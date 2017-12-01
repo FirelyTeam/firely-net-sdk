@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -72,7 +73,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Kind of Resource
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=100)]
+        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -86,7 +88,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifies the focus of this resource
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=110)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.ResourceReference Subject
         {
@@ -99,7 +102,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When created
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=120)]
+        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date CreatedElement
         {
@@ -131,7 +135,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who created
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=130)]
+        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]

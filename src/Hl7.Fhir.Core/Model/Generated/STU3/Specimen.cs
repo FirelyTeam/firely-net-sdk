@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Who collected the specimen
             /// </summary>
-            [FhirElement("collector", InSummary=true, Order=40)]
+            [FhirElement("collector", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
             [CLSCompliant(false)]
             [References("Practitioner")]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Collection time
             /// </summary>
-            [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("collected", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -391,7 +391,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Id for the container
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -582,7 +583,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External Identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -596,7 +598,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifier assigned by the lab
         /// </summary>
-        [FhirElement("accessionIdentifier", InSummary=true, Order=100)]
+        [FhirElement("accessionIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier AccessionIdentifier
         {
@@ -609,7 +612,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// available | unavailable | unsatisfactory | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SpecimenStatus> StatusElement
         {
@@ -641,7 +645,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Kind of material that forms the specimen
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=120)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -654,7 +659,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Where the specimen came from. This may be from the patient(s) or from the environment or a device
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Substance")]
         [Cardinality(Min=1,Max=1)]
@@ -670,7 +675,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The time when specimen was received for processing
         /// </summary>
-        [FhirElement("receivedTime", InSummary=true, Order=140)]
+        [FhirElement("receivedTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ReceivedTimeElement
         {

@@ -93,7 +93,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What score this group achieved
             /// </summary>
-            [FhirElement("measureScore", InSummary=true, Order=60)]
+            [FhirElement("measureScore", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
             {
@@ -227,7 +228,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Population identifier as defined in the measure
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.STU3.Identifier Identifier
             {
@@ -240,7 +242,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -540,7 +543,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What score this stratum achieved
             /// </summary>
-            [FhirElement("measureScore", InSummary=true, Order=60)]
+            [FhirElement("measureScore", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
             {
@@ -655,7 +659,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Population identifier as defined in the measure
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.STU3.Identifier Identifier
             {
@@ -668,7 +673,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -809,7 +815,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Additional identifier for the Report
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -822,7 +829,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// complete | pending | error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.MeasureReportStatus> StatusElement
@@ -855,7 +863,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// individual | patient-list | summary
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.MeasureReportType> TypeElement
@@ -888,7 +897,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What measure was evaluated
         /// </summary>
-        [FhirElement("measure", InSummary=true, Order=120)]
+        [FhirElement("measure", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Measure")]
         [Cardinality(Min=1,Max=1)]
@@ -904,7 +913,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What patient the report is for
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=130)]
+        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -919,7 +928,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the report was generated
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=140)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -951,7 +961,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who is reporting the data
         /// </summary>
-        [FhirElement("reportingOrganization", InSummary=true, Order=150)]
+        [FhirElement("reportingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -966,7 +976,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What period the report covers
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=160)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period

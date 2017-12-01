@@ -19,6 +19,8 @@ namespace Hl7.Fhir.Rest
 {
     internal class Requester<TOperationOutcome> where TOperationOutcome : Resource
     {
+        private readonly Model.Version _version;
+
         public Uri BaseUrl { get; private set; }
         public string FhirVersion { get; private set; }
         public bool UseFormatParameter { get; set; }
@@ -40,9 +42,10 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings { get; set; }
 
-        public Requester(Uri baseUrl, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource)
+        public Requester(Uri baseUrl, Model.Version version, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource)
         {
             BaseUrl = baseUrl;
+            _version = version;
             FhirVersion = fhirVersion;
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
@@ -67,6 +70,7 @@ namespace Hl7.Fhir.Rest
         {
             return ExecuteAsync(interaction).WaitResult();
         }
+
         public async Task<Response> ExecuteAsync(Request interaction)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
@@ -75,7 +79,7 @@ namespace Hl7.Fhir.Rest
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(FhirVersion, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+            var request = interaction.ToHttpRequest(_version, FhirVersion, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
 #if DOTNETFW
             request.Timeout = Timeout;

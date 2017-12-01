@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A Comment recorded against this element in the FHIR Resource
         /// </summary>
-        [FhirElement("fhir_comments", InSummary = false, Order = 5)]
+        [FhirElement("fhir_comments", Order = 5)]
         [Cardinality(Min = 0, Max = -1)]
         public List<Hl7.Fhir.Model.FhirString> FhirCommentsElement
         {

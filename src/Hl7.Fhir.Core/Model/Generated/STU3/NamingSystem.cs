@@ -294,7 +294,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this naming system (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=90)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -327,7 +328,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.PublicationStatus> StatusElement
@@ -393,7 +395,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=120)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -426,7 +429,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=130)]
+        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -458,7 +462,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=140)]
+        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
@@ -549,7 +554,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=180)]
+        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.UsageContext> UseContext
@@ -563,7 +569,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Intended jurisdiction for naming system (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=190)]
+        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction

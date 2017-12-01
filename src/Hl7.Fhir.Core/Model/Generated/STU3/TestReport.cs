@@ -1229,7 +1229,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -1242,7 +1243,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Informal name of the executed TestScript
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=100)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -1274,7 +1276,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// completed | in-progress | waiting | stopped | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.TestReportStatus> StatusElement
@@ -1307,7 +1310,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Reference to the  version-specific TestScript that was executed to produce this TestReport
         /// </summary>
-        [FhirElement("testScript", InSummary=true, Order=120)]
+        [FhirElement("testScript", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("TestScript")]
         [Cardinality(Min=1,Max=1)]
@@ -1323,7 +1326,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// pass | fail | pending
         /// </summary>
-        [FhirElement("result", InSummary=true, Order=130)]
+        [FhirElement("result", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.TestReportResult> ResultElement
@@ -1356,7 +1360,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The final score (percentage of tests passed) resulting from the execution of the TestScript
         /// </summary>
-        [FhirElement("score", InSummary=true, Order=140)]
+        [FhirElement("score", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal ScoreElement
         {
@@ -1388,7 +1393,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the tester producing this report (Organization or individual)
         /// </summary>
-        [FhirElement("tester", InSummary=true, Order=150)]
+        [FhirElement("tester", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TesterElement
         {
@@ -1420,7 +1426,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the TestScript was executed and this TestReport was generated
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=160)]
+        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
         {

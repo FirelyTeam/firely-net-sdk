@@ -199,7 +199,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifies this organization  across multiple systems
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -213,7 +214,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Whether the organization's record is still in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=100)]
+        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -245,7 +247,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Kind of organization
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -259,7 +262,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name used for the organization
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=120)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -352,7 +356,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The organization of which this organization forms a part
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=160)]
+        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]

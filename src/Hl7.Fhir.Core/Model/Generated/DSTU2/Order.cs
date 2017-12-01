@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Code specifies when request should be done. The code may simply be a priority code
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -78,7 +79,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// A formal schedule
             /// </summary>
-            [FhirElement("schedule", InSummary=true, Order=50)]
+            [FhirElement("schedule", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Timing Schedule
             {
@@ -162,7 +164,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Identifiers assigned to this order by the orderer or by the receiver
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -176,7 +179,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the order was made
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=100)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -208,7 +212,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Patient this order is about
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=110)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Substance")]
         [DataMember]
@@ -223,7 +227,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who initiated the order
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=120)]
+        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
@@ -238,7 +242,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who is intended to fulfill the order
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=130)]
+        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Organization","Device","Practitioner")]
         [DataMember]
@@ -253,7 +257,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Text - why the order was made
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.DSTU2.ResourceReference))]
         [DataMember]
@@ -268,7 +272,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When order should be fulfilled
         /// </summary>
-        [FhirElement("when", InSummary=true, Order=150)]
+        [FhirElement("when", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public WhenComponent When
         {
@@ -281,7 +286,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// What action is being ordered
         /// </summary>
-        [FhirElement("detail", InSummary=true, Order=160)]
+        [FhirElement("detail", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Detail

@@ -55,7 +55,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// xml:id (or equivalent in JSON)
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
+        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=new[] { Version.All }, Order=10)]
+        [CLSCompliant(false)]
         [IdPattern]
         [DataMember]
         public string ElementId
@@ -69,7 +70,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional Content defined by implementations
         /// </summary>
-        [FhirElement("extension", InSummary=true, Order=20)]
+        [FhirElement("extension", InSummary=new[] { Version.All }, Order=20)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Extension

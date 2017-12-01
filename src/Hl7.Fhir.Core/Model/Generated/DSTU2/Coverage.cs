@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// An identifier for the plan issuer
         /// </summary>
-        [FhirElement("issuer", InSummary=true, Order=90)]
+        [FhirElement("issuer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -86,7 +86,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Coverage start and end dates
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=110)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -99,7 +100,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Type of coverage
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=120)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Type
         {
@@ -112,7 +114,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Subscriber ID
         /// </summary>
-        [FhirElement("subscriberId", InSummary=true, Order=130)]
+        [FhirElement("subscriberId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Identifier SubscriberId
         {
@@ -125,7 +128,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The primary coverage ID
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=140)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -139,7 +143,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// An identifier for the group
         /// </summary>
-        [FhirElement("group", InSummary=true, Order=150)]
+        [FhirElement("group", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString GroupElement
         {
@@ -171,7 +176,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// An identifier for the plan
         /// </summary>
-        [FhirElement("plan", InSummary=true, Order=160)]
+        [FhirElement("plan", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PlanElement
         {
@@ -203,7 +209,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// An identifier for the subsection of the plan
         /// </summary>
-        [FhirElement("subPlan", InSummary=true, Order=170)]
+        [FhirElement("subPlan", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SubPlanElement
         {
@@ -235,7 +242,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The dependent number
         /// </summary>
-        [FhirElement("dependent", InSummary=true, Order=180)]
+        [FhirElement("dependent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt DependentElement
         {
@@ -267,7 +275,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The plan instance or sequence counter
         /// </summary>
-        [FhirElement("sequence", InSummary=true, Order=190)]
+        [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt SequenceElement
         {
@@ -314,7 +323,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Insurer network
         /// </summary>
-        [FhirElement("network", InSummary=true, Order=210)]
+        [FhirElement("network", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Identifier Network
         {

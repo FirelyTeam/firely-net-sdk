@@ -56,7 +56,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Numerator value
         /// </summary>
-        [FhirElement("numerator", InSummary=true, Order=30)]
+        [FhirElement("numerator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Numerator
         {
@@ -69,7 +70,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Denominator value
         /// </summary>
-        [FhirElement("denominator", InSummary=true, Order=40)]
+        [FhirElement("denominator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Denominator
         {

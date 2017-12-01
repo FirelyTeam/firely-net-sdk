@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The id of the request associated with this response, if any
         /// </summary>
-        [FhirElement("requestId", InSummary=true, Order=90)]
+        [FhirElement("requestId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Id RequestIdElement
         {
@@ -90,7 +91,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -103,7 +105,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A reference to a knowledge module
         /// </summary>
-        [FhirElement("module", InSummary=true, Order=110)]
+        [FhirElement("module", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("ServiceDefinition")]
         [Cardinality(Min=1,Max=1)]
@@ -119,7 +121,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// success | data-requested | data-required | in-progress | failure | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.GuidanceResponseStatus> StatusElement

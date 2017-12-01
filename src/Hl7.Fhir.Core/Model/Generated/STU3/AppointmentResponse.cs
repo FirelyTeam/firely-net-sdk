@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -72,7 +73,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Appointment this response relates to
         /// </summary>
-        [FhirElement("appointment", InSummary=true, Order=100)]
+        [FhirElement("appointment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("Appointment")]
         [Cardinality(Min=1,Max=1)]
@@ -152,7 +153,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Role of participant in the appointment
         /// </summary>
-        [FhirElement("participantType", InSummary=true, Order=130)]
+        [FhirElement("participantType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
@@ -166,7 +168,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Person, Location/HealthcareService or Device
         /// </summary>
-        [FhirElement("actor", InSummary=true, Order=140)]
+        [FhirElement("actor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [DataMember]
@@ -181,7 +183,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
         /// </summary>
-        [FhirElement("participantStatus", InSummary=true, Order=150)]
+        [FhirElement("participantStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ParticipationStatus> ParticipantStatusElement

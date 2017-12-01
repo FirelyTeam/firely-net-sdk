@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Individual who was performing
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=40)]
+            [FhirElement("actor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
             [CLSCompliant(false)]
             [References("Practitioner","Patient","RelatedPerson","Device")]
             [Cardinality(Min=1,Max=1)]
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Instantiates protocol or definition
         /// </summary>
-        [FhirElement("definition", InSummary=true, Order=100)]
+        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("PlanDefinition","ActivityDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Part of referenced event
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=110)]
+        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("MedicationAdministration","Procedure")]
         [Cardinality(Min=0,Max=-1)]
@@ -410,7 +410,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// in-progress | on-hold | completed | entered-in-error | stopped | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.MedicationAdministrationStatus> StatusElement
@@ -456,7 +457,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What was administered
         /// </summary>
-        [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -472,7 +473,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who received medication
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=150)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -517,7 +518,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Start and end time of administration
         /// </summary>
-        [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
@@ -533,7 +534,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who administered substance
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=190)]
+        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<PerformerComponent> Performer
@@ -547,7 +549,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// True if medication not administered
         /// </summary>
-        [FhirElement("notGiven", InSummary=true, Order=200)]
+        [FhirElement("notGiven", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NotGivenElement
         {

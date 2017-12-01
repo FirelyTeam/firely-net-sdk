@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business Identifier for research subject
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -71,7 +72,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// candidate | enrolled | active | suspended | withdrawn | completed
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.ResearchSubjectStatus> StatusElement
@@ -104,7 +106,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Start and end of participation
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=110)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -117,7 +120,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Study subject is part of
         /// </summary>
-        [FhirElement("study", InSummary=true, Order=120)]
+        [FhirElement("study", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("ResearchStudy")]
         [Cardinality(Min=1,Max=1)]
@@ -133,7 +136,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who is part of study
         /// </summary>
-        [FhirElement("individual", InSummary=true, Order=130)]
+        [FhirElement("individual", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]

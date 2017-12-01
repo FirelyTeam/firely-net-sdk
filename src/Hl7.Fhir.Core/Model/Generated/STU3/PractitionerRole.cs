@@ -399,7 +399,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business Identifiers that are specific to a role/location
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -413,7 +414,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Whether this practitioner's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=100)]
+        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -445,7 +447,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The period during which the practitioner is authorized to perform in these role(s)
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=110)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -458,7 +461,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Practitioner that is able to provide the defined services for the organation
         /// </summary>
-        [FhirElement("practitioner", InSummary=true, Order=120)]
+        [FhirElement("practitioner", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -473,7 +476,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Organization where the roles are available
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=130)]
+        [FhirElement("organization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -488,7 +491,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Roles which this practitioner may perform
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=140)]
+        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -502,7 +506,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Specific specialty of the practitioner
         /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=150)]
+        [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -516,7 +521,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The location(s) at which this practitioner provides care
         /// </summary>
-        [FhirElement("location", InSummary=true, Order=160)]
+        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
@@ -548,7 +553,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details that are specific to the role/location/service
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=180)]
+        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ContactPoint> Telecom

@@ -63,7 +63,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The code-valued attribute of the filter
             /// </summary>
-            [FhirElement("path", InSummary=true, Order=40)]
+            [FhirElement("path", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
@@ -96,7 +97,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Valueset for the filter
             /// </summary>
-            [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("valueSet", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
             [DataMember]
@@ -111,7 +112,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What code is expected
             /// </summary>
-            [FhirElement("valueCode", InSummary=true, Order=60)]
+            [FhirElement("valueCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Code> ValueCodeElement
@@ -144,7 +146,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What Coding is expected
             /// </summary>
-            [FhirElement("valueCoding", InSummary=true, Order=70)]
+            [FhirElement("valueCoding", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> ValueCoding
@@ -158,7 +161,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What CodeableConcept is expected
             /// </summary>
-            [FhirElement("valueCodeableConcept", InSummary=true, Order=80)]
+            [FhirElement("valueCodeableConcept", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> ValueCodeableConcept
@@ -265,7 +269,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The date-valued attribute of the filter
             /// </summary>
-            [FhirElement("path", InSummary=true, Order=40)]
+            [FhirElement("path", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
@@ -298,7 +303,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The value of the filter, as a Period, DateTime, or Duration value
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration))]
             [DataMember]
@@ -384,7 +389,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The type of the required data
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=30)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.FHIRAllTypes> TypeElement
@@ -417,7 +423,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The profile of the required data
         /// </summary>
-        [FhirElement("profile", InSummary=true, Order=40)]
+        [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> ProfileElement
@@ -450,7 +457,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Indicates that specific structure elements are referenced by the knowledge module
         /// </summary>
-        [FhirElement("mustSupport", InSummary=true, Order=50)]
+        [FhirElement("mustSupport", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> MustSupportElement
@@ -483,7 +491,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What codes are expected
         /// </summary>
-        [FhirElement("codeFilter", InSummary=true, Order=60)]
+        [FhirElement("codeFilter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<CodeFilterComponent> CodeFilter
@@ -497,7 +506,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What dates/date ranges are expected
         /// </summary>
-        [FhirElement("dateFilter", InSummary=true, Order=70)]
+        [FhirElement("dateFilter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<DateFilterComponent> DateFilter

@@ -40,14 +40,14 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var t = new FhirXmlParser().Parse<Resource>(original);
 
-            var outputXml = new FhirXmlSerializer().SerializeToString(t);
+            var outputXml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(t);
             XmlAssert.AreSame(testFileName, original, outputXml);
 
-            var outputJson = new FhirJsonSerializer().SerializeToString(t);
+            var outputJson = new FhirJsonSerializer(Fhir.Model.Version.DSTU2).SerializeToString(t);
             var t2 = new FhirJsonParser().Parse<Resource>(outputJson);
             Assert.IsTrue(t.IsExactly(t2));
 
-            var outputXml2 = new FhirXmlSerializer().SerializeToString(t2);
+            var outputXml2 = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(t2);
             XmlAssert.AreSame(testFileName, original, outputXml2);            
         }
 
@@ -250,14 +250,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.IsFalse(resource.Matches(null), "Serialization of " + inputFile + " matched null - Matches test");
                 Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
 
-                var json = new FhirJsonSerializer().SerializeToString(resource);
+                var json = new FhirJsonSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
                 var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = new FhirXmlSerializer().SerializeToString(resource);
+                var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }
@@ -271,14 +271,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 var xml = File.ReadAllText(inputFile);
                 var resource = new FhirXmlParser().Parse<Resource>(xml);
 
-                var json = new FhirJsonSerializer().SerializeToString(resource);
+                var json = new FhirJsonSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
                 var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = new FhirXmlSerializer().SerializeToString(resource);
+                var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }

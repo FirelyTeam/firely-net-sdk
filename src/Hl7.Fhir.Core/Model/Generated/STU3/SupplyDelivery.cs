@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Fulfills plan, proposal or order
         /// </summary>
-        [FhirElement("basedOn", InSummary=true, Order=100)]
+        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("SupplyRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Part of referenced event
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=110)]
+        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("SupplyDelivery","Contract")]
         [Cardinality(Min=0,Max=-1)]
@@ -209,7 +209,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// in-progress | completed | abandoned | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.SupplyDeliveryStatus> StatusElement
         {
@@ -282,7 +283,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When event occurred
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.STU3.Timing))]
         [DataMember]

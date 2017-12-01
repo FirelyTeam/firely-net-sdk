@@ -34,18 +34,18 @@ namespace Hl7.Fhir.Core.Tests.Serialization
         [TestMethod]
         public void NoOpSerializer()
         {
-            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new DoNothingCustomSerializer() });
+            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new DoNothingCustomSerializer() }, Model.Version.DSTU2);
             var pat = createData();
 
             // Make sure a no-op serializer does not influence serialization
             var xml = xmlSerializer.SerializeToString(pat);
-            Assert.AreEqual(new FhirXmlSerializer().SerializeToString(pat), xml);
+            Assert.AreEqual(new FhirXmlSerializer(Model.Version.DSTU2).SerializeToString(pat), xml);
 
-            var jsonSerializer = new FhirJsonSerializer(new ParserSettings() { CustomSerializer = new DoNothingCustomSerializer() });
+            var jsonSerializer = new FhirJsonSerializer(new ParserSettings() { CustomSerializer = new DoNothingCustomSerializer() }, Model.Version.DSTU2);
 
             // Make sure a no-op serializer does not influence serialization
             var json = jsonSerializer.SerializeToString(pat);
-            Assert.AreEqual(new FhirJsonSerializer().SerializeToString(pat), json);
+            Assert.AreEqual(new FhirJsonSerializer(Model.Version.DSTU2).SerializeToString(pat), json);
         }
 
         private class DoNothingCustomSerializer : ISerializerCustomization
@@ -62,14 +62,14 @@ namespace Hl7.Fhir.Core.Tests.Serialization
         {
             var pat = createData();
 
-            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new InsertAdditionalMembersAroundCustomSerializer() });
+            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new InsertAdditionalMembersAroundCustomSerializer() }, Model.Version.DSTU2);
             var xml = xmlSerializer.SerializeToString(pat);
             Assert.AreEqual("<Patient myProp=\"true\" myProp2=\"dude\" xmlns=\"http://hl7.org/fhir\">" +
                     "<active myProp=\"true\" myProp2=\"dude\" value=\"true\" /><name myProp=\"true\" myProp2=\"dude\">" +
                     "<family myProp=\"true\" myProp2=\"dude\" value=\"Kramer\" /><given myProp=\"true\" myProp2=\"dude\" value=\"Ewout\" />" +
                     "</name><gender myProp=\"true\" myProp2=\"dude\" value=\"male\" /><active2 value=\"true\" /><gender2>male</gender2></Patient>", xml);
 
-            var jsonSerializer = new FhirJsonSerializer(new ParserSettings() { CustomSerializer = new InsertAdditionalMembersAroundCustomSerializer() });
+            var jsonSerializer = new FhirJsonSerializer(new ParserSettings() { CustomSerializer = new InsertAdditionalMembersAroundCustomSerializer() }, Model.Version.DSTU2);
             var json = jsonSerializer.SerializeToString(pat);
             Assert.AreEqual("{\"resourceType\":\"Patient\",\"myProp\":true,\"myProp2\":\"dude\",\"active\":true,\"_active\":{\"myProp\":true,\"myProp2\":\"dude\"},\"name\":[{\"myProp\":true,\"myProp2\":\"dude\",\"family\":[\"Kramer\"],\"_family\":[{\"myProp\":true,\"myProp2\":\"dude\"}],\"given\":[\"Ewout\"],\"_given\":[{\"myProp\":true,\"myProp2\":\"dude\"}]}],\"gender\":\"male\",\"_gender\":{\"myProp\":true,\"myProp2\":\"dude\"},\"active2\":{\"value\":true},\"gender2\":{\"value\":\"male\"}}", json);
 
@@ -120,15 +120,15 @@ namespace Hl7.Fhir.Core.Tests.Serialization
         {
             var pat = createData();
 
-            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new SkipActiveCustomSerializer() });
+            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new SkipActiveCustomSerializer() }, Model.Version.DSTU2);
             var xml = xmlSerializer.SerializeToString(pat);
             Assert.IsFalse(xml.Contains("<active"));
-            Assert.IsTrue(new FhirXmlSerializer().SerializeToString(pat).Contains("<active"));
+            Assert.IsTrue(new FhirXmlSerializer(Model.Version.DSTU2).SerializeToString(pat).Contains("<active"));
 
-            var jsonSerializer = new FhirJsonSerializer(new ParserSettings() { CustomSerializer = new SkipActiveCustomSerializer() });
+            var jsonSerializer = new FhirJsonSerializer(new ParserSettings() { CustomSerializer = new SkipActiveCustomSerializer() }, Model.Version.DSTU2);
             var json = jsonSerializer.SerializeToString(pat);
             Assert.IsFalse(json.Contains("\"active\":"));
-            Assert.IsTrue(new FhirJsonSerializer().SerializeToString(pat).Contains("\"active\":"));
+            Assert.IsTrue(new FhirJsonSerializer(Model.Version.DSTU2).SerializeToString(pat).Contains("\"active\":"));
         }
 
         private class SkipActiveCustomSerializer : ISerializerCustomization
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
         {
             var pat = createData();
             pat.AddAnnotation(new YadaYadaAnnotation { Num = 3 });
-            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new DumpAnnotationCustomSerializer() });
+            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new DumpAnnotationCustomSerializer() }, Model.Version.DSTU2);
             var xml = xmlSerializer.SerializeToString(pat);
 
             Assert.IsTrue(xml.Contains("<Patient yada=\"3\""));
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
         {
             var pat = createData();
             pat.AddAnnotation(new YadaYadaAnnotation { Num = 4 });
-            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new DumpAnnotationCustomSerializer() });
+            var xmlSerializer = new FhirXmlSerializer(new ParserSettings() { CustomSerializer = new DumpAnnotationCustomSerializer() }, Model.Version.DSTU2);
             var patXml = xmlSerializer.SerializeToString(pat);
 
             var xmlDeserializer = new FhirXmlParser(new ParserSettings() { CustomDeserializer = new RetrieveAnnotationCustomDeserializer() });

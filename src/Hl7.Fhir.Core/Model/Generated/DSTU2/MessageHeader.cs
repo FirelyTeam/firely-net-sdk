@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Id of original message
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id IdentifierElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// ok | transient-error | fatal-error
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ResponseType> CodeElement
@@ -131,7 +133,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Specific list of hints/warnings/errors
             /// </summary>
-            [FhirElement("details", InSummary=true, Order=60)]
+            [FhirElement("details", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
             [CLSCompliant(false)]
             [References("OperationOutcome")]
             [DataMember]
@@ -229,7 +231,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -261,7 +264,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Name of software running the system
             /// </summary>
-            [FhirElement("software", InSummary=true, Order=50)]
+            [FhirElement("software", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SoftwareElement
             {
@@ -293,7 +297,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Version of software running
             /// </summary>
-            [FhirElement("version", InSummary=true, Order=60)]
+            [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
             {
@@ -325,7 +330,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Human contact for problems
             /// </summary>
-            [FhirElement("contact", InSummary=true, Order=70)]
+            [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.ContactPoint Contact
             {
@@ -338,7 +344,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Actual message source address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=80)]
+            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri EndpointElement
@@ -464,7 +471,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -496,7 +504,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Particular delivery destination within the destination
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
+            [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("Device")]
             [DataMember]
@@ -511,7 +519,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Actual destination address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=60)]
+            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri EndpointElement
@@ -620,7 +629,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Time that the message was sent
         /// </summary>
-        [FhirElement("timestamp", InSummary=true, Order=90)]
+        [FhirElement("timestamp", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant TimestampElement
@@ -653,7 +663,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Code for the event this message represents
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=100)]
+        [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Event
@@ -667,7 +678,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// If this is a reply to prior message
         /// </summary>
-        [FhirElement("response", InSummary=true, Order=110)]
+        [FhirElement("response", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public ResponseComponent Response
         {
@@ -680,7 +692,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Message Source Application
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=120)]
+        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public MessageSourceComponent Source
@@ -694,7 +707,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Message Destination Application(s)
         /// </summary>
-        [FhirElement("destination", InSummary=true, Order=130)]
+        [FhirElement("destination", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<MessageDestinationComponent> Destination
@@ -708,7 +722,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The source of the data entry
         /// </summary>
-        [FhirElement("enterer", InSummary=true, Order=140)]
+        [FhirElement("enterer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -723,7 +737,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The source of the decision
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=150)]
+        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -738,7 +752,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Intended "real-world" recipient for the data
         /// </summary>
-        [FhirElement("receiver", InSummary=true, Order=160)]
+        [FhirElement("receiver", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
@@ -753,7 +767,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Final responsibility for event
         /// </summary>
-        [FhirElement("responsible", InSummary=true, Order=170)]
+        [FhirElement("responsible", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
@@ -768,7 +782,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Cause of event
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=180)]
+        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -781,7 +796,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The actual content of the message
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=190)]
+        [FhirElement("data", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Data

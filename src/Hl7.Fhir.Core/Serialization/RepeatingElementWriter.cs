@@ -17,14 +17,16 @@ namespace Hl7.Fhir.Serialization
     {
         private IFhirWriter _writer;
         private ModelInspector _inspector;
+        private readonly Model.Version _version;
 
         public ParserSettings Settings { get; private set; }
 
-        public RepeatingElementWriter(IFhirWriter writer, ParserSettings settings)
+        public RepeatingElementWriter(IFhirWriter writer, ParserSettings settings, Model.Version version)
         {
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
+            _version = version;
         }
 
         public void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
@@ -38,7 +40,7 @@ namespace Hl7.Fhir.Serialization
 
             foreach(var element in elements)
             {
-                var writer = new DispatchingWriter(_writer, Settings);
+                var writer = new DispatchingWriter(_writer, Settings, _version);
                 writer.Serialize(prop, element, summary, mode);
             }
 

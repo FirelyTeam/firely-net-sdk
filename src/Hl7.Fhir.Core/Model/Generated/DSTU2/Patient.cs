@@ -282,7 +282,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// E.g. Dog, Cow
             /// </summary>
-            [FhirElement("species", InSummary=true, Order=40)]
+            [FhirElement("species", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Species
@@ -296,7 +297,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// E.g. Poodle, Angus
             /// </summary>
-            [FhirElement("breed", InSummary=true, Order=50)]
+            [FhirElement("breed", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Breed
             {
@@ -309,7 +311,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// E.g. Neutered, Intact
             /// </summary>
-            [FhirElement("genderStatus", InSummary=true, Order=60)]
+            [FhirElement("genderStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept GenderStatus
             {
@@ -649,7 +652,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// An identifier for this patient
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -663,7 +667,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Whether this patient's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=100)]
+        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -695,7 +700,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A name associated with the patient
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.HumanName> Name
@@ -709,7 +715,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A contact detail for the individual
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=120)]
+        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ContactPoint> Telecom
@@ -723,7 +730,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=130)]
+        [FhirElement("gender", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -755,7 +763,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The date of birth for the individual
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=140)]
+        [FhirElement("birthDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date BirthDateElement
         {
@@ -787,7 +796,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Indicates if the individual is deceased or not
         /// </summary>
-        [FhirElement("deceased", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
@@ -802,7 +811,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Addresses for the individual
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=160)]
+        [FhirElement("address", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -872,7 +882,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// This patient is known to be an animal (non-human)
         /// </summary>
-        [FhirElement("animal", InSummary=true, Order=210)]
+        [FhirElement("animal", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [DataMember]
         public AnimalComponent Animal
         {
@@ -915,7 +926,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Organization that is the custodian of the patient record
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=240)]
+        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]

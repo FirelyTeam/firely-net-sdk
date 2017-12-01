@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Reference to the image source
             /// </summary>
-            [FhirElement("link", InSummary=true, Order=50)]
+            [FhirElement("link", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("Media")]
             [Cardinality(Min=1,Max=1)]
@@ -184,7 +184,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Id for external references to this report
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -198,7 +199,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// registered | partial | final | corrected | appended | cancelled | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.DiagnosticReportStatus> StatusElement
@@ -231,7 +233,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Service category
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=110)]
+        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -244,7 +247,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Name/Code for this diagnostic report
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=120)]
+        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -258,7 +262,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The subject of the report, usually, but not always, the patient
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Location")]
         [Cardinality(Min=1,Max=1)]
@@ -274,7 +278,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Health care event when test ordered
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=140)]
+        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -289,7 +293,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Clinically Relevant time/time-period for report
         /// </summary>
-        [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
@@ -305,7 +309,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// DateTime this version was released
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=160)]
+        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
@@ -338,7 +343,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible Diagnostic Service
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=170)]
+        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=1,Max=1)]
@@ -418,7 +423,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Key images associated with this report
         /// </summary>
-        [FhirElement("image", InSummary=true, Order=220)]
+        [FhirElement("image", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ImageComponent> Image

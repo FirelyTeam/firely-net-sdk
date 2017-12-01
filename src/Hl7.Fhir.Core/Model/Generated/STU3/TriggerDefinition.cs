@@ -56,7 +56,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=30)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.TriggerType> TypeElement
@@ -89,7 +90,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Triggering event name
         /// </summary>
-        [FhirElement("eventName", InSummary=true, Order=40)]
+        [FhirElement("eventName", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString EventNameElement
         {
@@ -121,7 +123,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Timing of the event
         /// </summary>
-        [FhirElement("eventTiming", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("eventTiming", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.STU3.Timing),typeof(Hl7.Fhir.Model.STU3.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
@@ -136,7 +138,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Triggering data of the event
         /// </summary>
-        [FhirElement("eventData", InSummary=true, Order=60)]
+        [FhirElement("eventData", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.DataRequirement EventData
         {

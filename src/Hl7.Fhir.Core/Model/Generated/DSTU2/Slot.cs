@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -85,7 +86,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The schedule resource that this slot defines an interval of status information
         /// </summary>
-        [FhirElement("schedule", InSummary=true, Order=110)]
+        [FhirElement("schedule", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("Schedule")]
         [Cardinality(Min=1,Max=1)]
@@ -101,7 +102,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// busy | free | busy-unavailable | busy-tentative
         /// </summary>
-        [FhirElement("freeBusyType", InSummary=true, Order=120)]
+        [FhirElement("freeBusyType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.SlotStatus> FreeBusyTypeElement
@@ -134,7 +136,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date/Time that the slot is to begin
         /// </summary>
-        [FhirElement("start", InSummary=true, Order=130)]
+        [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
@@ -167,7 +170,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date/Time that the slot is to conclude
         /// </summary>
-        [FhirElement("end", InSummary=true, Order=140)]
+        [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement

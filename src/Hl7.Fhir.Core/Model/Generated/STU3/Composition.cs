@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// personal | professional | legal | official
             /// </summary>
-            [FhirElement("mode", InSummary=true, Order=40)]
+            [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Code<Hl7.Fhir.Model.CompositionAttestationMode>> ModeElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// When the composition was attested
             /// </summary>
-            [FhirElement("time", InSummary=true, Order=50)]
+            [FhirElement("time", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime TimeElement
             {
@@ -130,7 +132,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Who attested the composition
             /// </summary>
-            [FhirElement("party", InSummary=true, Order=60)]
+            [FhirElement("party", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
             [CLSCompliant(false)]
             [References("Patient","Practitioner","Organization")]
             [DataMember]
@@ -228,7 +230,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// replaces | transforms | signs | appends
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
@@ -261,7 +264,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Target of the relationship
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.STU3.Identifier),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -355,7 +358,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Code(s) that apply to the event being documented
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -369,7 +373,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The period covered by the documentation
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
+            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -382,7 +387,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The event(s) being documented
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=60)]
+            [FhirElement("detail", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.STU3.ResourceReference> Detail
@@ -537,7 +543,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// working | snapshot | changes
             /// </summary>
-            [FhirElement("mode", InSummary=true, Order=70)]
+            [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ListMode> ModeElement
             {
@@ -724,7 +731,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Logical identifier of composition (version-independent)
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -737,7 +745,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// preliminary | final | amended | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.CompositionStatus> StatusElement
@@ -770,7 +779,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Kind of composition (LOINC if possible)
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -784,7 +794,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Categorization of Composition
         /// </summary>
-        [FhirElement("class", InSummary=true, Order=120)]
+        [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
         {
@@ -797,7 +808,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who and/or what the composition is about
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.ResourceReference Subject
@@ -811,7 +823,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context of the Composition
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=140)]
+        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -826,7 +838,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Composition editing time
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -859,7 +872,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who and/or what authored the composition
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=160)]
+        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Practitioner","Device","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=-1)]
@@ -875,7 +888,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Human Readable name/title
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=170)]
+        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -908,7 +922,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// As defined by affinity domain
         /// </summary>
-        [FhirElement("confidentiality", InSummary=true, Order=180)]
+        [FhirElement("confidentiality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.ConfidentialityClassification> ConfidentialityElement
         {
@@ -940,7 +955,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Attests to accuracy of composition
         /// </summary>
-        [FhirElement("attester", InSummary=true, Order=190)]
+        [FhirElement("attester", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<AttesterComponent> Attester
@@ -954,7 +970,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Organization which maintains the composition
         /// </summary>
-        [FhirElement("custodian", InSummary=true, Order=200)]
+        [FhirElement("custodian", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -969,7 +985,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Relationships to other compositions/documents
         /// </summary>
-        [FhirElement("relatesTo", InSummary=true, Order=210)]
+        [FhirElement("relatesTo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<RelatesToComponent> RelatesTo
@@ -983,7 +1000,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The clinical service(s) being documented
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=220)]
+        [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<EventComponent> Event

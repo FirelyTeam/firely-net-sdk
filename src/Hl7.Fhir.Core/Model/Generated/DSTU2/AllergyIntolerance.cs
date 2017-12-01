@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Specific substance considered to be responsible for event
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=40)]
+            [FhirElement("substance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Substance
             {
@@ -78,7 +79,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// unlikely | likely | confirmed - clinical certainty about the specific substance
             /// </summary>
-            [FhirElement("certainty", InSummary=true, Order=50)]
+            [FhirElement("certainty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCertainty> CertaintyElement
             {
@@ -110,7 +112,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Clinical symptoms/signs associated with the Event
             /// </summary>
-            [FhirElement("manifestation", InSummary=true, Order=60)]
+            [FhirElement("manifestation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Manifestation
@@ -156,7 +159,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Date(/time) when manifestations showed
             /// </summary>
-            [FhirElement("onset", InSummary=true, Order=80)]
+            [FhirElement("onset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime OnsetElement
             {
@@ -188,7 +192,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// mild | moderate | severe (of event as a whole)
             /// </summary>
-            [FhirElement("severity", InSummary=true, Order=90)]
+            [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.AllergyIntoleranceSeverity> SeverityElement
             {
@@ -220,7 +225,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// How the subject was exposed to the substance
             /// </summary>
-            [FhirElement("exposureRoute", InSummary=true, Order=100)]
+            [FhirElement("exposureRoute", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ExposureRoute
             {
@@ -347,7 +353,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -361,7 +368,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date(/time) when manifestations showed
         /// </summary>
-        [FhirElement("onset", InSummary=true, Order=100)]
+        [FhirElement("onset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OnsetElement
         {
@@ -393,7 +401,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("recordedDate", InSummary=true, Order=110)]
+        [FhirElement("recordedDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
         {
@@ -425,7 +434,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who recorded the sensitivity
         /// </summary>
-        [FhirElement("recorder", InSummary=true, Order=120)]
+        [FhirElement("recorder", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner","Patient")]
         [DataMember]
@@ -440,7 +449,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who the sensitivity is for
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=130)]
+        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -456,7 +465,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Source of the information about the allergy
         /// </summary>
-        [FhirElement("reporter", InSummary=true, Order=140)]
+        [FhirElement("reporter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson","Practitioner")]
         [DataMember]
@@ -471,7 +480,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Substance, (or class) considered to be responsible for risk
         /// </summary>
-        [FhirElement("substance", InSummary=true, Order=150)]
+        [FhirElement("substance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Substance
@@ -485,7 +495,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// active | unconfirmed | confirmed | inactive | resolved | refuted | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=160)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceStatus> StatusElement
         {
@@ -517,7 +528,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// CRITL | CRITH | CRITU
         /// </summary>
-        [FhirElement("criticality", InSummary=true, Order=170)]
+        [FhirElement("criticality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCriticality> CriticalityElement
         {
@@ -549,7 +561,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// allergy | intolerance - Underlying mechanism (if known)
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=180)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntoleranceType> TypeElement
         {
@@ -581,7 +594,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// food | medication | environment | other - Category of Substance
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=190)]
+        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCategory> CategoryElement
         {
@@ -613,7 +627,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date(/time) of last known occurrence of a reaction
         /// </summary>
-        [FhirElement("lastOccurence", InSummary=true, Order=200)]
+        [FhirElement("lastOccurence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastOccurenceElement
         {

@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Narrative"; } }
-        
+
         /// <summary>
         /// The status of a resource narrative
         /// (url: http://hl7.org/fhir/ValueSet/narrative-status)
@@ -87,17 +87,18 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// generated | extensions | additional | empty
         /// </summary>
-        [FhirElement("status", InSummary = true, Order = 30)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("status", InSummary = new[] { Version.All }, Order = 30)]
+        [CLSCompliant(false)]
+        [Cardinality(Min = 1, Max = 1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
-        
+
         private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
-        
+
         /// <summary>
         /// generated | extensions | additional | empty
         /// </summary>
@@ -109,18 +110,19 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
-                  StatusElement = null; 
+                if (value == null)
+                    StatusElement = null;
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
-        
+
         /// <summary>
         /// Limited xhtml content
         /// </summary>
-        [FhirElement("div", XmlSerialization=XmlSerializationHint.XhtmlElement, InSummary=true, Order=40)]
+        [FhirElement("div", XmlSerialization = XmlSerializationHint.XhtmlElement, InSummary = new[] { Version.All }, Order = 40)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [NarrativeXhtmlPattern]
         [DataMember]

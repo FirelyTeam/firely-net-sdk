@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// reference | inclusion
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.GuideDependencyType> TypeElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Where to find dependency
             /// </summary>
-            [FhirElement("uri", InSummary=true, Order=50)]
+            [FhirElement("uri", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UriElement
@@ -209,7 +211,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Name used .page.package
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -274,7 +277,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Resource in the implementation guide
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=60)]
+            [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<ResourceComponent> Resource
@@ -371,7 +375,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// If not an example, has its normal meaning
             /// </summary>
-            [FhirElement("example", InSummary=true, Order=40)]
+            [FhirElement("example", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExampleElement
@@ -404,7 +409,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Human Name for the resource
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=50)]
+            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -500,7 +506,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Location of the resource
             /// </summary>
-            [FhirElement("source", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -629,7 +635,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Type this profiles applies to
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -662,7 +669,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Profile that all resources must conform to
             /// </summary>
-            [FhirElement("profile", InSummary=true, Order=50)]
+            [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
@@ -756,7 +763,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Where to find that page
             /// </summary>
-            [FhirElement("source", InSummary=true, Order=40)]
+            [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri SourceElement
@@ -789,7 +797,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Short title shown for navigational assistance
             /// </summary>
-            [FhirElement("title", InSummary=true, Order=50)]
+            [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
@@ -822,7 +831,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// page | example | list | include | directory | dictionary | toc | resource
             /// </summary>
-            [FhirElement("kind", InSummary=true, Order=60)]
+            [FhirElement("kind", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.GuidePageKind> KindElement
@@ -1063,7 +1073,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Logical URI to reference this implementation guide (globally unique)
         /// </summary>
-        [FhirElement("url", InSummary=true, Order=90)]
+        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -1096,7 +1107,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business version of the implementation guide
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=100)]
+        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -1128,7 +1140,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this implementation guide (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -1161,7 +1174,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.PublicationStatus> StatusElement
@@ -1194,7 +1208,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=130)]
+        [FhirElement("experimental", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -1226,7 +1241,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=140)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -1258,7 +1274,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=150)]
+        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -1290,7 +1307,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=160)]
+        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
@@ -1336,7 +1354,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=180)]
+        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.UsageContext> UseContext
@@ -1350,7 +1369,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Intended jurisdiction for implementation guide (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=190)]
+        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1396,7 +1416,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// FHIR Version this Implementation Guide targets
         /// </summary>
-        [FhirElement("fhirVersion", InSummary=true, Order=210)]
+        [FhirElement("fhirVersion", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Id FhirVersionElement
         {
@@ -1428,7 +1449,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Another Implementation guide this depends on
         /// </summary>
-        [FhirElement("dependency", InSummary=true, Order=220)]
+        [FhirElement("dependency", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<DependencyComponent> Dependency
@@ -1442,7 +1464,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Group of resources as used in .page.package
         /// </summary>
-        [FhirElement("package", InSummary=true, Order=230)]
+        [FhirElement("package", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<PackageComponent> Package
@@ -1456,7 +1479,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Profiles that apply globally
         /// </summary>
-        [FhirElement("global", InSummary=true, Order=240)]
+        [FhirElement("global", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<GlobalComponent> Global
@@ -1503,7 +1527,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Page/Section in the Guide
         /// </summary>
-        [FhirElement("page", InSummary=true, Order=260)]
+        [FhirElement("page", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [CLSCompliant(false)]
         [DataMember]
         public PageComponent Page
         {

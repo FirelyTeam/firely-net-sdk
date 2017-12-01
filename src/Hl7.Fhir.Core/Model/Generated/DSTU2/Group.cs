@@ -366,7 +366,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique id
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -380,7 +381,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// person | animal | practitioner | device | medication | substance
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=100)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.GroupType> TypeElement
@@ -413,7 +415,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Descriptive or actual
         /// </summary>
-        [FhirElement("actual", InSummary=true, Order=110)]
+        [FhirElement("actual", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -446,7 +449,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Kind of Group members
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=120)]
+        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -459,7 +463,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Label for Group
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=130)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -491,7 +496,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Number of members
         /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=140)]
+        [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt QuantityElement
         {

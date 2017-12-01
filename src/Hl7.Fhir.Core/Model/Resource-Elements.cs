@@ -76,7 +76,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logical id of this artifact
         /// </summary>
-        [FhirElement("id", InSummary=true, Order=10)]
+        [FhirElement("id", InSummary= new[] { Version.All }, Order=10)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Id IdElement
         {
@@ -108,7 +109,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Metadata about the resource
         /// </summary>
-        [FhirElement("meta", InSummary=true, Order=20)]
+        [FhirElement("meta", InSummary= new[] { Version.All }, Order=20)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Meta Meta
         {
@@ -121,7 +123,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A set of rules under which this content was created
         /// </summary>
-        [FhirElement("implicitRules", InSummary=true, Order=30)]
+        [FhirElement("implicitRules", InSummary= new[] { Version.All }, Order=30)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ImplicitRulesElement
         {

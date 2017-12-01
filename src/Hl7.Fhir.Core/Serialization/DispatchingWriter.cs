@@ -17,14 +17,16 @@ namespace Hl7.Fhir.Serialization
     {
         private readonly IFhirWriter _writer;
         private readonly ModelInspector _inspector;
+        private readonly Model.Version _version;
 
         public ParserSettings Settings { get; private set; }
 
-        public DispatchingWriter(IFhirWriter data, ParserSettings settings)
+        public DispatchingWriter(IFhirWriter data, ParserSettings settings, Model.Version version)
         {
             _writer = data;
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
+            _version = version;
         }
 
         internal void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
@@ -68,7 +70,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if (prop.Choice == ChoiceType.ResourceChoice)
             {
-                var writer = new ResourceWriter(_writer, Settings);
+                var writer = new ResourceWriter(_writer, Settings, _version);
                 writer.Serialize((Resource)instance, summary, contained: true);
                 return;
             }
@@ -80,7 +82,7 @@ namespace Hl7.Fhir.Serialization
 
             if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
             {
-                var cplxWriter = new ComplexTypeWriter(_writer, Settings);
+                var cplxWriter = new ComplexTypeWriter(_writer, Settings, _version);
                 cplxWriter.Serialize(mapping, instance, st, mode);
             }
             else

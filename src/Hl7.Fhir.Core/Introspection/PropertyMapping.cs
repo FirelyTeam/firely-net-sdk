@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsPrimitive { get; private set; }
         public bool RepresentsValueElement { get; private set; }
-        public bool InSummary { get; private set; }
+        public HashSet<Model.Version> InSummary { get; private set; }
         public bool IsMandatoryElement { get; private set; }
 
         public Type ReturnType { get; private set; }
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Introspection
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
 
-            result.InSummary = elementAttr != null ? elementAttr.InSummary : false;
+            result.InSummary = new HashSet<Model.Version>( elementAttr?.InSummary ?? new Model.Version[0] );
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
             result.Choice = elementAttr != null ? elementAttr.Choice : ChoiceType.None;
 

@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Role of participant in the appointment
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -79,7 +80,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Person, Location/HealthcareService or Device
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=50)]
+            [FhirElement("actor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
             [DataMember]
@@ -94,7 +95,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// required | optional | information-only
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=60)]
+            [FhirElement("required", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ParticipantRequired> RequiredElement
             {
@@ -240,7 +242,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -254,7 +257,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.AppointmentStatus> StatusElement
@@ -287,7 +291,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A broad categorisation of the service that is to be performed during this appointment
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=true, Order=110)]
+        [FhirElement("serviceCategory", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
@@ -300,7 +305,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The specific service that is to be performed during this appointment
         /// </summary>
-        [FhirElement("serviceType", InSummary=true, Order=120)]
+        [FhirElement("serviceType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -314,7 +320,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The specialty of a practitioner that would be required to perform the service requested in this appointment
         /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=130)]
+        [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -328,7 +335,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The style of appointment or patient that has been booked in the slot (not service type)
         /// </summary>
-        [FhirElement("appointmentType", InSummary=true, Order=140)]
+        [FhirElement("appointmentType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept AppointmentType
         {
@@ -341,7 +349,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Reason this appointment is scheduled
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=150)]
+        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -449,7 +458,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When appointment is to take place
         /// </summary>
-        [FhirElement("start", InSummary=true, Order=200)]
+        [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
         {
@@ -481,7 +491,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When appointment is to conclude
         /// </summary>
-        [FhirElement("end", InSummary=true, Order=210)]
+        [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
         {

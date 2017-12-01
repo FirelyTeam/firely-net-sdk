@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Individual responsible for the annotation
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(Version=Version.DSTU2, Types=new[]{typeof(Hl7.Fhir.Model.DSTU2.ResourceReference),typeof(Hl7.Fhir.Model.FhirString)})]
         [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.STU3.ResourceReference),typeof(Hl7.Fhir.Model.FhirString)})]
@@ -72,7 +72,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the annotation was made
         /// </summary>
-        [FhirElement("time", InSummary=true, Order=40)]
+        [FhirElement("time", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime TimeElement
         {
@@ -104,7 +105,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The annotation  - text content
         /// </summary>
-        [FhirElement("text", Order=50)]
+        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=50)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement

@@ -672,7 +672,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External Ids for this plan
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -686,7 +687,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Protocol or definition
         /// </summary>
-        [FhirElement("definition", InSummary=true, Order=100)]
+        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("PlanDefinition","Questionnaire")]
         [Cardinality(Min=0,Max=-1)]
@@ -702,7 +703,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Fulfills care plan
         /// </summary>
-        [FhirElement("basedOn", InSummary=true, Order=110)]
+        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("CarePlan")]
         [Cardinality(Min=0,Max=-1)]
@@ -718,7 +719,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// CarePlan replaced by this CarePlan
         /// </summary>
-        [FhirElement("replaces", InSummary=true, Order=120)]
+        [FhirElement("replaces", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("CarePlan")]
         [Cardinality(Min=0,Max=-1)]
@@ -734,7 +735,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Part of referenced CarePlan
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=130)]
+        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("CarePlan")]
         [Cardinality(Min=0,Max=-1)]
@@ -750,7 +751,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | suspended | completed | entered-in-error | cancelled | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.CarePlanStatus> StatusElement
@@ -783,7 +785,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// proposal | plan | order | option
         /// </summary>
-        [FhirElement("intent", InSummary=true, Order=150)]
+        [FhirElement("intent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.CarePlanIntent> IntentElement
@@ -816,7 +819,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type of plan
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=160)]
+        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -830,7 +834,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Human-friendly name for the CarePlan
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=170)]
+        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -862,7 +867,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Summary of nature of plan
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=180)]
+        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -894,7 +900,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who care plan is for
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=190)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -910,7 +916,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Created in context of
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=200)]
+        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -925,7 +931,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Time period plan covers
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=210)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -938,7 +945,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who is responsible for contents of the plan
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=220)]
+        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","RelatedPerson","Organization","CareTeam")]
         [Cardinality(Min=0,Max=-1)]
@@ -970,7 +977,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Health issues this plan addresses
         /// </summary>
-        [FhirElement("addresses", InSummary=true, Order=240)]
+        [FhirElement("addresses", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
         [CLSCompliant(false)]
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]

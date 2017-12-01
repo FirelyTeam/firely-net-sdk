@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -72,7 +73,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Whether this schedule is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=100)]
+        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -104,7 +106,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A broad categorisation of the service that is to be performed during this appointment
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=true, Order=110)]
+        [FhirElement("serviceCategory", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
@@ -117,7 +120,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The specific service that is to be performed during this appointment
         /// </summary>
-        [FhirElement("serviceType", InSummary=true, Order=120)]
+        [FhirElement("serviceType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -131,7 +135,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The specialty of a practitioner that would be required to perform the service requested in this appointment
         /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=130)]
+        [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -145,7 +150,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, PractitionerRole, Device, Patient or RelatedPerson
         /// </summary>
-        [FhirElement("actor", InSummary=true, Order=140)]
+        [FhirElement("actor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
         [Cardinality(Min=1,Max=-1)]
@@ -161,7 +166,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The period of time that the slots that are attached to this Schedule resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates
         /// </summary>
-        [FhirElement("planningHorizon", InSummary=true, Order=150)]
+        [FhirElement("planningHorizon", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period PlanningHorizon
         {

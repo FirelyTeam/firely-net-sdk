@@ -19,8 +19,6 @@
     from the Visual Studio C# Interactive window
 
 TODO:
-- Version-dependent InSummary
-
 - ComponentDetails.Render: is the inAbstractType parameter needed / correct?
 
 - Share common code between STU3 and DSTU2: ModelInfo, Binary, Bundle, BundleExtensions, ElementDefinitonExtensions
@@ -625,7 +623,7 @@ public class ResourceDetails
                 "    {0}: {1}{2} {3} {4}{5}{6}",
                 prop.Name,
                 prop.PropType,
-                prop.IsSummaryVersions.Count > 0 ? " summary(" + string.Join(",", prop.IsSummaryVersions) + ")" : string.Empty,
+                prop.InSummaryVersions.Count > 0 ? " summary(" + string.Join(",", prop.InSummaryVersions) + ")" : string.Empty,
                 prop.CardMin,
                 prop.CardMax,
                 prop.ReferenceTargets.Count == 0 ? string.Empty : " targets: " + string.Join(",", prop.ReferenceTargets),
@@ -783,12 +781,13 @@ public class ResourceDetails
             yield return $"    /// <summary>";
             yield return $"    /// Primitive value of the element";
             yield return $"    /// </summary>";
-            yield return $"    [FhirElement(\"value\", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]";
+            yield return $"    [FhirElement(\"value\", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=new[]{{Hl7.Fhir.Model.Version.All}}, Order=30)]";
+            yield return $"    [CLSCompliant(false)]";
             if (!string.IsNullOrEmpty(Pattern) && Name != "FhirDecimal" && Name != "Time" && Name != "Integer" &&
                 Name != "UnsignedInt" && Name != "PositiveInt" && Name != "Instant"
                 || Name == "FhirUri")
             {
-                yield return $"        [{ Name.Replace("Fhir", "") }Pattern]";
+                yield return $"    [{ Name.Replace("Fhir", "") }Pattern]";
             }
             yield return $"    [DataMember]";
             yield return $"    public { PrimitiveTypeName } Value";
@@ -1422,7 +1421,7 @@ public class PropertyDetails
     public string Name;
     public string FhirName;
     public string PropType;
-    public HashSet<string> IsSummaryVersions = new HashSet<string>();
+    public HashSet<string> InSummaryVersions = new HashSet<string>();
     public string Summary = string.Empty;
     public string CardMin;
     public string CardMax;
@@ -1445,7 +1444,7 @@ public class PropertyDetails
     }
 
     public static PropertyDetails MergeSame(
-        IEnumerable<KeyValuePair<string, PropertyDetails>> versionAndProperties, 
+        IEnumerable<KeyValuePair<string, PropertyDetails>> versionAndProperties,
         Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion
     )
     {
@@ -1453,7 +1452,7 @@ public class PropertyDetails
 
         var firstProperty = versionAndProperties.First().Value;
         var isSummaryVersions = versionAndProperties
-            .Where(pair => pair.Value.IsSummaryVersions.Count > 0)
+            .Where(pair => pair.Value.InSummaryVersions.Count > 0)
             .Select(pair => pair.Key)
             .ToList();
         var allowedTypesAreTheSame = versionAndProperties
@@ -1466,7 +1465,7 @@ public class PropertyDetails
             Name = firstProperty.Name,
             FhirName = firstProperty.FhirName,
             PropType = firstProperty.PropType,
-            IsSummaryVersions = isSummaryVersions.Count == 0 ?
+            InSummaryVersions = isSummaryVersions.Count == 0 ?
                 new HashSet<string>() :
                 isSummaryVersions.Count == versionAndProperties.Count() ?
                     new HashSet<string>(new[] { string.Empty }) : // All versions
@@ -1479,7 +1478,7 @@ public class PropertyDetails
             NativeName = firstProperty.NativeName,
             AllowedTypesByVersion = allowedTypesAreTheSameAndNotVersionSpecific ?
                 new Dictionary<string, List<string>> { { string.Empty, new List<string>(firstProperty.AllowedTypes()) } } : // All versions
-                versionAndProperties.ToDictionary( vp => vp.Key, vp => vp.Value.AllowedTypes() ),
+                versionAndProperties.ToDictionary(vp => vp.Key, vp => vp.Value.AllowedTypes()),
             CodeRequiredBinding = firstProperty.CodeRequiredBinding,
             isXmlAttribute = firstProperty.isXmlAttribute
         };
@@ -1492,7 +1491,7 @@ public class PropertyDetails
             AllowedTypesByVersion.Values.Single();
     }
 
-    private static bool EqualsAnyOrder( List<string> first, List<string> second)
+    private static bool EqualsAnyOrder(List<string> first, List<string> second)
     {
         return Enumerable.SequenceEqual(first.OrderBy(s => s), second.OrderBy(s => s));
     }
@@ -1500,16 +1499,13 @@ public class PropertyDetails
     public IEnumerable<string> Render(int nPropNum)
     {
         foreach (var line in StringUtils.RenderSummary(Summary)) yield return line;
-        var inSummary = IsSummaryVersions.Contains(string.Empty) ?
-            ", InSummary=true" :
-            string.Empty;
         var choice = PropType == "Hl7.Fhir.Model.Element" ?
             ", Choice=ChoiceType.DatatypeChoice" :
             PropType == "Hl7.Fhir.Model.Resource" ?
                 ", Choice=ChoiceType.ResourceChoice" :
                 string.Empty;
-        yield return $"[FhirElement(\"{FhirName}\"{inSummary}, Order={nPropNum}{choice})]";
-        if (ReferenceTargets.Count > 0 || AllowedTypesByVersion.Values.Sum( at => at.Count ) > 0)
+        yield return $"[FhirElement(\"{FhirName}\"{InSummaryAttribute()}, Order={nPropNum}{choice})]";
+        if (ReferenceTargets.Count > 0 || AllowedTypesByVersion.Values.Sum(at => at.Count) > 0 || InSummaryVersions.Count > 0)
         {
             yield return "[CLSCompliant(false)]";
         }
@@ -1585,6 +1581,16 @@ public class PropertyDetails
             yield return "    }";
             yield return "}";
         }
+    }
+
+    private string InSummaryAttribute()
+    {
+        if (InSummaryVersions.Count == 0)
+        {
+            return string.Empty;
+        }
+        var versionsString = string.Join(",", InSummaryVersions.Select( v => string.IsNullOrEmpty(v) ? "Hl7.Fhir.Model.Version.All" : "Hl7.Fhir.Model.Version." + v));
+        return ", InSummary=new[]{" + versionsString + "}";
     }
 
     public IEnumerable<string> RenderAsChildWithName()
@@ -1699,7 +1705,7 @@ public class PropertyDetails
     {
         var result = new PropertyDetails();
         if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", ns) != null)
-            result.IsSummaryVersions.Add(string.Empty);
+            result.InSummaryVersions.Add(string.Empty);
         if (element.SelectSingleNode("fhir:representation[@value = 'xmlAttr']", ns) != null)
             result.isXmlAttribute = true;
         if (element.SelectSingleNode("fhir:short/@value", ns) != null)

@@ -56,7 +56,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Low limit
         /// </summary>
-        [FhirElement("low", InSummary=true, Order=30)]
+        [FhirElement("low", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Low
         {
@@ -69,7 +70,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// High limit
         /// </summary>
-        [FhirElement("high", InSummary=true, Order=40)]
+        [FhirElement("high", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity High
         {

@@ -55,7 +55,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Extensions that cannot be ignored
         /// </summary>
-        [FhirElement("modifierExtension", InSummary=true, Order=30)]
+        [FhirElement("modifierExtension", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> ModifierExtension

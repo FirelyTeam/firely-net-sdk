@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=40)]
+            [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DSTU2.DiagnosticOrderStatus> StatusElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// More information about the event and its context
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
+            [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Description
             {
@@ -111,7 +113,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// The date at which the event happened
             /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=60)]
+            [FhirElement("dateTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -247,7 +250,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Code to indicate the item (test or panel) being ordered
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -290,7 +294,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=70)]
+            [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DSTU2.DiagnosticOrderStatus> StatusElement
             {
@@ -322,7 +327,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Events specific to this item
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=80)]
+            [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<EventComponent> Event
@@ -422,7 +428,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who and/or what test is about
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=90)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
@@ -438,7 +444,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who ordered the test
         /// </summary>
-        [FhirElement("orderer", InSummary=true, Order=100)]
+        [FhirElement("orderer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -453,7 +459,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Identifiers assigned to this order
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=110)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -467,7 +474,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The encounter that this diagnostic order is associated with
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=120)]
+        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -528,7 +535,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=160)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.DiagnosticOrderStatus> StatusElement
         {
@@ -560,7 +568,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=170)]
+        [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.DiagnosticOrderPriority> PriorityElement
         {

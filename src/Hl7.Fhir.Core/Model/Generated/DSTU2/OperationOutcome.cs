@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// fatal | error | warning | information
             /// </summary>
-            [FhirElement("severity", InSummary=true, Order=40)]
+            [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.IssueSeverity> SeverityElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Error or warning code
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.IssueType> CodeElement
@@ -131,7 +133,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional details about the error
             /// </summary>
-            [FhirElement("details", InSummary=true, Order=60)]
+            [FhirElement("details", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Details
             {
@@ -144,7 +147,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional diagnostic information about the issue
             /// </summary>
-            [FhirElement("diagnostics", InSummary=true, Order=70)]
+            [FhirElement("diagnostics", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DiagnosticsElement
             {
@@ -176,7 +180,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// XPath of element(s) related to issue
             /// </summary>
-            [FhirElement("location", InSummary=true, Order=80)]
+            [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> LocationElement
@@ -295,7 +300,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A single issue associated with the action
         /// </summary>
-        [FhirElement("issue", InSummary=true, Order=90)]
+        [FhirElement("issue", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<IssueComponent> Issue

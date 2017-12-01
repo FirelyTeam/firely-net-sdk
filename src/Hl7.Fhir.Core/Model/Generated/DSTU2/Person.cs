@@ -198,7 +198,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=100)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.HumanName> Name
@@ -212,7 +213,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A contact detail for the person
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=110)]
+        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ContactPoint> Telecom
@@ -226,7 +228,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=120)]
+        [FhirElement("gender", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -258,7 +261,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The date on which the person was born
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=130)]
+        [FhirElement("birthDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date BirthDateElement
         {
@@ -317,7 +321,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The organization that is the custodian of the person record
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=160)]
+        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -332,7 +336,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// This person's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=170)]
+        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {

@@ -322,7 +322,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// planned | waitlist | active | onhold | finished | cancelled
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.EpisodeOfCareStatus> StatusElement
@@ -369,7 +370,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Type/class  - e.g. specialist referral, disease management
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=120)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -399,7 +401,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Patient for this episode of care
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=140)]
+        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -415,7 +417,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Organization that assumes care
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=150)]
+        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -430,7 +432,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Interval during responsibility is assumed
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=160)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {

@@ -97,7 +97,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Name to be displayed for group
             /// </summary>
-            [FhirElement("title", InSummary=true, Order=50)]
+            [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
             {
@@ -129,7 +130,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Concept that represents this section in a questionnaire
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=60)]
+            [FhirElement("concept", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Concept
@@ -698,7 +700,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External identifiers for this questionnaire
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -712,7 +715,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Logical identifier for this version of Questionnaire
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=100)]
+        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -744,7 +748,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// draft | published | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.QuestionnaireStatus> StatusElement
@@ -777,7 +782,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=120)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -809,7 +815,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Organization/individual who designed the questionnaire
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=130)]
+        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -841,7 +848,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Contact information of the publisher
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=140)]
+        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ContactPoint> Telecom
@@ -855,7 +863,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Resource that can be subject of QuestionnaireResponse
         /// </summary>
-        [FhirElement("subjectType", InSummary=true, Order=150)]
+        [FhirElement("subjectType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
@@ -888,7 +897,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Grouped questions
         /// </summary>
-        [FhirElement("group", InSummary=true, Order=160)]
+        [FhirElement("group", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public GroupComponent Group

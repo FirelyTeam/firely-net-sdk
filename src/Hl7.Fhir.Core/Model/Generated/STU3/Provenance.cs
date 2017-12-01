@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What the agents role was
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=40)]
+            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -79,7 +80,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Who participated
             /// </summary>
-            [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("who", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -211,7 +212,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// derivation | revision | quotation | source | removal
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=40)]
+            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.STU3.ProvenanceEntityRole> RoleElement
@@ -244,7 +246,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Identity of entity
             /// </summary>
-            [FhirElement("what", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("what", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.STU3.ResourceReference),typeof(Hl7.Fhir.Model.STU3.Identifier))]
             [Cardinality(Min=1,Max=1)]
@@ -350,7 +352,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Target Reference(s) (usually version specific)
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=90)]
+        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ResourceReference> Target
@@ -377,7 +380,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the activity was recorded / updated
         /// </summary>
-        [FhirElement("recorded", InSummary=true, Order=110)]
+        [FhirElement("recorded", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant RecordedElement

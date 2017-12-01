@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Date recommendation created
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=40)]
+            [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Vaccine recommendation applies to
             /// </summary>
-            [FhirElement("vaccineCode", InSummary=true, Order=50)]
+            [FhirElement("vaccineCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept VaccineCode
             {
@@ -111,7 +113,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Disease to be immunized against
             /// </summary>
-            [FhirElement("targetDisease", InSummary=true, Order=60)]
+            [FhirElement("targetDisease", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept TargetDisease
             {
@@ -124,7 +127,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Recommended dose number
             /// </summary>
-            [FhirElement("doseNumber", InSummary=true, Order=70)]
+            [FhirElement("doseNumber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt DoseNumberElement
             {
@@ -156,7 +160,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Vaccine administration status
             /// </summary>
-            [FhirElement("forecastStatus", InSummary=true, Order=80)]
+            [FhirElement("forecastStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ForecastStatus
@@ -659,7 +664,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -673,7 +679,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who this profile is for
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=100)]
+        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -689,7 +695,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Vaccine administration recommendations
         /// </summary>
-        [FhirElement("recommendation", InSummary=true, Order=110)]
+        [FhirElement("recommendation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<RecommendationComponent> Recommendation

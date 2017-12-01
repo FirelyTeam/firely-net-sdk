@@ -296,7 +296,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Role of participant in encounter
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -323,7 +324,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Persons involved in the encounter other than the patient
             /// </summary>
-            [FhirElement("individual", InSummary=true, Order=60)]
+            [FhirElement("individual", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
             [CLSCompliant(false)]
             [References("Practitioner","RelatedPerson")]
             [DataMember]
@@ -939,7 +940,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifier(s) by which this encounter is known
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -953,7 +955,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.EncounterStatus> StatusElement
@@ -1000,7 +1003,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// inpatient | outpatient | ambulatory | emergency +
         /// </summary>
-        [FhirElement("class", InSummary=true, Order=120)]
+        [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Class
         {
@@ -1027,7 +1031,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Specific type of encounter
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=140)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1054,7 +1059,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The patient ro group present at the encounter
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=160)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
@@ -1069,7 +1074,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Episode(s) of care that this encounter should be recorded against
         /// </summary>
-        [FhirElement("episodeOfCare", InSummary=true, Order=170)]
+        [FhirElement("episodeOfCare", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
         [CLSCompliant(false)]
         [References("EpisodeOfCare")]
         [Cardinality(Min=0,Max=-1)]
@@ -1101,7 +1106,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// List of participants involved in the encounter
         /// </summary>
-        [FhirElement("participant", InSummary=true, Order=190)]
+        [FhirElement("participant", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ParticipantComponent> Participant
@@ -1115,7 +1121,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The appointment that scheduled this encounter
         /// </summary>
-        [FhirElement("appointment", InSummary=true, Order=200)]
+        [FhirElement("appointment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
         [CLSCompliant(false)]
         [References("Appointment")]
         [DataMember]
@@ -1156,7 +1162,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Reason the encounter takes place (code)
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=230)]
+        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -1170,7 +1177,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The list of diagnosis relevant to this encounter
         /// </summary>
-        [FhirElement("diagnosis", InSummary=true, Order=240)]
+        [FhirElement("diagnosis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<DiagnosisComponent> Diagnosis

@@ -401,7 +401,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Unique id for this set of answers
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -414,7 +415,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Request fulfilled by this QuestionnaireResponse
         /// </summary>
-        [FhirElement("basedOn", InSummary=true, Order=100)]
+        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("ReferralRequest","CarePlan","ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -430,7 +431,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Part of this action
         /// </summary>
-        [FhirElement("parent", InSummary=true, Order=110)]
+        [FhirElement("parent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("Observation","Procedure")]
         [Cardinality(Min=0,Max=-1)]
@@ -446,7 +447,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Form being answered
         /// </summary>
-        [FhirElement("questionnaire", InSummary=true, Order=120)]
+        [FhirElement("questionnaire", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Questionnaire")]
         [DataMember]
@@ -461,7 +462,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// in-progress | completed | amended | entered-in-error | stopped
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.QuestionnaireResponseStatus> StatusElement
@@ -494,7 +496,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The subject of the questions
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.ResourceReference Subject
         {
@@ -507,7 +510,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Encounter or Episode during which questionnaire was completed
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=150)]
+        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -522,7 +525,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date the answers were gathered
         /// </summary>
-        [FhirElement("authored", InSummary=true, Order=160)]
+        [FhirElement("authored", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredElement
         {
@@ -554,7 +558,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Person who received and recorded the answers
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=170)]
+        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
         [CLSCompliant(false)]
         [References("Device","Practitioner","Patient","RelatedPerson")]
         [DataMember]
@@ -569,7 +573,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The person who answered the questions
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=180)]
+        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]

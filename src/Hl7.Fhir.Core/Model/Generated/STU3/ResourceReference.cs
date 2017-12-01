@@ -56,7 +56,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Literal reference, Relative, internal or absolute URL
         /// </summary>
-        [FhirElement("reference", InSummary=true, Order=30)]
+        [FhirElement("reference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ReferenceElement
         {
@@ -88,7 +89,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Logical reference, when literal reference is not known
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=40)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -101,7 +103,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Text alternative for the resource
         /// </summary>
-        [FhirElement("display", InSummary=true, Order=50)]
+        [FhirElement("display", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {

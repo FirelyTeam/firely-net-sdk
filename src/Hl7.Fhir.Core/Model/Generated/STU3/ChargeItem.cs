@@ -165,7 +165,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business Identifier for item
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -211,7 +212,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.ChargeItemStatus> StatusElement
@@ -260,7 +262,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A code that identifies the charge, like a billing code
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=130)]
+        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -274,7 +277,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Individual service was done for/to
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -290,7 +293,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Encounter / Episode associated with event
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=150)]
+        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -305,7 +308,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the charged service was applied
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.STU3.Timing))]
         [DataMember]
@@ -364,7 +367,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Quantity of which the charge item has been serviced
         /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=200)]
+        [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Quantity
         {
@@ -377,7 +381,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("bodysite", InSummary=true, Order=210)]
+        [FhirElement("bodysite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Bodysite
@@ -468,7 +473,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Individual who was entering
         /// </summary>
-        [FhirElement("enterer", InSummary=true, Order=250)]
+        [FhirElement("enterer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Patient","Device","RelatedPerson")]
         [DataMember]
@@ -483,7 +488,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date the charge item was entered
         /// </summary>
-        [FhirElement("enteredDate", InSummary=true, Order=260)]
+        [FhirElement("enteredDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime EnteredDateElement
         {
@@ -545,7 +551,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Account to place this charge
         /// </summary>
-        [FhirElement("account", InSummary=true, Order=290)]
+        [FhirElement("account", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
         [CLSCompliant(false)]
         [References("Account")]
         [Cardinality(Min=0,Max=-1)]

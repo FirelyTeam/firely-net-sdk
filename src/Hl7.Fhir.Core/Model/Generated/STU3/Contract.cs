@@ -571,7 +571,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Contract Term Number
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.STU3.Identifier Identifier
             {
@@ -584,7 +585,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Contract Term Issue Date Time
             /// </summary>
-            [FhirElement("issued", InSummary=true, Order=50)]
+            [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime IssuedElement
             {
@@ -616,7 +618,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Contract Term Effective Time
             /// </summary>
-            [FhirElement("applies", InSummary=true, Order=60)]
+            [FhirElement("applies", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Applies
             {
@@ -655,7 +658,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Context of the Contract term
             /// </summary>
-            [FhirElement("topic", InSummary=true, Order=90)]
+            [FhirElement("topic", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.STU3.ResourceReference> Topic
@@ -697,7 +701,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Security Labels that define affected terms
             /// </summary>
-            [FhirElement("securityLabel", InSummary=true, Order=120)]
+            [FhirElement("securityLabel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -1557,7 +1562,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contract number
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Identifier Identifier
         {
@@ -1570,7 +1576,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.ContractResourceStatusCodes> StatusElement
         {
@@ -1602,7 +1609,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When this Contract was issued
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=110)]
+        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
         {
@@ -1634,7 +1642,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Effective time
         /// </summary>
-        [FhirElement("applies", InSummary=true, Order=120)]
+        [FhirElement("applies", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Applies
         {
@@ -1647,7 +1656,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contract Target Entity
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ResourceReference> Subject
@@ -1661,7 +1671,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context of the Contract
         /// </summary>
-        [FhirElement("topic", InSummary=true, Order=140)]
+        [FhirElement("topic", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ResourceReference> Topic
@@ -1707,7 +1718,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type or form
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=170)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -1720,7 +1732,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Subtype within the context of type
         /// </summary>
-        [FhirElement("subType", InSummary=true, Order=180)]
+        [FhirElement("subType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> SubType
@@ -1788,7 +1801,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Security Labels that define affected resources
         /// </summary>
-        [FhirElement("securityLabel", InSummary=true, Order=230)]
+        [FhirElement("securityLabel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> SecurityLabel

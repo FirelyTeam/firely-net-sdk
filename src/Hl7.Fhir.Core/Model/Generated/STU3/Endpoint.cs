@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifies this endpoint across multiple systems
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -72,7 +73,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// active | suspended | error | off | entered-in-error | test
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.EndpointStatus> StatusElement
@@ -105,7 +107,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Protocol/Profile/Standard to be used with this endpoint connection
         /// </summary>
-        [FhirElement("connectionType", InSummary=true, Order=110)]
+        [FhirElement("connectionType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding ConnectionType
@@ -119,7 +122,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A name that this endpoint can be identified by
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=120)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -151,7 +155,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Organization that manages this endpoint (may not be the organization that exposes the endpoint)
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=130)]
+        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -180,7 +184,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Interval the endpoint is expected to be operational
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=150)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -193,7 +198,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
         /// </summary>
-        [FhirElement("payloadType", InSummary=true, Order=160)]
+        [FhirElement("payloadType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> PayloadType
@@ -207,7 +213,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
         /// </summary>
-        [FhirElement("payloadMimeType", InSummary=true, Order=170)]
+        [FhirElement("payloadMimeType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement
@@ -240,7 +247,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The technical base address for connecting to this endpoint
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=180)]
+        [FhirElement("address", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri AddressElement

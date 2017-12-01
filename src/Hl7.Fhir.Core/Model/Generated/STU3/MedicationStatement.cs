@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -72,7 +73,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Fulfils plan, proposal or order
         /// </summary>
-        [FhirElement("basedOn", InSummary=true, Order=100)]
+        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("MedicationRequest","CarePlan","ProcedureRequest","ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Part of referenced event
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=110)]
+        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("MedicationAdministration","MedicationDispense","MedicationStatement","Procedure","Observation")]
         [Cardinality(Min=0,Max=-1)]
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Encounter / Episode associated with MedicationStatement
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=120)]
+        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -119,7 +120,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// active | completed | entered-in-error | intended | stopped | on-hold
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.MedicationStatementStatus> StatusElement
@@ -152,7 +154,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type of medication usage
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=140)]
+        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -165,7 +168,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What medication was taken
         /// </summary>
-        [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -181,7 +184,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The date/time or interval when the medication was taken
         /// </summary>
-        [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
@@ -196,7 +199,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the statement was asserted?
         /// </summary>
-        [FhirElement("dateAsserted", InSummary=true, Order=170)]
+        [FhirElement("dateAsserted", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
         {
@@ -243,7 +247,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who is/was taking  the medication
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=190)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -273,7 +277,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// y | n | unk | na
         /// </summary>
-        [FhirElement("taken", InSummary=true, Order=210)]
+        [FhirElement("taken", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.MedicationStatementTaken> TakenElement

@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// unspecified | offset | gain | two-point
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DeviceMetricCalibrationType> TypeElement
             {
@@ -97,7 +98,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// not-calibrated | calibration-required | calibrated | unspecified
             /// </summary>
-            [FhirElement("state", InSummary=true, Order=50)]
+            [FhirElement("state", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DeviceMetricCalibrationState> StateElement
             {
@@ -129,7 +131,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Describes the time last calibration has been performed
             /// </summary>
-            [FhirElement("time", InSummary=true, Order=60)]
+            [FhirElement("time", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Instant TimeElement
             {
@@ -237,7 +240,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Type of metric
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=90)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -251,7 +255,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique identifier of this DeviceMetric
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Identifier Identifier
@@ -265,7 +270,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unit of metric
         /// </summary>
-        [FhirElement("unit", InSummary=true, Order=110)]
+        [FhirElement("unit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Unit
         {
@@ -278,7 +284,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Describes the link to the source Device
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=120)]
+        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Device")]
         [DataMember]
@@ -293,7 +299,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Describes the link to the parent DeviceComponent
         /// </summary>
-        [FhirElement("parent", InSummary=true, Order=130)]
+        [FhirElement("parent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("DeviceComponent")]
         [DataMember]
@@ -308,7 +314,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// on | off | standby
         /// </summary>
-        [FhirElement("operationalStatus", InSummary=true, Order=140)]
+        [FhirElement("operationalStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.DeviceMetricOperationalStatus> OperationalStatusElement
         {
@@ -340,7 +347,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// black | red | green | yellow | blue | magenta | cyan | white
         /// </summary>
-        [FhirElement("color", InSummary=true, Order=150)]
+        [FhirElement("color", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceMetricColor> ColorElement
         {
@@ -372,7 +380,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// measurement | setting | calculation | unspecified
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=160)]
+        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceMetricCategory> CategoryElement
@@ -405,7 +414,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Describes the measurement repetition time
         /// </summary>
-        [FhirElement("measurementPeriod", InSummary=true, Order=170)]
+        [FhirElement("measurementPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Timing MeasurementPeriod
         {
@@ -418,7 +428,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Describes the calibrations that have been performed or that are required to be performed
         /// </summary>
-        [FhirElement("calibration", InSummary=true, Order=180)]
+        [FhirElement("calibration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<CalibrationComponent> Calibration

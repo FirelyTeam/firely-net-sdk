@@ -361,7 +361,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// preparation | in-progress | on-hold | completed | entered-in-error | stopped
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.MedicationDispenseStatus> StatusElement
         {
@@ -406,7 +407,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What medication was supplied
         /// </summary>
-        [FhirElement("medication", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -422,7 +423,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who the dispense is for
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
@@ -535,7 +536,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When product was packaged and reviewed
         /// </summary>
-        [FhirElement("whenPrepared", InSummary=true, Order=220)]
+        [FhirElement("whenPrepared", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime WhenPreparedElement
         {

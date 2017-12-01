@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// draft | requested | active | cancelled | accepted | rejected | completed
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=90)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.ReferralStatus> StatusElement
@@ -105,7 +106,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date of creation/activation
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=110)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -137,7 +139,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Referral/Transition of care request type
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=120)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -163,7 +166,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Urgency of referral / transfer of care request
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=140)]
+        [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -176,7 +180,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Patient referred to care or transfer
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=150)]
+        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -191,7 +195,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Requester of referral / transfer of care
         /// </summary>
-        [FhirElement("requester", InSummary=true, Order=160)]
+        [FhirElement("requester", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Patient")]
         [DataMember]
@@ -206,7 +210,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Receiver of referral / transfer of care request
         /// </summary>
-        [FhirElement("recipient", InSummary=true, Order=170)]
+        [FhirElement("recipient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -237,7 +241,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date referral/transfer of care request is sent
         /// </summary>
-        [FhirElement("dateSent", InSummary=true, Order=190)]
+        [FhirElement("dateSent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateSentElement
         {
@@ -269,7 +274,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Reason for referral / transfer of care request
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=200)]
+        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -314,7 +320,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Actions requested as part of the referral
         /// </summary>
-        [FhirElement("serviceRequested", InSummary=true, Order=220)]
+        [FhirElement("serviceRequested", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceRequested
@@ -328,7 +335,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Additonal information to support referral or transfer of care request
         /// </summary>
-        [FhirElement("supportingInformation", InSummary=true, Order=230)]
+        [FhirElement("supportingInformation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ResourceReference> SupportingInformation
@@ -342,7 +350,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Requested service(s) fulfillment time
         /// </summary>
-        [FhirElement("fulfillmentTime", InSummary=true, Order=240)]
+        [FhirElement("fulfillmentTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period FulfillmentTime
         {

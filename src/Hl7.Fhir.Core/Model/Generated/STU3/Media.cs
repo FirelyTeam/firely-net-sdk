@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifier(s) for the image
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -72,7 +73,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Procedure that caused this media to be created
         /// </summary>
-        [FhirElement("basedOn", InSummary=true, Order=100)]
+        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -88,7 +89,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// photo | video | audio
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DigitalMediaType> TypeElement
@@ -121,7 +123,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The type of acquisition equipment/process
         /// </summary>
-        [FhirElement("subtype", InSummary=true, Order=120)]
+        [FhirElement("subtype", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Subtype
         {
@@ -134,7 +137,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Imaging view, e.g. Lateral or Antero-posterior
         /// </summary>
-        [FhirElement("view", InSummary=true, Order=130)]
+        [FhirElement("view", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept View
         {
@@ -147,7 +151,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who/What this Media is a record of
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","Group","Device","Specimen")]
         [DataMember]
@@ -162,7 +166,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Encounter / Episode associated with media
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=150)]
+        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -177,7 +181,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When Media was collected
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
@@ -192,7 +196,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The person who generated the image
         /// </summary>
-        [FhirElement("operator", InSummary=true, Order=170)]
+        [FhirElement("operator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -207,7 +211,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Why was event performed?
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=180)]
+        [FhirElement("reasonCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -221,7 +226,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Body part in media
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=190)]
+        [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BodySite
         {
@@ -234,7 +240,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Observing Device
         /// </summary>
-        [FhirElement("device", InSummary=true, Order=200)]
+        [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
         [CLSCompliant(false)]
         [References("Device","DeviceMetric")]
         [DataMember]
@@ -249,7 +255,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Height of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("height", InSummary=true, Order=210)]
+        [FhirElement("height", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt HeightElement
         {
@@ -281,7 +288,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Width of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("width", InSummary=true, Order=220)]
+        [FhirElement("width", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt WidthElement
         {
@@ -313,7 +321,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Number of frames if &gt; 1 (photo)
         /// </summary>
-        [FhirElement("frames", InSummary=true, Order=230)]
+        [FhirElement("frames", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt FramesElement
         {
@@ -345,7 +354,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Length in seconds (audio / video)
         /// </summary>
-        [FhirElement("duration", InSummary=true, Order=240)]
+        [FhirElement("duration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt DurationElement
         {

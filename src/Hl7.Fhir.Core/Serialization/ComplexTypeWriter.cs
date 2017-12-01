@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     {
         private IFhirWriter _writer;
         private ModelInspector _inspector;
- 
+        private readonly Model.Version _version;
 
         internal enum SerializationMode
         {
@@ -32,10 +32,13 @@ namespace Hl7.Fhir.Serialization
 
         public ParserSettings Settings { get; private set; }
 
-        public ComplexTypeWriter(IFhirWriter writer, ParserSettings settings)
+        public ComplexTypeWriter(IFhirWriter writer, ParserSettings settings, Model.Version version)
         {
+            if (version == Model.Version.All) throw new ArgumentException("Must use a specific version", nameof(version));
+
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
+            _version = version;
             Settings = settings;
         }
 
@@ -89,7 +92,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (instance is IBundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
                 || prop.Name == "id"
-                || summary == Rest.SummaryType.True && prop.InSummary
+                || summary == Rest.SummaryType.True && prop.InSummary != null && (prop.InSummary.Contains(Model.Version.All) || prop.InSummary.Contains(_version))
                 || summary == Rest.SummaryType.False
                 || summary == Rest.SummaryType.Data && !(prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative")
                 || summary == Rest.SummaryType.Text && ((prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative") || (prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") || prop.IsMandatoryElement)
@@ -143,7 +146,7 @@ namespace Hl7.Fhir.Serialization
 
                 _writer.WriteStartProperty(memberName);
                
-                var writer = new DispatchingWriter(_writer, Settings);
+                var writer = new DispatchingWriter(_writer, Settings, _version);
 
                 // Now, if our writer does not use dual properties for primitive values + rest (xml),
                 // or this is a complex property without value element, serialize data normally

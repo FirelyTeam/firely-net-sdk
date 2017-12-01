@@ -56,7 +56,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Indication of the reason the entity signed the object(s)
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=30)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Type
@@ -70,7 +71,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the signature was created
         /// </summary>
-        [FhirElement("when", InSummary=true, Order=40)]
+        [FhirElement("when", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant WhenElement
@@ -103,7 +105,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who signed the signature
         /// </summary>
-        [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("who", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.DSTU2.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -119,7 +121,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The technical format of the signature
         /// </summary>
-        [FhirElement("contentType", InSummary=true, Order=60)]
+        [FhirElement("contentType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
@@ -152,7 +155,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The actual signature content (XML DigSig. JWT, picture, etc.)
         /// </summary>
-        [FhirElement("blob", InSummary=true, Order=70)]
+        [FhirElement("blob", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary BlobElement

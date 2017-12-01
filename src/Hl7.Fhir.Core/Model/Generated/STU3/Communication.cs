@@ -147,7 +147,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
@@ -161,7 +162,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Instantiates protocol or definition
         /// </summary>
-        [FhirElement("definition", InSummary=true, Order=100)]
+        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("PlanDefinition","ActivityDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -177,7 +178,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Request fulfilled by this communication
         /// </summary>
-        [FhirElement("basedOn", InSummary=true, Order=110)]
+        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ResourceReference> BasedOn
@@ -191,7 +193,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Part of this action
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=120)]
+        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ResourceReference> PartOf
@@ -205,7 +208,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// preparation | in-progress | suspended | aborted | completed | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.EventStatus> StatusElement
@@ -238,7 +242,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Communication did not occur
         /// </summary>
-        [FhirElement("notDone", InSummary=true, Order=140)]
+        [FhirElement("notDone", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NotDoneElement
         {
@@ -270,7 +275,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Why communication did not occur
         /// </summary>
-        [FhirElement("notDoneReason", InSummary=true, Order=150)]
+        [FhirElement("notDoneReason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept NotDoneReason
         {
@@ -311,7 +317,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Focus of message
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=180)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
@@ -356,7 +362,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Encounter or episode leading to message
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=210)]
+        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -450,7 +456,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=250)]
+        [FhirElement("reasonCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -464,7 +471,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Why was communication done?
         /// </summary>
-        [FhirElement("reasonReference", InSummary=true, Order=260)]
+        [FhirElement("reasonReference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
         [CLSCompliant(false)]
         [References("Condition","Observation")]
         [Cardinality(Min=0,Max=-1)]

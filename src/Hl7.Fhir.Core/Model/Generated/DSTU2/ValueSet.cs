@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Name of an individual to contact
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -97,7 +98,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Contact details for individual or publisher
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=50)]
+            [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.DSTU2.ContactPoint> Telecom
@@ -189,7 +191,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// URI to identify the code system (e.g. in Coding.system)
             /// </summary>
-            [FhirElement("system", InSummary=true, Order=40)]
+            [FhirElement("system", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri SystemElement
@@ -222,7 +225,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Version (for use in Coding.version)
             /// </summary>
-            [FhirElement("version", InSummary=true, Order=50)]
+            [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
             {
@@ -254,7 +258,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// If code comparison is case sensitive
             /// </summary>
-            [FhirElement("caseSensitive", InSummary=true, Order=60)]
+            [FhirElement("caseSensitive", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean CaseSensitiveElement
             {
@@ -804,7 +809,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Import the contents of another value set
             /// </summary>
-            [FhirElement("import", InSummary=true, Order=40)]
+            [FhirElement("import", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirUri> ImportElement
@@ -837,7 +843,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Include one or more codes from a code system
             /// </summary>
-            [FhirElement("include", InSummary=true, Order=50)]
+            [FhirElement("include", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<ConceptSetComponent> Include
@@ -948,7 +955,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// The system the codes come from
             /// </summary>
-            [FhirElement("system", InSummary=true, Order=40)]
+            [FhirElement("system", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri SystemElement
@@ -981,7 +989,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Specific version of the code system referred to
             /// </summary>
-            [FhirElement("version", InSummary=true, Order=50)]
+            [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
             {
@@ -2120,7 +2129,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Globally unique logical identifier for  value set
         /// </summary>
-        [FhirElement("url", InSummary=true, Order=90)]
+        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {
@@ -2152,7 +2162,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Additional identifier for the value set (e.g. HL7 v2 / CDA)
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Identifier Identifier
         {
@@ -2165,7 +2176,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Logical identifier for this version of the value set
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=110)]
+        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -2197,7 +2209,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Informal name for this value set
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=120)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -2229,7 +2242,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.ConformanceResourceStatus> StatusElement
@@ -2262,7 +2276,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -2294,7 +2309,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=150)]
+        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -2326,7 +2342,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Contact details of the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=160)]
+        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactComponent> Contact
@@ -2340,7 +2357,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date for given status
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=170)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -2372,7 +2390,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Fixed date for all referenced code systems and value sets
         /// </summary>
-        [FhirElement("lockedDate", InSummary=true, Order=180)]
+        [FhirElement("lockedDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date LockedDateElement
         {
@@ -2404,7 +2423,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Human language description of the value set
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=190)]
+        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -2436,7 +2456,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Content intends to support these contexts
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=200)]
+        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> UseContext
@@ -2450,7 +2471,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Indicates whether or not any change to the content logical definition may occur
         /// </summary>
-        [FhirElement("immutable", InSummary=true, Order=210)]
+        [FhirElement("immutable", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ImmutableElement
         {
@@ -2546,7 +2568,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Whether this is intended to be used with an extensible binding
         /// </summary>
-        [FhirElement("extensible", InSummary=true, Order=240)]
+        [FhirElement("extensible", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExtensibleElement
         {
@@ -2578,7 +2601,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// An inline code system, which is part of this value set
         /// </summary>
-        [FhirElement("codeSystem", InSummary=true, Order=250)]
+        [FhirElement("codeSystem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [CLSCompliant(false)]
         [DataMember]
         public CodeSystemComponent CodeSystem
         {

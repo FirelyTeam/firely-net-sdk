@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who/what does assessment apply to?
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=90)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
@@ -274,7 +274,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When was assessment made?
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=100)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -306,7 +307,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Condition assessed
         /// </summary>
-        [FhirElement("condition", InSummary=true, Order=110)]
+        [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("Condition")]
         [DataMember]
@@ -321,7 +322,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Where was assessment performed?
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=120)]
+        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -336,7 +337,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who did assessment?
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=130)]
+        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Practitioner","Device")]
         [DataMember]
@@ -351,7 +352,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique identifier for the assessment
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=140)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Identifier Identifier
         {
@@ -364,7 +366,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Evaluation mechanism
         /// </summary>
-        [FhirElement("method", InSummary=true, Order=150)]
+        [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {

@@ -24,14 +24,16 @@ namespace Hl7.Fhir.Serialization
     {
         private IFhirWriter _writer;
         private ModelInspector _inspector;
+        private readonly Model.Version _version;
 
         public ParserSettings Settings { get; private set; }
 
-        public ResourceWriter(IFhirWriter writer, ParserSettings settings)
+        public ResourceWriter(IFhirWriter writer, ParserSettings settings, Model.Version version)
         {
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
+            _version = version;
         }
 
         public void Serialize(Resource instance, Rest.SummaryType summary, bool contained = false)
@@ -44,7 +46,7 @@ namespace Hl7.Fhir.Serialization
 
             _writer.WriteStartRootObject(mapping.Name, contained);
 
-            var complexSerializer = new ComplexTypeWriter(_writer, Settings);
+            var complexSerializer = new ComplexTypeWriter(_writer, Settings, _version);
             Coding subsettedTag = null;
             bool createdMetaElement = false;
             if (summary != Rest.SummaryType.False && instance is Resource)

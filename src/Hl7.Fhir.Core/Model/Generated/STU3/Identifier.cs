@@ -56,7 +56,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// usual | official | temp | secondary (If known)
         /// </summary>
-        [FhirElement("use", InSummary=true, Order=30)]
+        [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.IdentifierUse> UseElement
         {
@@ -88,7 +89,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Description of identifier
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=40)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -101,7 +103,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The namespace for the identifier value
         /// </summary>
-        [FhirElement("system", InSummary=true, Order=50)]
+        [FhirElement("system", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri SystemElement
         {
@@ -133,7 +136,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The value that is unique
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=60)]
+        [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ValueElement
         {
@@ -165,7 +169,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Time period when id is/was valid for use
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=70)]
+        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -178,7 +183,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Organization that issued id (may be just text)
         /// </summary>
-        [FhirElement("assigner", InSummary=true, Order=80)]
+        [FhirElement("assigner", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]

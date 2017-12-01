@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Message part content
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.DSTU2.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -147,7 +147,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -161,7 +162,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Message category
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=100)]
+        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -174,7 +176,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Message sender
         /// </summary>
-        [FhirElement("sender", InSummary=true, Order=110)]
+        [FhirElement("sender", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [DataMember]
@@ -189,7 +191,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Message recipient
         /// </summary>
-        [FhirElement("recipient", InSummary=true, Order=120)]
+        [FhirElement("recipient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Device","Organization","Patient","Practitioner","RelatedPerson","Group")]
         [Cardinality(Min=0,Max=-1)]
@@ -205,7 +207,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Message payload
         /// </summary>
-        [FhirElement("payload", InSummary=true, Order=130)]
+        [FhirElement("payload", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<PayloadComponent> Payload
@@ -219,7 +222,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A channel of communication
         /// </summary>
-        [FhirElement("medium", InSummary=true, Order=140)]
+        [FhirElement("medium", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -233,7 +237,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// in-progress | completed | suspended | rejected | failed
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=150)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.CommunicationStatus> StatusElement
         {
@@ -265,7 +270,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Encounter leading to message
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=160)]
+        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -280,7 +285,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When sent
         /// </summary>
-        [FhirElement("sent", InSummary=true, Order=170)]
+        [FhirElement("sent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime SentElement
         {
@@ -312,7 +318,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When received
         /// </summary>
-        [FhirElement("received", InSummary=true, Order=180)]
+        [FhirElement("received", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ReceivedElement
         {
@@ -344,7 +351,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=190)]
+        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -358,7 +366,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Focus of message
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=200)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -373,7 +381,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// CommunicationRequest producing this message
         /// </summary>
-        [FhirElement("requestDetail", InSummary=true, Order=210)]
+        [FhirElement("requestDetail", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
         [CLSCompliant(false)]
         [References("CommunicationRequest")]
         [DataMember]

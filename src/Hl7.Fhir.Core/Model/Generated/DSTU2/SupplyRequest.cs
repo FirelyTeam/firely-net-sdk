@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Fulfilment code
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -78,7 +79,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Formal fulfillment schedule
             /// </summary>
-            [FhirElement("schedule", InSummary=true, Order=50)]
+            [FhirElement("schedule", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Timing Schedule
             {
@@ -162,7 +164,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Patient for whom the item is supplied
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=90)]
+        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -177,7 +179,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who initiated this order
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=100)]
+        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Patient")]
         [DataMember]
@@ -192,7 +194,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the request was made
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=110)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -224,7 +227,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=120)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Identifier Identifier
         {
@@ -237,7 +241,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// requested | completed | failed | cancelled
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.SupplyRequestStatus> StatusElement
         {
@@ -269,7 +274,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The kind of supply (central, non-stock, etc.)
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=140)]
+        [FhirElement("kind", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Kind
         {
@@ -282,7 +288,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("orderedItem", InSummary=true, Order=150)]
+        [FhirElement("orderedItem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Medication","Substance","Device")]
         [DataMember]
@@ -297,7 +303,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who is intended to fulfill the request
         /// </summary>
-        [FhirElement("supplier", InSummary=true, Order=160)]
+        [FhirElement("supplier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -313,7 +319,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Why the supply item was requested
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.DSTU2.ResourceReference))]
         [DataMember]
@@ -328,7 +334,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the request should be fulfilled
         /// </summary>
-        [FhirElement("when", InSummary=true, Order=180)]
+        [FhirElement("when", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public WhenComponent When
         {

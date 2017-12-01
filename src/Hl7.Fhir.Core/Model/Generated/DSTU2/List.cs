@@ -251,7 +251,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Descriptive name for the list
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=100)]
+        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -283,7 +284,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// What the purpose of this list is
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=110)]
+        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -296,7 +298,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// If all resources have the same subject
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=120)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
@@ -311,7 +313,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who and/or what defined the list contents (aka Author)
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=130)]
+        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [References("Practitioner","Patient","Device")]
         [DataMember]
@@ -341,7 +343,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// current | retired | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=150)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ListStatus> StatusElement
@@ -374,7 +377,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the list was prepared
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=160)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -419,7 +423,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// working | snapshot | changes
         /// </summary>
-        [FhirElement("mode", InSummary=true, Order=180)]
+        [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ListMode> ModeElement

@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
             Assert.IsNotNull(loc3);
-            var jsonSer = new FhirJsonSerializer();
+            var jsonSer = new FhirJsonSerializer(Fhir.Model.Version.DSTU2);
             Assert.AreEqual(jsonSer.SerializeToString(loc),
                             jsonSer.SerializeToString(loc3));
 

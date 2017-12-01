@@ -80,7 +80,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Roles which this practitioner may perform
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=50)]
+            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Role
             {
@@ -93,7 +94,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Specific specialty of the practitioner
             /// </summary>
-            [FhirElement("specialty", InSummary=true, Order=60)]
+            [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -107,7 +109,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// The period during which the practitioner is authorized to perform in these role(s)
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=70)]
+            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -387,7 +390,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A identifier for the person as this agent
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -401,7 +405,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Whether this practitioner's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=100)]
+        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
@@ -433,7 +438,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.HumanName Name
         {
@@ -446,7 +452,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A contact detail for the practitioner
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=120)]
+        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ContactPoint> Telecom
@@ -460,7 +467,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Where practitioner can be found/visited
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=130)]
+        [FhirElement("address", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -474,7 +482,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=140)]
+        [FhirElement("gender", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -506,7 +515,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The date  on which the practitioner was born
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=150)]
+        [FhirElement("birthDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date BirthDateElement
         {

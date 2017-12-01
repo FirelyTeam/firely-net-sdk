@@ -36,6 +36,7 @@ namespace Hl7.Fhir.Rest
         }
 
         public HttpWebRequest ToHttpRequest(
+            Model.Version version,
             string fhirVersion,
             Prefer bodyPreference,
             ResourceFormat format,
@@ -78,7 +79,7 @@ namespace Hl7.Fhir.Rest
             }
 
             if (Resource != null)
-                setBodyAndContentType(request, Resource, format, CompressRequestBody, out body);
+                setBodyAndContentType(request, Resource, format, CompressRequestBody, version, out body);
             // PCL doesn't support setting the length (and in this case will be empty anyway)
 #if DOTNETFW
             else
@@ -126,7 +127,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static void setBodyAndContentType(HttpWebRequest request, Model.Resource data, ResourceFormat format, bool CompressRequestBody, out byte[] body)
+        private static void setBodyAndContentType(HttpWebRequest request, Model.Resource data, ResourceFormat format, bool CompressRequestBody, Model.Version version, out byte[] body)
         {
             if (data == null) throw Utility.Error.ArgumentNull(nameof(data));
 
@@ -151,8 +152,8 @@ namespace Hl7.Fhir.Rest
             else
             {
                 body = format == ResourceFormat.Xml ?
-                    new Serialization.FhirXmlSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False) :
-                    new Serialization.FhirJsonSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False);
+                    new Serialization.FhirXmlSerializer(version).SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False) :
+                    new Serialization.FhirJsonSerializer(version).SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed

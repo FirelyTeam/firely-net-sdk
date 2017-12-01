@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A name the software is known by
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Version covered by this statement
             /// </summary>
-            [FhirElement("version", InSummary=true, Order=50)]
+            [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
             {
@@ -130,7 +132,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Date this version released
             /// </summary>
-            [FhirElement("releaseDate", InSummary=true, Order=60)]
+            [FhirElement("releaseDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime ReleaseDateElement
             {
@@ -245,7 +248,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Describes this specific instance
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=40)]
+            [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -278,7 +282,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Base URL for the installation
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=50)]
+            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement
             {
@@ -388,7 +393,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// client | server
             /// </summary>
-            [FhirElement("mode", InSummary=true, Order=40)]
+            [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.STU3.RestfulCapabilityMode> ModeElement
@@ -453,7 +459,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Information about security of implementation
             /// </summary>
-            [FhirElement("security", InSummary=true, Order=60)]
+            [FhirElement("security", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public SecurityComponent Security
             {
@@ -466,7 +473,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Resource served on the REST interface
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=70)]
+            [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<ResourceComponent> Resource
@@ -508,7 +516,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Definition of an operation or a custom query
             /// </summary>
-            [FhirElement("operation", InSummary=true, Order=100)]
+            [FhirElement("operation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<OperationComponent> Operation
@@ -663,7 +672,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Adds CORS Headers (http://enable-cors.org/)
             /// </summary>
-            [FhirElement("cors", InSummary=true, Order=40)]
+            [FhirElement("cors", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean CorsElement
             {
@@ -695,7 +705,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates
             /// </summary>
-            [FhirElement("service", InSummary=true, Order=50)]
+            [FhirElement("service", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Service
@@ -985,7 +996,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A resource type that is supported
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -1018,7 +1030,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Base System profile for all uses of resource
             /// </summary>
-            [FhirElement("profile", InSummary=true, Order=50)]
+            [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [DataMember]
@@ -2096,7 +2108,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The defined operation/query
             /// </summary>
-            [FhirElement("definition", InSummary=true, Order=50)]
+            [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("OperationDefinition")]
             [Cardinality(Min=1,Max=1)]
@@ -2268,7 +2280,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Messages supported by this system
             /// </summary>
-            [FhirElement("supportedMessage", InSummary=true, Order=70)]
+            [FhirElement("supportedMessage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<SupportedMessageComponent> SupportedMessage
@@ -2282,7 +2295,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Declare support for this event
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=80)]
+            [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<EventComponent> Event
@@ -2514,7 +2528,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// sender | receiver
             /// </summary>
-            [FhirElement("mode", InSummary=true, Order=40)]
+            [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.STU3.EventCapabilityMode> ModeElement
@@ -2547,7 +2562,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Message supported by this system
             /// </summary>
-            [FhirElement("definition", InSummary=true, Order=50)]
+            [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("MessageDefinition")]
             [Cardinality(Min=1,Max=1)]
@@ -2641,7 +2656,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Event type
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Code
@@ -2753,7 +2769,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Profile that describes the request
             /// </summary>
-            [FhirElement("request", InSummary=true, Order=80)]
+            [FhirElement("request", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
@@ -2769,7 +2785,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Profile that describes the response
             /// </summary>
-            [FhirElement("response", InSummary=true, Order=90)]
+            [FhirElement("response", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
@@ -2985,7 +3001,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Constraint on a resource used in the document
             /// </summary>
-            [FhirElement("profile", InSummary=true, Order=60)]
+            [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
@@ -3077,7 +3093,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Logical URI to reference this capability statement (globally unique)
         /// </summary>
-        [FhirElement("url", InSummary=true, Order=90)]
+        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {
@@ -3109,7 +3126,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business version of the capability statement
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=100)]
+        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -3141,7 +3159,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this capability statement (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -3173,7 +3192,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this capability statement (human friendly)
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=120)]
+        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -3205,7 +3225,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.PublicationStatus> StatusElement
@@ -3238,7 +3259,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -3270,7 +3292,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -3303,7 +3326,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=160)]
+        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -3335,7 +3359,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=170)]
+        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
@@ -3381,7 +3406,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=190)]
+        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.STU3.UsageContext> UseContext
@@ -3395,7 +3421,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Intended jurisdiction for capability statement (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=200)]
+        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -3473,7 +3500,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// instance | capability | requirements
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=230)]
+        [FhirElement("kind", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.CapabilityStatementKind> KindElement
@@ -3506,7 +3534,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Canonical URL of another capability statement this implements
         /// </summary>
-        [FhirElement("instantiates", InSummary=true, Order=240)]
+        [FhirElement("instantiates", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> InstantiatesElement
@@ -3539,7 +3568,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Software that is covered by this capability statement
         /// </summary>
-        [FhirElement("software", InSummary=true, Order=250)]
+        [FhirElement("software", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [CLSCompliant(false)]
         [DataMember]
         public SoftwareComponent Software
         {
@@ -3552,7 +3582,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// If this describes a specific instance
         /// </summary>
-        [FhirElement("implementation", InSummary=true, Order=260)]
+        [FhirElement("implementation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [CLSCompliant(false)]
         [DataMember]
         public ImplementationComponent Implementation
         {
@@ -3565,7 +3596,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// FHIR Version the system uses
         /// </summary>
-        [FhirElement("fhirVersion", InSummary=true, Order=270)]
+        [FhirElement("fhirVersion", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Id FhirVersionElement
@@ -3598,7 +3630,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// no | extensions | elements | both
         /// </summary>
-        [FhirElement("acceptUnknown", InSummary=true, Order=280)]
+        [FhirElement("acceptUnknown", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.UnknownContentCode> AcceptUnknownElement
@@ -3631,7 +3664,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// formats supported (xml | json | ttl | mime type)
         /// </summary>
-        [FhirElement("format", InSummary=true, Order=290)]
+        [FhirElement("format", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> FormatElement
@@ -3664,7 +3698,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Patch formats supported
         /// </summary>
-        [FhirElement("patchFormat", InSummary=true, Order=300)]
+        [FhirElement("patchFormat", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=300)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> PatchFormatElement
@@ -3697,7 +3732,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Implementation guides supported
         /// </summary>
-        [FhirElement("implementationGuide", InSummary=true, Order=310)]
+        [FhirElement("implementationGuide", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=310)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> ImplementationGuideElement
@@ -3730,7 +3766,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Profiles for use cases supported
         /// </summary>
-        [FhirElement("profile", InSummary=true, Order=320)]
+        [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=320)]
         [CLSCompliant(false)]
         [References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -3746,7 +3782,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// If the endpoint is a RESTful one
         /// </summary>
-        [FhirElement("rest", InSummary=true, Order=330)]
+        [FhirElement("rest", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=330)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<RestComponent> Rest
@@ -3760,7 +3797,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// If messaging is supported
         /// </summary>
-        [FhirElement("messaging", InSummary=true, Order=340)]
+        [FhirElement("messaging", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=340)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<MessagingComponent> Messaging
@@ -3774,7 +3812,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Document definition
         /// </summary>
-        [FhirElement("document", InSummary=true, Order=350)]
+        [FhirElement("document", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=350)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<DocumentComponent> Document

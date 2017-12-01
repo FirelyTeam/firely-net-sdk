@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Identifiers assigned to this order by the orderer or by the receiver
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -72,7 +73,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The order that this is a response to
         /// </summary>
-        [FhirElement("request", InSummary=true, Order=100)]
+        [FhirElement("request", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [References("Order")]
         [Cardinality(Min=1,Max=1)]
@@ -88,7 +89,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the response was made
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=110)]
+        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -120,7 +122,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who made the response
         /// </summary>
-        [FhirElement("who", InSummary=true, Order=120)]
+        [FhirElement("who", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Device")]
         [DataMember]
@@ -135,7 +137,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | completed
         /// </summary>
-        [FhirElement("orderStatus", InSummary=true, Order=130)]
+        [FhirElement("orderStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.OrderStatus> OrderStatusElement
@@ -168,7 +171,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Additional description of the response
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=140)]
+        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -200,7 +204,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Details of the outcome of performing the order
         /// </summary>
-        [FhirElement("fulfillment", InSummary=true, Order=150)]
+        [FhirElement("fulfillment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Fulfillment

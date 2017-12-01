@@ -154,8 +154,8 @@ namespace Hl7.Fhir.Tests.Serialization
 
         internal FhirXmlParser FhirXmlParser = new FhirXmlParser();
         internal FhirJsonParser FhirJsonParser = new FhirJsonParser();
-        internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
-        internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
+        internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.DSTU2);
+        internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.DSTU2);
 
         [TestMethod]
         public void ParsePerfJson()

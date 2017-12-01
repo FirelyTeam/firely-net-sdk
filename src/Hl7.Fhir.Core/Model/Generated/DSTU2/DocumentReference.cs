@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// replaces | transforms | signs | appends
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
@@ -98,7 +99,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Target of the relationship
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
+            [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [References("DocumentReference")]
             [Cardinality(Min=1,Max=1)]
@@ -192,7 +193,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Where to access the document
             /// </summary>
-            [FhirElement("attachment", InSummary=true, Order=40)]
+            [FhirElement("attachment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Attachment Attachment
@@ -206,7 +208,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Format/content rules for the document
             /// </summary>
-            [FhirElement("format", InSummary=true, Order=50)]
+            [FhirElement("format", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Format
@@ -298,7 +301,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Context of the document  content
             /// </summary>
-            [FhirElement("encounter", InSummary=true, Order=40)]
+            [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
             [CLSCompliant(false)]
             [References("Encounter")]
             [DataMember]
@@ -313,7 +316,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Main Clinical Acts Documented
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=50)]
+            [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Event
@@ -327,7 +331,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Time of service that is being documented
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=60)]
+            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -340,7 +345,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Kind of facility where patient was seen
             /// </summary>
-            [FhirElement("facilityType", InSummary=true, Order=70)]
+            [FhirElement("facilityType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept FacilityType
             {
@@ -353,7 +359,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional details about where the content was created (e.g. clinical specialty)
             /// </summary>
-            [FhirElement("practiceSetting", InSummary=true, Order=80)]
+            [FhirElement("practiceSetting", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept PracticeSetting
             {
@@ -366,7 +373,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Patient demographics from source
             /// </summary>
-            [FhirElement("sourcePatientInfo", InSummary=true, Order=90)]
+            [FhirElement("sourcePatientInfo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
             [CLSCompliant(false)]
             [References("Patient")]
             [DataMember]
@@ -381,7 +388,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Related identifiers or resources
             /// </summary>
-            [FhirElement("related", InSummary=true, Order=100)]
+            [FhirElement("related", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<RelatedComponent> Related
@@ -498,7 +506,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Identifier of related objects or events
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Identifier Identifier
             {
@@ -511,7 +520,8 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Related Resource
             /// </summary>
-            [FhirElement("ref", InSummary=true, Order=50)]
+            [FhirElement("ref", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.ResourceReference Ref
             {
@@ -595,7 +605,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Master Version Specific Identifier
         /// </summary>
-        [FhirElement("masterIdentifier", InSummary=true, Order=90)]
+        [FhirElement("masterIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Identifier MasterIdentifier
         {
@@ -608,7 +619,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Other identifiers for the document
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
@@ -622,7 +634,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who/what is the subject of the document
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=110)]
+        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","Group","Device")]
         [DataMember]
@@ -637,7 +649,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Kind of document (LOINC if possible)
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=120)]
+        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -651,7 +664,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Categorization of document
         /// </summary>
-        [FhirElement("class", InSummary=true, Order=130)]
+        [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
         {
@@ -664,7 +678,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who and/or what authored the document
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=140)]
+        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
@@ -680,7 +694,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Organization which maintains the document
         /// </summary>
-        [FhirElement("custodian", InSummary=true, Order=150)]
+        [FhirElement("custodian", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -695,7 +709,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who/what authenticated the document
         /// </summary>
-        [FhirElement("authenticator", InSummary=true, Order=160)]
+        [FhirElement("authenticator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
@@ -710,7 +724,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Document creation time
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=170)]
+        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -742,7 +757,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When this document reference created
         /// </summary>
-        [FhirElement("indexed", InSummary=true, Order=180)]
+        [FhirElement("indexed", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IndexedElement
@@ -775,7 +791,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// current | superseded | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=190)]
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DocumentReferenceStatus> StatusElement
@@ -808,7 +825,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// preliminary | final | appended | amended | entered-in-error
         /// </summary>
-        [FhirElement("docStatus", InSummary=true, Order=200)]
+        [FhirElement("docStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DocStatus
         {
@@ -821,7 +839,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Relationships to other documents
         /// </summary>
-        [FhirElement("relatesTo", InSummary=true, Order=210)]
+        [FhirElement("relatesTo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<RelatesToComponent> RelatesTo
@@ -835,7 +854,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=220)]
+        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -867,7 +887,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Document security-tags
         /// </summary>
-        [FhirElement("securityLabel", InSummary=true, Order=230)]
+        [FhirElement("securityLabel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
@@ -881,7 +902,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Document referenced
         /// </summary>
-        [FhirElement("content", InSummary=true, Order=240)]
+        [FhirElement("content", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<ContentComponent> Content
@@ -895,7 +917,8 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Clinical context of document
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=250)]
+        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [CLSCompliant(false)]
         [DataMember]
         public ContextComponent Context
         {

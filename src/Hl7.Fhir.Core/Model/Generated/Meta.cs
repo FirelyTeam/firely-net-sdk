@@ -56,7 +56,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Version specific identifier
         /// </summary>
-        [FhirElement("versionId", InSummary=true, Order=30)]
+        [FhirElement("versionId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Id VersionIdElement
         {
@@ -88,7 +89,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the resource version last changed
         /// </summary>
-        [FhirElement("lastUpdated", InSummary=true, Order=40)]
+        [FhirElement("lastUpdated", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Instant LastUpdatedElement
         {
@@ -120,7 +122,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Profiles this resource claims to conform to
         /// </summary>
-        [FhirElement("profile", InSummary=true, Order=50)]
+        [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> ProfileElement
@@ -153,7 +156,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Security Labels applied to this resource
         /// </summary>
-        [FhirElement("security", InSummary=true, Order=60)]
+        [FhirElement("security", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Security
@@ -167,7 +171,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Tags applied to this resource
         /// </summary>
-        [FhirElement("tag", InSummary=true, Order=70)]
+        [FhirElement("tag", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Tag
