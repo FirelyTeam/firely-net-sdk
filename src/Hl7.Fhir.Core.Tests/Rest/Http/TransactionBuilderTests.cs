@@ -51,9 +51,7 @@ namespace Hl7.Fhir.Test
             tx.Get("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=<=2014-09-08T18:42:02.000Z&context=14187710&_format=json");
             var b = tx.ToBundle();
 
-            byte[] body;
-
-            var req = b.Entry[0].ToHttpRequest(null, null, ResourceFormat.Json, useFormatParameter: true, CompressRequestBody: false, body: out body);
+            var req = b.Entry[0].ToHttpRequest(null, null, ResourceFormat.Json, useFormatParameter: true, CompressRequestBody: false);
 
             Assert.AreEqual("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=%3C%3D2014-09-08T18%3A42%3A02.000Z&context=14187710&_format=json&_format=json", req.RequestUri.AbsoluteUri);
         }
