@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Specification.Source
     public interface IConformanceSource : IResourceResolver
     {
         /// <summary>Returns a list of summary information for all the FHIR artifacts provided by the source.</summary>
-        IEnumerable<ArtifactSummary> ListSummaries();
+        IReadOnlyList<ArtifactSummary> ListSummaries();
 
         /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
