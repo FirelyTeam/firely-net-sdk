@@ -15,6 +15,7 @@ using System.Net;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
+using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -64,9 +65,38 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void FetchConformance()
+        public void FetchConformanceWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
+            client.ParserSettings.AllowUnrecognizedEnums = true;
+
+            var entry = client.CapabilityStatement();
+
+            Assert.IsNotNull(entry.Text);
+            Assert.IsNotNull(entry);
+            Assert.IsNotNull(entry.FhirVersion);
+            // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual("200", client.LastResult.Status);
+
+            entry = client.CapabilityStatement(SummaryType.True);
+
+            Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
+            Assert.IsNotNull(entry);
+            Assert.IsNotNull(entry.FhirVersion);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual("200", client.LastResult.Status);
+
+            Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
+            Assert.AreNotEqual(0, entry.Rest[0].Resource.Count , "There is expected to be at least 1 resource defined in the conformance statement");
+            Assert.IsTrue(entry.Rest[0].Resource[0].Type.HasValue, "The resource type should be provided");
+            Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
+        }
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void FetchConformanceHttpClient()
+        {
+            TestClient client = new TestClient(testEndpoint);
             client.ParserSettings.AllowUnrecognizedEnums = true;
 
             var entry = client.CapabilityStatement();
@@ -112,7 +142,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void ReadWithFormat()
+        public void ReadWithFormatWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
 
@@ -123,9 +153,21 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(loc);
         }
 
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void ReadWithFormatHttpClient()
+        {
+            TestClient client = new TestClient(testEndpoint);
+
+            client.UseFormatParam = true;
+            client.PreferredFormat = ResourceFormat.Json;
+
+            var loc = client.Read<Patient>("Patient/example");
+            Assert.IsNotNull(loc);
+        }
+
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void Read()
+        public void ReadWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
 
@@ -164,9 +206,49 @@ namespace Hl7.Fhir.Tests.Rest
                             jsonSer.SerializeToString(loc4));
         }
 
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void ReadHttpClient()
+        {
+            TestClient client = new TestClient(testEndpoint);
+
+            var loc = client.Read<Location>("Location/1");
+            Assert.IsNotNull(loc);
+            Assert.AreEqual("Den Burg", loc.Address.City);
+
+            Assert.AreEqual("1", loc.Id);
+            Assert.IsNotNull(loc.Meta.VersionId);
+
+            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
+            Assert.IsNotNull(loc2);
+            Assert.AreEqual(loc2.Id, loc.Id);
+            Assert.AreEqual(loc2.Meta.VersionId, loc.Meta.VersionId);
+
+            try
+            {
+                var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
+                Assert.Fail();
+            }
+            catch (FhirOperationException ex)
+            {
+                Assert.AreEqual(HttpStatusCode.NotFound, ex.Status);
+                Assert.AreEqual("404", client.LastResult.Status);
+            }
+
+            var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
+            Assert.IsNotNull(loc3);
+            var jsonSer = new FhirJsonSerializer();
+            Assert.AreEqual(jsonSer.SerializeToString(loc),
+                            jsonSer.SerializeToString(loc3));
+
+            var loc4 = client.Read<Location>(loc.ResourceIdentity());
+            Assert.IsNotNull(loc4);
+            Assert.AreEqual(jsonSer.SerializeToString(loc),
+                            jsonSer.SerializeToString(loc4));
+        }
+
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void ReadRelative()
+        public void ReadRelativeWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
 
@@ -180,9 +262,24 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Den Burg", loc.Address.City);
         }
 
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void ReadRelativeHttpClient()
+        {
+            TestClient client = new TestClient(testEndpoint);
+
+            var loc = client.Read<Location>(new Uri("Location/1", UriKind.Relative));
+            Assert.IsNotNull(loc);
+            Assert.AreEqual("Den Burg", loc.Address.City);
+
+            var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
+            loc = client.Read<Location>(ri);
+            Assert.IsNotNull(loc);
+            Assert.AreEqual("Den Burg", loc.Address.City);
+        }
+
 #if NO_ASYNC_ANYMORE
 		[TestMethod, TestCategory("FhirClient")]
-		public void ReadRelativeAsync()
+		public void ReadRelativeAsyncWebClient()
 		{
 			FhirClient client = new FhirClient(testEndpoint);
 
@@ -195,9 +292,24 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.IsNotNull(loc);
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
+
+		[TestMethod, TestCategory("FhirClient")]
+		public void ReadRelativeAsyncHttpClient()
+		{
+			TestClient client = new TestClient(testEndpoint);
+
+			var loc = client.ReadAsync<Location>(new Uri("Location/1", UriKind.Relative)).Result;
+			Assert.IsNotNull(loc);
+			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
+
+			var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
+			loc = client.ReadAsync<Location>(ri).Result;
+			Assert.IsNotNull(loc);
+			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
+		}
 #endif
 
-        public static void Compression_OnBeforeRequestGZip(object sender, BeforeRequestEventArgs e)
+        public static void Compression_OnBeforeWebRequestGZip(object sender, BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
@@ -207,7 +319,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        public static void Compression_OnBeforeRequestDeflate(object sender, BeforeRequestEventArgs e)
+        public static void Compression_OnBeforeWebRequestDeflate(object sender, BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
@@ -217,7 +329,37 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        public static void Compression_OnBeforeRequestZipOrDeflate(object sender, BeforeRequestEventArgs e)
+        public static void Compression_OnBeforeWebRequestZipOrDeflate(object sender, BeforeRequestEventArgs e)
+        {
+            if (e.RawRequest != null)
+            {
+                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
+                e.RawRequest.Headers.Remove("Accept-Encoding");
+                e.RawRequest.Headers["Accept-Encoding"] =  "gzip, deflate";
+            }
+        }
+
+        public static void Compression_OnBeforeHttpRequestGZip(object sender, BeforeRequestEventArgs e)
+        {
+            if (e.RawRequest != null)
+            {
+                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
+                e.RawRequest.Headers.Remove("Accept-Encoding");
+                e.RawRequest.Headers["Accept-Encoding"] = "gzip";
+            }
+        }
+
+        public static void Compression_OnBeforeHttpRequestDeflate(object sender, BeforeRequestEventArgs e)
+        {
+            if (e.RawRequest != null)
+            {
+                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
+                e.RawRequest.Headers.Remove("Accept-Encoding");
+                e.RawRequest.Headers["Accept-Encoding"] = "deflate";
+            }
+        }
+
+        public static void Compression_OnBeforeHttpRequestZipOrDeflate(object sender, BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
@@ -230,13 +372,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, Ignore]   // Something does not work with the gzip
         [TestCategory("FhirClient"), 
             TestCategory("IntegrationTest")]
-        public void Search()
+        public void SearchWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
             Bundle result;
 
             client.CompressRequestBody = true;
-            client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
+            client.OnBeforeRequest += Compression_OnBeforeWebRequestGZip;
             client.OnAfterResponse += Client_OnAfterResponse;
 
             result = client.Search<DiagnosticReport>();
@@ -244,14 +386,14 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
 
-            client.OnBeforeRequest -= Compression_OnBeforeRequestZipOrDeflate;
-            client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
+            client.OnBeforeRequest -= Compression_OnBeforeWebRequestZipOrDeflate;
+            client.OnBeforeRequest += Compression_OnBeforeWebRequestZipOrDeflate;
 
             result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count <= 10);
 
-            client.OnBeforeRequest -= Compression_OnBeforeRequestGZip;
+            client.OnBeforeRequest -= Compression_OnBeforeWebRequestGZip;
 
             var withSubject =
                 result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
@@ -272,7 +414,7 @@ namespace Hl7.Fhir.Tests.Rest
             //            typeof(Patient).GetCollectionName()));
 
 
-            client.OnBeforeRequest += Compression_OnBeforeRequestDeflate;
+            client.OnBeforeRequest += Compression_OnBeforeWebRequestDeflate;
 
             result = client.Search<Patient>(new string[] { "name=Chalmers", "name=Peter" });
 
@@ -441,7 +583,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
+            client.OnBeforeRequest += Compression_OnBeforeWebRequestZipOrDeflate;
             // client.CompressRequestBody = true;
 
             var pat = client.Read<Patient>("Patient/example");
