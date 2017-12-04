@@ -19,9 +19,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 
-namespace Hl7.Fhir.Rest
+namespace Hl7.Fhir.Rest.Http
 {
-    public partial class FhirHttpClient : IFhirClient
+    public partial class FhirClient : IFhirCompatibleClient
     {
         private Requester _requester;
 
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Rest
         /// conformance check will be made to check that the FHIR versions are compatible.
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
-        public FhirHttpClient(Uri endpoint, bool verifyFhirVersion = false)
+        public FhirClient(Uri endpoint, bool verifyFhirVersion = false)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
@@ -51,8 +51,7 @@ namespace Hl7.Fhir.Rest
 
             _requester = new Requester(Endpoint)
             {
-                BeforeRequest = this.BeforeRequest,
-                AfterResponse = this.AfterResponse
+
             };
 
             VerifyFhirVersion = verifyFhirVersion;
@@ -72,7 +71,7 @@ namespace Hl7.Fhir.Rest
         /// conformance check will be made to check that the FHIR versions are compatible.
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
-        public FhirHttpClient(string endpoint, bool verifyFhirVersion = false)
+        public FhirClient(string endpoint, bool verifyFhirVersion = false)
             : this(new Uri(endpoint), verifyFhirVersion)
         {
         }
@@ -1011,39 +1010,6 @@ namespace Hl7.Fhir.Rest
                 foreach (var entry in bundle.Entry.Where(e => e.Resource != null))
                     entry.Resource.ResourceBase = new Uri(baseUri, UriKind.RelativeOrAbsolute);
             }
-        }
-
-
-        /// <summary>
-        /// Called just before the Http call is done
-        /// </summary>
-        public event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
-
-        /// <summary>
-        /// Called just after the response was received
-        /// </summary>
-        public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
-
-        /// <summary>
-        /// Inspect or modify the <see cref="HttpRequestMessage"/> just before the FhirClient issues a call to the server
-        /// </summary>
-        /// <param name="rawRequest">The request as it is about to be sent to the server</param>
-        /// <param name="body">The data in the body of the request as it is about to be sent to the server</param>
-        protected virtual void BeforeRequest(HttpRequestMessage rawRequest, byte[] body)
-        {
-            // Default implementation: call event
-            OnBeforeRequest?.Invoke(this, new BeforeRequestEventArgs(rawRequest, body));
-        }
-
-        /// <summary>
-        /// Inspect the <see cref="HttpResponseMessage"/> as it came back from the server
-        /// </summary>
-        /// <remarks>You cannot read the body from the HttpResponseMessage, since it has
-        /// already been read by the framework. Use the body parameter instead.</remarks>
-        protected virtual void AfterResponse(HttpResponseMessage webResponse, byte[] body)
-        {
-            // Default implementation: call event
-            OnAfterResponse?.Invoke(this, new AfterResponseEventArgs(webResponse, body));
         }
 
         // Original

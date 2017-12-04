@@ -15,9 +15,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Rest
+namespace Hl7.Fhir.Rest.Http
 {
-   internal class HttpRequester : IDisposable
+   internal class Requester : IDisposable
     {
         public Uri BaseUrl { get; private set; }
         public HttpClient Client { get; private set; }
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings { get; set; }
 
-        public HttpRequester(Uri baseUrl)
+        public Requester(Uri baseUrl)
         {
             var clientHandler = new HttpClientHandler()
             {

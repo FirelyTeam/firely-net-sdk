@@ -16,73 +16,69 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task Search_UsingSearchParams_SearchReturned()
         {
-            using (var client = new FhirClient(_endpoint)
+            var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            })
+            };
+
+            var srch = new SearchParams()
+                .Where("name=Daniel")
+                .LimitTo(10)
+                .SummaryOnly()
+                .OrderBy("birthdate",
+                    SortOrder.Descending);
+
+            var result1 = await client.SearchAsync<Patient>(srch);
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
             {
-
-                var srch = new SearchParams()
-                    .Where("name=Daniel")
-                    .LimitTo(10)
-                    .SummaryOnly()
-                    .OrderBy("birthdate",
-                        SortOrder.Descending);
-
-                var result1 = await client.SearchAsync<Patient>(srch);
-                Assert.IsTrue(result1.Entry.Count >= 1);
-
-                while (result1 != null)
+                foreach (var e in result1.Entry)
                 {
-                    foreach (var e in result1.Entry)
-                    {
-                        Patient p = (Patient)e.Resource;
-                        Console.WriteLine(
-                            $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                    }
-                    result1 = client.Continue(result1, PageDirection.Next);
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-
-                Console.WriteLine("Test Completed");
+                result1 = client.Continue(result1, PageDirection.Next);
             }
+            
+            Console.WriteLine("Test Completed");
         }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public void SearchSync_UsingSearchParams_SearchReturned()
         {
-            using (var client = new FhirClient(_endpoint)
+            var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            })
+            };
+
+            var srch = new SearchParams()
+                .Where("name=Daniel")
+                .LimitTo(10)
+                .SummaryOnly()
+                .OrderBy("birthdate",
+                    SortOrder.Descending);
+
+            var result1 = client.Search<Patient>(srch);
+
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
             {
-
-                var srch = new SearchParams()
-                    .Where("name=Daniel")
-                    .LimitTo(10)
-                    .SummaryOnly()
-                    .OrderBy("birthdate",
-                        SortOrder.Descending);
-
-                var result1 = client.Search<Patient>(srch);
-
-                Assert.IsTrue(result1.Entry.Count >= 1);
-
-                while (result1 != null)
+                foreach (var e in result1.Entry)
                 {
-                    foreach (var e in result1.Entry)
-                    {
-                        Patient p = (Patient)e.Resource;
-                        Console.WriteLine(
-                            $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                    }
-                    result1 = client.Continue(result1, PageDirection.Next);
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-
-                Console.WriteLine("Test Completed");
+                result1 = client.Continue(result1, PageDirection.Next);
             }
+
+            Console.WriteLine("Test Completed");
         }
 
 
@@ -90,102 +86,97 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchMultiple_UsingSearchParams_SearchReturned()
         {
-            using (var client = new FhirClient(_endpoint)
+            var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            })
+            };
+
+            var srchParams = new SearchParams()
+                .Where("name=Daniel")
+                .LimitTo(10)
+                .SummaryOnly()
+                .OrderBy("birthdate",
+                    SortOrder.Descending);
+            
+            var task1 = client.SearchAsync<Patient>(srchParams);
+            var task2 = client.SearchAsync<Patient>(srchParams);
+            var task3 = client.SearchAsync<Patient>(srchParams);
+
+            await Task.WhenAll(task1, task2, task3);
+            var result1 = task1.Result;
+
+            Assert.IsTrue(result1.Entry.Count >= 1);
+            
+            while (result1 != null)
             {
-                var srchParams = new SearchParams()
-                    .Where("name=Daniel")
-                    .LimitTo(10)
-                    .SummaryOnly()
-                    .OrderBy("birthdate",
-                        SortOrder.Descending);
-
-                var task1 = client.SearchAsync<Patient>(srchParams);
-                var task2 = client.SearchAsync<Patient>(srchParams);
-                var task3 = client.SearchAsync<Patient>(srchParams);
-
-                await Task.WhenAll(task1, task2, task3);
-                var result1 = task1.Result;
-
-                Assert.IsTrue(result1.Entry.Count >= 1);
-
-                while (result1 != null)
+                foreach (var e in result1.Entry)
                 {
-                    foreach (var e in result1.Entry)
-                    {
-                        Patient p = (Patient)e.Resource;
-                        Console.WriteLine(
-                            $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                    }
-                    result1 = client.Continue(result1, PageDirection.Next);
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-
-                Console.WriteLine("Test Completed");
+                result1 = client.Continue(result1, PageDirection.Next);
             }
+
+            Console.WriteLine("Test Completed");
         }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_SyncContinue_SearchReturned()
         {
-            using (var client = new FhirClient(_endpoint)
+            var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            })
+            };
+            
+            var result1 = await client.SearchAsync<Patient>(new []{"family=clark"});
+
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
             {
-
-                var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" });
-
-                Assert.IsTrue(result1.Entry.Count >= 1);
-
-                while (result1 != null)
+                foreach (var e in result1.Entry)
                 {
-                    foreach (var e in result1.Entry)
-                    {
-                        Patient p = (Patient)e.Resource;
-                        Console.WriteLine(
-                            $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                    }
-                    result1 = client.Continue(result1, PageDirection.Next);
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-
-                Console.WriteLine("Test Completed");
+                result1 = client.Continue(result1, PageDirection.Next);
             }
+
+            Console.WriteLine("Test Completed");
         }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturned()
         {
-            using (var client = new FhirClient(_endpoint)
+            var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            })
+            };
+
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" },null,1);
+
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
             {
-
-                var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" }, null, 1);
-
-                Assert.IsTrue(result1.Entry.Count >= 1);
-
-                while (result1 != null)
+                foreach (var e in result1.Entry)
                 {
-                    foreach (var e in result1.Entry)
-                    {
-                        Patient p = (Patient)e.Resource;
-                        Console.WriteLine(
-                            $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                    }
-                    Console.WriteLine("Fetching more results...");
-                    result1 = await client.ContinueAsync(result1);
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-
-                Console.WriteLine("Test Completed");
+                Console.WriteLine("Fetching more results...");
+                result1 = await client.ContinueAsync(result1);
             }
+
+            Console.WriteLine("Test Completed");
         }
     }
 }
