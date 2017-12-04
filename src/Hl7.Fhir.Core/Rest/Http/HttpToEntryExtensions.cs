@@ -55,9 +55,9 @@ namespace Hl7.Fhir.Rest.Http
             {
                 result.Response.SetBody(body);
 
-                if (IsBinaryResponse(result.Response.Location, contentType.ToString()))
+                if (Rest.HttpToEntryExtensions.IsBinaryResponse(result.Response.Location, contentType.ToString()))
                 {
-                    result.Resource = makeBinaryResource(body, contentType.ToString());
+                    result.Resource = Rest.HttpToEntryExtensions.MakeBinaryResource(body, contentType.ToString());
                     if (result.Response.Location != null)
                     {
                         var ri = new ResourceIdentity(result.Response.Location);
@@ -69,8 +69,8 @@ namespace Hl7.Fhir.Rest.Http
                 }
                 else
                 {
-                    var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType.ToString(), parserSettings, throwOnFormatException);
+                    var bodyText = Rest.HttpToEntryExtensions.DecodeBody(body, charEncoding);
+                    var resource = Rest.HttpToEntryExtensions.ParseResource(bodyText, contentType.ToString(), parserSettings, throwOnFormatException);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -81,152 +81,12 @@ namespace Hl7.Fhir.Rest.Http
             return result;
         }      
 
-        internal static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
-        {           
-            Resource result= null;
-
-            var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
-
-            if (fhirType == ResourceFormat.Unknown)
-                throw new UnsupportedBodyTypeException(
-                    "Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?"
-                        .FormatWith(contentType), contentType, bodyText);
-
-            if (!SerializationUtil.ProbeIsJson(bodyText) && !SerializationUtil.ProbeIsXml(bodyText))
-                throw new UnsupportedBodyTypeException(
-                        "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
-
-            try
-            {
-                if (fhirType == ResourceFormat.Json)
-                    result = new FhirJsonParser(settings).Parse<Resource>(bodyText);
-                else
-                    result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
-            }
-            catch(FormatException fe)
-            {
-                if (throwOnFormatException) throw fe;
-                return null;
-            }
-
-            return result;
-        }
-
-        internal static bool IsBinaryResponse(string responseUri, string contentType)
-        {
-            if (!string.IsNullOrEmpty(contentType)
-                && (ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower())
-                    || ContentType.JSON_CONTENT_HEADERS.Contains(contentType.ToLower())
-                )
-                )
-                return false;
-
-            if (ResourceIdentity.IsRestResourceIdentity(responseUri))
-            {
-                var id = new ResourceIdentity(responseUri);
-
-                if (id.ResourceType != ResourceType.Binary.ToString()) return false;
-
-                if (id.Id != null && Id.IsValidValue(id.Id)) return true;
-                if (id.VersionId != null && Id.IsValidValue(id.VersionId)) return true;
-            }
-
-            return false;
-        }
-
-        internal static string DecodeBody(byte[] body, Encoding enc)
-        {
-            if (body == null) return null;
-            if (enc == null) enc = Encoding.UTF8;
-
-            // [WMR 20160421] Explicit disposal
-            // return (new StreamReader(new MemoryStream(body), enc, true)).ReadToEnd();
-            using (var stream = new MemoryStream(body))
-            using (var reader = new StreamReader(stream, enc, true))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        internal static Binary makeBinaryResource(byte[] data, string contentType)
-        {
-            var binary = new Binary();
-
-            binary.Content = data;
-            binary.ContentType = contentType;
-
-            return binary;
-        }
-
-        public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
-        {
-            var body = interaction.GetBody();
-
-            if (body != null)
-                return DecodeBody(body, Encoding.UTF8);
-            else
-                return null;
-        }
-
-        private class Body
-        {
-            public byte[] Data;
-        }
-
-
-        public static byte[] GetBody(this Bundle.ResponseComponent interaction)
-        {
-            var body = interaction.Annotation<Body>();
-            return body != null ? body.Data : null;
-        }
-
-        internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
-        {
-            interaction.RemoveAnnotations<Body>();
-            interaction.AddAnnotation(new Body { Data = data });
-        }
-
         internal static void SetHeaders(this Bundle.ResponseComponent interaction, HttpResponseHeaders headers)
         {
             foreach (var header in headers)
             {
                 interaction.AddExtension(EXTENSION_RESPONSE_HEADER, new FhirString(header.Key + ":" + header.Value));
             }
-        }
-
-        public static IEnumerable<Tuple<string,string>> GetHeaders(this Bundle.ResponseComponent interaction)
-        {
-            foreach (var headerExt in interaction.GetExtensions(EXTENSION_RESPONSE_HEADER))
-            {
-                if(headerExt.Value != null && headerExt.Value is FhirString)
-                {
-                    var header = ((FhirString)headerExt.Value).Value;
-
-                    if (header != null)
-                    {
-                        yield return header.SplitLeft(':');
-                    }
-                }
-            }
-        }
-
-
-        public static IEnumerable<string> GetHeader(this Bundle.ResponseComponent interaction, string header)
-        {
-            return interaction.GetHeaders().Where(h => h.Item1 == header).Select(h => h.Item2);
-        }
-    }
-
-
-    public class UnsupportedBodyTypeException : Exception
-    {
-        public string BodyType { get; set; }
-
-        public string Body { get; set; }
-        public UnsupportedBodyTypeException(string message, string mimeType, string body) : base(message)
-        {
-            BodyType = mimeType;
-            Body = body;
         }
     }
 }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest.Http
 {
-   internal class Requester : IDisposable
+   internal class Requester : IRequester, IDisposable
     {
         public Uri BaseUrl { get; private set; }
         public HttpClient Client { get; private set; }
@@ -43,15 +43,11 @@ namespace Hl7.Fhir.Rest.Http
 
         public ParserSettings ParserSettings { get; set; }
 
-        public Requester(Uri baseUrl)
+        public Requester(Uri baseUrl, HttpMessageHandler messageHandler)
         {
-            var clientHandler = new HttpClientHandler()
-            {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-            };
-
             BaseUrl = baseUrl;
-            Client = new HttpClient(clientHandler);
+            Client = new HttpClient(messageHandler);
+
             Client.DefaultRequestHeaders.Add("User-Agent", ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
@@ -63,6 +59,7 @@ namespace Hl7.Fhir.Rest.Http
 
 
         public Bundle.EntryComponent LastResult { get; private set; }
+        public HttpStatusCode? LastStatusCode => LastResponse?.StatusCode;
         public HttpResponseMessage LastResponse { get; private set; }
         public HttpRequestMessage LastRequest { get; private set; }
         public Action<HttpRequestMessage, byte[]> BeforeRequest { get; set; }
@@ -80,7 +77,7 @@ namespace Hl7.Fhir.Rest.Http
 
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
-            using (var requestMessage = interaction.ToHttpRequest(this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody))
+            using (var requestMessage = interaction.ToHttpRequestMessage(this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody))
             {
                 if (PreferCompressedResponses)
                 {

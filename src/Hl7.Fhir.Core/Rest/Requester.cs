@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class Requester
+    internal class Requester : IRequester
     {
         public Uri BaseUrl { get; private set; }
 
@@ -55,6 +55,7 @@ namespace Hl7.Fhir.Rest
 
 
         public Bundle.EntryComponent LastResult { get; private set; }
+        public HttpStatusCode? LastStatusCode => LastResponse?.StatusCode;
         public HttpWebResponse LastResponse { get; private set; }
         public HttpWebRequest LastRequest { get; private set; }
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
