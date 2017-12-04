@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Rest.Http
         /// conformance check will be made to check that the FHIR versions are compatible.
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
-        public FhirClient(string endpoint, HttpMessageHandler messageHandler,bool verifyFhirVersion = false)
+        public FhirClient(string endpoint, HttpMessageHandler messageHandler = null, bool verifyFhirVersion = false)
             : this(new Uri(endpoint), messageHandler, verifyFhirVersion)
         {
         }
