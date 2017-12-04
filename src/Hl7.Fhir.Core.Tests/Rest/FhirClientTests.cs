@@ -1075,27 +1075,27 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             // GET operation $everything without parameters
-            var loc = client.TypeOperation<Patient>("everything", null, true);
+            var loc = client.TypeOperation<Patient>("everything", null, useGet: true);
             Assert.IsNotNull(loc);
 
             // POST operation $everything without parameters
-            loc = client.TypeOperation<Patient>("everything", null, false);
+            loc = client.TypeOperation<Patient>("everything", null, useGet: false);
             Assert.IsNotNull(loc);
 
             
 
             // GET operation $everything with 1 primitive parameter
-             loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 11)), true);
+             loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 11)), useGet: true);
             Assert.IsNotNull(loc);
 
             // GET operation $everything with 1 primitive2token parameter
-            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Identifier("", "example")), true);
+            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Identifier("", "example")), useGet: true);
             Assert.IsNotNull(loc);
 
             // GET operation $everything with 1 resource parameter
             try
             {
-                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Patient()), true);
+                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Patient()), useGet: true);
                 Assert.Fail("An InvalidOperationException was expected here");
             }
             catch (Exception ex)
@@ -1106,7 +1106,7 @@ namespace Hl7.Fhir.Tests.Rest
             // GET operation $everything with 1 complex parameter
             try
             {
-                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Annotation() { Text = "test" }), true);
+                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Annotation() { Text = "test" }), useGet: true);
                 Assert.Fail("An InvalidOperationException was expected here");
             }
             catch (Exception ex)
@@ -1115,7 +1115,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             // POST operation $everything with 1 parameter
-            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), false);
+            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), useGet: false);
             Assert.IsNotNull(loc);
         }
     }

@@ -248,11 +248,11 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        private string ParamValueToString(Element parameterValue)
+        private string paramValueToString(Parameters.ParameterComponent parameter)
         {
-            if (parameterValue != null)
+            if (parameter.Value != null)
             {
-                switch (parameterValue)
+                switch (parameter.Value)
                 {
                     case Identifier id:
                         return id.ToToken();
@@ -263,14 +263,14 @@ namespace Hl7.Fhir.Rest
                     case CodeableConcept codeableConcept:
                         return codeableConcept.ToToken();
                     default:
-                        if (ModelInfo.IsPrimitive(parameterValue.GetType()))
+                        if (ModelInfo.IsPrimitive(parameter.Value.GetType()))
                         {
-                            return parameterValue.ToString();
+                            return parameter.Value.ToString();
                         }
                         break;
                 }
             }
-            throw Error.InvalidOperation("Parameters of non-primitive types are not allowed.");
+            throw Error.InvalidOperation($"Parameter '{parameter.Name}' has a non-primitive type, which is not allowed.");
         }
 
         public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Rest
                 {
                     foreach (var parameter in parameters.Parameter)
                     {
-                        path.AddParam(parameter.Name, ParamValueToString(parameter.Value));
+                        path.AddParam(parameter.Name, paramValueToString(parameter));
                     }
                 }
             }
