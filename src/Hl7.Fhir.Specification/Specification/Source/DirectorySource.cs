@@ -310,18 +310,20 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Determines if the <see cref="DirectorySource"/> instance should
-        /// use only a single thread to harvest the artifact summary information.
+        /// Determines if the <see cref="DirectorySource"/> instance should harvest artifact
+        /// summary information in parallel on the thread pool.
         /// </summary>
         /// <remarks>
-        /// By default, the <see cref="DirectorySource"/> leverages the thread pool
-        /// to try and speed up the artifact summary generation process.
-        /// Set this property to <c>true</c> to force single threaded processing.
+        /// By default, the <see cref="DirectorySource"/> harvests artifact summaries serially
+        /// on the calling thread. However if this option is enabled, then the DirectorySource
+        /// performs summary harvesting in parallel on the thread pool, in order to speed up
+        /// the process. This is especially effective when the content directory contains many
+        /// (nested) subfolders and files.
         /// </remarks>
-        public bool SingleThreaded
+        public bool MultiThreaded
         {
-            get { return _settings.SingleThreaded; }
-            set { _settings.SingleThreaded = value; } // Refresh();
+            get { return _settings.MultiThreaded; }
+            set { _settings.MultiThreaded = value; } // Refresh();
         }
 
         /// <summary>Request a full re-scan of the specified content directory.</summary>
@@ -426,7 +428,7 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-#region IArtifactSource
+        #region IArtifactSource
 
         /// <summary>Returns a list of artifact filenames.</summary>
         public IEnumerable<string> ListArtifactNames() => GetFilePaths().Select(path => Path.GetFileName(path));
@@ -439,9 +441,9 @@ namespace Hl7.Fhir.Specification.Source
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
 
-#endregion
+        #endregion
 
-#region IConformanceSource
+        #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
         public IEnumerable<ArtifactSummary> ListSummaries() 
@@ -481,9 +483,9 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-#endregion
+        #endregion
 
-#region IResourceResolver
+        #region IResourceResolver
 
         /// <summary>Resolve the resource with the specified uri.</summary>
         public Resource ResolveByUri(string uri)
@@ -501,9 +503,9 @@ namespace Hl7.Fhir.Specification.Source
             return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
         }
 
-#endregion
+        #endregion
 
-#region Private members
+        #region Private members
 
         // IMPORTANT!
         // prepareFiles & prepareSummaries callers MUST lock on _syncLock
@@ -697,7 +699,7 @@ namespace Hl7.Fhir.Specification.Source
 
             var settings = _settings;
             var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, settings.FormatPreference);
-            summaries = harvestSummaries(uniqueArtifacts, settings.SummaryDetailsHarvesters, SingleThreaded);
+            summaries = harvestSummaries(uniqueArtifacts, settings.SummaryDetailsHarvesters, MultiThreaded);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
@@ -719,14 +721,14 @@ namespace Hl7.Fhir.Specification.Source
             return;
         }
 
-        private static List<ArtifactSummary> harvestSummaries(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool singleThreaded)
+        private static List<ArtifactSummary> harvestSummaries(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool multiThreaded)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
             var cnt = paths.Count;
             var scanResult = new List<ArtifactSummary>(cnt);
 
-            if (singleThreaded)
+            if (!multiThreaded)
             {
                 foreach (var filePath in paths)
                 {
@@ -759,9 +761,9 @@ namespace Hl7.Fhir.Specification.Source
                         // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                         i =>
                         {
-                        // Harvest summaries from single file
-                        // Save each result to a separate array entry (no locking required)
-                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
+                            // Harvest summaries from single file
+                            // Save each result to a separate array entry (no locking required)
+                            results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
                         });
                 }
                 catch (AggregateException aex)
@@ -826,7 +828,7 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-#endregion
+        #endregion
 
         // <summary>Provides synchronized access to the list of file paths. May enter lock to re-generate the list on demand.</summary>
 
