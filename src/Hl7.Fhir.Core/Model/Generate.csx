@@ -17,13 +17,6 @@
         #load "Generate.csx"
 
     from the Visual Studio C# Interactive window
-
-TODO:
-- Share common code between STU3 and DSTU2: ModelInfo, Binary, Bundle, BundleExtensions, ElementDefinitonExtensions
-
-- STU3 equivalent of IConformanceResource
-
-- Handle logical types as interfaces
 */
 
 #r "System.Xml"
