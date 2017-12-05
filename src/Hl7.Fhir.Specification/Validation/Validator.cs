@@ -8,7 +8,7 @@
 
 // [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
 #define REUSE_SNAPSHOT_GENERATOR
-#define DUMP_SNAPSHOTS
+//#define DUMP_SNAPSHOTS
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Validation
 #if DUMP_SNAPSHOTS
 
                 string xml = (new FhirXmlSerializer()).SerializeToString(definition);
-                string name = definition.Id ?? definition.Name.Replace(" ", "");
+                string name = definition.Id ?? definition.Name.Replace(" ", "").Replace("/", "");
                 var dir = @"c:\temp\validation";
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
