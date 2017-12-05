@@ -20,10 +20,10 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest.Http
 {
-   public static class HttpToEntryExtensions
+    internal static class HttpToEntryExtensions
     {
         private const string USERDATA_BODY = "$body";
-        private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
+        private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
         internal static Bundle.EntryComponent ToBundleEntry(this HttpResponseMessage response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException)
         {
@@ -41,15 +41,15 @@ namespace Hl7.Fhir.Rest.Http
             {
                 charEncoding = Encoding.GetEncoding(response.Content.Headers.ContentType.CharSet);
             }
-            catch(ArgumentException e)
+            catch (ArgumentException e)
             {
                 charEncoding = Encoding.UTF8;
-            } 
+            }
 
             result.Response.Location = response.Headers.Location?.AbsoluteUri ?? response.Content.Headers.ContentLocation?.AbsoluteUri;
 
             result.Response.LastModified = response.Content.Headers.LastModified;
-            result.Response.Etag = response.Headers.ETag?.Tag;                     
+            result.Response.Etag = response.Headers.ETag?.Tag;
 
             if (body != null && body.Length != 0)
             {
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Rest.Http
             }
 
             return result;
-        }      
+        }
 
         internal static void SetHeaders(this Bundle.ResponseComponent interaction, HttpResponseHeaders headers)
         {

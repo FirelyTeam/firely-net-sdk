@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void SearchHttpClient()
         {
             using (var handler = new MockHttpMessageHandler())
-            using (TestClient client = new TestClient(testEndpoint, handler))
+            using (TestClient client = new TestClient(testEndpoint, messageHandler: handler))
             {
                 Bundle result;
 
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateEditDeleteHttpClient()
         {
             using (var handler = new MockHttpMessageHandler())
-            using (TestClient client = new TestClient(testEndpoint, handler))
+            using (TestClient client = new TestClient(testEndpoint, messageHandler: handler))
             {
 
                 handler.OnBeforeRequest += Compression_OnBeforeHttpRequestZipOrDeflate;
@@ -1520,7 +1520,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CallsCallbacksHttpClient()
         {
             using (var handler = new MockHttpMessageHandler())
-            using (TestClient client = new TestClient(testEndpoint, handler))
+            using (TestClient client = new TestClient(testEndpoint, messageHandler: handler))
             {
                 client.ParserSettings.AllowUnrecognizedEnums = true;
 
@@ -1610,7 +1610,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void RequestFullResourceHttpClient()
         {
             using (var handler = new MockHttpMessageHandler())
-            using (var client = new TestClient(testEndpoint, handler))
+            using (var client = new TestClient(testEndpoint, messageHandler: handler))
             {
                 var minimal = false;
                 handler.OnBeforeRequest += (object s, Core.Tests.Rest.Mocks.BeforeRequestEventArgs e) => e.RawRequest.Headers.TryAddWithoutValidation("Prefer", minimal ? "return=minimal" : "return=representation");

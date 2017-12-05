@@ -35,6 +35,7 @@ namespace Hl7.Fhir.Rest.Http
         /// 2. decompress any responses that have Content-Encoding: gzip (or deflate)
         /// </summary>
         public bool PreferCompressedResponses { get; set; }
+
         /// <summary>
         /// Compress any Request bodies 
         /// (warning, if a server does not handle compressed requests you will get a 415 response)

@@ -32,13 +32,13 @@ namespace Hl7.Fhir.Rest.Http
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="messageHandler"></param>
         /// <param name="verifyFhirVersion">
+        /// <param name="messageHandler"></param>
         /// If parameter is set to true the first time a request is made to the server a 
         /// conformance check will be made to check that the FHIR versions are compatible.
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
-        public FhirClient(Uri endpoint, HttpMessageHandler messageHandler = null, bool verifyFhirVersion = false)
+        public FhirClient(Uri endpoint, bool verifyFhirVersion = false, HttpMessageHandler messageHandler = null)
         {
             Endpoint = GetValidatedEndpoint(endpoint);
             VerifyFhirVersion = verifyFhirVersion;
@@ -65,14 +65,14 @@ namespace Hl7.Fhir.Rest.Http
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="messageHandler"></param>
         /// <param name="verifyFhirVersion">
+        /// <param name="messageHandler"></param>
         /// If parameter is set to true the first time a request is made to the server a 
         /// conformance check will be made to check that the FHIR versions are compatible.
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
-        public FhirClient(string endpoint, HttpMessageHandler messageHandler = null, bool verifyFhirVersion = false)
-            : this(new Uri(endpoint), messageHandler, verifyFhirVersion)
+        public FhirClient(string endpoint, bool verifyFhirVersion = false, HttpMessageHandler messageHandler = null)
+            : this(new Uri(endpoint), verifyFhirVersion, messageHandler)
         {
         }
 
