@@ -791,49 +791,6 @@ namespace Hl7.Fhir.Specification.Source
             return scanResult;
         }
 
-/*
-        /// <summary>
-        /// Try to deserialize the full resource represented by the specified <see cref="ArtifactSummary"/>.
-        /// </summary>
-        /// <param name="summary">An <see cref="ArtifactSummary"/> instance.</param>
-        /// <typeparam name="T">The expected resource type.</typeparam>
-        /// <returns>A new instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
-        private static T getResourceFromScannedSource<T>(ArtifactSummary summary)
-            where T : Resource
-        {
-            // File path of the containing resource file (could be a Bundle)
-            var path = summary.Origin;
-
-            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
-            {
-
-                // TODO: Handle exceptions & null return values
-                // e.g. file may have been deleted/renamed since last scan
-
-                // Advance stream to the target resource (e.g. specific Bundle entry)
-                if (navStream != null && navStream.Seek(summary.Position))
-                {
-                    // Create navigator for the target resource
-                    var nav = navStream.Current;
-                    if (nav != null)
-                    {
-                        // Parse target resource from navigator
-                        var parser = new BaseFhirParser();
-                        var result = parser.Parse<T>(nav);
-                        if (result != null)
-                        {
-                            // Add origin annotation
-                            result.SetOrigin(path);
-                            return result;
-                        }
-                    }
-                }
-
-                return null;
-            }
-        }
-*/
-
         #endregion
 
         // <summary>Provides synchronized access to the list of file paths. May enter lock to re-generate the list on demand.</summary>
