@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Source
             other.Includes = this.Includes;
             other.Excludes = this.Excludes;
             other.FormatPreference = this.FormatPreference;
-            other.SingleThreaded = this.SingleThreaded;
+            other.MultiThreaded = this.MultiThreaded;
             other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
         }
 
@@ -254,17 +254,16 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Determines if the <see cref="DirectorySource"/> instance should harvest artifact
-        /// summary information serially on the calling thread.
+        /// summary information in parallel on the thread pool.
         /// </summary>
         /// <remarks>
-        /// By default, the <see cref="DirectorySource"/> tries to harvest artifact summaries
-        /// in parallel on the thread pool, in order to speed up the process. This is especially
-        /// effective when the DirectorySource needs to scan a directory (structure) that contains
-        /// many files.
-        /// By enabling this property, a consumer can prevent the DirectorySource from using the
-        /// thread pool and force it to perform all the work serially on the calling thread.
+        /// By default, the <see cref="DirectorySource"/> harvests artifact summaries serially
+        /// on the calling thread. However if this option is enabled, then the DirectorySource
+        /// performs summary harvesting in parallel on the thread pool, in order to speed up
+        /// the process. This is especially effective when the content directory contains many
+        /// (nested) subfolders and files.
         /// </remarks>
-        public bool SingleThreaded { get; set; } // = false;
+        public bool MultiThreaded { get; set; } // = false;
 
         /// <summary>
         /// An array of <see cref="ArtifactSummaryHarvester"/> delegates for harvesting
