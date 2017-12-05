@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source.Summary;
+using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -17,7 +18,10 @@ namespace Hl7.Fhir.Specification.Source
     public interface IConformanceSource : IResourceResolver
     {
         /// <summary>Returns a list of summary information for all the FHIR artifacts provided by the source.</summary>
-        IReadOnlyList<ArtifactSummary> ListSummaries();
+        ReadOnlyCollection<ArtifactSummary> ListSummaries();
+
+        // [WMR 20171204] We could convert the following members to extension methods (ConformanceSourceExtensions)
+        // Breaking change, but decreases interface implementer burden
 
         /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
