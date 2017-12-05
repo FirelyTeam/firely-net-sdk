@@ -222,36 +222,38 @@ namespace Hl7.Fhir.Utility
             if (t == null) throw Error.ArgumentNull("t");
 
 #if !DOTNETFW
-            return t.GetRuntimeProperties(); //(BindingFlags.Instance | BindingFlags.Public);
+            // Unfortunately, netstandard1.0 has no method to filter on bindingflags :-(
+            // Have to do it ourselves
+            return t.GetRuntimeProperties().Where(p => hasPublicInstanceReadAccessor(p));
+            //return t.GetRuntimeProperties(); //(BindingFlags.Instance | BindingFlags.Public);
             // return t.GetTypeInfo().DeclaredProperties.Union(t.GetTypeInfo().BaseType.GetTypeInfo().DeclaredProperties); //(BindingFlags.Instance | BindingFlags.Public);
+
+            bool hasPublicInstanceReadAccessor(PropertyInfo p)
+            {
+                if (!p.CanRead) return false;
+                var getMethod = p.GetMethod;
+                return getMethod.IsPublic && !getMethod.IsStatic;
+            }
 #else
             return t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 #endif
         }
 
-        public static PropertyInfo FindPublicProperty(Type t, string name)
-        {
-            if (t == null) throw Error.ArgumentNull("t");
-            if (name == null) throw Error.ArgumentNull("name");
+//        public static PropertyInfo FindPublicProperty(Type t, string name)
+//        {
+//            if (t == null) throw Error.ArgumentNull("t");
+//            if (name == null) throw Error.ArgumentNull("name");
 
-#if !DOTNETFW
-            return t.GetRuntimeProperty(name);
-#else
-            return t.GetProperty(name, BindingFlags.Instance | BindingFlags.Public);
-#endif
-        }
+//            return t.GetProperty(name, BindingFlags.Instance | BindingFlags.Public);
+//        }
 
-        internal static MethodInfo FindPublicStaticMethod(Type t, string name, params Type[] arguments)
-        {
-            if (t == null) throw Error.ArgumentNull("t");
-            if (name == null) throw Error.ArgumentNull("name");
+//        internal static MethodInfo FindPublicStaticMethod(Type t, string name, params Type[] arguments)
+//        {
+//            if (t == null) throw Error.ArgumentNull("t");
+//            if (name == null) throw Error.ArgumentNull("name");
 
-#if !DOTNETFW
-            return t.GetRuntimeMethod(name,arguments);
-#else
-            return t.GetMethod(name, arguments);
-#endif
-        }
+//            return t.GetMethod(name, arguments);
+//        }
 
         public static bool HasDefaultPublicConstructor(Type t)
         {

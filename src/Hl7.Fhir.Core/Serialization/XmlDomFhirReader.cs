@@ -19,6 +19,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
+    [Obsolete("Replace this class with XmlDomFhirNavigator from the Hl7.Fhir.Support assembly, and pass it to a Parse() overload which accepts IElementNavigator")]
     public class XmlDomFhirReader : IFhirReader
     {
         public const string BINARY_CONTENT_MEMBER_NAME = "content";

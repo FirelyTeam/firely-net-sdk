@@ -31,10 +31,9 @@ namespace Hl7.FhirPath
         {
             lock(_cacheLock)
             {
-                CompiledExpression ce = null;
-                bool success = _cache.TryGetValue(expression, out ce);
+                bool success = _cache.TryGetValue(expression, out CompiledExpression ce);
 
-                if(!success)
+                if (!success)
                 {
                     var compiler = new FhirPathCompiler();
                     ce = compiler.Compile(expression);

@@ -76,8 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(artifact is StructureDefinition);
             Assert.AreEqual("Observation", ((StructureDefinition)artifact).Name);
 
-            var ci = artifact.Annotation<OriginAnnotation>();
-            Assert.AreEqual("http://test.fhir.org/r2/StructureDefinition/Observation", ci.Origin);
+            Assert.AreEqual("http://test.fhir.org/r2/StructureDefinition/Observation", artifact.GetOrigin());
         }
 
         private class TestFhirClient : Rest.FhirClient
@@ -320,7 +319,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Save back to disk to create a conflicting duplicate
             var b = new Bundle();
             b.AddResourceEntry(ext, url);
-            var xml = FhirSerializer.SerializeToXml(b);
+            var xml = new FhirXmlSerializer().SerializeToString(b);
             var filePath = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + ".xml";
             var filePath2 = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + "2.xml";
             File.WriteAllText(filePath, xml);
