@@ -194,6 +194,65 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(us is StructureDefinition);
         }
 
+        [TestMethod]
+        public void GetSomeArtifactsBySummary()
+        {
+            var fa = source;
+
+            var summaries = fa.ListSummaries();
+
+            var summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            Assert.IsNotNull(summary);
+            var vs = summary.LoadResource();
+            Assert.IsTrue(vs is ValueSet);
+            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/administrative-gender");
+            Assert.IsNotNull(summary);
+            vs = summary.LoadResource();
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/location-status");
+            Assert.IsNotNull(summary);
+            vs = summary.LoadResource();
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Condition");
+            Assert.IsNotNull(summary);
+            var rs = summary.LoadResource();
+            Assert.IsNotNull(rs);
+            Assert.IsTrue(rs is StructureDefinition);
+            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
+            Assert.IsNotNull(summary);
+            rs = summary.LoadResource();
+            Assert.IsNotNull(rs);
+            Assert.IsTrue(rs is StructureDefinition);
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Money");
+            Assert.IsNotNull(summary);
+            var dt = summary.LoadResource();
+            Assert.IsNotNull(dt);
+            Assert.IsTrue(dt is StructureDefinition);
+
+            // Try to find a core extension
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/valueset-history");
+            Assert.IsNotNull(summary);
+            var ext = summary.LoadResource();
+            Assert.IsNotNull(ext);
+            Assert.IsTrue(ext is StructureDefinition);
+
+            // Try to find an additional US profile (they are distributed with the spec for now)
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/cqif-questionnaire");
+            Assert.IsNotNull(summary);
+            var us = summary.LoadResource();
+            Assert.IsNotNull(us);
+            Assert.IsTrue(us is StructureDefinition);
+        }
+
 
         [TestMethod]
         public void TestFilenameDeDuplication()
