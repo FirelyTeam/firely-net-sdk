@@ -97,30 +97,32 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void FetchConformanceHttpClient()
         {
-            TestClient client = new TestClient(testEndpoint);
-            client.ParserSettings.AllowUnrecognizedEnums = true;
+            using (TestClient client = new TestClient(testEndpoint))
+            {
+                client.ParserSettings.AllowUnrecognizedEnums = true;
 
-            var entry = client.CapabilityStatement();
+                var entry = client.CapabilityStatement();
 
-            Assert.IsNotNull(entry.Text);
-            Assert.IsNotNull(entry);
-            Assert.IsNotNull(entry.FhirVersion);
-            // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
-            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
-            Assert.AreEqual("200", client.LastResult.Status);
+                Assert.IsNotNull(entry.Text);
+                Assert.IsNotNull(entry);
+                Assert.IsNotNull(entry.FhirVersion);
+                // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
+                Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+                Assert.AreEqual("200", client.LastResult.Status);
 
-            entry = client.CapabilityStatement(SummaryType.True);
+                entry = client.CapabilityStatement(SummaryType.True);
 
-            Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
-            Assert.IsNotNull(entry);
-            Assert.IsNotNull(entry.FhirVersion);
-            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
-            Assert.AreEqual("200", client.LastResult.Status);
+                Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
+                Assert.IsNotNull(entry);
+                Assert.IsNotNull(entry.FhirVersion);
+                Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+                Assert.AreEqual("200", client.LastResult.Status);
 
-            Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
-            Assert.AreNotEqual(0, entry.Rest[0].Resource.Count, "There is expected to be at least 1 resource defined in the conformance statement");
-            Assert.IsTrue(entry.Rest[0].Resource[0].Type.HasValue, "The resource type should be provided");
-            Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
+                Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
+                Assert.AreNotEqual(0, entry.Rest[0].Resource.Count, "There is expected to be at least 1 resource defined in the conformance statement");
+                Assert.IsTrue(entry.Rest[0].Resource[0].Type.HasValue, "The resource type should be provided");
+                Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
+            }
         }
 
 
@@ -157,13 +159,14 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadWithFormatHttpClient()
         {
-            TestClient client = new TestClient(testEndpoint);
+            using (TestClient client = new TestClient(testEndpoint))
+            {
+                client.UseFormatParam = true;
+                client.PreferredFormat = ResourceFormat.Json;
 
-            client.UseFormatParam = true;
-            client.PreferredFormat = ResourceFormat.Json;
-
-            var loc = client.Read<Patient>("Patient/example");
-            Assert.IsNotNull(loc);
+                var loc = client.Read<Patient>("Patient/example");
+                Assert.IsNotNull(loc);
+            }
         }
 
 
@@ -210,41 +213,43 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadHttpClient()
         {
-            TestClient client = new TestClient(testEndpoint);
-
-            var loc = client.Read<Location>("Location/1");
-            Assert.IsNotNull(loc);
-            Assert.AreEqual("Den Burg", loc.Address.City);
-
-            Assert.AreEqual("1", loc.Id);
-            Assert.IsNotNull(loc.Meta.VersionId);
-
-            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
-            Assert.IsNotNull(loc2);
-            Assert.AreEqual(loc2.Id, loc.Id);
-            Assert.AreEqual(loc2.Meta.VersionId, loc.Meta.VersionId);
-
-            try
+            using (TestClient client = new TestClient(testEndpoint))
             {
-                var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
-                Assert.Fail();
-            }
-            catch (FhirOperationException ex)
-            {
-                Assert.AreEqual(HttpStatusCode.NotFound, ex.Status);
-                Assert.AreEqual("404", client.LastResult.Status);
-            }
 
-            var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
-            Assert.IsNotNull(loc3);
-            var jsonSer = new FhirJsonSerializer();
-            Assert.AreEqual(jsonSer.SerializeToString(loc),
-                            jsonSer.SerializeToString(loc3));
+                var loc = client.Read<Location>("Location/1");
+                Assert.IsNotNull(loc);
+                Assert.AreEqual("Den Burg", loc.Address.City);
 
-            var loc4 = client.Read<Location>(loc.ResourceIdentity());
-            Assert.IsNotNull(loc4);
-            Assert.AreEqual(jsonSer.SerializeToString(loc),
-                            jsonSer.SerializeToString(loc4));
+                Assert.AreEqual("1", loc.Id);
+                Assert.IsNotNull(loc.Meta.VersionId);
+
+                var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
+                Assert.IsNotNull(loc2);
+                Assert.AreEqual(loc2.Id, loc.Id);
+                Assert.AreEqual(loc2.Meta.VersionId, loc.Meta.VersionId);
+
+                try
+                {
+                    var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
+                    Assert.Fail();
+                }
+                catch (FhirOperationException ex)
+                {
+                    Assert.AreEqual(HttpStatusCode.NotFound, ex.Status);
+                    Assert.AreEqual("404", client.LastResult.Status);
+                }
+
+                var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
+                Assert.IsNotNull(loc3);
+                var jsonSer = new FhirJsonSerializer();
+                Assert.AreEqual(jsonSer.SerializeToString(loc),
+                                jsonSer.SerializeToString(loc3));
+
+                var loc4 = client.Read<Location>(loc.ResourceIdentity());
+                Assert.IsNotNull(loc4);
+                Assert.AreEqual(jsonSer.SerializeToString(loc),
+                                jsonSer.SerializeToString(loc4));
+            }
         }
 
 
@@ -266,16 +271,17 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadRelativeHttpClient()
         {
-            TestClient client = new TestClient(testEndpoint);
+            using (TestClient client = new TestClient(testEndpoint))
+            {
+                var loc = client.Read<Location>(new Uri("Location/1", UriKind.Relative));
+                Assert.IsNotNull(loc);
+                Assert.AreEqual("Den Burg", loc.Address.City);
 
-            var loc = client.Read<Location>(new Uri("Location/1", UriKind.Relative));
-            Assert.IsNotNull(loc);
-            Assert.AreEqual("Den Burg", loc.Address.City);
-
-            var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
-            loc = client.Read<Location>(ri);
-            Assert.IsNotNull(loc);
-            Assert.AreEqual("Den Burg", loc.Address.City);
+                var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
+                loc = client.Read<Location>(ri);
+                Assert.IsNotNull(loc);
+                Assert.AreEqual("Den Burg", loc.Address.City);
+            }
         }
 
 #if NO_ASYNC_ANYMORE
@@ -297,17 +303,18 @@ namespace Hl7.Fhir.Tests.Rest
 		[TestMethod, TestCategory("FhirClient")]
 		public void ReadRelativeAsyncHttpClient()
 		{
-			TestClient client = new TestClient(testEndpoint);
+			using (TestClient client = new TestClient(testEndpoint))
+            {
+                var loc = client.ReadAsync<Location>(new Uri("Location/1", UriKind.Relative)).Result;
+                Assert.IsNotNull(loc);
+                Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 
-			var loc = client.ReadAsync<Location>(new Uri("Location/1", UriKind.Relative)).Result;
-			Assert.IsNotNull(loc);
-			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
-
-			var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
-			loc = client.ReadAsync<Location>(ri).Result;
-			Assert.IsNotNull(loc);
-			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
-		}
+                var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
+                loc = client.ReadAsync<Location>(ri).Result;
+                Assert.IsNotNull(loc);
+                Assert.AreEqual("Den Burg", loc.Resource.Address.City);
+            }
+        }
 #endif
 
         public static void Compression_OnBeforeWebRequestGZip(object sender, Fhir.Rest.BeforeRequestEventArgs e)
@@ -830,7 +837,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateEditDeleteHttpClient()
         {
             using (var handler = new MockHttpMessageHandler())
-            using (TestClient client = new TestClient(testEndpoint))
+            using (TestClient client = new TestClient(testEndpoint, handler))
             {
 
                 handler.OnBeforeRequest += Compression_OnBeforeHttpRequestZipOrDeflate;
