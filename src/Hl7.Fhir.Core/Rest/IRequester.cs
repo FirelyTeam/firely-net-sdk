@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public interface IRequester
+    internal interface IRequester
     {
         Bundle.EntryComponent Execute(Bundle.EntryComponent interaction);
         Task<Bundle.EntryComponent> ExecuteAsync(Bundle.EntryComponent interaction);

@@ -62,8 +62,6 @@ namespace Hl7.Fhir.Rest.Http
         public HttpStatusCode? LastStatusCode => LastResponse?.StatusCode;
         public HttpResponseMessage LastResponse { get; private set; }
         public HttpRequestMessage LastRequest { get; private set; }
-        public Action<HttpRequestMessage, byte[]> BeforeRequest { get; set; }
-        public Action<HttpResponseMessage, byte[]> AfterResponse { get; set; }
 
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
@@ -93,8 +91,6 @@ namespace Hl7.Fhir.Rest.Http
                     outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync();
                 }
 
-                BeforeRequest?.Invoke(requestMessage, outgoingBody);
-
                 using (var response = await Client.SendAsync(requestMessage).ConfigureAwait(false))
                 {
                     try
@@ -102,7 +98,6 @@ namespace Hl7.Fhir.Rest.Http
                         var body = await response.Content.ReadAsByteArrayAsync();
 
                         LastResponse = response;
-                        AfterResponse?.Invoke(response, body);
 
                         // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
                         try
