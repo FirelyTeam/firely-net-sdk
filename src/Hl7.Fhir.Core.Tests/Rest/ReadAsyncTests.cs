@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
@@ -14,7 +15,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturned()
+        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturnedWebClient()
         {
             var client = new FhirClient(_endpoint)
             {
@@ -32,7 +33,26 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturned()
+        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturnedHttpClient()
+        {
+            using (var client = new TestClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                PreferredReturn = Prefer.ReturnRepresentation
+            })
+            {
+                Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
+                Assert.IsNotNull(p);
+                Assert.IsNotNull(p.Name[0].Given);
+                Assert.IsNotNull(p.Name[0].Family);
+                Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                Console.WriteLine("Test Completed");
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturnedWebClient()
         {
             var client = new FhirClient(_endpoint)
             {
@@ -46,6 +66,25 @@ namespace Hl7.Fhir.Core.AsyncTests
             Assert.IsNotNull(p.Name[0].Family);
             Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
             Console.WriteLine("Test Completed");
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturnedHttpClient()
+        {
+            using (var client = new TestClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                PreferredReturn = Prefer.ReturnRepresentation
+            })
+            {
+                Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
+                Assert.IsNotNull(p);
+                Assert.IsNotNull(p.Name[0].Given);
+                Assert.IsNotNull(p.Name[0].Family);
+                Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                Console.WriteLine("Test Completed");
+            }
         }
     }
 }
