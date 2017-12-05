@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest.Http
 {
-    public partial class FhirClient : BaseFhirClient, IFhirCompatibleClient
+    public partial class FhirClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -81,21 +81,21 @@ namespace Hl7.Fhir.Rest.Http
         /// </summary>
         public HttpRequestHeaders RequestHeaders { get; protected set; }
 
-        public byte[] LastBody => LastResult?.GetBody();
-        public string LastBodyAsText => LastResult?.GetBodyAsText();
-        public Resource LastBodyAsResource => Requester.LastResult?.Resource;
+        public override byte[] LastBody => LastResult?.GetBody();
+        public override string LastBodyAsText => LastResult?.GetBodyAsText();
+        public override Resource LastBodyAsResource => Requester.LastResult?.Resource;
 
         /// <summary>
         /// Returns the HttpRequestMessage as it was last constructed to execute a call on the FhirClient
         /// </summary>
-        public HttpRequestMessage LastRequest { get { return (Requester as Http.Requester)?.LastRequest; } }
+        new public HttpRequestMessage LastRequest { get { return (Requester as Http.Requester)?.LastRequest; } }
 
         /// <summary>
         /// Returns the HttpResponseMessage as it was last received during a call on the FhirClient
         /// </summary>
         /// <remarks>Note that the FhirClient will have read the body data from the HttpResponseMessage, so this is
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpResponseMessage LastResponse { get { return (Requester as Http.Requester)?.LastResponse; } }
+        new public HttpResponseMessage LastResponse { get { return (Requester as Http.Requester)?.LastResponse; } }
 
         /// <summary>
         /// Override dispose in order to clean up request headers tied to disposed requester.

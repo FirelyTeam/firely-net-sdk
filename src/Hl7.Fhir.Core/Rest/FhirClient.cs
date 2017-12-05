@@ -20,7 +20,8 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient : BaseFhirClient, IFhirClient
+    [Obsolete]
+    public partial class FhirClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -68,21 +69,23 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public byte[] LastBody => LastResult?.GetBody();
-        public string LastBodyAsText => LastResult?.GetBodyAsText();
-        public Resource LastBodyAsResource => Requester.LastResult?.Resource;
+        public override byte[] LastBody => LastResult?.GetBody();
+        public override string LastBodyAsText => LastResult?.GetBodyAsText();
+        public override Resource LastBodyAsResource => Requester.LastResult?.Resource;
 
         /// <summary>
         /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
         /// </summary>
-        public HttpWebRequest LastRequest { get { return (Requester as Requester)?.LastRequest; } }
+        [Obsolete]
+        public override HttpWebRequest LastRequest { get { return (Requester as Requester)?.LastRequest; } }
 
         /// <summary>
         /// Returns the HttpWebResponse as it was last received during a call on the FhirClient
         /// </summary>
         /// <remarks>Note that the FhirClient will have read the body data from the HttpWebResponse, so this is
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpWebResponse LastResponse { get { return (Requester as Requester)?.LastResponse; } }
+        [Obsolete]
+        public override HttpWebResponse LastResponse { get { return (Requester as Requester)?.LastResponse; } }
 
         /// <summary>
         /// Called just before the Http call is done

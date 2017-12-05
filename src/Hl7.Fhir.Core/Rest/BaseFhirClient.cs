@@ -10,8 +10,14 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class BaseFhirClient : IDisposable
+    public abstract partial class BaseFhirClient : IDisposable, IFhirClient
     {
+        [Obsolete]
+        public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
+
+        [Obsolete]
+        public event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
+
         protected IRequester Requester { get; set; }
 
         /// <summary>
@@ -130,6 +136,18 @@ namespace Hl7.Fhir.Rest
             get { return Requester.ParserSettings; }
             set { Requester.ParserSettings = value; }
         }
+
+        public abstract byte[] LastBody { get; }
+
+        public abstract Resource LastBodyAsResource { get; }
+
+        public abstract string LastBodyAsText { get; }
+
+        [Obsolete]
+        public virtual HttpWebRequest LastRequest { get => throw new NotImplementedException(); }
+
+        [Obsolete]
+        public virtual HttpWebResponse LastResponse { get => throw new NotImplementedException(); }
 
         protected static Uri GetValidatedEndpoint(Uri endpoint)
         {
