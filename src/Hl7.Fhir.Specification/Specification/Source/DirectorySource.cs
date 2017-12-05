@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Specification.Source
             return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
         }
 
-#endregion
+        #endregion
 
         #region Private members
 
