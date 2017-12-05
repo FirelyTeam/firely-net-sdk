@@ -412,7 +412,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ListSummaries()
         {
-            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
+                new DirectorySourceSettings { IncludeSubDirectories = true });
 
             var sd = source.Summaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
             var sm = source.Summaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
@@ -446,7 +447,8 @@ namespace Hl7.Fhir.Specification.Tests
             const int threadCount = 25;
             const string uri = @"http://example.org/fhir/StructureDefinition/human-group";
 
-            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
+                new DirectorySourceSettings { IncludeSubDirectories = true });
 
             var tasks = new Tasks.Task[threadCount];
             var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
