@@ -7,9 +7,11 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Rest.Http;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 

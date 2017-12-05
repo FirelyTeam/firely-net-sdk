@@ -46,11 +46,12 @@ namespace Hl7.Fhir.Core.Tests.Rest.Mocks
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage message, CancellationToken cancellationToken)
         {
-            BeforeRequest(message, (await message.Content.ReadAsByteArrayAsync()));
+            var requestBody = message.Content != null ? await message.Content.ReadAsByteArrayAsync() : new byte[0];
+            BeforeRequest(message, requestBody);
 
             var response = await base.SendAsync(message, cancellationToken);
 
-            AfterResponse(response, (await response.Content.ReadAsByteArrayAsync()));
+            AfterResponse(response, (await response.Content?.ReadAsByteArrayAsync() ?? new byte[0]));
 
             return response;
         }

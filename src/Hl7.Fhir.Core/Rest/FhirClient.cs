@@ -90,12 +90,14 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Called just before the Http call is done
         /// </summary>
-        public event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
+        [Obsolete]
+        public override event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         /// <summary>
         /// Called just after the response was received
         /// </summary>
-        public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
+        [Obsolete]
+        public override event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server

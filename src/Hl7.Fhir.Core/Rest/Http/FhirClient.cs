@@ -97,6 +97,12 @@ namespace Hl7.Fhir.Rest.Http
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
         new public HttpResponseMessage LastResponse { get { return (Requester as Http.Requester)?.LastResponse; } }
 
+        [Obsolete]
+        public override event EventHandler<AfterResponseEventArgs> OnAfterResponse = (args, e) => throw new NotImplementedException();
+
+        [Obsolete]
+        public override event EventHandler<BeforeRequestEventArgs> OnBeforeRequest = (args, e) => throw new NotImplementedException();
+
         /// <summary>
         /// Override dispose in order to clean up request headers tied to disposed requester.
         /// </summary>
@@ -108,7 +114,7 @@ namespace Hl7.Fhir.Rest.Http
                 if (disposing)
                 {
                     this.RequestHeaders = null;
-                    base.Dispose();
+                    base.Dispose(disposing);
                 }
 
                 disposedValue = true;

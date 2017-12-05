@@ -1612,8 +1612,6 @@ namespace Hl7.Fhir.Tests.Rest
             using (var handler = new MockHttpMessageHandler())
             using (var client = new TestClient(testEndpoint, messageHandler: handler))
             {
-                var minimal = false;
-                handler.OnBeforeRequest += (object s, Core.Tests.Rest.Mocks.BeforeRequestEventArgs e) => e.RawRequest.Headers.TryAddWithoutValidation("Prefer", minimal ? "return=minimal" : "return=representation");
 
                 var result = client.Read<Patient>("Patient/glossy");
                 Assert.IsNotNull(result);
@@ -1621,16 +1619,13 @@ namespace Hl7.Fhir.Tests.Rest
                 result.Meta = null;
 
                 client.PreferredReturn = Prefer.ReturnRepresentation;
-                minimal = false;
                 var posted = client.Create(result);
                 Assert.IsNotNull(posted, "Patient example not found");
 
-                minimal = true;     // simulate a server that does not return a body, even if ReturnFullResource = true
                 posted = client.Create(result);
                 Assert.IsNotNull(posted, "Did not return a resource, even when ReturnFullResource=true");
 
                 client.PreferredReturn = Prefer.ReturnMinimal;
-                minimal = true;
                 posted = client.Create(result);
                 Assert.IsNull(posted);
             }
@@ -1960,7 +1955,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (TestClient validationFhirClient = new TestClient("https://sqlonfhir.azurewebsites.net/fhir"))
             {
-                validationFhirClient.RequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer bad-bearer");
+                validationFhirClient.RequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "bad-bearer");
 
                 try
                 {

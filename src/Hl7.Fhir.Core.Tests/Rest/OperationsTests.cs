@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeExpandParameterValueSetWebClient()
+        public void InvokeExpandParameterValueSetHttpClient()
         {
             using (var client = new TestClient(FhirClientTests.TerminologyEndpoint))
             {
