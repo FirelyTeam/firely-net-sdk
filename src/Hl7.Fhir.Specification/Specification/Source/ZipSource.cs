@@ -13,6 +13,7 @@ using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -129,7 +130,7 @@ namespace Hl7.Fhir.Specification.Source
         #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
-        public IEnumerable<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>

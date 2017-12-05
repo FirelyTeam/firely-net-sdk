@@ -35,7 +35,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
-
+using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -445,8 +445,7 @@ namespace Hl7.Fhir.Specification.Source
         #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public IEnumerable<ArtifactSummary> ListSummaries() 
-            => GetSummaries().Select(s => s); // Prevent caller from modifying internal list
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => GetSummaries().AsReadOnly();
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
