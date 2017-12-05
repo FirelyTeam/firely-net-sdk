@@ -8,10 +8,12 @@
 
 // [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
 #define REUSE_SNAPSHOT_GENERATOR
+#define DUMP_SNAPSHOTS
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
@@ -21,6 +23,7 @@ using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -490,12 +493,16 @@ namespace Hl7.Fhir.Validation
             if (generator != null)
             {
                 generator.Update(definition);
+
 #if DUMP_SNAPSHOTS
 
-                string xml = FhirSerializer.SerializeResourceToXml(definition);
+                string xml = (new FhirXmlSerializer()).SerializeToString(definition);
                 string name = definition.Id ?? definition.Name.Replace(" ", "");
+                var dir = @"c:\temp\validation";
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
 
-                File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
+                File.WriteAllText(Path.Combine(dir,name) + ".StructureDefinition.xml", xml);
 #endif
 
 
