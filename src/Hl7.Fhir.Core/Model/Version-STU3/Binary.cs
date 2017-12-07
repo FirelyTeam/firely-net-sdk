@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Resource for capturing binary data
     /// </summary>
-    public partial class Binary
+    public partial class Binary : IBinary
     {
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

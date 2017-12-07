@@ -131,18 +131,8 @@ namespace Hl7.Fhir.Rest
         {
             if (data == null) throw Utility.Error.ArgumentNull(nameof(data));
 
-            if (data is Model.DSTU2.Binary)
+            if (data is Model.IBinary bin)
             {
-                var bin = (Model.DSTU2.Binary)data;
-                body = bin.Content;
-                // This is done by the caller after the OnBeforeRequest is called so that other properties
-                // can be set before the content is committed
-                // request.WriteBody(CompressRequestBody, bin.Content);
-                request.ContentType = bin.ContentType;
-            }
-            else if (data is Model.STU3.Binary)
-            {
-                var bin = (Model.STU3.Binary)data;
                 body = bin.Content;
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
