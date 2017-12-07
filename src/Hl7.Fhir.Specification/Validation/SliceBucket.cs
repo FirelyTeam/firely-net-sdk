@@ -25,8 +25,10 @@ namespace Hl7.Fhir.Validation
             // definition walker, which would walk across references if necessary.
             foreach (var d in discriminator)
             {
-                if (d.Type != ElementDefinition.DiscriminatorType.Value)
-                    throw Error.NotImplemented($"Slicing with a discriminator of type '{d.Type}' is not yet supported by this validator.");
+                if(d.EndsWith("@type"))
+                    throw Error.NotImplemented($"Slicing with an '@type' discriminator is not yet supported by this validator.");
+                else if (d.EndsWith("@profile"))
+                    throw Error.NotImplemented($"Slicing with an '@profile' discriminator is not yet supported by this validator.");
             }
 
             Root = root.ShallowCopy();
