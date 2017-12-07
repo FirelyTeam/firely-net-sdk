@@ -319,12 +319,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             Patient p = new Patient();
             p.Active = true;
-            p.ManagingOrganization = new ResourceReference("http://isure.cannot.be.found.nl/fhir/Patient/1");
+            p.ManagingOrganization = new ResourceReference("http://reference.cannot.be.found.nl/fhir/Patient/1");
 
             var result = validator.Validate(p);
             Assert.True(result.Success);
             Assert.Equal(1, result.Warnings);
-            Assert.Contains("Cannot resolve reference http://isure.cannot.be.found.nl/fhir/Patient/1", result.Issue[0].ToString());
+            Assert.Contains("Cannot resolve reference http://reference.cannot.be.found.nl/fhir/Patient/1", result.Issue[0].ToString());
 
             validator.Settings.ResolveExteralReferences = false;
 
