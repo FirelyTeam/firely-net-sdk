@@ -63,9 +63,14 @@ namespace Hl7.Fhir.Model
 
             if (this.GetType() != other.GetType()) return false;
 
-            if (!base.Matches(other)) return false;
+            if (!base.IsExactly(other)) return false;
 
-            return Object.Equals(ObjectValue, ((Primitive)other).ObjectValue);
+            var otherValue = ((Primitive)other).ObjectValue;
+
+            if (ObjectValue is byte[] bytes && otherValue is byte[] bytesOther)
+                return Enumerable.SequenceEqual(bytes, bytesOther);
+            else
+                return Object.Equals(ObjectValue, ((Primitive)other).ObjectValue);
         }
     }
 

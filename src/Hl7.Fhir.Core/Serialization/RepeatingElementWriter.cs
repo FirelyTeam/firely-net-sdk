@@ -7,16 +7,8 @@
  */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 
 
 namespace Hl7.Fhir.Serialization
@@ -26,10 +18,13 @@ namespace Hl7.Fhir.Serialization
         private IFhirWriter _writer;
         private ModelInspector _inspector;
 
-        public RepeatingElementWriter(IFhirWriter writer)
+        public ParserSettings Settings { get; private set; }
+
+        public RepeatingElementWriter(IFhirWriter writer, ParserSettings settings)
         {
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
+            Settings = settings;
         }
 
         public void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
@@ -43,7 +38,7 @@ namespace Hl7.Fhir.Serialization
 
             foreach(var element in elements)
             {
-                var writer = new DispatchingWriter(_writer);
+                var writer = new DispatchingWriter(_writer, Settings);
                 writer.Serialize(prop, element, summary, mode);
             }
 

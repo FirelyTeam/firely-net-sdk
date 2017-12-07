@@ -13,8 +13,9 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Xunit;
 using System;
+using Hl7.Fhir.Validation;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Specification.Tests
 {
     [Trait("Category", "Validation")]
     public class BasicValidationTests : IClassFixture<ValidationFixture>
@@ -232,7 +233,10 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void ValidatesPatternValue()
         {
-            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+            // [WMR 20170727] Fixed
+            // Do NOT modify common core Patient definition, as this would affect all subsequent tests.
+            // Instead, clone the core def and modify the clone
+            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient).DeepCopy();
 
             var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
 
@@ -306,6 +310,27 @@ namespace Hl7.Fhir.Validation
             Assert.Equal(0, report.Warnings);
         }
 
+
+        [Fact]
+        public void DoNotFollowRefsSuppressesWarning()
+        {
+            var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ResolveExteralReferences = true });
+
+            Patient p = new Patient();
+            p.Active = true;
+            p.ManagingOrganization = new ResourceReference("http://reference.cannot.be.found.nl/fhir/Patient/1");
+
+            var result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);
+            Assert.Contains("Cannot resolve reference http://reference.cannot.be.found.nl/fhir/Patient/1", result.Issue[0].ToString());
+
+            validator.Settings.ResolveExteralReferences = false;
+
+            result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(0, result.Warnings);
+        }
 
         [Fact]
         public void ValidateOverNameRef()
@@ -597,25 +622,6 @@ namespace Hl7.Fhir.Validation
 
         }
 
-        class InMemoryResourceResolver : IResourceResolver
-        {
-            ILookup<string, Resource> _resources;
-
-            public InMemoryResourceResolver(IEnumerable<Resource> profiles)
-            {
-                _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
-            }
-
-            public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
-
-            public Resource ResolveByCanonicalUri(string uri) => null;
-
-            public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
-
-            // cf. ResourceStreamScanner.StreamResources
-            static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
-        }
-
         [Fact]
         public void HandlesParentElementOfCoreAbstractType()
         {
@@ -759,5 +765,26 @@ namespace Hl7.Fhir.Validation
         }
 
     }
+
+    class InMemoryResourceResolver : IResourceResolver
+    {
+        ILookup<string, Resource> _resources;
+
+        public InMemoryResourceResolver(IEnumerable<Resource> profiles)
+        {
+            _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+        }
+
+        public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
+
+        public Resource ResolveByCanonicalUri(string uri) => null;
+
+        public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
+
+        // cf. ResourceStreamScanner.StreamResources
+        static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+    }
+
+
 }
 

@@ -15,18 +15,23 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct JsonDomFhirNavigator
     {
-        public static IElementNavigator Create(JsonReader reader, string rootName=null)
+        public static IElementNavigator Create(JObject root, string rootName = null)
+        {
+            var type = root.GetCoreTypeFromObject();
+
+            if (type == null && rootName == null)
+                throw Error.InvalidOperation("Root object has no type indication (resourceType) and therefore cannot be used to construct the navigator. Alternatively, specify a rootName using the parameter.");
+
+            return new JsonDomFhirNavigator(rootName ?? type, root);
+
+        }
+        public static IElementNavigator Create(JsonReader reader, string rootName = null)
         {
             try
             {
                 JObject doc = null;
                 doc = SerializationUtil.JObjectFromReader(reader);
-                var type = doc.GetCoreTypeFromObject();
-
-                if (type == null && rootName == null)
-                    throw Error.InvalidOperation("Root object has no type indication (resourceType) and therefore cannot be used to construct the navigator. Alternatively, specify a rootName using the parameter.");
-
-                return new JsonDomFhirNavigator(rootName ?? doc.GetCoreTypeFromObject(), doc);
+                return Create(doc, rootName);
             }
             catch (JsonException jec)
             {

@@ -13,10 +13,13 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
 {
-
+    /// <summary>Interface for browsing and resolving FHIR artifacts by (file) name.</summary>
     public interface IArtifactSource
     {
+        /// <summary>Returns a list of artifact filenames.</summary>
         IEnumerable<string> ListArtifactNames();
+
+        /// <summary>Load the artifact with the specified filename.</summary>
         Stream LoadArtifactByName(string artifactName);
     }
 

@@ -105,7 +105,7 @@ namespace Hl7.FhirPath.Tests
 
         private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected)
         {
-            var tpXml = FhirSerializer.SerializeToXml(resource);
+            var tpXml = new FhirXmlSerializer().SerializeToString(resource);
             var npoco = new PocoNavigator(resource);
             //       FhirPathEvaluatorTest.Render(npoco);
 

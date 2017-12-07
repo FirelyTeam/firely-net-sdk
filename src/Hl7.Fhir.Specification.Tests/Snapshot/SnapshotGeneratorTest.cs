@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Specification.Tests
             var tempPath = Path.GetTempPath();
             var sdSave = (StructureDefinition)sd.DeepCopy();
             sdSave.Snapshot.Element = expanded.ToList();
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(sdSave));
+            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), new FhirXmlSerializer().SerializeToString(sdSave));
 
             foreach (var elem in expanded)
             {
@@ -982,8 +982,9 @@ namespace Hl7.Fhir.Specification.Tests
             // if (!areEqual)
             // {
             var tempPath = Path.GetTempPath();
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
+            var xmlSer = new FhirXmlSerializer();
+            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), xmlSer.SerializeToString(original));
+            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), xmlSer.SerializeToString(expanded));
             // }
 
             // Assert.IsTrue(areEqual);
@@ -4579,32 +4580,27 @@ namespace Hl7.Fhir.Specification.Tests
             Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.QuestionnaireResponse),
             Name = "QuestionnaireResponseWithSlice",
             Url = @"http://example.org/fhir/StructureDefinition/QuestionnaireResponseWithSlice",
-            //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
                 {
-                    new ElementDefinition("QuestionnaireResponse")
-                    {
-                    },
-
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "text" }
+                            Discriminator = new List<string>() { "text" }
                         }
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Name = "Q1"
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Name = "Q2"
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group.linkid")
+                    new ElementDefinition("QuestionnaireResponse.group.question.linkid")
                     {
                         Max = "0"
                     },
@@ -4640,19 +4636,19 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
             StructureDefinition expanded = null;
-           // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
                 generateSnapshotAndCompare(sd, out expanded);
             }
             finally
             {
-          //      _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
             }
 
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
-         //   dumpElements(expanded.Snapshot.Element);
+            // dumpElements(expanded.Snapshot.Element);
 
             // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x]
             var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.group.group.question.answer.value[x]").ToList();
@@ -5014,6 +5010,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ann);
             Assert.IsNotNull(ann.BaseElementDefinition);
             Assert.AreEqual(0, ann.BaseElementDefinition.Min);
+            // dumpElements(expanded.Snapshot.Element);
         }
 
     }
