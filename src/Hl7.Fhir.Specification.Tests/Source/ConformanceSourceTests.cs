@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(humanName);
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestSourceSpeedTest()
         {
             // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
