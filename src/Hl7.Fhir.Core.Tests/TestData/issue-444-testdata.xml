@@ -1,0 +1,54 @@
+﻿<CapabilityStatement xmlns="http://hl7.org/fhir">
+  <id value="ImoFhirTerminologyServer" />
+  <name value="IMO FHIR Terminology Server" />
+  <status value="draft" />
+  <date value="2017-10-17" />
+  <publisher value="Intelligent Medical Objects" />
+  <contact>
+    <name value="Intelligent Medical Objects" />
+    <telecom>
+      <system value="url" />
+      <value value="http://www.e-imo.com" />
+    </telecom>
+  </contact>
+  <description value="Conformance statement for the IMO FHIR Terminology Server" />
+  <kind value="capability" />
+  <fhirVersion value="3.0.1" />
+  <acceptUnknown value="no" />
+  <format value="xml" />
+  <format value="json" />
+  <rest>
+    <mode value="server" />
+    <documentation value="IMO FHIR Terminology Server" />
+    <resource>
+      <type value="ValueSet" />
+      <profile>
+        <reference value="http://hl7.org/fhir/StructureDefinition/ValueSet" />
+      </profile>
+      <interaction>
+        <code value="read" />
+        <documentation value="Read allows clients to get the logical definitions of the value sets" />
+      </interaction>
+      <interaction>
+        <code value="search-type" />
+        <documentation value="Search allows clients to find value sets on the server" />
+      </interaction>
+      <searchParam>
+        <name value="identifier" />
+        <definition value="http://hl7.org/fhir/SearchParameter/ValueSet-identifier" />
+        <type value="token" />
+      </searchParam>
+      <searchParam>
+        <name value="title" />
+        <definition value="http://hl7.org/fhir/SearchParameter/ValueSet-title" />
+        <type value="string" />
+      </searchParam>
+    </resource>
+    <operation>
+      <name value="expand" />
+      <definition>
+        <reference value="http://hl7.org/fhir/OperationDefinition/ValueSet-expand" />
+      </definition>
+    </operation>
+  </rest>
+</CapabilityStatement>
