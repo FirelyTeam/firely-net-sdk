@@ -85,15 +85,18 @@ namespace Hl7.Fhir.Model
         /// Converts this Fhir DateTime as a .NET DateTimeOffset
         /// </summary>
         /// <param name="zone">Optional. Ensures the returned DateTimeOffset uses the the specified zone.</param>
-        /// <returns>A DateTimeOffset filled out to midnight, january 1 in case of a partial date/time. If the Fhir DateTime
-        /// does not specify a timezone, the local timezone of the machine is assumed. Note that the zone parameter has no 
+        /// <remarks>In .NET the minimal value for DateTimeOffset is 1/1/0001 12:00:00 AM +00:00. That means,for example, 
+        /// a FhirDateTime of "0001-01-01T00:00:00+01:00" could not be converted to a DateTimeOffset. In that case a 
+        /// ArgumentOutOfRangeException will be thrown.</remarks>
+        /// <returns>A DateTimeOffset filled out to midnight, january 1 (UTC) in case of a partial date/time. If the Fhir DateTime
+        /// does not specify a timezone, the UTC (Coordinated Universal Time) is assumed. Note that the zone parameter has no 
         /// effect on this, this merely converts the given Fhir datetime to the desired timezone</returns>
         public DateTimeOffset ToDateTimeOffset(TimeSpan? zone = null)
         {
             if (this.Value == null) throw new InvalidOperationException("FhirDateTime's value is null");
 
-            // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1
-            // When there's no timezone, the local timezone is assumed
+            // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
+            // When there's no timezone, the UTC is assumed
             var dto = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(this.Value);
 
             //NB: There's a useful TimeZone class, but Portable45 does not support it

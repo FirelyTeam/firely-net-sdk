@@ -7,15 +7,9 @@
  */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -24,10 +18,13 @@ namespace Hl7.Fhir.Serialization
         private readonly IFhirWriter _writer;
         private readonly ModelInspector _inspector;
 
-        public DispatchingWriter(IFhirWriter data)
+        public ParserSettings Settings { get; private set; }
+
+        public DispatchingWriter(IFhirWriter data, ParserSettings settings)
         {
             _writer = data;
             _inspector = BaseFhirParser.Inspector;
+            Settings = settings;
         }
 
         internal void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
@@ -56,40 +53,41 @@ namespace Hl7.Fhir.Serialization
                 write(prop, instance, summary, mode);
         }
 
-        private void write(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
+        private void write(PropertyMapping property, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
         {
             // If this is a primitive type, no classmappings and reflection is involved,
             // just serialize the primitive to the writer
-            if (prop.IsPrimitive)
+            if (property.IsPrimitive)
             {
                 var writer = new PrimitiveValueWriter(_writer);
-                writer.Serialize(instance, prop.SerializationHint);
+                writer.Serialize(instance, property.SerializationHint);
                 return;
             }
 
             // A Choice property that contains a choice of any resource
             // (as used in Resource.contained)
-            if (prop.Choice == ChoiceType.ResourceChoice)
+            if (property.Choice == ChoiceType.ResourceChoice)
             {
-                var writer = new ResourceWriter(_writer);
-                writer.Serialize(instance, summary, contained: true);
+                var writer = new ResourceWriter(_writer, Settings);
+                writer.Serialize((Resource)instance, summary, contained: true);
                 return;
             }
 
             ClassMapping mapping = _inspector.ImportType(instance.GetType());
-            var st = summary;
-            if (prop.IsMandatoryElement && st == Rest.SummaryType.Text && mapping.HasPrimitiveValueMember)
-                st = Rest.SummaryType.False;
+
+            summary = summary == Rest.SummaryType.Text && property.IsMandatoryElement && mapping.HasPrimitiveValueMember
+                ? Rest.SummaryType.False
+                : summary;
 
             if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
             {
-                var cplxWriter = new ComplexTypeWriter(_writer);
-                cplxWriter.Serialize(mapping, instance, st, mode);
+                var cplxWriter = new ComplexTypeWriter(_writer, Settings);
+                cplxWriter.Serialize(mapping, instance, summary, mode);
             }
             else
             {
                 object value = mapping.PrimitiveValueProperty.GetValue(instance);
-                write(mapping.PrimitiveValueProperty, value, st, ComplexTypeWriter.SerializationMode.AllMembers);
+                write(mapping.PrimitiveValueProperty, value, summary, ComplexTypeWriter.SerializationMode.AllMembers);
             }
         }
     }

@@ -151,6 +151,56 @@ namespace Hl7.Fhir.Specification.Navigation
             return null;
         }
 
+        /// <summary>
+        /// If the element is constrained to a single common type (i.e. if all the existing
+        /// <see cref="ElementDefinition.TypeRefComponent"/> items share a common type code),
+        /// then return that common type code, otherwise return <c>null</c>.
+        /// </summary>
+        /// <param name="types">A list of element types.</param>
+        /// <returns>A type code.</returns>
+        public static string CommonTypeCode(this List<ElementDefinition.TypeRefComponent> types)
+        {
+            if (types != null)
+            {
+                var cnt = types.Count;
+                if (cnt > 0)
+                {
+                    var firstCode = types[0].Code;
+                    for (int i = 1; i < cnt; i++)
+                    {
+                        var code = types[i].Code;
+                        // Ignore empty codes (invalid, Type.code is required)
+                        if (code != null && code != firstCode)
+                        {
+                            return null;
+                        }
+                    }
+                    return firstCode;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// If the element is constrained to a single common type (i.e. if all the existing
+        /// <see cref="ElementDefinition.TypeRefComponent"/> items share a common type code),
+        /// then return that common type code, otherwise return <c>null</c>.
+        /// </summary>
+        /// <param name="elem">An element definition.</param>
+        /// <returns>A type code.</returns>
+        public static string CommonTypeCode(this ElementDefinition elem) => elem?.Type.CommonTypeCode();
+
+        /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
+        /// <param name="types">A list of element types.</param>
+        /// <returns>A list of type code strings.</returns>
+        public static List<string> DistinctTypeCodes(this List<ElementDefinition.TypeRefComponent> types)
+            => types.Where(t => t.Code != null).Select(t => t.Code).Distinct().ToList();
+
+        /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
+        /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
+        /// <returns>A list of type code strings.</returns>
+        public static List<string> DistinctTypeCodes(this ElementDefinition elem) => elem?.Type.DistinctTypeCodes();
+
         /// <summary>Returns <c>true</c> if the element represents an extension with a custom extension profile url, or <c>false</c> otherwise.</summary>
         public static bool IsMappedExtension(this ElementDefinition defn)
         {

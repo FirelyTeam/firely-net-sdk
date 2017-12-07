@@ -139,7 +139,7 @@ namespace HealthConnex.Fhir.Server.Tests
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
             var nav = new PocoNavigator(resource);
-            var results = nav.Select(index.Expression, nav);
+            var results = nav.Select(index.Expression, new FhirEvaluationContext(nav));
             if (results.Count() > 0)
             {
                 foreach (var t2 in results)

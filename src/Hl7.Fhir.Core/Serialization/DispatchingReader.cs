@@ -20,6 +20,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
+#pragma warning disable 612,618
     public class DispatchingReader
     {
         private readonly IFhirReader _current;
@@ -36,6 +37,7 @@ namespace Hl7.Fhir.Serialization
 
             Settings = settings;
         }
+#pragma warning restore 612,618
 
         public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
         {

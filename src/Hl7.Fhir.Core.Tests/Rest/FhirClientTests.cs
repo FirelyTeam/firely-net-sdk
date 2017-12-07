@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
+        //public static Uri testEndpoint = new Uri("http://vonk.furore.com");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
@@ -153,13 +154,14 @@ namespace Hl7.Fhir.Tests.Rest
 
             var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "1", loc.Meta.VersionId));
             Assert.IsNotNull(loc3);
-            Assert.AreEqual(FhirSerializer.SerializeResourceToJson(loc),
-                            FhirSerializer.SerializeResourceToJson(loc3));
+            var jsonSer = new FhirJsonSerializer();
+            Assert.AreEqual(jsonSer.SerializeToString(loc),
+                            jsonSer.SerializeToString(loc3));
 
             var loc4 = client.Read<Location>(loc.ResourceIdentity());
             Assert.IsNotNull(loc4);
-            Assert.AreEqual(FhirSerializer.SerializeResourceToJson(loc),
-                            FhirSerializer.SerializeResourceToJson(loc4));
+            Assert.AreEqual(jsonSer.SerializeToString(loc),
+                            jsonSer.SerializeToString(loc4));
         }
 
 
@@ -447,7 +449,7 @@ namespace Hl7.Fhir.Tests.Rest
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
 
-            System.Diagnostics.Trace.WriteLine(Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToXml(pat));
+            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(pat));
 
             var fe = client.Create(pat); // Create as we are not providing the ID to be used.
             Assert.IsNotNull(fe);
@@ -779,7 +781,7 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             FhirClient client = new FhirClient(testEndpoint);
-            System.Diagnostics.Trace.WriteLine(Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToXml(furore));
+            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(furore));
 
             var fe = client.Create(furore);
             Assert.IsNotNull(fe);
@@ -1071,6 +1073,33 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
             }
+        }
+
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public void TestOperationEverything()
+        {
+            FhirClient client = new FhirClient(testEndpoint)
+            {
+                UseFormatParam = true,
+                PreferredFormat = ResourceFormat.Json
+            };
+
+            // GET operation $everything without parameters
+            var loc = client.TypeOperation<Patient>("everything", null, true);
+            Assert.IsNotNull(loc);
+
+            // POST operation $everything without parameters
+            loc = client.TypeOperation<Patient>("everything", null, false);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 parameter
+            // This doesn't work yet. When an operation is used with primitive types then those parameters must be appended to the url as query parameters.
+            // loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), true);
+            // Assert.IsNotNull(loc);
+
+            // POST operation $everything with 1 parameter
+            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), false);
+            Assert.IsNotNull(loc);
         }
 
     }

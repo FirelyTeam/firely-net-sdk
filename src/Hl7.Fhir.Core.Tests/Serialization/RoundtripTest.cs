@@ -29,19 +29,26 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]   
         public void RoundTripOneExample()
         {
-            string testFileName = "testscript-example(example).xml";
+            roundTripOneExample("testscript-example(example).xml");
+            roundTripOneExample("TestPatient.xml");
+        }
+
+        private void roundTripOneExample(string filename)
+        {
+            string testFileName = filename;
             var original = TestDataHelper.ReadTestData(testFileName);
 
-            var t = new FhirXmlParser().Parse<TestScript>(original);
-            var outputXml = FhirSerializer.SerializeResourceToXml(t);
-            XmlAssert.AreSame(testFileName,original, outputXml);
+            var t = new FhirXmlParser().Parse<Resource>(original);
 
-            var outputJson = FhirSerializer.SerializeResourceToJson(t);
-            var t2 = new FhirJsonParser().Parse<TestScript>(outputJson);
+            var outputXml = new FhirXmlSerializer().SerializeToString(t);
+            XmlAssert.AreSame(testFileName, original, outputXml);
+
+            var outputJson = new FhirJsonSerializer().SerializeToString(t);
+            var t2 = new FhirJsonParser().Parse<Resource>(outputJson);
             Assert.IsTrue(t.IsExactly(t2));
 
-            var outputXml2 = FhirSerializer.SerializeResourceToXml(t2);
-            XmlAssert.AreSame(testFileName, original, outputXml2);
+            var outputXml2 = new FhirXmlSerializer().SerializeToString(t2);
+            XmlAssert.AreSame(testFileName, original, outputXml2);            
         }
 
 
@@ -155,8 +162,12 @@ namespace Hl7.Fhir.Tests.Serialization
                 var toExt = ext == ".xml" ? ".json" : ".xml";
                 string outputFile = Path.Combine(outputPath, exampleName) + toExt;
 
+                
+#if ELABORATE_OUTPUT
+                // Disabled this WriteLine() since it makes the CI build output HUGE
+                // Could be re-enabled for local use to track down errors!
                 Debug.WriteLine("Converting {0} [{1}->{2}] ", exampleName, ext, toExt);
-
+#endif
                 if (file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets."))
                     continue;
                 if (!isFeed(file))
@@ -247,14 +258,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.IsFalse(resource.Matches(null), "Serialization of " + inputFile + " matched null - Matches test");
                 Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
 
-                var json = FhirSerializer.SerializeResourceToJson(resource);
+                var json = new FhirJsonSerializer().SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
                 var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = FhirSerializer.SerializeResourceToXml(resource);
+                var xml = new FhirXmlSerializer().SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }
@@ -268,14 +279,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 var xml = File.ReadAllText(inputFile);
                 var resource = new FhirXmlParser().Parse<Resource>(xml);
 
-                var json = FhirSerializer.SerializeResourceToJson(resource);
+                var json = new FhirJsonSerializer().SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
                 var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = FhirSerializer.SerializeResourceToXml(resource);
+                var xml = new FhirXmlSerializer().SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }
