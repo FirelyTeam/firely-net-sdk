@@ -9,12 +9,12 @@
 
    <PropertyGroup>
     <Version>$(FhirApiVersion)</Version>
-    <PackageId>Hl7.Fhir.DSTU2</PackageId>
-    <Title>HL7 FHIR Core support API for DSTU2</Title>	
-    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)</Summary>
+    <PackageId>Hl7.Fhir</PackageId>
+    <Title>HL7 FHIR Core support API for DSTU2, STU3</Title>	
+    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0.2) and STU3 (3.0.1)</Summary>
     <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
-    <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
+    <AssemblyName>Hl7.Fhir.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
@@ -73,33 +73,6 @@
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <Compile Remove="Properties\Resources.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Model\Generated\Template-Bindings.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-Bindings.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-DataTypeModel.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-Model.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ModelInfo.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ProfiledDataTypes.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Generated\DSTU2\" />
