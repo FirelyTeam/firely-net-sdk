@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void GetSomeArtifactsById()
         {
-            var fa = ZipSource.CreateValidationSource();
+            var fa = source;
 
             var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
@@ -289,7 +289,6 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestJsonBundleRetrieval()
         {
-            //var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
@@ -306,7 +305,6 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSourceSpeedTest()
         {
-            // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
@@ -316,9 +314,11 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = false
                 });
 
-            Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
+            using (var stream = jsonSource.LoadArtifactByName("profiles-types.json"))
+            {
+                Assert.IsNotNull(stream);
+            }
 
-            // var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
             var xmlSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
@@ -328,9 +328,11 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = false
                 });
 
-            Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
+            using (var stream = xmlSource.LoadArtifactByName("profiles-types.xml"))
+            {
+                Assert.IsNotNull(stream);
+            }
 
-            // var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
             var xmlSourceLarge = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
@@ -339,26 +341,26 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = true
                 });
 
-            Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
+            using (var stream = xmlSourceLarge.LoadArtifactByName("profiles-types.xml"))
+            {
+                Assert.IsNotNull(stream);
+            }
 
-            (var duration, var count) = runTest(jsonSource);
-            Debug.WriteLine($"jsonSource: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 1000);
+            runTest("profiles-types.json", jsonSource, false, 1000);
+            runTest("profiles-types.xml", xmlSource, false, 500);
+            runTest("all xml examples", xmlSourceLarge, false, 10000);
 
-            (duration, count) = runTest(xmlSource);
-            Debug.WriteLine($"xmlSource: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 500);
+            runTest("profiles-types.json", jsonSource, true, 1000);
+            runTest("profiles-types.xml", xmlSource, true, 500);
+            runTest("all xml examples", xmlSourceLarge, true, 10000);
 
-            (duration, count) = runTest(xmlSourceLarge);
-            Debug.WriteLine($"xmlSourceLarge: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 10000);
-
-            (long duration, int count) runTest(DirectorySource s)
+            void runTest(string title, DirectorySource s, bool multiThreaded, long maxDuration)
             {
                 var sw = new Stopwatch();
                 sw.Start();
 
                 int cnt = 0;
+                s.MultiThreaded = multiThreaded;
                 for (var repeat = 0; repeat < 10; repeat++)
                 {
                     s.Refresh();  // force reload of whole file
@@ -366,7 +368,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
 
                 sw.Stop();
-                return (sw.ElapsedMilliseconds, cnt);
+                Debug.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
+                Assert.IsTrue(sw.ElapsedMilliseconds < maxDuration);
             }
         }
 
