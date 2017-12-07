@@ -35,7 +35,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
-
+using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -445,8 +445,7 @@ namespace Hl7.Fhir.Specification.Source
         #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public IEnumerable<ArtifactSummary> ListSummaries() 
-            => GetSummaries().Select(s => s); // Prevent caller from modifying internal list
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => GetSummaries().AsReadOnly();
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
@@ -467,7 +466,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (valueSetUri == null) throw Error.ArgumentNull(nameof(valueSetUri));
             var summary = GetSummaries().ResolveCodeSystem(valueSetUri);
-            return summary != null ? getResourceFromScannedSource<CodeSystem>(summary) : null;
+            return summary?.LoadResource<CodeSystem>();
         }
 
         /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
@@ -482,7 +481,7 @@ namespace Hl7.Fhir.Specification.Source
                 throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} cannot both be null.");
             }
             var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
-            return summaries.Select(summary => getResourceFromScannedSource<ConceptMap>(summary)).Where(r => r != null);
+            return summaries.Select(summary => summary?.LoadResource<ConceptMap>()).Where(r => r != null);
         }
 
         /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
@@ -492,7 +491,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             var summary = GetSummaries().ResolveNamingSystem(uniqueId);
-            return summary != null ? getResourceFromScannedSource<NamingSystem>(summary) : null;
+            return summary?.LoadResource<NamingSystem>();
         }
 
 
@@ -506,7 +505,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByUri(uri);
-            return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+            return summary?.LoadResource<Resource>();
         }
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
@@ -515,7 +514,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri);
-            return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+            return summary?.LoadResource<Resource>();
         }
 
         #endregion
@@ -800,47 +799,6 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             return scanResult;
-        }
-
-        /// <summary>
-        /// Try to deserialize the full resource represented by the specified <see cref="ArtifactSummary"/>.
-        /// </summary>
-        /// <param name="info">An <see cref="ArtifactSummary"/> instance.</param>
-        /// <typeparam name="T">The expected resource type.</typeparam>
-        /// <returns>A new instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
-        private static T getResourceFromScannedSource<T>(ArtifactSummary info)
-            where T : Resource
-        {
-            // File path of the containing resource file (could be a Bundle)
-            var path = info.Origin;
-
-            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
-            {
-
-                // TODO: Handle exceptions & null return values
-                // e.g. file may have been deleted/renamed since last scan
-
-                // Advance stream to the target resource (e.g. specific Bundle entry)
-                if (navStream != null && navStream.Seek(info.Position))
-                {
-                    // Create navigator for the target resource
-                    var nav = navStream.Current;
-                    if (nav != null)
-                    {
-                        // Parse target resource from navigator
-                        var parser = new BaseFhirParser();
-                        var result = parser.Parse<T>(nav);
-                        if (result != null)
-                        {
-                            // Add origin annotation
-                            result.SetOrigin(info.Origin);
-                            return result;
-                        }
-                    }
-                }
-
-                return null;
-            }
         }
 
         #endregion

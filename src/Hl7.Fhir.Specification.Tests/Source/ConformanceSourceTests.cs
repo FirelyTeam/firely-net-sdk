@@ -194,6 +194,65 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(us is StructureDefinition);
         }
 
+        [TestMethod]
+        public void GetSomeArtifactsBySummary()
+        {
+            var fa = source;
+
+            var summaries = fa.ListSummaries();
+
+            var summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            Assert.IsNotNull(summary);
+            var vs = summary.LoadResource();
+            Assert.IsTrue(vs is ValueSet);
+            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/administrative-gender");
+            Assert.IsNotNull(summary);
+            vs = summary.LoadResource();
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/location-status");
+            Assert.IsNotNull(summary);
+            vs = summary.LoadResource();
+            Assert.IsNotNull(vs);
+            Assert.IsTrue(vs is ValueSet);
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Condition");
+            Assert.IsNotNull(summary);
+            var rs = summary.LoadResource();
+            Assert.IsNotNull(rs);
+            Assert.IsTrue(rs is StructureDefinition);
+            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
+            Assert.IsNotNull(summary);
+            rs = summary.LoadResource();
+            Assert.IsNotNull(rs);
+            Assert.IsTrue(rs is StructureDefinition);
+
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Money");
+            Assert.IsNotNull(summary);
+            var dt = summary.LoadResource();
+            Assert.IsNotNull(dt);
+            Assert.IsTrue(dt is StructureDefinition);
+
+            // Try to find a core extension
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/valueset-history");
+            Assert.IsNotNull(summary);
+            var ext = summary.LoadResource();
+            Assert.IsNotNull(ext);
+            Assert.IsTrue(ext is StructureDefinition);
+
+            // Try to find an additional US profile (they are distributed with the spec for now)
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/cqif-questionnaire");
+            Assert.IsNotNull(summary);
+            var us = summary.LoadResource();
+            Assert.IsNotNull(us);
+            Assert.IsTrue(us is StructureDefinition);
+        }
+
 
         [TestMethod]
         public void TestFilenameDeDuplication()
@@ -328,7 +387,6 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestJsonBundleRetrieval()
         {
-            //var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
@@ -345,7 +403,6 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, Ignore]
         public void TestSourceSpeedTest()
         {
-            // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
@@ -357,7 +414,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
 
-            // var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
             var xmlSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
@@ -369,7 +425,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
-            // var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
             var xmlSourceLarge = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
@@ -380,24 +435,21 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
 
-            (var duration, var count) = runTest(jsonSource);
-            Debug.WriteLine($"jsonSource: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 1000);
+            runTest("profiles-types.json", jsonSource, false, 1000);
+            runTest("profiles-types.xml", xmlSource, false, 500);
+            runTest("all xml examples", xmlSourceLarge, false, 10000);
 
-            (duration, count) = runTest(xmlSource);
-            Debug.WriteLine($"xmlSource: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 500);
+            runTest("profiles-types.json", jsonSource, true, 1000);
+            runTest("profiles-types.xml", xmlSource, true, 500);
+            runTest("all xml examples", xmlSourceLarge, true, 10000);
 
-            (duration, count) = runTest(xmlSourceLarge);
-            Debug.WriteLine($"xmlSourceLarge: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 10000);
-
-            (long duration, int count) runTest(DirectorySource s)
+            void runTest(string title, DirectorySource s, bool multiThreaded, long maxDuration)
             {
                 var sw = new Stopwatch();
                 sw.Start();
 
                 int cnt = 0;
+                s.MultiThreaded = multiThreaded;
                 for (var repeat = 0; repeat < 10; repeat++)
                 {
                     s.Refresh();  // force reload of whole file
@@ -405,7 +457,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
 
                 sw.Stop();
-                return (sw.ElapsedMilliseconds, cnt);
+                Debug.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
+                Assert.IsTrue(sw.ElapsedMilliseconds < maxDuration);
             }
         }
 
