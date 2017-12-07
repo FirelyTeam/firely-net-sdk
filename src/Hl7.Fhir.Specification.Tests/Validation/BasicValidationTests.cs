@@ -313,6 +313,27 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
+        public void DoNotFollowRefsSuppressesWarning()
+        {
+            var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ResolveExteralReferences = true });
+
+            Patient p = new Patient();
+            p.Active = true;
+            p.ManagingOrganization = new ResourceReference("http://reference.cannot.be.found.nl/fhir/Patient/1");
+
+            var result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);
+            Assert.Contains("Cannot resolve reference http://reference.cannot.be.found.nl/fhir/Patient/1", result.Issue[0].ToString());
+
+            validator.Settings.ResolveExteralReferences = false;
+
+            result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(0, result.Warnings);
+        }
+
+        [Fact]
         public void ValidateOverNameRef()
         {
             var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-with-incorrect-fixed-type.xml");
