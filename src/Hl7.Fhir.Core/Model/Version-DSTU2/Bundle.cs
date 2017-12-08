@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model.DSTU2
     public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject, IBundle
     {
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-        public partial class EntryComponent
+        public partial class EntryComponent : IBundleEntry
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             [NotMapped]
@@ -64,8 +64,31 @@ namespace Hl7.Fhir.Model.DSTU2
 
             [Obsolete("Base no longer exists in BundleEntryComponent. You need to replace any code using this element."), NotMapped]
             public string Base { get; set; }
+
+            IBundleSearch IBundleEntry.Search
+            {
+                get { return Search; }
+            }
+
+            IBundleRequest IBundleEntry.Request
+            {
+                get { return Request; }
+            }
+
+            IBundleResponse IBundleEntry.Response
+            {
+                get { return Response; }
+            }
         }
 
+        public partial class SearchComponent : IBundleSearch
+        { }
+
+        public partial class RequestComponent : IBundleRequest
+        { }
+
+        public partial class ResponseComponent : IBundleResponse
+        { }
 
         [Obsolete("Base no longer exists in Bundle. You need to replace any code using this element."), NotMapped]
         public string Base { get; set; }
@@ -133,6 +156,12 @@ namespace Hl7.Fhir.Model.DSTU2
         {
             get { return getLink(ATOM_LINKREL_ALTERNATE); }
             set { setLink(ATOM_LINKREL_ALTERNATE, value); }
+        }
+
+        [NotMapped]
+        public IEnumerable<IBundleEntry> Entries
+        {
+            get { return Entry.OfType<IBundleEntry>(); }
         }
 
         private Uri getLink(string rel)
