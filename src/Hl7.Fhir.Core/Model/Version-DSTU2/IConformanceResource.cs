@@ -35,30 +35,17 @@ using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model.DSTU2
 {
-    public interface IConformanceResource
+    public interface IConformanceResource : IMetadataResource
     {
-        string Name { get; set; }
-        FhirString NameElement { get; set; }
-
-        string Url { get; set; }
-        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
-
-        string Publisher { get; set; }
-        FhirString PublisherElement { get; set; }
-
-        string Description { get; set; }
         FhirString DescriptionElement { get; set; }
 
         ConformanceResourceStatus? Status { get; set; }
         Code<Hl7.Fhir.Model.DSTU2.ConformanceResourceStatus> StatusElement { get; set; }
-        bool? Experimental { get; set; }
-        Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
-        string Date { get; set; }
-        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
         List<CodeableConcept> UseContext { get; set; }
         //List<ContactPoint> Contact { get; set; }
     }
+
     public interface IConformanceResourceContact
     {
         Hl7.Fhir.Model.FhirString NameElement { get; set; }

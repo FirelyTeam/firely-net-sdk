@@ -30,26 +30,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model.STU3
 {
-    public interface IConformanceResource
+    public interface IConformanceResource : IMetadataResource
     {
-        string Url { get; set; }
-        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
-
-        string Name { get; set; }
-        FhirString NameElement { get; set; }
-
-        string Publisher { get; set; }
-        FhirString PublisherElement { get; set; }
+        Markdown DescriptionElement { get; set; }
 
         List<ContactDetail> Contact { get; set; }
-
-        string Description { get; set; }
-        Markdown DescriptionElement { get; set; }
 
         List<UsageContext> UseContext { get; set; }
 
@@ -58,12 +47,6 @@ namespace Hl7.Fhir.Model.STU3
 
         PublicationStatus? Status { get; set; }
         Code<PublicationStatus> StatusElement { get; set; }
-
-        bool? Experimental { get; set; }
-        FhirBoolean ExperimentalElement { get; set; }
-
-        string Date { get; set; }
-        FhirDateTime DateElement { get; set; }
     }
 
     public interface IVersionableConformanceResource : IConformanceResource

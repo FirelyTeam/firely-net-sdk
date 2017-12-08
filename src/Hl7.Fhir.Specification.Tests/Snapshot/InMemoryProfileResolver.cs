@@ -12,25 +12,25 @@ namespace Hl7.Fhir.Specification.Tests
     {
         ILookup<string, Resource> _resources;
 
-        public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
+        public InMemoryProfileResolver(IEnumerable<IMetadataResource> profiles)
         {
             Reload(profiles);
         }
 
-        public InMemoryProfileResolver(params IConformanceResource[] profiles) : this(profiles.AsEnumerable()) { }
+        public InMemoryProfileResolver(params IMetadataResource[] profiles) : this(profiles.AsEnumerable()) { }
 
-        public InMemoryProfileResolver(IConformanceResource profile) : this(new IConformanceResource[] { profile }) { }
+        public InMemoryProfileResolver(IMetadataResource profile) : this(new IMetadataResource[] { profile }) { }
 
-        public void Reload(IEnumerable<IConformanceResource> profiles)
+        public void Reload(IEnumerable<IMetadataResource> profiles)
         {
             _resources = profiles.ToLookup(r => r.Url, r => r as Resource);
         }
 
-        public void Reload(IConformanceResource[] profiles) => Reload(profiles.AsEnumerable());
+        public void Reload(IMetadataResource[] profiles) => Reload(profiles.AsEnumerable());
 
-        public void Reload(IConformanceResource profile) => Reload(new IConformanceResource[] { profile });
+        public void Reload(IMetadataResource profile) => Reload(new IMetadataResource[] { profile });
 
-        public void Clear() => Reload(Enumerable.Empty<IConformanceResource>());
+        public void Clear() => Reload(Enumerable.Empty<IMetadataResource>());
 
         #region IResourceResolver
 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         #endregion
 
-        #region IConformanceResource
+        #region IMetadataResource
 
         public ValueSet FindValueSetBySystem(string valueSetUri)
             => throw new NotImplementedException();
