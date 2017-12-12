@@ -14,6 +14,7 @@ using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -25,7 +26,6 @@ namespace Hl7.Fhir.Specification.Source
     public class ZipSource : IConformanceSource, IArtifactSource
     {
         public const string SpecificationZipFileName = "specification.zip";
-        private static readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(ZipSource).GetTypeInfo().Assembly.GetName().Version.ToString();
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip".</summary>
         /// <returns>A new <see cref="ZipSource"/> instance.</returns>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Specification.Source
         #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
-        public IEnumerable<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (!File.Exists(ZipPath)) throw new FileNotFoundException(String.Format("Cannot prepare ZipArtifactSource: file '{0}' was not found", ZipPath));
 
-            var zc = new ZipCacher(ZipPath, CACHE_KEY);
+            var zc = new ZipCacher(ZipPath, GetCacheKey());
             var source = new DirectorySource(zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
@@ -171,6 +171,14 @@ namespace Hl7.Fhir.Specification.Source
                 source.Mask = mask;
             }
             return source;
+        }
+
+        private string GetCacheKey()
+        {
+            Assembly assembly = typeof(ZipSource).GetTypeInfo().Assembly;
+            var versionInfo =  assembly.GetCustomAttribute(typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
+            var productInfo = assembly.GetCustomAttribute(typeof(AssemblyProductAttribute)) as AssemblyProductAttribute;
+            return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
         }
 
         // Allow derived classes to override

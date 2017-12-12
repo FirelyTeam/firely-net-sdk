@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
@@ -22,6 +23,13 @@ namespace Hl7.Fhir.Validation
         {
             // TODO: Should check whether the discriminator is a valid child path of root. Wait until we have the
             // definition walker, which would walk across references if necessary.
+            foreach (var d in discriminator)
+            {
+                if(d.EndsWith("@type"))
+                    throw Error.NotImplemented($"Slicing with an '@type' discriminator is not yet supported by this validator.");
+                else if (d.EndsWith("@profile"))
+                    throw Error.NotImplemented($"Slicing with an '@profile' discriminator is not yet supported by this validator.");
+            }
 
             Root = root.ShallowCopy();
             Validator = validator;

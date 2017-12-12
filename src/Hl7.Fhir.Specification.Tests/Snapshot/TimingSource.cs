@@ -4,6 +4,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -15,7 +16,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         public TimingSource(IConformanceSource source) { _source = source; }
 
-        public IEnumerable<ArtifactSummary> ListSummaries() => throw new NotImplementedException();
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => throw new NotImplementedException();
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
             => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));

@@ -36,7 +36,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
-
+using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -311,18 +311,20 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Determines if the <see cref="DirectorySource"/> instance should
-        /// use only a single thread to harvest the artifact summary information.
+        /// Determines if the <see cref="DirectorySource"/> instance should harvest artifact
+        /// summary information in parallel on the thread pool.
         /// </summary>
         /// <remarks>
-        /// By default, the <see cref="DirectorySource"/> leverages the thread pool
-        /// to try and speed up the artifact summary generation process.
-        /// Set this property to <c>true</c> to force single threaded processing.
+        /// By default, the <see cref="DirectorySource"/> harvests artifact summaries serially
+        /// on the calling thread. However if this option is enabled, then the DirectorySource
+        /// performs summary harvesting in parallel on the thread pool, in order to speed up
+        /// the process. This is especially effective when the content directory contains many
+        /// (nested) subfolders and files.
         /// </remarks>
-        public bool SingleThreaded
+        public bool MultiThreaded
         {
-            get { return _settings.SingleThreaded; }
-            set { _settings.SingleThreaded = value; } // Refresh();
+            get { return _settings.MultiThreaded; }
+            set { _settings.MultiThreaded = value; } // Refresh();
         }
 
         /// <summary>Request a full re-scan of the specified content directory.</summary>
@@ -427,7 +429,7 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-#region IArtifactSource
+        #region IArtifactSource
 
         /// <summary>Returns a list of artifact filenames.</summary>
         public IEnumerable<string> ListArtifactNames() => GetFilePaths().Select(path => Path.GetFileName(path));
@@ -440,13 +442,12 @@ namespace Hl7.Fhir.Specification.Source
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
 
-#endregion
+        #endregion
 
-#region IConformanceSource
+        #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public IEnumerable<ArtifactSummary> ListSummaries() 
-            => GetSummaries().Select(s => s); // Prevent caller from modifying internal list
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => GetSummaries().AsReadOnly();
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
@@ -459,7 +460,8 @@ namespace Hl7.Fhir.Specification.Source
         {
             // if (system == null) throw Error.ArgumentNull(nameof(system));
             var summary = GetSummaries().ResolveValueSet(system);
-            return summary != null ? getResourceFromScannedSource<ValueSet>(summary) : null;
+            // return summary != null ? getResourceFromScannedSource<ValueSet>(summary) : null;
+            return summary?.LoadResource<ValueSet>();
         }
 
         /// <summary>Resolve <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
@@ -470,7 +472,8 @@ namespace Hl7.Fhir.Specification.Source
                 throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
             }
             var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
-            return summaries.Select(summary => getResourceFromScannedSource<ConceptMap>(summary)).Where(r => r != null);
+            // return summaries.Select(summary => getResourceFromScannedSource<ConceptMap>(summary)).Where(r => r != null);
+            return summaries.Select(summary => summary?.LoadResource<ConceptMap>()).Where(r => r != null);
         }
 
         /// <summary>Resolve the <see cref="NamingSystem"/> resource with the specified uniqueId.</summary>
@@ -478,20 +481,22 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             var summary = GetSummaries().ResolveNamingSystem(uniqueId);
-            return summary != null ? getResourceFromScannedSource<NamingSystem>(summary) : null;
+            // return summary != null ? getResourceFromScannedSource<NamingSystem>(summary) : null;
+            return summary?.LoadResource<NamingSystem>();
         }
 
 
-#endregion
+        #endregion
 
-#region IResourceResolver
+        #region IResourceResolver
 
         /// <summary>Resolve the resource with the specified uri.</summary>
         public Resource ResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByUri(uri);
-            return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+            // return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+            return summary?.LoadResource<Resource>();
         }
 
         /// <summary>Resolve the conformance resource with the specified canonical url.</summary>
@@ -499,12 +504,13 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri);
-            return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+            // return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+            return summary?.LoadResource<Resource>();
         }
 
-#endregion
+        #endregion
 
-#region Private members
+        #region Private members
 
         // IMPORTANT!
         // prepareFiles & prepareSummaries callers MUST lock on _syncLock
@@ -698,7 +704,7 @@ namespace Hl7.Fhir.Specification.Source
 
             var settings = _settings;
             var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, settings.FormatPreference);
-            summaries = harvestSummaries(uniqueArtifacts, settings.SummaryDetailsHarvesters, SingleThreaded);
+            summaries = harvestSummaries(uniqueArtifacts, settings.SummaryDetailsHarvesters, MultiThreaded);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
@@ -720,14 +726,14 @@ namespace Hl7.Fhir.Specification.Source
             return;
         }
 
-        private static List<ArtifactSummary> harvestSummaries(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool singleThreaded)
+        private static List<ArtifactSummary> harvestSummaries(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool multiThreaded)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
             var cnt = paths.Count;
             var scanResult = new List<ArtifactSummary>(cnt);
 
-            if (singleThreaded)
+            if (!multiThreaded)
             {
                 foreach (var filePath in paths)
                 {
@@ -760,9 +766,9 @@ namespace Hl7.Fhir.Specification.Source
                         // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                         i =>
                         {
-                        // Harvest summaries from single file
-                        // Save each result to a separate array entry (no locking required)
-                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
+                            // Harvest summaries from single file
+                            // Save each result to a separate array entry (no locking required)
+                            results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
                         });
                 }
                 catch (AggregateException aex)
@@ -786,48 +792,7 @@ namespace Hl7.Fhir.Specification.Source
             return scanResult;
         }
 
-        /// <summary>
-        /// Try to deserialize the full resource represented by the specified <see cref="ArtifactSummary"/>.
-        /// </summary>
-        /// <param name="info">An <see cref="ArtifactSummary"/> instance.</param>
-        /// <typeparam name="T">The expected resource type.</typeparam>
-        /// <returns>A new instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
-        private static T getResourceFromScannedSource<T>(ArtifactSummary info)
-            where T : Resource
-        {
-            // File path of the containing resource file (could be a Bundle)
-            var path = info.Origin;
-
-            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
-            {
-
-                // TODO: Handle exceptions & null return values
-                // e.g. file may have been deleted/renamed since last scan
-
-                // Advance stream to the target resource (e.g. specific Bundle entry)
-                if (navStream != null && navStream.Seek(info.Position))
-                {
-                    // Create navigator for the target resource
-                    var nav = navStream.Current;
-                    if (nav != null)
-                    {
-                        // Parse target resource from navigator
-                        var parser = new BaseFhirParser();
-                        var result = parser.Parse<T>(nav);
-                        if (result != null)
-                        {
-                            // Add origin annotation
-                            result.SetOrigin(info.Origin);
-                            return result;
-                        }
-                    }
-                }
-
-                return null;
-            }
-        }
-
-#endregion
+        #endregion
 
         // <summary>Provides synchronized access to the list of file paths. May enter lock to re-generate the list on demand.</summary>
 

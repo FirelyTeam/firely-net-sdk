@@ -118,8 +118,12 @@ namespace Hl7.Fhir.Validation
             // If no aggregation is given, all kinds of aggregation are allowed, otherwise only allow
             // those aggregation types that are given in the Aggregation element
             bool hasAggregation = typeRef.Aggregation != null && typeRef.Aggregation.Count() != 0;
-            if(hasAggregation && !typeRef.Aggregation.Any(a => a == encounteredKind))
-                  validator.Trace(outcome,  $"Encountered a reference ({reference}) of kind '{encounteredKind}' which is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
+            if (hasAggregation && !typeRef.Aggregation.Any(a => a == encounteredKind))
+                validator.Trace(outcome, $"Encountered a reference ({reference}) of kind '{encounteredKind}' which is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
+
+            // Bail out if we are asked to follow an *external reference* when this is disabled in the settings
+            if (validator.Settings.ResolveExteralReferences == false && encounteredKind == AggregationMode.Referenced)
+                return outcome;
 
             // If we failed to find a referenced resource within the current instance, try to resolve it using an external method
             if (referencedResource == null && encounteredKind == AggregationMode.Referenced)

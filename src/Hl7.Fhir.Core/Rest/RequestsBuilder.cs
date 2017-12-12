@@ -6,11 +6,12 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using System;
-using Hl7.Fhir.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
@@ -228,13 +229,55 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        private string paramValueToString(Parameters.ParameterComponent parameter)
+        {
+            if (parameter.Value != null)
+            {
+                switch (parameter.Value)
+                {
+                    case Model.DSTU2.Identifier id:
+                        return id.ToToken();
+                    case Model.STU3.Identifier id:
+                        return id.ToToken();
+                    case Coding coding:
+                        return coding.ToToken();
+                    case Model.DSTU2.ContactPoint contactPoint:
+                        return contactPoint.ToToken();
+                    case Model.STU3.ContactPoint contactPoint:
+                        return contactPoint.ToToken();
+                    case CodeableConcept codeableConcept:
+                        return codeableConcept.ToToken();
+                    default:
+                        if (Model.DSTU2.ModelInfo.IsPrimitive(parameter.Value.GetType()) || Model.STU3.ModelInfo.IsPrimitive(parameter.Value.GetType()))
+                        {
+                            return parameter.Value.ToString();
+                        }
+                        break;
+                }
+            }
+            throw Error.InvalidOperation($"Parameter '{parameter.Name}' has a non-primitive type, which is not allowed.");
+        }
+
         public RequestsBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
             var request = newRequest(useGet ? HTTPVerb.GET : HTTPVerb.POST, InteractionType.Operation);
-
-            request.Resource = parameters;
-
             var path = new RestUrl(endpoint);
+
+            if (useGet)
+            {
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters.Parameter)
+                    {
+                        path.AddParam(parameter.Name, paramValueToString(parameter));
+                    }
+                }
+            }
+            else
+            {
+                request.Resource = parameters;
+            }
+
             addRequest(request, path);
 
             return this;
