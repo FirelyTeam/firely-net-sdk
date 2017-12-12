@@ -1001,12 +1001,15 @@ public class ResourceDetails
             resource.Constraints = new List<ConstraintDetails>();
             foreach (var node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", loadedVersion.NSR).OfType<XmlElement>())
             {
-                var expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value|fhir:expression/@value", loadedVersion.NSR).Value;
-                var parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", loadedVersion.NSR).Value;
-                if (parentPath.Contains("."))
+                var expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value|fhir:expression/@value", loadedVersion.NSR)?.Value;
+                if (expression != null)
                 {
-                    // This expression applied to a backbone element, so need to give it scope
-                    expression = parentPath.Replace("[x]", "").Replace(resourceName + ".", "") + ".all(" + expression + ")";
+                    var parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", loadedVersion.NSR).Value;
+                    if (parentPath.Contains("."))
+                    {
+                        // This expression applied to a backbone element, so need to give it scope
+                        expression = parentPath.Replace("[x]", "").Replace(resourceName + ".", "") + ".all(" + expression + ")";
+                    }
                 }
                 var constraint = new ConstraintDetails
                 {
@@ -1390,14 +1393,23 @@ public class ConstraintDetails
     {
         yield return $"public static ElementDefinitionConstraint { GetName(type) } = new ElementDefinitionConstraint";
         yield return $"{{";
-        yield return $"    Expression = { StringUtils.Quote(Expression) },";
+        if (!string.IsNullOrEmpty(Expression))
+        {
+            yield return $"    Expression = { StringUtils.Quote(Expression) },";
+        }
         yield return $"    Key = { StringUtils.Quote(Key) },";
         var severity = Severity == "Error" ?
             "ConstraintSeverity.Error" :
             "ConstraintSeverity.Warning";
         yield return $"    Severity = { severity },";
-        yield return $"    Human = { StringUtils.Quote(Human) },";
-        yield return $"    Xpath = { StringUtils.Quote(XPath) }";
+        if (!string.IsNullOrEmpty(Human))
+        {
+            yield return $"    Human = { StringUtils.Quote(Human) },";
+        }
+        if (!string.IsNullOrEmpty(XPath))
+        {
+            yield return $"    Xpath = { StringUtils.Quote(XPath) }";
+        }
         yield return $"}};";
     }
 
