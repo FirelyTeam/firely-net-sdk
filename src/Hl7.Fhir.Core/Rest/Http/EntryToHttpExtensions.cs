@@ -35,19 +35,19 @@ namespace Hl7.Fhir.Rest.Http
             var request = new HttpRequestMessage(getMethod(interaction.Method), location.Uri);
 
             if (!useFormatParameter)
-                request.Headers.Add("Accept", Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false));
+                request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false)));
 
-            if (interaction.IfMatch != null) request.Headers.TryAddWithoutValidation("If-Match", interaction.IfMatch);
-            if (interaction.IfNoneMatch != null) request.Headers.TryAddWithoutValidation("If-None-Match", interaction.IfNoneMatch);
+            if (interaction.IfMatch != null) request.Headers.Add("If-Match", interaction.IfMatch);
+            if (interaction.IfNoneMatch != null) request.Headers.Add("If-None-Match", interaction.IfNoneMatch);
             if (interaction.IfModifiedSince != null) request.Headers.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
-            if (interaction.IfNoneExist != null) request.Headers.TryAddWithoutValidation("If-None-Exist", interaction.IfNoneExist);
+            if (interaction.IfNoneExist != null) request.Headers.Add("If-None-Exist", interaction.IfNoneExist);
 
             var interactionType = entry.Annotation<TransactionBuilder.InteractionType>();
 
             if (interactionType == TransactionBuilder.InteractionType.Create && returnPreference != null)
-                request.Headers.TryAddWithoutValidation("Prefer", "return=" + PrimitiveTypeConverter.ConvertTo<string>(returnPreference));
+                request.Headers.Add("Prefer", "return=" + PrimitiveTypeConverter.ConvertTo<string>(returnPreference));
             else if (interactionType == TransactionBuilder.InteractionType.Search && handlingPreference != null)
-                request.Headers.TryAddWithoutValidation("Prefer", "handling=" + PrimitiveTypeConverter.ConvertTo<string>(handlingPreference));
+                request.Headers.Add("Prefer", "handling=" + PrimitiveTypeConverter.ConvertTo<string>(handlingPreference));
 
             if (entry.Resource != null)
                 setBodyAndContentType(request, entry.Resource, format, CompressRequestBody);
@@ -105,10 +105,7 @@ namespace Hl7.Fhir.Rest.Http
 
             request.Content = new ByteArrayContent(body);
 
-            // MediaTypeHeaderValue cannot accept a content type that contains charset at the end, so that value must be split out.
-            var contentTypeList = contentType.Split(';');
-            request.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeList.FirstOrDefault());
-            request.Content.Headers.ContentType.CharSet = System.Text.Encoding.UTF8.WebName;
+            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
         }
 
 

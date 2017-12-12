@@ -16,7 +16,6 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
 using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
-using Hl7.Fhir.Core.Tests.Rest.Mocks;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -347,7 +346,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        public static void Compression_OnBeforeHttpRequestGZip(object sender, Core.Tests.Rest.Mocks.BeforeRequestEventArgs e)
+        public static void Compression_OnBeforeHttpRequestGZip(object sender, Core.Rest.Http.BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
@@ -357,7 +356,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        public static void Compression_OnBeforeHttpRequestDeflate(object sender, Core.Tests.Rest.Mocks.BeforeRequestEventArgs e)
+        public static void Compression_OnBeforeHttpRequestDeflate(object sender, Core.Rest.Http.BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
@@ -367,7 +366,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        public static void Compression_OnBeforeHttpRequestZipOrDeflate(object sender, Core.Tests.Rest.Mocks.BeforeRequestEventArgs e)
+        public static void Compression_OnBeforeHttpRequestZipOrDeflate(object sender, Core.Rest.Http.BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
@@ -435,7 +434,7 @@ namespace Hl7.Fhir.Tests.Rest
             TestCategory("IntegrationTest")]
         public void SearchHttpClient()
         {
-            using (var handler = new MockHttpMessageHandler())
+            using (var handler = new Core.Rest.Http.HttpClientEventHandler())
             using (TestClient client = new TestClient(testEndpoint, messageHandler: handler))
             {
                 Bundle result;
@@ -836,7 +835,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateEditDeleteHttpClient()
         {
-            using (var handler = new MockHttpMessageHandler())
+            using (var handler = new Core.Rest.Http.HttpClientEventHandler())
             using (TestClient client = new TestClient(testEndpoint, messageHandler: handler))
             {
 
@@ -1519,7 +1518,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CallsCallbacksHttpClient()
         {
-            using (var handler = new MockHttpMessageHandler())
+            using (var handler = new Core.Rest.Http.HttpClientEventHandler())
             using (TestClient client = new TestClient(testEndpoint, messageHandler: handler))
             {
                 client.ParserSettings.AllowUnrecognizedEnums = true;
@@ -1609,7 +1608,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void RequestFullResourceHttpClient()
         {
-            using (var handler = new MockHttpMessageHandler())
+            using (var handler = new Core.Rest.Http.HttpClientEventHandler())
             using (var client = new TestClient(testEndpoint, messageHandler: handler))
             {
 

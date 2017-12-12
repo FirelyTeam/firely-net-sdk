@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Core.Tests.Rest.Mocks
+namespace Hl7.Fhir.Core.Rest.Http
 {
-    public class MockHttpMessageHandler : HttpClientHandler
+    public class HttpClientEventHandler : HttpClientHandler
     {
         /// <summary>
         /// Called just before the Http call is done

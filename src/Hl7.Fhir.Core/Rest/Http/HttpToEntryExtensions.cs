@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Rest.Http
             {
                 charEncoding = Encoding.GetEncoding(response.Content.Headers.ContentType.CharSet);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 charEncoding = Encoding.UTF8;
             }
@@ -49,13 +49,13 @@ namespace Hl7.Fhir.Rest.Http
             result.Response.Location = response.Headers.Location?.AbsoluteUri ?? response.Content.Headers.ContentLocation?.AbsoluteUri;
 
             result.Response.LastModified = response.Content.Headers.LastModified;
-            result.Response.Etag = response.Headers.ETag?.Tag;
+            result.Response.Etag = response.Headers.ETag?.Tag.Trim('\"');
 
             if (body != null && body.Length != 0)
             {
                 result.Response.SetBody(body);
 
-                if (Rest.HttpToEntryExtensions.IsBinaryResponse(result.Response.Location, contentType.ToString()))
+                if (Rest.HttpToEntryExtensions.IsBinaryResponse(result.Response.Location, contentType.MediaType.ToString()))
                 {
                     result.Resource = Rest.HttpToEntryExtensions.MakeBinaryResource(body, contentType.ToString());
                     if (result.Response.Location != null)
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Rest.Http
                 else
                 {
                     var bodyText = Rest.HttpToEntryExtensions.DecodeBody(body, charEncoding);
-                    var resource = Rest.HttpToEntryExtensions.ParseResource(bodyText, contentType.ToString(), parserSettings, throwOnFormatException);
+                    var resource = Rest.HttpToEntryExtensions.ParseResource(bodyText, contentType.MediaType.ToString(), parserSettings, throwOnFormatException);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
