@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Hl7.Fhir.DSTU2</id>
-    <version>0.91.3</version>
-    <title>HL7 FHIR Core support API for DSTU2</title>
+    <id>Hl7.Fhir.Core</id>
+    <version>0.95.0</version>
+    <title>HL7 FHIR Core support API</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
-    <description>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0).</description>
-    <releaseNotes>DSTU2 release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+    <description>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0), STU3 (3.0).</description>
+    <releaseNotes>Multi-versions release</releaseNotes>
     <summary>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</summary>
     <language>en-us</language>
-    <projectUrl>https://github.com/ewoutkramer/fhir-net-api</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
-    <copyright>Copyright 2016</copyright>
+    <projectUrl>https://github.com/CareEvolution/fhir-net-api</projectUrl>
+    <iconUrl>https://github.com/CareEvolution/fhir-net-api/blob/master/icon-fhir-32.png?raw=true</iconUrl>
+    <copyright>Copyright 2017</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>HL7 FHIR REST parse serialize class model</tags>
     <dependencies>

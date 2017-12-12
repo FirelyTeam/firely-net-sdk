@@ -6,13 +6,13 @@
     <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
     <Company>Furore (http://fhir.furore.com)</Company>
     <Copyright>Copyright 2017 Furore Health Informatics.  Contains materials (C) HL7 International</Copyright>
-    <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
-    <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/CareEvolution/fhir-net-api</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/CareEvolution/fhir-net-api/blob/master/icon-fhir-32.png?raw=true</PackageIconUrl>
+    <PackageReleaseNotes>Multi-versions release</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.99.0-alpha1</FhirApiVersion>
+    <FhirApiVersion>0.95.0-alpha1</FhirApiVersion>
     <SupportApiVersion>0.4.5-beta1</SupportApiVersion>
   </PropertyGroup>
 
@@ -28,8 +28,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>False</SignAssembly>
     <IncludeSymbols>True</IncludeSymbols>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
