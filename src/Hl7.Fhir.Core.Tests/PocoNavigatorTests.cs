@@ -11,6 +11,7 @@ using System.Linq;
 using Hl7.FhirPath.Expressions;
 using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath;
+using System.IO;
 
 namespace Hl7.Fhir
 {
@@ -176,6 +177,23 @@ namespace Hl7.Fhir
                 Assert.Fail();
             }           
         }
+
+        [TestMethod]
+        public void IncorrectPathInTwoSuccessiveRepeatingMembers()
+        {
+            var xml = File.ReadAllText(@"TestData\issue-444-testdata.xml");
+            var cs = (new FhirXmlParser()).Parse<Conformance>(xml);
+            var nav = new PocoNavigator(cs);
+
+            nav.MoveToFirstChild();
+
+            Assert.IsTrue(nav.MoveToNext("format"));
+            nav.MoveToNext(); // format[1] again
+            nav.MoveToNext();   // rest[0]
+            
+            Assert.IsTrue(nav.Location.Contains("Conformance.rest[0]"));
+        }
+
     }
 
 }

@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -146,6 +147,49 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public bool TryGetValue(string key, out object value) => properties.TryGetValue(key, out value);
 
         #endregion
+
+        /// <summary>Try to load a resource from the summary <see cref="Origin"/>.</summary>
+        /// <typeparam name="T">The resource type to return.</typeparam>
+        /// <returns>A new resource instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        /// <remarks>
+        /// This method annotates returned resource instances with an <seealso cref="OriginAnnotation"/>
+        /// that captures the value of the <see cref="Origin"/> property.
+        /// The <seealso cref="OriginAnnotationExtensions.GetOrigin(Resource)"/> extension method 
+        /// provides access to the annotated location.
+        /// </remarks>
+        public T LoadResource<T>() where T : Resource
+        {
+            // File path of the containing resource file (could be a Bundle)
+            var path = Origin;
+
+            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
+            {
+
+                // Handle exceptions & null return values?
+                // e.g. file may have been deleted/renamed since last scan
+
+                // Advance stream to the target resource (e.g. specific Bundle entry)
+                if (navStream != null && navStream.Seek(Position))
+                {
+                    // Create navigator for the target resource
+                    var nav = navStream.Current;
+                    if (nav != null)
+                    {
+                        // Parse target resource from navigator
+                        var parser = new BaseFhirParser();
+                        var result = parser.Parse<T>(nav);
+                        if (result != null)
+                        {
+                            // Add origin annotation
+                            result.SetOrigin(path);
+                            return result;
+                        }
+                    }
+                }
+
+                return null;
+            }
+        }
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

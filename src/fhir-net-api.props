@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.94.0-beta2</FhirApiVersion>
-    <SupportApiVersion>0.94.0-beta2</SupportApiVersion>
+    <FhirApiVersion>0.94.0</FhirApiVersion>
+    <SupportApiVersion>0.94.0</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Compiler settings -->
