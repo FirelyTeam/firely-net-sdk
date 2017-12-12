@@ -52,7 +52,6 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Rest\Mocks\" />
   </ItemGroup>
 
   <ItemGroup>
