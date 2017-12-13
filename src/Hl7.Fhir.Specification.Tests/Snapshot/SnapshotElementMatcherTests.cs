@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
+            var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true } );
             _testResolver = new CachedResolver(dirSource);
         }
 
