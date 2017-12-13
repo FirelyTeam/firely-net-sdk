@@ -7,9 +7,11 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Rest.Http;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 
@@ -37,7 +39,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        public void TestPreferSetting()
+        public void TestPreferSettingWebRequester()
         {
             var p = new Patient();
             var tx = new TransactionBuilder("http://myserver.org/fhir")
@@ -68,6 +70,42 @@ namespace Hl7.Fhir.Test
 
             request = b.Entry[0].ToHttpRequest(null, Prefer.ReturnRepresentation, ResourceFormat.Json, false, false, out dummy);
             Assert.IsNull(request.Headers["Prefer"]);        
+        }
+
+        [TestMethod]
+        public void TestPreferSettingHttpRequester()
+        {
+            var p = new Patient();
+            var tx = new TransactionBuilder("http://myserver.org/fhir")
+                        .Create(p);
+            var b = tx.ToBundle();
+            byte[] dummy;
+
+            var request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Lenient, Prefer.ReturnMinimal, ResourceFormat.Json, false, false);
+            Assert.AreEqual("return=minimal", request.Headers.GetValues("Prefer").FirstOrDefault());
+
+            request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Strict, Prefer.ReturnRepresentation, ResourceFormat.Json, false, false);
+            Assert.AreEqual("return=representation", request.Headers.GetValues("Prefer").FirstOrDefault());
+
+            request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Strict, Prefer.OperationOutcome, ResourceFormat.Json, false, false);
+            Assert.AreEqual("return=OperationOutcome", request.Headers.GetValues("Prefer").FirstOrDefault());
+
+            request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Strict, null, ResourceFormat.Json, false, false);
+            request.Headers.TryGetValues("Prefer", out var preferHeader);
+            Assert.IsNull(preferHeader);
+
+            tx = new TransactionBuilder("http://myserver.org/fhir").Search(new SearchParams().Where("name=ewout"), resourceType: "Patient");
+            b = tx.ToBundle();
+
+            request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Lenient, Prefer.ReturnMinimal, ResourceFormat.Json, false, false);
+            Assert.AreEqual("handling=lenient", request.Headers.GetValues("Prefer").FirstOrDefault());
+
+            request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Strict, Prefer.ReturnRepresentation, ResourceFormat.Json, false, false);
+            Assert.AreEqual("handling=strict", request.Headers.GetValues("Prefer").FirstOrDefault());
+
+            request = b.Entry[0].ToHttpRequestMessage(null, Prefer.ReturnRepresentation, ResourceFormat.Json, false, false);
+            request.Headers.TryGetValues("Prefer", out preferHeader);
+            Assert.IsNull(preferHeader);        
         }
     }
 }

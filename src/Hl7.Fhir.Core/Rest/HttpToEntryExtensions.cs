@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Rest
 
                 if (IsBinaryResponse(response.ResponseUri.OriginalString, contentType))
                 {
-                    result.Resource = makeBinaryResource(body, contentType);
+                    result.Resource = MakeBinaryResource(body, contentType);
                     if (result.Response.Location != null)
                     {
                         var ri = new ResourceIdentity(result.Response.Location);
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType, parserSettings, throwOnFormatException);
+                    var resource = ParseResource(bodyText, contentType, parserSettings, throwOnFormatException);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }      
 
-        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
+        internal static Resource ParseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
         {           
             Resource result= null;
 
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static Binary makeBinaryResource(byte[] data, string contentType)
+        internal static Binary MakeBinaryResource(byte[] data, string contentType)
         {
             var binary = new Binary();
 

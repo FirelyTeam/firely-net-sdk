@@ -8,18 +8,13 @@ namespace Hl7.Fhir.Rest
 {
     public interface IFhirClient
     {
+
 #if NET_COMPRESSION
         bool PreferCompressedResponses { get; set; }
         bool CompressRequestBody { get; set; }
 #endif
-
         Uri Endpoint { get; }
-        byte[] LastBody { get; }
-        Resource LastBodyAsResource { get; }
-        string LastBodyAsText { get; }
-        HttpWebRequest LastRequest { get; }
-        HttpWebResponse LastResponse { get; }
-        Bundle.ResponseComponent LastResult { get; }
+
         ParserSettings ParserSettings { get; set; }
         ResourceFormat PreferredFormat { get; set; }
         bool ReturnFullResource { get; set; }
@@ -27,8 +22,23 @@ namespace Hl7.Fhir.Rest
         bool UseFormatParam { get; set; }
         bool VerifyFhirVersion { get; set; }
 
+        byte[] LastBody { get; }
+        Resource LastBodyAsResource { get; }
+        string LastBodyAsText { get; }
+
+        Bundle.ResponseComponent LastResult { get; }
+
+        [Obsolete]
+        HttpWebRequest LastRequest { get; }
+
+        [Obsolete]
+        HttpWebResponse LastResponse { get; }
+
+        [Obsolete]
         event EventHandler<AfterResponseEventArgs> OnAfterResponse;
-        event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
+
+        [Obsolete]
+        event EventHandler<BeforeRequestEventArgs> OnBeforeRequest; 
 
         CapabilityStatement CapabilityStatement(SummaryType? summary = default(SummaryType?));
         Task<CapabilityStatement> CapabilityStatementAsync(SummaryType? summary = default(SummaryType?));

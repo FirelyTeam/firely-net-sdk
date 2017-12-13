@@ -32,14 +32,14 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <remarks>
         /// </remarks>
-        public HttpStatusCode Status { get; set; }
+        public HttpStatusCode? Status { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FhirOperationException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         /// <param name="status">The http status code associated with the message</param>
-        public FhirOperationException(string message, HttpStatusCode status)
+        public FhirOperationException(string message, HttpStatusCode? status)
             : base(message)
         {
             Status = status;
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="status">The http status code associated with the message</param>
         /// <param name="inner">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
-        public FhirOperationException(string message, HttpStatusCode status, Exception inner)
+        public FhirOperationException(string message, HttpStatusCode? status, Exception inner)
             : base(message, inner)
         {
             Status = status;
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="status">The http status code associated with the message</param>
         /// <param name="outcome">The outcome of the operation <see cref="OperationOutcome"/>.</param>
         /// <param name="inner">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
-        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome outcome, Exception inner)
+        public FhirOperationException(string message, HttpStatusCode? status, OperationOutcome outcome, Exception inner)
             : base(message, inner)
         {
             Outcome = outcome;
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="message">The message that describes the error.</param>
         /// <param name="status">The http status code associated with the message</param>
         /// <param name="outcome">The outcome of the operation <see cref="OperationOutcome"/>.</param>
-        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome outcome)
+        public FhirOperationException(string message, HttpStatusCode? status, OperationOutcome outcome)
             : base(message)
         {
             Outcome = outcome;
