@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
 
-            var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
+            var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true });
             _source = new TimingSource(dirSource);
             _testResolver = new CachedResolver(_source);
         }
@@ -2305,7 +2305,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Start at root types without a base (Element, Extension), then recursively expand derived types
 
             var result = true;
-            var source = new DirectorySource("TestData/snapshot-test", false);
+            var source = new DirectorySource("TestData/snapshot-test");
             var resolver = new CachedResolver(source); // IMPORTANT!
 
             _generator = new SnapshotGenerator(resolver, _settings);
@@ -2514,7 +2514,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestReslicingOrder()
         {
-            var dirSource = new DirectorySource("TestData/validation", includeSubdirectories: false);
+            var dirSource = new DirectorySource("TestData/validation");
             var sd = dirSource.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.IsNotNull(sd);
 
@@ -2624,7 +2624,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void FindComplexTestExtensions()
         {
             Debug.WriteLine("Complex extension in TestData folder:");
-            var dirSource = new DirectorySource("TestData/snapshot-test/extensions", includeSubdirectories: false);
+            var dirSource = new DirectorySource("TestData/snapshot-test/extensions");
             var uris = dirSource.ListResourceUris(ResourceType.StructureDefinition);
             foreach (var uri in uris)
             {
@@ -4024,7 +4024,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSliceBase_PatientTelecomResliceEK()
         {
-            var dirSource = new DirectorySource("TestData/validation", false);
+            var dirSource = new DirectorySource("TestData/validation");
             var source = new TimingSource(dirSource);
             var resolver = new CachedResolver(source);
             var multiResolver = new MultiResolver(resolver, _testResolver);
