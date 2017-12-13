@@ -1,150 +1,79 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.FhirPath
 {
-    internal class Constraint
+    internal class ConstraintSet : ReadOnlyCollection<Constraint>
     {
-        readonly public ElementDefinition.TypeRefComponent[] Types;
-        readonly public ElementDefinitionNavigator Source;
+        readonly public ElementDefinition.TypeRefComponent[] CandidateTypes;
 
-        internal Constraint(IEnumerable<ElementDefinition.TypeRefComponent> types, ElementDefinitionNavigator source)
+        public ConstraintSet(IList<Constraint> list) : base(list)
         {
-            Types = types.ToArray();
-            Source = source.ShallowCopy();
+            CandidateTypes = this.SelectMany(c => c.CandidateTypes).Distinct().ToArray();
         }
 
-        public static Constraint Create(StructureDefinition definition)
-        {
-            var nav = new ElementDefinitionNavigator(definition);
-            nav.MoveToFirstChild();
-            return Create(nav).Single();
-        }
-
-        public static Constraint[] Create(ElementDefinitionNavigator definition)
-        {
-            var pointer = definition.ShallowCopy();
-            var result = new List<Constraint>();
-
-            do
-            {
-                result.Add(new Constraint(typesFromDefinition(pointer), pointer));
-            }
-            while (pointer.MoveToNextSliceAtAnyLevel());
-
-            return result.ToArray();
-        }
-
-        private static ElementDefinition.TypeRefComponent[] typesFromDefinition(ElementDefinitionNavigator navigator)
-        {
-            //In DSTU2, if this is the root of a type, we need to look at the constrainedType or else the id
-            if (ElementDefinitionNavigator.IsRootPath(navigator.Path))
-            {
-                bool isConstrained = navigator.StructureDefinition.ConstrainedType != null;
-                var myType = isConstrained ? navigator.StructureDefinition.ConstrainedType.GetLiteral() :
-                                navigator.StructureDefinition.Id;
-                var myProfile = isConstrained ? navigator.StructureDefinition.Url : null;
-
-                return new[]
-                {
-                    new ElementDefinition.TypeRefComponent { Code = ModelInfo.FhirTypeNameToFhirType(myType), Profile = new string[] { myProfile } }
-                };
-            }
-            else
-            {
-                return navigator.Current?.Type?.ToArray() ?? new ElementDefinition.TypeRefComponent[0];
-            }
-        }
-
-        public ElementDefinition.TypeRefComponent[] MatchingTypeRefs(FHIRDefinedType type, string profile = null)
-        {
-            return Types.Where(tr => tr.Code == type && (profile == null || tr.Profile?.FirstOrDefault() == profile)).ToArray();
-        }
-    }
-
-    internal class ConstraintSet : List<Constraint>
-    {
-        public ConstraintSet()
+        public ConstraintSet(IEnumerable<Constraint> constraints) : this(constraints.ToList())
         {
         }
 
-        public ConstraintSet(IEnumerable<Constraint> constraints)
+        public static ConstraintSet FromStructureDefinition(StructureDefinition definition) 
+            => new ConstraintSet(new[] { Constraint.FromStructure(definition) });
+
+        public static ConstraintSet FromDefinitionNavigator(ElementDefinitionNavigator navigator, bool includeSlices) 
+            => new ConstraintSet(Constraint.FromDefinition(navigator, includeSlices));
+
+        public ConstraintSet WithChild(string name, bool includeSlices=false)
         {
-            this.AddRange(constraints);
+            var matches = this
+                .Where(c => c.HasChildren)
+                .Select(c => c.Source.ShallowCopy())
+                .Where(nav => tryMoveToName(nav, name))
+                .SelectMany(nav => FromDefinitionNavigator(nav, includeSlices));
+
+            return new ConstraintSet(matches);
         }
 
-        public ConstraintSet(StructureDefinition definition)
+        public ConstraintSet WithChild(string name, IResourceResolver resolver, bool includeSlices=false)
         {
-            this.AddConstraint(definition);
-        }
+            var withLocalConstraints = new ConstraintSet(this.Where(c => c.HasChildren));
+            var withoutLocalConstraints = new ConstraintSet(this.Where(c => !c.HasChildren));
+            var referencedConstraints = withoutLocalConstraints.ReferencedTypes(resolver);
 
-        public void AddConstraint(StructureDefinition definition)
-        {
-            this.Add(Constraint.Create(definition));
-        }
-
-        public void AddConstraints(ElementDefinitionNavigator navigator)
-        {
-            this.AddRange(Constraint.Create(navigator));
-        }
-
-        public ConstraintSet WithChild(string name)
-        {
-            var result = new List<Constraint>();
-
-            foreach (var constraint in this)
-            {
-                var childNav = constraint.Source.ShallowCopy();
-                if (tryMoveToName(childNav, name))
-                    result.AddRange(Constraint.Create(childNav));
-            }
-
-            return new ConstraintSet(result);
+            return withLocalConstraints.WithChild(name, includeSlices) + referencedConstraints.WithChild(name, includeSlices);
         }
 
         public ConstraintSet WithType(FHIRDefinedType type, string profile = null)
         {
-            var newConstraints =
-                from c in this
-                let matchingRefs = c.MatchingTypeRefs(type, profile)
-                where matchingRefs.Any()
-                select new Constraint(matchingRefs, c.Source);
+            var newConstraints = this
+                    .Select(c => c.WithTypes(type, profile))
+                    .Where(c => c.HasCandidates);
 
             return new ConstraintSet(newConstraints);
         }
 
-        public ElementDefinition.TypeRefComponent[] CandidateTypeRefs()
+        public static ConstraintSet operator +(ConstraintSet left, ConstraintSet right)
+            => new ConstraintSet(left.Union(right));
+
+        private static StructureDefinition[] getStructures(IEnumerable<string> profiles, IResourceResolver resolver)
         {
-            return  this.SelectMany(c => c.Types).Distinct().ToArray();
+            return profiles
+                .Select(p => resolver.FindStructureDefinition(p))
+                .Where(sd => sd != null)        // TODO: Don't ignore these, report errors about unresolved references!
+                .ToArray();
         }
 
-        public FHIRDefinedType[] CandidateTypes()
+        internal ConstraintSet ReferencedTypes(IResourceResolver resolver)
         {
-            return this.SelectMany(c => c.Types)
-                .Where(t=>t.Code != null)
-                .Select(t=> t.Code.Value)
-                .Distinct().ToArray();
-        }
+            var profiles = CandidateTypes.Select(tr => tr.TypeProfile());
+            var sds = getStructures(profiles, resolver);
+            var result = sds.Select(sd => Constraint.FromStructure(sd));
 
-
-        public ConstraintSet IncludeReferencedTypes(IResourceResolver resolver)
-        {
-            var result = new ConstraintSet(this);
-
-            foreach(var type in result.CandidateTypeRefs())
-            {
-                var profile = type.TypeProfile();
-                var sd = resolver.FindStructureDefinition(profile);
-                if (sd != null)
-                    result.AddConstraint(sd);
-            }
-
-            return result;
+            return new ConstraintSet(result);
         }
 
         // Note: alters the position of the navigator passed into it
