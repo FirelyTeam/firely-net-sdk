@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
             bundleWithSpecificEntries("Referenced"),
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
-            buildParametersWithBoundParams(),
+            buildParametersWithBoundParams(),   
             bundleWithConstrainedContained(),
             buildOrganizationWithRegexConstraintOnName(),
             buildOrganizationWithRegexConstraintOnType()
@@ -36,10 +36,10 @@ namespace Hl7.Fhir.Validation
         private static StructureDefinition buildOrganizationWithRegexConstraintOnName()
         {
             var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MyOrganization", "My Organization",
-                    "Test an organization with Name containing regex", FHIRDefinedType.Organization);
+                    "Test an organization with Name containing regex", FHIRAllTypes.Organization);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Organization").OfType(FHIRDefinedType.Organization));
+            cons.Add(new ElementDefinition("Organization").OfType(FHIRAllTypes.Organization));
 
             var nameDef = new ElementDefinition("Organization.name");
             nameDef.SetStringExtension("http://hl7.org/fhir/StructureDefinition/regex", "[A-Z].*");
@@ -52,12 +52,12 @@ namespace Hl7.Fhir.Validation
         private static StructureDefinition buildOrganizationWithRegexConstraintOnType()
         {
             var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MyOrganization2", "My Organization",
-                    "Test an organization with Name containing regex", FHIRDefinedType.Organization);
+                    "Test an organization with Name containing regex", FHIRAllTypes.Organization);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Organization").OfType(FHIRDefinedType.Organization));
+            cons.Add(new ElementDefinition("Organization").OfType(FHIRAllTypes.Organization));
 
-            var nameDef = new ElementDefinition("Organization.name.value").OfType(FHIRDefinedType.String);
+            var nameDef = new ElementDefinition("Organization.name.value").OfType(FHIRAllTypes.String);
             nameDef.Type.Single().SetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-regex", "[A-Z].*");
             nameDef.Type.Single().Code = null;
             cons.Add(nameDef);
