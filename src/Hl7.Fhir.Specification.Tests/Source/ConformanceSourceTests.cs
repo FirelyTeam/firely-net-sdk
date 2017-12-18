@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(humanName);
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void TestSourceSpeedTest()
         {
             var jsonSource = new DirectorySource(
@@ -435,7 +435,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ListSummaries()
         {
-            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
+                new DirectorySourceSettings { IncludeSubDirectories = true });
 
             var vs = source.Summaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.Summaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
@@ -468,7 +469,8 @@ namespace Hl7.Fhir.Specification.Tests
             const int threadCount = 25;
             const string uri = @"http://example.org/fhir/StructureDefinition/human-group";
 
-            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
+                new DirectorySourceSettings { IncludeSubDirectories = true });
 
             var tasks = new Task[threadCount];
             var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];

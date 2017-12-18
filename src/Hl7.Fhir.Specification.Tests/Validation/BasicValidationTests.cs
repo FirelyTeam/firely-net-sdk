@@ -111,13 +111,13 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var def = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
 
-            var instance = new Oid("1.2.3.4.q");
+            var instance = new Oid("urn:oid:1.2.3.4.q");
             var report = _validator.Validate(instance, def);
             Assert.False(report.Success);
             Assert.Equal(1, report.Errors);
             Assert.Equal(0, report.Warnings);
 
-            instance = new Oid("1.2.3.4");
+            instance = new Oid("urn:oid:1.2.3.4");
             report = _validator.Validate(instance, def);
             Assert.True(report.Success);
             Assert.Equal(0, report.Errors);
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
 
-            var extensionInstance = new Extension("http://some.org/testExtension", new Oid("1.2.3.4.5"));
+            var extensionInstance = new Extension("http://some.org/testExtension", new Oid("urn:oid:1.2.3.4.5"));
 
             var report = _validator.Validate(extensionInstance, extensionSd);
 
@@ -310,6 +310,60 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
+        [Fact]
+        public void ValidateOrganizationWithRegEx()
+        {
+            var o = new Organization() { Name = "firely" };
+            var report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization");
+
+            Assert.False(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+            o = new Organization() { Name = "Firely" }; // the first char is now uppercase
+            report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization");
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+        }
+
+        [Fact]
+        public void ValidateOrganizationWithRegExOnType()
+        {
+            var o = new Organization() { Name = "firely" };
+            var report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization2");
+
+            Assert.False(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+            o = new Organization() { Name = "Firely" }; // the first char is now uppercase
+            report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization2");
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+        }
+
+        [Fact]
+        public void DoNotFollowRefsSuppressesWarning()
+        {
+            var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ResolveExteralReferences = true });
+
+            Patient p = new Patient();
+            p.Active = true;
+            p.ManagingOrganization = new ResourceReference("http://reference.cannot.be.found.nl/fhir/Patient/1");
+
+            var result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);
+            Assert.Contains("Cannot resolve reference http://reference.cannot.be.found.nl/fhir/Patient/1", result.Issue[0].ToString());
+
+            validator.Settings.ResolveExteralReferences = false;
+
+            result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(0, result.Warnings);
+        }
 
         [Fact]
         public void ValidateOverNameRef()
