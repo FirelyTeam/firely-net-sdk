@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="cacheDuration">Default expiration time of a cache entry, in seconds.</param>
         public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION)
         {
-            Source = source;
+            Source = source ?? throw Error.ArgumentNull(nameof(source));
             CacheDuration = cacheDuration;
 
             _resourcesByUri = new Cache<Resource>(id => InternalResolveByUri(id), CacheDuration);
