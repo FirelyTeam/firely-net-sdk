@@ -131,6 +131,75 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [TestMethod]
+        public void TestProfilesResourcesXml()
+        {
+            const string path = @"TestData\profiles-resources.xml";
+
+            var summaries = ArtifactSummaryGenerator.Generate(path);
+            Assert.IsNotNull(summaries);
+            Assert.AreNotEqual(0, summaries.Count);
+            for (int i = 0; i < summaries.Count; i++)
+            {
+                var summary = summaries[i];
+                Assert.IsFalse(summary.IsFaulted);
+
+                // Common properties
+                Assert.AreEqual(path, summary.Origin);
+
+                var fi = new FileInfo(path);
+                Assert.AreEqual(fi.Length, summary.FileSize);
+                Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
+
+                if (StringComparer.Ordinal.Equals(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName))
+                {
+                    Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
+
+                    // Conformance resource properties
+                    Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
+                    Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
+                    Assert.IsNotNull(summary.GetConformanceName());
+                    Assert.IsNotNull(summary.GetConformanceStatus());
+                    Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+
+
+                    //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
+
+                    // StructureDefinition properties
+                    Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
+                    Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
+
+                    // For profiles-resources, we expect Kind = Resource | Logical
+                    var kind = summary.GetStructureDefinitionKind();
+                    Assert.IsNotNull(kind);
+                    Assert.IsTrue(
+                        kind == StructureDefinition.StructureDefinitionKind.Resource.GetLiteral()
+                        ||
+                        // e.g. for MetadataResource
+                        kind == StructureDefinition.StructureDefinitionKind.Logical.GetLiteral()
+                    );
+
+                    Assert.IsNotNull(summary.GetStructureDefinitionType());
+
+                    // If this is a specializing StructDef, then BaseDefinition should also be specified
+                    var derivation = summary.GetStructureDefinitionDerivation();
+                    if (derivation != null)
+                    {
+                        // Base definition should always be specified, except for root types such as Resource
+                        Assert.IsNotNull(summary.GetStructureDefinitionBaseDefinition());
+                    }
+
+                    // [WMR 20171219] Core extensions
+                    if (kind == StructureDefinition.StructureDefinitionKind.Resource.GetLiteral())
+                    {
+                        Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
+                        Assert.IsNotNull(summary.GetStructureDefinitionWorkingGroup());
+                    }
+                }
+
+            }
+        }
+
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
             var summaries = ArtifactSummaryGenerator.Generate(path, harvesters);

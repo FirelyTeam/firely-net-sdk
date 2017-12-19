@@ -127,6 +127,32 @@ namespace Hl7.Fhir.Specification.Source.Summary
             return false;
         }
 
+        /// <summary>Harvest extension values into a property bag.</summary>
+        /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
+        /// <param name="properties">A property bag to store harvested summary information.</param>
+        /// <param name="extensionValueHarvester">Callback function called for each individual extension entry.</param>
+        public static void HarvestExtensions(this IElementNavigator nav, IDictionary<string, object> properties, Action<IElementNavigator, IDictionary<string, object>, string> extensionValueHarvester)
+        {
+            const string extension = "extension";
+
+            if (nav.Find(extension))
+            {
+                do
+                {
+                    var childNav = nav.Clone();
+                    if (childNav.MoveToFirstChild("url"))
+                        
+                    {
+                        if (childNav.Value is string url)
+                        {
+                            extensionValueHarvester(childNav, properties, url);
+                        }
+                    }
+                // [WMR 20171219] BUG: MoveToNext advances to extension.url (child attribute) instead of the next extension element
+                } while (nav.MoveToNext(extension));
+            }
+        }
+
     }
 
 }
