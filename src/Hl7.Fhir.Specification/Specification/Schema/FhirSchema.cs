@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification.Schema.Tags;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -11,53 +12,91 @@ namespace Hl7.Fhir.Specification.Schema
 {
     public abstract class Assertion
     {
-        SchemaAnnotations OnSuccess { get; }
-        SchemaAnnotations OnFailure { get; }
-        SchemaAnnotations OnUndecided { get; }
+        //TODO: Move Id here?
+    }
+    public abstract class TaggedAssertion : Assertion
+    {
+        public readonly SchemaTags Success;
+        public readonly SchemaTags Failure;
+        public readonly SchemaTags Undecided;       
     }
 
-    public interface ISingleElementAssertion
+    public abstract class SimpleAssertion : TaggedAssertion, ITagSource, IMemberAssertion
     {
-        // Who adds the annotations when?
-        SchemaAnnotations Validate(IElementNavigator input, ValidationContext vc);
+        public IEnumerable<SchemaTags> CollectTags() => new[] { Success };
+
+        public abstract SchemaTags Validate(IElementNavigator input, ValidationContext vc);
     }
 
-    public interface IMultipleElementAssertion
+    /// <summary>
+    /// Tags that this assertion would provide on success.
+    /// </summary>
+    /// <remarks>
+    /// Is a list of SchemaTags, since the assertion (i.e. a slice) may provide multiple
+    /// possible outcomes.
+    /// </remarks>
+    interface ITagSource
     {
-        // Who adds the annotations when?
-        SchemaAnnotations Validate(IEnumerable<IElementNavigator> input, ValidationContext vc);
+        IEnumerable<SchemaTags> CollectTags();
     }
 
-    public static class SomeExtensions
+    /// <summary>
+    /// Implemented by assertions that work on a single node (IElementNavigator)
+    /// </summary>
+    /// <remarks>
+    /// Examples are fixed, binding, working on a single IElementNavigator.Value, and
+    /// children, working on the children of a single IElementNavigator
+    /// </remarks>
+    public interface IMemberAssertion
     {
-        public static SchemaAnnotations Validate(this IMultipleElementAssertion assertion, IElementNavigator input, ValidationContext vc)
-            => assertion.Validate(new[] { input }, vc);
+        SchemaTags Validate(IElementNavigator input, ValidationContext vc);
     }
 
-
-    public interface IAssertionContainer
+    /// <summary>
+    /// Implemented by assertions that work on groups of nodes
+    /// </summary>
+    /// <remarks>
+    /// Examples are subgroups, ref, minItems, slice
+    /// </remarks>
+    public interface IGroupAssertion
     {
-        IEnumerable<Schema> Subschemas();
+        SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc);
     }
 
-    public class Schema : Assertion, IMultipleElementAssertion, IAssertionContainer
+    public class Schema : TaggedAssertion, IGroupAssertion, ITagSource
     {
-        string Id { get; }
+        public static readonly Schema Empty = new Schema();
 
-        ReadOnlyCollection<Assertion> Assertions { get; }
+        public readonly string Id;
+        public readonly IEnumerable<Assertion> Assertions;
 
-        public IEnumerable<Schema> Subschemas() 
-            => new[] { this }
-                .Union(Assertions.OfType<IAssertionContainer>()
-                    .SelectMany(sec => sec.Subschemas()));
-
-        // I think a schema should split the inputS into single input IElementNavs
-        // No, there are multiple kinds of assertions, depending on which you have a 
-        // different Validate()!
-        public SchemaAnnotations Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
+        public Schema(params Assertion[] assertions)
         {
-            var multiAssertions = Assertions.OfType<IMultipleElementAssertion>();
-            var singleAssertions = Assertions.OfType<ISingleElementAssertion>();
+            Assertions = assertions;
+            // Add ResultTag success by default?
+        }
+
+        public Schema(IEnumerable<Assertion> assertions) => Assertions = assertions;
+
+        public Schema(string id, params Assertion[] assertions) : this(assertions)
+        {
+            Id = id;
+        }
+
+        public Schema(string id, IEnumerable<Assertion> assertions) : this(assertions)
+        {
+            Id = id;
+        }
+
+        public IEnumerable<SchemaTags> CollectTags()
+            => Assertions
+                .OfType<ITagSource>()
+                .Aggregate(Success.Collection, (sum, ass) => sum.Combine(ass.CollectTags()));
+
+        public SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
+        {
+            var multiAssertions = Assertions.OfType<IGroupAssertion>();
+            var singleAssertions = Assertions.OfType<IMemberAssertion>();
 
             var multiResults = collect(multiAssertions
                 .Select(assert => assert.Validate(input, vc)));
@@ -69,32 +108,35 @@ namespace Hl7.Fhir.Specification.Schema
 
             return multiResults + singleResults;
 
-            SchemaAnnotations collect(IEnumerable<SchemaAnnotations> bunch) =>
-                bunch
-                .Aggregate((sum, other) => sum += other)
-                .Merge();
+            SchemaTags collect(IEnumerable<SchemaTags> bunch) => bunch.Aggregate((sum, other) => sum += other);
         }
     }
 }
 
+
 /*****
+
   {   
     define: { identified subschemas which are not evaluated }
 
-    ref: { included set of schemas }
+    ref: "external reference" 
 
-	group { membership condition } : { constraints for this group }
+    {
+       // nested schema
+    }
 
 	minItems:
 	maxItems:
-	
+
+    group { membership condition } : { constraints for this group }
+
     slice 
     {
         ordered: true/false
-        
+
 		// one or more groups defined by subschemas
 		group { membership condition } : { constraints for this group }
-		default: { constraints for this group } === group {} : {    }
+		default: { constraints for this group } === group {} : {    }    // no default: {} : { fail }
     }
 
     children
@@ -103,12 +145,10 @@ namespace Hl7.Fhir.Specification.Schema
 		"asdfdfs" : { constraints for this name }
     }
 
-	annotations { a tag block to execute on success }
-
 	success { a tag block to execute }
 	fail { a tag block to execute }
 	undecided { a tag block to execute }
 }
 
+****/
 
-**/

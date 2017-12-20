@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Specification.Schema;
+using Hl7.Fhir.Specification.Schema.Tags;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         [TestMethod]
         public void SerializeSchemaAnnotations()
         {
-            var subject = new SchemaAnnotations()
+            var subject = new SchemaTags()
             {
                 new Ann1 { X = "Jan" },
                 new Ann1 { X = "Klaas"},

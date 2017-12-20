@@ -2,27 +2,43 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification.Schema.Tags;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class ConditionalAssertion : Assertion, IAssertionContainer, ISingleElementAssertion
+    public class ConditionalAssertion : Assertion, IGroupAssertion, ITagSource
     {
-        Schema Condition;
+        public readonly Schema Condition;
 
-        Schema Assertion;
+        public readonly Schema Assertion;
 
-        public IEnumerable<Schema> Subschemas() => new[] { Assertion };
-
-        public ResultAnnotation IsMember(IElementNavigator input, ValidationContext vc) 
-            => Condition.Validate(input, vc).Result;
-
-        public SchemaAnnotations Validate(IElementNavigator input, ValidationContext vc)
+        public ConditionalAssertion(Schema condition, Schema assertion)
         {
-            if(IsMember(input,vc).Result == ValidationResult.Success)
-                return Assertion.Validate(input, vc);
+            Condition = condition ?? throw new ArgumentNullException(nameof(condition));
+            Assertion = assertion ?? throw new ArgumentNullException(nameof(assertion));
+        }
 
-            // yeah, return...ehm....
-            throw new NotImplementedException();
+        public IEnumerable<SchemaTags> CollectTags() => Assertion.CollectTags();
+
+        public SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
+        {
+            var result = Condition.Validate(input,vc);
+
+            switch(result.Result.Result)
+            {
+                case ValidationResult.Success:
+                    // is a member, result depends on membership assertion
+                    return Assertion.Validate(input, vc);  
+                case ValidationResult.Failure:
+                    // fails membership condition -> no reason to fail
+                    return Assertion.Success;
+                case ValidationResult.Undecided:
+                    return Assertion.Undecided;
+                default:
+                    // TODO: add context information (location + assertion ID) for debug purposes
+                    throw Error.NotSupported($"Internal error: Unknown validation result '{result.Result.Result}' encountered");
+            }
         }
     }
 

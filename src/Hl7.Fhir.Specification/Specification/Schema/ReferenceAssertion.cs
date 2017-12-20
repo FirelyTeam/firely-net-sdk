@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification.Schema.Tags;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class ReferenceAssertion : Assertion, ISingleElementAssertion, IAssertionContainer
+    public class ReferenceAssertion : Assertion, IGroupAssertion, ITagSource
     {
         // A symbolic reference, or a reference to another Schema?
         // Or one of the next two?
@@ -16,10 +17,10 @@ namespace Hl7.Fhir.Specification.Schema
 
         private Schema ReferencedSchema => DirectReference ?? Dereference();
 
-        public IEnumerable<Schema> Subschemas() => ReferencedSchema.Subschemas();
+        public IEnumerable<SchemaTags> CollectTags() => ReferencedSchema.CollectTags();
 
-        public SchemaAnnotations Validate(IElementNavigator input, ValidationContext vc)
-            => ReferencedSchema.Validate(new[] { input }, vc);
+        public SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
+            => ReferencedSchema.Validate(input, vc);
     }
 
 }
