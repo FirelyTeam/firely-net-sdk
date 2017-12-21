@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Schema.Tags
         public static readonly SchemaTags Success = new SchemaTags(ResultTag.Success);
         public static readonly SchemaTags Failure = new SchemaTags(ResultTag.Failure);
         public static readonly SchemaTags Undecided = new SchemaTags(ResultTag.Undecided);
-
+        public static readonly SchemaTags Empty = new SchemaTags();
         public SchemaTags(params SchemaTag[] tags) : this(tags.AsEnumerable())
         {
         }
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Specification.Schema.Tags
 
     public static class SchemaTagExtensions
     {
-        public static IEnumerable<SchemaTags> Combine(this IEnumerable<SchemaTags> left, IEnumerable<SchemaTags> right)
+        public static IEnumerable<SchemaTags> Product(this IEnumerable<SchemaTags> left, IEnumerable<SchemaTags> right)
             => from leftST in left
                from rightST in right
                select leftST + rightST;

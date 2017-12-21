@@ -12,32 +12,18 @@ namespace Hl7.Fhir.Specification.Schema
 {
     public abstract class Assertion
     {
+        public static readonly Assertion Succeed = new Succeed();
+        public static readonly Assertion Fail = new Fail();
+        public static readonly Assertion Undecided = new Undecided();
         //TODO: Move Id here?
-    }
-    public abstract class TaggedAssertion : Assertion
-    {
-        public readonly SchemaTags Success;
-        public readonly SchemaTags Failure;
-        public readonly SchemaTags Undecided;       
-    }
-
-    public abstract class SimpleAssertion : TaggedAssertion, ITagSource, IMemberAssertion
-    {
-        public IEnumerable<SchemaTags> CollectTags() => new[] { Success };
-
-        public abstract SchemaTags Validate(IElementNavigator input, ValidationContext vc);
-    }
-
-    /// <summary>
-    /// Tags that this assertion would provide on success.
-    /// </summary>
-    /// <remarks>
-    /// Is a list of SchemaTags, since the assertion (i.e. a slice) may provide multiple
-    /// possible outcomes.
-    /// </remarks>
-    interface ITagSource
-    {
-        IEnumerable<SchemaTags> CollectTags();
+        /// <summary>
+        /// Tags that this assertion would provide on success.
+        /// </summary>
+        /// <remarks>
+        /// Is a list of SchemaTags, since the assertion (i.e. a slice) may provide multiple
+        /// possible outcomes.
+        /// </remarks>
+        public abstract IEnumerable<SchemaTags> CollectTags();
     }
 
     /// <summary>
@@ -63,17 +49,14 @@ namespace Hl7.Fhir.Specification.Schema
         SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc);
     }
 
-    public class Schema : TaggedAssertion, IGroupAssertion, ITagSource
+    public class Schema : Assertion, IGroupAssertion
     {
-        public static readonly Schema Empty = new Schema();
-
         public readonly string Id;
         public readonly IEnumerable<Assertion> Assertions;
 
         public Schema(params Assertion[] assertions)
         {
             Assertions = assertions;
-            // Add ResultTag success by default?
         }
 
         public Schema(IEnumerable<Assertion> assertions) => Assertions = assertions;
@@ -88,10 +71,9 @@ namespace Hl7.Fhir.Specification.Schema
             Id = id;
         }
 
-        public IEnumerable<SchemaTags> CollectTags()
+        public override IEnumerable<SchemaTags> CollectTags()
             => Assertions
-                .OfType<ITagSource>()
-                .Aggregate(Success.Collection, (sum, ass) => sum.Combine(ass.CollectTags()));
+                .Aggregate(SchemaTags.Success.Collection, (sum, ass) => sum.Product(ass.CollectTags()));
 
         public SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
         {

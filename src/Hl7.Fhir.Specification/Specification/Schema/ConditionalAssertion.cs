@@ -7,7 +7,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class ConditionalAssertion : Assertion, IGroupAssertion, ITagSource
+    public class ConditionalAssertion : Assertion, IGroupAssertion
     {
         public readonly Schema Condition;
 
@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Schema
             Assertion = assertion ?? throw new ArgumentNullException(nameof(assertion));
         }
 
-        public IEnumerable<SchemaTags> CollectTags() => Assertion.CollectTags();
+        public override IEnumerable<SchemaTags> CollectTags() => Assertion.CollectTags();
 
         public SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
         {
@@ -29,15 +29,15 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 case ValidationResult.Success:
                     // is a member, result depends on membership assertion
-                    return Assertion.Validate(input, vc);  
+                    return result + Assertion.Validate(input, vc);  
                 case ValidationResult.Failure:
                     // fails membership condition -> no reason to fail
-                    return Assertion.Success;
+                    return SchemaTags.Success;
                 case ValidationResult.Undecided:
-                    return Assertion.Undecided;
+                    return SchemaTags.Undecided;
                 default:
                     // TODO: add context information (location + assertion ID) for debug purposes
-                    throw Error.NotSupported($"Internal error: Unknown validation result '{result.Result.Result}' encountered");
+                    throw Error.NotSupported($"Internal error: Unknown validation result '{result.Result.Result}' encountered in group.");
             }
         }
     }
