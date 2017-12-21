@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Serialization
             if (instance is IList)
                 instance = ((IList)instance)[0];
 
-            if (!prop.IsPrimitive && prop.Choice != ChoiceType.ResourceChoice)
+            if (instance != null && !prop.IsPrimitive && prop.Choice != ChoiceType.ResourceChoice)
             {
                 var mapping = _inspector.ImportType(instance.GetType());
                 return mapping.HasPrimitiveValueMember;
