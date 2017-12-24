@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Service not availablefrom this date
+            /// Service not available from this date
             /// </summary>
             [FhirElement("during", Order=50)]
             [DataMember]
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Whether this practitioner's record is in active use
+        /// Whether this practitioner role record is in active use
         /// </summary>
         [FhirElement("active", InSummary=true, Order=100)]
         [DataMember]
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
         
         /// <summary>
-        /// Whether this practitioner's record is in active use
+        /// Whether this practitioner role record is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
-        /// Practitioner that is able to provide the defined services for the organation
+        /// Practitioner that is able to provide the defined services for the organization
         /// </summary>
         [FhirElement("practitioner", InSummary=true, Order=120)]
         [CLSCompliant(false)]

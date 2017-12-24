@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,8 +51,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "time"; } }
         
-        // Must conform to the pattern "([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?"
-        public const string PATTERN = @"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?";
+        // Must conform to the pattern "([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?"
+        public const string PATTERN = @"([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?";
 
 		public Time(string value)
 		{

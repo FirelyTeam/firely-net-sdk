@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Thu, 27 Jul 2017 10:42:41 GMT for FHIR v3.0.1
+// Model Generated on Thu, 21 Dec 2017 08:45:37 GMT for FHIR v3.1.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -18,6 +18,8 @@
 
 // Generated Shared Enumeration: AdministrativeGender
 
+// Generated Shared Enumeration: GuidePageKind
+
 // Generated Shared Enumeration: EventStatus
 
 // Generated Shared Enumeration: ActionGroupingBehavior
@@ -31,6 +33,8 @@
 
 // Generated Shared Enumeration: ParticipationStatus
 
+// Generated Shared Enumeration: ClaimProcessingCodes
+
 // Generated Shared Enumeration: ListMode
 
 // Generated Shared Enumeration: SearchParamType
@@ -38,6 +42,8 @@
 // Generated Shared Enumeration: FinancialResourceStatusCodes
 
 // Generated Shared Enumeration: ActionCardinalityBehavior
+
+// Generated Shared Enumeration: GuideDependencyType
 
 // Generated Shared Enumeration: ActionConditionKind
 
@@ -54,13 +60,13 @@
 
 // Generated Shared Enumeration: RequestStatus
 
+// Generated Shared Enumeration: NoteType
+
 // Generated Shared Enumeration: CompositionStatus
 
 // Generated Shared Enumeration: ActionRequiredBehavior
 
 // Generated Shared Enumeration: DocumentRelationshipType
-
-// Generated Shared Enumeration: MessageSignificanceCategory
 
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (type): DataRequirement.type
@@ -73,6 +79,8 @@
 // Hl7.Fhir.Core\Model\Generated\UsageContext.cs
 // Hl7.Fhir.Core\Model\Generated\TriggerDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Timing.cs
+// Hl7.Fhir.Core\Model\Generated\SubstanceMoiety.cs
+// Hl7.Fhir.Core\Model\Generated\SubstanceAmount.cs
 // Hl7.Fhir.Core\Model\Generated\Signature.cs
 // Hl7.Fhir.Core\Model\Generated\SampledData.cs
 // Hl7.Fhir.Core\Model\Generated\RelatedArtifact.cs
@@ -80,9 +88,12 @@
 // Hl7.Fhir.Core\Model\Generated\Ratio.cs
 // Hl7.Fhir.Core\Model\Generated\Range.cs
 // Hl7.Fhir.Core\Model\Generated\Quantity.cs
+// Hl7.Fhir.Core\Model\Generated\ProductShelfLife.cs
+// Hl7.Fhir.Core\Model\Generated\ProdCharacteristic.cs
 // Hl7.Fhir.Core\Model\Generated\Period.cs
 // Hl7.Fhir.Core\Model\Generated\ParameterDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Meta.cs
+// Hl7.Fhir.Core\Model\Generated\MarketingStatus.cs
 // Hl7.Fhir.Core\Model\Generated\Identifier.cs
 // Hl7.Fhir.Core\Model\Generated\HumanName.cs
 // Hl7.Fhir.Core\Model\Generated\ElementDefinition.cs

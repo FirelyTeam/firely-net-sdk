@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -169,6 +169,21 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Intended "real-world" recipient for the data
+            /// </summary>
+            [FhirElement("receiver", InSummary=true, Order=70)]
+            [CLSCompliant(false)]
+			[References("Practitioner","Organization")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Receiver
+            {
+                get { return _Receiver; }
+                set { _Receiver = value; OnPropertyChanged("Receiver"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Receiver;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as MessageDestinationComponent;
@@ -179,6 +194,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                     if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
+                    if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
                     return dest;
                 }
                 else
@@ -199,6 +215,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(Target, otherT.Target)) return false;
                 if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
+                if( !DeepComparable.Matches(Receiver, otherT.Receiver)) return false;
                 
                 return true;
             }
@@ -212,6 +229,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
+                if( !DeepComparable.IsExactly(Receiver, otherT.Receiver)) return false;
                 
                 return true;
             }
@@ -226,6 +244,7 @@ namespace Hl7.Fhir.Model
                     if (NameElement != null) yield return NameElement;
                     if (Target != null) yield return Target;
                     if (EndpointElement != null) yield return EndpointElement;
+                    if (Receiver != null) yield return Receiver;
                 }
             }
 
@@ -238,6 +257,7 @@ namespace Hl7.Fhir.Model
                     if (NameElement != null) yield return new ElementValue("name", false, NameElement);
                     if (Target != null) yield return new ElementValue("target", false, Target);
                     if (EndpointElement != null) yield return new ElementValue("endpoint", false, EndpointElement);
+                    if (Receiver != null) yield return new ElementValue("receiver", false, Receiver);
                 }
             }
 
@@ -673,24 +693,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> _Destination;
         
         /// <summary>
-        /// Intended "real-world" recipient for the data
-        /// </summary>
-        [FhirElement("receiver", InSummary=true, Order=110)]
-        [CLSCompliant(false)]
-		[References("Practitioner","Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Receiver
-        {
-            get { return _Receiver; }
-            set { _Receiver = value; OnPropertyChanged("Receiver"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Receiver;
-        
-        /// <summary>
         /// Real world sender of the message
         /// </summary>
-        [FhirElement("sender", InSummary=true, Order=120)]
+        [FhirElement("sender", InSummary=true, Order=110)]
         [CLSCompliant(false)]
 		[References("Practitioner","Organization")]
         [DataMember]
@@ -703,42 +708,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Sender;
         
         /// <summary>
-        /// Time that the message was sent
-        /// </summary>
-        [FhirElement("timestamp", InSummary=true, Order=130)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Instant TimestampElement
-        {
-            get { return _TimestampElement; }
-            set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Instant _TimestampElement;
-        
-        /// <summary>
-        /// Time that the message was sent
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public DateTimeOffset? Timestamp
-        {
-            get { return TimestampElement != null ? TimestampElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  TimestampElement = null; 
-                else
-                  TimestampElement = new Hl7.Fhir.Model.Instant(value);
-                OnPropertyChanged("Timestamp");
-            }
-        }
-        
-        /// <summary>
         /// The source of the data entry
         /// </summary>
-        [FhirElement("enterer", InSummary=true, Order=140)]
+        [FhirElement("enterer", InSummary=true, Order=120)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -753,7 +725,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source of the decision
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=150)]
+        [FhirElement("author", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -768,7 +740,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message source application
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=160)]
+        [FhirElement("source", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
@@ -782,7 +754,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Final responsibility for event
         /// </summary>
-        [FhirElement("responsible", InSummary=true, Order=170)]
+        [FhirElement("responsible", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("Practitioner","Organization")]
         [DataMember]
@@ -797,7 +769,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Cause of event
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=180)]
+        [FhirElement("reason", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
         {
@@ -810,7 +782,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this is a reply to prior message
         /// </summary>
-        [FhirElement("response", InSummary=true, Order=190)]
+        [FhirElement("response", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.MessageHeader.ResponseComponent Response
         {
@@ -823,7 +795,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content of the message
         /// </summary>
-        [FhirElement("focus", InSummary=true, Order=200)]
+        [FhirElement("focus", InSummary=true, Order=180)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
@@ -835,6 +807,38 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.ResourceReference> _Focus;
+        
+        /// <summary>
+        /// Link to the definition for this message
+        /// </summary>
+        [FhirElement("definition", InSummary=true, Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri DefinitionElement
+        {
+            get { return _DefinitionElement; }
+            set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _DefinitionElement;
+        
+        /// <summary>
+        /// Link to the definition for this message
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Definition
+        {
+            get { return DefinitionElement != null ? DefinitionElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DefinitionElement = null; 
+                else
+                  DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Definition");
+            }
+        }
         
 
         public override void AddDefaultConstraints()
@@ -852,9 +856,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
                 if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(Destination.DeepCopy());
-                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
-                if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.MessageHeader.MessageSourceComponent)Source.DeepCopy();
@@ -862,6 +864,7 @@ namespace Hl7.Fhir.Model
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
                 if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.ResponseComponent)Response.DeepCopy();
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
+                if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)DefinitionElement.DeepCopy();
                 return dest;
             }
             else
@@ -881,9 +884,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
-            if( !DeepComparable.Matches(Receiver, otherT.Receiver)) return false;
             if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
-            if( !DeepComparable.Matches(TimestampElement, otherT.TimestampElement)) return false;
             if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
@@ -891,6 +892,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Response, otherT.Response)) return false;
             if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
+            if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
             
             return true;
         }
@@ -903,9 +905,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
-            if( !DeepComparable.IsExactly(Receiver, otherT.Receiver)) return false;
             if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
-            if( !DeepComparable.IsExactly(TimestampElement, otherT.TimestampElement)) return false;
             if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
@@ -913,6 +913,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
             if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
+            if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
             
             return true;
         }
@@ -925,9 +926,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				if (Event != null) yield return Event;
 				foreach (var elem in Destination) { if (elem != null) yield return elem; }
-				if (Receiver != null) yield return Receiver;
 				if (Sender != null) yield return Sender;
-				if (TimestampElement != null) yield return TimestampElement;
 				if (Enterer != null) yield return Enterer;
 				if (Author != null) yield return Author;
 				if (Source != null) yield return Source;
@@ -935,6 +934,7 @@ namespace Hl7.Fhir.Model
 				if (Reason != null) yield return Reason;
 				if (Response != null) yield return Response;
 				foreach (var elem in Focus) { if (elem != null) yield return elem; }
+				if (DefinitionElement != null) yield return DefinitionElement;
             }
         }
 
@@ -946,9 +946,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Event != null) yield return new ElementValue("event", false, Event);
                 foreach (var elem in Destination) { if (elem != null) yield return new ElementValue("destination", true, elem); }
-                if (Receiver != null) yield return new ElementValue("receiver", false, Receiver);
                 if (Sender != null) yield return new ElementValue("sender", false, Sender);
-                if (TimestampElement != null) yield return new ElementValue("timestamp", false, TimestampElement);
                 if (Enterer != null) yield return new ElementValue("enterer", false, Enterer);
                 if (Author != null) yield return new ElementValue("author", false, Author);
                 if (Source != null) yield return new ElementValue("source", false, Source);
@@ -956,6 +954,7 @@ namespace Hl7.Fhir.Model
                 if (Reason != null) yield return new ElementValue("reason", false, Reason);
                 if (Response != null) yield return new ElementValue("response", false, Response);
                 foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
+                if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
             }
         }
 

@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Investigation to increase healthcare-related patient-independent knowledge
+    /// Physical entity which is the primary unit of interest in the study
     /// </summary>
     [FhirType("ResearchSubject", IsResource=true)]
     [DataContract]
@@ -72,49 +72,92 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("enrolled", "http://hl7.org/fhir/research-subject-status"), Description("Enrolled")]
-            Enrolled,
+            [EnumLiteral("eligible", "http://hl7.org/fhir/research-subject-status"), Description("Eligible")]
+            Eligible,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/research-subject-status"), Description("Active")]
-            Active,
+            [EnumLiteral("follow-up", "http://hl7.org/fhir/research-subject-status"), Description("Follow-up")]
+            FollowUp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("suspended", "http://hl7.org/fhir/research-subject-status"), Description("Suspended")]
-            Suspended,
+            [EnumLiteral("ineligible", "http://hl7.org/fhir/research-subject-status"), Description("Ineligible")]
+            Ineligible,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("not-registered", "http://hl7.org/fhir/research-subject-status"), Description("Not Registered")]
+            NotRegistered,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("off-study", "http://hl7.org/fhir/research-subject-status"), Description("Off-study")]
+            OffStudy,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("on-study", "http://hl7.org/fhir/research-subject-status"), Description("On-study")]
+            OnStudy,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("on-study-intervention", "http://hl7.org/fhir/research-subject-status"), Description("On-study-intervention")]
+            OnStudyIntervention,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("on-study-observation", "http://hl7.org/fhir/research-subject-status"), Description("On-study-observation")]
+            OnStudyObservation,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("pending-on-study", "http://hl7.org/fhir/research-subject-status"), Description("Pending on-study")]
+            PendingOnStudy,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("potential-candidate", "http://hl7.org/fhir/research-subject-status"), Description("Potential Candidate")]
+            PotentialCandidate,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-subject-status)
+            /// </summary>
+            [EnumLiteral("screening", "http://hl7.org/fhir/research-subject-status"), Description("Screening")]
+            Screening,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
             [EnumLiteral("withdrawn", "http://hl7.org/fhir/research-subject-status"), Description("Withdrawn")]
             Withdrawn,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/research-subject-status)
-            /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/research-subject-status"), Description("Completed")]
-            Completed,
         }
 
         /// <summary>
-        /// Business Identifier for research subject
+        /// Business Identifier for research subject in a study
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// candidate | enrolled | active | suspended | withdrawn | completed
+        /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -128,7 +171,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> _StatusElement;
         
         /// <summary>
-        /// candidate | enrolled | active | suspended | withdrawn | completed
+        /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -284,7 +327,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>)StatusElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopy();
@@ -345,7 +388,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Period != null) yield return Period;
 				if (Study != null) yield return Study;
@@ -362,7 +405,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Period != null) yield return new ElementValue("period", false, Period);
                 if (Study != null) yield return new ElementValue("study", false, Study);

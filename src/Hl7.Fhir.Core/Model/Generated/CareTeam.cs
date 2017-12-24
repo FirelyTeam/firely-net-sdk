@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -434,9 +434,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _ManagingOrganization;
         
         /// <summary>
+        /// A contact detail for the care team (that applies to all members)
+        /// </summary>
+        [FhirElement("telecom", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ContactPoint> Telecom
+        {
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+        
+        /// <summary>
         /// Comments made about the CareTeam
         /// </summary>
-        [FhirElement("note", Order=200)]
+        [FhirElement("note", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -454,7 +468,7 @@ namespace Hl7.Fhir.Model
             Key = "ctm-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
-            Xpath = "contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))"
+            Xpath = "starts-with(f:member/f:reference/@value, 'Practitioner/') or contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))"
         };
 
         public override void AddDefaultConstraints()
@@ -482,6 +496,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(ManagingOrganization != null) dest.ManagingOrganization = new List<Hl7.Fhir.Model.ResourceReference>(ManagingOrganization.DeepCopy());
+                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
@@ -511,6 +526,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
@@ -533,6 +549,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
@@ -555,6 +572,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
 				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				foreach (var elem in ManagingOrganization) { if (elem != null) yield return elem; }
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
@@ -576,6 +594,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
                 foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
                 foreach (var elem in ManagingOrganization) { if (elem != null) yield return new ElementValue("managingOrganization", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
             }
         }

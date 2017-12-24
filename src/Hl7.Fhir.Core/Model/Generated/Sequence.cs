@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1104,6 +1104,19 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Receiver Operator Characteristic (ROC) Curve
+            /// </summary>
+            [FhirElement("roc", InSummary=true, Order=180)]
+            [DataMember]
+            public Hl7.Fhir.Model.Sequence.RocComponent Roc
+            {
+                get { return _Roc; }
+                set { _Roc = value; OnPropertyChanged("Roc"); }
+            }
+            
+            private Hl7.Fhir.Model.Sequence.RocComponent _Roc;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as QualityComponent;
@@ -1125,6 +1138,7 @@ namespace Hl7.Fhir.Model
                     if(PrecisionElement != null) dest.PrecisionElement = (Hl7.Fhir.Model.FhirDecimal)PrecisionElement.DeepCopy();
                     if(RecallElement != null) dest.RecallElement = (Hl7.Fhir.Model.FhirDecimal)RecallElement.DeepCopy();
                     if(FScoreElement != null) dest.FScoreElement = (Hl7.Fhir.Model.FhirDecimal)FScoreElement.DeepCopy();
+                    if(Roc != null) dest.Roc = (Hl7.Fhir.Model.Sequence.RocComponent)Roc.DeepCopy();
                     return dest;
                 }
                 else
@@ -1156,6 +1170,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PrecisionElement, otherT.PrecisionElement)) return false;
                 if( !DeepComparable.Matches(RecallElement, otherT.RecallElement)) return false;
                 if( !DeepComparable.Matches(FScoreElement, otherT.FScoreElement)) return false;
+                if( !DeepComparable.Matches(Roc, otherT.Roc)) return false;
                 
                 return true;
             }
@@ -1180,6 +1195,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PrecisionElement, otherT.PrecisionElement)) return false;
                 if( !DeepComparable.IsExactly(RecallElement, otherT.RecallElement)) return false;
                 if( !DeepComparable.IsExactly(FScoreElement, otherT.FScoreElement)) return false;
+                if( !DeepComparable.IsExactly(Roc, otherT.Roc)) return false;
                 
                 return true;
             }
@@ -1205,6 +1221,7 @@ namespace Hl7.Fhir.Model
                     if (PrecisionElement != null) yield return PrecisionElement;
                     if (RecallElement != null) yield return RecallElement;
                     if (FScoreElement != null) yield return FScoreElement;
+                    if (Roc != null) yield return Roc;
                 }
             }
 
@@ -1228,6 +1245,341 @@ namespace Hl7.Fhir.Model
                     if (PrecisionElement != null) yield return new ElementValue("precision", false, PrecisionElement);
                     if (RecallElement != null) yield return new ElementValue("recall", false, RecallElement);
                     if (FScoreElement != null) yield return new ElementValue("fScore", false, FScoreElement);
+                    if (Roc != null) yield return new ElementValue("roc", false, Roc);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("RocComponent")]
+        [DataContract]
+        public partial class RocComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "RocComponent"; } }
+            
+            /// <summary>
+            /// Genotype quality score
+            /// </summary>
+            [FhirElement("score", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Integer> ScoreElement
+            {
+                get { if(_ScoreElement==null) _ScoreElement = new List<Hl7.Fhir.Model.Integer>(); return _ScoreElement; }
+                set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Integer> _ScoreElement;
+            
+            /// <summary>
+            /// Genotype quality score
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> Score
+            {
+                get { return ScoreElement != null ? ScoreElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        ScoreElement = null; 
+                    else
+                        ScoreElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                    OnPropertyChanged("Score");
+                }
+            }
+            
+            /// <summary>
+            /// Roc score true positive numbers
+            /// </summary>
+            [FhirElement("numTP", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Integer> NumTPElement
+            {
+                get { if(_NumTPElement==null) _NumTPElement = new List<Hl7.Fhir.Model.Integer>(); return _NumTPElement; }
+                set { _NumTPElement = value; OnPropertyChanged("NumTPElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Integer> _NumTPElement;
+            
+            /// <summary>
+            /// Roc score true positive numbers
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> NumTP
+            {
+                get { return NumTPElement != null ? NumTPElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        NumTPElement = null; 
+                    else
+                        NumTPElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                    OnPropertyChanged("NumTP");
+                }
+            }
+            
+            /// <summary>
+            /// Roc score false positive numbers
+            /// </summary>
+            [FhirElement("numFP", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Integer> NumFPElement
+            {
+                get { if(_NumFPElement==null) _NumFPElement = new List<Hl7.Fhir.Model.Integer>(); return _NumFPElement; }
+                set { _NumFPElement = value; OnPropertyChanged("NumFPElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Integer> _NumFPElement;
+            
+            /// <summary>
+            /// Roc score false positive numbers
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> NumFP
+            {
+                get { return NumFPElement != null ? NumFPElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        NumFPElement = null; 
+                    else
+                        NumFPElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                    OnPropertyChanged("NumFP");
+                }
+            }
+            
+            /// <summary>
+            /// Roc score false negative numbers
+            /// </summary>
+            [FhirElement("numFN", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Integer> NumFNElement
+            {
+                get { if(_NumFNElement==null) _NumFNElement = new List<Hl7.Fhir.Model.Integer>(); return _NumFNElement; }
+                set { _NumFNElement = value; OnPropertyChanged("NumFNElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Integer> _NumFNElement;
+            
+            /// <summary>
+            /// Roc score false negative numbers
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> NumFN
+            {
+                get { return NumFNElement != null ? NumFNElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        NumFNElement = null; 
+                    else
+                        NumFNElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
+                    OnPropertyChanged("NumFN");
+                }
+            }
+            
+            /// <summary>
+            /// Precision of the GQ score
+            /// </summary>
+            [FhirElement("precision", InSummary=true, Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirDecimal> PrecisionElement
+            {
+                get { if(_PrecisionElement==null) _PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _PrecisionElement; }
+                set { _PrecisionElement = value; OnPropertyChanged("PrecisionElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirDecimal> _PrecisionElement;
+            
+            /// <summary>
+            /// Precision of the GQ score
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<decimal?> Precision
+            {
+                get { return PrecisionElement != null ? PrecisionElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        PrecisionElement = null; 
+                    else
+                        PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
+                    OnPropertyChanged("Precision");
+                }
+            }
+            
+            /// <summary>
+            /// Sensitivity of the GQ score
+            /// </summary>
+            [FhirElement("sensitivity", InSummary=true, Order=90)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirDecimal> SensitivityElement
+            {
+                get { if(_SensitivityElement==null) _SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _SensitivityElement; }
+                set { _SensitivityElement = value; OnPropertyChanged("SensitivityElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirDecimal> _SensitivityElement;
+            
+            /// <summary>
+            /// Sensitivity of the GQ score
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<decimal?> Sensitivity
+            {
+                get { return SensitivityElement != null ? SensitivityElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        SensitivityElement = null; 
+                    else
+                        SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
+                    OnPropertyChanged("Sensitivity");
+                }
+            }
+            
+            /// <summary>
+            /// FScore of the GQ score
+            /// </summary>
+            [FhirElement("fMeasure", InSummary=true, Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirDecimal> FMeasureElement
+            {
+                get { if(_FMeasureElement==null) _FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _FMeasureElement; }
+                set { _FMeasureElement = value; OnPropertyChanged("FMeasureElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirDecimal> _FMeasureElement;
+            
+            /// <summary>
+            /// FScore of the GQ score
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<decimal?> FMeasure
+            {
+                get { return FMeasureElement != null ? FMeasureElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        FMeasureElement = null; 
+                    else
+                        FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
+                    OnPropertyChanged("FMeasure");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as RocComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(ScoreElement != null) dest.ScoreElement = new List<Hl7.Fhir.Model.Integer>(ScoreElement.DeepCopy());
+                    if(NumTPElement != null) dest.NumTPElement = new List<Hl7.Fhir.Model.Integer>(NumTPElement.DeepCopy());
+                    if(NumFPElement != null) dest.NumFPElement = new List<Hl7.Fhir.Model.Integer>(NumFPElement.DeepCopy());
+                    if(NumFNElement != null) dest.NumFNElement = new List<Hl7.Fhir.Model.Integer>(NumFNElement.DeepCopy());
+                    if(PrecisionElement != null) dest.PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(PrecisionElement.DeepCopy());
+                    if(SensitivityElement != null) dest.SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(SensitivityElement.DeepCopy());
+                    if(FMeasureElement != null) dest.FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(FMeasureElement.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new RocComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as RocComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(ScoreElement, otherT.ScoreElement)) return false;
+                if( !DeepComparable.Matches(NumTPElement, otherT.NumTPElement)) return false;
+                if( !DeepComparable.Matches(NumFPElement, otherT.NumFPElement)) return false;
+                if( !DeepComparable.Matches(NumFNElement, otherT.NumFNElement)) return false;
+                if( !DeepComparable.Matches(PrecisionElement, otherT.PrecisionElement)) return false;
+                if( !DeepComparable.Matches(SensitivityElement, otherT.SensitivityElement)) return false;
+                if( !DeepComparable.Matches(FMeasureElement, otherT.FMeasureElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as RocComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(ScoreElement, otherT.ScoreElement)) return false;
+                if( !DeepComparable.IsExactly(NumTPElement, otherT.NumTPElement)) return false;
+                if( !DeepComparable.IsExactly(NumFPElement, otherT.NumFPElement)) return false;
+                if( !DeepComparable.IsExactly(NumFNElement, otherT.NumFNElement)) return false;
+                if( !DeepComparable.IsExactly(PrecisionElement, otherT.PrecisionElement)) return false;
+                if( !DeepComparable.IsExactly(SensitivityElement, otherT.SensitivityElement)) return false;
+                if( !DeepComparable.IsExactly(FMeasureElement, otherT.FMeasureElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    foreach (var elem in ScoreElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in NumTPElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in NumFPElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in NumFNElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in PrecisionElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in SensitivityElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in FMeasureElement) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in ScoreElement) { if (elem != null) yield return new ElementValue("score", true, elem); }
+                    foreach (var elem in NumTPElement) { if (elem != null) yield return new ElementValue("numTP", true, elem); }
+                    foreach (var elem in NumFPElement) { if (elem != null) yield return new ElementValue("numFP", true, elem); }
+                    foreach (var elem in NumFNElement) { if (elem != null) yield return new ElementValue("numFN", true, elem); }
+                    foreach (var elem in PrecisionElement) { if (elem != null) yield return new ElementValue("precision", true, elem); }
+                    foreach (var elem in SensitivityElement) { if (elem != null) yield return new ElementValue("sensitivity", true, elem); }
+                    foreach (var elem in FMeasureElement) { if (elem != null) yield return new ElementValue("fMeasure", true, elem); }
                 }
             }
 
@@ -1526,6 +1878,505 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("StructureVariantComponent")]
+        [DataContract]
+        public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "StructureVariantComponent"; } }
+            
+            /// <summary>
+            /// Precision of boundaries
+            /// </summary>
+            [FhirElement("precision", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString PrecisionElement
+            {
+                get { return _PrecisionElement; }
+                set { _PrecisionElement = value; OnPropertyChanged("PrecisionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _PrecisionElement;
+            
+            /// <summary>
+            /// Precision of boundaries
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Precision
+            {
+                get { return PrecisionElement != null ? PrecisionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        PrecisionElement = null; 
+                    else
+                        PrecisionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Precision");
+                }
+            }
+            
+            /// <summary>
+            /// Structural Variant reported aCGH ratio
+            /// </summary>
+            [FhirElement("reportedaCGHRatio", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal ReportedaCGHRatioElement
+            {
+                get { return _ReportedaCGHRatioElement; }
+                set { _ReportedaCGHRatioElement = value; OnPropertyChanged("ReportedaCGHRatioElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _ReportedaCGHRatioElement;
+            
+            /// <summary>
+            /// Structural Variant reported aCGH ratio
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? ReportedaCGHRatio
+            {
+                get { return ReportedaCGHRatioElement != null ? ReportedaCGHRatioElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        ReportedaCGHRatioElement = null; 
+                    else
+                        ReportedaCGHRatioElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("ReportedaCGHRatio");
+                }
+            }
+            
+            /// <summary>
+            /// Structural Variant Length
+            /// </summary>
+            [FhirElement("length", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer LengthElement
+            {
+                get { return _LengthElement; }
+                set { _LengthElement = value; OnPropertyChanged("LengthElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _LengthElement;
+            
+            /// <summary>
+            /// Structural Variant Length
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Length
+            {
+                get { return LengthElement != null ? LengthElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        LengthElement = null; 
+                    else
+                        LengthElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Length");
+                }
+            }
+            
+            /// <summary>
+            /// Structural variant outer
+            /// </summary>
+            [FhirElement("outer", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Sequence.OuterComponent Outer
+            {
+                get { return _Outer; }
+                set { _Outer = value; OnPropertyChanged("Outer"); }
+            }
+            
+            private Hl7.Fhir.Model.Sequence.OuterComponent _Outer;
+            
+            /// <summary>
+            /// Structural variant inner
+            /// </summary>
+            [FhirElement("inner", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.Sequence.InnerComponent Inner
+            {
+                get { return _Inner; }
+                set { _Inner = value; OnPropertyChanged("Inner"); }
+            }
+            
+            private Hl7.Fhir.Model.Sequence.InnerComponent _Inner;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as StructureVariantComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(PrecisionElement != null) dest.PrecisionElement = (Hl7.Fhir.Model.FhirString)PrecisionElement.DeepCopy();
+                    if(ReportedaCGHRatioElement != null) dest.ReportedaCGHRatioElement = (Hl7.Fhir.Model.FhirDecimal)ReportedaCGHRatioElement.DeepCopy();
+                    if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopy();
+                    if(Outer != null) dest.Outer = (Hl7.Fhir.Model.Sequence.OuterComponent)Outer.DeepCopy();
+                    if(Inner != null) dest.Inner = (Hl7.Fhir.Model.Sequence.InnerComponent)Inner.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new StructureVariantComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as StructureVariantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(PrecisionElement, otherT.PrecisionElement)) return false;
+                if( !DeepComparable.Matches(ReportedaCGHRatioElement, otherT.ReportedaCGHRatioElement)) return false;
+                if( !DeepComparable.Matches(LengthElement, otherT.LengthElement)) return false;
+                if( !DeepComparable.Matches(Outer, otherT.Outer)) return false;
+                if( !DeepComparable.Matches(Inner, otherT.Inner)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as StructureVariantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(PrecisionElement, otherT.PrecisionElement)) return false;
+                if( !DeepComparable.IsExactly(ReportedaCGHRatioElement, otherT.ReportedaCGHRatioElement)) return false;
+                if( !DeepComparable.IsExactly(LengthElement, otherT.LengthElement)) return false;
+                if( !DeepComparable.IsExactly(Outer, otherT.Outer)) return false;
+                if( !DeepComparable.IsExactly(Inner, otherT.Inner)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (PrecisionElement != null) yield return PrecisionElement;
+                    if (ReportedaCGHRatioElement != null) yield return ReportedaCGHRatioElement;
+                    if (LengthElement != null) yield return LengthElement;
+                    if (Outer != null) yield return Outer;
+                    if (Inner != null) yield return Inner;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (PrecisionElement != null) yield return new ElementValue("precision", false, PrecisionElement);
+                    if (ReportedaCGHRatioElement != null) yield return new ElementValue("reportedaCGHRatio", false, ReportedaCGHRatioElement);
+                    if (LengthElement != null) yield return new ElementValue("length", false, LengthElement);
+                    if (Outer != null) yield return new ElementValue("outer", false, Outer);
+                    if (Inner != null) yield return new ElementValue("inner", false, Inner);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("OuterComponent")]
+        [DataContract]
+        public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "OuterComponent"; } }
+            
+            /// <summary>
+            /// Structural Variant Outer Start
+            /// </summary>
+            [FhirElement("start", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer StartElement
+            {
+                get { return _StartElement; }
+                set { _StartElement = value; OnPropertyChanged("StartElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _StartElement;
+            
+            /// <summary>
+            /// Structural Variant Outer Start
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Start
+            {
+                get { return StartElement != null ? StartElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        StartElement = null; 
+                    else
+                        StartElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Start");
+                }
+            }
+            
+            /// <summary>
+            /// Structural Variant Outer End
+            /// </summary>
+            [FhirElement("end", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer EndElement
+            {
+                get { return _EndElement; }
+                set { _EndElement = value; OnPropertyChanged("EndElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _EndElement;
+            
+            /// <summary>
+            /// Structural Variant Outer End
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? End
+            {
+                get { return EndElement != null ? EndElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        EndElement = null; 
+                    else
+                        EndElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("End");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as OuterComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
+                    if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new OuterComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as OuterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
+                if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as OuterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
+                if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (StartElement != null) yield return StartElement;
+                    if (EndElement != null) yield return EndElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                    if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("InnerComponent")]
+        [DataContract]
+        public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "InnerComponent"; } }
+            
+            /// <summary>
+            /// Structural Variant Inner Start
+            /// </summary>
+            [FhirElement("start", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer StartElement
+            {
+                get { return _StartElement; }
+                set { _StartElement = value; OnPropertyChanged("StartElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _StartElement;
+            
+            /// <summary>
+            /// Structural Variant Inner Start
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Start
+            {
+                get { return StartElement != null ? StartElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        StartElement = null; 
+                    else
+                        StartElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("Start");
+                }
+            }
+            
+            /// <summary>
+            /// Structural Variant Inner End
+            /// </summary>
+            [FhirElement("end", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer EndElement
+            {
+                get { return _EndElement; }
+                set { _EndElement = value; OnPropertyChanged("EndElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _EndElement;
+            
+            /// <summary>
+            /// Structural Variant Inner End
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? End
+            {
+                get { return EndElement != null ? EndElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        EndElement = null; 
+                    else
+                        EndElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("End");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as InnerComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
+                    if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new InnerComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as InnerComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
+                if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as InnerComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
+                if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (StartElement != null) yield return StartElement;
+                    if (EndElement != null) yield return EndElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                    if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                }
+            }
+
+            
+        }
+        
+        
         /// <summary>
         /// Unique ID for this particular sequence. This is a FHIR-defined id
         /// </summary>
@@ -1813,6 +2664,20 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Pointer;
         
+        /// <summary>
+        /// Structural variant
+        /// </summary>
+        [FhirElement("structureVariant", InSummary=true, Order=240)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Sequence.StructureVariantComponent> StructureVariant
+        {
+            get { if(_StructureVariant==null) _StructureVariant = new List<Hl7.Fhir.Model.Sequence.StructureVariantComponent>(); return _StructureVariant; }
+            set { _StructureVariant = value; OnPropertyChanged("StructureVariant"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Sequence.StructureVariantComponent> _StructureVariant;
+        
 
         public static ElementDefinition.ConstraintComponent Sequence_SEQ_3 = new ElementDefinition.ConstraintComponent()
         {
@@ -1882,6 +2747,7 @@ namespace Hl7.Fhir.Model
                 if(ReadCoverageElement != null) dest.ReadCoverageElement = (Hl7.Fhir.Model.Integer)ReadCoverageElement.DeepCopy();
                 if(Repository != null) dest.Repository = new List<Hl7.Fhir.Model.Sequence.RepositoryComponent>(Repository.DeepCopy());
                 if(Pointer != null) dest.Pointer = new List<Hl7.Fhir.Model.ResourceReference>(Pointer.DeepCopy());
+                if(StructureVariant != null) dest.StructureVariant = new List<Hl7.Fhir.Model.Sequence.StructureVariantComponent>(StructureVariant.DeepCopy());
                 return dest;
             }
             else
@@ -1914,6 +2780,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReadCoverageElement, otherT.ReadCoverageElement)) return false;
             if( !DeepComparable.Matches(Repository, otherT.Repository)) return false;
             if( !DeepComparable.Matches(Pointer, otherT.Pointer)) return false;
+            if( !DeepComparable.Matches(StructureVariant, otherT.StructureVariant)) return false;
             
             return true;
         }
@@ -1939,6 +2806,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReadCoverageElement, otherT.ReadCoverageElement)) return false;
             if( !DeepComparable.IsExactly(Repository, otherT.Repository)) return false;
             if( !DeepComparable.IsExactly(Pointer, otherT.Pointer)) return false;
+            if( !DeepComparable.IsExactly(StructureVariant, otherT.StructureVariant)) return false;
             
             return true;
         }
@@ -1964,6 +2832,7 @@ namespace Hl7.Fhir.Model
 				if (ReadCoverageElement != null) yield return ReadCoverageElement;
 				foreach (var elem in Repository) { if (elem != null) yield return elem; }
 				foreach (var elem in Pointer) { if (elem != null) yield return elem; }
+				foreach (var elem in StructureVariant) { if (elem != null) yield return elem; }
             }
         }
 
@@ -1988,6 +2857,7 @@ namespace Hl7.Fhir.Model
                 if (ReadCoverageElement != null) yield return new ElementValue("readCoverage", false, ReadCoverageElement);
                 foreach (var elem in Repository) { if (elem != null) yield return new ElementValue("repository", true, elem); }
                 foreach (var elem in Pointer) { if (elem != null) yield return new ElementValue("pointer", true, elem); }
+                foreach (var elem in StructureVariant) { if (elem != null) yield return new ElementValue("structureVariant", true, elem); }
             }
         }
 

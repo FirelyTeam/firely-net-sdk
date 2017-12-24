@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// accepted | declined | tentative | needs-action
             /// </summary>
-            [FhirElement("status", Order=70)]
+            [FhirElement("status", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ParticipationStatus> StatusElement
@@ -709,11 +709,43 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The ReferralRequest provided as information to allocate to the Encounter
+        /// Detailed information and instructions for the patient
         /// </summary>
-        [FhirElement("incomingReferral", Order=260)]
+        [FhirElement("patientInstruction", Order=260)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString PatientInstructionElement
+        {
+            get { return _PatientInstructionElement; }
+            set { _PatientInstructionElement = value; OnPropertyChanged("PatientInstructionElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _PatientInstructionElement;
+        
+        /// <summary>
+        /// Detailed information and instructions for the patient
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string PatientInstruction
+        {
+            get { return PatientInstructionElement != null ? PatientInstructionElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  PatientInstructionElement = null; 
+                else
+                  PatientInstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("PatientInstruction");
+            }
+        }
+        
+        /// <summary>
+        /// The ServiceRequest provided as information to allocate to the Encounter
+        /// </summary>
+        [FhirElement("incomingReferral", Order=270)]
         [CLSCompliant(false)]
-		[References("ReferralRequest")]
+		[References("ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> IncomingReferral
@@ -727,7 +759,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Participants involved in appointment
         /// </summary>
-        [FhirElement("participant", Order=270)]
+        [FhirElement("participant", Order=280)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
@@ -741,7 +773,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Potential date/time interval(s) requested to allocate the appointment within
         /// </summary>
-        [FhirElement("requestedPeriod", Order=280)]
+        [FhirElement("requestedPeriod", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Period> RequestedPeriod
@@ -813,6 +845,7 @@ namespace Hl7.Fhir.Model
                 if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
+                if(PatientInstructionElement != null) dest.PatientInstructionElement = (Hl7.Fhir.Model.FhirString)PatientInstructionElement.DeepCopy();
                 if(IncomingReferral != null) dest.IncomingReferral = new List<Hl7.Fhir.Model.ResourceReference>(IncomingReferral.DeepCopy());
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopy());
                 if(RequestedPeriod != null) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopy());
@@ -850,6 +883,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Slot, otherT.Slot)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.Matches(PatientInstructionElement, otherT.PatientInstructionElement)) return false;
             if( !DeepComparable.Matches(IncomingReferral, otherT.IncomingReferral)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
             if( !DeepComparable.Matches(RequestedPeriod, otherT.RequestedPeriod)) return false;
@@ -880,6 +914,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Slot, otherT.Slot)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.IsExactly(PatientInstructionElement, otherT.PatientInstructionElement)) return false;
             if( !DeepComparable.IsExactly(IncomingReferral, otherT.IncomingReferral)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
             if( !DeepComparable.IsExactly(RequestedPeriod, otherT.RequestedPeriod)) return false;
@@ -910,6 +945,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Slot) { if (elem != null) yield return elem; }
 				if (CreatedElement != null) yield return CreatedElement;
 				if (CommentElement != null) yield return CommentElement;
+				if (PatientInstructionElement != null) yield return PatientInstructionElement;
 				foreach (var elem in IncomingReferral) { if (elem != null) yield return elem; }
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
 				foreach (var elem in RequestedPeriod) { if (elem != null) yield return elem; }
@@ -939,6 +975,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Slot) { if (elem != null) yield return new ElementValue("slot", true, elem); }
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                if (PatientInstructionElement != null) yield return new ElementValue("patientInstruction", false, PatientInstructionElement);
                 foreach (var elem in IncomingReferral) { if (elem != null) yield return new ElementValue("incomingReferral", true, elem); }
                 foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
                 foreach (var elem in RequestedPeriod) { if (elem != null) yield return new ElementValue("requestedPeriod", true, elem); }

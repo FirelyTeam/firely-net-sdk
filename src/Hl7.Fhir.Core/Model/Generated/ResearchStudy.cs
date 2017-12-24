@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -66,26 +66,32 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("draft", "http://hl7.org/fhir/research-study-status"), Description("Draft")]
-            Draft,
+            [EnumLiteral("active", "http://hl7.org/fhir/research-study-status"), Description("Active")]
+            Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("in-progress", "http://hl7.org/fhir/research-study-status"), Description("In-progress")]
-            InProgress,
+            [EnumLiteral("administratively-completed", "http://hl7.org/fhir/research-study-status"), Description("Administratively Completed")]
+            AdministrativelyCompleted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("suspended", "http://hl7.org/fhir/research-study-status"), Description("Suspended")]
-            Suspended,
+            [EnumLiteral("approved", "http://hl7.org/fhir/research-study-status"), Description("Approved")]
+            Approved,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("stopped", "http://hl7.org/fhir/research-study-status"), Description("Stopped")]
-            Stopped,
+            [EnumLiteral("closed-to-accrual", "http://hl7.org/fhir/research-study-status"), Description("Closed to Accrual")]
+            ClosedToAccrual,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-study-status)
+            /// </summary>
+            [EnumLiteral("closed-to-accrual-and-intervention", "http://hl7.org/fhir/research-study-status"), Description("Closed to Accrual and Intervention")]
+            ClosedToAccrualAndIntervention,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
@@ -96,8 +102,32 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/research-study-status"), Description("Entered in error")]
-            EnteredInError,
+            [EnumLiteral("disapproved", "http://hl7.org/fhir/research-study-status"), Description("Disapproved")]
+            Disapproved,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-study-status)
+            /// </summary>
+            [EnumLiteral("in-review", "http://hl7.org/fhir/research-study-status"), Description("In Review")]
+            InReview,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-study-status)
+            /// </summary>
+            [EnumLiteral("temporarily-closed-to-accrual", "http://hl7.org/fhir/research-study-status"), Description("Temporarily Closed to Accrual")]
+            TemporarilyClosedToAccrual,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-study-status)
+            /// </summary>
+            [EnumLiteral("temporarily-closed-to-accrual-and-intervention", "http://hl7.org/fhir/research-study-status"), Description("Temporarily Closed to Accrual and Intervention")]
+            TemporarilyClosedToAccrualAndIntervention,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/research-study-status)
+            /// </summary>
+            [EnumLiteral("withdrawn", "http://hl7.org/fhir/research-study-status"), Description("Withdrawn")]
+            Withdrawn,
         }
 
         [FhirType("ArmComponent")]
@@ -143,15 +173,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Categorization of study arm
             /// </summary>
-            [FhirElement("code", Order=50)]
+            [FhirElement("type", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public Hl7.Fhir.Model.CodeableConcept Type
             {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// Short explanation of study path
@@ -193,7 +223,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     return dest;
                 }
@@ -213,7 +243,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 
                 return true;
@@ -226,7 +256,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 
                 return true;
@@ -240,7 +270,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
-                    if (Code != null) yield return Code;
+                    if (Type != null) yield return Type;
                     if (DescriptionElement != null) yield return DescriptionElement;
                 }
             }
@@ -252,8 +282,131 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (Type != null) yield return new ElementValue("type", false, Type);
                     if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("ObjectiveComponent")]
+        [DataContract]
+        public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ObjectiveComponent"; } }
+            
+            /// <summary>
+            /// Label for the objective
+            /// </summary>
+            [FhirElement("name", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Label for the objective
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        NameElement = null; 
+                    else
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// primary | secondary | exploratory
+            /// </summary>
+            [FhirElement("type", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ObjectiveComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ObjectiveComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ObjectiveComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ObjectiveComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (NameElement != null) yield return NameElement;
+                    if (Type != null) yield return Type;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (Type != null) yield return new ElementValue("type", false, Type);
                 }
             }
 
@@ -340,7 +493,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
-        /// draft | in-progress | suspended | stopped | completed | entered-in-error
+        /// active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
         /// </summary>
         [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
@@ -354,7 +507,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ResearchStudy.ResearchStudyStatus> _StatusElement;
         
         /// <summary>
-        /// draft | in-progress | suspended | stopped | completed | entered-in-error
+        /// active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -373,9 +526,35 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
+        /// </summary>
+        [FhirElement("primaryPurposeType", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept PrimaryPurposeType
+        {
+            get { return _PrimaryPurposeType; }
+            set { _PrimaryPurposeType = value; OnPropertyChanged("PrimaryPurposeType"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _PrimaryPurposeType;
+        
+        /// <summary>
+        /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
+        /// </summary>
+        [FhirElement("phase", InSummary=true, Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Phase
+        {
+            get { return _Phase; }
+            set { _Phase = value; OnPropertyChanged("Phase"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Phase;
+        
+        /// <summary>
         /// Classifications for the study
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=140)]
+        [FhirElement("category", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -387,9 +566,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
-        /// Drugs, devices, conditions, etc. under study
+        /// Drugs, devices, etc. under study
         /// </summary>
-        [FhirElement("focus", InSummary=true, Order=150)]
+        [FhirElement("focus", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Focus
@@ -401,9 +580,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Focus;
         
         /// <summary>
+        /// Condition being studied
+        /// </summary>
+        [FhirElement("condition", InSummary=true, Order=180)]
+        [CLSCompliant(false)]
+		[References("Condition")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Condition
+        {
+            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Condition; }
+            set { _Condition = value; OnPropertyChanged("Condition"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Condition;
+        
+        /// <summary>
         /// Contact details for the study
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=160)]
+        [FhirElement("contact", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -417,7 +612,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// References and dependencies
         /// </summary>
-        [FhirElement("relatedArtifact", Order=170)]
+        [FhirElement("relatedArtifact", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<RelatedArtifact> RelatedArtifact
@@ -431,7 +626,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Used to search for the study
         /// </summary>
-        [FhirElement("keyword", InSummary=true, Order=180)]
+        [FhirElement("keyword", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Keyword
@@ -445,21 +640,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Geographic region(s) for study
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=190)]
+        [FhirElement("location", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
+        public List<Hl7.Fhir.Model.CodeableConcept> Location
         {
-            get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
-            set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Location; }
+            set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Location;
         
         /// <summary>
         /// What this is study doing
         /// </summary>
-        [FhirElement("description", Order=200)]
+        [FhirElement("description", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -472,7 +667,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Inclusion &amp; exclusion criteria
         /// </summary>
-        [FhirElement("enrollment", InSummary=true, Order=210)]
+        [FhirElement("enrollment", InSummary=true, Order=240)]
         [CLSCompliant(false)]
 		[References("Group")]
         [Cardinality(Min=0,Max=-1)]
@@ -488,7 +683,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the study began and ended
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=220)]
+        [FhirElement("period", InSummary=true, Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -499,9 +694,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
-        /// Organization responsible for the study
+        /// Organization that initiates and is legally responsible for the study
         /// </summary>
-        [FhirElement("sponsor", InSummary=true, Order=230)]
+        [FhirElement("sponsor", InSummary=true, Order=260)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -514,9 +709,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Sponsor;
         
         /// <summary>
-        /// The individual responsible for the study
+        /// Researcher who oversees multiple aspects of the study
         /// </summary>
-        [FhirElement("principalInvestigator", InSummary=true, Order=240)]
+        [FhirElement("principalInvestigator", InSummary=true, Order=270)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -529,9 +724,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _PrincipalInvestigator;
         
         /// <summary>
-        /// Location involved in study execution
+        /// Facility where study activities are conducted
         /// </summary>
-        [FhirElement("site", InSummary=true, Order=250)]
+        [FhirElement("site", InSummary=true, Order=280)]
         [CLSCompliant(false)]
 		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
@@ -545,9 +740,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Site;
         
         /// <summary>
-        /// Reason for terminating study early
+        /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
         /// </summary>
-        [FhirElement("reasonStopped", InSummary=true, Order=260)]
+        [FhirElement("reasonStopped", InSummary=true, Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ReasonStopped
         {
@@ -558,9 +753,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _ReasonStopped;
         
         /// <summary>
-        /// Comments made about the event
+        /// Comments made about the study
         /// </summary>
-        [FhirElement("note", Order=270)]
+        [FhirElement("note", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -574,7 +769,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Defined path through the study for a subject
         /// </summary>
-        [FhirElement("arm", Order=280)]
+        [FhirElement("arm", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResearchStudy.ArmComponent> Arm
@@ -584,6 +779,20 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.ResearchStudy.ArmComponent> _Arm;
+        
+        /// <summary>
+        /// A goal for the study
+        /// </summary>
+        [FhirElement("objective", Order=320)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> Objective
+        {
+            get { if(_Objective==null) _Objective = new List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent>(); return _Objective; }
+            set { _Objective = value; OnPropertyChanged("Objective"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> _Objective;
         
 
         public override void AddDefaultConstraints()
@@ -604,12 +813,15 @@ namespace Hl7.Fhir.Model
                 if(Protocol != null) dest.Protocol = new List<Hl7.Fhir.Model.ResourceReference>(Protocol.DeepCopy());
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ResearchStudy.ResearchStudyStatus>)StatusElement.DeepCopy();
+                if(PrimaryPurposeType != null) dest.PrimaryPurposeType = (Hl7.Fhir.Model.CodeableConcept)PrimaryPurposeType.DeepCopy();
+                if(Phase != null) dest.Phase = (Hl7.Fhir.Model.CodeableConcept)Phase.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.CodeableConcept>(Focus.DeepCopy());
+                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.ResourceReference>(Condition.DeepCopy());
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.CodeableConcept>(Keyword.DeepCopy());
-                if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.CodeableConcept>(Location.DeepCopy());
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(Enrollment != null) dest.Enrollment = new List<Hl7.Fhir.Model.ResourceReference>(Enrollment.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
@@ -619,6 +831,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonStopped != null) dest.ReasonStopped = (Hl7.Fhir.Model.CodeableConcept)ReasonStopped.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Arm != null) dest.Arm = new List<Hl7.Fhir.Model.ResearchStudy.ArmComponent>(Arm.DeepCopy());
+                if(Objective != null) dest.Objective = new List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent>(Objective.DeepCopy());
                 return dest;
             }
             else
@@ -641,12 +854,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Protocol, otherT.Protocol)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(PrimaryPurposeType, otherT.PrimaryPurposeType)) return false;
+            if( !DeepComparable.Matches(Phase, otherT.Phase)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
+            if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.Matches(Keyword, otherT.Keyword)) return false;
-            if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(Enrollment, otherT.Enrollment)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -656,6 +872,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReasonStopped, otherT.ReasonStopped)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Arm, otherT.Arm)) return false;
+            if( !DeepComparable.Matches(Objective, otherT.Objective)) return false;
             
             return true;
         }
@@ -671,12 +888,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Protocol, otherT.Protocol)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(PrimaryPurposeType, otherT.PrimaryPurposeType)) return false;
+            if( !DeepComparable.IsExactly(Phase, otherT.Phase)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
+            if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.IsExactly(Keyword, otherT.Keyword)) return false;
-            if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(Enrollment, otherT.Enrollment)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
@@ -686,6 +906,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReasonStopped, otherT.ReasonStopped)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Arm, otherT.Arm)) return false;
+            if( !DeepComparable.IsExactly(Objective, otherT.Objective)) return false;
             
             return true;
         }
@@ -701,12 +922,15 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Protocol) { if (elem != null) yield return elem; }
 				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
+				if (PrimaryPurposeType != null) yield return PrimaryPurposeType;
+				if (Phase != null) yield return Phase;
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				foreach (var elem in Focus) { if (elem != null) yield return elem; }
+				foreach (var elem in Condition) { if (elem != null) yield return elem; }
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
 				foreach (var elem in Keyword) { if (elem != null) yield return elem; }
-				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
+				foreach (var elem in Location) { if (elem != null) yield return elem; }
 				if (Description != null) yield return Description;
 				foreach (var elem in Enrollment) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
@@ -716,6 +940,7 @@ namespace Hl7.Fhir.Model
 				if (ReasonStopped != null) yield return ReasonStopped;
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				foreach (var elem in Arm) { if (elem != null) yield return elem; }
+				foreach (var elem in Objective) { if (elem != null) yield return elem; }
             }
         }
 
@@ -730,12 +955,15 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Protocol) { if (elem != null) yield return new ElementValue("protocol", true, elem); }
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (PrimaryPurposeType != null) yield return new ElementValue("primaryPurposeType", false, PrimaryPurposeType);
+                if (Phase != null) yield return new ElementValue("phase", false, Phase);
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
                 foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", true, elem); }
                 foreach (var elem in Keyword) { if (elem != null) yield return new ElementValue("keyword", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }
                 if (Description != null) yield return new ElementValue("description", false, Description);
                 foreach (var elem in Enrollment) { if (elem != null) yield return new ElementValue("enrollment", true, elem); }
                 if (Period != null) yield return new ElementValue("period", false, Period);
@@ -745,6 +973,7 @@ namespace Hl7.Fhir.Model
                 if (ReasonStopped != null) yield return new ElementValue("reasonStopped", false, ReasonStopped);
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
                 foreach (var elem in Arm) { if (elem != null) yield return new ElementValue("arm", true, elem); }
+                foreach (var elem in Objective) { if (elem != null) yield return new ElementValue("objective", true, elem); }
             }
         }
 

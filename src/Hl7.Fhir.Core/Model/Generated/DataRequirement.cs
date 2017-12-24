@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element ValueSet
             {
@@ -109,63 +109,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What code is expected
             /// </summary>
-            [FhirElement("valueCode", InSummary=true, Order=60)]
+            [FhirElement("code", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Code> ValueCodeElement
+            public List<Hl7.Fhir.Model.Coding> Code
             {
-                get { if(_ValueCodeElement==null) _ValueCodeElement = new List<Hl7.Fhir.Model.Code>(); return _ValueCodeElement; }
-                set { _ValueCodeElement = value; OnPropertyChanged("ValueCodeElement"); }
+                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.Coding>(); return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private List<Hl7.Fhir.Model.Code> _ValueCodeElement;
-            
-            /// <summary>
-            /// What code is expected
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<string> ValueCode
-            {
-                get { return ValueCodeElement != null ? ValueCodeElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if (value == null)
-                      ValueCodeElement = null; 
-                    else
-                      ValueCodeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
-                    OnPropertyChanged("ValueCode");
-                }
-            }
-            
-            /// <summary>
-            /// What Coding is expected
-            /// </summary>
-            [FhirElement("valueCoding", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Coding> ValueCoding
-            {
-                get { if(_ValueCoding==null) _ValueCoding = new List<Hl7.Fhir.Model.Coding>(); return _ValueCoding; }
-                set { _ValueCoding = value; OnPropertyChanged("ValueCoding"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Coding> _ValueCoding;
-            
-            /// <summary>
-            /// What CodeableConcept is expected
-            /// </summary>
-            [FhirElement("valueCodeableConcept", InSummary=true, Order=80)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> ValueCodeableConcept
-            {
-                get { if(_ValueCodeableConcept==null) _ValueCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ValueCodeableConcept; }
-                set { _ValueCodeableConcept = value; OnPropertyChanged("ValueCodeableConcept"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _ValueCodeableConcept;
+            private List<Hl7.Fhir.Model.Coding> _Code;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -176,9 +129,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
                     if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Element)ValueSet.DeepCopy();
-                    if(ValueCodeElement != null) dest.ValueCodeElement = new List<Hl7.Fhir.Model.Code>(ValueCodeElement.DeepCopy());
-                    if(ValueCoding != null) dest.ValueCoding = new List<Hl7.Fhir.Model.Coding>(ValueCoding.DeepCopy());
-                    if(ValueCodeableConcept != null) dest.ValueCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCodeableConcept.DeepCopy());
+                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
                     return dest;
                 }
                 else
@@ -198,9 +149,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
                 if( !DeepComparable.Matches(ValueSet, otherT.ValueSet)) return false;
-                if( !DeepComparable.Matches(ValueCodeElement, otherT.ValueCodeElement)) return false;
-                if( !DeepComparable.Matches(ValueCoding, otherT.ValueCoding)) return false;
-                if( !DeepComparable.Matches(ValueCodeableConcept, otherT.ValueCodeableConcept)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 
                 return true;
             }
@@ -213,9 +162,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
                 if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
-                if( !DeepComparable.IsExactly(ValueCodeElement, otherT.ValueCodeElement)) return false;
-                if( !DeepComparable.IsExactly(ValueCoding, otherT.ValueCoding)) return false;
-                if( !DeepComparable.IsExactly(ValueCodeableConcept, otherT.ValueCodeableConcept)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 
                 return true;
             }
@@ -228,9 +175,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
                     if (ValueSet != null) yield return ValueSet;
-                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return elem; }
-                    foreach (var elem in ValueCoding) { if (elem != null) yield return elem; }
-                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return elem; }
+                    foreach (var elem in Code) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -242,9 +187,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item; 
                     if (PathElement != null) yield return new ElementValue("path", false, PathElement);
                     if (ValueSet != null) yield return new ElementValue("valueSet", false, ValueSet);
-                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return new ElementValue("valueCode", true, elem); }
-                    foreach (var elem in ValueCoding) { if (elem != null) yield return new ElementValue("valueCoding", true, elem); }
-                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return new ElementValue("valueCodeableConcept", true, elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
  
                 } 
             } 

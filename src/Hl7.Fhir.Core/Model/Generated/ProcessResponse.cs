@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,33 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ProcessResponse"; } }
         
+        /// <summary>
+        /// This value set includes sample Process Outcome codes.
+        /// (url: http://hl7.org/fhir/ValueSet/process-outcome)
+        /// </summary>
+        [FhirEnumeration("ProcessOutcomeCodes")]
+        public enum ProcessOutcomeCodes
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/processoutcomecodes)
+            /// </summary>
+            [EnumLiteral("complete", "http://hl7.org/fhir/processoutcomecodes"), Description("Complete")]
+            Complete,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/processoutcomecodes)
+            /// </summary>
+            [EnumLiteral("pended", "http://hl7.org/fhir/processoutcomecodes"), Description("Pended")]
+            Pended,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/processoutcomecodes)
+            /// </summary>
+            [EnumLiteral("error", "http://hl7.org/fhir/processoutcomecodes"), Description("Error")]
+            Error,
+        }
+
         [FhirType("ProcessNoteComponent")]
         [DataContract]
         public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -67,13 +94,32 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("type", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Type
+            public Code<Hl7.Fhir.Model.NoteType> TypeElement
             {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Type;
+            private Code<Hl7.Fhir.Model.NoteType> _TypeElement;
+            
+            /// <summary>
+            /// display | print | printoper
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.NoteType? Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        TypeElement = null; 
+                    else
+                        TypeElement = new Code<Hl7.Fhir.Model.NoteType>(value);
+                    OnPropertyChanged("Type");
+                }
+            }
             
             /// <summary>
             /// Comment on the processing
@@ -114,7 +160,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.NoteType>)TypeElement.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                     return dest;
                 }
@@ -133,7 +179,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
                 
                 return true;
@@ -145,7 +191,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
                 
                 return true;
@@ -158,7 +204,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Type != null) yield return Type;
+                    if (TypeElement != null) yield return TypeElement;
                     if (TextElement != null) yield return TextElement;
                 }
             }
@@ -169,7 +215,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                     if (TextElement != null) yield return new ElementValue("text", false, TextElement);
                 }
             }
@@ -291,13 +337,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("outcome", Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Outcome
+        public Code<Hl7.Fhir.Model.ProcessResponse.ProcessOutcomeCodes> OutcomeElement
         {
-            get { return _Outcome; }
-            set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            get { return _OutcomeElement; }
+            set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Outcome;
+        private Code<Hl7.Fhir.Model.ProcessResponse.ProcessOutcomeCodes> _OutcomeElement;
+        
+        /// <summary>
+        /// Processing outcome
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.ProcessResponse.ProcessOutcomeCodes? Outcome
+        {
+            get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  OutcomeElement = null; 
+                else
+                  OutcomeElement = new Code<Hl7.Fhir.Model.ProcessResponse.ProcessOutcomeCodes>(value);
+                OnPropertyChanged("Outcome");
+            }
+        }
         
         /// <summary>
         /// Disposition Message
@@ -437,7 +502,7 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
-                if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
+                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ProcessResponse.ProcessOutcomeCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
@@ -467,7 +532,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
-            if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
@@ -490,7 +555,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
-            if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
@@ -513,7 +578,7 @@ namespace Hl7.Fhir.Model
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Organization != null) yield return Organization;
 				if (Request != null) yield return Request;
-				if (Outcome != null) yield return Outcome;
+				if (OutcomeElement != null) yield return OutcomeElement;
 				if (DispositionElement != null) yield return DispositionElement;
 				if (RequestProvider != null) yield return RequestProvider;
 				if (RequestOrganization != null) yield return RequestOrganization;
@@ -535,7 +600,7 @@ namespace Hl7.Fhir.Model
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (Organization != null) yield return new ElementValue("organization", false, Organization);
                 if (Request != null) yield return new ElementValue("request", false, Request);
-                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
                 if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);

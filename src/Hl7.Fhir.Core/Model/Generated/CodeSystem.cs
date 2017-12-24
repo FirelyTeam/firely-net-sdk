@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -119,6 +119,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("complete", "http://hl7.org/fhir/codesystem-content-mode"), Description("Complete")]
             Complete,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/codesystem-content-mode)
+            /// </summary>
+            [EnumLiteral("supplement", "http://hl7.org/fhir/codesystem-content-mode"), Description("Supplement")]
+            Supplement,
         }
 
         /// <summary>
@@ -1640,7 +1646,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// not-present | example | fragment | complete
+        /// not-present | example | fragment | complete | supplement
         /// </summary>
         [FhirElement("content", InSummary=true, Order=290)]
         [Cardinality(Min=1,Max=1)]
@@ -1654,7 +1660,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode> _ContentElement;
         
         /// <summary>
-        /// not-present | example | fragment | complete
+        /// not-present | example | fragment | complete | supplement
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1673,9 +1679,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Code System this adds designations and properties to
+        /// </summary>
+        [FhirElement("supplements", InSummary=true, Order=300)]
+        [CLSCompliant(false)]
+		[References("CodeSystem")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Supplements
+        {
+            get { return _Supplements; }
+            set { _Supplements = value; OnPropertyChanged("Supplements"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Supplements;
+        
+        /// <summary>
         /// Total concepts in the code system
         /// </summary>
-        [FhirElement("count", InSummary=true, Order=300)]
+        [FhirElement("count", InSummary=true, Order=310)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt CountElement
         {
@@ -1707,7 +1728,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Filter that can be used in a value set
         /// </summary>
-        [FhirElement("filter", InSummary=true, Order=310)]
+        [FhirElement("filter", InSummary=true, Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeSystem.FilterComponent> Filter
@@ -1721,7 +1742,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information supplied about each concept
         /// </summary>
-        [FhirElement("property", InSummary=true, Order=320)]
+        [FhirElement("property", InSummary=true, Order=330)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeSystem.PropertyComponent> Property
@@ -1735,7 +1756,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Concepts in the code system
         /// </summary>
-        [FhirElement("concept", Order=330)]
+        [FhirElement("concept", Order=340)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept
@@ -1791,6 +1812,7 @@ namespace Hl7.Fhir.Model
                 if(CompositionalElement != null) dest.CompositionalElement = (Hl7.Fhir.Model.FhirBoolean)CompositionalElement.DeepCopy();
                 if(VersionNeededElement != null) dest.VersionNeededElement = (Hl7.Fhir.Model.FhirBoolean)VersionNeededElement.DeepCopy();
                 if(ContentElement != null) dest.ContentElement = (Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>)ContentElement.DeepCopy();
+                if(Supplements != null) dest.Supplements = (Hl7.Fhir.Model.ResourceReference)Supplements.DeepCopy();
                 if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.UnsignedInt)CountElement.DeepCopy();
                 if(Filter != null) dest.Filter = new List<Hl7.Fhir.Model.CodeSystem.FilterComponent>(Filter.DeepCopy());
                 if(Property != null) dest.Property = new List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>(Property.DeepCopy());
@@ -1833,6 +1855,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CompositionalElement, otherT.CompositionalElement)) return false;
             if( !DeepComparable.Matches(VersionNeededElement, otherT.VersionNeededElement)) return false;
             if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
+            if( !DeepComparable.Matches(Supplements, otherT.Supplements)) return false;
             if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
             if( !DeepComparable.Matches(Filter, otherT.Filter)) return false;
             if( !DeepComparable.Matches(Property, otherT.Property)) return false;
@@ -1868,6 +1891,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CompositionalElement, otherT.CompositionalElement)) return false;
             if( !DeepComparable.IsExactly(VersionNeededElement, otherT.VersionNeededElement)) return false;
             if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
+            if( !DeepComparable.IsExactly(Supplements, otherT.Supplements)) return false;
             if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
             if( !DeepComparable.IsExactly(Filter, otherT.Filter)) return false;
             if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
@@ -1903,6 +1927,7 @@ namespace Hl7.Fhir.Model
 				if (CompositionalElement != null) yield return CompositionalElement;
 				if (VersionNeededElement != null) yield return VersionNeededElement;
 				if (ContentElement != null) yield return ContentElement;
+				if (Supplements != null) yield return Supplements;
 				if (CountElement != null) yield return CountElement;
 				foreach (var elem in Filter) { if (elem != null) yield return elem; }
 				foreach (var elem in Property) { if (elem != null) yield return elem; }
@@ -1937,6 +1962,7 @@ namespace Hl7.Fhir.Model
                 if (CompositionalElement != null) yield return new ElementValue("compositional", false, CompositionalElement);
                 if (VersionNeededElement != null) yield return new ElementValue("versionNeeded", false, VersionNeededElement);
                 if (ContentElement != null) yield return new ElementValue("content", false, ContentElement);
+                if (Supplements != null) yield return new ElementValue("supplements", false, Supplements);
                 if (CountElement != null) yield return new ElementValue("count", false, CountElement);
                 foreach (var elem in Filter) { if (elem != null) yield return new ElementValue("filter", true, elem); }
                 foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", true, elem); }

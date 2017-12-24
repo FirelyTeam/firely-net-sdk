@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -385,34 +385,34 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ActionComponent"; } }
             
             /// <summary>
-            /// User-visible label for the action (e.g. 1. or A.)
+            /// User-visible prefix for the action (e.g. 1. or A.)
             /// </summary>
-            [FhirElement("label", Order=40)]
+            [FhirElement("prefix", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString LabelElement
+            public Hl7.Fhir.Model.FhirString PrefixElement
             {
-                get { return _LabelElement; }
-                set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
+                get { return _PrefixElement; }
+                set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _LabelElement;
+            private Hl7.Fhir.Model.FhirString _PrefixElement;
             
             /// <summary>
-            /// User-visible label for the action (e.g. 1. or A.)
+            /// User-visible prefix for the action (e.g. 1. or A.)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Label
+            public string Prefix
             {
-                get { return LabelElement != null ? LabelElement.Value : null; }
+                get { return PrefixElement != null ? PrefixElement.Value : null; }
                 set
                 {
                     if (value == null)
-                        LabelElement = null; 
+                        PrefixElement = null; 
                     else
-                        LabelElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Label");
+                        PrefixElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Prefix");
                 }
             }
             
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("timing", Order=170, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
             public Hl7.Fhir.Model.Element Timing
             {
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
+                    if(PrefixElement != null) dest.PrefixElement = (Hl7.Fhir.Model.FhirString)PrefixElement.DeepCopy();
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(TextEquivalentElement != null) dest.TextEquivalentElement = (Hl7.Fhir.Model.FhirString)TextEquivalentElement.DeepCopy();
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
+                if( !DeepComparable.Matches(PrefixElement, otherT.PrefixElement)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(TextEquivalentElement, otherT.TextEquivalentElement)) return false;
@@ -1001,7 +1001,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
+                if( !DeepComparable.IsExactly(PrefixElement, otherT.PrefixElement)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(TextEquivalentElement, otherT.TextEquivalentElement)) return false;
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (LabelElement != null) yield return LabelElement;
+                    if (PrefixElement != null) yield return PrefixElement;
                     if (TitleElement != null) yield return TitleElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (TextEquivalentElement != null) yield return TextEquivalentElement;
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
+                    if (PrefixElement != null) yield return new ElementValue("prefix", false, PrefixElement);
                     if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     if (TextEquivalentElement != null) yield return new ElementValue("textEquivalent", false, TextEquivalentElement);
@@ -2135,7 +2135,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Purpose;
         
         /// <summary>
-        /// Describes the clinical usage of the asset
+        /// Describes the clinical usage of the plan
         /// </summary>
         [FhirElement("usage", Order=210)]
         [DataMember]
@@ -2148,7 +2148,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _UsageElement;
         
         /// <summary>
-        /// Describes the clinical usage of the asset
+        /// Describes the clinical usage of the plan
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2327,7 +2327,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Copyright;
         
         /// <summary>
-        /// Related artifacts for the asset
+        /// Additional documentation, citations, etc
         /// </summary>
         [FhirElement("relatedArtifact", Order=310)]
         [Cardinality(Min=0,Max=-1)]

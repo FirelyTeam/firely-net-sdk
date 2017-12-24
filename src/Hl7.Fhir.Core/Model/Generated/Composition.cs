@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("party", InSummary=true, Order=60)]
             [CLSCompliant(false)]
-			[References("Patient","Practitioner","Organization")]
+			[References("Patient","Practitioner","PractitionerRole","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Party
             {
@@ -882,7 +882,6 @@ namespace Hl7.Fhir.Model
         [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References()]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -945,7 +944,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", InSummary=true, Order=160)]
         [CLSCompliant(false)]
-		[References("Practitioner","Device","Patient","RelatedPerson")]
+		[References("Practitioner","PractitionerRole","Device","Patient","RelatedPerson","Organization")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Author
@@ -1098,7 +1097,7 @@ namespace Hl7.Fhir.Model
             Expression = "section.all(text.exists() or entry.exists() or section.exists())",
             Key = "cmp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A section must at least one of text, entries, or sub-sections",
+            Human = "A section must contain at least one of text, entries, or sub-sections",
             Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
         };
 

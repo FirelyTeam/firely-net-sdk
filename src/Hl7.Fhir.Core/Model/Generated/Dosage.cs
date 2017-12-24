@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Supplemental instruction - e.g. "with meals"
+        /// Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
         /// </summary>
         [FhirElement("additionalInstruction", InSummary=true, Order=50)]
         [Cardinality(Min=0,Max=-1)]

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -313,9 +313,25 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Laterality;
             
             /// <summary>
+            /// Specimen imaged
+            /// </summary>
+            [FhirElement("specimen", InSummary=true, Order=130)]
+            [CLSCompliant(false)]
+			[References("Specimen")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Specimen
+            {
+                get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
+                set { _Specimen = value; OnPropertyChanged("Specimen"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
+            
+            /// <summary>
             /// When the series started
             /// </summary>
-            [FhirElement("started", InSummary=true, Order=130)]
+            [FhirElement("started", InSummary=true, Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime StartedElement
             {
@@ -347,9 +363,9 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who performed the series
             /// </summary>
-            [FhirElement("performer", InSummary=true, Order=140)]
+            [FhirElement("performer", InSummary=true, Order=150)]
             [CLSCompliant(false)]
-			[References("Practitioner")]
+			[References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Performer
@@ -363,7 +379,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A single SOP instance from the series
             /// </summary>
-            [FhirElement("instance", Order=150)]
+            [FhirElement("instance", Order=160)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent> Instance
@@ -390,6 +406,7 @@ namespace Hl7.Fhir.Model
                     if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Coding)BodySite.DeepCopy();
                     if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.Coding)Laterality.DeepCopy();
+                    if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                     if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                     if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent>(Instance.DeepCopy());
@@ -419,6 +436,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.Matches(Laterality, otherT.Laterality)) return false;
+                if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
                 if( !DeepComparable.Matches(StartedElement, otherT.StartedElement)) return false;
                 if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
                 if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
@@ -441,6 +459,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.IsExactly(Laterality, otherT.Laterality)) return false;
+                if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
                 if( !DeepComparable.IsExactly(StartedElement, otherT.StartedElement)) return false;
                 if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
@@ -464,6 +483,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
                     if (BodySite != null) yield return BodySite;
                     if (Laterality != null) yield return Laterality;
+                    foreach (var elem in Specimen) { if (elem != null) yield return elem; }
                     if (StartedElement != null) yield return StartedElement;
                     foreach (var elem in Performer) { if (elem != null) yield return elem; }
                     foreach (var elem in Instance) { if (elem != null) yield return elem; }
@@ -485,6 +505,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
                     if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
                     if (Laterality != null) yield return new ElementValue("laterality", false, Laterality);
+                    foreach (var elem in Specimen) { if (elem != null) yield return new ElementValue("specimen", true, elem); }
                     if (StartedElement != null) yield return new ElementValue("started", false, StartedElement);
                     foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
                     foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, elem); }
@@ -820,20 +841,20 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Coding> _ModalityList;
         
         /// <summary>
-        /// Who the images are of
+        /// Who or what is the subject of the study
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=true, Order=140)]
         [CLSCompliant(false)]
-		[References("Patient")]
+		[References("Patient","Device","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Originating context
@@ -887,7 +908,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[References("ReferralRequest","CarePlan","ProcedureRequest")]
+		[References("CarePlan","ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -1117,7 +1138,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(AvailabilityElement != null) dest.AvailabilityElement = (Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>)AvailabilityElement.DeepCopy();
                 if(ModalityList != null) dest.ModalityList = new List<Hl7.Fhir.Model.Coding>(ModalityList.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
@@ -1153,7 +1174,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(AvailabilityElement, otherT.AvailabilityElement)) return false;
             if( !DeepComparable.Matches(ModalityList, otherT.ModalityList)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(StartedElement, otherT.StartedElement)) return false;
             if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
@@ -1182,7 +1203,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(AvailabilityElement, otherT.AvailabilityElement)) return false;
             if( !DeepComparable.IsExactly(ModalityList, otherT.ModalityList)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(StartedElement, otherT.StartedElement)) return false;
             if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
@@ -1211,7 +1232,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (AvailabilityElement != null) yield return AvailabilityElement;
 				foreach (var elem in ModalityList) { if (elem != null) yield return elem; }
-				if (Patient != null) yield return Patient;
+				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;
 				if (StartedElement != null) yield return StartedElement;
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
@@ -1239,7 +1260,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (AvailabilityElement != null) yield return new ElementValue("availability", false, AvailabilityElement);
                 foreach (var elem in ModalityList) { if (elem != null) yield return new ElementValue("modalityList", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (Context != null) yield return new ElementValue("context", false, Context);
                 if (StartedElement != null) yield return new ElementValue("started", false, StartedElement);
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }

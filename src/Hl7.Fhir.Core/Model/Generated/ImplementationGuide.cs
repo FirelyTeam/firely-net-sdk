@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,84 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ImplementationGuide"; } }
         
-        /// <summary>
-        /// How a dependency is represented when the guide is published.
-        /// (url: http://hl7.org/fhir/ValueSet/guide-dependency-type)
-        /// </summary>
-        [FhirEnumeration("GuideDependencyType")]
-        public enum GuideDependencyType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-dependency-type)
-            /// </summary>
-            [EnumLiteral("reference", "http://hl7.org/fhir/guide-dependency-type"), Description("Reference")]
-            Reference,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-dependency-type)
-            /// </summary>
-            [EnumLiteral("inclusion", "http://hl7.org/fhir/guide-dependency-type"), Description("Inclusion")]
-            Inclusion,
-        }
-
-        /// <summary>
-        /// The kind of an included page.
-        /// (url: http://hl7.org/fhir/ValueSet/guide-page-kind)
-        /// </summary>
-        [FhirEnumeration("GuidePageKind")]
-        public enum GuidePageKind
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("page", "http://hl7.org/fhir/guide-page-kind"), Description("Page")]
-            Page,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("example", "http://hl7.org/fhir/guide-page-kind"), Description("Example")]
-            Example,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("list", "http://hl7.org/fhir/guide-page-kind"), Description("List")]
-            List,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("include", "http://hl7.org/fhir/guide-page-kind"), Description("Include")]
-            Include,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("directory", "http://hl7.org/fhir/guide-page-kind"), Description("Directory")]
-            Directory,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("dictionary", "http://hl7.org/fhir/guide-page-kind"), Description("Dictionary")]
-            Dictionary,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("toc", "http://hl7.org/fhir/guide-page-kind"), Description("Table Of Contents")]
-            Toc,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-page-kind)
-            /// </summary>
-            [EnumLiteral("resource", "http://hl7.org/fhir/guide-page-kind"), Description("Resource")]
-            Resource,
-        }
-
         [FhirType("DependencyComponent")]
         [DataContract]
         public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -146,13 +68,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType> TypeElement
+            public Code<Hl7.Fhir.Model.GuideDependencyType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType> _TypeElement;
+            private Code<Hl7.Fhir.Model.GuideDependencyType> _TypeElement;
             
             /// <summary>
             /// reference | inclusion
@@ -160,7 +82,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType? Type
+            public Hl7.Fhir.Model.GuideDependencyType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -168,7 +90,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         TypeElement = null; 
                     else
-                        TypeElement = new Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.GuideDependencyType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -213,7 +135,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.GuideDependencyType>)TypeElement.DeepCopy();
                     if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
                     return dest;
                 }
@@ -450,7 +372,6 @@ namespace Hl7.Fhir.Model
             /// If not an example, has its normal meaning
             /// </summary>
             [FhirElement("example", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExampleElement
             {
@@ -903,13 +824,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("kind", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind> KindElement
+            public Code<Hl7.Fhir.Model.GuidePageKind> KindElement
             {
                 get { return _KindElement; }
                 set { _KindElement = value; OnPropertyChanged("KindElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind> _KindElement;
+            private Code<Hl7.Fhir.Model.GuidePageKind> _KindElement;
             
             /// <summary>
             /// page | example | list | include | directory | dictionary | toc | resource
@@ -917,7 +838,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ImplementationGuide.GuidePageKind? Kind
+            public Hl7.Fhir.Model.GuidePageKind? Kind
             {
                 get { return KindElement != null ? KindElement.Value : null; }
                 set
@@ -925,7 +846,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         KindElement = null; 
                     else
-                        KindElement = new Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>(value);
+                        KindElement = new Code<Hl7.Fhir.Model.GuidePageKind>(value);
                     OnPropertyChanged("Kind");
                 }
             }
@@ -1051,7 +972,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                    if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>)KindElement.DeepCopy();
+                    if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.GuidePageKind>)KindElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TypeElement.DeepCopy());
                     if(PackageElement != null) dest.PackageElement = new List<Hl7.Fhir.Model.FhirString>(PackageElement.DeepCopy());
                     if(FormatElement != null) dest.FormatElement = (Hl7.Fhir.Model.Code)FormatElement.DeepCopy();

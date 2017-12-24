@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,45 +56,24 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AdverseEvent"; } }
         
         /// <summary>
-        /// Overall categorization of the event, e.g. real or potential
-        /// (url: http://hl7.org/fhir/ValueSet/adverse-event-category)
+        /// Overall nature of the event, e.g. real or potential
+        /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
         /// </summary>
-        [FhirEnumeration("AdverseEventCategory")]
-        public enum AdverseEventCategory
+        [FhirEnumeration("AdverseEventActuality")]
+        public enum AdverseEventActuality
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/adverse-event-category)
+            /// (system: http://hl7.org/fhir/adverse-event-actuality)
             /// </summary>
-            [EnumLiteral("AE", "http://hl7.org/fhir/adverse-event-category"), Description("Adverse Event")]
-            AE,
+            [EnumLiteral("actual", "http://hl7.org/fhir/adverse-event-actuality"), Description("Adverse Event")]
+            Actual,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/adverse-event-category)
+            /// (system: http://hl7.org/fhir/adverse-event-actuality)
             /// </summary>
-            [EnumLiteral("PAE", "http://hl7.org/fhir/adverse-event-category"), Description("Potential Adverse Event")]
-            PAE,
-        }
-
-        /// <summary>
-        /// TODO
-        /// (url: http://hl7.org/fhir/ValueSet/adverse-event-causality)
-        /// </summary>
-        [FhirEnumeration("AdverseEventCausality")]
-        public enum AdverseEventCausality
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/adverse-event-causality)
-            /// </summary>
-            [EnumLiteral("causality1", "http://hl7.org/fhir/adverse-event-causality"), Description("causality1 placeholder")]
-            Causality1,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/adverse-event-causality)
-            /// </summary>
-            [EnumLiteral("causality2", "http://hl7.org/fhir/adverse-event-causality"), Description("causality2 placeholder")]
-            Causality2,
+            [EnumLiteral("potential", "http://hl7.org/fhir/adverse-event-actuality"), Description("Potential Adverse Event")]
+            Potential,
         }
 
         [FhirType("SuspectEntityComponent")]
@@ -121,122 +100,18 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Instance;
             
             /// <summary>
-            /// causality1 | causality2
+            /// Information on the possible cause of the event
             /// </summary>
             [FhirElement("causality", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality> CausalityElement
+            public List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent> Causality
             {
-                get { return _CausalityElement; }
-                set { _CausalityElement = value; OnPropertyChanged("CausalityElement"); }
+                get { if(_Causality==null) _Causality = new List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>(); return _Causality; }
+                set { _Causality = value; OnPropertyChanged("Causality"); }
             }
             
-            private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality> _CausalityElement;
-            
-            /// <summary>
-            /// causality1 | causality2
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality? Causality
-            {
-                get { return CausalityElement != null ? CausalityElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        CausalityElement = null; 
-                    else
-                        CausalityElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>(value);
-                    OnPropertyChanged("Causality");
-                }
-            }
-            
-            /// <summary>
-            /// assess1 | assess2
-            /// </summary>
-            [FhirElement("causalityAssessment", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept CausalityAssessment
-            {
-                get { return _CausalityAssessment; }
-                set { _CausalityAssessment = value; OnPropertyChanged("CausalityAssessment"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _CausalityAssessment;
-            
-            /// <summary>
-            /// AdverseEvent.suspectEntity.causalityProductRelatedness
-            /// </summary>
-            [FhirElement("causalityProductRelatedness", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString CausalityProductRelatednessElement
-            {
-                get { return _CausalityProductRelatednessElement; }
-                set { _CausalityProductRelatednessElement = value; OnPropertyChanged("CausalityProductRelatednessElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _CausalityProductRelatednessElement;
-            
-            /// <summary>
-            /// AdverseEvent.suspectEntity.causalityProductRelatedness
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string CausalityProductRelatedness
-            {
-                get { return CausalityProductRelatednessElement != null ? CausalityProductRelatednessElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        CausalityProductRelatednessElement = null; 
-                    else
-                        CausalityProductRelatednessElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("CausalityProductRelatedness");
-                }
-            }
-            
-            /// <summary>
-            /// method1 | method2
-            /// </summary>
-            [FhirElement("causalityMethod", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept CausalityMethod
-            {
-                get { return _CausalityMethod; }
-                set { _CausalityMethod = value; OnPropertyChanged("CausalityMethod"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _CausalityMethod;
-            
-            /// <summary>
-            /// AdverseEvent.suspectEntity.causalityAuthor
-            /// </summary>
-            [FhirElement("causalityAuthor", InSummary=true, Order=90)]
-            [CLSCompliant(false)]
-			[References("Practitioner","PractitionerRole")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference CausalityAuthor
-            {
-                get { return _CausalityAuthor; }
-                set { _CausalityAuthor = value; OnPropertyChanged("CausalityAuthor"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _CausalityAuthor;
-            
-            /// <summary>
-            /// result1 | result2
-            /// </summary>
-            [FhirElement("causalityResult", InSummary=true, Order=100)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept CausalityResult
-            {
-                get { return _CausalityResult; }
-                set { _CausalityResult = value; OnPropertyChanged("CausalityResult"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _CausalityResult;
+            private List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent> _Causality;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -246,12 +121,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Instance != null) dest.Instance = (Hl7.Fhir.Model.ResourceReference)Instance.DeepCopy();
-                    if(CausalityElement != null) dest.CausalityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>)CausalityElement.DeepCopy();
-                    if(CausalityAssessment != null) dest.CausalityAssessment = (Hl7.Fhir.Model.CodeableConcept)CausalityAssessment.DeepCopy();
-                    if(CausalityProductRelatednessElement != null) dest.CausalityProductRelatednessElement = (Hl7.Fhir.Model.FhirString)CausalityProductRelatednessElement.DeepCopy();
-                    if(CausalityMethod != null) dest.CausalityMethod = (Hl7.Fhir.Model.CodeableConcept)CausalityMethod.DeepCopy();
-                    if(CausalityAuthor != null) dest.CausalityAuthor = (Hl7.Fhir.Model.ResourceReference)CausalityAuthor.DeepCopy();
-                    if(CausalityResult != null) dest.CausalityResult = (Hl7.Fhir.Model.CodeableConcept)CausalityResult.DeepCopy();
+                    if(Causality != null) dest.Causality = new List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>(Causality.DeepCopy());
                     return dest;
                 }
                 else
@@ -270,12 +140,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
-                if( !DeepComparable.Matches(CausalityElement, otherT.CausalityElement)) return false;
-                if( !DeepComparable.Matches(CausalityAssessment, otherT.CausalityAssessment)) return false;
-                if( !DeepComparable.Matches(CausalityProductRelatednessElement, otherT.CausalityProductRelatednessElement)) return false;
-                if( !DeepComparable.Matches(CausalityMethod, otherT.CausalityMethod)) return false;
-                if( !DeepComparable.Matches(CausalityAuthor, otherT.CausalityAuthor)) return false;
-                if( !DeepComparable.Matches(CausalityResult, otherT.CausalityResult)) return false;
+                if( !DeepComparable.Matches(Causality, otherT.Causality)) return false;
                 
                 return true;
             }
@@ -287,12 +152,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
-                if( !DeepComparable.IsExactly(CausalityElement, otherT.CausalityElement)) return false;
-                if( !DeepComparable.IsExactly(CausalityAssessment, otherT.CausalityAssessment)) return false;
-                if( !DeepComparable.IsExactly(CausalityProductRelatednessElement, otherT.CausalityProductRelatednessElement)) return false;
-                if( !DeepComparable.IsExactly(CausalityMethod, otherT.CausalityMethod)) return false;
-                if( !DeepComparable.IsExactly(CausalityAuthor, otherT.CausalityAuthor)) return false;
-                if( !DeepComparable.IsExactly(CausalityResult, otherT.CausalityResult)) return false;
+                if( !DeepComparable.IsExactly(Causality, otherT.Causality)) return false;
                 
                 return true;
             }
@@ -305,12 +165,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Instance != null) yield return Instance;
-                    if (CausalityElement != null) yield return CausalityElement;
-                    if (CausalityAssessment != null) yield return CausalityAssessment;
-                    if (CausalityProductRelatednessElement != null) yield return CausalityProductRelatednessElement;
-                    if (CausalityMethod != null) yield return CausalityMethod;
-                    if (CausalityAuthor != null) yield return CausalityAuthor;
-                    if (CausalityResult != null) yield return CausalityResult;
+                    foreach (var elem in Causality) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -321,12 +176,168 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Instance != null) yield return new ElementValue("instance", false, Instance);
-                    if (CausalityElement != null) yield return new ElementValue("causality", false, CausalityElement);
-                    if (CausalityAssessment != null) yield return new ElementValue("causalityAssessment", false, CausalityAssessment);
-                    if (CausalityProductRelatednessElement != null) yield return new ElementValue("causalityProductRelatedness", false, CausalityProductRelatednessElement);
-                    if (CausalityMethod != null) yield return new ElementValue("causalityMethod", false, CausalityMethod);
-                    if (CausalityAuthor != null) yield return new ElementValue("causalityAuthor", false, CausalityAuthor);
-                    if (CausalityResult != null) yield return new ElementValue("causalityResult", false, CausalityResult);
+                    foreach (var elem in Causality) { if (elem != null) yield return new ElementValue("causality", true, elem); }
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("CausalityComponent")]
+        [DataContract]
+        public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "CausalityComponent"; } }
+            
+            /// <summary>
+            /// Assessment of if the entity caused the event
+            /// </summary>
+            [FhirElement("assessment", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Assessment
+            {
+                get { return _Assessment; }
+                set { _Assessment = value; OnPropertyChanged("Assessment"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Assessment;
+            
+            /// <summary>
+            /// AdverseEvent.suspectEntity.causalityProductRelatedness
+            /// </summary>
+            [FhirElement("productRelatedness", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ProductRelatednessElement
+            {
+                get { return _ProductRelatednessElement; }
+                set { _ProductRelatednessElement = value; OnPropertyChanged("ProductRelatednessElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ProductRelatednessElement;
+            
+            /// <summary>
+            /// AdverseEvent.suspectEntity.causalityProductRelatedness
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string ProductRelatedness
+            {
+                get { return ProductRelatednessElement != null ? ProductRelatednessElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ProductRelatednessElement = null; 
+                    else
+                        ProductRelatednessElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("ProductRelatedness");
+                }
+            }
+            
+            /// <summary>
+            /// AdverseEvent.suspectEntity.causalityAuthor
+            /// </summary>
+            [FhirElement("author", InSummary=true, Order=60)]
+            [CLSCompliant(false)]
+			[References("Practitioner","PractitionerRole")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Author
+            {
+                get { return _Author; }
+                set { _Author = value; OnPropertyChanged("Author"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Author;
+            
+            /// <summary>
+            /// ProbabilityScale | Bayesian | Checklist
+            /// </summary>
+            [FhirElement("method", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Method
+            {
+                get { return _Method; }
+                set { _Method = value; OnPropertyChanged("Method"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Method;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as CausalityComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Assessment != null) dest.Assessment = (Hl7.Fhir.Model.CodeableConcept)Assessment.DeepCopy();
+                    if(ProductRelatednessElement != null) dest.ProductRelatednessElement = (Hl7.Fhir.Model.FhirString)ProductRelatednessElement.DeepCopy();
+                    if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+                    if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new CausalityComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as CausalityComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Assessment, otherT.Assessment)) return false;
+                if( !DeepComparable.Matches(ProductRelatednessElement, otherT.ProductRelatednessElement)) return false;
+                if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as CausalityComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Assessment, otherT.Assessment)) return false;
+                if( !DeepComparable.IsExactly(ProductRelatednessElement, otherT.ProductRelatednessElement)) return false;
+                if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+                if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Assessment != null) yield return Assessment;
+                    if (ProductRelatednessElement != null) yield return ProductRelatednessElement;
+                    if (Author != null) yield return Author;
+                    if (Method != null) yield return Method;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Assessment != null) yield return new ElementValue("assessment", false, Assessment);
+                    if (ProductRelatednessElement != null) yield return new ElementValue("productRelatedness", false, ProductRelatednessElement);
+                    if (Author != null) yield return new ElementValue("author", false, Author);
+                    if (Method != null) yield return new ElementValue("method", false, Method);
                 }
             }
 
@@ -348,58 +359,71 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// AE | PAE 
-        /// An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not
+        /// actual | potential
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=100)]
+        [FhirElement("actuality", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory> CategoryElement
+        public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
         {
-            get { return _CategoryElement; }
-            set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
+            get { return _ActualityElement; }
+            set { _ActualityElement = value; OnPropertyChanged("ActualityElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory> _CategoryElement;
-        
-        /// <summary>
-        /// AE | PAE 
-        /// An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory? Category
-        {
-            get { return CategoryElement != null ? CategoryElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  CategoryElement = null; 
-                else
-                  CategoryElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>(value);
-                OnPropertyChanged("Category");
-            }
-        }
+        private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> _ActualityElement;
         
         /// <summary>
         /// actual | potential
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
         {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { return ActualityElement != null ? ActualityElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ActualityElement = null; 
+                else
+                  ActualityElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
+                OnPropertyChanged("Actuality");
+            }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        /// <summary>
+        /// ProductProblem | ProductQuality | ProductUseError | WrongDose | IncorrectPrescribingInformation | WrongTechnique | WrongRouteOfAdministration | WrongRate | WrongDuration | WrongTime | ExpiredDrug | MedicalDeviceUseError | ProblemDifferentManufacturer | UnsafePhysicalEnvironment
+        /// </summary>
+        [FhirElement("category", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
+        {
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
-        /// Subject or group impacted by event
+        /// Type of the event itself in relation to the subject
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=120)]
+        [FhirElement("event", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Event
+        {
+            get { return _Event; }
+            set { _Event = value; OnPropertyChanged("Event"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Event;
+        
+        /// <summary>
+        /// Subject impacted by event
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("Patient","ResearchSubject","Medication","Device")]
+		[References("Patient","Group","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -412,7 +436,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the event occurred
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=130)]
+        [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -442,25 +466,25 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Adverse Reaction Events linked to exposure to substance
+        /// Effect on the subject due to this event
         /// </summary>
-        [FhirElement("reaction", InSummary=true, Order=140)]
+        [FhirElement("resultingCondition", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Reaction
+        public List<Hl7.Fhir.Model.ResourceReference> ResultingCondition
         {
-            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.ResourceReference>(); return _Reaction; }
-            set { _Reaction = value; OnPropertyChanged("Reaction"); }
+            get { if(_ResultingCondition==null) _ResultingCondition = new List<Hl7.Fhir.Model.ResourceReference>(); return _ResultingCondition; }
+            set { _ResultingCondition = value; OnPropertyChanged("ResultingCondition"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Reaction;
+        private List<Hl7.Fhir.Model.ResourceReference> _ResultingCondition;
         
         /// <summary>
         /// Location where adverse event occurred
         /// </summary>
-        [FhirElement("location", InSummary=true, Order=150)]
+        [FhirElement("location", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -473,9 +497,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
-        /// Mild | Moderate | Severe
+        /// Seriousness of the event
         /// </summary>
-        [FhirElement("seriousness", InSummary=true, Order=160)]
+        [FhirElement("seriousness", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Seriousness
         {
@@ -486,9 +510,22 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Seriousness;
         
         /// <summary>
+        /// Mild | Moderate | Severe
+        /// </summary>
+        [FhirElement("severity", InSummary=true, Order=180)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Severity
+        {
+            get { return _Severity; }
+            set { _Severity = value; OnPropertyChanged("Severity"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Severity;
+        
+        /// <summary>
         /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=170)]
+        [FhirElement("outcome", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Outcome
         {
@@ -501,7 +538,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who recorded the adverse event
         /// </summary>
-        [FhirElement("recorder", InSummary=true, Order=180)]
+        [FhirElement("recorder", InSummary=true, Order=200)]
         [CLSCompliant(false)]
 		[References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
@@ -516,7 +553,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who  was involved in the adverse event or the potential adverse event
         /// </summary>
-        [FhirElement("eventParticipant", InSummary=true, Order=190)]
+        [FhirElement("eventParticipant", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[References("Practitioner","Device")]
         [DataMember]
@@ -531,7 +568,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of the adverse event
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=200)]
+        [FhirElement("description", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -563,7 +600,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The suspected agent causing the adverse event
         /// </summary>
-        [FhirElement("suspectEntity", InSummary=true, Order=210)]
+        [FhirElement("suspectEntity", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> SuspectEntity
@@ -577,7 +614,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// AdverseEvent.subjectMedicalHistory
         /// </summary>
-        [FhirElement("subjectMedicalHistory", InSummary=true, Order=220)]
+        [FhirElement("subjectMedicalHistory", InSummary=true, Order=240)]
         [CLSCompliant(false)]
 		[References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure")]
         [Cardinality(Min=0,Max=-1)]
@@ -593,7 +630,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// AdverseEvent.referenceDocument
         /// </summary>
-        [FhirElement("referenceDocument", InSummary=true, Order=230)]
+        [FhirElement("referenceDocument", InSummary=true, Order=250)]
         [CLSCompliant(false)]
 		[References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -609,7 +646,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// AdverseEvent.study
         /// </summary>
-        [FhirElement("study", InSummary=true, Order=240)]
+        [FhirElement("study", InSummary=true, Order=260)]
         [CLSCompliant(false)]
 		[References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
@@ -637,13 +674,15 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>)CategoryElement.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(ActualityElement != null) dest.ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>)ActualityElement.DeepCopy();
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+                if(Event != null) dest.Event = (Hl7.Fhir.Model.CodeableConcept)Event.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.ResourceReference>(Reaction.DeepCopy());
+                if(ResultingCondition != null) dest.ResultingCondition = new List<Hl7.Fhir.Model.ResourceReference>(ResultingCondition.DeepCopy());
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Seriousness != null) dest.Seriousness = (Hl7.Fhir.Model.CodeableConcept)Seriousness.DeepCopy();
+                if(Severity != null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)Severity.DeepCopy();
                 if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
                 if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
                 if(EventParticipant != null) dest.EventParticipant = (Hl7.Fhir.Model.ResourceReference)EventParticipant.DeepCopy();
@@ -670,13 +709,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(ActualityElement, otherT.ActualityElement)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(Reaction, otherT.Reaction)) return false;
+            if( !DeepComparable.Matches(ResultingCondition, otherT.ResultingCondition)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(Seriousness, otherT.Seriousness)) return false;
+            if( !DeepComparable.Matches(Severity, otherT.Severity)) return false;
             if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
             if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
             if( !DeepComparable.Matches(EventParticipant, otherT.EventParticipant)) return false;
@@ -696,13 +737,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(ActualityElement, otherT.ActualityElement)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
+            if( !DeepComparable.IsExactly(ResultingCondition, otherT.ResultingCondition)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(Seriousness, otherT.Seriousness)) return false;
+            if( !DeepComparable.IsExactly(Severity, otherT.Severity)) return false;
             if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
             if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
             if( !DeepComparable.IsExactly(EventParticipant, otherT.EventParticipant)) return false;
@@ -722,13 +765,15 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
-				if (CategoryElement != null) yield return CategoryElement;
-				if (Type != null) yield return Type;
+				if (ActualityElement != null) yield return ActualityElement;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (Event != null) yield return Event;
 				if (Subject != null) yield return Subject;
 				if (DateElement != null) yield return DateElement;
-				foreach (var elem in Reaction) { if (elem != null) yield return elem; }
+				foreach (var elem in ResultingCondition) { if (elem != null) yield return elem; }
 				if (Location != null) yield return Location;
 				if (Seriousness != null) yield return Seriousness;
+				if (Severity != null) yield return Severity;
 				if (Outcome != null) yield return Outcome;
 				if (Recorder != null) yield return Recorder;
 				if (EventParticipant != null) yield return EventParticipant;
@@ -747,13 +792,15 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (ActualityElement != null) yield return new ElementValue("actuality", false, ActualityElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
+                if (Event != null) yield return new ElementValue("event", false, Event);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", true, elem); }
+                foreach (var elem in ResultingCondition) { if (elem != null) yield return new ElementValue("resultingCondition", true, elem); }
                 if (Location != null) yield return new ElementValue("location", false, Location);
                 if (Seriousness != null) yield return new ElementValue("seriousness", false, Seriousness);
+                if (Severity != null) yield return new ElementValue("severity", false, Severity);
                 if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
                 if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
                 if (EventParticipant != null) yield return new ElementValue("eventParticipant", false, EventParticipant);

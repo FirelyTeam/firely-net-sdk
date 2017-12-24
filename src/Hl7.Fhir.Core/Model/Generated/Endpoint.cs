@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Organization that manages this endpoint (may not be the organization that exposes the endpoint)
+        /// Organization that manages this endpoint (might not be the organization that exposes the endpoint)
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=130)]
         [CLSCompliant(false)]

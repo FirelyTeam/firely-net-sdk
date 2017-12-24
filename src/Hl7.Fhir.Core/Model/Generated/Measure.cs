@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,55 +63,22 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
-            /// Unique identifier
+            /// Meaning of the group
             /// </summary>
-            [FhirElement("identifier", Order=40)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("code", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.Identifier _Identifier;
-            
-            /// <summary>
-            /// Short name
-            /// </summary>
-            [FhirElement("name", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Short name
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Summary description
             /// </summary>
-            [FhirElement("description", Order=60)]
+            [FhirElement("description", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -143,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Population criteria
             /// </summary>
-            [FhirElement("population", Order=70)]
+            [FhirElement("population", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Measure.PopulationComponent> Population
@@ -157,7 +124,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Stratifier criteria for the measure
             /// </summary>
-            [FhirElement("stratifier", Order=80)]
+            [FhirElement("stratifier", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Measure.StratifierComponent> Stratifier
@@ -175,8 +142,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.Measure.PopulationComponent>(Population.DeepCopy());
                     if(Stratifier != null) dest.Stratifier = new List<Hl7.Fhir.Model.Measure.StratifierComponent>(Stratifier.DeepCopy());
@@ -197,8 +163,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(Population, otherT.Population)) return false;
                 if( !DeepComparable.Matches(Stratifier, otherT.Stratifier)) return false;
@@ -212,8 +177,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
                 if( !DeepComparable.IsExactly(Stratifier, otherT.Stratifier)) return false;
@@ -228,8 +192,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
-                    if (NameElement != null) yield return NameElement;
+                    if (Code != null) yield return Code;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     foreach (var elem in Population) { if (elem != null) yield return elem; }
                     foreach (var elem in Stratifier) { if (elem != null) yield return elem; }
@@ -242,8 +205,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
                     if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
                     foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", true, elem); }
@@ -262,22 +224,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PopulationComponent"; } }
             
             /// <summary>
-            /// Unique identifier
-            /// </summary>
-            [FhirElement("identifier", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
-            {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _Identifier;
-            
-            /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
             /// </summary>
-            [FhirElement("code", Order=50)]
+            [FhirElement("code", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -288,41 +237,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// Short name
-            /// </summary>
-            [FhirElement("name", Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Short name
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
             /// The human readable description of this population criteria
             /// </summary>
-            [FhirElement("description", Order=70)]
+            [FhirElement("description", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -354,7 +271,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The name of a valid referenced CQL expression (may be namespaced) that defines this population criteria
             /// </summary>
-            [FhirElement("criteria", Order=80)]
+            [FhirElement("criteria", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CriteriaElement
@@ -391,9 +308,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(CriteriaElement != null) dest.CriteriaElement = (Hl7.Fhir.Model.FhirString)CriteriaElement.DeepCopy();
                     return dest;
@@ -413,9 +328,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(CriteriaElement, otherT.CriteriaElement)) return false;
                 
@@ -428,9 +341,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(CriteriaElement, otherT.CriteriaElement)) return false;
                 
@@ -444,9 +355,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
                     if (Code != null) yield return Code;
-                    if (NameElement != null) yield return NameElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (CriteriaElement != null) yield return CriteriaElement;
                 }
@@ -458,9 +367,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                     if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     if (CriteriaElement != null) yield return new ElementValue("criteria", false, CriteriaElement);
                 }
@@ -478,22 +385,54 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StratifierComponent"; } }
             
             /// <summary>
-            /// The identifier for the stratifier used to coordinate the reported data back to this stratifier
+            /// Meaning of the stratifier
             /// </summary>
-            [FhirElement("identifier", Order=40)]
+            [FhirElement("code", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.Identifier _Identifier;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// The human readable description of this stratifier
+            /// </summary>
+            [FhirElement("description", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// The human readable description of this stratifier
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DescriptionElement = null; 
+                    else
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
             
             /// <summary>
             /// How the measure should be stratified
             /// </summary>
-            [FhirElement("criteria", Order=50)]
+            [FhirElement("criteria", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CriteriaElement
             {
@@ -525,7 +464,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Path to the stratifier
             /// </summary>
-            [FhirElement("path", Order=60)]
+            [FhirElement("path", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
             {
@@ -561,7 +500,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(CriteriaElement != null) dest.CriteriaElement = (Hl7.Fhir.Model.FhirString)CriteriaElement.DeepCopy();
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
                     return dest;
@@ -581,7 +521,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(CriteriaElement, otherT.CriteriaElement)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
                 
@@ -594,7 +535,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(CriteriaElement, otherT.CriteriaElement)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
                 
@@ -608,7 +550,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
+                    if (Code != null) yield return Code;
+                    if (DescriptionElement != null) yield return DescriptionElement;
                     if (CriteriaElement != null) yield return CriteriaElement;
                     if (PathElement != null) yield return PathElement;
                 }
@@ -620,7 +563,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     if (CriteriaElement != null) yield return new ElementValue("criteria", false, CriteriaElement);
                     if (PathElement != null) yield return new ElementValue("path", false, PathElement);
                 }
@@ -638,17 +582,17 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SupplementalDataComponent"; } }
             
             /// <summary>
-            /// Identifier, unique within the measure
+            /// Meaning of the supplemental data
             /// </summary>
-            [FhirElement("identifier", Order=40)]
+            [FhirElement("code", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.Identifier _Identifier;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// supplemental-data | risk-adjustment-factor
@@ -665,9 +609,41 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Usage;
             
             /// <summary>
+            /// The human readable description of this supplemental data
+            /// </summary>
+            [FhirElement("description", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// The human readable description of this supplemental data
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DescriptionElement = null; 
+                    else
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
             /// Expression describing additional data to be reported
             /// </summary>
-            [FhirElement("criteria", Order=60)]
+            [FhirElement("criteria", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CriteriaElement
             {
@@ -699,7 +675,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Path to the supplemental data element
             /// </summary>
-            [FhirElement("path", Order=70)]
+            [FhirElement("path", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
             {
@@ -735,8 +711,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Usage != null) dest.Usage = new List<Hl7.Fhir.Model.CodeableConcept>(Usage.DeepCopy());
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(CriteriaElement != null) dest.CriteriaElement = (Hl7.Fhir.Model.FhirString)CriteriaElement.DeepCopy();
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
                     return dest;
@@ -756,8 +733,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Usage, otherT.Usage)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(CriteriaElement, otherT.CriteriaElement)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
                 
@@ -770,8 +748,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Usage, otherT.Usage)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(CriteriaElement, otherT.CriteriaElement)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
                 
@@ -785,8 +764,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
+                    if (Code != null) yield return Code;
                     foreach (var elem in Usage) { if (elem != null) yield return elem; }
+                    if (DescriptionElement != null) yield return DescriptionElement;
                     if (CriteriaElement != null) yield return CriteriaElement;
                     if (PathElement != null) yield return PathElement;
                 }
@@ -798,8 +778,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
                     foreach (var elem in Usage) { if (elem != null) yield return new ElementValue("usage", true, elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     if (CriteriaElement != null) yield return new ElementValue("criteria", false, CriteriaElement);
                     if (PathElement != null) yield return new ElementValue("path", false, PathElement);
                 }
@@ -1244,9 +1225,22 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
         
         /// <summary>
+        /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=260)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Subject;
+        
+        /// <summary>
         /// E.g. Education, Treatment, Assessment, etc
         /// </summary>
-        [FhirElement("topic", Order=260)]
+        [FhirElement("topic", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1260,7 +1254,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A content contributor
         /// </summary>
-        [FhirElement("contributor", Order=270)]
+        [FhirElement("contributor", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Contributor> Contributor
@@ -1274,7 +1268,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=280)]
+        [FhirElement("contact", InSummary=true, Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -1288,7 +1282,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=290)]
+        [FhirElement("copyright", Order=300)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Copyright
         {
@@ -1301,7 +1295,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional documentation, citations, etc
         /// </summary>
-        [FhirElement("relatedArtifact", Order=300)]
+        [FhirElement("relatedArtifact", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<RelatedArtifact> RelatedArtifact
@@ -1315,7 +1309,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Logic used by the measure
         /// </summary>
-        [FhirElement("library", Order=310)]
+        [FhirElement("library", Order=320)]
         [CLSCompliant(false)]
 		[References("Library")]
         [Cardinality(Min=0,Max=-1)]
@@ -1331,7 +1325,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Disclaimer for use of the measure or its referenced content
         /// </summary>
-        [FhirElement("disclaimer", InSummary=true, Order=320)]
+        [FhirElement("disclaimer", InSummary=true, Order=330)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Disclaimer
         {
@@ -1344,7 +1338,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proportion | ratio | continuous-variable | cohort
         /// </summary>
-        [FhirElement("scoring", InSummary=true, Order=330)]
+        [FhirElement("scoring", InSummary=true, Order=340)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Scoring
         {
@@ -1357,7 +1351,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// opportunity | all-or-nothing | linear | weighted
         /// </summary>
-        [FhirElement("compositeScoring", InSummary=true, Order=340)]
+        [FhirElement("compositeScoring", InSummary=true, Order=350)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept CompositeScoring
         {
@@ -1370,7 +1364,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// process | outcome | structure | patient-reported-outcome | composite
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=350)]
+        [FhirElement("type", InSummary=true, Order=360)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1384,7 +1378,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How is risk adjustment applied for this measure
         /// </summary>
-        [FhirElement("riskAdjustment", InSummary=true, Order=360)]
+        [FhirElement("riskAdjustment", InSummary=true, Order=370)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RiskAdjustmentElement
         {
@@ -1416,7 +1410,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How is rate aggregation performed for this measure
         /// </summary>
-        [FhirElement("rateAggregation", InSummary=true, Order=370)]
+        [FhirElement("rateAggregation", InSummary=true, Order=380)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RateAggregationElement
         {
@@ -1448,7 +1442,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why does this measure exist
         /// </summary>
-        [FhirElement("rationale", InSummary=true, Order=380)]
+        [FhirElement("rationale", InSummary=true, Order=390)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Rationale
         {
@@ -1461,7 +1455,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Summary of clinical guidelines
         /// </summary>
-        [FhirElement("clinicalRecommendationStatement", InSummary=true, Order=390)]
+        [FhirElement("clinicalRecommendationStatement", InSummary=true, Order=400)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown ClinicalRecommendationStatement
         {
@@ -1474,7 +1468,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Improvement notation for the measure, e.g. higher score indicates better quality
         /// </summary>
-        [FhirElement("improvementNotation", InSummary=true, Order=400)]
+        [FhirElement("improvementNotation", InSummary=true, Order=410)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ImprovementNotationElement
         {
@@ -1506,7 +1500,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Defined terms used in the measure documentation
         /// </summary>
-        [FhirElement("definition", InSummary=true, Order=410)]
+        [FhirElement("definition", InSummary=true, Order=420)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Markdown> Definition
@@ -1520,7 +1514,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional guidance for implementers
         /// </summary>
-        [FhirElement("guidance", InSummary=true, Order=420)]
+        [FhirElement("guidance", InSummary=true, Order=430)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Guidance
         {
@@ -1533,7 +1527,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The measure set, e.g. Preventive Care and Screening
         /// </summary>
-        [FhirElement("set", InSummary=true, Order=430)]
+        [FhirElement("set", InSummary=true, Order=440)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SetElement
         {
@@ -1565,7 +1559,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Population criteria group
         /// </summary>
-        [FhirElement("group", Order=440)]
+        [FhirElement("group", Order=450)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Measure.GroupComponent> Group
@@ -1579,7 +1573,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What other data should be reported with the measure
         /// </summary>
-        [FhirElement("supplementalData", Order=450)]
+        [FhirElement("supplementalData", Order=460)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> SupplementalData
@@ -1621,6 +1615,7 @@ namespace Hl7.Fhir.Model
                 if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.CodeableConcept)Subject.DeepCopy();
                 if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
                 if(Contributor != null) dest.Contributor = new List<Contributor>(Contributor.DeepCopy());
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
@@ -1675,6 +1670,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(EffectivePeriod, otherT.EffectivePeriod)) return false;
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Topic, otherT.Topic)) return false;
             if( !DeepComparable.Matches(Contributor, otherT.Contributor)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
@@ -1722,6 +1718,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(EffectivePeriod, otherT.EffectivePeriod)) return false;
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Topic, otherT.Topic)) return false;
             if( !DeepComparable.IsExactly(Contributor, otherT.Contributor)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
@@ -1769,6 +1766,7 @@ namespace Hl7.Fhir.Model
 				if (EffectivePeriod != null) yield return EffectivePeriod;
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
 				foreach (var elem in Topic) { if (elem != null) yield return elem; }
 				foreach (var elem in Contributor) { if (elem != null) yield return elem; }
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
@@ -1815,6 +1813,7 @@ namespace Hl7.Fhir.Model
                 if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", false, EffectivePeriod);
                 foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
                 foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", true, elem); }
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }

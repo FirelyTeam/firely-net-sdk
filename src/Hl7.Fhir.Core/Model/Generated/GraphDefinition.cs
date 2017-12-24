@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,27 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "GraphDefinition"; } }
         
+        /// <summary>
+        /// Defines how a compartment rule is used
+        /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-use)
+        /// </summary>
+        [FhirEnumeration("GraphCompartmentUse")]
+        public enum GraphCompartmentUse
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/graph-compartment-use)
+            /// </summary>
+            [EnumLiteral("condition", "http://hl7.org/fhir/graph-compartment-use"), Description("Condition")]
+            Condition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/graph-compartment-use)
+            /// </summary>
+            [EnumLiteral("requirement", "http://hl7.org/fhir/graph-compartment-use"), Description("Requirement")]
+            Requirement,
+        }
+
         /// <summary>
         /// How a compartment must be linked
         /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-rule)
@@ -99,7 +120,6 @@ namespace Hl7.Fhir.Model
             /// Path in the resource that contains the link
             /// </summary>
             [FhirElement("path", Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
             {
@@ -260,7 +280,7 @@ namespace Hl7.Fhir.Model
             /// Potential target for the link
             /// </summary>
             [FhirElement("target", Order=90)]
-            [Cardinality(Min=1,Max=-1)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.GraphDefinition.TargetComponent> Target
             {
@@ -402,9 +422,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Criteria for reverse lookup
+            /// </summary>
+            [FhirElement("params", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ParamsElement
+            {
+                get { return _ParamsElement; }
+                set { _ParamsElement = value; OnPropertyChanged("ParamsElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ParamsElement;
+            
+            /// <summary>
+            /// Criteria for reverse lookup
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Params
+            {
+                get { return ParamsElement != null ? ParamsElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ParamsElement = null; 
+                    else
+                        ParamsElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Params");
+                }
+            }
+            
+            /// <summary>
             /// Profile for the target resource
             /// </summary>
-            [FhirElement("profile", Order=50)]
+            [FhirElement("profile", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri ProfileElement
             {
@@ -436,7 +488,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Compartment Consistency Rules
             /// </summary>
-            [FhirElement("compartment", Order=60)]
+            [FhirElement("compartment", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.GraphDefinition.CompartmentComponent> Compartment
@@ -450,7 +502,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional links from target resource
             /// </summary>
-            [FhirElement("link", Order=70)]
+            [FhirElement("link", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.GraphDefinition.LinkComponent> Link
@@ -469,6 +521,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResourceType>)TypeElement.DeepCopy();
+                    if(ParamsElement != null) dest.ParamsElement = (Hl7.Fhir.Model.FhirString)ParamsElement.DeepCopy();
                     if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.FhirUri)ProfileElement.DeepCopy();
                     if(Compartment != null) dest.Compartment = new List<Hl7.Fhir.Model.GraphDefinition.CompartmentComponent>(Compartment.DeepCopy());
                     if(Link != null) dest.Link = new List<Hl7.Fhir.Model.GraphDefinition.LinkComponent>(Link.DeepCopy());
@@ -490,6 +543,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(ParamsElement, otherT.ParamsElement)) return false;
                 if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.Matches(Compartment, otherT.Compartment)) return false;
                 if( !DeepComparable.Matches(Link, otherT.Link)) return false;
@@ -504,6 +558,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(ParamsElement, otherT.ParamsElement)) return false;
                 if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.IsExactly(Compartment, otherT.Compartment)) return false;
                 if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
@@ -519,6 +574,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
+                    if (ParamsElement != null) yield return ParamsElement;
                     if (ProfileElement != null) yield return ProfileElement;
                     foreach (var elem in Compartment) { if (elem != null) yield return elem; }
                     foreach (var elem in Link) { if (elem != null) yield return elem; }
@@ -532,6 +588,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (ParamsElement != null) yield return new ElementValue("params", false, ParamsElement);
                     if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
                     foreach (var elem in Compartment) { if (elem != null) yield return new ElementValue("compartment", true, elem); }
                     foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
@@ -550,9 +607,42 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CompartmentComponent"; } }
             
             /// <summary>
+            /// condition | requirement
+            /// </summary>
+            [FhirElement("use", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse> UseElement
+            {
+                get { return _UseElement; }
+                set { _UseElement = value; OnPropertyChanged("UseElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse> _UseElement;
+            
+            /// <summary>
+            /// condition | requirement
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse? Use
+            {
+                get { return UseElement != null ? UseElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        UseElement = null; 
+                    else
+                        UseElement = new Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse>(value);
+                    OnPropertyChanged("Use");
+                }
+            }
+            
+            /// <summary>
             /// Identifies the compartment
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.CompartmentType> CodeElement
@@ -585,7 +675,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// identical | matching | different | custom
             /// </summary>
-            [FhirElement("rule", Order=50)]
+            [FhirElement("rule", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule> RuleElement
@@ -618,7 +708,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Custom rule, as a FHIRPath expression
             /// </summary>
-            [FhirElement("expression", Order=60)]
+            [FhirElement("expression", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ExpressionElement
             {
@@ -650,7 +740,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Documentation for FHIRPath expression
             /// </summary>
-            [FhirElement("description", Order=70)]
+            [FhirElement("description", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -686,6 +776,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
+                    if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse>)UseElement.DeepCopy();
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.CompartmentType>)CodeElement.DeepCopy();
                     if(RuleElement != null) dest.RuleElement = (Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule>)RuleElement.DeepCopy();
                     if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
@@ -707,6 +798,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.Matches(RuleElement, otherT.RuleElement)) return false;
                 if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
@@ -721,6 +813,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(RuleElement, otherT.RuleElement)) return false;
                 if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
@@ -736,6 +829,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
+                    if (UseElement != null) yield return UseElement;
                     if (CodeElement != null) yield return CodeElement;
                     if (RuleElement != null) yield return RuleElement;
                     if (ExpressionElement != null) yield return ExpressionElement;
@@ -749,6 +843,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+                    if (UseElement != null) yield return new ElementValue("use", false, UseElement);
                     if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
                     if (RuleElement != null) yield return new ElementValue("rule", false, RuleElement);
                     if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
@@ -1057,7 +1152,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of resource at which the graph starts
         /// </summary>
-        [FhirElement("start", Order=210)]
+        [FhirElement("start", InSummary=true, Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ResourceType> StartElement

@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,9 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "boolean"; } }
         
+        // Must conform to the pattern "true|false"
+        public const string PATTERN = @"true|false";
+
 		public FhirBoolean(bool? value)
 		{
 			Value = value;
@@ -62,6 +65,7 @@ namespace Hl7.Fhir.Model
         /// Primitive value of the element
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
+        [BooleanPattern]
         [DataMember]
         public bool? Value
         {

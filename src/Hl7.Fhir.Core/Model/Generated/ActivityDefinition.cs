@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Purpose;
         
         /// <summary>
-        /// Describes the clinical usage of the asset
+        /// Describes the clinical usage of the activity definition
         /// </summary>
         [FhirElement("usage", Order=200)]
         [DataMember]
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _UsageElement;
         
         /// <summary>
-        /// Describes the clinical usage of the asset
+        /// Describes the clinical usage of the activity definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -899,7 +899,7 @@ namespace Hl7.Fhir.Model
         private List<RelatedArtifact> _RelatedArtifact;
         
         /// <summary>
-        /// Logic used by the asset
+        /// Logic used by the activity definition
         /// </summary>
         [FhirElement("library", Order=310)]
         [CLSCompliant(false)]
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of resource
         /// </summary>
-        [FhirElement("kind", Order=320)]
+        [FhirElement("kind", InSummary=true, Order=320)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ResourceType> KindElement
         {
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Detail type of activity
         /// </summary>
-        [FhirElement("code", Order=330)]
+        [FhirElement("code", InSummary=true, Order=330)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -960,11 +960,43 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
+        /// True if the activity should not be performed
+        /// </summary>
+        [FhirElement("doNotPerform", InSummary=true, Order=340)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
+        {
+            get { return _DoNotPerformElement; }
+            set { _DoNotPerformElement = value; OnPropertyChanged("DoNotPerformElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _DoNotPerformElement;
+        
+        /// <summary>
+        /// True if the activity should not be performed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? DoNotPerform
+        {
+            get { return DoNotPerformElement != null ? DoNotPerformElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  DoNotPerformElement = null; 
+                else
+                  DoNotPerformElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("DoNotPerform");
+            }
+        }
+        
+        /// <summary>
         /// When activity is to occur
         /// </summary>
-        [FhirElement("timing", Order=340, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", Order=350, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Duration))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
         {
@@ -977,7 +1009,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where it should happen
         /// </summary>
-        [FhirElement("location", Order=350)]
+        [FhirElement("location", Order=360)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -992,7 +1024,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who should participate in the action
         /// </summary>
-        [FhirElement("participant", Order=360)]
+        [FhirElement("participant", Order=370)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent> Participant
@@ -1006,7 +1038,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What's administered/supplied
         /// </summary>
-        [FhirElement("product", Order=370, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("product", Order=380, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
@@ -1021,7 +1053,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How much is administered/consumed/supplied
         /// </summary>
-        [FhirElement("quantity", Order=380)]
+        [FhirElement("quantity", Order=390)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Quantity
         {
@@ -1034,7 +1066,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Detailed dosage instructions
         /// </summary>
-        [FhirElement("dosage", Order=390)]
+        [FhirElement("dosage", Order=400)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Dosage> Dosage
@@ -1048,7 +1080,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What part of body to perform on
         /// </summary>
-        [FhirElement("bodySite", Order=400)]
+        [FhirElement("bodySite", Order=410)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -1060,9 +1092,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
+        /// What specimens are required to perform this action
+        /// </summary>
+        [FhirElement("specimenRequirement", Order=420)]
+        [CLSCompliant(false)]
+		[References("SpecimenDefinition")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> SpecimenRequirement
+        {
+            get { if(_SpecimenRequirement==null) _SpecimenRequirement = new List<Hl7.Fhir.Model.ResourceReference>(); return _SpecimenRequirement; }
+            set { _SpecimenRequirement = value; OnPropertyChanged("SpecimenRequirement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _SpecimenRequirement;
+        
+        /// <summary>
         /// Transform to apply the template
         /// </summary>
-        [FhirElement("transform", Order=410)]
+        [FhirElement("transform", Order=430)]
         [CLSCompliant(false)]
 		[References("StructureMap")]
         [DataMember]
@@ -1077,7 +1125,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Dynamic aspects of the definition
         /// </summary>
-        [FhirElement("dynamicValue", Order=420)]
+        [FhirElement("dynamicValue", Order=440)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent> DynamicValue
@@ -1127,6 +1175,7 @@ namespace Hl7.Fhir.Model
                 if(Library != null) dest.Library = new List<Hl7.Fhir.Model.ResourceReference>(Library.DeepCopy());
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ResourceType>)KindElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent>(Participant.DeepCopy());
@@ -1134,6 +1183,7 @@ namespace Hl7.Fhir.Model
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                 if(Dosage != null) dest.Dosage = new List<Dosage>(Dosage.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
+                if(SpecimenRequirement != null) dest.SpecimenRequirement = new List<Hl7.Fhir.Model.ResourceReference>(SpecimenRequirement.DeepCopy());
                 if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
                 if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
                 return dest;
@@ -1178,6 +1228,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Library, otherT.Library)) return false;
             if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
             if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
@@ -1185,6 +1236,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.Matches(Dosage, otherT.Dosage)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+            if( !DeepComparable.Matches(SpecimenRequirement, otherT.SpecimenRequirement)) return false;
             if( !DeepComparable.Matches(Transform, otherT.Transform)) return false;
             if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
             
@@ -1222,6 +1274,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Library, otherT.Library)) return false;
             if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
             if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
@@ -1229,6 +1282,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.IsExactly(Dosage, otherT.Dosage)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
+            if( !DeepComparable.IsExactly(SpecimenRequirement, otherT.SpecimenRequirement)) return false;
             if( !DeepComparable.IsExactly(Transform, otherT.Transform)) return false;
             if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
             
@@ -1266,6 +1320,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Library) { if (elem != null) yield return elem; }
 				if (KindElement != null) yield return KindElement;
 				if (Code != null) yield return Code;
+				if (DoNotPerformElement != null) yield return DoNotPerformElement;
 				if (Timing != null) yield return Timing;
 				if (Location != null) yield return Location;
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
@@ -1273,6 +1328,7 @@ namespace Hl7.Fhir.Model
 				if (Quantity != null) yield return Quantity;
 				foreach (var elem in Dosage) { if (elem != null) yield return elem; }
 				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
+				foreach (var elem in SpecimenRequirement) { if (elem != null) yield return elem; }
 				if (Transform != null) yield return Transform;
 				foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }
             }
@@ -1309,6 +1365,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Library) { if (elem != null) yield return new ElementValue("library", true, elem); }
                 if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
                 if (Code != null) yield return new ElementValue("code", false, Code);
+                if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", false, DoNotPerformElement);
                 if (Timing != null) yield return new ElementValue("timing", false, Timing);
                 if (Location != null) yield return new ElementValue("location", false, Location);
                 foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
@@ -1316,6 +1373,7 @@ namespace Hl7.Fhir.Model
                 if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
                 foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", true, elem); }
                 foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, elem); }
+                foreach (var elem in SpecimenRequirement) { if (elem != null) yield return new ElementValue("specimenRequirement", true, elem); }
                 if (Transform != null) yield return new ElementValue("transform", false, Transform);
                 foreach (var elem in DynamicValue) { if (elem != null) yield return new ElementValue("dynamicValue", true, elem); }
             }

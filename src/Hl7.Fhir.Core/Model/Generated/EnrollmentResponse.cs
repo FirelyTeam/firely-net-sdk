@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -121,13 +121,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("outcome", Order=120)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Outcome
+        public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement
         {
-            get { return _Outcome; }
-            set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            get { return _OutcomeElement; }
+            set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Outcome;
+        private Code<Hl7.Fhir.Model.ClaimProcessingCodes> _OutcomeElement;
+        
+        /// <summary>
+        /// complete | error | partial
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.ClaimProcessingCodes? Outcome
+        {
+            get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  OutcomeElement = null; 
+                else
+                  OutcomeElement = new Code<Hl7.Fhir.Model.ClaimProcessingCodes>(value);
+                OnPropertyChanged("Outcome");
+            }
+        }
         
         /// <summary>
         /// Disposition Message
@@ -255,7 +274,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
-                if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
+                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ClaimProcessingCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
@@ -281,7 +300,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
-            if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
@@ -300,7 +319,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
-            if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
@@ -319,7 +338,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Request != null) yield return Request;
-				if (Outcome != null) yield return Outcome;
+				if (OutcomeElement != null) yield return OutcomeElement;
 				if (DispositionElement != null) yield return DispositionElement;
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Organization != null) yield return Organization;
@@ -337,7 +356,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Request != null) yield return new ElementValue("request", false, Request);
-                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (Organization != null) yield return new ElementValue("organization", false, Organization);

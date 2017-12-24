@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -277,6 +277,223 @@ namespace Hl7.Fhir.Model
                     if (LongitudeElement != null) yield return new ElementValue("longitude", false, LongitudeElement);
                     if (LatitudeElement != null) yield return new ElementValue("latitude", false, LatitudeElement);
                     if (AltitudeElement != null) yield return new ElementValue("altitude", false, AltitudeElement);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("HoursOfOperationComponent")]
+        [DataContract]
+        public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "HoursOfOperationComponent"; } }
+            
+            /// <summary>
+            /// mon | tue | wed | thu | fri | sat | sun
+            /// </summary>
+            [FhirElement("daysOfWeek", Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
+            {
+                get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
+                set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
+            }
+            
+            private List<Code<Hl7.Fhir.Model.DaysOfWeek>> _DaysOfWeekElement;
+            
+            /// <summary>
+            /// mon | tue | wed | thu | fri | sat | sun
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DaysOfWeek
+            {
+                get { return DaysOfWeekElement != null ? DaysOfWeekElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        DaysOfWeekElement = null; 
+                    else
+                        DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+                    OnPropertyChanged("DaysOfWeek");
+                }
+            }
+            
+            /// <summary>
+            /// The Location is open all day
+            /// </summary>
+            [FhirElement("allDay", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean AllDayElement
+            {
+                get { return _AllDayElement; }
+                set { _AllDayElement = value; OnPropertyChanged("AllDayElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _AllDayElement;
+            
+            /// <summary>
+            /// The Location is open all day
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? AllDay
+            {
+                get { return AllDayElement != null ? AllDayElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        AllDayElement = null; 
+                    else
+                        AllDayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("AllDay");
+                }
+            }
+            
+            /// <summary>
+            /// Time that the Location opens
+            /// </summary>
+            [FhirElement("openingTime", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Time OpeningTimeElement
+            {
+                get { return _OpeningTimeElement; }
+                set { _OpeningTimeElement = value; OnPropertyChanged("OpeningTimeElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Time _OpeningTimeElement;
+            
+            /// <summary>
+            /// Time that the Location opens
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string OpeningTime
+            {
+                get { return OpeningTimeElement != null ? OpeningTimeElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        OpeningTimeElement = null; 
+                    else
+                        OpeningTimeElement = new Hl7.Fhir.Model.Time(value);
+                    OnPropertyChanged("OpeningTime");
+                }
+            }
+            
+            /// <summary>
+            /// Time that the Location closes
+            /// </summary>
+            [FhirElement("closingTime", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.Time ClosingTimeElement
+            {
+                get { return _ClosingTimeElement; }
+                set { _ClosingTimeElement = value; OnPropertyChanged("ClosingTimeElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Time _ClosingTimeElement;
+            
+            /// <summary>
+            /// Time that the Location closes
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string ClosingTime
+            {
+                get { return ClosingTimeElement != null ? ClosingTimeElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ClosingTimeElement = null; 
+                    else
+                        ClosingTimeElement = new Hl7.Fhir.Model.Time(value);
+                    OnPropertyChanged("ClosingTime");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as HoursOfOperationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DaysOfWeekElement != null) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DaysOfWeekElement.DeepCopy());
+                    if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopy();
+                    if(OpeningTimeElement != null) dest.OpeningTimeElement = (Hl7.Fhir.Model.Time)OpeningTimeElement.DeepCopy();
+                    if(ClosingTimeElement != null) dest.ClosingTimeElement = (Hl7.Fhir.Model.Time)ClosingTimeElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new HoursOfOperationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as HoursOfOperationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
+                if( !DeepComparable.Matches(AllDayElement, otherT.AllDayElement)) return false;
+                if( !DeepComparable.Matches(OpeningTimeElement, otherT.OpeningTimeElement)) return false;
+                if( !DeepComparable.Matches(ClosingTimeElement, otherT.ClosingTimeElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as HoursOfOperationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
+                if( !DeepComparable.IsExactly(AllDayElement, otherT.AllDayElement)) return false;
+                if( !DeepComparable.IsExactly(OpeningTimeElement, otherT.OpeningTimeElement)) return false;
+                if( !DeepComparable.IsExactly(ClosingTimeElement, otherT.ClosingTimeElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return elem; }
+                    if (AllDayElement != null) yield return AllDayElement;
+                    if (OpeningTimeElement != null) yield return OpeningTimeElement;
+                    if (ClosingTimeElement != null) yield return ClosingTimeElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", true, elem); }
+                    if (AllDayElement != null) yield return new ElementValue("allDay", false, AllDayElement);
+                    if (OpeningTimeElement != null) yield return new ElementValue("openingTime", false, OpeningTimeElement);
+                    if (ClosingTimeElement != null) yield return new ElementValue("closingTime", false, ClosingTimeElement);
                 }
             }
 
@@ -569,9 +786,55 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _PartOf;
         
         /// <summary>
+        /// What days/times during a week is this location usually open
+        /// </summary>
+        [FhirElement("hoursOfOperation", Order=230)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Location.HoursOfOperationComponent> HoursOfOperation
+        {
+            get { if(_HoursOfOperation==null) _HoursOfOperation = new List<Hl7.Fhir.Model.Location.HoursOfOperationComponent>(); return _HoursOfOperation; }
+            set { _HoursOfOperation = value; OnPropertyChanged("HoursOfOperation"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Location.HoursOfOperationComponent> _HoursOfOperation;
+        
+        /// <summary>
+        /// Description of availability exceptions
+        /// </summary>
+        [FhirElement("availabilityExceptions", Order=240)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString AvailabilityExceptionsElement
+        {
+            get { return _AvailabilityExceptionsElement; }
+            set { _AvailabilityExceptionsElement = value; OnPropertyChanged("AvailabilityExceptionsElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _AvailabilityExceptionsElement;
+        
+        /// <summary>
+        /// Description of availability exceptions
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string AvailabilityExceptions
+        {
+            get { return AvailabilityExceptionsElement != null ? AvailabilityExceptionsElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  AvailabilityExceptionsElement = null; 
+                else
+                  AvailabilityExceptionsElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("AvailabilityExceptions");
+            }
+        }
+        
+        /// <summary>
         /// Technical endpoints providing access to services operated for the location
         /// </summary>
-        [FhirElement("endpoint", Order=230)]
+        [FhirElement("endpoint", Order=250)]
         [CLSCompliant(false)]
 		[References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
@@ -612,6 +875,8 @@ namespace Hl7.Fhir.Model
                 if(Position != null) dest.Position = (Hl7.Fhir.Model.Location.PositionComponent)Position.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
+                if(HoursOfOperation != null) dest.HoursOfOperation = new List<Hl7.Fhir.Model.Location.HoursOfOperationComponent>(HoursOfOperation.DeepCopy());
+                if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
                 if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
@@ -644,6 +909,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Position, otherT.Position)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
+            if( !DeepComparable.Matches(HoursOfOperation, otherT.HoursOfOperation)) return false;
+            if( !DeepComparable.Matches(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
             if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
             
             return true;
@@ -669,6 +936,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Position, otherT.Position)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
+            if( !DeepComparable.IsExactly(HoursOfOperation, otherT.HoursOfOperation)) return false;
+            if( !DeepComparable.IsExactly(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
             if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
             
             return true;
@@ -694,6 +963,8 @@ namespace Hl7.Fhir.Model
 				if (Position != null) yield return Position;
 				if (ManagingOrganization != null) yield return ManagingOrganization;
 				if (PartOf != null) yield return PartOf;
+				foreach (var elem in HoursOfOperation) { if (elem != null) yield return elem; }
+				if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;
 				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
             }
         }
@@ -718,6 +989,8 @@ namespace Hl7.Fhir.Model
                 if (Position != null) yield return new ElementValue("position", false, Position);
                 if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
                 if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
+                foreach (var elem in HoursOfOperation) { if (elem != null) yield return new ElementValue("hoursOfOperation", true, elem); }
+                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", false, AvailabilityExceptionsElement);
                 foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
             }
         }

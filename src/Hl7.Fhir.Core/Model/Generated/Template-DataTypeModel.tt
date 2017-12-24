@@ -197,8 +197,8 @@
 				abstractType = true;
 
 			string pattern = null;
-			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element/fhir:type/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex']/fhir:valueString/@value", nsR) != null)
-				pattern = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element/fhir:type/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex']/fhir:valueString/@value", nsR).Value;
+			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element/fhir:type/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/regex']/fhir:valueString/@value", nsR) != null)
+				pattern = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element/fhir:type/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/regex']/fhir:valueString/@value", nsR).Value;
 
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
@@ -283,7 +283,8 @@ if (!abstractType){
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
 <#
 	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
-		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant"
+		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant" 
+		&& resourceName != "FhirString" && resourceName != "Markdown" && resourceName != "Base64Binary"
 		|| resourceName == "FhirUri")
     {
 		WriteLine("        [{0}Pattern]", resourceName.Replace("Fhir", ""));
@@ -798,6 +799,7 @@ if (!abstractType){
 	{
 		if (name.StartsWith("_"))
 			name = name.Substring(1);
+		name = name.Replace(".", "_");
 		if (name == "=")
 			return "Equal";
 		if (name == "<")

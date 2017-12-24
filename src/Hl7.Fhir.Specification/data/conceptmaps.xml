@@ -4,160 +4,6 @@
   <!-- Removed Meta/LastModified -->
   <type value="collection" />
   <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-observation-relationshiptypes-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-observation-relationshiptypes-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-observation-relationshiptypes-v3" />
-        <name value="v3 map for ObservationRelationshipType" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ActRelationshipType" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/observation-relationshiptypes" />
-          <target value="http://hl7.org/fhir/v3/ActRelationshipType" />
-          <element>
-            <code value="has-member" />
-            <target>
-              <code value="MBR" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="derived-from" />
-            <target>
-              <code value="DRIV" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="sequel-to" />
-            <target>
-              <code value="SEQL" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="replaces" />
-            <target>
-              <code value="RPLC" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="qualified-by" />
-            <target>
-              <code value="QUALF" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="interfered-by" />
-            <target>
-              <code value="INTF" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-address-use-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
-        <name value="v3 map for AddressUse" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-use" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/address-use" />
-          <target value="http://hl7.org/fhir/v3/AddressUse" />
-          <element>
-            <code value="home" />
-            <target>
-              <code value="H" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="work" />
-            <target>
-              <code value="WP" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="temp" />
-            <target>
-              <code value="TMP" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="old" />
-            <target>
-              <code value="OLD" />
-              <equivalence value="narrower" />
-              <comment value="Bad or Old" />
-            </target>
-            <target>
-              <code value="BAD" />
-              <equivalence value="narrower" />
-              <comment value="Bad or Old" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
     <resource>
       <ConceptMap>
@@ -171,7 +17,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
         <name value="v3 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -251,7 +97,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
         <name value="v2 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -306,6 +152,386 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-address-type-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
+        <name value="v3 map for AddressType" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/address-type" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/address-type" />
+          <target value="http://hl7.org/fhir/v3/AddressUse" />
+          <element>
+            <code value="postal" />
+            <target>
+              <code value="PHYS" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="physical" />
+            <target>
+              <code value="PST" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-name-use-v2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
+        <name value="v2 map for NameUse" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/name-use" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v2-0200" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/name-use" />
+          <target value="http://hl7.org/fhir/v2/0200" />
+          <element>
+            <code value="usual" />
+            <target>
+              <code value="D" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="official" />
+            <target>
+              <code value="L" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="TEMP" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="nickname" />
+            <target>
+              <code value="N" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="anonymous" />
+            <target>
+              <code value="S" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="NOUSE" />
+              <equivalence value="wider" />
+            </target>
+            <target>
+              <code value="BAD" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="maiden" />
+            <target>
+              <code value="M" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-name-use-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
+        <name value="v3 map for NameUse" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/name-use" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-EntityNameUseR2" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/name-use" />
+          <target value="http://hl7.org/fhir/v3/EntityNameUseR2" />
+          <element>
+            <code value="usual" />
+            <target>
+              <code value="C" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="official" />
+            <target>
+              <code value="OR" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="T" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="nickname" />
+            <target>
+              <code value="P" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="anonymous" />
+            <target>
+              <code value="ANON" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="OLD" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="maiden" />
+            <target>
+              <code value="M" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-medication-statement-status-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3" />
+        <name value="v3 map for MedicationStatementStatus" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-statement-status" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/medication-statement-status" />
+          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <element>
+            <code value="active" />
+            <target>
+              <code value="active" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="completed" />
+            <target>
+              <code value="completed" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="entered-in-error" />
+            <target>
+              <code value="nullified" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="stopped" />
+            <target>
+              <code value="aborted" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="on-hold" />
+            <target>
+              <code value="suspended" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-address-use-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
+        <name value="v3 map for AddressUse" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/address-use" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/address-use" />
+          <target value="http://hl7.org/fhir/v3/AddressUse" />
+          <element>
+            <code value="home" />
+            <target>
+              <code value="H" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="work" />
+            <target>
+              <code value="WP" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="TMP" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="OLD" />
+              <equivalence value="narrower" />
+              <comment value="Bad or Old" />
+            </target>
+            <target>
+              <code value="BAD" />
+              <equivalence value="narrower" />
+              <comment value="Bad or Old" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
     <resource>
       <ConceptMap>
@@ -319,7 +545,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
         <name value="v2 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
@@ -367,59 +593,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-address-type-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
-        <name value="v3 map for AddressType" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-type" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/address-type" />
-          <target value="http://hl7.org/fhir/v3/AddressUse" />
-          <element>
-            <code value="postal" />
-            <target>
-              <code value="PHYS" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="physical" />
-            <target>
-              <code value="PST" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3" />
     <resource>
       <ConceptMap>
@@ -433,7 +606,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3" />
         <name value="v3 map for MedicationRequestStatus" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -521,7 +694,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
         <name value="v3 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
@@ -565,6 +738,332 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-document-reference-status-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
+        <name value="v3 map for DocumentReferenceStatus" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/document-reference-status" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/document-reference-status" />
+          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <element>
+            <code value="current" />
+            <target>
+              <code value="active" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="superseded" />
+            <target>
+              <code value="obsolete" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="entered-in-error" />
+            <target>
+              <code value="nullified" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-medication-admin-status-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3" />
+        <name value="v3 map for MedicationAdministrationStatus" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-admin-status" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/medication-admin-status" />
+          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <element>
+            <code value="in-progress" />
+            <target>
+              <code value="active" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="on-hold" />
+            <target>
+              <code value="suspended" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="completed" />
+            <target>
+              <code value="completed" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="entered-in-error" />
+            <target>
+              <code value="nullified" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="stopped" />
+            <target>
+              <code value="aborted" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-address-use-v2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
+        <name value="v2 map for AddressUse" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/address-use" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v2-0190" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/address-use" />
+          <target value="http://hl7.org/fhir/v2/0190" />
+          <element>
+            <code value="home" />
+            <target>
+              <code value="H" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="work" />
+            <target>
+              <code value="O" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="C" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="BA" />
+              <equivalence value="wider" />
+              <comment value="unclear about old addresses" />
+            </target>
+          </element>
+          <element>
+            <code value="billing" />
+            <target>
+              <code value="BI" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-detectedissue-severity-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
+        <name value="v3 map for DetectedIssueSeverity" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/detectedissue-severity" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-SeverityObservation" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/detectedissue-severity" />
+          <target value="http://hl7.org/fhir/v3/ObservationValue" />
+          <element>
+            <code value="high" />
+            <target>
+              <code value="H" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="moderate" />
+            <target>
+              <code value="M" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="low" />
+            <target>
+              <code value="L" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-composition-status-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
+        <name value="v3 map for CompositionStatus" />
+        <status value="draft" />
+        <date value="2017-12-19T22:50:51+00:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceReference>
+          <reference value="http://hl7.org/fhir/ValueSet/composition-status" />
+        </sourceReference>
+        <targetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        </targetReference>
+        <group>
+          <source value="http://hl7.org/fhir/composition-status" />
+          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <element>
+            <code value="preliminary" />
+            <target>
+              <code value="active" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="final" />
+            <target>
+              <code value="completed" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="amended" />
+            <target>
+              <code value="completed" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="entered-in-error" />
+            <target>
+              <code value="nullified" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
     <resource>
       <ConceptMap>
@@ -578,7 +1077,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
         <name value="v3 map for DataAbsentReason" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
@@ -657,370 +1156,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-name-use-v2" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
-        <name value="v2 map for NameUse" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/name-use" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v2-0200" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/name-use" />
-          <target value="http://hl7.org/fhir/v2/0200" />
-          <element>
-            <code value="usual" />
-            <target>
-              <code value="D" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="official" />
-            <target>
-              <code value="L" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="temp" />
-            <target>
-              <code value="TEMP" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="nickname" />
-            <target>
-              <code value="N" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="anonymous" />
-            <target>
-              <code value="S" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="old" />
-            <target>
-              <code value="NOUSE" />
-              <equivalence value="wider" />
-            </target>
-            <target>
-              <code value="BAD" />
-              <equivalence value="wider" />
-            </target>
-          </element>
-          <element>
-            <code value="maiden" />
-            <target>
-              <code value="M" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-document-reference-status-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
-        <name value="v3 map for DocumentReferenceStatus" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/document-reference-status" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/document-reference-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
-          <element>
-            <code value="current" />
-            <target>
-              <code value="active" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="superseded" />
-            <target>
-              <code value="obsolete" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="entered-in-error" />
-            <target>
-              <code value="nullified" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-name-use-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
-        <name value="v3 map for NameUse" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/name-use" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-EntityNameUseR2" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/name-use" />
-          <target value="http://hl7.org/fhir/v3/EntityNameUseR2" />
-          <element>
-            <code value="usual" />
-            <target>
-              <code value="C" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="official" />
-            <target>
-              <code value="OR" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="temp" />
-            <target>
-              <code value="T" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="nickname" />
-            <target>
-              <code value="P" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="anonymous" />
-            <target>
-              <code value="ANON" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="old" />
-            <target>
-              <code value="OLD" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="maiden" />
-            <target>
-              <code value="M" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-detectedissue-severity-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
-        <name value="v3 map for DetectedIssueSeverity" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/detectedissue-severity" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-SeverityObservation" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/detectedissue-severity" />
-          <target value="http://hl7.org/fhir/v3/ObservationValue" />
-          <element>
-            <code value="high" />
-            <target>
-              <code value="H" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="moderate" />
-            <target>
-              <code value="M" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="low" />
-            <target>
-              <code value="L" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-medication-admin-status-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3" />
-        <name value="v3 map for MedicationAdministrationStatus" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/medication-admin-status" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/medication-admin-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
-          <element>
-            <code value="in-progress" />
-            <target>
-              <code value="active" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="on-hold" />
-            <target>
-              <code value="suspended" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="completed" />
-            <target>
-              <code value="completed" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="entered-in-error" />
-            <target>
-              <code value="nullified" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="stopped" />
-            <target>
-              <code value="aborted" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
     <resource>
       <ConceptMap>
@@ -1034,7 +1169,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
         <name value="v2 map for ContactPointSystem" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1110,7 +1245,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-dispense-status-v3" />
         <name value="v3 map for MedicationDispenseStatus" />
         <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
+        <date value="2017-12-19T22:50:51+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1163,215 +1298,6 @@
             <code value="stopped" />
             <target>
               <code value="aborted" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-composition-status-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
-        <name value="v3 map for CompositionStatus" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/composition-status" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/composition-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
-          <element>
-            <code value="preliminary" />
-            <target>
-              <code value="active" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="final" />
-            <target>
-              <code value="completed" />
-              <equivalence value="wider" />
-            </target>
-          </element>
-          <element>
-            <code value="amended" />
-            <target>
-              <code value="completed" />
-              <equivalence value="wider" />
-            </target>
-          </element>
-          <element>
-            <code value="entered-in-error" />
-            <target>
-              <code value="nullified" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-address-use-v2" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
-        <name value="v2 map for AddressUse" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-use" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v2-0190" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/address-use" />
-          <target value="http://hl7.org/fhir/v2/0190" />
-          <element>
-            <code value="home" />
-            <target>
-              <code value="H" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="work" />
-            <target>
-              <code value="O" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="temp" />
-            <target>
-              <code value="C" />
-              <equivalence value="equivalent" />
-            </target>
-          </element>
-          <element>
-            <code value="old" />
-            <target>
-              <code value="BA" />
-              <equivalence value="wider" />
-              <comment value="unclear about old addresses" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-medication-statement-status-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3" />
-        <name value="v3 map for MedicationStatementStatus" />
-        <status value="draft" />
-        <date value="2017-04-19T07:44:43+10:00" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/medication-statement-status" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/medication-statement-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
-          <element>
-            <code value="active" />
-            <target>
-              <code value="active" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="completed" />
-            <target>
-              <code value="completed" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="entered-in-error" />
-            <target>
-              <code value="nullified" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="stopped" />
-            <target>
-              <code value="aborted" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="on-hold" />
-            <target>
-              <code value="suspended" />
               <equivalence value="equal" />
             </target>
           </element>
@@ -3981,7 +3907,7 @@
               <display value="Some Example Code" />
               <equivalence value="equivalent" />
               <dependsOn>
-                <property value="http://example.org/fhir/DataElement/example" />
+                <property value="http://example.org/fhir/property-value/example" />
                 <system value="http://example.org/fhir/example3" />
                 <code value="some-code" />
                 <display value="Something Coded" />

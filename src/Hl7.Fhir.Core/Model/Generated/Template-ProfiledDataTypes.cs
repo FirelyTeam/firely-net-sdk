@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Thu, 27 Jul 2017 10:43:24 GMT for FHIR v3.0.1
+// Model Generated on Wed, 20 Dec 2017 10:13:40 GMT for FHIR v3.1.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -17,6 +17,8 @@
 
 // Generated Shared Enumeration: AdministrativeGender
 
+// Generated Shared Enumeration: GuidePageKind
+
 // Generated Shared Enumeration: EventStatus
 
 // Generated Shared Enumeration: ActionGroupingBehavior
@@ -30,6 +32,8 @@
 
 // Generated Shared Enumeration: ParticipationStatus
 
+// Generated Shared Enumeration: ClaimProcessingCodes
+
 // Generated Shared Enumeration: ListMode
 
 // Generated Shared Enumeration: SearchParamType
@@ -37,6 +41,8 @@
 // Generated Shared Enumeration: FinancialResourceStatusCodes
 
 // Generated Shared Enumeration: ActionCardinalityBehavior
+
+// Generated Shared Enumeration: GuideDependencyType
 
 // Generated Shared Enumeration: ActionConditionKind
 
@@ -53,13 +59,13 @@
 
 // Generated Shared Enumeration: RequestStatus
 
+// Generated Shared Enumeration: NoteType
+
 // Generated Shared Enumeration: CompositionStatus
 
 // Generated Shared Enumeration: ActionRequiredBehavior
 
 // Generated Shared Enumeration: DocumentRelationshipType
-
-// Generated Shared Enumeration: MessageSignificanceCategory
 
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (type): DataRequirement.type

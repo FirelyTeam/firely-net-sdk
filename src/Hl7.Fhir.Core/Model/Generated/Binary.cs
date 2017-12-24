@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content
         /// </summary>
-        [FhirElement("content", Order=70)]
+        [FhirElement("content", InSummary=true, Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary ContentElement

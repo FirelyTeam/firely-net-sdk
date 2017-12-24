@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,51 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Observation"; } }
         
-        /// <summary>
-        /// Codes specifying how two observations are related.
-        /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
-        /// </summary>
-        [FhirEnumeration("ObservationRelationshipType")]
-        public enum ObservationRelationshipType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
-            /// </summary>
-            [EnumLiteral("has-member", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Has Member")]
-            HasMember,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
-            /// </summary>
-            [EnumLiteral("derived-from", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Derived From")]
-            DerivedFrom,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
-            /// </summary>
-            [EnumLiteral("sequel-to", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Sequel To")]
-            SequelTo,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
-            /// </summary>
-            [EnumLiteral("replaces", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Replaces")]
-            Replaces,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
-            /// </summary>
-            [EnumLiteral("qualified-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Qualified By")]
-            QualifiedBy,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-relationshiptypes)
-            /// </summary>
-            [EnumLiteral("interfered-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Interfered By")]
-            InterferedBy,
-        }
-
         [FhirType("ReferenceRangeComponent")]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -296,132 +251,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatedComponent")]
-        [DataContract]
-        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RelatedComponent"; } }
-            
-            /// <summary>
-            /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
-            /// </summary>
-            [FhirElement("type", Order=40)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
-            {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> _TypeElement;
-            
-            /// <summary>
-            /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Observation.ObservationRelationshipType? Type
-            {
-                get { return TypeElement != null ? TypeElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        TypeElement = null; 
-                    else
-                        TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
-                    OnPropertyChanged("Type");
-                }
-            }
-            
-            /// <summary>
-            /// Resource that is related to this one
-            /// </summary>
-            [FhirElement("target", Order=50)]
-            [CLSCompliant(false)]
-			[References("Observation","QuestionnaireResponse","Sequence")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Target
-            {
-                get { return _Target; }
-                set { _Target = value; OnPropertyChanged("Target"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Target;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RelatedComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>)TypeElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RelatedComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RelatedComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RelatedComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (TypeElement != null) yield return TypeElement;
-                    if (Target != null) yield return Target;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Target != null) yield return new ElementValue("target", false, Target);
-                }
-            }
-
-            
-        }
-        
-        
         [FhirType("ComponentComponent")]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -448,7 +277,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -603,7 +432,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=100)]
         [CLSCompliant(false)]
-		[References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ProcedureRequest","ReferralRequest")]
+		[References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -615,9 +444,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
         
         /// <summary>
+        /// Part of referenced event
+        /// </summary>
+        [FhirElement("partOf", InSummary=true, Order=110)]
+        [CLSCompliant(false)]
+		[References("MedicationAdministration","MedicationDispense","MedicationStatement","Procedure","Immunization","ImagingStudy")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> PartOf
+        {
+            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
+            set { _PartOf = value; OnPropertyChanged("PartOf"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
+        
+        /// <summary>
         /// registered | preliminary | final | amended +
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -650,7 +495,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Classification of  type of observation
         /// </summary>
-        [FhirElement("category", Order=120)]
+        [FhirElement("category", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -664,7 +509,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of observation (code / type)
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=130)]
+        [FhirElement("code", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -678,7 +523,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who and/or what this is about
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("Patient","Group","Device","Location")]
         [DataMember]
@@ -693,7 +538,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Healthcare event during which this observation is made
         /// </summary>
-        [FhirElement("context", Order=150)]
+        [FhirElement("context", Order=160)]
         [CLSCompliant(false)]
 		[References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -708,9 +553,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinically relevant time/time-period for observation
         /// </summary>
-        [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
         {
@@ -721,9 +566,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Effective;
         
         /// <summary>
-        /// Date/Time this was made available
+        /// Date/Time this version was made available
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=170)]
+        [FhirElement("issued", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
         {
@@ -734,7 +579,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _IssuedElement;
         
         /// <summary>
-        /// Date/Time this was made available
+        /// Date/Time this version was made available
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -755,9 +600,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is responsible for the observation
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=180)]
+        [FhirElement("performer", InSummary=true, Order=190)]
         [CLSCompliant(false)]
-		[References("Practitioner","Organization","Patient","RelatedPerson")]
+		[References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Performer
@@ -771,9 +616,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actual result
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+		[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
         {
@@ -786,7 +631,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why the result is missing
         /// </summary>
-        [FhirElement("dataAbsentReason", Order=200)]
+        [FhirElement("dataAbsentReason", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
         {
@@ -799,7 +644,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// High, low, normal, etc.
         /// </summary>
-        [FhirElement("interpretation", Order=210)]
+        [FhirElement("interpretation", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Interpretation
         {
@@ -812,7 +657,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about result
         /// </summary>
-        [FhirElement("comment", Order=220)]
+        [FhirElement("comment", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -844,7 +689,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Observed body part
         /// </summary>
-        [FhirElement("bodySite", Order=230)]
+        [FhirElement("bodySite", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BodySite
         {
@@ -857,7 +702,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How it was done
         /// </summary>
-        [FhirElement("method", Order=240)]
+        [FhirElement("method", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
@@ -870,7 +715,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specimen used for this observation
         /// </summary>
-        [FhirElement("specimen", Order=250)]
+        [FhirElement("specimen", Order=260)]
         [CLSCompliant(false)]
 		[References("Specimen")]
         [DataMember]
@@ -885,9 +730,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// (Measurement) Device
         /// </summary>
-        [FhirElement("device", Order=260)]
+        [FhirElement("device", Order=270)]
         [CLSCompliant(false)]
-		[References("Device","DeviceMetric")]
+		[References("Device","DeviceComponent","DeviceMetric")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Device
         {
@@ -900,7 +745,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Provides guide for interpretation
         /// </summary>
-        [FhirElement("referenceRange", Order=270)]
+        [FhirElement("referenceRange", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> ReferenceRange
@@ -912,23 +757,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> _ReferenceRange;
         
         /// <summary>
-        /// Resource related to this observation
+        /// Related resource that belongs to the Observation group
         /// </summary>
-        [FhirElement("related", InSummary=true, Order=280)]
+        [FhirElement("hasMember", InSummary=true, Order=290)]
+        [CLSCompliant(false)]
+		[References("Observation","QuestionnaireResponse","Sequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Observation.RelatedComponent> Related
+        public List<Hl7.Fhir.Model.ResourceReference> HasMember
         {
-            get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.Observation.RelatedComponent>(); return _Related; }
-            set { _Related = value; OnPropertyChanged("Related"); }
+            get { if(_HasMember==null) _HasMember = new List<Hl7.Fhir.Model.ResourceReference>(); return _HasMember; }
+            set { _HasMember = value; OnPropertyChanged("HasMember"); }
         }
         
-        private List<Hl7.Fhir.Model.Observation.RelatedComponent> _Related;
+        private List<Hl7.Fhir.Model.ResourceReference> _HasMember;
+        
+        /// <summary>
+        /// Related measurements the observation is made from
+        /// </summary>
+        [FhirElement("derivedFrom", InSummary=true, Order=300)]
+        [CLSCompliant(false)]
+		[References("DocumentReference","ImagingStudy","Media","QuestionnaireResponse","Observation","Sequence")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
+        {
+            get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(); return _DerivedFrom; }
+            set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
         
         /// <summary>
         /// Component results
         /// </summary>
-        [FhirElement("component", InSummary=true, Order=290)]
+        [FhirElement("component", InSummary=true, Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Observation.ComponentComponent> Component
@@ -942,11 +805,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "value.empty() or code!=component.code",
+            Expression = "value.empty() or component.code.where( (coding.code = %resource.code.coding.code) and (coding.system = %resource.code.coding.system)).empty()",
             Key = "obs-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If code is the same as a component code then the value element associated with the code SHALL NOT be present",
-            Xpath = "not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
+            Human = "If Observation.code is the same as a Observation.component.code then the value element associated with the code SHALL NOT be present",
+            Xpath = "not(f:*[starts-with(local-name(.), 'value')] and (for $coding in f:code/f:coding return f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value] [f:system/@value=$coding/f:system/@value]))"
         };
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_6 = new ElementDefinition.ConstraintComponent()
@@ -985,6 +848,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
@@ -1002,7 +866,8 @@ namespace Hl7.Fhir.Model
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent>(ReferenceRange.DeepCopy());
-                if(Related != null) dest.Related = new List<Hl7.Fhir.Model.Observation.RelatedComponent>(Related.DeepCopy());
+                if(HasMember != null) dest.HasMember = new List<Hl7.Fhir.Model.ResourceReference>(HasMember.DeepCopy());
+                if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
                 if(Component != null) dest.Component = new List<Hl7.Fhir.Model.Observation.ComponentComponent>(Component.DeepCopy());
                 return dest;
             }
@@ -1023,6 +888,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -1040,7 +906,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
-            if( !DeepComparable.Matches(Related, otherT.Related)) return false;
+            if( !DeepComparable.Matches(HasMember, otherT.HasMember)) return false;
+            if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.Matches(Component, otherT.Component)) return false;
             
             return true;
@@ -1054,6 +921,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -1071,7 +939,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
             if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
-            if( !DeepComparable.IsExactly(Related, otherT.Related)) return false;
+            if( !DeepComparable.IsExactly(HasMember, otherT.HasMember)) return false;
+            if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
             
             return true;
@@ -1085,6 +954,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
+				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;
@@ -1102,7 +972,8 @@ namespace Hl7.Fhir.Model
 				if (Specimen != null) yield return Specimen;
 				if (Device != null) yield return Device;
 				foreach (var elem in ReferenceRange) { if (elem != null) yield return elem; }
-				foreach (var elem in Related) { if (elem != null) yield return elem; }
+				foreach (var elem in HasMember) { if (elem != null) yield return elem; }
+				foreach (var elem in DerivedFrom) { if (elem != null) yield return elem; }
 				foreach (var elem in Component) { if (elem != null) yield return elem; }
             }
         }
@@ -1115,6 +986,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 if (Code != null) yield return new ElementValue("code", false, Code);
@@ -1132,7 +1004,8 @@ namespace Hl7.Fhir.Model
                 if (Specimen != null) yield return new ElementValue("specimen", false, Specimen);
                 if (Device != null) yield return new ElementValue("device", false, Device);
                 foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", true, elem); }
-                foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", true, elem); }
+                foreach (var elem in HasMember) { if (elem != null) yield return new ElementValue("hasMember", true, elem); }
+                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", true, elem); }
                 foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", true, elem); }
             }
         }

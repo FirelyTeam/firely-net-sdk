@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,6 +54,113 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.DocumentReference; } }
         [NotMapped]
         public override string TypeName { get { return "DocumentReference"; } }
+        
+        [FhirType("AgentComponent")]
+        [DataContract]
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "AgentComponent"; } }
+            
+            /// <summary>
+            /// How agent participated
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
+            /// Who and/or what authored the document
+            /// </summary>
+            [FhirElement("who", InSummary=true, Order=50)]
+            [CLSCompliant(false)]
+			[References("Practitioner","PractitionerRole","Organization","Device","Patient","RelatedPerson")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Who
+            {
+                get { return _Who; }
+                set { _Who = value; OnPropertyChanged("Who"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Who;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as AgentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new AgentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as AgentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Who, otherT.Who)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AgentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Type != null) yield return Type;
+                    if (Who != null) yield return Who;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (Who != null) yield return new ElementValue("who", false, Who);
+                }
+            }
+
+            
+        }
+        
         
         [FhirType("RelatesToComponent")]
         [DataContract]
@@ -297,7 +404,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Context of the document  content
             /// </summary>
-            [FhirElement("encounter", InSummary=true, Order=40)]
+            [FhirElement("encounter", Order=40)]
             [CLSCompliant(false)]
 			[References("Encounter")]
             [DataMember]
@@ -312,7 +419,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Main clinical acts documented
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=50)]
+            [FhirElement("event", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Event
@@ -339,7 +446,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Kind of facility where patient was seen
             /// </summary>
-            [FhirElement("facilityType", InSummary=true, Order=70)]
+            [FhirElement("facilityType", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept FacilityType
             {
@@ -352,7 +459,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional details about where the content was created (e.g. clinical specialty)
             /// </summary>
-            [FhirElement("practiceSetting", InSummary=true, Order=80)]
+            [FhirElement("practiceSetting", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept PracticeSetting
             {
@@ -365,7 +472,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Patient demographics from source
             /// </summary>
-            [FhirElement("sourcePatientInfo", InSummary=true, Order=90)]
+            [FhirElement("sourcePatientInfo", Order=90)]
             [CLSCompliant(false)]
 			[References("Patient")]
             [DataMember]
@@ -380,7 +487,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Related identifiers or resources
             /// </summary>
-            [FhirElement("related", InSummary=true, Order=100)]
+            [FhirElement("related", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.DocumentReference.RelatedComponent> Related
@@ -497,7 +604,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifier of related objects or events
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
@@ -510,7 +617,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Related Resource
             /// </summary>
-            [FhirElement("ref", InSummary=true, Order=50)]
+            [FhirElement("ref", Order=50)]
             [CLSCompliant(false)]
 			[References()]
             [DataMember]
@@ -689,7 +796,6 @@ namespace Hl7.Fhir.Model
         /// Kind of document (LOINC if possible)
         /// </summary>
         [FhirElement("type", InSummary=true, Order=130)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -730,7 +836,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Document creation time
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=160)]
+        [FhirElement("created", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -762,16 +868,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When this document reference was created
         /// </summary>
-        [FhirElement("indexed", InSummary=true, Order=170)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("date", InSummary=true, Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.Instant IndexedElement
+        public Hl7.Fhir.Model.Instant DateElement
         {
-            get { return _IndexedElement; }
-            set { _IndexedElement = value; OnPropertyChanged("IndexedElement"); }
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
         
-        private Hl7.Fhir.Model.Instant _IndexedElement;
+        private Hl7.Fhir.Model.Instant _DateElement;
         
         /// <summary>
         /// When this document reference was created
@@ -779,39 +884,37 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public DateTimeOffset? Indexed
+        public DateTimeOffset? Date
         {
-            get { return IndexedElement != null ? IndexedElement.Value : null; }
+            get { return DateElement != null ? DateElement.Value : null; }
             set
             {
                 if (!value.HasValue)
-                  IndexedElement = null; 
+                  DateElement = null; 
                 else
-                  IndexedElement = new Hl7.Fhir.Model.Instant(value);
-                OnPropertyChanged("Indexed");
+                  DateElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("Date");
             }
         }
         
         /// <summary>
-        /// Who and/or what authored the document
+        /// Agent involved
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=180)]
-        [CLSCompliant(false)]
-		[References("Practitioner","Organization","Device","Patient","RelatedPerson")]
+        [FhirElement("agent", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Author
+        public List<Hl7.Fhir.Model.DocumentReference.AgentComponent> Agent
         {
-            get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
+            get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.DocumentReference.AgentComponent>(); return _Agent; }
+            set { _Agent = value; OnPropertyChanged("Agent"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Author;
+        private List<Hl7.Fhir.Model.DocumentReference.AgentComponent> _Agent;
         
         /// <summary>
         /// Who/what authenticated the document
         /// </summary>
-        [FhirElement("authenticator", InSummary=true, Order=190)]
+        [FhirElement("authenticator", Order=190)]
         [CLSCompliant(false)]
 		[References("Practitioner","Organization")]
         [DataMember]
@@ -826,7 +929,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization which maintains the document
         /// </summary>
-        [FhirElement("custodian", InSummary=true, Order=200)]
+        [FhirElement("custodian", Order=200)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -947,8 +1050,8 @@ namespace Hl7.Fhir.Model
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-                if(IndexedElement != null) dest.IndexedElement = (Hl7.Fhir.Model.Instant)IndexedElement.DeepCopy();
-                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Instant)DateElement.DeepCopy();
+                if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.DocumentReference.AgentComponent>(Agent.DeepCopy());
                 if(Authenticator != null) dest.Authenticator = (Hl7.Fhir.Model.ResourceReference)Authenticator.DeepCopy();
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
                 if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent>(RelatesTo.DeepCopy());
@@ -981,8 +1084,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Class, otherT.Class)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
-            if( !DeepComparable.Matches(IndexedElement, otherT.IndexedElement)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
             if( !DeepComparable.Matches(Authenticator, otherT.Authenticator)) return false;
             if( !DeepComparable.Matches(Custodian, otherT.Custodian)) return false;
             if( !DeepComparable.Matches(RelatesTo, otherT.RelatesTo)) return false;
@@ -1008,8 +1111,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
-            if( !DeepComparable.IsExactly(IndexedElement, otherT.IndexedElement)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
             if( !DeepComparable.IsExactly(Authenticator, otherT.Authenticator)) return false;
             if( !DeepComparable.IsExactly(Custodian, otherT.Custodian)) return false;
             if( !DeepComparable.IsExactly(RelatesTo, otherT.RelatesTo)) return false;
@@ -1035,8 +1138,8 @@ namespace Hl7.Fhir.Model
 				if (Class != null) yield return Class;
 				if (Subject != null) yield return Subject;
 				if (CreatedElement != null) yield return CreatedElement;
-				if (IndexedElement != null) yield return IndexedElement;
-				foreach (var elem in Author) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				foreach (var elem in Agent) { if (elem != null) yield return elem; }
 				if (Authenticator != null) yield return Authenticator;
 				if (Custodian != null) yield return Custodian;
 				foreach (var elem in RelatesTo) { if (elem != null) yield return elem; }
@@ -1061,8 +1164,8 @@ namespace Hl7.Fhir.Model
                 if (Class != null) yield return new ElementValue("class", false, Class);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (IndexedElement != null) yield return new ElementValue("indexed", false, IndexedElement);
-                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", true, elem); }
                 if (Authenticator != null) yield return new ElementValue("authenticator", false, Authenticator);
                 if (Custodian != null) yield return new ElementValue("custodian", false, Custodian);
                 foreach (var elem in RelatesTo) { if (elem != null) yield return new ElementValue("relatesTo", true, elem); }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -271,19 +271,144 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("PropertyComponent")]
+        [DataContract]
+        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PropertyComponent"; } }
+            
+            /// <summary>
+            /// Code that specifies the property
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
+            /// Property value as a quantity
+            /// </summary>
+            [FhirElement("valueQuantity", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Quantity> ValueQuantity
+            {
+                get { if(_ValueQuantity==null) _ValueQuantity = new List<Quantity>(); return _ValueQuantity; }
+                set { _ValueQuantity = value; OnPropertyChanged("ValueQuantity"); }
+            }
+            
+            private List<Quantity> _ValueQuantity;
+            
+            /// <summary>
+            /// Property value as a code
+            /// </summary>
+            [FhirElement("valueCode", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> ValueCode
+            {
+                get { if(_ValueCode==null) _ValueCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ValueCode; }
+                set { _ValueCode = value; OnPropertyChanged("ValueCode"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _ValueCode;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PropertyComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(ValueQuantity != null) dest.ValueQuantity = new List<Quantity>(ValueQuantity.DeepCopy());
+                    if(ValueCode != null) dest.ValueCode = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCode.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PropertyComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PropertyComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(ValueQuantity, otherT.ValueQuantity)) return false;
+                if( !DeepComparable.Matches(ValueCode, otherT.ValueCode)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PropertyComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(ValueQuantity, otherT.ValueQuantity)) return false;
+                if( !DeepComparable.IsExactly(ValueCode, otherT.ValueCode)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Type != null) yield return Type;
+                    foreach (var elem in ValueQuantity) { if (elem != null) yield return elem; }
+                    foreach (var elem in ValueCode) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    foreach (var elem in ValueQuantity) { if (elem != null) yield return new ElementValue("valueQuantity", true, elem); }
+                    foreach (var elem in ValueCode) { if (elem != null) yield return new ElementValue("valueCode", true, elem); }
+                }
+            }
+
+            
+        }
+        
+        
         /// <summary>
-        /// Instance id assigned by the software stack
+        /// Instance identifier
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// What kind of component it is
@@ -447,6 +572,20 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.CodeableConcept _LanguageCode;
         
+        /// <summary>
+        /// Other Attributes
+        /// </summary>
+        [FhirElement("property", InSummary=true, Order=190)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.DeviceComponent.PropertyComponent> Property
+        {
+            get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.DeviceComponent.PropertyComponent>(); return _Property; }
+            set { _Property = value; OnPropertyChanged("Property"); }
+        }
+        
+        private List<Hl7.Fhir.Model.DeviceComponent.PropertyComponent> _Property;
+        
 
         public override void AddDefaultConstraints()
         {
@@ -461,7 +600,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(LastSystemChangeElement != null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)LastSystemChangeElement.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
@@ -471,6 +610,7 @@ namespace Hl7.Fhir.Model
                 if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)MeasurementPrincipleElement.DeepCopy();
                 if(ProductionSpecification != null) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(ProductionSpecification.DeepCopy());
                 if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopy();
+                if(Property != null) dest.Property = new List<Hl7.Fhir.Model.DeviceComponent.PropertyComponent>(Property.DeepCopy());
                 return dest;
             }
             else
@@ -498,6 +638,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(MeasurementPrincipleElement, otherT.MeasurementPrincipleElement)) return false;
             if( !DeepComparable.Matches(ProductionSpecification, otherT.ProductionSpecification)) return false;
             if( !DeepComparable.Matches(LanguageCode, otherT.LanguageCode)) return false;
+            if( !DeepComparable.Matches(Property, otherT.Property)) return false;
             
             return true;
         }
@@ -518,6 +659,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(MeasurementPrincipleElement, otherT.MeasurementPrincipleElement)) return false;
             if( !DeepComparable.IsExactly(ProductionSpecification, otherT.ProductionSpecification)) return false;
             if( !DeepComparable.IsExactly(LanguageCode, otherT.LanguageCode)) return false;
+            if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
             
             return true;
         }
@@ -528,7 +670,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Type != null) yield return Type;
 				if (LastSystemChangeElement != null) yield return LastSystemChangeElement;
 				if (Source != null) yield return Source;
@@ -538,6 +680,7 @@ namespace Hl7.Fhir.Model
 				if (MeasurementPrincipleElement != null) yield return MeasurementPrincipleElement;
 				foreach (var elem in ProductionSpecification) { if (elem != null) yield return elem; }
 				if (LanguageCode != null) yield return LanguageCode;
+				foreach (var elem in Property) { if (elem != null) yield return elem; }
             }
         }
 
@@ -547,7 +690,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (Type != null) yield return new ElementValue("type", false, Type);
                 if (LastSystemChangeElement != null) yield return new ElementValue("lastSystemChange", false, LastSystemChangeElement);
                 if (Source != null) yield return new ElementValue("source", false, Source);
@@ -557,6 +700,7 @@ namespace Hl7.Fhir.Model
                 if (MeasurementPrincipleElement != null) yield return new ElementValue("measurementPrinciple", false, MeasurementPrincipleElement);
                 foreach (var elem in ProductionSpecification) { if (elem != null) yield return new ElementValue("productionSpecification", true, elem); }
                 if (LanguageCode != null) yield return new ElementValue("languageCode", false, LanguageCode);
+                foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", true, elem); }
             }
         }
 

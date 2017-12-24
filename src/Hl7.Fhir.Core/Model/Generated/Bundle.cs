@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -162,6 +162,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
+            [EnumLiteral("HEAD", "http://hl7.org/fhir/http-verb"), Description("HEAD")]
+            HEAD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-verb)
+            /// </summary>
             [EnumLiteral("POST", "http://hl7.org/fhir/http-verb"), Description("POST")]
             POST,
             /// <summary>
@@ -176,6 +182,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("DELETE", "http://hl7.org/fhir/http-verb"), Description("DELETE")]
             DELETE,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-verb)
+            /// </summary>
+            [EnumLiteral("PATCH", "http://hl7.org/fhir/http-verb"), Description("PATCH")]
+            PATCH,
         }
 
         [FhirType("LinkComponent")]
@@ -670,7 +682,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "RequestComponent"; } }
             
             /// <summary>
-            /// GET | POST | PUT | DELETE
+            /// GET | HEAD | POST | PUT | DELETE | PATCH
             /// </summary>
             [FhirElement("method", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -684,7 +696,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Bundle.HTTPVerb> _MethodElement;
             
             /// <summary>
-            /// GET | POST | PUT | DELETE
+            /// GET | HEAD | POST | PUT | DELETE | PATCH
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1238,9 +1250,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// When the bundle was assembled
+        /// </summary>
+        [FhirElement("timestamp", InSummary=true, Order=70)]
+        [DataMember]
+        public Hl7.Fhir.Model.Instant TimestampElement
+        {
+            get { return _TimestampElement; }
+            set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Instant _TimestampElement;
+        
+        /// <summary>
+        /// When the bundle was assembled
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public DateTimeOffset? Timestamp
+        {
+            get { return TimestampElement != null ? TimestampElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  TimestampElement = null; 
+                else
+                  TimestampElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("Timestamp");
+            }
+        }
+        
+        /// <summary>
         /// If search, the total number of matches
         /// </summary>
-        [FhirElement("total", InSummary=true, Order=70)]
+        [FhirElement("total", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt TotalElement
         {
@@ -1272,7 +1316,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Links related to this Bundle
         /// </summary>
-        [FhirElement("link", InSummary=true, Order=80)]
+        [FhirElement("link", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
@@ -1286,7 +1330,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entry in the bundle - will have a resource, or information
         /// </summary>
-        [FhirElement("entry", InSummary=true, Order=90)]
+        [FhirElement("entry", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
@@ -1300,7 +1344,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Digital Signature
         /// </summary>
-        [FhirElement("signature", InSummary=true, Order=100)]
+        [FhirElement("signature", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Signature Signature
         {
@@ -1406,6 +1450,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
+                if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
                 if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopy());
                 if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(Entry.DeepCopy());
@@ -1429,6 +1474,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(TimestampElement, otherT.TimestampElement)) return false;
             if( !DeepComparable.Matches(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.Matches(Link, otherT.Link)) return false;
             if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
@@ -1445,6 +1491,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(TimestampElement, otherT.TimestampElement)) return false;
             if( !DeepComparable.IsExactly(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
             if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
@@ -1461,6 +1508,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (TypeElement != null) yield return TypeElement;
+				if (TimestampElement != null) yield return TimestampElement;
 				if (TotalElement != null) yield return TotalElement;
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
 				foreach (var elem in Entry) { if (elem != null) yield return elem; }
@@ -1476,6 +1524,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (TimestampElement != null) yield return new ElementValue("timestamp", false, TimestampElement);
                 if (TotalElement != null) yield return new ElementValue("total", false, TotalElement);
                 foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
                 foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }

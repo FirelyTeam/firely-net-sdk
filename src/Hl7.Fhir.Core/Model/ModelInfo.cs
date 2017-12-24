@@ -275,7 +275,6 @@ namespace Hl7.Fhir.Model
         {
             FHIRAllTypes.StructureDefinition,
             FHIRAllTypes.StructureMap,
-            FHIRAllTypes.DataElement,
             FHIRAllTypes.CapabilityStatement,
             FHIRAllTypes.MessageDefinition,
             FHIRAllTypes.OperationDefinition,
@@ -308,7 +307,6 @@ namespace Hl7.Fhir.Model
         {
             ResourceType.StructureDefinition,
             ResourceType.StructureMap,
-            ResourceType.DataElement,
             ResourceType.CapabilityStatement,
             ResourceType.MessageDefinition,
             ResourceType.OperationDefinition,

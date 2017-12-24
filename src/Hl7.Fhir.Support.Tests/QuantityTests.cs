@@ -32,7 +32,7 @@ namespace Hl7.FhirPath.Tests
         }
 
         [Fact]
-        public void Equals()
+        public void Equals_()
         {
             var newq = new Quantity(3.14m, "kg");
             var newq2 = new Quantity(3.14, "kg", Quantity.UCUM);

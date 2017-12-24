@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -82,10 +82,16 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("secondary", "http://hl7.org/fhir/identifier-use"), Description("Secondary")]
             Secondary,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/identifier-use)
+            /// </summary>
+            [EnumLiteral("old", "http://hl7.org/fhir/identifier-use"), Description("Old")]
+            Old,
         }
 
         /// <summary>
-        /// usual | official | temp | secondary (If known)
+        /// usual | official | temp | secondary | old (If known)
         /// </summary>
         [FhirElement("use", InSummary=true, Order=30)]
         [DataMember]
@@ -98,7 +104,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Identifier.IdentifierUse> _UseElement;
         
         /// <summary>
-        /// usual | official | temp | secondary (If known)
+        /// usual | official | temp | secondary | old (If known)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

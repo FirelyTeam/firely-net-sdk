@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,9 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "uri"; } }
         
+        // Must conform to the pattern "\S*"
+        public const string PATTERN = @"\S*";
+
 		public FhirUri(string value)
 		{
 			Value = value;

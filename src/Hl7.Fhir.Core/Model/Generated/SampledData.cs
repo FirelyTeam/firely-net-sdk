@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -231,7 +231,6 @@ namespace Hl7.Fhir.Model
         /// Decimal values with spaces, or "E" | "U" | "L"
         /// </summary>
         [FhirElement("data", Order=90)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DataElement
         {

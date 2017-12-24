@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -598,6 +598,169 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("AuthorizationComponent")]
+        [DataContract]
+        public partial class AuthorizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "AuthorizationComponent"; } }
+            
+            /// <summary>
+            /// Procedure sequence for reference
+            /// </summary>
+            [FhirElement("authorizationSequence", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.PositiveInt AuthorizationSequenceElement
+            {
+                get { return _AuthorizationSequenceElement; }
+                set { _AuthorizationSequenceElement = value; OnPropertyChanged("AuthorizationSequenceElement"); }
+            }
+            
+            private Hl7.Fhir.Model.PositiveInt _AuthorizationSequenceElement;
+            
+            /// <summary>
+            /// Procedure sequence for reference
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? AuthorizationSequence
+            {
+                get { return AuthorizationSequenceElement != null ? AuthorizationSequenceElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        AuthorizationSequenceElement = null; 
+                    else
+                        AuthorizationSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                    OnPropertyChanged("AuthorizationSequence");
+                }
+            }
+            
+            /// <summary>
+            /// Authorization required flag
+            /// </summary>
+            [FhirElement("required", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean RequiredElement
+            {
+                get { return _RequiredElement; }
+                set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
+            
+            /// <summary>
+            /// Authorization required flag
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Required
+            {
+                get { return RequiredElement != null ? RequiredElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        RequiredElement = null; 
+                    else
+                        RequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Required");
+                }
+            }
+            
+            /// <summary>
+            /// Comments and instructions
+            /// </summary>
+            [FhirElement("note", Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Annotation> Note
+            {
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Annotation> _Note;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as AuthorizationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(AuthorizationSequenceElement != null) dest.AuthorizationSequenceElement = (Hl7.Fhir.Model.PositiveInt)AuthorizationSequenceElement.DeepCopy();
+                    if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new AuthorizationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as AuthorizationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(AuthorizationSequenceElement, otherT.AuthorizationSequenceElement)) return false;
+                if( !DeepComparable.Matches(RequiredElement, otherT.RequiredElement)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AuthorizationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(AuthorizationSequenceElement, otherT.AuthorizationSequenceElement)) return false;
+                if( !DeepComparable.IsExactly(RequiredElement, otherT.RequiredElement)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (AuthorizationSequenceElement != null) yield return AuthorizationSequenceElement;
+                    if (RequiredElement != null) yield return RequiredElement;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (AuthorizationSequenceElement != null) yield return new ElementValue("authorizationSequence", false, AuthorizationSequenceElement);
+                    if (RequiredElement != null) yield return new ElementValue("required", false, RequiredElement);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                }
+            }
+
+            
+        }
+        
+        
         [FhirType("ErrorsComponent")]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -813,13 +976,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("outcome", Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Outcome
+        public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement
         {
-            get { return _Outcome; }
-            set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            get { return _OutcomeElement; }
+            set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Outcome;
+        private Code<Hl7.Fhir.Model.ClaimProcessingCodes> _OutcomeElement;
+        
+        /// <summary>
+        /// complete | error | partial
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.ClaimProcessingCodes? Outcome
+        {
+            get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  OutcomeElement = null; 
+                else
+                  OutcomeElement = new Code<Hl7.Fhir.Model.ClaimProcessingCodes>(value);
+                OnPropertyChanged("Outcome");
+            }
+        }
         
         /// <summary>
         /// Disposition Message
@@ -915,9 +1097,55 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.EligibilityResponse.InsuranceComponent> _Insurance;
         
         /// <summary>
+        /// Pre-Authorization/Determination Reference
+        /// </summary>
+        [FhirElement("preAuthRef", Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString PreAuthRefElement
+        {
+            get { return _PreAuthRefElement; }
+            set { _PreAuthRefElement = value; OnPropertyChanged("PreAuthRefElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _PreAuthRefElement;
+        
+        /// <summary>
+        /// Pre-Authorization/Determination Reference
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string PreAuthRef
+        {
+            get { return PreAuthRefElement != null ? PreAuthRefElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  PreAuthRefElement = null; 
+                else
+                  PreAuthRefElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("PreAuthRef");
+            }
+        }
+        
+        /// <summary>
+        /// Services which may require prior authorization
+        /// </summary>
+        [FhirElement("authorization", Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.EligibilityResponse.AuthorizationComponent> Authorization
+        {
+            get { if(_Authorization==null) _Authorization = new List<Hl7.Fhir.Model.EligibilityResponse.AuthorizationComponent>(); return _Authorization; }
+            set { _Authorization = value; OnPropertyChanged("Authorization"); }
+        }
+        
+        private List<Hl7.Fhir.Model.EligibilityResponse.AuthorizationComponent> _Authorization;
+        
+        /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", Order=200)]
+        [FhirElement("form", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Form
         {
@@ -930,7 +1158,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Processing errors
         /// </summary>
-        [FhirElement("error", Order=210)]
+        [FhirElement("error", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent> Error
@@ -961,11 +1189,13 @@ namespace Hl7.Fhir.Model
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
-                if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
+                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ClaimProcessingCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
                 if(InforceElement != null) dest.InforceElement = (Hl7.Fhir.Model.FhirBoolean)InforceElement.DeepCopy();
                 if(Insurance != null) dest.Insurance = new List<Hl7.Fhir.Model.EligibilityResponse.InsuranceComponent>(Insurance.DeepCopy());
+                if(PreAuthRefElement != null) dest.PreAuthRefElement = (Hl7.Fhir.Model.FhirString)PreAuthRefElement.DeepCopy();
+                if(Authorization != null) dest.Authorization = new List<Hl7.Fhir.Model.EligibilityResponse.AuthorizationComponent>(Authorization.DeepCopy());
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent>(Error.DeepCopy());
                 return dest;
@@ -991,11 +1221,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
-            if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.Matches(InforceElement, otherT.InforceElement)) return false;
             if( !DeepComparable.Matches(Insurance, otherT.Insurance)) return false;
+            if( !DeepComparable.Matches(PreAuthRefElement, otherT.PreAuthRefElement)) return false;
+            if( !DeepComparable.Matches(Authorization, otherT.Authorization)) return false;
             if( !DeepComparable.Matches(Form, otherT.Form)) return false;
             if( !DeepComparable.Matches(Error, otherT.Error)) return false;
             
@@ -1014,11 +1246,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
-            if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.IsExactly(InforceElement, otherT.InforceElement)) return false;
             if( !DeepComparable.IsExactly(Insurance, otherT.Insurance)) return false;
+            if( !DeepComparable.IsExactly(PreAuthRefElement, otherT.PreAuthRefElement)) return false;
+            if( !DeepComparable.IsExactly(Authorization, otherT.Authorization)) return false;
             if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
             if( !DeepComparable.IsExactly(Error, otherT.Error)) return false;
             
@@ -1037,11 +1271,13 @@ namespace Hl7.Fhir.Model
 				if (RequestProvider != null) yield return RequestProvider;
 				if (RequestOrganization != null) yield return RequestOrganization;
 				if (Request != null) yield return Request;
-				if (Outcome != null) yield return Outcome;
+				if (OutcomeElement != null) yield return OutcomeElement;
 				if (DispositionElement != null) yield return DispositionElement;
 				if (Insurer != null) yield return Insurer;
 				if (InforceElement != null) yield return InforceElement;
 				foreach (var elem in Insurance) { if (elem != null) yield return elem; }
+				if (PreAuthRefElement != null) yield return PreAuthRefElement;
+				foreach (var elem in Authorization) { if (elem != null) yield return elem; }
 				if (Form != null) yield return Form;
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
             }
@@ -1059,11 +1295,13 @@ namespace Hl7.Fhir.Model
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
                 if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
                 if (Request != null) yield return new ElementValue("request", false, Request);
-                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
                 if (Insurer != null) yield return new ElementValue("insurer", false, Insurer);
                 if (InforceElement != null) yield return new ElementValue("inforce", false, InforceElement);
                 foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", true, elem); }
+                if (PreAuthRefElement != null) yield return new ElementValue("preAuthRef", false, PreAuthRefElement);
+                foreach (var elem in Authorization) { if (elem != null) yield return new ElementValue("authorization", true, elem); }
                 if (Form != null) yield return new ElementValue("form", false, Form);
                 foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, elem); }
             }

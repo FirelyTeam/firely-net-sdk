@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -106,51 +106,50 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("OrderedItemComponent")]
+        [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "OrderedItemComponent"; } }
+            public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
-            /// The requested amount of the item indicated
+            /// Item detail
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("code", Order=40)]
             [DataMember]
-            public Quantity Quantity
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Quantity; }
-                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Quantity _Quantity;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// Medication, Substance, or Device requested to be supplied
+            /// Value of detail
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirBoolean))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.Element Value
             {
-                get { return _Item; }
-                set { _Item = value; OnPropertyChanged("Item"); }
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.Element _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OrderedItemComponent;
+                var dest = other as ParameterComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -159,29 +158,29 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OrderedItemComponent());
+                return CopyTo(new ParameterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OrderedItemComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OrderedItemComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -193,8 +192,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Quantity != null) yield return Quantity;
-                    if (Item != null) yield return Item;
+                    if (Code != null) yield return Code;
+                    if (Value != null) yield return Value;
                 }
             }
 
@@ -204,117 +203,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("RequesterComponent")]
-        [DataContract]
-        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RequesterComponent"; } }
-            
-            /// <summary>
-            /// Individual making the request
-            /// </summary>
-            [FhirElement("agent", InSummary=true, Order=40)]
-            [CLSCompliant(false)]
-			[References("Practitioner","Organization","Patient","RelatedPerson","Device")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Agent
-            {
-                get { return _Agent; }
-                set { _Agent = value; OnPropertyChanged("Agent"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Agent;
-            
-            /// <summary>
-            /// Organization agent is acting for
-            /// </summary>
-            [FhirElement("onBehalfOf", Order=50)]
-            [CLSCompliant(false)]
-			[References("Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
-            {
-                get { return _OnBehalfOf; }
-                set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RequesterComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Agent != null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)Agent.DeepCopy();
-                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RequesterComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RequesterComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
-                if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RequesterComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
-                if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Agent != null) yield return Agent;
-                    if (OnBehalfOf != null) yield return OnBehalfOf;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Agent != null) yield return new ElementValue("agent", false, Agent);
-                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
                 }
             }
 
@@ -413,22 +303,53 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The item being requested
+        /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("orderedItem", InSummary=true, Order=130)]
+        [FhirElement("item", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent OrderedItem
+        public Hl7.Fhir.Model.Element Item
         {
-            get { return _OrderedItem; }
-            set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
+            get { return _Item; }
+            set { _Item = value; OnPropertyChanged("Item"); }
         }
         
-        private Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent _OrderedItem;
+        private Hl7.Fhir.Model.Element _Item;
+        
+        /// <summary>
+        /// The requested amount of the item indicated
+        /// </summary>
+        [FhirElement("quantity", InSummary=true, Order=140)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Quantity Quantity
+        {
+            get { return _Quantity; }
+            set { _Quantity = value; OnPropertyChanged("Quantity"); }
+        }
+        
+        private Quantity _Quantity;
+        
+        /// <summary>
+        /// Ordered item details
+        /// </summary>
+        [FhirElement("parameter", Order=150)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent> Parameter
+        {
+            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent>(); return _Parameter; }
+            set { _Parameter = value; OnPropertyChanged("Parameter"); }
+        }
+        
+        private List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent> _Parameter;
         
         /// <summary>
         /// When the request should be fulfilled
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
@@ -443,7 +364,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the request was made
         /// </summary>
-        [FhirElement("authoredOn", InSummary=true, Order=150)]
+        [FhirElement("authoredOn", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
         {
@@ -473,24 +394,26 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who/what is requesting service
+        /// Individual making the request
         /// </summary>
-        [FhirElement("requester", InSummary=true, Order=160)]
+        [FhirElement("requester", InSummary=true, Order=180)]
+        [CLSCompliant(false)]
+		[References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.SupplyRequest.RequesterComponent Requester
+        public Hl7.Fhir.Model.ResourceReference Requester
         {
             get { return _Requester; }
             set { _Requester = value; OnPropertyChanged("Requester"); }
         }
         
-        private Hl7.Fhir.Model.SupplyRequest.RequesterComponent _Requester;
+        private Hl7.Fhir.Model.ResourceReference _Requester;
         
         /// <summary>
         /// Who is intended to fulfill the request
         /// </summary>
-        [FhirElement("supplier", InSummary=true, Order=170)]
+        [FhirElement("supplier", InSummary=true, Order=190)]
         [CLSCompliant(false)]
-		[References("Organization")]
+		[References("Organization","HealthcareService")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Supplier
@@ -504,22 +427,37 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why the supply item was requested
         /// </summary>
-        [FhirElement("reason", Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("reasonCode", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Reason
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
         {
-            get { return _Reason; }
-            set { _Reason = value; OnPropertyChanged("Reason"); }
+            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
         }
         
-        private Hl7.Fhir.Model.Element _Reason;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+        
+        /// <summary>
+        /// Why the supply item was requested
+        /// </summary>
+        [FhirElement("reasonReference", Order=210)]
+        [CLSCompliant(false)]
+		[References("Condition","Observation","DiagnosticReport","DocumentReference")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
+        {
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
         
         /// <summary>
         /// The origin of the supply
         /// </summary>
-        [FhirElement("deliverFrom", Order=190)]
+        [FhirElement("deliverFrom", Order=220)]
         [CLSCompliant(false)]
 		[References("Organization","Location")]
         [DataMember]
@@ -534,7 +472,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The destination of the supply
         /// </summary>
-        [FhirElement("deliverTo", Order=200)]
+        [FhirElement("deliverTo", Order=230)]
         [CLSCompliant(false)]
 		[References("Organization","Location","Patient")]
         [DataMember]
@@ -564,12 +502,15 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
-                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent)OrderedItem.DeepCopy();
+                if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent>(Parameter.DeepCopy());
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
-                if(Requester != null) dest.Requester = (Hl7.Fhir.Model.SupplyRequest.RequesterComponent)Requester.DeepCopy();
+                if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(Supplier != null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
-                if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
+                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(DeliverFrom != null) dest.DeliverFrom = (Hl7.Fhir.Model.ResourceReference)DeliverFrom.DeepCopy();
                 if(DeliverTo != null) dest.DeliverTo = (Hl7.Fhir.Model.ResourceReference)DeliverTo.DeepCopy();
                 return dest;
@@ -593,12 +534,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
-            if( !DeepComparable.Matches(OrderedItem, otherT.OrderedItem)) return false;
+            if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+            if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+            if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(Supplier, otherT.Supplier)) return false;
-            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(DeliverFrom, otherT.DeliverFrom)) return false;
             if( !DeepComparable.Matches(DeliverTo, otherT.DeliverTo)) return false;
             
@@ -615,12 +559,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
-            if( !DeepComparable.IsExactly(OrderedItem, otherT.OrderedItem)) return false;
+            if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+            if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+            if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(Supplier, otherT.Supplier)) return false;
-            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(DeliverFrom, otherT.DeliverFrom)) return false;
             if( !DeepComparable.IsExactly(DeliverTo, otherT.DeliverTo)) return false;
             
@@ -637,12 +584,15 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (Category != null) yield return Category;
 				if (PriorityElement != null) yield return PriorityElement;
-				if (OrderedItem != null) yield return OrderedItem;
+				if (Item != null) yield return Item;
+				if (Quantity != null) yield return Quantity;
+				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
 				if (Occurrence != null) yield return Occurrence;
 				if (AuthoredOnElement != null) yield return AuthoredOnElement;
 				if (Requester != null) yield return Requester;
 				foreach (var elem in Supplier) { if (elem != null) yield return elem; }
-				if (Reason != null) yield return Reason;
+				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				if (DeliverFrom != null) yield return DeliverFrom;
 				if (DeliverTo != null) yield return DeliverTo;
             }
@@ -658,12 +608,15 @@ namespace Hl7.Fhir.Model
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Category != null) yield return new ElementValue("category", false, Category);
                 if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
-                if (OrderedItem != null) yield return new ElementValue("orderedItem", false, OrderedItem);
+                if (Item != null) yield return new ElementValue("item", false, Item);
+                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
                 if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
                 if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
                 if (Requester != null) yield return new ElementValue("requester", false, Requester);
                 foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", true, elem); }
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
                 if (DeliverFrom != null) yield return new ElementValue("deliverFrom", false, DeliverFrom);
                 if (DeliverTo != null) yield return new ElementValue("deliverTo", false, DeliverTo);
             }

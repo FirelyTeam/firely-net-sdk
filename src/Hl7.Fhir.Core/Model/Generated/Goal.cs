@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -362,6 +362,7 @@ namespace Hl7.Fhir.Model
         [FhirElement("subject", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("Patient","Group","Organization")]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -483,7 +484,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("addresses", Order=200)]
         [CLSCompliant(false)]
-		[References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
+		[References("Condition","Observation","MedicationStatement","NutritionOrder","ServiceRequest","RiskAssessment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Addresses

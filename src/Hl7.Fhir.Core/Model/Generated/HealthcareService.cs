@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Whether this healthcareservice is in active use
+        /// Whether this HealthcareService record is in active use
         /// </summary>
         [FhirElement("active", InSummary=true, Order=100)]
         [DataMember]
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
         
         /// <summary>
-        /// Whether this healthcareservice is in active use
+        /// Whether this HealthcareService record is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

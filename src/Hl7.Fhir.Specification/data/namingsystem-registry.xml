@@ -53,7 +53,7 @@
     <fullUrl value="http://hl7.org/fhir/NamingSystem/us-medicare" />
     <resource>
       <NamingSystem>
-        <id value="us-ssn" />
+        <id value="us-medicare" />
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -138,6 +138,45 @@
         <uniqueId>
           <type value="oid" />
           <value value="2.16.840.1.113883.4.6" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/gtin" />
+    <resource>
+      <NamingSystem>
+        <id value="gtin" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Global Trade Item Number (GTIN)" />
+        <status value="active" />
+        <kind value="identifier" />
+        <!-- Removed date -->
+        <publisher value="GS1" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://www.gs1.org/" />
+          </telecom>
+        </contact>
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="001" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="1.3.160" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="https://www.gs1.org/gtin" />
         </uniqueId>
       </NamingSystem>
     </resource>

@@ -487,7 +487,7 @@ if(!abstractType) {
         [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
         [CLSCompliant(false)]
-		[References(<#= pd.ReferenceTargets #>)]
+		[References(<#= pd.ReferenceTargets != null ? pd.ReferenceTargets : "\"Any\"" #>)]
 <# }
 #>
 <# if (!string.IsNullOrEmpty(pd.AllowedTypes)) {#>

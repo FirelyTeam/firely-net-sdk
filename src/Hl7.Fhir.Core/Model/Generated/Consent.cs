@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A healthcare consumer's policy choices to permits or denies recipients or roles to perform actions for specific purposes and periods of time
+    /// A healthcare consumer's  choices to permit or deny recipients or roles to perform actions for specific purposes and periods of time
     /// </summary>
     [FhirType("Consent", IsResource=true)]
     [DataContract]
@@ -101,6 +101,60 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
+        /// This value set includes sample Consent Action codes.
+        /// (url: http://hl7.org/fhir/ValueSet/consent-scope)
+        /// </summary>
+        [FhirEnumeration("ConsentScopeCodes")]
+        public enum ConsentScopeCodes
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consentscope)
+            /// </summary>
+            [EnumLiteral("ADR", "http://hl7.org/fhir/consentscope"), Description("Advanced Care Directive")]
+            ADR,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consentscope)
+            /// </summary>
+            [EnumLiteral("research", "http://hl7.org/fhir/consentscope"), Description("Research")]
+            Research,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consentscope)
+            /// </summary>
+            [EnumLiteral("privacy", "http://hl7.org/fhir/consentscope"), Description("Privacy Consent")]
+            Privacy,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consentscope)
+            /// </summary>
+            [EnumLiteral("treatment", "http://hl7.org/fhir/consentscope"), Description("Treatment")]
+            Treatment,
+        }
+
+        /// <summary>
+        /// How a rule statement is applied, such as adding additional consent or removing consent
+        /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
+        /// </summary>
+        [FhirEnumeration("ConsentProvisionType")]
+        public enum ConsentProvisionType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-provision-type)
+            /// </summary>
+            [EnumLiteral("deny", "http://hl7.org/fhir/consent-provision-type"), Description("Opt Out")]
+            Deny,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-provision-type)
+            /// </summary>
+            [EnumLiteral("permit", "http://hl7.org/fhir/consent-provision-type"), Description("Opt In")]
+            Permit,
+        }
+
+        /// <summary>
         /// How a resource reference is interpreted when testing consent restrictions
         /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
         /// </summary>
@@ -133,135 +187,6 @@ namespace Hl7.Fhir.Model
             Authoredby,
         }
 
-        /// <summary>
-        /// How an exception statement is applied, such as adding additional consent or removing consent
-        /// (url: http://hl7.org/fhir/ValueSet/consent-except-type)
-        /// </summary>
-        [FhirEnumeration("ConsentExceptType")]
-        public enum ConsentExceptType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-except-type)
-            /// </summary>
-            [EnumLiteral("deny", "http://hl7.org/fhir/consent-except-type"), Description("Opt Out")]
-            Deny,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-except-type)
-            /// </summary>
-            [EnumLiteral("permit", "http://hl7.org/fhir/consent-except-type"), Description("Opt In")]
-            Permit,
-        }
-
-        [FhirType("ActorComponent")]
-        [DataContract]
-        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ActorComponent"; } }
-            
-            /// <summary>
-            /// How the actor is involved
-            /// </summary>
-            [FhirElement("role", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Role
-            {
-                get { return _Role; }
-                set { _Role = value; OnPropertyChanged("Role"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Role;
-            
-            /// <summary>
-            /// Resource for the actor (or group, by role)
-            /// </summary>
-            [FhirElement("reference", Order=50)]
-            [CLSCompliant(false)]
-			[References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Reference
-            {
-                get { return _Reference; }
-                set { _Reference = value; OnPropertyChanged("Reference"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Reference;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ActorComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ActorComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ActorComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
-                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ActorComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
-                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Role != null) yield return Role;
-                    if (Reference != null) yield return Reference;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
-                }
-            }
-
-            
-        }
-        
-        
         [FhirType("PolicyComponent")]
         [DataContract]
         public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -404,71 +329,103 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DataComponent")]
+        [FhirType("VerificationComponent")]
         [DataContract]
-        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DataComponent"; } }
+            public override string TypeName { get { return "VerificationComponent"; } }
             
             /// <summary>
-            /// instance | related | dependents | authoredby
+            /// Has been verified
             /// </summary>
-            [FhirElement("meaning", InSummary=true, Order=40)]
+            [FhirElement("verified", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
+            public Hl7.Fhir.Model.FhirBoolean VerifiedElement
             {
-                get { return _MeaningElement; }
-                set { _MeaningElement = value; OnPropertyChanged("MeaningElement"); }
+                get { return _VerifiedElement; }
+                set { _VerifiedElement = value; OnPropertyChanged("VerifiedElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> _MeaningElement;
+            private Hl7.Fhir.Model.FhirBoolean _VerifiedElement;
             
             /// <summary>
-            /// instance | related | dependents | authoredby
+            /// Has been verified
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
+            public bool? Verified
             {
-                get { return MeaningElement != null ? MeaningElement.Value : null; }
+                get { return VerifiedElement != null ? VerifiedElement.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                        MeaningElement = null; 
+                        VerifiedElement = null; 
                     else
-                        MeaningElement = new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
-                    OnPropertyChanged("Meaning");
+                        VerifiedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Verified");
                 }
             }
             
             /// <summary>
-            /// The actual data reference
+            /// Person who verified
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=50)]
+            [FhirElement("verifiedWith", Order=50)]
             [CLSCompliant(false)]
-			[References()]
-            [Cardinality(Min=1,Max=1)]
+			[References("Patient","RelatedPerson")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Reference
+            public Hl7.Fhir.Model.ResourceReference VerifiedWith
             {
-                get { return _Reference; }
-                set { _Reference = value; OnPropertyChanged("Reference"); }
+                get { return _VerifiedWith; }
+                set { _VerifiedWith = value; OnPropertyChanged("VerifiedWith"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Reference;
+            private Hl7.Fhir.Model.ResourceReference _VerifiedWith;
+            
+            /// <summary>
+            /// When consent verified
+            /// </summary>
+            [FhirElement("verificationDate", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDateTime VerificationDateElement
+            {
+                get { return _VerificationDateElement; }
+                set { _VerificationDateElement = value; OnPropertyChanged("VerificationDateElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDateTime _VerificationDateElement;
+            
+            /// <summary>
+            /// When consent verified
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string VerificationDate
+            {
+                get { return VerificationDateElement != null ? VerificationDateElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        VerificationDateElement = null; 
+                    else
+                        VerificationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("VerificationDate");
+                }
+            }
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DataComponent;
+                var dest = other as VerificationComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>)MeaningElement.DeepCopy();
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+                    if(VerifiedElement != null) dest.VerifiedElement = (Hl7.Fhir.Model.FhirBoolean)VerifiedElement.DeepCopy();
+                    if(VerifiedWith != null) dest.VerifiedWith = (Hl7.Fhir.Model.ResourceReference)VerifiedWith.DeepCopy();
+                    if(VerificationDateElement != null) dest.VerificationDateElement = (Hl7.Fhir.Model.FhirDateTime)VerificationDateElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -477,29 +434,31 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DataComponent());
+                return CopyTo(new VerificationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DataComponent;
+                var otherT = other as VerificationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(MeaningElement, otherT.MeaningElement)) return false;
-                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(VerifiedElement, otherT.VerifiedElement)) return false;
+                if( !DeepComparable.Matches(VerifiedWith, otherT.VerifiedWith)) return false;
+                if( !DeepComparable.Matches(VerificationDateElement, otherT.VerificationDateElement)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DataComponent;
+                var otherT = other as VerificationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(MeaningElement, otherT.MeaningElement)) return false;
-                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.IsExactly(VerifiedElement, otherT.VerifiedElement)) return false;
+                if( !DeepComparable.IsExactly(VerifiedWith, otherT.VerifiedWith)) return false;
+                if( !DeepComparable.IsExactly(VerificationDateElement, otherT.VerificationDateElement)) return false;
                 
                 return true;
             }
@@ -511,8 +470,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (MeaningElement != null) yield return MeaningElement;
-                    if (Reference != null) yield return Reference;
+                    if (VerifiedElement != null) yield return VerifiedElement;
+                    if (VerifiedWith != null) yield return VerifiedWith;
+                    if (VerificationDateElement != null) yield return VerificationDateElement;
                 }
             }
 
@@ -522,8 +482,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MeaningElement != null) yield return new ElementValue("meaning", false, MeaningElement);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
+                    if (VerifiedElement != null) yield return new ElementValue("verified", false, VerifiedElement);
+                    if (VerifiedWith != null) yield return new ElementValue("verifiedWith", false, VerifiedWith);
+                    if (VerificationDateElement != null) yield return new ElementValue("verificationDate", false, VerificationDateElement);
                 }
             }
 
@@ -531,26 +492,25 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExceptComponent")]
+        [FhirType("provisionComponent")]
         [DataContract]
-        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ExceptComponent"; } }
+            public override string TypeName { get { return "provisionComponent"; } }
             
             /// <summary>
             /// deny | permit
             /// </summary>
             [FhirElement("type", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Consent.ConsentExceptType> TypeElement
+            public Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Consent.ConsentExceptType> _TypeElement;
+            private Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> _TypeElement;
             
             /// <summary>
             /// deny | permit
@@ -558,7 +518,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Consent.ConsentExceptType? Type
+            public Hl7.Fhir.Model.Consent.ConsentProvisionType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -566,13 +526,13 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         TypeElement = null; 
                     else
-                        TypeElement = new Code<Hl7.Fhir.Model.Consent.ConsentExceptType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>(value);
                     OnPropertyChanged("Type");
                 }
             }
             
             /// <summary>
-            /// Timeframe for this exception
+            /// Timeframe for this rule
             /// </summary>
             [FhirElement("period", InSummary=true, Order=50)]
             [DataMember]
@@ -585,21 +545,21 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Period _Period;
             
             /// <summary>
-            /// Who|what controlled by this exception (or group, by role)
+            /// Who|what controlled by this rule (or group, by role)
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=60)]
+            [FhirElement("actor", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Consent.ExceptActorComponent> Actor
+            public List<Hl7.Fhir.Model.Consent.provisionActorComponent> Actor
             {
-                get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.Consent.ExceptActorComponent>(); return _Actor; }
+                get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.Consent.provisionActorComponent>(); return _Actor; }
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
             
-            private List<Hl7.Fhir.Model.Consent.ExceptActorComponent> _Actor;
+            private List<Hl7.Fhir.Model.Consent.provisionActorComponent> _Actor;
             
             /// <summary>
-            /// Actions controlled by this exception
+            /// Actions controlled by this rule
             /// </summary>
             [FhirElement("action", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
@@ -627,7 +587,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Coding> _SecurityLabel;
             
             /// <summary>
-            /// Context of activities covered by this exception
+            /// Context of activities covered by this rule
             /// </summary>
             [FhirElement("purpose", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
@@ -660,16 +620,16 @@ namespace Hl7.Fhir.Model
             [FhirElement("code", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Code
+            public List<Hl7.Fhir.Model.CodeableConcept> Code
             {
-                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.Coding>(); return _Code; }
+                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private List<Hl7.Fhir.Model.Coding> _Code;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Code;
             
             /// <summary>
-            /// Timeframe for data controlled by this exception
+            /// Timeframe for data controlled by this rule
             /// </summary>
             [FhirElement("dataPeriod", InSummary=true, Order=120)]
             [DataMember]
@@ -682,36 +642,51 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Period _DataPeriod;
             
             /// <summary>
-            /// Data controlled by this exception
+            /// Data controlled by this rule
             /// </summary>
             [FhirElement("data", InSummary=true, Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Consent.ExceptDataComponent> Data
+            public List<Hl7.Fhir.Model.Consent.provisionDataComponent> Data
             {
-                get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.Consent.ExceptDataComponent>(); return _Data; }
+                get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.Consent.provisionDataComponent>(); return _Data; }
                 set { _Data = value; OnPropertyChanged("Data"); }
             }
             
-            private List<Hl7.Fhir.Model.Consent.ExceptDataComponent> _Data;
+            private List<Hl7.Fhir.Model.Consent.provisionDataComponent> _Data;
+            
+            /// <summary>
+            /// Nested Exception Rules
+            /// </summary>
+            [FhirElement("provision", Order=140)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Consent.provisionComponent> Provision
+            {
+                get { if(_Provision==null) _Provision = new List<Hl7.Fhir.Model.Consent.provisionComponent>(); return _Provision; }
+                set { _Provision = value; OnPropertyChanged("Provision"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Consent.provisionComponent> _Provision;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ExceptComponent;
+                var dest = other as provisionComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Consent.ConsentExceptType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>)TypeElement.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.Consent.ExceptActorComponent>(Actor.DeepCopy());
+                    if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.Consent.provisionActorComponent>(Actor.DeepCopy());
                     if(Action != null) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopy());
                     if(SecurityLabel != null) dest.SecurityLabel = new List<Hl7.Fhir.Model.Coding>(SecurityLabel.DeepCopy());
                     if(Purpose != null) dest.Purpose = new List<Hl7.Fhir.Model.Coding>(Purpose.DeepCopy());
                     if(Class != null) dest.Class = new List<Hl7.Fhir.Model.Coding>(Class.DeepCopy());
-                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
+                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(DataPeriod != null) dest.DataPeriod = (Hl7.Fhir.Model.Period)DataPeriod.DeepCopy();
-                    if(Data != null) dest.Data = new List<Hl7.Fhir.Model.Consent.ExceptDataComponent>(Data.DeepCopy());
+                    if(Data != null) dest.Data = new List<Hl7.Fhir.Model.Consent.provisionDataComponent>(Data.DeepCopy());
+                    if(Provision != null) dest.Provision = new List<Hl7.Fhir.Model.Consent.provisionComponent>(Provision.DeepCopy());
                     return dest;
                 }
                 else
@@ -720,12 +695,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ExceptComponent());
+                return CopyTo(new provisionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ExceptComponent;
+                var otherT = other as provisionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -739,13 +714,14 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(DataPeriod, otherT.DataPeriod)) return false;
                 if( !DeepComparable.Matches(Data, otherT.Data)) return false;
+                if( !DeepComparable.Matches(Provision, otherT.Provision)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ExceptComponent;
+                var otherT = other as provisionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -759,6 +735,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(DataPeriod, otherT.DataPeriod)) return false;
                 if( !DeepComparable.IsExactly(Data, otherT.Data)) return false;
+                if( !DeepComparable.IsExactly(Provision, otherT.Provision)) return false;
                 
                 return true;
             }
@@ -780,6 +757,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Code) { if (elem != null) yield return elem; }
                     if (DataPeriod != null) yield return DataPeriod;
                     foreach (var elem in Data) { if (elem != null) yield return elem; }
+                    foreach (var elem in Provision) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -799,6 +777,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
                     if (DataPeriod != null) yield return new ElementValue("dataPeriod", false, DataPeriod);
                     foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", true, elem); }
+                    foreach (var elem in Provision) { if (elem != null) yield return new ElementValue("provision", true, elem); }
                 }
             }
 
@@ -806,12 +785,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExceptActorComponent")]
+        [FhirType("provisionActorComponent")]
         [DataContract]
-        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ExceptActorComponent"; } }
+            public override string TypeName { get { return "provisionActorComponent"; } }
             
             /// <summary>
             /// How the actor is involved
@@ -845,7 +824,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ExceptActorComponent;
+                var dest = other as provisionActorComponent;
                 
                 if (dest != null)
                 {
@@ -860,12 +839,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ExceptActorComponent());
+                return CopyTo(new provisionActorComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ExceptActorComponent;
+                var otherT = other as provisionActorComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -877,7 +856,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ExceptActorComponent;
+                var otherT = other as provisionActorComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -914,12 +893,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExceptDataComponent")]
+        [FhirType("provisionDataComponent")]
         [DataContract]
-        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ExceptDataComponent"; } }
+            public override string TypeName { get { return "provisionDataComponent"; } }
             
             /// <summary>
             /// instance | related | dependents | authoredby
@@ -972,7 +951,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ExceptDataComponent;
+                var dest = other as provisionDataComponent;
                 
                 if (dest != null)
                 {
@@ -987,12 +966,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ExceptDataComponent());
+                return CopyTo(new provisionDataComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ExceptDataComponent;
+                var otherT = other as provisionDataComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1004,7 +983,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ExceptDataComponent;
+                var otherT = other as provisionDataComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1088,10 +1067,43 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Which of the four areas this resource covers
+        /// </summary>
+        [FhirElement("scope", InSummary=true, Order=110)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes> ScopeElement
+        {
+            get { return _ScopeElement; }
+            set { _ScopeElement = value; OnPropertyChanged("ScopeElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes> _ScopeElement;
+        
+        /// <summary>
+        /// Which of the four areas this resource covers
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.Consent.ConsentScopeCodes? Scope
+        {
+            get { return ScopeElement != null ? ScopeElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ScopeElement = null; 
+                else
+                  ScopeElement = new Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes>(value);
+                OnPropertyChanged("Scope");
+            }
+        }
+        
+        /// <summary>
         /// Classification of the consent statement - for indexing/retrieval
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=110)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("category", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Category
         {
@@ -1104,7 +1116,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who the consent applies to
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=120)]
+        [FhirElement("patient", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -1116,19 +1128,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
-        /// Period that this consent applies
-        /// </summary>
-        [FhirElement("period", InSummary=true, Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period Period
-        {
-            get { return _Period; }
-            set { _Period = value; OnPropertyChanged("Period"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
         /// When this Consent was created or indexed
@@ -1163,7 +1162,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who is agreeing to the policy and exceptions
+        /// Who is agreeing to the policy and rules
         /// </summary>
         [FhirElement("consentingParty", InSummary=true, Order=150)]
         [CLSCompliant(false)]
@@ -1179,37 +1178,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _ConsentingParty;
         
         /// <summary>
-        /// Who|what controlled by this consent (or group, by role)
-        /// </summary>
-        [FhirElement("actor", InSummary=true, Order=160)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Consent.ActorComponent> Actor
-        {
-            get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.Consent.ActorComponent>(); return _Actor; }
-            set { _Actor = value; OnPropertyChanged("Actor"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Consent.ActorComponent> _Actor;
-        
-        /// <summary>
-        /// Actions controlled by this consent
-        /// </summary>
-        [FhirElement("action", InSummary=true, Order=170)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Action
-        {
-            get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Action; }
-            set { _Action = value; OnPropertyChanged("Action"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _Action;
-        
-        /// <summary>
         /// Custodian of the consent
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=180)]
+        [FhirElement("organization", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -1225,7 +1196,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Source from which this consent is taken
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -1240,7 +1211,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Policies covered by this consent
         /// </summary>
-        [FhirElement("policy", Order=200)]
+        [FhirElement("policy", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Consent.PolicyComponent> Policy
@@ -1254,103 +1225,43 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Policy that this consents to
         /// </summary>
-        [FhirElement("policyRule", InSummary=true, Order=210)]
+        [FhirElement("policyRule", InSummary=true, Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri PolicyRuleElement
+        public Hl7.Fhir.Model.CodeableConcept PolicyRule
         {
-            get { return _PolicyRuleElement; }
-            set { _PolicyRuleElement = value; OnPropertyChanged("PolicyRuleElement"); }
+            get { return _PolicyRule; }
+            set { _PolicyRule = value; OnPropertyChanged("PolicyRule"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _PolicyRuleElement;
+        private Hl7.Fhir.Model.CodeableConcept _PolicyRule;
         
         /// <summary>
-        /// Policy that this consents to
+        /// Consent Verified by patient or family
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string PolicyRule
-        {
-            get { return PolicyRuleElement != null ? PolicyRuleElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  PolicyRuleElement = null; 
-                else
-                  PolicyRuleElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("PolicyRule");
-            }
-        }
-        
-        /// <summary>
-        /// Security Labels that define affected resources
-        /// </summary>
-        [FhirElement("securityLabel", InSummary=true, Order=220)]
+        [FhirElement("verification", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Coding> SecurityLabel
+        public List<Hl7.Fhir.Model.Consent.VerificationComponent> Verification
         {
-            get { if(_SecurityLabel==null) _SecurityLabel = new List<Hl7.Fhir.Model.Coding>(); return _SecurityLabel; }
-            set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
+            get { if(_Verification==null) _Verification = new List<Hl7.Fhir.Model.Consent.VerificationComponent>(); return _Verification; }
+            set { _Verification = value; OnPropertyChanged("Verification"); }
         }
         
-        private List<Hl7.Fhir.Model.Coding> _SecurityLabel;
+        private List<Hl7.Fhir.Model.Consent.VerificationComponent> _Verification;
         
         /// <summary>
-        /// Context of activities for which the agreement is made
+        /// Constraints to the base Consent.policyRule
         /// </summary>
-        [FhirElement("purpose", InSummary=true, Order=230)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("provision", InSummary=true, Order=210)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Coding> Purpose
+        public Hl7.Fhir.Model.Consent.provisionComponent Provision
         {
-            get { if(_Purpose==null) _Purpose = new List<Hl7.Fhir.Model.Coding>(); return _Purpose; }
-            set { _Purpose = value; OnPropertyChanged("Purpose"); }
+            get { return _Provision; }
+            set { _Provision = value; OnPropertyChanged("Provision"); }
         }
         
-        private List<Hl7.Fhir.Model.Coding> _Purpose;
-        
-        /// <summary>
-        /// Timeframe for data controlled by this consent
-        /// </summary>
-        [FhirElement("dataPeriod", InSummary=true, Order=240)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period DataPeriod
-        {
-            get { return _DataPeriod; }
-            set { _DataPeriod = value; OnPropertyChanged("DataPeriod"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _DataPeriod;
-        
-        /// <summary>
-        /// Data controlled by this consent
-        /// </summary>
-        [FhirElement("data", InSummary=true, Order=250)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Consent.DataComponent> Data
-        {
-            get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.Consent.DataComponent>(); return _Data; }
-            set { _Data = value; OnPropertyChanged("Data"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Consent.DataComponent> _Data;
-        
-        /// <summary>
-        /// Additional rule -  addition or removal of permissions
-        /// </summary>
-        [FhirElement("except", InSummary=true, Order=260)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Consent.ExceptComponent> Except
-        {
-            get { if(_Except==null) _Except = new List<Hl7.Fhir.Model.Consent.ExceptComponent>(); return _Except; }
-            set { _Except = value; OnPropertyChanged("Except"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Consent.ExceptComponent> _Except;
+        private Hl7.Fhir.Model.Consent.provisionComponent _Provision;
         
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_1 = new ElementDefinition.ConstraintComponent()
@@ -1378,22 +1289,17 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Consent.ConsentState>)StatusElement.DeepCopy();
+                if(ScopeElement != null) dest.ScopeElement = (Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes>)ScopeElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                 if(ConsentingParty != null) dest.ConsentingParty = new List<Hl7.Fhir.Model.ResourceReference>(ConsentingParty.DeepCopy());
-                if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.Consent.ActorComponent>(Actor.DeepCopy());
-                if(Action != null) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopy());
                 if(Organization != null) dest.Organization = new List<Hl7.Fhir.Model.ResourceReference>(Organization.DeepCopy());
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
                 if(Policy != null) dest.Policy = new List<Hl7.Fhir.Model.Consent.PolicyComponent>(Policy.DeepCopy());
-                if(PolicyRuleElement != null) dest.PolicyRuleElement = (Hl7.Fhir.Model.FhirUri)PolicyRuleElement.DeepCopy();
-                if(SecurityLabel != null) dest.SecurityLabel = new List<Hl7.Fhir.Model.Coding>(SecurityLabel.DeepCopy());
-                if(Purpose != null) dest.Purpose = new List<Hl7.Fhir.Model.Coding>(Purpose.DeepCopy());
-                if(DataPeriod != null) dest.DataPeriod = (Hl7.Fhir.Model.Period)DataPeriod.DeepCopy();
-                if(Data != null) dest.Data = new List<Hl7.Fhir.Model.Consent.DataComponent>(Data.DeepCopy());
-                if(Except != null) dest.Except = new List<Hl7.Fhir.Model.Consent.ExceptComponent>(Except.DeepCopy());
+                if(PolicyRule != null) dest.PolicyRule = (Hl7.Fhir.Model.CodeableConcept)PolicyRule.DeepCopy();
+                if(Verification != null) dest.Verification = new List<Hl7.Fhir.Model.Consent.VerificationComponent>(Verification.DeepCopy());
+                if(Provision != null) dest.Provision = (Hl7.Fhir.Model.Consent.provisionComponent)Provision.DeepCopy();
                 return dest;
             }
             else
@@ -1413,22 +1319,17 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(ScopeElement, otherT.ScopeElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.Matches(ConsentingParty, otherT.ConsentingParty)) return false;
-            if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
-            if( !DeepComparable.Matches(Action, otherT.Action)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Policy, otherT.Policy)) return false;
-            if( !DeepComparable.Matches(PolicyRuleElement, otherT.PolicyRuleElement)) return false;
-            if( !DeepComparable.Matches(SecurityLabel, otherT.SecurityLabel)) return false;
-            if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
-            if( !DeepComparable.Matches(DataPeriod, otherT.DataPeriod)) return false;
-            if( !DeepComparable.Matches(Data, otherT.Data)) return false;
-            if( !DeepComparable.Matches(Except, otherT.Except)) return false;
+            if( !DeepComparable.Matches(PolicyRule, otherT.PolicyRule)) return false;
+            if( !DeepComparable.Matches(Verification, otherT.Verification)) return false;
+            if( !DeepComparable.Matches(Provision, otherT.Provision)) return false;
             
             return true;
         }
@@ -1441,22 +1342,17 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(ScopeElement, otherT.ScopeElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.IsExactly(ConsentingParty, otherT.ConsentingParty)) return false;
-            if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
-            if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Policy, otherT.Policy)) return false;
-            if( !DeepComparable.IsExactly(PolicyRuleElement, otherT.PolicyRuleElement)) return false;
-            if( !DeepComparable.IsExactly(SecurityLabel, otherT.SecurityLabel)) return false;
-            if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
-            if( !DeepComparable.IsExactly(DataPeriod, otherT.DataPeriod)) return false;
-            if( !DeepComparable.IsExactly(Data, otherT.Data)) return false;
-            if( !DeepComparable.IsExactly(Except, otherT.Except)) return false;
+            if( !DeepComparable.IsExactly(PolicyRule, otherT.PolicyRule)) return false;
+            if( !DeepComparable.IsExactly(Verification, otherT.Verification)) return false;
+            if( !DeepComparable.IsExactly(Provision, otherT.Provision)) return false;
             
             return true;
         }
@@ -1469,22 +1365,17 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (StatusElement != null) yield return StatusElement;
+				if (ScopeElement != null) yield return ScopeElement;
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Patient != null) yield return Patient;
-				if (Period != null) yield return Period;
 				if (DateTimeElement != null) yield return DateTimeElement;
 				foreach (var elem in ConsentingParty) { if (elem != null) yield return elem; }
-				foreach (var elem in Actor) { if (elem != null) yield return elem; }
-				foreach (var elem in Action) { if (elem != null) yield return elem; }
 				foreach (var elem in Organization) { if (elem != null) yield return elem; }
 				if (Source != null) yield return Source;
 				foreach (var elem in Policy) { if (elem != null) yield return elem; }
-				if (PolicyRuleElement != null) yield return PolicyRuleElement;
-				foreach (var elem in SecurityLabel) { if (elem != null) yield return elem; }
-				foreach (var elem in Purpose) { if (elem != null) yield return elem; }
-				if (DataPeriod != null) yield return DataPeriod;
-				foreach (var elem in Data) { if (elem != null) yield return elem; }
-				foreach (var elem in Except) { if (elem != null) yield return elem; }
+				if (PolicyRule != null) yield return PolicyRule;
+				foreach (var elem in Verification) { if (elem != null) yield return elem; }
+				if (Provision != null) yield return Provision;
             }
         }
 
@@ -1496,22 +1387,17 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ScopeElement != null) yield return new ElementValue("scope", false, ScopeElement);
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Period != null) yield return new ElementValue("period", false, Period);
                 if (DateTimeElement != null) yield return new ElementValue("dateTime", false, DateTimeElement);
                 foreach (var elem in ConsentingParty) { if (elem != null) yield return new ElementValue("consentingParty", true, elem); }
-                foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", true, elem); }
-                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
                 foreach (var elem in Organization) { if (elem != null) yield return new ElementValue("organization", true, elem); }
                 if (Source != null) yield return new ElementValue("source", false, Source);
                 foreach (var elem in Policy) { if (elem != null) yield return new ElementValue("policy", true, elem); }
-                if (PolicyRuleElement != null) yield return new ElementValue("policyRule", false, PolicyRuleElement);
-                foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", true, elem); }
-                foreach (var elem in Purpose) { if (elem != null) yield return new ElementValue("purpose", true, elem); }
-                if (DataPeriod != null) yield return new ElementValue("dataPeriod", false, DataPeriod);
-                foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", true, elem); }
-                foreach (var elem in Except) { if (elem != null) yield return new ElementValue("except", true, elem); }
+                if (PolicyRule != null) yield return new ElementValue("policyRule", false, PolicyRule);
+                foreach (var elem in Verification) { if (elem != null) yield return new ElementValue("verification", true, elem); }
+                if (Provision != null) yield return new ElementValue("provision", false, Provision);
             }
         }
 

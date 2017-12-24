@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -186,6 +186,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
+            [EnumLiteral("MarketingStatus", "http://hl7.org/fhir/data-types"), Description("MarketingStatus")]
+            MarketingStatus,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
             [EnumLiteral("Meta", "http://hl7.org/fhir/data-types"), Description("Meta")]
             Meta,
             /// <summary>
@@ -212,6 +218,18 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Period", "http://hl7.org/fhir/data-types"), Description("Period")]
             Period,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("ProdCharacteristic", "http://hl7.org/fhir/data-types"), Description("ProdCharacteristic")]
+            ProdCharacteristic,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("ProductShelfLife", "http://hl7.org/fhir/data-types"), Description("ProductShelfLife")]
+            ProductShelfLife,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -260,6 +278,18 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("SimpleQuantity", "http://hl7.org/fhir/data-types"), Description("SimpleQuantity")]
             SimpleQuantity,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("SubstanceAmount", "http://hl7.org/fhir/data-types"), Description("SubstanceAmount")]
+            SubstanceAmount,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("SubstanceMoiety", "http://hl7.org/fhir/data-types"), Description("SubstanceMoiety")]
+            SubstanceMoiety,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -444,8 +474,14 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("BodySite", "http://hl7.org/fhir/resource-types"), Description("BodySite")]
-            BodySite,
+            [EnumLiteral("BiologicallyDerivedProduct", "http://hl7.org/fhir/resource-types"), Description("BiologicallyDerivedProduct")]
+            BiologicallyDerivedProduct,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("BodyStructure", "http://hl7.org/fhir/resource-types"), Description("BodyStructure")]
+            BodyStructure,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -558,12 +594,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DataElement", "http://hl7.org/fhir/resource-types"), Description("DataElement")]
-            DataElement,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("DetectedIssue", "http://hl7.org/fhir/resource-types"), Description("DetectedIssue")]
             DetectedIssue,
             /// <summary>
@@ -660,8 +690,26 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("EntryDefinition", "http://hl7.org/fhir/resource-types"), Description("EntryDefinition")]
+            EntryDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/resource-types"), Description("EpisodeOfCare")]
             EpisodeOfCare,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("EventDefinition", "http://hl7.org/fhir/resource-types"), Description("EventDefinition")]
+            EventDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ExampleScenario", "http://hl7.org/fhir/resource-types"), Description("ExampleScenario")]
+            ExampleScenario,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -720,12 +768,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ImagingManifest", "http://hl7.org/fhir/resource-types"), Description("ImagingManifest")]
-            ImagingManifest,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("ImagingStudy", "http://hl7.org/fhir/resource-types"), Description("ImagingStudy")]
             ImagingStudy,
             /// <summary>
@@ -738,6 +780,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("ImmunizationEvaluation", "http://hl7.org/fhir/resource-types"), Description("ImmunizationEvaluation")]
+            ImmunizationEvaluation,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/resource-types"), Description("ImmunizationRecommendation")]
             ImmunizationRecommendation,
             /// <summary>
@@ -746,6 +794,30 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("ImplementationGuide", "http://hl7.org/fhir/resource-types"), Description("ImplementationGuide")]
             ImplementationGuide,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ImplementationGuideInput", "http://hl7.org/fhir/resource-types"), Description("ImplementationGuideInput")]
+            ImplementationGuideInput,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ImplementationGuideOutput", "http://hl7.org/fhir/resource-types"), Description("ImplementationGuideOutput")]
+            ImplementationGuideOutput,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("Invoice", "http://hl7.org/fhir/resource-types"), Description("Invoice")]
+            Invoice,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ItemInstance", "http://hl7.org/fhir/resource-types"), Description("ItemInstance")]
+            ItemInstance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -822,6 +894,48 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("MedicinalProduct", "http://hl7.org/fhir/resource-types"), Description("MedicinalProduct")]
+            MedicinalProduct,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("MedicinalProductAuthorization", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductAuthorization")]
+            MedicinalProductAuthorization,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("MedicinalProductClinicals", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductClinicals")]
+            MedicinalProductClinicals,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("MedicinalProductDeviceSpec", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductDeviceSpec")]
+            MedicinalProductDeviceSpec,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("MedicinalProductIngredient", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductIngredient")]
+            MedicinalProductIngredient,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("MedicinalProductPackaged", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductPackaged")]
+            MedicinalProductPackaged,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("MedicinalProductPharmaceutical", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductPharmaceutical")]
+            MedicinalProductPharmaceutical,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("MessageDefinition", "http://hl7.org/fhir/resource-types"), Description("MessageDefinition")]
             MessageDefinition,
             /// <summary>
@@ -852,6 +966,18 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("ObservationDefinition", "http://hl7.org/fhir/resource-types"), Description("ObservationDefinition")]
+            ObservationDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("OccupationalData", "http://hl7.org/fhir/resource-types"), Description("OccupationalData")]
+            OccupationalData,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("OperationDefinition", "http://hl7.org/fhir/resource-types"), Description("OperationDefinition")]
             OperationDefinition,
             /// <summary>
@@ -866,6 +992,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Organization", "http://hl7.org/fhir/resource-types"), Description("Organization")]
             Organization,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("OrganizationRole", "http://hl7.org/fhir/resource-types"), Description("OrganizationRole")]
+            OrganizationRole,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -924,12 +1056,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ProcedureRequest", "http://hl7.org/fhir/resource-types"), Description("ProcedureRequest")]
-            ProcedureRequest,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("ProcessRequest", "http://hl7.org/fhir/resource-types"), Description("ProcessRequest")]
             ProcessRequest,
             /// <summary>
@@ -938,6 +1064,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("ProcessResponse", "http://hl7.org/fhir/resource-types"), Description("ProcessResponse")]
             ProcessResponse,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ProductPlan", "http://hl7.org/fhir/resource-types"), Description("ProductPlan")]
+            ProductPlan,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -956,12 +1088,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("QuestionnaireResponse", "http://hl7.org/fhir/resource-types"), Description("QuestionnaireResponse")]
             QuestionnaireResponse,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("ReferralRequest", "http://hl7.org/fhir/resource-types"), Description("ReferralRequest")]
-            ReferralRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1026,6 +1152,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/resource-types"), Description("ServiceRequest")]
+            ServiceRequest,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Slot", "http://hl7.org/fhir/resource-types"), Description("Slot")]
             Slot,
             /// <summary>
@@ -1034,6 +1166,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Specimen", "http://hl7.org/fhir/resource-types"), Description("Specimen")]
             Specimen,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("SpecimenDefinition", "http://hl7.org/fhir/resource-types"), Description("SpecimenDefinition")]
+            SpecimenDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1062,6 +1200,24 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("SubstancePolymer", "http://hl7.org/fhir/resource-types"), Description("SubstancePolymer")]
+            SubstancePolymer,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("SubstanceReferenceInformation", "http://hl7.org/fhir/resource-types"), Description("SubstanceReferenceInformation")]
+            SubstanceReferenceInformation,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("SubstanceSpecification", "http://hl7.org/fhir/resource-types"), Description("SubstanceSpecification")]
+            SubstanceSpecification,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("SupplyDelivery", "http://hl7.org/fhir/resource-types"), Description("SupplyDelivery")]
             SupplyDelivery,
             /// <summary>
@@ -1080,6 +1236,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("TerminologyCapabilities", "http://hl7.org/fhir/resource-types"), Description("TerminologyCapabilities")]
+            TerminologyCapabilities,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("TestReport", "http://hl7.org/fhir/resource-types"), Description("TestReport")]
             TestReport,
             /// <summary>
@@ -1092,47 +1254,26 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("UserSession", "http://hl7.org/fhir/resource-types"), Description("UserSession")]
+            UserSession,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("ValueSet", "http://hl7.org/fhir/resource-types"), Description("ValueSet")]
             ValueSet,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("VerificationResult", "http://hl7.org/fhir/resource-types"), Description("VerificationResult")]
+            VerificationResult,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/resource-types"), Description("VisionPrescription")]
             VisionPrescription,
-        }
-
-        /// <summary>
-        /// The content or mime type.
-        /// (url: http://hl7.org/fhir/ValueSet/content-type)
-        /// </summary>
-        [FhirEnumeration("ContentType")]
-        public enum ContentType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/content-type)
-            /// </summary>
-            [EnumLiteral("xml", "http://hl7.org/fhir/content-type"), Description("xml")]
-            Xml,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/content-type)
-            /// </summary>
-            [EnumLiteral("json", "http://hl7.org/fhir/content-type"), Description("json")]
-            Json,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/content-type)
-            /// </summary>
-            [EnumLiteral("ttl", "http://hl7.org/fhir/content-type"), Description("ttl")]
-            Ttl,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/content-type)
-            /// </summary>
-            [EnumLiteral("none", "http://hl7.org/fhir/content-type"), Description("none")]
-            None,
         }
 
         /// <summary>
@@ -3631,66 +3772,66 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// xml | json | ttl | none
+            /// Mime type to accept in the payload of the response, with charset etc.
             /// </summary>
             [FhirElement("accept", Order=80)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.TestScript.ContentType> AcceptElement
+            public Hl7.Fhir.Model.Code AcceptElement
             {
                 get { return _AcceptElement; }
                 set { _AcceptElement = value; OnPropertyChanged("AcceptElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.TestScript.ContentType> _AcceptElement;
+            private Hl7.Fhir.Model.Code _AcceptElement;
             
             /// <summary>
-            /// xml | json | ttl | none
+            /// Mime type to accept in the payload of the response, with charset etc.
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.TestScript.ContentType? Accept
+            public string Accept
             {
                 get { return AcceptElement != null ? AcceptElement.Value : null; }
                 set
                 {
-                    if (!value.HasValue)
+                    if (value == null)
                         AcceptElement = null; 
                     else
-                        AcceptElement = new Code<Hl7.Fhir.Model.TestScript.ContentType>(value);
+                        AcceptElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Accept");
                 }
             }
             
             /// <summary>
-            /// xml | json | ttl | none
+            /// Mime type of the request payload contents, with charset etc.
             /// </summary>
             [FhirElement("contentType", Order=90)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.TestScript.ContentType> ContentType_Element
+            public Hl7.Fhir.Model.Code ContentTypeElement
             {
-                get { return _ContentType_Element; }
-                set { _ContentType_Element = value; OnPropertyChanged("ContentType_Element"); }
+                get { return _ContentTypeElement; }
+                set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.TestScript.ContentType> _ContentType_Element;
+            private Hl7.Fhir.Model.Code _ContentTypeElement;
             
             /// <summary>
-            /// xml | json | ttl | none
+            /// Mime type of the request payload contents, with charset etc.
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.TestScript.ContentType? ContentType_
+            public string ContentType
             {
-                get { return ContentType_Element != null ? ContentType_Element.Value : null; }
+                get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
                 set
                 {
-                    if (!value.HasValue)
-                        ContentType_Element = null; 
+                    if (value == null)
+                        ContentTypeElement = null; 
                     else
-                        ContentType_Element = new Code<Hl7.Fhir.Model.TestScript.ContentType>(value);
-                    OnPropertyChanged("ContentType_");
+                        ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("ContentType");
                 }
             }
             
@@ -4007,8 +4148,8 @@ namespace Hl7.Fhir.Model
                     if(ResourceElement != null) dest.ResourceElement = (Code<Hl7.Fhir.Model.TestScript.FHIRDefinedType>)ResourceElement.DeepCopy();
                     if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(AcceptElement != null) dest.AcceptElement = (Code<Hl7.Fhir.Model.TestScript.ContentType>)AcceptElement.DeepCopy();
-                    if(ContentType_Element != null) dest.ContentType_Element = (Code<Hl7.Fhir.Model.TestScript.ContentType>)ContentType_Element.DeepCopy();
+                    if(AcceptElement != null) dest.AcceptElement = (Hl7.Fhir.Model.Code)AcceptElement.DeepCopy();
+                    if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                     if(DestinationElement != null) dest.DestinationElement = (Hl7.Fhir.Model.Integer)DestinationElement.DeepCopy();
                     if(EncodeRequestUrlElement != null) dest.EncodeRequestUrlElement = (Hl7.Fhir.Model.FhirBoolean)EncodeRequestUrlElement.DeepCopy();
                     if(OriginElement != null) dest.OriginElement = (Hl7.Fhir.Model.Integer)OriginElement.DeepCopy();
@@ -4041,7 +4182,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(AcceptElement, otherT.AcceptElement)) return false;
-                if( !DeepComparable.Matches(ContentType_Element, otherT.ContentType_Element)) return false;
+                if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
                 if( !DeepComparable.Matches(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.Matches(EncodeRequestUrlElement, otherT.EncodeRequestUrlElement)) return false;
                 if( !DeepComparable.Matches(OriginElement, otherT.OriginElement)) return false;
@@ -4067,7 +4208,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(AcceptElement, otherT.AcceptElement)) return false;
-                if( !DeepComparable.IsExactly(ContentType_Element, otherT.ContentType_Element)) return false;
+                if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
                 if( !DeepComparable.IsExactly(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.IsExactly(EncodeRequestUrlElement, otherT.EncodeRequestUrlElement)) return false;
                 if( !DeepComparable.IsExactly(OriginElement, otherT.OriginElement)) return false;
@@ -4094,7 +4235,7 @@ namespace Hl7.Fhir.Model
                     if (LabelElement != null) yield return LabelElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (AcceptElement != null) yield return AcceptElement;
-                    if (ContentType_Element != null) yield return ContentType_Element;
+                    if (ContentTypeElement != null) yield return ContentTypeElement;
                     if (DestinationElement != null) yield return DestinationElement;
                     if (EncodeRequestUrlElement != null) yield return EncodeRequestUrlElement;
                     if (OriginElement != null) yield return OriginElement;
@@ -4119,7 +4260,7 @@ namespace Hl7.Fhir.Model
                     if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     if (AcceptElement != null) yield return new ElementValue("accept", false, AcceptElement);
-                    if (ContentType_Element != null) yield return new ElementValue("contentType", false, ContentType_Element);
+                    if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
                     if (DestinationElement != null) yield return new ElementValue("destination", false, DestinationElement);
                     if (EncodeRequestUrlElement != null) yield return new ElementValue("encodeRequestUrl", false, EncodeRequestUrlElement);
                     if (OriginElement != null) yield return new ElementValue("origin", false, OriginElement);
@@ -4481,34 +4622,34 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// xml | json | ttl | none
+            /// Mime type to compare against the 'Content-Type' header
             /// </summary>
             [FhirElement("contentType", Order=100)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.TestScript.ContentType> ContentType_Element
+            public Hl7.Fhir.Model.Code ContentTypeElement
             {
-                get { return _ContentType_Element; }
-                set { _ContentType_Element = value; OnPropertyChanged("ContentType_Element"); }
+                get { return _ContentTypeElement; }
+                set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.TestScript.ContentType> _ContentType_Element;
+            private Hl7.Fhir.Model.Code _ContentTypeElement;
             
             /// <summary>
-            /// xml | json | ttl | none
+            /// Mime type to compare against the 'Content-Type' header
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.TestScript.ContentType? ContentType_
+            public string ContentType
             {
-                get { return ContentType_Element != null ? ContentType_Element.Value : null; }
+                get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
                 set
                 {
-                    if (!value.HasValue)
-                        ContentType_Element = null; 
+                    if (value == null)
+                        ContentTypeElement = null; 
                     else
-                        ContentType_Element = new Code<Hl7.Fhir.Model.TestScript.ContentType>(value);
-                    OnPropertyChanged("ContentType_");
+                        ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("ContentType");
                 }
             }
             
@@ -5031,7 +5172,7 @@ namespace Hl7.Fhir.Model
                     if(CompareToSourceIdElement != null) dest.CompareToSourceIdElement = (Hl7.Fhir.Model.FhirString)CompareToSourceIdElement.DeepCopy();
                     if(CompareToSourceExpressionElement != null) dest.CompareToSourceExpressionElement = (Hl7.Fhir.Model.FhirString)CompareToSourceExpressionElement.DeepCopy();
                     if(CompareToSourcePathElement != null) dest.CompareToSourcePathElement = (Hl7.Fhir.Model.FhirString)CompareToSourcePathElement.DeepCopy();
-                    if(ContentType_Element != null) dest.ContentType_Element = (Code<Hl7.Fhir.Model.TestScript.ContentType>)ContentType_Element.DeepCopy();
+                    if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                     if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                     if(HeaderFieldElement != null) dest.HeaderFieldElement = (Hl7.Fhir.Model.FhirString)HeaderFieldElement.DeepCopy();
                     if(MinimumIdElement != null) dest.MinimumIdElement = (Hl7.Fhir.Model.FhirString)MinimumIdElement.DeepCopy();
@@ -5072,7 +5213,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(CompareToSourceIdElement, otherT.CompareToSourceIdElement)) return false;
                 if( !DeepComparable.Matches(CompareToSourceExpressionElement, otherT.CompareToSourceExpressionElement)) return false;
                 if( !DeepComparable.Matches(CompareToSourcePathElement, otherT.CompareToSourcePathElement)) return false;
-                if( !DeepComparable.Matches(ContentType_Element, otherT.ContentType_Element)) return false;
+                if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
                 if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.Matches(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
                 if( !DeepComparable.Matches(MinimumIdElement, otherT.MinimumIdElement)) return false;
@@ -5106,7 +5247,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(CompareToSourceIdElement, otherT.CompareToSourceIdElement)) return false;
                 if( !DeepComparable.IsExactly(CompareToSourceExpressionElement, otherT.CompareToSourceExpressionElement)) return false;
                 if( !DeepComparable.IsExactly(CompareToSourcePathElement, otherT.CompareToSourcePathElement)) return false;
-                if( !DeepComparable.IsExactly(ContentType_Element, otherT.ContentType_Element)) return false;
+                if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
                 if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.IsExactly(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
                 if( !DeepComparable.IsExactly(MinimumIdElement, otherT.MinimumIdElement)) return false;
@@ -5141,7 +5282,7 @@ namespace Hl7.Fhir.Model
                     if (CompareToSourceIdElement != null) yield return CompareToSourceIdElement;
                     if (CompareToSourceExpressionElement != null) yield return CompareToSourceExpressionElement;
                     if (CompareToSourcePathElement != null) yield return CompareToSourcePathElement;
-                    if (ContentType_Element != null) yield return ContentType_Element;
+                    if (ContentTypeElement != null) yield return ContentTypeElement;
                     if (ExpressionElement != null) yield return ExpressionElement;
                     if (HeaderFieldElement != null) yield return HeaderFieldElement;
                     if (MinimumIdElement != null) yield return MinimumIdElement;
@@ -5174,7 +5315,7 @@ namespace Hl7.Fhir.Model
                     if (CompareToSourceIdElement != null) yield return new ElementValue("compareToSourceId", false, CompareToSourceIdElement);
                     if (CompareToSourceExpressionElement != null) yield return new ElementValue("compareToSourceExpression", false, CompareToSourceExpressionElement);
                     if (CompareToSourcePathElement != null) yield return new ElementValue("compareToSourcePath", false, CompareToSourcePathElement);
-                    if (ContentType_Element != null) yield return new ElementValue("contentType", false, ContentType_Element);
+                    if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
                     if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
                     if (HeaderFieldElement != null) yield return new ElementValue("headerField", false, HeaderFieldElement);
                     if (MinimumIdElement != null) yield return new ElementValue("minimumId", false, MinimumIdElement);

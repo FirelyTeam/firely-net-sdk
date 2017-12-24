@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An person that is related to a patient, but who is not a direct target of care
+    /// A person that is related to a patient, but who is not a direct target of care
     /// </summary>
     [FhirType("RelatedPerson", IsResource=true)]
     [DataContract]
@@ -121,14 +121,15 @@ namespace Hl7.Fhir.Model
         /// The nature of the relationship
         /// </summary>
         [FhirElement("relationship", InSummary=true, Order=120)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Relationship
+        public List<Hl7.Fhir.Model.CodeableConcept> Relationship
         {
-            get { return _Relationship; }
+            get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Relationship; }
             set { _Relationship = value; OnPropertyChanged("Relationship"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Relationship;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Relationship;
         
         /// <summary>
         /// A name associated with the person
@@ -280,7 +281,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
+                if(Relationship != null) dest.Relationship = new List<Hl7.Fhir.Model.CodeableConcept>(Relationship.DeepCopy());
                 if(Name != null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
@@ -350,7 +351,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
 				if (Patient != null) yield return Patient;
-				if (Relationship != null) yield return Relationship;
+				foreach (var elem in Relationship) { if (elem != null) yield return elem; }
 				foreach (var elem in Name) { if (elem != null) yield return elem; }
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
 				if (GenderElement != null) yield return GenderElement;
@@ -370,7 +371,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
+                foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", true, elem); }
                 foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
                 foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
                 if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);

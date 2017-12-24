@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -99,8 +99,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-type)
             /// </summary>
-            [EnumLiteral("patient-list", "http://hl7.org/fhir/measure-report-type"), Description("Patient List")]
-            PatientList,
+            [EnumLiteral("subject-list", "http://hl7.org/fhir/measure-report-type"), Description("Subject List")]
+            SubjectList,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-type)
@@ -119,16 +119,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What group of the measure
             /// </summary>
-            [FhirElement("identifier", Order=40)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.Identifier _Identifier;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// The populations in the group
@@ -149,32 +148,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("measureScore", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
+            public Quantity MeasureScore
             {
-                get { return _MeasureScoreElement; }
-                set { _MeasureScoreElement = value; OnPropertyChanged("MeasureScoreElement"); }
+                get { return _MeasureScore; }
+                set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
             }
             
-            private Hl7.Fhir.Model.FhirDecimal _MeasureScoreElement;
-            
-            /// <summary>
-            /// What score this group achieved
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? MeasureScore
-            {
-                get { return MeasureScoreElement != null ? MeasureScoreElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        MeasureScoreElement = null; 
-                    else
-                        MeasureScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("MeasureScore");
-                }
-            }
+            private Quantity _MeasureScore;
             
             /// <summary>
             /// Stratification results
@@ -197,9 +177,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(Population.DeepCopy());
-                    if(MeasureScoreElement != null) dest.MeasureScoreElement = (Hl7.Fhir.Model.FhirDecimal)MeasureScoreElement.DeepCopy();
+                    if(MeasureScore != null) dest.MeasureScore = (Quantity)MeasureScore.DeepCopy();
                     if(Stratifier != null) dest.Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(Stratifier.DeepCopy());
                     return dest;
                 }
@@ -218,9 +198,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Population, otherT.Population)) return false;
-                if( !DeepComparable.Matches(MeasureScoreElement, otherT.MeasureScoreElement)) return false;
+                if( !DeepComparable.Matches(MeasureScore, otherT.MeasureScore)) return false;
                 if( !DeepComparable.Matches(Stratifier, otherT.Stratifier)) return false;
                 
                 return true;
@@ -232,9 +212,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
-                if( !DeepComparable.IsExactly(MeasureScoreElement, otherT.MeasureScoreElement)) return false;
+                if( !DeepComparable.IsExactly(MeasureScore, otherT.MeasureScore)) return false;
                 if( !DeepComparable.IsExactly(Stratifier, otherT.Stratifier)) return false;
                 
                 return true;
@@ -247,9 +227,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
+                    if (Code != null) yield return Code;
                     foreach (var elem in Population) { if (elem != null) yield return elem; }
-                    if (MeasureScoreElement != null) yield return MeasureScoreElement;
+                    if (MeasureScore != null) yield return MeasureScore;
                     foreach (var elem in Stratifier) { if (elem != null) yield return elem; }
                 }
             }
@@ -260,9 +240,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
                     foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
-                    if (MeasureScoreElement != null) yield return new ElementValue("measureScore", false, MeasureScoreElement);
+                    if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
                     foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", true, elem); }
                 }
             }
@@ -279,22 +259,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PopulationComponent"; } }
             
             /// <summary>
-            /// Population identifier as defined in the measure
+            /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
-            {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _Identifier;
-            
-            /// <summary>
-            /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -307,7 +274,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Size of the population
             /// </summary>
-            [FhirElement("count", Order=60)]
+            [FhirElement("count", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Integer CountElement
             {
@@ -337,19 +304,19 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// For patient-list reports, the patients in this population
+            /// For subject-list reports, the subjects in this population
             /// </summary>
-            [FhirElement("patients", Order=70)]
+            [FhirElement("subjects", Order=60)]
             [CLSCompliant(false)]
 			[References("List")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Patients
+            public Hl7.Fhir.Model.ResourceReference Subjects
             {
-                get { return _Patients; }
-                set { _Patients = value; OnPropertyChanged("Patients"); }
+                get { return _Subjects; }
+                set { _Subjects = value; OnPropertyChanged("Subjects"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Patients;
+            private Hl7.Fhir.Model.ResourceReference _Subjects;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -358,10 +325,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-                    if(Patients != null) dest.Patients = (Hl7.Fhir.Model.ResourceReference)Patients.DeepCopy();
+                    if(Subjects != null) dest.Subjects = (Hl7.Fhir.Model.ResourceReference)Subjects.DeepCopy();
                     return dest;
                 }
                 else
@@ -379,10 +345,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.Matches(Patients, otherT.Patients)) return false;
+                if( !DeepComparable.Matches(Subjects, otherT.Subjects)) return false;
                 
                 return true;
             }
@@ -393,10 +358,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.IsExactly(Patients, otherT.Patients)) return false;
+                if( !DeepComparable.IsExactly(Subjects, otherT.Subjects)) return false;
                 
                 return true;
             }
@@ -408,10 +372,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
                     if (Code != null) yield return Code;
                     if (CountElement != null) yield return CountElement;
-                    if (Patients != null) yield return Patients;
+                    if (Subjects != null) yield return Subjects;
                 }
             }
 
@@ -421,10 +384,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (Patients != null) yield return new ElementValue("patients", false, Patients);
+                    if (Subjects != null) yield return new ElementValue("subjects", false, Subjects);
                 }
             }
 
@@ -442,15 +404,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What stratifier of the group
             /// </summary>
-            [FhirElement("identifier", Order=40)]
+            [FhirElement("code", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.Identifier _Identifier;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Stratum results, one for each unique value in the stratifier
@@ -473,7 +435,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Stratum != null) dest.Stratum = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>(Stratum.DeepCopy());
                     return dest;
                 }
@@ -492,7 +454,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Stratum, otherT.Stratum)) return false;
                 
                 return true;
@@ -504,7 +466,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Stratum, otherT.Stratum)) return false;
                 
                 return true;
@@ -517,7 +479,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
+                    if (Code != null) yield return Code;
                     foreach (var elem in Stratum) { if (elem != null) yield return elem; }
                 }
             }
@@ -528,7 +490,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
                     foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", true, elem); }
                 }
             }
@@ -550,32 +512,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("value", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString ValueElement
+            public Hl7.Fhir.Model.CodeableConcept Value
             {
-                get { return _ValueElement; }
-                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _ValueElement;
-            
-            /// <summary>
-            /// The stratum value, e.g. male
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Value
-            {
-                get { return ValueElement != null ? ValueElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ValueElement = null; 
-                    else
-                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Value");
-                }
-            }
+            private Hl7.Fhir.Model.CodeableConcept _Value;
             
             /// <summary>
             /// Population results in this stratum
@@ -594,34 +537,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What score this stratum achieved
             /// </summary>
-            [FhirElement("measureScore", InSummary=true, Order=60)]
+            [FhirElement("measureScore", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
+            public Quantity MeasureScore
             {
-                get { return _MeasureScoreElement; }
-                set { _MeasureScoreElement = value; OnPropertyChanged("MeasureScoreElement"); }
+                get { return _MeasureScore; }
+                set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
             }
             
-            private Hl7.Fhir.Model.FhirDecimal _MeasureScoreElement;
-            
-            /// <summary>
-            /// What score this stratum achieved
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? MeasureScore
-            {
-                get { return MeasureScoreElement != null ? MeasureScoreElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        MeasureScoreElement = null; 
-                    else
-                        MeasureScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("MeasureScore");
-                }
-            }
+            private Quantity _MeasureScore;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -630,9 +554,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(Population.DeepCopy());
-                    if(MeasureScoreElement != null) dest.MeasureScoreElement = (Hl7.Fhir.Model.FhirDecimal)MeasureScoreElement.DeepCopy();
+                    if(MeasureScore != null) dest.MeasureScore = (Quantity)MeasureScore.DeepCopy();
                     return dest;
                 }
                 else
@@ -650,9 +574,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 if( !DeepComparable.Matches(Population, otherT.Population)) return false;
-                if( !DeepComparable.Matches(MeasureScoreElement, otherT.MeasureScoreElement)) return false;
+                if( !DeepComparable.Matches(MeasureScore, otherT.MeasureScore)) return false;
                 
                 return true;
             }
@@ -663,9 +587,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
-                if( !DeepComparable.IsExactly(MeasureScoreElement, otherT.MeasureScoreElement)) return false;
+                if( !DeepComparable.IsExactly(MeasureScore, otherT.MeasureScore)) return false;
                 
                 return true;
             }
@@ -677,9 +601,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (ValueElement != null) yield return ValueElement;
+                    if (Value != null) yield return Value;
                     foreach (var elem in Population) { if (elem != null) yield return elem; }
-                    if (MeasureScoreElement != null) yield return MeasureScoreElement;
+                    if (MeasureScore != null) yield return MeasureScore;
                 }
             }
 
@@ -689,9 +613,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
                     foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
-                    if (MeasureScoreElement != null) yield return new ElementValue("measureScore", false, MeasureScoreElement);
+                    if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
                 }
             }
 
@@ -707,22 +631,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StratifierGroupPopulationComponent"; } }
             
             /// <summary>
-            /// Population identifier as defined in the measure
+            /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
-            {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _Identifier;
-            
-            /// <summary>
-            /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
+            [FhirElement("code", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -735,7 +646,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Size of the population
             /// </summary>
-            [FhirElement("count", Order=60)]
+            [FhirElement("count", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Integer CountElement
             {
@@ -765,19 +676,19 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// For patient-list reports, the patients in this population
+            /// For subject-list reports, the subjects in this population
             /// </summary>
-            [FhirElement("patients", Order=70)]
+            [FhirElement("subjects", Order=60)]
             [CLSCompliant(false)]
 			[References("List")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Patients
+            public Hl7.Fhir.Model.ResourceReference Subjects
             {
-                get { return _Patients; }
-                set { _Patients = value; OnPropertyChanged("Patients"); }
+                get { return _Subjects; }
+                set { _Subjects = value; OnPropertyChanged("Subjects"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Patients;
+            private Hl7.Fhir.Model.ResourceReference _Subjects;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -786,10 +697,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-                    if(Patients != null) dest.Patients = (Hl7.Fhir.Model.ResourceReference)Patients.DeepCopy();
+                    if(Subjects != null) dest.Subjects = (Hl7.Fhir.Model.ResourceReference)Subjects.DeepCopy();
                     return dest;
                 }
                 else
@@ -807,10 +717,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.Matches(Patients, otherT.Patients)) return false;
+                if( !DeepComparable.Matches(Subjects, otherT.Subjects)) return false;
                 
                 return true;
             }
@@ -821,10 +730,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.IsExactly(Patients, otherT.Patients)) return false;
+                if( !DeepComparable.IsExactly(Subjects, otherT.Subjects)) return false;
                 
                 return true;
             }
@@ -836,10 +744,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
                     if (Code != null) yield return Code;
                     if (CountElement != null) yield return CountElement;
-                    if (Patients != null) yield return Patients;
+                    if (Subjects != null) yield return Subjects;
                 }
             }
 
@@ -849,10 +756,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (Patients != null) yield return new ElementValue("patients", false, Patients);
+                    if (Subjects != null) yield return new ElementValue("subjects", false, Subjects);
                 }
             }
 
@@ -907,7 +813,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// individual | patient-list | summary
+        /// individual | subject-list | summary
         /// </summary>
         [FhirElement("type", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
@@ -921,7 +827,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> _TypeElement;
         
         /// <summary>
-        /// individual | patient-list | summary
+        /// individual | subject-list | summary
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -956,19 +862,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Measure;
         
         /// <summary>
-        /// What patient the report is for
+        /// What individual(s) the report is for
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("Patient")]
+		[References("Patient","Practitioner","Location","Device","RelatedPerson","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// When the report was generated
@@ -1078,7 +984,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>)StatusElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)TypeElement.DeepCopy();
                 if(Measure != null) dest.Measure = (Hl7.Fhir.Model.ResourceReference)Measure.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(ReportingOrganization != null) dest.ReportingOrganization = (Hl7.Fhir.Model.ResourceReference)ReportingOrganization.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
@@ -1105,7 +1011,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(Measure, otherT.Measure)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(ReportingOrganization, otherT.ReportingOrganization)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -1125,7 +1031,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(Measure, otherT.Measure)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(ReportingOrganization, otherT.ReportingOrganization)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
@@ -1145,7 +1051,7 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (TypeElement != null) yield return TypeElement;
 				if (Measure != null) yield return Measure;
-				if (Patient != null) yield return Patient;
+				if (Subject != null) yield return Subject;
 				if (DateElement != null) yield return DateElement;
 				if (ReportingOrganization != null) yield return ReportingOrganization;
 				if (Period != null) yield return Period;
@@ -1164,7 +1070,7 @@ namespace Hl7.Fhir.Model
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                 if (Measure != null) yield return new ElementValue("measure", false, Measure);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
                 if (ReportingOrganization != null) yield return new ElementValue("reportingOrganization", false, ReportingOrganization);
                 if (Period != null) yield return new ElementValue("period", false, Period);

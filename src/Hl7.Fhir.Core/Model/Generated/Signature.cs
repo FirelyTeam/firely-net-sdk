@@ -37,12 +37,12 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A digital Signature - XML DigSig, JWT, Graphical image of signature, etc.
+    /// A digital Signature - XML DigSig, JWS, Graphical image of signature, etc.
     /// </summary>
     [FhirType("Signature")]
     [DataContract]
@@ -130,17 +130,49 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _OnBehalfOf;
         
         /// <summary>
-        /// The technical format of the signature
+        /// The technical format of the signed resources
         /// </summary>
-        [FhirElement("contentType", InSummary=true, Order=70)]
+        [FhirElement("targetFormat", Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.Code ContentTypeElement
+        public Hl7.Fhir.Model.Code TargetFormatElement
         {
-            get { return _ContentTypeElement; }
-            set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+            get { return _TargetFormatElement; }
+            set { _TargetFormatElement = value; OnPropertyChanged("TargetFormatElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _ContentTypeElement;
+        private Hl7.Fhir.Model.Code _TargetFormatElement;
+        
+        /// <summary>
+        /// The technical format of the signed resources
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string TargetFormat
+        {
+            get { return TargetFormatElement != null ? TargetFormatElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  TargetFormatElement = null; 
+                else
+                  TargetFormatElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("TargetFormat");
+            }
+        }
+        
+        /// <summary>
+        /// The technical format of the signature
+        /// </summary>
+        [FhirElement("sigFormat", Order=80)]
+        [DataMember]
+        public Hl7.Fhir.Model.Code SigFormatElement
+        {
+            get { return _SigFormatElement; }
+            set { _SigFormatElement = value; OnPropertyChanged("SigFormatElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Code _SigFormatElement;
         
         /// <summary>
         /// The technical format of the signature
@@ -148,23 +180,23 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string ContentType
+        public string SigFormat
         {
-            get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+            get { return SigFormatElement != null ? SigFormatElement.Value : null; }
             set
             {
                 if (value == null)
-                  ContentTypeElement = null; 
+                  SigFormatElement = null; 
                 else
-                  ContentTypeElement = new Hl7.Fhir.Model.Code(value);
-                OnPropertyChanged("ContentType");
+                  SigFormatElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("SigFormat");
             }
         }
         
         /// <summary>
-        /// The actual signature content (XML DigSig. JWT, picture, etc.)
+        /// The actual signature content (XML DigSig. JWS, picture, etc.)
         /// </summary>
-        [FhirElement("blob", Order=80)]
+        [FhirElement("blob", Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary BlobElement
         {
@@ -175,7 +207,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Base64Binary _BlobElement;
         
         /// <summary>
-        /// The actual signature content (XML DigSig. JWT, picture, etc.)
+        /// The actual signature content (XML DigSig. JWS, picture, etc.)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -205,7 +237,8 @@ namespace Hl7.Fhir.Model
                 if(WhenElement != null) dest.WhenElement = (Hl7.Fhir.Model.Instant)WhenElement.DeepCopy();
                 if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
                 if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.Element)OnBehalfOf.DeepCopy();
-                if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
+                if(TargetFormatElement != null) dest.TargetFormatElement = (Hl7.Fhir.Model.Code)TargetFormatElement.DeepCopy();
+                if(SigFormatElement != null) dest.SigFormatElement = (Hl7.Fhir.Model.Code)SigFormatElement.DeepCopy();
                 if(BlobElement != null) dest.BlobElement = (Hl7.Fhir.Model.Base64Binary)BlobElement.DeepCopy();
                 return dest;
             }
@@ -228,7 +261,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.Matches(Who, otherT.Who)) return false;
             if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
-            if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.Matches(TargetFormatElement, otherT.TargetFormatElement)) return false;
+            if( !DeepComparable.Matches(SigFormatElement, otherT.SigFormatElement)) return false;
             if( !DeepComparable.Matches(BlobElement, otherT.BlobElement)) return false;
             
             return true;
@@ -244,7 +278,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
             if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
-            if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.IsExactly(TargetFormatElement, otherT.TargetFormatElement)) return false;
+            if( !DeepComparable.IsExactly(SigFormatElement, otherT.SigFormatElement)) return false;
             if( !DeepComparable.IsExactly(BlobElement, otherT.BlobElement)) return false;
             
             return true;
@@ -260,7 +295,8 @@ namespace Hl7.Fhir.Model
                 if (WhenElement != null) yield return WhenElement;
                 if (Who != null) yield return Who;
                 if (OnBehalfOf != null) yield return OnBehalfOf;
-                if (ContentTypeElement != null) yield return ContentTypeElement;
+                if (TargetFormatElement != null) yield return TargetFormatElement;
+                if (SigFormatElement != null) yield return SigFormatElement;
                 if (BlobElement != null) yield return BlobElement;
             }
         }
@@ -275,7 +311,8 @@ namespace Hl7.Fhir.Model
                 if (WhenElement != null) yield return new ElementValue("when", false, WhenElement);
                 if (Who != null) yield return new ElementValue("who", false, Who);
                 if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
-                if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
+                if (TargetFormatElement != null) yield return new ElementValue("targetFormat", false, TargetFormatElement);
+                if (SigFormatElement != null) yield return new ElementValue("sigFormat", false, SigFormatElement);
                 if (BlobElement != null) yield return new ElementValue("blob", false, BlobElement);
  
             } 

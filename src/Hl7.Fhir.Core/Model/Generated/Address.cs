@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -82,6 +82,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("old", "http://hl7.org/fhir/address-use"), Description("Old / Incorrect")]
             Old,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/address-use)
+            /// </summary>
+            [EnumLiteral("billing", "http://hl7.org/fhir/address-use"), Description("Billing")]
+            Billing,
         }
 
         /// <summary>
@@ -112,7 +118,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// home | work | temp | old - purpose of this address
+        /// home | work | temp | old | billing - purpose of this address
         /// </summary>
         [FhirElement("use", InSummary=true, Order=30)]
         [DataMember]
@@ -125,7 +131,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Address.AddressUse> _UseElement;
         
         /// <summary>
-        /// home | work | temp | old - purpose of this address
+        /// home | work | temp | old | billing - purpose of this address
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

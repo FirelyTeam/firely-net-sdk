@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=100)]
         [CLSCompliant(false)]
-		[References("ReferralRequest","CarePlan","ProcedureRequest")]
+		[References("CarePlan","ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -471,18 +471,18 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Part of this action
         /// </summary>
-        [FhirElement("parent", InSummary=true, Order=110)]
+        [FhirElement("partOf", InSummary=true, Order=110)]
         [CLSCompliant(false)]
 		[References("Observation","Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Parent
+        public List<Hl7.Fhir.Model.ResourceReference> PartOf
         {
-            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
-            set { _Parent = value; OnPropertyChanged("Parent"); }
+            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
+            set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
+        private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
         /// Form being answered
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
+                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
                 if(Questionnaire != null) dest.Questionnaire = (Hl7.Fhir.Model.ResourceReference)Questionnaire.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
-            if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
+            if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(Questionnaire, otherT.Questionnaire)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
-            if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
+            if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(Questionnaire, otherT.Questionnaire)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-				foreach (var elem in Parent) { if (elem != null) yield return elem; }
+				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
 				if (Questionnaire != null) yield return Questionnaire;
 				if (StatusElement != null) yield return StatusElement;
 				if (Subject != null) yield return Subject;
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
                 if (Questionnaire != null) yield return new ElementValue("questionnaire", false, Questionnaire);
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);

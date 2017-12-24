@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,33 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MessageDefinition"; } }
         
+        /// <summary>
+        /// The impact of the content of a message.
+        /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
+        /// </summary>
+        [FhirEnumeration("MessageSignificanceCategory")]
+        public enum MessageSignificanceCategory
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/message-significance-category)
+            /// </summary>
+            [EnumLiteral("Consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+            Consequence,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/message-significance-category)
+            /// </summary>
+            [EnumLiteral("Currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+            Currency,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/message-significance-category)
+            /// </summary>
+            [EnumLiteral("Notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+            Notification,
+        }
+
         [FhirType("FocusComponent")]
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -762,31 +789,49 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
         
         /// <summary>
-        /// Event type
+        /// Link to the Event type
         /// </summary>
         [FhirElement("event", InSummary=true, Order=270)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Event
+        public Hl7.Fhir.Model.FhirUri EventElement
         {
-            get { return _Event; }
-            set { _Event = value; OnPropertyChanged("Event"); }
+            get { return _EventElement; }
+            set { _EventElement = value; OnPropertyChanged("EventElement"); }
         }
         
-        private Hl7.Fhir.Model.Coding _Event;
+        private Hl7.Fhir.Model.FhirUri _EventElement;
+        
+        /// <summary>
+        /// Link to the Event type
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Event
+        {
+            get { return EventElement != null ? EventElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  EventElement = null; 
+                else
+                  EventElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Event");
+            }
+        }
         
         /// <summary>
         /// Consequence | Currency | Notification
         /// </summary>
         [FhirElement("category", InSummary=true, Order=280)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.MessageSignificanceCategory> CategoryElement
+        public Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory> CategoryElement
         {
             get { return _CategoryElement; }
             set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.MessageSignificanceCategory> _CategoryElement;
+        private Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory> _CategoryElement;
         
         /// <summary>
         /// Consequence | Currency | Notification
@@ -794,7 +839,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MessageSignificanceCategory? Category
+        public Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory? Category
         {
             get { return CategoryElement != null ? CategoryElement.Value : null; }
             set
@@ -802,7 +847,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   CategoryElement = null; 
                 else
-                  CategoryElement = new Code<Hl7.Fhir.Model.MessageSignificanceCategory>(value);
+                  CategoryElement = new Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory>(value);
                 OnPropertyChanged("Category");
             }
         }
@@ -909,8 +954,8 @@ namespace Hl7.Fhir.Model
                 if(Base != null) dest.Base = (Hl7.Fhir.Model.ResourceReference)Base.DeepCopy();
                 if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
                 if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
-                if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageSignificanceCategory>)CategoryElement.DeepCopy();
+                if(EventElement != null) dest.EventElement = (Hl7.Fhir.Model.FhirUri)EventElement.DeepCopy();
+                if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory>)CategoryElement.DeepCopy();
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.MessageDefinition.FocusComponent>(Focus.DeepCopy());
                 if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Hl7.Fhir.Model.FhirBoolean)ResponseRequiredElement.DeepCopy();
                 if(AllowedResponse != null) dest.AllowedResponse = new List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent>(AllowedResponse.DeepCopy());
@@ -949,7 +994,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Base, otherT.Base)) return false;
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
             if( !DeepComparable.Matches(Replaces, otherT.Replaces)) return false;
-            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+            if( !DeepComparable.Matches(EventElement, otherT.EventElement)) return false;
             if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
             if( !DeepComparable.Matches(ResponseRequiredElement, otherT.ResponseRequiredElement)) return false;
@@ -982,7 +1027,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Base, otherT.Base)) return false;
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
             if( !DeepComparable.IsExactly(Replaces, otherT.Replaces)) return false;
-            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
+            if( !DeepComparable.IsExactly(EventElement, otherT.EventElement)) return false;
             if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
             if( !DeepComparable.IsExactly(ResponseRequiredElement, otherT.ResponseRequiredElement)) return false;
@@ -1015,7 +1060,7 @@ namespace Hl7.Fhir.Model
 				if (Base != null) yield return Base;
 				foreach (var elem in Parent) { if (elem != null) yield return elem; }
 				foreach (var elem in Replaces) { if (elem != null) yield return elem; }
-				if (Event != null) yield return Event;
+				if (EventElement != null) yield return EventElement;
 				if (CategoryElement != null) yield return CategoryElement;
 				foreach (var elem in Focus) { if (elem != null) yield return elem; }
 				if (ResponseRequiredElement != null) yield return ResponseRequiredElement;
@@ -1047,7 +1092,7 @@ namespace Hl7.Fhir.Model
                 if (Base != null) yield return new ElementValue("base", false, Base);
                 foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
                 foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
-                if (Event != null) yield return new ElementValue("event", false, Event);
+                if (EventElement != null) yield return new ElementValue("event", false, EventElement);
                 if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
                 foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
                 if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", false, ResponseRequiredElement);

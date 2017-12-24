@@ -136,26 +136,6 @@ namespace Hl7.Fhir.Model
         }
     }
 
-    public partial class DataElement : IConformanceResource
-    {
-        // I think DataElement should have Description too
-        [NotMapped]
-        [Obsolete("This property is internal only, and doesn't actually exist in the FHIR object model")]
-        public Markdown Description
-        {
-            get { return null; }
-            set { throw new NotImplementedException(); }
-        }
-
-        [NotMapped]
-        public Markdown Purpose
-        {
-            get { return null; }
-            set { throw new NotImplementedException(); }
-        }
-    }
-
-
     public partial class NamingSystem : IConformanceResource
     {
         // I think NamingSystem should have Experimental too

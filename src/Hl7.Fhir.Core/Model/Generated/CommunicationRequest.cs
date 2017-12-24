@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -137,115 +137,6 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Content != null) yield return new ElementValue("content", false, Content);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("RequesterComponent")]
-        [DataContract]
-        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RequesterComponent"; } }
-            
-            /// <summary>
-            /// Individual making the request
-            /// </summary>
-            [FhirElement("agent", InSummary=true, Order=40)]
-            [CLSCompliant(false)]
-			[References("Practitioner","Organization","Patient","RelatedPerson","Device")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Agent
-            {
-                get { return _Agent; }
-                set { _Agent = value; OnPropertyChanged("Agent"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Agent;
-            
-            /// <summary>
-            /// Organization agent is acting for
-            /// </summary>
-            [FhirElement("onBehalfOf", InSummary=true, Order=50)]
-            [CLSCompliant(false)]
-			[References("Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
-            {
-                get { return _OnBehalfOf; }
-                set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RequesterComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Agent != null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)Agent.DeepCopy();
-                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RequesterComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RequesterComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
-                if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RequesterComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
-                if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Agent != null) yield return Agent;
-                    if (OnBehalfOf != null) yield return OnBehalfOf;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Agent != null) yield return new ElementValue("agent", false, Agent);
-                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
                 }
             }
 
@@ -437,20 +328,20 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
-        /// Focal resources
+        /// Resources that pertain to this communication request
         /// </summary>
-        [FhirElement("topic", Order=190)]
+        [FhirElement("about", Order=190)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Topic
+        public List<Hl7.Fhir.Model.ResourceReference> About
         {
-            get { if(_Topic==null) _Topic = new List<Hl7.Fhir.Model.ResourceReference>(); return _Topic; }
-            set { _Topic = value; OnPropertyChanged("Topic"); }
+            get { if(_About==null) _About = new List<Hl7.Fhir.Model.ResourceReference>(); return _About; }
+            set { _About = value; OnPropertyChanged("About"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Topic;
+        private List<Hl7.Fhir.Model.ResourceReference> _About;
         
         /// <summary>
         /// Encounter or episode leading to message
@@ -529,11 +420,26 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Who/what is requesting service
+        /// </summary>
+        [FhirElement("requester", InSummary=true, Order=240)]
+        [CLSCompliant(false)]
+		[References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson","Device")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Requester
+        {
+            get { return _Requester; }
+            set { _Requester = value; OnPropertyChanged("Requester"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Requester;
+        
+        /// <summary>
         /// Message sender
         /// </summary>
-        [FhirElement("sender", Order=240)]
+        [FhirElement("sender", InSummary=true, Order=250)]
         [CLSCompliant(false)]
-		[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+		[References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson","HealthcareService")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
         {
@@ -542,19 +448,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.ResourceReference _Sender;
-        
-        /// <summary>
-        /// Who/what is requesting service
-        /// </summary>
-        [FhirElement("requester", InSummary=true, Order=250)]
-        [DataMember]
-        public Hl7.Fhir.Model.CommunicationRequest.RequesterComponent Requester
-        {
-            get { return _Requester; }
-            set { _Requester = value; OnPropertyChanged("Requester"); }
-        }
-        
-        private Hl7.Fhir.Model.CommunicationRequest.RequesterComponent _Requester;
         
         /// <summary>
         /// Why is communication needed?
@@ -575,7 +468,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("reasonReference", InSummary=true, Order=270)]
         [CLSCompliant(false)]
-		[References("Condition","Observation")]
+		[References("Condition","Observation","DiagnosticReport","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
@@ -601,20 +494,10 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
-        public static ElementDefinition.ConstraintComponent CommunicationRequest_CMR_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "requester.all((agent.resolve() is Practitioner) or (agent.resolve() is Device) or onBehalfOf.exists().not())",
-            Key = "cmr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
-        };
-
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(CommunicationRequest_CMR_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -634,13 +517,13 @@ namespace Hl7.Fhir.Model
                 if(Medium != null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
-                if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.ResourceReference>(Topic.DeepCopy());
+                if(About != null) dest.About = new List<Hl7.Fhir.Model.ResourceReference>(About.DeepCopy());
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>(Payload.DeepCopy());
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
+                if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
-                if(Requester != null) dest.Requester = (Hl7.Fhir.Model.CommunicationRequest.RequesterComponent)Requester.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
@@ -671,13 +554,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.Matches(Topic, otherT.Topic)) return false;
+            if( !DeepComparable.Matches(About, otherT.About)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
-            if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
+            if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
@@ -701,13 +584,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.IsExactly(Topic, otherT.Topic)) return false;
+            if( !DeepComparable.IsExactly(About, otherT.About)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
-            if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
+            if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
@@ -731,13 +614,13 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Medium) { if (elem != null) yield return elem; }
 				if (Subject != null) yield return Subject;
 				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
-				foreach (var elem in Topic) { if (elem != null) yield return elem; }
+				foreach (var elem in About) { if (elem != null) yield return elem; }
 				if (Context != null) yield return Context;
 				foreach (var elem in Payload) { if (elem != null) yield return elem; }
 				if (Occurrence != null) yield return Occurrence;
 				if (AuthoredOnElement != null) yield return AuthoredOnElement;
-				if (Sender != null) yield return Sender;
 				if (Requester != null) yield return Requester;
+				if (Sender != null) yield return Sender;
 				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
 				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
@@ -760,13 +643,13 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", true, elem); }
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
-                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
+                foreach (var elem in About) { if (elem != null) yield return new ElementValue("about", true, elem); }
                 if (Context != null) yield return new ElementValue("context", false, Context);
                 foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", true, elem); }
                 if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
                 if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
-                if (Sender != null) yield return new ElementValue("sender", false, Sender);
                 if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                if (Sender != null) yield return new ElementValue("sender", false, Sender);
                 foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
                 foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }

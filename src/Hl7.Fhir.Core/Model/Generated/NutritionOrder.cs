@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1250,7 +1250,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("orderer", InSummary=true, Order=140)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
         {
@@ -1344,6 +1344,20 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent _EnteralFormula;
         
+        /// <summary>
+        /// Comments
+        /// </summary>
+        [FhirElement("note", Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
+        
 
         public static ElementDefinition.ConstraintComponent NutritionOrder_NOR_1 = new ElementDefinition.ConstraintComponent()
         {
@@ -1380,6 +1394,7 @@ namespace Hl7.Fhir.Model
                 if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.OralDietComponent)OralDiet.DeepCopy();
                 if(Supplement != null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(Supplement.DeepCopy());
                 if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent)EnteralFormula.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -1409,6 +1424,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(OralDiet, otherT.OralDiet)) return false;
             if( !DeepComparable.Matches(Supplement, otherT.Supplement)) return false;
             if( !DeepComparable.Matches(EnteralFormula, otherT.EnteralFormula)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -1431,6 +1447,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(OralDiet, otherT.OralDiet)) return false;
             if( !DeepComparable.IsExactly(Supplement, otherT.Supplement)) return false;
             if( !DeepComparable.IsExactly(EnteralFormula, otherT.EnteralFormula)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -1453,6 +1470,7 @@ namespace Hl7.Fhir.Model
 				if (OralDiet != null) yield return OralDiet;
 				foreach (var elem in Supplement) { if (elem != null) yield return elem; }
 				if (EnteralFormula != null) yield return EnteralFormula;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
 
@@ -1474,6 +1492,7 @@ namespace Hl7.Fhir.Model
                 if (OralDiet != null) yield return new ElementValue("oralDiet", false, OralDiet);
                 foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", true, elem); }
                 if (EnteralFormula != null) yield return new ElementValue("enteralFormula", false, EnteralFormula);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
             }
         }
 

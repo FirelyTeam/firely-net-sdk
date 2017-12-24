@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// oid | uuid | uri | other
             /// </summary>
-            [FhirElement("type", Order=40)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The unique identifier
             /// </summary>
-            [FhirElement("value", Order=50)]
+            [FhirElement("value", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// codesystem | identifier | root
         /// </summary>
-        [FhirElement("kind", Order=110)]
+        [FhirElement("kind", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> KindElement
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifiers used for system
         /// </summary>
-        [FhirElement("uniqueId", Order=210)]
+        [FhirElement("uniqueId", InSummary=true, Order=210)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> UniqueId
@@ -661,21 +661,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> _UniqueId;
         
-        /// <summary>
-        /// Use this instead
-        /// </summary>
-        [FhirElement("replacedBy", Order=220)]
-        [CLSCompliant(false)]
-		[References("NamingSystem")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ReplacedBy
-        {
-            get { return _ReplacedBy; }
-            set { _ReplacedBy = value; OnPropertyChanged("ReplacedBy"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
-        
 
         public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
         {
@@ -684,15 +669,6 @@ namespace Hl7.Fhir.Model
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Root systems cannot have uuid identifiers",
             Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value='uuid')"
-        };
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "replacedBy.empty() or status = 'retired'",
-            Key = "nsd-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have replacedBy if naming system is retired",
-            Xpath = "not(f:replacedBy) or f:status/@value='retired'"
         };
 
         public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
@@ -709,7 +685,6 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(NamingSystem_NSD_1);
-            InvariantConstraints.Add(NamingSystem_NSD_3);
             InvariantConstraints.Add(NamingSystem_NSD_2);
         }
 
@@ -733,7 +708,6 @@ namespace Hl7.Fhir.Model
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
                 if(UniqueId != null) dest.UniqueId = new List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent>(UniqueId.DeepCopy());
-                if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.ResourceReference)ReplacedBy.DeepCopy();
                 return dest;
             }
             else
@@ -764,7 +738,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.Matches(UsageElement, otherT.UsageElement)) return false;
             if( !DeepComparable.Matches(UniqueId, otherT.UniqueId)) return false;
-            if( !DeepComparable.Matches(ReplacedBy, otherT.ReplacedBy)) return false;
             
             return true;
         }
@@ -788,7 +761,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.IsExactly(UsageElement, otherT.UsageElement)) return false;
             if( !DeepComparable.IsExactly(UniqueId, otherT.UniqueId)) return false;
-            if( !DeepComparable.IsExactly(ReplacedBy, otherT.ReplacedBy)) return false;
             
             return true;
         }
@@ -812,7 +784,6 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
 				if (UsageElement != null) yield return UsageElement;
 				foreach (var elem in UniqueId) { if (elem != null) yield return elem; }
-				if (ReplacedBy != null) yield return ReplacedBy;
             }
         }
 
@@ -835,7 +806,6 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
                 if (UsageElement != null) yield return new ElementValue("usage", false, UsageElement);
                 foreach (var elem in UniqueId) { if (elem != null) yield return new ElementValue("uniqueId", true, elem); }
-                if (ReplacedBy != null) yield return new ElementValue("replacedBy", false, ReplacedBy);
             }
         }
 

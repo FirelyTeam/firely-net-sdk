@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Specification.Tests
                 FullUrl = "http://somewhere.org/",
                 Resource = new MessageHeader
                 {
-                    Timestamp = DateTimeOffset.Now,
+                    // Timestamp = DateTimeOffset.Now,
                     Meta = new Meta { LastUpdated = DateTimeOffset.Now }
                 }
             });

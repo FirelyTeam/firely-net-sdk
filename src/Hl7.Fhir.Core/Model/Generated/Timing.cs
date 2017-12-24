@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -119,14 +119,56 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
             /// </summary>
+            [EnumLiteral("MORN.early", "http://hl7.org/fhir/event-timing"), Description("Early Morning")]
+            MORN_early,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("MORN.late", "http://hl7.org/fhir/event-timing"), Description("Late Morning")]
+            MORN_late,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("NOON", "http://hl7.org/fhir/event-timing"), Description("Noon")]
+            NOON,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
             [EnumLiteral("AFT", "http://hl7.org/fhir/event-timing"), Description("Afternoon")]
             AFT,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
             /// </summary>
+            [EnumLiteral("AFT.early", "http://hl7.org/fhir/event-timing"), Description("Early Afternoon")]
+            AFT_early,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("AFT.late", "http://hl7.org/fhir/event-timing"), Description("Late Afternoon")]
+            AFT_late,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
             [EnumLiteral("EVE", "http://hl7.org/fhir/event-timing"), Description("Evening")]
             EVE,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("EVE.early", "http://hl7.org/fhir/event-timing"), Description("Early Evening")]
+            EVE_early,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("EVE.late", "http://hl7.org/fhir/event-timing"), Description("Late Evening")]
+            EVE_late,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
@@ -634,7 +676,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Regular life events the event is tied to
+            /// Code for time period of occurrence
             /// </summary>
             [FhirElement("when", InSummary=true, Order=170)]
             [Cardinality(Min=0,Max=-1)]
@@ -648,7 +690,7 @@ namespace Hl7.Fhir.Model
             private List<Code<Hl7.Fhir.Model.Timing.EventTiming>> _WhenElement;
             
             /// <summary>
-            /// Regular life events the event is tied to
+            /// Code for time period of occurrence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

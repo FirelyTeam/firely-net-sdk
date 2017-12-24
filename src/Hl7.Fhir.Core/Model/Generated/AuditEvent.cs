@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -174,9 +174,22 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "AgentComponent"; } }
             
             /// <summary>
+            /// How agent participated
+            /// </summary>
+            [FhirElement("type", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
             /// Agent role in the event
             /// </summary>
-            [FhirElement("role", Order=40)]
+            [FhirElement("role", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -190,9 +203,9 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Direct reference to resource
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=50)]
+            [FhirElement("reference", InSummary=true, Order=60)]
             [CLSCompliant(false)]
-			[References("Practitioner","Organization","Device","Patient","RelatedPerson")]
+			[References("PractitionerRole","Practitioner","Organization","Device","Patient","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {
@@ -205,7 +218,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Unique identifier for the user
             /// </summary>
-            [FhirElement("userId", InSummary=true, Order=60)]
+            [FhirElement("userId", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier UserId
             {
@@ -218,7 +231,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Alternative User id e.g. authentication
             /// </summary>
-            [FhirElement("altId", Order=70)]
+            [FhirElement("altId", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AltIdElement
             {
@@ -250,7 +263,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human-meaningful name for the agent
             /// </summary>
-            [FhirElement("name", Order=80)]
+            [FhirElement("name", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -282,7 +295,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether user is initiator
             /// </summary>
-            [FhirElement("requestor", Order=90)]
+            [FhirElement("requestor", InSummary=true, Order=100)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequestorElement
@@ -315,7 +328,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where
             /// </summary>
-            [FhirElement("location", Order=100)]
+            [FhirElement("location", Order=110)]
             [CLSCompliant(false)]
 			[References("Location")]
             [DataMember]
@@ -330,7 +343,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Policy that authorized event
             /// </summary>
-            [FhirElement("policy", Order=110)]
+            [FhirElement("policy", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -363,7 +376,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of media
             /// </summary>
-            [FhirElement("media", Order=120)]
+            [FhirElement("media", Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Media
             {
@@ -376,7 +389,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Logical network location for application activity
             /// </summary>
-            [FhirElement("network", Order=130)]
+            [FhirElement("network", Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.AuditEvent.NetworkComponent Network
             {
@@ -389,7 +402,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reason given for this user
             /// </summary>
-            [FhirElement("purposeOfUse", Order=140)]
+            [FhirElement("purposeOfUse", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfUse
@@ -407,6 +420,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
                     if(UserId != null) dest.UserId = (Hl7.Fhir.Model.Identifier)UserId.DeepCopy();
@@ -435,6 +449,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(Role, otherT.Role)) return false;
                 if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
                 if( !DeepComparable.Matches(UserId, otherT.UserId)) return false;
@@ -456,6 +471,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
                 if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
                 if( !DeepComparable.IsExactly(UserId, otherT.UserId)) return false;
@@ -478,6 +494,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
+                    if (Type != null) yield return Type;
                     foreach (var elem in Role) { if (elem != null) yield return elem; }
                     if (Reference != null) yield return Reference;
                     if (UserId != null) yield return UserId;
@@ -498,6 +515,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return new ElementValue("type", false, Type);
                     foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", true, elem); }
                     if (Reference != null) yield return new ElementValue("reference", false, Reference);
                     if (UserId != null) yield return new ElementValue("userId", false, UserId);
@@ -1153,35 +1171,18 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Property value
             /// </summary>
-            [FhirElement("value", Order=50)]
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Base64Binary))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Base64Binary ValueElement
+            public Hl7.Fhir.Model.Element Value
             {
-                get { return _ValueElement; }
-                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Base64Binary _ValueElement;
-            
-            /// <summary>
-            /// Property value
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public byte[] Value
-            {
-                get { return ValueElement != null ? ValueElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ValueElement = null; 
-                    else
-                        ValueElement = new Hl7.Fhir.Model.Base64Binary(value);
-                    OnPropertyChanged("Value");
-                }
-            }
+            private Hl7.Fhir.Model.Element _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1191,7 +1192,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirString)TypeElement.DeepCopy();
-                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.Base64Binary)ValueElement.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -1210,7 +1211,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -1222,7 +1223,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -1235,7 +1236,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
-                    if (ValueElement != null) yield return ValueElement;
+                    if (Value != null) yield return Value;
                 }
             }
 
@@ -1246,7 +1247,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
                 }
             }
 
@@ -1315,9 +1316,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// When the activity occurred
+        /// </summary>
+        [FhirElement("period", Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        
+        private Hl7.Fhir.Model.Period _Period;
+        
+        /// <summary>
         /// Time when the event occurred on source
         /// </summary>
-        [FhirElement("recorded", InSummary=true, Order=120)]
+        [FhirElement("recorded", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant RecordedElement
@@ -1350,7 +1364,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether the event succeeded or failed
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=130)]
+        [FhirElement("outcome", InSummary=true, Order=140)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
         {
@@ -1382,7 +1396,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of the event outcome
         /// </summary>
-        [FhirElement("outcomeDesc", InSummary=true, Order=140)]
+        [FhirElement("outcomeDesc", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString OutcomeDescElement
         {
@@ -1414,7 +1428,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The purposeOfUse of the event
         /// </summary>
-        [FhirElement("purposeOfEvent", InSummary=true, Order=150)]
+        [FhirElement("purposeOfEvent", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfEvent
@@ -1428,7 +1442,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actor involved in the event
         /// </summary>
-        [FhirElement("agent", Order=160)]
+        [FhirElement("agent", Order=170)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
@@ -1442,7 +1456,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Audit Event Reporter
         /// </summary>
-        [FhirElement("source", Order=170)]
+        [FhirElement("source", Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.AuditEvent.SourceComponent Source
@@ -1456,7 +1470,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data or objects used
         /// </summary>
-        [FhirElement("entity", Order=180)]
+        [FhirElement("entity", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
@@ -1494,6 +1508,7 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                 if(Subtype != null) dest.Subtype = new List<Hl7.Fhir.Model.Coding>(Subtype.DeepCopy());
                 if(ActionElement != null) dest.ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>)ActionElement.DeepCopy();
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
                 if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>)OutcomeElement.DeepCopy();
                 if(OutcomeDescElement != null) dest.OutcomeDescElement = (Hl7.Fhir.Model.FhirString)OutcomeDescElement.DeepCopy();
@@ -1521,6 +1536,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.Matches(ActionElement, otherT.ActionElement)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(RecordedElement, otherT.RecordedElement)) return false;
             if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
@@ -1541,6 +1557,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.IsExactly(ActionElement, otherT.ActionElement)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(RecordedElement, otherT.RecordedElement)) return false;
             if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
@@ -1561,6 +1578,7 @@ namespace Hl7.Fhir.Model
 				if (Type != null) yield return Type;
 				foreach (var elem in Subtype) { if (elem != null) yield return elem; }
 				if (ActionElement != null) yield return ActionElement;
+				if (Period != null) yield return Period;
 				if (RecordedElement != null) yield return RecordedElement;
 				if (OutcomeElement != null) yield return OutcomeElement;
 				if (OutcomeDescElement != null) yield return OutcomeDescElement;
@@ -1580,6 +1598,7 @@ namespace Hl7.Fhir.Model
                 if (Type != null) yield return new ElementValue("type", false, Type);
                 foreach (var elem in Subtype) { if (elem != null) yield return new ElementValue("subtype", true, elem); }
                 if (ActionElement != null) yield return new ElementValue("action", false, ActionElement);
+                if (Period != null) yield return new ElementValue("period", false, Period);
                 if (RecordedElement != null) yield return new ElementValue("recorded", false, RecordedElement);
                 if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
                 if (OutcomeDescElement != null) yield return new ElementValue("outcomeDesc", false, OutcomeDescElement);

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.1.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_9 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "children().element.first().label.empty() and children().element.first().code.empty() and children().element.first().requirements.empty()",
+            Expression = "children().element.where(path.contains('.').not()).label.empty() and children().element.where(path.contains('.').not()).code.empty() and children().element.where(path.contains('.').not()).requirements.empty()",
             Key = "sdf-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "In any snapshot or differential, no label, code or requirements on the an element without a \".\" in the path (e.g. the first element)",
@@ -1249,11 +1249,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_16 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "snapshot.element.id.trace('ids').isDistinct()",
+            Expression = "snapshot.element.all(id) and snapshot.element.id.trace('ids').isDistinct()",
             Key = "sdf-16",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "All element definitions must have unique ids (snapshot)",
-            Xpath = "count(*/f:element)=count(*/f:element/@id)"
+            Xpath = "count(f:snapshot/f:element)=count(f:snapshot/f:element/@id) and (count(f:snapshot/f:element)=count(distinct-values(f:snapshot/f:element/@id)))"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_18 = new ElementDefinition.ConstraintComponent()
@@ -1267,11 +1267,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_17 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "differential.element.id.trace('ids').isDistinct()",
+            Expression = "differential.element.all(id) and differential.element.id.trace('ids').isDistinct()",
             Key = "sdf-17",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "All element definitions must have unique ids (diff)",
-            Xpath = "count(*/f:element)=count(*/f:element/@id)"
+            Xpath = "count(f:differential/f:element)=count(f:differential/f:element/@id) and (count(f:differential/f:element)=count(distinct-values(f:differential/f:element/@id)))"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_12 = new ElementDefinition.ConstraintComponent()
@@ -1382,6 +1382,15 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
         };
 
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_10 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "snapshot.element.all(binding.empty() or binding.valueSet.exists() or binding.description.exists())",
+            Key = "sdf-10",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "provide either a binding reference or a description (or both)",
+            Xpath = "not(exists(f:binding)) or (exists(f:binding/f:valueSetUri) or exists(f:binding/f:valueSetReference)) or exists(f:binding/f:description)"
+        };
+
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15A = new ElementDefinition.ConstraintComponent()
         {
             Expression = "differential.all(element.first().path.contains('.').not() implies element.first().type.empty())",
@@ -1393,7 +1402,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_20 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "differential.all(element.first().slicing.empty())",
+            Expression = "differential.all(element.where(path.contains('.').not()).slicing.empty())",
             Key = "sdf-20",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "No slicing on the root element",
@@ -1430,6 +1439,7 @@ namespace Hl7.Fhir.Model
             InvariantConstraints.Add(StructureDefinition_SDF_15);
             InvariantConstraints.Add(StructureDefinition_SDF_8);
             InvariantConstraints.Add(StructureDefinition_SDF_3);
+            InvariantConstraints.Add(StructureDefinition_SDF_10);
             InvariantConstraints.Add(StructureDefinition_SDF_15A);
             InvariantConstraints.Add(StructureDefinition_SDF_20);
             InvariantConstraints.Add(StructureDefinition_SDF_8A);
