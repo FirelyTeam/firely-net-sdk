@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification.Schema.Tags;
+using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
@@ -11,20 +12,30 @@ namespace Hl7.Fhir.Specification.Schema
         // A symbolic reference, or a reference to another Schema?
         // Or one of the next two?
 
-        public ElementSchema DirectReference;
+        public ReferenceAssertion(ElementSchema schema)
+        {
+            DirectReference = schema;
+        }
 
-        public Func<ElementSchema> Dereference;
+        public ReferenceAssertion(Func<ElementSchema> dereference)
+        {
+            Dereference = dereference;
+        }
+
+        public readonly ElementSchema DirectReference;
+
+        public readonly Func<ElementSchema> Dereference;
 
         private ElementSchema ReferencedSchema => DirectReference ?? Dereference();
 
-        public override IEnumerable<Assertions> CollectAssertions(Predicate<Assertion> pred)
-            => ReferencedSchema.CollectAssertions(pred);
+        // TODO: Risk of loop (if a referenced schema refers back to this schema - which is nonsense, but possible)
+        public override IEnumerable<Assertions> Collect()
+            => ReferencedSchema.Collect();
 
-        // TODO: This will loop infinitely on Identifier (or any schema referring indirectly to itself)
-        public override IEnumerable<SchemaTags> CollectTags() => ReferencedSchema.CollectTags();
-
-        public SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
+        public List<(Assertions,IElementNavigator)> Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
             => ReferencedSchema.Validate(input, vc);
+
+        public override JToken ToJson() => new JProperty("ref", ReferencedSchema.Id ?? "no identifier");
     }
 
 }

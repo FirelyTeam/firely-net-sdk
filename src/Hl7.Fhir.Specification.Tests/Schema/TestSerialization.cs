@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Schema.Tags;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,27 +13,24 @@ namespace Hl7.Fhir.Specification.Tests.Schema
     [TestClass]
     public class TestSerialization
     {
-        public class Ann1
-        {
-            public string X { get; set; }
-        }
-        public class Ann2
-        {
-            public string X { get; set; }
-            public int Y { get; set; }
-        }
-
         [TestMethod]
         public void SerializeSchemaAnnotations()
         {
-            var subject = new SchemaTags()
-            {
-                new Ann1 { X = "Jan" },
-                new Ann1 { X = "Klaas"},
-                new Ann2 { X = "Piet", Y = 4 }
-            };
+            var sub = new ElementSchema("#sub", new Trace("In a subschema"));
 
-            var result = (subject as IJsonSerializable).ToJson().ToString();
+            var main = new ElementSchema("http://root.nl/schema1",
+                new Definitions(sub),
+                new Fail(),
+                new ElementSchema("#nested", new Undecided()),
+                new ReferenceAssertion(sub),
+                new SliceAssertion(false,
+                    @default: new Trace("this is the default"),                
+                    new SliceAssertion.Slice("und", new Undecided(), new Trace("I really don't know")),
+                    new SliceAssertion.Slice("fail", new Fail(), new Trace("This always fails"))
+                    )
+                );
+
+            var result = main.ToJson().ToString();
         }
     }
 }

@@ -44,6 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Specification\Schema\AssertionTagger.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="specification.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>contentFiles\any\any</PackagePath>

@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification.Schema.Tags;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,10 +10,8 @@ namespace Hl7.Fhir.Specification.Schema
 {
     public abstract class Assertion
     {
-        public static readonly Assertion Succeed = new Succeed();
-        public static readonly Assertion Fail = new Fail();
-        public static readonly Assertion Undecided = new Undecided();
         //TODO: Move Id here?
+
         /// <summary>
         /// Tags that this assertion would provide on success.
         /// </summary>
@@ -20,9 +19,13 @@ namespace Hl7.Fhir.Specification.Schema
         /// Is a list of SchemaTags, since the assertion (i.e. a slice) may provide multiple
         /// possible outcomes.
         /// </remarks>
-        public abstract IEnumerable<SchemaTags> CollectTags();
+        public abstract IEnumerable<Assertions> Collect();
 
-        public abstract IEnumerable<Assertions> CollectAssertions(Predicate<Assertion> pred);
+        public static ElementSchema operator +(Assertion left, Assertion right)
+            => new ElementSchema(left, right);
+
+        public abstract JToken ToJson();
+
     }
 
     /// <summary>
@@ -34,7 +37,7 @@ namespace Hl7.Fhir.Specification.Schema
     /// </remarks>
     public interface IMemberAssertion
     {
-        SchemaTags Validate(IElementNavigator input, ValidationContext vc);
+        Assertions Validate(IElementNavigator input, ValidationContext vc);
     }
 
     /// <summary>
@@ -45,19 +48,27 @@ namespace Hl7.Fhir.Specification.Schema
     /// </remarks>
     public interface IGroupAssertion
     {
-        SchemaTags Validate(IEnumerable<IElementNavigator> input, ValidationContext vc);
+        List<(Assertions,IElementNavigator)> Validate(IEnumerable<IElementNavigator> input, ValidationContext vc);
     }
 
 
+    public interface IMergeableAssertion
+    {
+        IMergeableAssertion Merge(IMergeableAssertion other);
+    }
+
     public class Assertions : ReadOnlyCollection<Assertion>
     {
+        public static readonly Assertions Success = new Assertions(ResultAssertion.Success);
+        public static readonly Assertions Failure = new Assertions(ResultAssertion.Failure);
+        public static readonly Assertions Undecided = new Assertions(ResultAssertion.Undecided);
         public static readonly Assertions Empty = new Assertions();
 
         public Assertions(params Assertion[] assertions) : this(assertions.AsEnumerable())
         {
         }
 
-        public Assertions(IEnumerable<Assertion> assertions) : base(assertions.ToList())
+        public Assertions(IEnumerable<Assertion> assertions) : base(merge(assertions).ToList())
         {
         }
 
@@ -68,6 +79,21 @@ namespace Hl7.Fhir.Specification.Schema
 
         public static Assertions operator +(Assertions left, Assertion right)
                 => new Assertions(left.Union(new[] { right }));
+
+        private static IEnumerable<Assertion> merge(IEnumerable<Assertion> assertions)
+        {
+            var mergeable = assertions.OfType<IMergeableAssertion>();
+            var nonMergeable = assertions.Where(a => !(a is IMergeableAssertion));
+
+            var merged =
+                from sa in mergeable
+                group sa by sa.GetType() into grp
+                select (Assertion)grp.Aggregate((sum, other) => sum.Merge(other));
+
+            return nonMergeable.Union(merged);
+        }
+
+        public ResultAssertion Result => this.OfType<ResultAssertion>().Single();
     }
 
     public static class AssertionsExtensions
