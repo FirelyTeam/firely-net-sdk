@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Specification.Schema
         public readonly Assertion Default; 
         public readonly IEnumerable<ConditionalAssertion> Slices;
 
-        public SliceAssertion(bool ordered, Schema @default, params ConditionalAssertion[] slices) : this(ordered, @default, slices.AsEnumerable())
+        public SliceAssertion(bool ordered, ElementSchema @default, params ConditionalAssertion[] slices) : this(ordered, @default, slices.AsEnumerable())
         {
         }
 
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Schema
         {
         }
 
-        public SliceAssertion(bool ordered, Schema @default, IEnumerable<ConditionalAssertion> slices)
+        public SliceAssertion(bool ordered, ElementSchema @default, IEnumerable<ConditionalAssertion> slices)
         {
             Ordered = ordered;
             Default = @default ?? Assertion.Fail

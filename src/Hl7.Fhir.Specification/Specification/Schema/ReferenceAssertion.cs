@@ -11,11 +11,14 @@ namespace Hl7.Fhir.Specification.Schema
         // A symbolic reference, or a reference to another Schema?
         // Or one of the next two?
 
-        public Schema DirectReference;
+        public ElementSchema DirectReference;
 
-        public Func<Schema> Dereference;
+        public Func<ElementSchema> Dereference;
 
-        private Schema ReferencedSchema => DirectReference ?? Dereference();
+        private ElementSchema ReferencedSchema => DirectReference ?? Dereference();
+
+        public override IEnumerable<Assertions> CollectAssertions(Predicate<Assertion> pred)
+            => ReferencedSchema.CollectAssertions(pred);
 
         // TODO: This will loop infinitely on Identifier (or any schema referring indirectly to itself)
         public override IEnumerable<SchemaTags> CollectTags() => ReferencedSchema.CollectTags();

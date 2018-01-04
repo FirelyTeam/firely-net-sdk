@@ -9,11 +9,11 @@ namespace Hl7.Fhir.Specification.Schema
 {
     public class ConditionalAssertion : Assertion, IGroupAssertion
     {
-        public readonly Schema Condition;
+        public readonly ElementSchema Condition;
 
-        public readonly Schema Assertion;
+        public readonly ElementSchema Assertion;
 
-        public ConditionalAssertion(Schema condition, Schema assertion)
+        public ConditionalAssertion(ElementSchema condition, ElementSchema assertion)
         {
             Condition = condition ?? throw new ArgumentNullException(nameof(condition));
             Assertion = assertion ?? throw new ArgumentNullException(nameof(assertion));

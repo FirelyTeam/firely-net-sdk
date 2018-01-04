@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Schema
         {
             Taggee = taggee ?? throw new ArgumentNullException(nameof(taggee));
             Result = result;
-            Tags = tags ?? throw new ArgumentNullException(nameof(tags));                        
+            Tags = tags ?? throw new ArgumentNullException(nameof(tags));
         }
 
         public override IEnumerable<SchemaTags> CollectTags()
@@ -30,6 +30,29 @@ namespace Hl7.Fhir.Specification.Schema
                 return result + Tags;
             else
                 return result;
+        }
+    }
+
+
+    public class SuccessTags : AssertionTagger
+    {
+        public SuccessTags(Assertion taggee, ValidationResult result, SchemaTags tags) : base(taggee, ValidationResult.Success, tags)
+        {
+        }
+    }
+
+
+    public class FailureTags : AssertionTagger
+    {
+        public FailureTags(Assertion taggee, ValidationResult result, SchemaTags tags) : base(taggee, ValidationResult.Failure, tags)
+        {
+        }
+    }
+
+    public class UndecidedTags : AssertionTagger
+    {
+        public UndecidedTags(Assertion taggee, ValidationResult result, SchemaTags tags) : base(taggee, ValidationResult.Undecided, tags)
+        {
         }
     }
 }
