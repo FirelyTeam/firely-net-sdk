@@ -25,7 +25,7 @@
           </telecom>
         </contact>
         <description value="Describes how the ServiceRequest resource is used to for genetics" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -1584,7 +1584,7 @@
           </telecom>
         </contact>
         <description value="Consent Directive" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -4836,7 +4836,7 @@
           </telecom>
         </contact>
         <description value="Adds additional information to a family member history supporting both the capture of mother/father relationships as well as additional observations necessary to enable genetics-based risk analysis for patients" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -6154,7 +6154,7 @@
           </telecom>
         </contact>
         <description value="Guidance on using Provenance for related history elements" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -7612,7 +7612,7 @@
         <!-- Removed date -->
         <publisher value="HL7" />
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -9739,7 +9739,7 @@
         <!-- Removed date -->
         <publisher value="HL7" />
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -11468,7 +11468,7 @@
           </telecom>
         </contact>
         <description value="This profile describes the direct or derived, qualitative or quantitative physiological measurement, setting, or calculation data produced by a medical device or a device component." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -13481,7 +13481,7 @@
           </telecom>
         </contact>
         <description value="Describes how the observation resource is used to report structured genetic test results" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -15809,7 +15809,7 @@
           </telecom>
         </contact>
         <description value="FHIR Vital Signs Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -18352,7 +18352,7 @@
           </telecom>
         </contact>
         <description value="FHIR Body Weight Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -21012,7 +21012,7 @@
           </telecom>
         </contact>
         <description value="FHIR Respiratory Rate Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -23657,7 +23657,7 @@
           </telecom>
         </contact>
         <description value="FHIR Heart Rate Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -26302,7 +26302,7 @@
           </telecom>
         </contact>
         <description value="FHIR Body Temperature Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -28962,7 +28962,7 @@
           </telecom>
         </contact>
         <description value="FHIR Body Height Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -31622,7 +31622,7 @@
           </telecom>
         </contact>
         <description value="FHIR Body Length Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -34282,7 +34282,7 @@
           </telecom>
         </contact>
         <description value="FHIR Head Circumference Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -36942,7 +36942,7 @@
           </telecom>
         </contact>
         <description value="FHIR Oxygen Saturation Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -39587,7 +39587,7 @@
           </telecom>
         </contact>
         <description value="FHIR Body Mass Index (BMI) Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -42232,7 +42232,7 @@
           </telecom>
         </contact>
         <description value="FHIR Blood Pressure Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -46723,7 +46723,7 @@
           </telecom>
         </contact>
         <description value="FHIR Vital Signs Panel Profile" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -49372,7 +49372,7 @@
           </telecom>
         </contact>
         <description value="Lipid Lab Report" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -50786,7 +50786,7 @@
           </telecom>
         </contact>
         <description value="Describes how the lab report is used for a standard Lipid Profile - Cholesterol, Triglyceride and Cholesterol fractions. Uses LOINC codes" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -53029,7 +53029,7 @@
           </telecom>
         </contact>
         <description value="Triglyceride Result" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -54986,7 +54986,7 @@
           </telecom>
         </contact>
         <description value="HDL Cholesterol Result" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -56981,7 +56981,7 @@
           </telecom>
         </contact>
         <description value="LDL Cholesterol Result" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -58965,7 +58965,7 @@
           </telecom>
         </contact>
         <description value="Describes how the DiagnosticReport resource is used to report structured genetic test results" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -60294,7 +60294,7 @@
           </telecom>
         </contact>
         <description value="Describes how the HLA genotyping results" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -61615,7 +61615,7 @@
           </telecom>
         </contact>
         <description value="The base Composition is a general resource for compositions or documents about any kind of subject that might be encountered in healthcare including such things as guidelines, medicines, etc. A clinical document is focused on documents related to the provision of care process, where the subject is a patient, a group of patients, or a closely related concept. A clinical document has additional reqiurements around confidentiality that do not apply in the same way to other kinds of documents" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -63320,7 +63320,7 @@
           </telecom>
         </contact>
         <description value="A set of resources composed into a single coherent clinical statement with clinical attestation" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />
@@ -65117,7 +65117,7 @@
           </telecom>
         </contact>
         <description value="Identifies how the ElementDefinition data type is used when it appears within a data element" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="dex" />
           <uri value="http://wiki.ihe.net/index.php?title=Data_Element_Exchange" />
@@ -68472,7 +68472,7 @@
           </telecom>
         </contact>
         <description value="Defines the elements to be supported within the AuditEvent resource in order to conform with the Electronic Health Record System Functional Model Record Lifecycle Event standard" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -70896,7 +70896,7 @@
           </telecom>
         </contact>
         <description value="Defines the elements to be supported within the Provenance resource in order to conform with the Electronic Health Record System Functional Model Record Lifecycle Event standard" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -72005,7 +72005,7 @@
           </telecom>
         </contact>
         <description value="A questionnaire with the ability to specify behavior associated with questions or groups of questions" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="workflow" />
           <uri value="http://hl7.org/fhir/workflow" />

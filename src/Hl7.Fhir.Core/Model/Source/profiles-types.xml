@@ -111,7 +111,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Element Type: Base definition for all elements in a resource." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -342,7 +342,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for BackboneElement Type: Base definition for all elements that are defined inside a resource - but not those in a data type." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -503,7 +503,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for base64Binary Type: A stream of bytes" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="base64Binary" />
@@ -646,7 +646,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for boolean Type: Value of &quot;true&quot; or &quot;false&quot;" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="boolean" />
@@ -787,7 +787,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for code type: A string which has at least one character and no leading or trailing whitespace and where there is no whitespace other than single spaces in the contents" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="code" />
@@ -938,7 +938,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for date Type: A date or partial date (e.g. just year or year + month). There is no time zone. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="date" />
@@ -1079,7 +1079,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for dateTime Type: A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a time zone SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="dateTime" />
@@ -1220,7 +1220,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for decimal Type: A rational number with implicit precision" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="decimal" />
@@ -1363,7 +1363,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for id type: Any combination of letters, numerals, &quot;-&quot; and &quot;.&quot;, with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="id" />
@@ -1516,7 +1516,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for instant Type: An instant in time - known at least to the second" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="instant" />
@@ -1659,7 +1659,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for integer Type: A whole number" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="integer" />
@@ -1806,7 +1806,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for markdown type: A string that may contain markdown syntax for optional processing by a mark down presentation engine" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="markdown" />
@@ -1959,7 +1959,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for oid type: An OID represented as a URI" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="oid" />
@@ -2112,7 +2112,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for positiveInt type: An integer with a value that is positive (e.g. &gt;0)" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="positiveInt" />
@@ -2263,7 +2263,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for string Type: A sequence of Unicode characters" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="string" />
@@ -2408,7 +2408,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for time Type: A time during the day, with no date specified" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="time" />
@@ -2549,7 +2549,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for unsignedInt type: An integer with a value that is not negative (e.g. &gt;= 0)" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="unsignedInt" />
@@ -2700,7 +2700,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for uri Type: String of characters used to identify a name or a resource" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="uri" />
@@ -2843,7 +2843,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for uuid type: A UUID, represented as a URI" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="uuid" />
@@ -2996,7 +2996,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for xhtml Type" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="xhtml" />
@@ -3374,7 +3374,7 @@
         </contact>
         <description value="Base StructureDefinition for Address Type: An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world." />
         <purpose value="Need to be able to record postal addresses, along with notes about their use." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -4229,7 +4229,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Age Type: A duration of time during which an organism (or a process) has existed." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -4691,7 +4691,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Annotation Type: A  text note which also  contains information about who made the statement and when." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -5178,7 +5178,7 @@
         </contact>
         <description value="Base StructureDefinition for Attachment Type: For referring to data content defined in other formats." />
         <purpose value="Many models need to include data defined in other specifications that is complex and opaque to the healthcare model. This includes documents, media recordings, structured data, etc." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -5808,7 +5808,7 @@
         </contact>
         <description value="Base StructureDefinition for CodeableConcept Type: A concept that may be defined by a formal reference to a terminology or ontology or may be provided by text." />
         <purpose value="This is a common pattern in healthcare - a concept that may be defined by one or more codes from formal definitions including LOINC and SNOMED CT, and/or defined by the provision of text that captures a human sense of the concept." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -6213,7 +6213,7 @@
         </contact>
         <description value="Base StructureDefinition for Coding Type: A reference to a code defined by a terminology system." />
         <purpose value="References to codes are very common in healthcare models." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -6710,7 +6710,7 @@
         </contact>
         <description value="Base StructureDefinition for ContactDetail Type: Specifies contact information for a person or organization." />
         <purpose value="Need to track contact information in the same way across multiple resources." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -7032,7 +7032,7 @@
         </contact>
         <description value="Base StructureDefinition for ContactPoint Type: Details for all kinds of technology mediated contact points for a person or organization, including telephone, email, etc." />
         <purpose value="Need to track phone, fax, mobile, sms numbers, email addresses, twitter tags, etc." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -7492,7 +7492,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="elementdefinition-definitions.html#ElementDefinition.isSummary" title="This element is included in summaries">Σ</a>
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -7589,7 +7589,7 @@
         </contact>
         <description value="Base StructureDefinition for Contributor Type: A contributor to the content of a knowledge asset, including authors, editors, reviewers, and endorsers." />
         <purpose value="Need to track contributor information in the same way across multiple resources." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -7856,7 +7856,7 @@
         </contact>
         <description value="Base StructureDefinition for Count Type: A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies." />
         <purpose value="Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -8168,7 +8168,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="elementdefinition-definitions.html#ElementDefinition.isSummary" title="This element is included in summaries">Σ</a>
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8484,7 +8484,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for DataRequirement Type: Describes a required data item for evaluation in terms of the type of data, and optional code or date-based filters of the data." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -9054,7 +9054,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Distance Type: A length - a value with a unit that is a physical distance." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -9395,7 +9395,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="elementdefinition-definitions.html#ElementDefinition.isSummary" title="This element is included in summaries">Σ</a>
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9808,7 +9808,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Dosage Type: Indicates how the medication is/was taken or should be taken by the patient." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -10594,7 +10594,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Duration Type: A length of time." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -12540,7 +12540,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for ElementDefinition Type: Captures constraints on each element within the resource, profile, or extension." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="dex" />
           <uri value="http://wiki.ihe.net/index.php?title=Data_Element_Exchange" />
@@ -17487,7 +17487,7 @@
         </contact>
         <description value="Base StructureDefinition for Extension Type: Optional Extension Element - found in all resources." />
         <purpose value="The ability to add extensions in a structured way is what keeps FHIR resources simple." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -18149,7 +18149,7 @@
         </contact>
         <description value="Base StructureDefinition for HumanName Type: A human's name with the ability to identify parts and usage." />
         <purpose value="Need to be able to record names, along with notes about their use." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -18830,7 +18830,7 @@
         </contact>
         <description value="Base StructureDefinition for Identifier Type: A technical identifier - identifies some entity uniquely and unambiguously." />
         <purpose value="Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -19466,7 +19466,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for MarketingStatus Type: The marketing status describes the date when a medicinal product is actually put on the market or the date as of which it is no longer available." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="w5" />
           <uri value="http://hl7.org/fhir/w5" />
@@ -19881,7 +19881,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Meta Type: The metadata about a resource. This is content in the resource that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -20259,7 +20259,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Money Type: An amount of economic utility in some recognized currency." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -20648,7 +20648,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Narrative Type: A human-readable formatted text, including images." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -20898,7 +20898,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="elementdefinition-definitions.html#ElementDefinition.isSummary" title="This element is included in summaries">Σ</a>
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -21069,7 +21069,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for ParameterDefinition Type: The parameters to the module. This collection specifies both the input and output parameters. Input parameters are provided by the caller as part of the $evaluate operation. Output parameters are included in the GuidanceResponse." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -21484,7 +21484,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Period Type: A time period defined by a start and end date and optionally time." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -21983,7 +21983,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for ProdCharacteristic Type: The marketing status describes the date when a medicinal product is actually put on the market or the date as of which it is no longer available." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="w5" />
           <uri value="http://hl7.org/fhir/w5" />
@@ -22484,7 +22484,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for ProductShelfLife Type: The shelf-life and storage information for a medicinal product item or container can be described using the this class." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="w5" />
           <uri value="http://hl7.org/fhir/w5" />
@@ -22857,7 +22857,7 @@
         </contact>
         <description value="Base StructureDefinition for Quantity Type: A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies." />
         <purpose value="Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -23341,7 +23341,7 @@
         </contact>
         <description value="Base StructureDefinition for Range Type: A set of ordered Quantities defined by a low and high limit." />
         <purpose value="Need to be able to specify ranges of values." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -23660,7 +23660,7 @@
         </contact>
         <description value="Base StructureDefinition for Ratio Type: A relationship of two Quantity values - expressed as a numerator and a denominator." />
         <purpose value="Need to able to capture ratios for some measurements (titers) and some rates (costs)." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -23987,7 +23987,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Reference Type: A reference from one resource to another." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -24251,7 +24251,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="elementdefinition-definitions.html#ElementDefinition.isSummary" title="This element is included in summaries">Σ</a>
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -24401,7 +24401,7 @@
         </contact>
         <description value="Base StructureDefinition for RelatedArtifact Type: Related artifacts such as additional documentation, justification, or bibliographic references." />
         <purpose value="Knowledge resources must be able to provide enough information for consumers of the content (and/or interventions or results produced by the content) to be able to determine and understand the justification for and evidence in support of the content." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -24698,7 +24698,7 @@
                   <a name="SampledData"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -24859,7 +24859,7 @@
         </contact>
         <description value="Base StructureDefinition for SampledData Type: A series of measurements taken by a device, with upper and lower limits. There may be more than one dimension in the data." />
         <purpose value="There is a need for a concise way to handle the data produced by devices that sample a physical state at a high frequency." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -25235,7 +25235,7 @@
                   <a name="Signature"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -25473,7 +25473,7 @@
         </contact>
         <description value="Base StructureDefinition for Signature Type: A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different signature approaches have different utilities." />
         <purpose value="There are a number of places where content must be signed in healthcare." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -26117,7 +26117,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for SubstanceAmount Type: Chemical substances are a single substance type whose primary defining element is the molecular structure. Chemical substances shall be defined on the basis of their complete covalent molecular structure; the presence of a salt (counter-ion) and/or solvates (water, alcohols) is also captured. Purity, grade, physical form or particle size are not taken into account in the definition of a chemical substance or in the assignment of a Substance ID." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="w5" />
           <uri value="http://hl7.org/fhir/w5" />
@@ -26630,7 +26630,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for SubstanceMoiety Type: Chemical substances are a single substance type whose primary defining element is the molecular structure. Chemical substances shall be defined on the basis of their complete covalent molecular structure; the presence of a salt (counter-ion) and/or solvates (water, alcohols) is also captured. Purity, grade, physical form or particle size are not taken into account in the definition of a chemical substance or in the assignment of a Substance ID." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="w5" />
           <uri value="http://hl7.org/fhir/w5" />
@@ -27404,7 +27404,7 @@
         </contact>
         <description value="Base StructureDefinition for Timing Type: Specifies an event that may occur multiple times. Timing schedules are used to record when things are planned, expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds, and may be used for reporting the schedule to which past regular activities were carried out." />
         <purpose value="Need to able to track proposed timing schedules. There are several different ways to do this: one or more specified times, a simple rules like three times a day, or  before/after meals." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -28426,7 +28426,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="elementdefinition-definitions.html#ElementDefinition.isSummary" title="This element is included in summaries">Σ</a>
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="conformance-rules.html#constraints" title="This element has or is affected by some invariants">I</a>
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -28683,7 +28683,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for TriggerDefinition Type: A description of a triggering event. Triggering events can be named events, data events, or periodic, as determined by the type element." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -29163,7 +29163,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a style="padding-left: 3px; padding-right: 3px; color: black; background-color: white" href="elementdefinition-definitions.html#ElementDefinition.isSummary" title="This element is included in summaries">Σ</a>
-                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #ffe6e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
+                  <a style="padding-left: 3px; padding-right: 3px; border: 1px grey solid; font-weight: bold; color: black; background-color: #fff5e6" href="versions.html#std-process" title="Ballot Status = Trial Use">TU</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -29290,7 +29290,7 @@
         </contact>
         <description value="Base StructureDefinition for UsageContext Type: Specifies clinical/business/etc metadata that can be used to retrieve, index and/or categorize an artifact. This metadata can either be specific to the applicable population (e.g., age category, DRG) or the specific context of care (e.g., venue, care setting, provider of care)." />
         <purpose value="Consumers of the resource must be able to determine the intended applicability for the resource. Ideally, this information would be used programmatically to determine when and how it should be incorporated or exposed." />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -29512,7 +29512,7 @@
           </telecom>
         </contact>
         <description value="A fixed quantity (no comparator)" />
-        <fhirVersion value="3.1.0" />
+        <fhirVersion value="3.2.0" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
