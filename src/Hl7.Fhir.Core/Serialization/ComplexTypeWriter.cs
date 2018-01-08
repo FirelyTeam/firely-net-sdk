@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Serialization
             if (instance is IList && ((IList)instance).Count > 0)
                 instance = ((IList)instance)[0];
 
-            if (prop.IsPrimitive || prop.Choice == ChoiceType.ResourceChoice)
+            if (instance == null || prop.IsPrimitive || prop.Choice == ChoiceType.ResourceChoice)
                 return false;
 
             return _inspector.ImportType(instance.GetType()).HasPrimitiveValueMember;
