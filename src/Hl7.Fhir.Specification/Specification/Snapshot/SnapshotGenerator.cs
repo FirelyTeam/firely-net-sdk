@@ -45,7 +45,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         // But all instances should share a common IResourceResolver instance
         // TODO: Probably also need to share a common recursion stack...
 
+        // Original source, as specified in the constructor
         readonly IResourceResolver _resolver;
+        // Internal source, unwrapped from SnapshotGenerator (if applicable), for recursive expansion
+        readonly IResourceResolver _internalResolver;
         readonly SnapshotGeneratorSettings _settings;
         readonly SnapshotRecursionStack _stack = new SnapshotRecursionStack();
 
@@ -57,9 +60,18 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public SnapshotGenerator(IResourceResolver resolver)
         {
-            if (resolver == null) { throw Error.ArgumentNull(nameof(resolver)); }
-            _resolver = resolver;
+            _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
+            _internalResolver = unwrap(resolver);
             _settings = SnapshotGeneratorSettings.CreateDefault();
+        }
+
+        static IResourceResolver unwrap(IResourceResolver source)
+        {
+            while (source is SnapshotSource ss)
+            {
+                source = ss.Source;
+            }
+            return source;
         }
 
         /// <summary>
@@ -72,11 +84,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings)
         {
             _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
+            _internalResolver = unwrap(resolver);
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // [WMR 20171023] Always copy the specified settings, to prevent shared state
             // Especially important to prevent corruption of the global SnapshotGeneratorSettings.Default instance.
             _settings = new SnapshotGeneratorSettings(settings);
         }
+
+        /// <summary>Returns a reference to the associated <see cref="IResourceResolver"/> instance, as specified in the call to the constructor.</summary>
+        public IResourceResolver Source => _resolver;
 
         /// <summary>Returns the snapshot generator configuration settings.</summary>
         public SnapshotGeneratorSettings Settings => _settings;
@@ -231,7 +247,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.Base != null)
             {
-                var baseStructure = _resolver.FindStructureDefinition(structure.Base);
+                var baseStructure = _internalResolver.FindStructureDefinition(structure.Base);
 
                 // [WMR 20161208] Handle unresolved base profile
                 if (baseStructure == null)
@@ -719,7 +735,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     primaryDiffTypeProfile = profileRef.CanonicalUrl;
                 }
 
-                var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+                var typeStructure = _internalResolver.FindStructureDefinition(primaryDiffTypeProfile);
 
                 // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
                 // [WMR 20170823] WRONG! Base element may specify multiple type options
@@ -730,7 +746,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //}
 
                 // The element type profile constraint must match at least one base type
-                var isCompatible = snap.Current.Type.Any(t => _resolver.IsValidTypeProfile(t.Code, typeStructure));
+                var isCompatible = snap.Current.Type.Any(t => _internalResolver.IsValidTypeProfile(t.Code, typeStructure));
                 if (!isCompatible)
                 {
                     addIssueInvalidProfileType(diff.Current, typeStructure);
@@ -1399,7 +1415,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!string.IsNullOrEmpty(typeProfile) && !typeRef.IsReference()) // && _settings.MergeTypeProfiles
             {
                 // Try to resolve the custom element type profile reference
-                baseStructure = _resolver.FindStructureDefinition(typeProfile);
+                baseStructure = _internalResolver.FindStructureDefinition(typeProfile);
                 isValidProfile = ensureSnapshot
                     ? this.ensureSnapshot(baseStructure, typeProfile, location)
                     : this.verifyStructure(baseStructure, typeProfile, location);
@@ -1410,7 +1426,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             string typeName;
             if (!isValidProfile && typeCodeElem != null && (typeName = typeCodeElem.ObjectValue as string) != null)
             {
-                baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
+                baseStructure = _internalResolver.GetStructureDefinitionForTypeCode(typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
                 isValidProfile = (IsEqualPath(typeName, location.Location)) ||
                     (
@@ -1453,7 +1469,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.GenerateSnapshotForExternalProfiles
-                    && (sd.Snapshot == null || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                    && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -1590,7 +1606,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // profile that is currently being fully expanded, i.e. the url is already on the main stack.
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
-            var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
+            var sdBase = _internalResolver.FindStructureDefinition(baseProfileUri);
             var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, diffRoot.ToNamedNode()); // Recursion!
             if (baseRoot == null)
             {
@@ -1631,6 +1647,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Determine if the specified element names are equal. Performs an ordinal comparison.</summary>
         static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
 
+        /// <summary>Create a fully connected element tree from a sparse (differential) element list by adding missing parent element definitions.</summary>
+        /// <returns>A list of elements that represents a fully connected element tree.</returns>
+        /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
         public static List<ElementDefinition> ConstructFullTree(List<ElementDefinition> source) => DifferentialTreeConstructor.MakeTree(source);
     }
 }
