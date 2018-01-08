@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class Definitions : Assertion
+    public class Definitions : IAssertion
     {
         public readonly ElementSchema[] Schemas;
 
@@ -21,9 +21,7 @@ namespace Hl7.Fhir.Specification.Schema
             Schemas = schemas.ToArray();
         }
 
-        public override IEnumerable<Assertions> Collect() => Assertions.Empty.Collection;
-
-        public override JToken ToJson() =>
+        public JToken ToJson() =>
             new JProperty("definitions", new JArray(
                 Schemas.Select(s => s.ToJson())));
     }

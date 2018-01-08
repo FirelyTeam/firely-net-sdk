@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hl7.Fhir.Specification.Schema.Tags
+namespace Hl7.Fhir.Specification.Schema
 {
     // TODO: keep them as separate entries
     // TODO: Do something with issues
     // TODO: remove duplicates
-    public class Trace : Assertion, IMergeableAssertion
+    public class Trace : IAssertion, IMergeable
     {
         private string _message;
 
@@ -18,13 +18,11 @@ namespace Hl7.Fhir.Specification.Schema.Tags
             _message = message;
         }
 
-        public override IEnumerable<Assertions> Collect() => Assertions.Empty.Collection;
-
-        public IMergeableAssertion Merge(IMergeableAssertion other)
+        public IMergeable Merge(IMergeable other)
             => other is Trace tt ?
                 new Trace(_message + Environment.NewLine + tt._message)
                 : throw Error.InvalidOperation($"Internal logic failed: tried to merge a Trace with an {other.GetType().Name}");
 
-        public override JToken ToJson() => new JProperty("trace", _message);
+        public JToken ToJson() => new JProperty("trace", _message);
     }
 }

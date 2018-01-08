@@ -1,15 +1,12 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification.Schema.Tags;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class ElementSchema : Assertion, IGroupAssertion, IMergeableAssertion
+    public class ElementSchema : IAssertion, IGroupValidatable, IMergeable, ICollectable
     {
         public static readonly ElementSchema Empty = new ElementSchema();
 
@@ -21,16 +18,16 @@ namespace Hl7.Fhir.Specification.Schema
             Members = assertions;
         }
 
-        public ElementSchema(params Assertion[] assertions) : this(new Assertions(assertions))  { }
+        public ElementSchema(params IAssertion[] assertions) : this(new Assertions(assertions))  { }
 
-        public ElementSchema(IEnumerable<Assertion> assertions) : this(new Assertions(assertions))    { }
+        public ElementSchema(IEnumerable<IAssertion> assertions) : this(new Assertions(assertions))    { }
 
-        public ElementSchema(string id, params Assertion[] assertions) : this(assertions)
+        public ElementSchema(string id, params IAssertion[] assertions) : this(assertions)
         {
             Id = id;
         }
 
-        public ElementSchema(string id, IEnumerable<Assertion> assertions) : this(assertions)
+        public ElementSchema(string id, IEnumerable<IAssertion> assertions) : this(assertions)
         {
             Id = id;
         }
@@ -40,14 +37,14 @@ namespace Hl7.Fhir.Specification.Schema
             Id = id;
         }
 
-        public override IEnumerable<Assertions> Collect()
+        public IEnumerable<Assertions> Collect()
             => Members
                 .Aggregate(Assertions.Success.Collection, (sum, ass) => sum.Product(ass.Collect()));
 
         public List<(Assertions,IElementNavigator)> Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
         {
-            var multiAssertions = Members.OfType<IGroupAssertion>();
-            var singleAssertions = Members.OfType<IMemberAssertion>();
+            var multiAssertions = Members.OfType<IGroupValidatable>();
+            var singleAssertions = Members.OfType<IValidatable>();
 
             var multiResults = multiAssertions
                                 .SelectMany(ma => ma.Validate(input, vc));
@@ -64,18 +61,18 @@ namespace Hl7.Fhir.Specification.Schema
             Assertions collect(IEnumerable<Assertions> bunch) => bunch.Aggregate((sum, other) => sum += other);
         }
 
-        public override JToken ToJson()
+        public JToken ToJson()
         {
-            return new JObject(new JProperty("id", Id))
-            {
-                Members.Select(mem => nest(mem.ToJson()))
-            };
+            var result = new JObject();
+            if (Id != null) result.Add(new JProperty("id", Id));
+            result.Add(Members.Select(mem => nest(mem.ToJson())));
+            return result;
 
             JToken nest(JToken mem) =>
                 mem is JObject ? new JProperty("nested", mem) : mem;
         }
 
-        public IMergeableAssertion Merge(IMergeableAssertion other) =>
+        public IMergeable Merge(IMergeable other) =>
             other is ElementSchema schema ?  new ElementSchema(this.Members + schema.Members)
                 : throw Error.InvalidOperation($"Internal logic failed: tried to merge an ElementSchema with a {other.GetType().Name}");
     }

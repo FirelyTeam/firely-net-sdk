@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class Children : Assertion, IMergeableAssertion
+    public class Children : IAssertion, IMergeable, ICollectable
     {
         public readonly Child[] ChildAssertions;
 
@@ -31,9 +31,9 @@ namespace Hl7.Fhir.Specification.Schema
 
         private readonly Dictionary<string, Child> _hashedChildren;
 
-        public override IEnumerable<Assertions> Collect() => new Assertions(this).Collection;
+        public IEnumerable<Assertions> Collect() => new Assertions(this).Collection;
 
-        public IMergeableAssertion Merge(IMergeableAssertion other)
+        public IMergeable Merge(IMergeable other)
         {
             if (other is Children cd)
             {
@@ -57,24 +57,22 @@ namespace Hl7.Fhir.Specification.Schema
             }
         }
 
-        public override JToken ToJson() =>
+        public JToken ToJson() =>
             new JProperty("children", new JObject() { ChildAssertions.Select(ca => ca.ToJson()) });
 
 
-        public class Child : Assertion, IMergeableAssertion
+        public class Child : IAssertion, IMergeable
         {
             public readonly string Name;
-            public readonly Assertion Assertion;
+            public readonly IAssertion Assertion;
 
-            public Child(string name, Assertion assertion)
+            public Child(string name, IAssertion assertion)
             {
                 Name = name ?? throw new ArgumentNullException(nameof(name));
                 Assertion = assertion ?? throw new ArgumentNullException(nameof(assertion));
             }
 
-            public override IEnumerable<Assertions> Collect() => Assertions.Empty.Collection;
-
-            public IMergeableAssertion Merge(IMergeableAssertion other)
+            public IMergeable Merge(IMergeable other)
             {
                 if (other is Child ca)
                 {
@@ -87,7 +85,7 @@ namespace Hl7.Fhir.Specification.Schema
                     throw Error.InvalidOperation($"Internal logic failed: tried to merge a Child with an {other.GetType().Name}");
             }
 
-            public override JToken ToJson() =>
+            public JToken ToJson() =>
                 new JProperty(Name, Assertion.ToJson().MakeNestedProp());
         }
     }

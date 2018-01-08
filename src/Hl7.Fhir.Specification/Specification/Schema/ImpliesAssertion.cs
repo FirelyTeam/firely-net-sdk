@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification.Schema.Tags;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class ImpliesAssertion : Assertion, IMemberAssertion
+    public class ImpliesAssertion : IAssertion, IValidatable, ICollectable
     {
-        public readonly Assertion Condition;
+        public readonly IAssertion Condition;
 
-        public readonly Assertion Assertion;
+        public readonly IAssertion Assertion;
 
-        public ImpliesAssertion(Assertion condition, Assertion assertion)
+        public ImpliesAssertion(IAssertion condition, IAssertion assertion)
         {
             Condition = condition ?? throw new ArgumentNullException(nameof(condition));
             Assertion = assertion ?? throw new ArgumentNullException(nameof(assertion));
         }
 
-        public override IEnumerable<Assertions> Collect() => Condition.Collect().Product(Assertion.Collect());
+        public IEnumerable<Assertions> Collect() => Condition.Collect().Product(Assertion.Collect());
 
         public Assertions Validate(IElementNavigator input, ValidationContext vc)
         {
@@ -44,7 +40,7 @@ namespace Hl7.Fhir.Specification.Schema
             }
         }
 
-        public override JToken ToJson() =>
+        public JToken ToJson() =>
             new JProperty("implies",
                 new JObject(
                     new JProperty("condition", Condition.ToJson().MakeNestedProp()),

@@ -1,32 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification.Schema.Tags;
 using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class SliceAssertion : Assertion, IGroupAssertion
+    public class SliceAssertion : IAssertion, IGroupValidatable, ICollectable
     {
-        public class Slice : Assertion
+        public class Slice : IAssertion, ICollectable
         {
             public readonly string Name;
-            public readonly Assertion Condition;
-            public readonly Assertion Assertion;
+            public readonly IAssertion Condition;
+            public readonly IAssertion Assertion;
 
-            public Slice(string name, Assertion condition, Assertion assertion)
+            public Slice(string name, IAssertion condition, IAssertion assertion)
             {
                 Name = name ?? throw new ArgumentNullException(nameof(name));
                 Condition = condition ?? throw new ArgumentNullException(nameof(condition));
                 Assertion = assertion ?? throw new ArgumentNullException(nameof(assertion));
             }
 
-            public override IEnumerable<Assertions> Collect() => Condition.Collect().Product(Assertion.Collect());
+            public IEnumerable<Assertions> Collect() => Condition.Collect().Product(Assertion.Collect());
 
-            public override JToken ToJson() =>
+            public JToken ToJson() =>
                 new JObject(
                     new JProperty("name", Name),
                     new JProperty("condition", Condition.ToJson().MakeNestedProp()),
@@ -36,10 +33,10 @@ namespace Hl7.Fhir.Specification.Schema
 
 
         public readonly bool Ordered;
-        public readonly Assertion Default;
+        public readonly IAssertion Default;
         public readonly Slice[] Slices;
 
-        public SliceAssertion(bool ordered, Assertion @default, params Slice[] slices) : this(ordered, @default, slices.AsEnumerable())
+        public SliceAssertion(bool ordered, IAssertion @default, params Slice[] slices) : this(ordered, @default, slices.AsEnumerable())
         {
         }
 
@@ -52,7 +49,7 @@ namespace Hl7.Fhir.Specification.Schema
         {
         }
 
-        public SliceAssertion(bool ordered, Assertion @default, IEnumerable<Slice> slices)
+        public SliceAssertion(bool ordered, IAssertion @default, IEnumerable<Slice> slices)
         {
             Ordered = ordered;
             Default = @default ?? new ElementSchema(ResultAssertion.Failure,
@@ -60,7 +57,7 @@ namespace Hl7.Fhir.Specification.Schema
             Slices = slices.ToArray() ?? throw new ArgumentNullException(nameof(slices));
         }
 
-        public override IEnumerable<Assertions> Collect()
+        public IEnumerable<Assertions> Collect()
             => Slices.Aggregate(Default.Collect(), (sum, slice) => sum.Product(slice.Collect()));
 
         public List<(Assertions, IElementNavigator)> Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
@@ -132,7 +129,7 @@ namespace Hl7.Fhir.Specification.Schema
             return results;
         }
 
-        public override JToken ToJson()
+        public JToken ToJson()
         {
             var def = Default.ToJson();
             if (def is JProperty) def = new JObject(def);

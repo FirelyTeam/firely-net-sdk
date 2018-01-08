@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Specification.Schema
         Undecided
     }
 
-    public class ResultAssertion : Assertion, IMergeableAssertion
+    public class ResultAssertion : IAssertion, IMergeable
     {
         public static readonly ResultAssertion Success = new ResultAssertion { Result = ValidationResult.Success };
         public static readonly ResultAssertion Failure = new ResultAssertion { Result = ValidationResult.Failure };
@@ -23,9 +23,7 @@ namespace Hl7.Fhir.Specification.Schema
 
         public bool IsSuccessful => Result == ValidationResult.Success;
 
-        public override IEnumerable<Assertions> Collect() => Assertions.Empty.Collection;            
-
-        public IMergeableAssertion Merge(IMergeableAssertion other)
+        public IMergeable Merge(IMergeable other)
         {
             if (other is ResultAssertion ra)
             {
@@ -40,6 +38,6 @@ namespace Hl7.Fhir.Specification.Schema
                 throw Error.InvalidOperation($"Internal logic failed: tried to merge a ResultAssertion with an {other.GetType().Name}");
         }
 
-        public override JToken ToJson() => new JProperty("result", Result.ToString());
+        public JToken ToJson() => new JProperty("result", Result.ToString());
     }
 }

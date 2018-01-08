@@ -1,33 +1,31 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification.Schema.Tags;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public abstract class Assertion
+    public interface IAssertion : IJsonSerializable
     {
-        //TODO: Move Id here?
-
-        /// <summary>
-        /// Tags that this assertion would provide on success.
-        /// </summary>
-        /// <remarks>
-        /// Is a list of SchemaTags, since the assertion (i.e. a slice) may provide multiple
-        /// possible outcomes.
-        /// </remarks>
-        public abstract IEnumerable<Assertions> Collect();
-
-        public static ElementSchema operator +(Assertion left, Assertion right)
-            => new ElementSchema(left, right);
-
-        public abstract JToken ToJson();
-
+    }
+   
+    public interface IJsonSerializable
+    {
+        JToken ToJson();
     }
 
+    /// <summary>
+    /// Tags that this assertion would provide on success.
+    /// </summary>
+    /// <remarks>
+    /// Is a list of SchemaTags, since the assertion (i.e. a slice) may provide multiple
+    /// possible outcomes.
+    /// </remarks>
+    public interface ICollectable
+    {
+        IEnumerable<Assertions> Collect();
+    }
     /// <summary>
     /// Implemented by assertions that work on a single node (IElementNavigator)
     /// </summary>
@@ -35,7 +33,7 @@ namespace Hl7.Fhir.Specification.Schema
     /// Examples are fixed, binding, working on a single IElementNavigator.Value, and
     /// children, working on the children of a single IElementNavigator
     /// </remarks>
-    public interface IMemberAssertion
+    public interface IValidatable
     {
         Assertions Validate(IElementNavigator input, ValidationContext vc);
     }
@@ -46,29 +44,29 @@ namespace Hl7.Fhir.Specification.Schema
     /// <remarks>
     /// Examples are subgroups, ref, minItems, slice
     /// </remarks>
-    public interface IGroupAssertion
+    public interface IGroupValidatable
     {
         List<(Assertions,IElementNavigator)> Validate(IEnumerable<IElementNavigator> input, ValidationContext vc);
     }
 
 
-    public interface IMergeableAssertion
+    public interface IMergeable
     {
-        IMergeableAssertion Merge(IMergeableAssertion other);
+        IMergeable Merge(IMergeable other);
     }
 
-    public class Assertions : ReadOnlyCollection<Assertion>
+    public class Assertions : ReadOnlyCollection<IAssertion>
     {
         public static readonly Assertions Success = new Assertions(ResultAssertion.Success);
         public static readonly Assertions Failure = new Assertions(ResultAssertion.Failure);
         public static readonly Assertions Undecided = new Assertions(ResultAssertion.Undecided);
         public static readonly Assertions Empty = new Assertions();
 
-        public Assertions(params Assertion[] assertions) : this(assertions.AsEnumerable())
+        public Assertions(params IAssertion[] assertions) : this(assertions.AsEnumerable())
         {
         }
 
-        public Assertions(IEnumerable<Assertion> assertions) : base(merge(assertions).ToList())
+        public Assertions(IEnumerable<IAssertion> assertions) : base(merge(assertions).ToList())
         {
         }
 
@@ -77,18 +75,18 @@ namespace Hl7.Fhir.Specification.Schema
         public static Assertions operator +(Assertions left, Assertions right)
             => new Assertions(left.Union(right));
 
-        public static Assertions operator +(Assertions left, Assertion right)
+        public static Assertions operator +(Assertions left, IAssertion right)
                 => new Assertions(left.Union(new[] { right }));
 
-        private static IEnumerable<Assertion> merge(IEnumerable<Assertion> assertions)
+        private static IEnumerable<IAssertion> merge(IEnumerable<IAssertion> assertions)
         {
-            var mergeable = assertions.OfType<IMergeableAssertion>();
-            var nonMergeable = assertions.Where(a => !(a is IMergeableAssertion));
+            var mergeable = assertions.OfType<IMergeable>();
+            var nonMergeable = assertions.Where(a => !(a is IMergeable));
 
             var merged =
                 from sa in mergeable
                 group sa by sa.GetType() into grp
-                select (Assertion)grp.Aggregate((sum, other) => sum.Merge(other));
+                select (IAssertion)grp.Aggregate((sum, other) => sum.Merge(other));
 
             return nonMergeable.Union(merged);
         }
