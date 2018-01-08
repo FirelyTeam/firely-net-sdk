@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using System.Linq;
 using Hl7.Fhir.Utility;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -114,5 +115,11 @@ namespace Hl7.Fhir.Specification.Source
             // None of the IArtifactSources succeeded in returning a result
             return null;
         }
+
+        // Allow derived classes to override
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        internal protected virtual string DebuggerDisplay
+            => $"{GetType().Name} for {Sources.Count} sources: {string.Join(" | ", Sources.Select(s => s.DebuggerDisplayString()))}";
     }
 }
