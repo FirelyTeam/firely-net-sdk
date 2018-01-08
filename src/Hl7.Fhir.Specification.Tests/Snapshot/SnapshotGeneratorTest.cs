@@ -2195,33 +2195,49 @@ namespace Hl7.Fhir.Specification.Tests
         static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDiff();
 
         [TestMethod]
+        public void TestExpandCoreElement()
+        {
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
+        }
+
+        [TestMethod]
+        public void TestExpandCoreBackBoneElement()
+        {
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
+        }
+
+        [TestMethod]
+        public void TestExpandCoreExtension()
+        {
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
+        }
+
+        [TestMethod]
+        [Ignore]
         public void TestExpandCoreArtifacts()
         {
-            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
-            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
 
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/string");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/code");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/id");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/string");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/code");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/id");
 
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Meta");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/HumanName");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Quantity");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Money");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Meta");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/HumanName");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Quantity");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Money");
 
-            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Resource");
-            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Resource");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Basic");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/AuditEvent");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Basic");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/AuditEvent");
 
-            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Organization");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Organization");
         }
 
         [TestMethod]

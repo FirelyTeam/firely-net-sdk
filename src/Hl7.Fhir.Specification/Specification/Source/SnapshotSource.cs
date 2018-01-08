@@ -8,9 +8,9 @@ namespace Hl7.Fhir.Specification.Source
 {
     // Requirements:
     // - Use of SnapshotSource should be transparent
-    // - SnapshotGenerator should be useable *without* SnapshotSource
+    // - SnapshotGenerator should be useable and fully functional with or without SnapshotSource
 
-    // SnapshotGenerator remains responsible for:
+    // SnapshotGenerator class remains responsible for:
     // - detecting and handling recursion
     // - caching expanded root elements
     // - annotating snapshots
@@ -24,9 +24,8 @@ namespace Hl7.Fhir.Specification.Source
     {
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified internal resolver.</summary>
         /// <param name="source">An internal <see cref="IResourceResolver"/> instance. The implementation should be idempotent (i.e. cached), so the generated snapshots are persisted in memory.</param>
-        /// <param name="regenerate">Determines if the source should always re-generate the snapshot component (<c>true</c>), or return the existing snapshot if available (<c>false</c>).</param>
-        /// <param name="settings">Optional settings for the snapshot generator (or <c>null</c> to use the default settings).</param>
-        public SnapshotSource(IResourceResolver source, bool regenerate, SnapshotGeneratorSettings settings)
+        /// <param name="settings">Configuration settings for the snapshot generator.</param>
+        public SnapshotSource(IResourceResolver source, SnapshotGeneratorSettings settings)
         {
             // TODO: Specified source should be cacheable...
             // Maybe add some interface property to detect behavior?
@@ -35,26 +34,31 @@ namespace Hl7.Fhir.Specification.Source
             // Alternatively, add new secondary interface IResolverProperties
 
             Source = source ?? throw Error.ArgumentNull(nameof(source));
-            Regenerate = regenerate;
-            Generator = settings != null 
-                ? new SnapshotGenerator(this, settings)
-                : new SnapshotGenerator(this);
+            // SnapshotGenerator ctor will throw if settings is null
+            Generator = new SnapshotGenerator(this, settings);
         }
 
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified internal resolver.</summary>
         /// <param name="source">An internal <see cref="IResourceResolver"/> instance. The implementation should be idempotent (i.e. cached), so the generated snapshots are persisted in memory.</param>
-        /// <param name="regenerate">Determines if the source should always re-generate the snapshot component (<c>true</c>), or return the existing snapshot if available (<c>false</c>).</param>
-        public SnapshotSource(IResourceResolver source, bool regenerate) : this(source, regenerate, null) { }
+        /// <param name="regenerate">Determines if the source should always discard any existing snapshot components provided by the internal source and force re-generation.</param>
+        public SnapshotSource(IResourceResolver source, bool regenerate)
+            : this(source, createSettings(regenerate)) { }
+
+        // Create default SnapshotGeneratorSettings, apply the specified regenerate flag
+        static SnapshotGeneratorSettings createSettings(bool regenerate)
+        {
+            var settings = SnapshotGeneratorSettings.CreateDefault();
+            settings.ForceRegenerateSnapshots = regenerate;
+            return settings;
+        }
 
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified internal resolver.</summary>
-        /// <param name="source">An internal <see cref="IResourceResolver"/> instance.</param>
-        public SnapshotSource(IResourceResolver source) : this(source, true) { }
+        /// <param name="source">An internal <see cref="IResourceResolver"/> instance. The implementation should be idempotent (i.e. cached), so the generated snapshots are persisted in memory.</param>
+        public SnapshotSource(IResourceResolver source) 
+            : this(source, SnapshotGeneratorSettings.CreateDefault()) { }
 
         /// <summary>Returns a reference to the internal artifact source.</summary>
         public IResourceResolver Source { get; }
-
-        /// <summary>Determines if the source should always re-generate the snapshot component (<c>true</c>), or return the existing snapshot if available (<c>false</c>).</summary>
-        public bool Regenerate { get; } = true;
 
         /// <summary>Returns the internal <see cref="SnapshotGenerator"/> instance used by the source.</summary>
         public SnapshotGenerator Generator { get; }
@@ -77,10 +81,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (res is StructureDefinition sd)
             {
-                // [WMR 20171219] 
-                // - Re -use annotation defined by SnapshotGenerator
-                // - OR: define custom annotation for SnapshotSource
-                if (Regenerate || !sd.HasSnapshot || !sd.Snapshot.IsCreatedBySnapshotGenerator())
+                if (!sd.HasSnapshot || Generator.Settings.ForceRegenerateSnapshots || !sd.Snapshot.IsCreatedBySnapshotGenerator())
                 {
                     Generator.Update(sd);
                 }
@@ -91,6 +92,6 @@ namespace Hl7.Fhir.Specification.Source
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal protected virtual string DebuggerDisplay => $"{GetType().Name} for {Source.DebuggerDisplayString()} | Regenerate = {Regenerate}";
+        internal protected virtual string DebuggerDisplay => $"{GetType().Name} for {Source.DebuggerDisplayString()}";
     }
 }

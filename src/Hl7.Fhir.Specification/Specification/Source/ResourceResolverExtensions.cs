@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Specification.Source
             // if (resolver is WebResolver wr) { return wr.DebuggerDisplay; }
             if (resolver is MultiResolver mr) { return mr.DebuggerDisplay; }
             if (resolver is CachedResolver cr) { return cr.DebuggerDisplay; }
+            if (resolver is SnapshotSource ss) { return ss.DebuggerDisplay; }
 
             return resolver.GetType().Name;
         }
