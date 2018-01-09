@@ -119,16 +119,6 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromFormatParam("application/fhir+json"));
         }
 
-        [TestMethod]
-        public void RunPostSearch()
-        {
-            FhirClient client = new FhirClient(_endpointSupportingSearchUsingPost);
-            SearchParams searchParams = new SearchParams();
-            searchParams.Add("identifier", "urn:oid:2.16.840.1.113883.2.4.6.3|738472983");
-            Bundle bundle = client.SearchUsingPost<Patient>(searchParams);
-            Assert.IsTrue(bundle.Total == 1);
-        }
-
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadWithFormat()
         {
