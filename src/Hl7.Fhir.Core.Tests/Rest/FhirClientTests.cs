@@ -15,6 +15,11 @@ using System.Net;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
+using System.IO;
+using Lib.Net.Http.EncryptedContentEncoding;
+using System.Threading.Tasks;
+using Hl7.Fhir.Utility;
+using static Hl7.Fhir.Model.Bundle;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -25,12 +30,16 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        public static Uri testEndpoint = new Uri("http://test.fhir.org/r2");
+        //public static Uri testEndpoint = new Uri("http://test.fhir.org/r2");
         //public static Uri testEndpoint = new Uri("http://vonk.furore.com");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-        //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
+        public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
+        //public static Uri testEndpoint = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
+
+        //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir");
+        public static Uri _endpointSupportingSearchUsingPost = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
 
         public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/dstu2_1");
 
@@ -109,6 +118,16 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromFormatParam("application/json"));
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromFormatParam("application/json+fhir"));
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromFormatParam("application/fhir+json"));
+        }
+
+        [TestMethod]
+        public void RunPostSearch()
+        {
+            FhirClient client = new FhirClient(_endpointSupportingSearchUsingPost);
+            SearchParams searchParams = new SearchParams();
+            searchParams.Add("identifier", "urn:oid:2.16.840.1.113883.2.4.6.3|738472983");
+            Bundle bundle = client.SearchUsingPost<Patient>(searchParams);
+            Assert.IsTrue(bundle.Total == 1);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -760,6 +779,17 @@ namespace Hl7.Fhir.Tests.Rest
             var pat = (Patient)pats.Entry.First().Resource;
         }
 
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void TestSearchUsingPostByPersonaCode()
+        {
+            var client = new FhirClient(_endpointSupportingSearchUsingPost);
+
+            var pats =
+              client.SearchUsingPost<Patient>(
+                new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") });
+            var pat = (Patient)pats.Entry.First().Resource;
+        }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
