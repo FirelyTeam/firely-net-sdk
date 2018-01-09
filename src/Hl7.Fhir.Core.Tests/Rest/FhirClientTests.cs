@@ -16,7 +16,6 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
 using System.IO;
-using Lib.Net.Http.EncryptedContentEncoding;
 using System.Threading.Tasks;
 using Hl7.Fhir.Utility;
 using static Hl7.Fhir.Model.Bundle;
