@@ -68,5 +68,28 @@ namespace Hl7.Fhir.Specification.Tests
                 assert_ele1(elem);
             }
         }
+
+        [TestMethod]
+        public void CannotCreateSnapshotGeneratorFromSnapshotSource()
+        {
+            var orgSource = ZipSource.CreateValidationSource();
+            var cachedSource = new CachedResolver(orgSource);
+            var src = new SnapshotSource(cachedSource);
+
+            // Verify that SnapshotGenerator ctor rejects SnapshotSource arguments
+            Assert.ThrowsException<ArgumentException>(() => new SnapshotGenerator(src));
+        }
+
+        [TestMethod]
+        public void CannotCreateNestedSnapshotSource()
+        {
+            var orgSource = ZipSource.CreateValidationSource();
+            var cachedSource = new CachedResolver(orgSource);
+            var src = new SnapshotSource(cachedSource);
+
+            // Verify that SnapshotSource ctor rejects SnapshotSource arguments
+            Assert.ThrowsException<ArgumentException>(() => new SnapshotSource(src));
+        }
+
     }
 }
