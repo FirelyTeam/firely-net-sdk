@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         List<ElementDefinition> generate(StructureDefinition structure)
         {
-            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' ...");
+            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' (#{structure.GetHashCode()}) ...");
 
             List<ElementDefinition> result;
             var differential = structure.Differential;
