@@ -307,7 +307,6 @@ namespace Hl7.Fhir.Rest
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
             path.AddPath("_search");
-            //path.AddParams(q.ToUriParamList());
             entry.Resource = q.ToParameters();
             addEntry(entry, path);
 
