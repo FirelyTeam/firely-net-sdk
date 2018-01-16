@@ -25,19 +25,19 @@ namespace Hl7.Fhir.Specification.Schema
 
         public JToken ToJson()
         {
-            var result = new JObject("trace", new JProperty("message", Message));
+            var trace = new JObject(new JProperty("message", Message));
 
             if(Location != null)
-                result.Add(new JProperty("location", Location));
+                trace.Add(new JProperty("location", Location));
 
             if (Details != null)
             {
-                result.Add(new JProperty("code", Details.Code));
-                result.Add(new JProperty("severity", Details.Severity.GetLiteral()));
-                result.Add(new JProperty("category", Details.Type.GetLiteral()));
+                trace.Add(new JProperty("code", Details.Code));
+                trace.Add(new JProperty("severity", Details.Severity.GetLiteral()));
+                trace.Add(new JProperty("category", Details.Type.GetLiteral()));
             }
 
-            return result;
+            return new JProperty("trace", trace);
         }
 
     }
