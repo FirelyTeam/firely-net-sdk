@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180115] NEW - Replacement for expandAllComplexElements (OBSOLETE)
         // Expand all elements with complex type and no children
-        IList<ElementDefinition> fullyExpand(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues)
+        IList<ElementDefinition> fullyExpand(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues = null)
         {
             var nav = new ElementDefinitionNavigator(elements);
             // Skip root element
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             if (nav.HasChildren || (isExpandableElement(nav.Current) && _generator.ExpandElement(nav)))
             {
-                if (_generator.Outcome != null)
+                if (issues != null && _generator.Outcome != null)
                 {
                     issues.AddRange(_generator.Outcome.Issue);
                 }
@@ -6181,6 +6181,58 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Assert.IsTrue(isChanged(type));
             }
+        }
+
+        [TestMethod]
+        public void TestAuPatientWithExtensions()
+        {
+            // Forge issue: https://trello.com/c/Q13pabzq
+
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org.au/fhir/StructureDefinition/au-patient");
+            Assert.IsNotNull(sd);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            // Verify extensions on Patient.birthDate
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Patient.birthDate.extension"));
+            // 1. Extension slice intro
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.SliceName);
+            // 2. Extension: accuracyIndicator
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("accuracyIndicator", nav.Current.SliceName);
+            // 3. Extension: birthTime
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("birthTime", nav.Current.SliceName);
+
+            // Verify extensions on Patient.deceased[x]:deceasedDateTime
+            Assert.IsTrue(nav.JumpToFirst("Patient.deceased[x]"));
+            // 1. Type slice intro
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.SliceName);
+            // 2. Type slice: deceasedBoolean
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("deceasedBoolean", nav.Current.SliceName);
+            // 3. Type slice: deceasedDateTime
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("deceasedDateTime", nav.Current.SliceName);
+            // 4. Patient.deceased[x]:deceasedDateTime.extension slice intro
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.SliceName);
+            // 5. Extension: accuracyIndicator
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("accuracyIndicator", nav.Current.SliceName);
+
         }
 
     }
