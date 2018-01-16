@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         List<ElementDefinition> generate(StructureDefinition structure)
         {
-            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' ...");
+            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' (#{structure.GetHashCode()}) ...");
 
             List<ElementDefinition> result;
             var differential = structure.Differential;
@@ -1137,7 +1137,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Recursively re-generate IDs for elements inherited from external rebased type profile
             if (_settings.GenerateElementIds)
             {
-                ElementIdGenerator.Update(snap, true);
+                // [WMR 20180116] Fix: only update child element ids
+                ElementIdGenerator.Update(snap, true, true);
             }
 
             if (MustRaisePrepareElement)
