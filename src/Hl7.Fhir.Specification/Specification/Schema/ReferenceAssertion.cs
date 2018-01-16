@@ -7,24 +7,19 @@ namespace Hl7.Fhir.Specification.Schema
 {
     public class ReferenceAssertion : IAssertion, IGroupValidatable, ICollectable
     {
-        // A symbolic reference, or a reference to another Schema?
-        // Or one of the next two?
-
         public ReferenceAssertion(ElementSchema schema)
         {
-            DirectReference = schema;
+            _reference = new Lazy<ElementSchema>(() => schema);
         }
 
         public ReferenceAssertion(Func<ElementSchema> dereference)
         {
-            Dereference = dereference;
+            _reference = new Lazy<ElementSchema>(dereference);
         }
 
-        public readonly ElementSchema DirectReference;
+        private readonly Lazy<ElementSchema> _reference;
 
-        public readonly Func<ElementSchema> Dereference;
-
-        private ElementSchema ReferencedSchema => DirectReference ?? Dereference();
+        public ElementSchema ReferencedSchema => _reference.Value;
 
         // TODO: Risk of loop (if a referenced schema refers back to this schema - which is nonsense, but possible)
         public IEnumerable<Assertions> Collect() => ReferencedSchema.Collect();

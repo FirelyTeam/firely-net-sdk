@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -11,25 +12,36 @@ namespace Hl7.Fhir.Specification.Schema
 {
     public class Children : IAssertion, IMergeable, ICollectable
     {
-        public readonly Child[] ChildAssertions;
-
-        public Children(params Child[] children) : this(children.AsEnumerable())
+        private readonly Lazy<IReadOnlyDictionary<string,IAssertion>> _childList;
+        
+        public Children(params (string name, IAssertion assertion)[] children)
         {
+            _childList = new Lazy<IReadOnlyDictionary<string, IAssertion>>(()=>toROD(children));                    
         }
 
-        public Children(IEnumerable<Child> children)
+        private IReadOnlyDictionary<string, IAssertion> toROD(IEnumerable<(string,IAssertion)> children)
         {
-            ChildAssertions = children.ToArray();
-            _hashedChildren = new Dictionary<string, Child>();
-
-            foreach (var child in children)
-                _hashedChildren.Add(child.Name, child);
+            var lookup = new Dictionary<string, IAssertion>();
+            foreach (var (name, assertion) in children)
+                lookup.Add(name, assertion);
+            return lookup;
         }
 
-        public Child Lookup(string name) =>
-            _hashedChildren.TryGetValue(name, out var child) ? child : null;
 
-        private readonly Dictionary<string, Child> _hashedChildren;
+        public Children(IReadOnlyDictionary<string, IAssertion> children)
+        {
+            _childList = new Lazy<IReadOnlyDictionary<string, IAssertion>>(() => children);
+        }
+
+        public Children(Func<IReadOnlyDictionary<string, IAssertion>> childGenerator)
+        {
+            _childList = new Lazy<IReadOnlyDictionary<string, IAssertion>>(childGenerator);
+        }
+
+        public IReadOnlyDictionary<string, IAssertion> ChildList => _childList.Value;
+
+        public IAssertion Lookup(string name) =>
+            ChildList.TryGetValue(name, out var child) ? child : null;
 
         public IEnumerable<Assertions> Collect() => new Assertions(this).Collection;
 
@@ -40,53 +52,25 @@ namespace Hl7.Fhir.Specification.Schema
                 var mergedChildren = from name in names()
                        let left = this.Lookup(name)
                        let right = cd.Lookup(name)
-                       select merge(left, right);
-                return new Children(mergedChildren);
+                       select (name,merge(left, right));
+                return new Children(() => toROD(mergedChildren));
             }
             else
                 throw Error.InvalidOperation($"Internal logic failed: tried to merge Children with an {other.GetType().Name}");
 
-            IEnumerable<string> names() => ChildAssertions.Select(c => c.Name)
-                                            .Union(cd.ChildAssertions.Select(c => c.Name)).Distinct();
+            IEnumerable<string> names() => ChildList.Keys.Union(cd.ChildList.Keys).Distinct();
 
-            Child merge(Child l, Child r)
+            IAssertion merge(IAssertion l, IAssertion r)
             {
                 if (l == null) return r;
                 if (r == null) return l;
-                return (Child)l.Merge(r);
+
+                return new ElementSchema(l, r);
             }
         }
 
         public JToken ToJson() =>
-            new JProperty("children", new JObject() { ChildAssertions.Select(ca => ca.ToJson()) });
-
-
-        public class Child : IAssertion, IMergeable
-        {
-            public readonly string Name;
-            public readonly IAssertion Assertion;
-
-            public Child(string name, IAssertion assertion)
-            {
-                Name = name ?? throw new ArgumentNullException(nameof(name));
-                Assertion = assertion ?? throw new ArgumentNullException(nameof(assertion));
-            }
-
-            public IMergeable Merge(IMergeable other)
-            {
-                if (other is Child ca)
-                {
-                    if (Name != ca.Name)
-                        throw Error.InvalidOperation($"Internal logic failed: tried to merge two children with a different name ('{Name}' and '{ca.Name}')");
-
-                    return new Child(Name, new ElementSchema(Assertion, ca.Assertion));
-                }
-                else
-                    throw Error.InvalidOperation($"Internal logic failed: tried to merge a Child with an {other.GetType().Name}");
-            }
-
-            public JToken ToJson() =>
-                new JProperty(Name, Assertion.ToJson().MakeNestedProp());
-        }
+            new JProperty("children", new JObject() { ChildList.Select(child =>
+                new JProperty(child.Key, child.Value.ToJson().MakeNestedProp())) });
     }
 }

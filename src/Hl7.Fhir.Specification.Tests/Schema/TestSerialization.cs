@@ -22,8 +22,8 @@ namespace Hl7.Fhir.Specification.Tests.Schema
                     new SliceAssertion.Slice("fail", new Fail(), new Trace("This always fails"))
                     ),
                 new Children(
-                    new Children.Child("child1", new ElementSchema(new Fail())),
-                    new Children.Child("child2", new Trace("in child 2")))
+                    ("child1", new ElementSchema(new Fail())),
+                    ("child2", new Trace("in child 2")))
                 );
 
             var result = main.ToJson().ToString();

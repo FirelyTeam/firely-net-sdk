@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Utility;
+﻿using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,75 @@ namespace Hl7.Fhir.Specification.Schema
     // TODO: keep them as separate entries
     // TODO: Do something with issues
     // TODO: remove duplicates
-    public class Trace : IAssertion, IMergeable
+    public class Trace : IAssertion
     {
-        private string _message;
+        public readonly string Message;
+        public readonly Issue Details;
+        public readonly string Location;
 
-        public Trace(string message)
+        public Trace(string message, string location=null, Issue details=null)
         {
-            _message = message;
+            Message = message ?? throw new ArgumentNullException(nameof(message));
+            Location = location;
+            Details = details;
         }
 
-        public IMergeable Merge(IMergeable other)
-            => other is Trace tt ?
-                new Trace(_message + Environment.NewLine + tt._message)
-                : throw Error.InvalidOperation($"Internal logic failed: tried to merge a Trace with an {other.GetType().Name}");
+        public JToken ToJson()
+        {
+            var result = new JObject("trace", new JProperty("message", Message));
 
-        public JToken ToJson() => new JProperty("trace", _message);
+            if(Location != null)
+                result.Add(new JProperty("location", Location));
+
+            if (Details != null)
+            {
+                result.Add(new JProperty("code", Details.Code));
+                result.Add(new JProperty("severity", Details.Severity.GetLiteral()));
+                result.Add(new JProperty("category", Details.Type.GetLiteral()));
+            }
+
+            return result;
+        }
+
     }
+
+    //public class TraceDetails
+    //{
+    //    public readonly string Code;
+    //    public readonly IssueSeverity Severity;
+    //    public readonly IssueCategory? Category;
+
+    //    public TraceDetails(string code, IssueSeverity severity, IssueCategory? category = null)
+    //    {
+    //        Code = code ?? throw new ArgumentNullException(nameof(code));
+    //        Severity = severity;
+    //        Category = category;
+    //    }
+
+    //    public enum IssueSeverity
+    //    {
+    //        Fatal,
+    //        Error,
+    //        Warning,
+    //        Information
+    //    }
+
+    //    public enum IssueCategory
+    //    {
+    //        /// <summary>
+    //        /// Content invalid against the specification or a profile.
+    //        /// </summary>
+    //        Invalid,
+
+    //        BusinessRule,
+
+    //        Incomplete,
+
+    //        NotSupported,
+
+    //        Exception,
+
+    //        CodeInvalid
+    //    }
+    //}
 }

@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Utility;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public class XmlOrder : IAssertion
+    public class XmlOrder : SimpleAssertion
     {
         public readonly int Order;
 
@@ -15,6 +16,10 @@ namespace Hl7.Fhir.Specification.Schema
             Order = order;
         }
 
-        public JToken ToJson() => new JProperty("xml-order", Order);
+        protected override string Key => "xml-order";
+
+        protected override object Value => Order;
+
+        public override Assertions Validate(IElementNavigator input, ValidationContext vc) => Assertions.Empty;
     }
 }

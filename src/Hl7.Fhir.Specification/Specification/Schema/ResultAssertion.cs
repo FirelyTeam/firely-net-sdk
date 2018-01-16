@@ -3,6 +3,7 @@ using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
@@ -15,11 +16,22 @@ namespace Hl7.Fhir.Specification.Schema
 
     public class ResultAssertion : IAssertion, IMergeable
     {
-        public static readonly ResultAssertion Success = new ResultAssertion { Result = ValidationResult.Success };
-        public static readonly ResultAssertion Failure = new ResultAssertion { Result = ValidationResult.Failure };
-        public static readonly ResultAssertion Undecided = new ResultAssertion { Result = ValidationResult.Undecided };
+        public static readonly ResultAssertion Success = new ResultAssertion(ValidationResult.Success);
+        public static readonly ResultAssertion Failure = new ResultAssertion(ValidationResult.Failure);
+        public static readonly ResultAssertion Undecided = new ResultAssertion(ValidationResult.Undecided);
 
-        public ValidationResult Result;
+        public readonly ValidationResult Result;
+        public readonly IAssertion[] Evidence;
+
+        public ResultAssertion(ValidationResult result, params IAssertion[] evidence) : this(result, evidence.AsEnumerable())
+        {
+        }
+
+        public ResultAssertion(ValidationResult result, IEnumerable<IAssertion> evidence)
+        {
+            Evidence = evidence?.ToArray() ?? throw new ArgumentNullException(nameof(evidence));
+            Result = result;
+        }
 
         public bool IsSuccessful => Result == ValidationResult.Success;
 
