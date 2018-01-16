@@ -2133,10 +2133,6 @@ namespace Hl7.Fhir.Specification.Tests
             return string.Empty;
         }
 
-        // static bool hasChanges<T>(IList<T> extendables) where T : IExtendable => extendables != null ? extendables.Any(e => isChanged(e)) : false;
-
-        // static bool isChanged(IExtendable extendable) => extendable != null && extendable.GetChangedByDiff() == true;
-
         static bool hasChanges<T>(IList<T> elements) where T : Element => elements != null ? elements.Any(e => isChanged(e)) : false;
         static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDiff();
 
@@ -6111,7 +6107,80 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Debug.WriteLine($"{type, -30} {ModelInfo.IsKnownResource(type),-10} {ModelInfo.IsDataType(type), -10} {ModelInfo.IsPrimitive(type), -10} {!ModelInfo.IsPrimitive(type),-10} {isComplexDataTypeOrResource(type)}");
             }
-            
+        }
+
+        // [WMR 20180115]
+        // https://github.com/ewoutkramer/fhir-net-api/issues/510
+        // "Missing diff annotation on ElementDefinition.TypeRefComponent"
+        [TestMethod]
+        public void TestConstrainedByDiff_Type()
+        {
+            StructureDefinition sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "MyNationalPatient",
+                Url = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.name")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Profile = @"http://fhir.nl/fhir/StructureDefinition/nl-core-humanname"
+                                }
+                            }
+                        },
+                        new ElementDefinition("Patient.generalPractitioner")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    TargetProfile = @"http://fhir.nl/fhir/StructureDefinition/nl-core-organization"
+                                },
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    TargetProfile = @"http://fhir.nl/fhir/StructureDefinition/nl-core-practitioner"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Enable annotations on snapshot elements with diff constraints
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.GenerateAnnotationsOnConstraints = true;
+            _generator = new SnapshotGenerator(_testResolver, settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBasePaths(expanded);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Patient.name"));
+            Assert.IsTrue(hasChanges(nav.Current));
+            Assert.IsFalse(isChanged(nav.Current));
+            Assert.IsTrue(hasChanges(nav.Current.Type));
+            foreach (var type in nav.Current.Type)
+            {
+                Assert.IsTrue(isChanged(type));
+            }
+
+            Assert.IsTrue(nav.JumpToFirst("Patient.generalPractitioner"));
+            Assert.IsTrue(hasChanges(nav.Current));
+            Assert.IsFalse(isChanged(nav.Current)); 
+            Assert.IsTrue(hasChanges(nav.Current.Type));
+            foreach (var type in nav.Current.Type)
+            {
+                Assert.IsTrue(isChanged(type));
+            }
         }
 
     }

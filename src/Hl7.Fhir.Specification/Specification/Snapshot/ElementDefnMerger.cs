@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                    foreach (var element in snap.Type) { onConstraint(snap); }
+                    foreach (var element in snap.Type) { onConstraint(element); }
                 }
 
                 // ElementDefinition.contentReference cannot be overridden by a derived profile                
