@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Specification.Source
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected virtual string DebuggerDisplay
+        internal protected virtual string DebuggerDisplay
             => $"{GetType().Name} for '{_contentDirectory}'"
             + (_artifactFilePaths != null ? $" | {_artifactFilePaths.Count} files" : null)
             + (_artifactSummaries != null ? $" | {_artifactSummaries.Count} resources" : null);

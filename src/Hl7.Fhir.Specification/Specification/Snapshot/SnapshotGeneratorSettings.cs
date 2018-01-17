@@ -6,9 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
+using System.ComponentModel;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -19,6 +19,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
+        [Obsolete("Use the CreateDefault() method")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             GenerateSnapshotForExternalProfiles = true,
@@ -28,6 +30,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             GenerateElementIds = true                   // for STU3
             // MergeTypeProfiles = true
         };
+
+        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> instance with default property values.</summary>
+        public static SnapshotGeneratorSettings CreateDefault() => new SnapshotGeneratorSettings();
 
         /// <summary>Default ctor.</summary>
         public SnapshotGeneratorSettings() { }

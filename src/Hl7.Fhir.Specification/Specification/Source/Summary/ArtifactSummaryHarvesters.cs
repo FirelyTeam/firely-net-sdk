@@ -12,6 +12,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -211,6 +212,12 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public static readonly string BaseDefinitionKey = "StructureDefinition.baseDefinition";
         public static readonly string DerivationKey = "StructureDefinition.derivation";
 
+        public static readonly string FmmExtensionUrl = @"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm";
+        public static readonly string MaturityLevelKey = "StructureDefinition.maturityLevel";
+
+        public const string WgExtensionUrl = @"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg";
+        public static readonly string WorkingGroupKey = "StructureDefinition.workingGroup";
+
         /// <summary>Determines if the specified instance represents summary information about a <see cref="StructureDefinition"/> resource.</summary>
         public static bool IsStructureDefinitionSummary(this IArtifactSummaryPropertyBag properties)
             => properties.GetTypeName() == StructureDefinitionTypeName;
@@ -222,7 +229,10 @@ namespace Hl7.Fhir.Specification.Source.Summary
         {
             if (IsStructureDefinitionSummary(properties))
             {
-                // Explicit harvester chaining
+                // [WMR 20171218] Harvest global core extensions, e.g. maturity level & working group
+                nav.HarvestExtensions(properties, harvestExtension);
+
+                // Explicit extractor chaining
                 if (ConformanceSummaryProperties.Harvest(nav, properties))
                 {
                     nav.HarvestValue(properties, FhirVersionKey, "fhirVersion");
@@ -235,6 +245,25 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 return true;
             }
             return false;
+        }
+
+        // Callback for HarvestExtensions, called for each individual extension entry
+        static void harvestExtension(IElementNavigator nav, IDictionary<string, object> properties, string url)
+        {
+            if (StringComparer.Ordinal.Equals(FmmExtensionUrl, url))
+            {
+                if (nav.MoveToNext("valueInteger"))
+                {
+                    properties[MaturityLevelKey] = nav.Value;
+                }
+            }
+            else if (StringComparer.Ordinal.Equals(WgExtensionUrl, url))
+            {
+                if (nav.MoveToNext("valueCode"))
+                {
+                    properties[WorkingGroupKey] = nav.Value;
+                }
+            }
         }
 
         /// <summary>Get the <c>StructureDefinition.fhirVersion</c> property value from the specified artifact summary property bag, if available.</summary>
@@ -266,6 +295,22 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
         public static string GetStructureDefinitionDerivation(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(DerivationKey);
+
+        /// <summary>Get the value of the maturity level extension from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>
+        /// Returns the resource maturity level, as defined by the official FHIR extension "http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm".
+        /// Only applies to summaries of <see cref="StructureDefinition"/> resources that define FHIR core resources.
+        /// </remarks>
+        public static string GetStructureDefinitionMaturityLevel(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(MaturityLevelKey);
+
+        /// <summary>Get the value of the working group extension from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>
+        /// Returns the associated working group, as defined by the official FHIR extension "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg".
+        /// Only applies to summaries of <see cref="StructureDefinition"/> resources that define FHIR core resources.
+        /// </remarks>
+        public static string GetStructureDefinitionWorkingGroup(this IArtifactSummaryPropertyBag properties)
+           => properties.GetValueOrDefault<string>(WorkingGroupKey);
 
     }
 

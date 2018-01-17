@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Validation
                     var resolver = Settings.ResourceResolver;
                     if (resolver != null)
                     {
-                        SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
+                        SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.CreateDefault();
                         _snapshotGenerator = new SnapshotGenerator(resolver, settings);
                     }
 
