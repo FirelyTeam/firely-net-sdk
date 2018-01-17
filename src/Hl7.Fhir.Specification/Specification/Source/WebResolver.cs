@@ -7,10 +7,8 @@
  */
 
 using System;
-using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Support;
 using System.Net;
 using Hl7.Fhir.Utility;
 

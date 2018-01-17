@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2018, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -57,8 +57,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public SnapshotGenerator(IResourceResolver resolver)
         {
-            if (resolver == null) { throw Error.ArgumentNull(nameof(resolver)); }
-            _resolver = resolver;
+            _resolver = verifySource(resolver, nameof(resolver));
             _settings = SnapshotGeneratorSettings.CreateDefault();
         }
 
@@ -71,12 +70,29 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings)
         {
-            _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
+            _resolver = verifySource(resolver, nameof(resolver));
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // [WMR 20171023] Always copy the specified settings, to prevent shared state
             // Especially important to prevent corruption of the global SnapshotGeneratorSettings.Default instance.
             _settings = new SnapshotGeneratorSettings(settings);
         }
+
+        static IResourceResolver verifySource(IResourceResolver resolver, string name = null)
+        {
+            if (resolver == null) { throw Error.ArgumentNull(name ?? nameof(resolver)); }
+            if (resolver is SnapshotSource) { throw Error.Argument(name ?? nameof(resolver), $"Invalid argument. Cannot create a new {nameof(SnapshotGenerator)} instance from an existing {nameof(SnapshotSource)}."); }
+
+            // TODO: Verify that the specified resolver is idempotent (i.e. caching)
+            // Maybe add some interface property to detect behavior?
+            // i.e. IsIdemPotent (repeated calls return same instance)
+            // Note: cannot add new property to IResourceResolver, breaking change...
+            // Alternatively, add new secondary interface IResourceResolverProperties
+
+            return resolver;
+        }
+
+        /// <summary>Returns a reference to the associated <see cref="IResourceResolver"/> instance, as specified in the call to the constructor.</summary>
+        public IResourceResolver Source => _resolver;
 
         /// <summary>Returns the snapshot generator configuration settings.</summary>
         public SnapshotGeneratorSettings Settings => _settings;
@@ -208,7 +224,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         List<ElementDefinition> generate(StructureDefinition structure)
         {
-            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' ...");
+            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' (#{structure.GetHashCode()}) ...");
 
             List<ElementDefinition> result;
             var differential = structure.Differential;
@@ -1453,7 +1469,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.GenerateSnapshotForExternalProfiles
-                    && (sd.Snapshot == null || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                    && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -1631,6 +1647,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Determine if the specified element names are equal. Performs an ordinal comparison.</summary>
         static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
 
+        /// <summary>Create a fully connected element tree from a sparse (differential) element list by adding missing parent element definitions.</summary>
+        /// <returns>A list of elements that represents a fully connected element tree.</returns>
+        /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
         public static List<ElementDefinition> ConstructFullTree(List<ElementDefinition> source) => DifferentialTreeConstructor.MakeTree(source);
     }
 }
