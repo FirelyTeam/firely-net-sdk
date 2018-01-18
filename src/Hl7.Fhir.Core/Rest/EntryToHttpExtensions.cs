@@ -57,13 +57,13 @@ namespace Hl7.Fhir.Rest
             
             if (entry.Resource != null)
             {
-                bool isSearch =
+                bool searchUsingPost =
                     interaction.Method == Bundle.HTTPVerb.POST
                     && (entry.HasAnnotation<TransactionBuilder.InteractionType>()
                     && entry.Annotation<TransactionBuilder.InteractionType>() == TransactionBuilder.InteractionType.Search)
                     && entry.Resource is Parameters;
 
-                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, isSearch, out body);
+                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, searchUsingPost, out body);
             }
             // PCL doesn't support setting the length (and in this case will be empty anyway)
 #if DOTNETFW
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, bool isSearch, out byte[] body)
+        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, bool searchUsingPost, out byte[] body)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Rest
                 // request.WriteBody(CompressRequestBody, bin.Content);
                 request.ContentType = bin.ContentType;
             }
-            else if (isSearch)
+            else if (searchUsingPost)
             {
                 string bodyParameters = null;
                 foreach(Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
