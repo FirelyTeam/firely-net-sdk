@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Test
 
             Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
             byte[] body;
-            bundle.Entry[0].ToHttpRequest(Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+            bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
             string actual = Encoding.UTF8.GetString(body);
             Assert.AreEqual(expected, actual);
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Test
 
             Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
             byte[] body;
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
             Assert.AreEqual(expected, request.Method);
         }
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Test
 
             Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
             byte[] body;
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
             Assert.AreEqual(expected, request.ContentType);
         }
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Test
 
             Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
             byte[] body;
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
             string actual = request.RequestUri.AbsoluteUri;
             Assert.AreEqual(expected, actual);
