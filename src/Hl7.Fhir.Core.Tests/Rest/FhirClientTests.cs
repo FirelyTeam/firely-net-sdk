@@ -15,6 +15,10 @@ using System.Net;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
+using System.IO;
+using System.Threading.Tasks;
+using Hl7.Fhir.Utility;
+using static Hl7.Fhir.Model.Bundle;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -765,6 +769,17 @@ namespace Hl7.Fhir.Tests.Rest
             var pat = (Patient)pats.Entry.First().Resource;
         }
 
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void TestSearchUsingPostByPersonaCode()
+        {
+            var client = new FhirClient(_endpointSupportingSearchUsingPost);
+
+            var pats =
+              client.SearchUsingPost<Patient>(
+                new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") });
+            var pat = (Patient)pats.Entry.First().Resource;
+        }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
