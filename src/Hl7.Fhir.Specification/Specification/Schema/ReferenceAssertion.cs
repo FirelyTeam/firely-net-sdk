@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
@@ -27,7 +28,8 @@ namespace Hl7.Fhir.Specification.Schema
         public List<(Assertions,IElementNavigator)> Validate(IEnumerable<IElementNavigator> input, ValidationContext vc)
             => ReferencedSchema.Validate(input, vc);
 
-        public JToken ToJson() => new JProperty("ref", ReferencedSchema.Id ?? "no identifier");
+        public JToken ToJson() => new JProperty("$ref", ReferencedSchema.Id.ToString() ??
+            throw Error.InvalidOperation("Cannot convert to Json: reference refers to a schema without an identifier"));
     }
 
 }

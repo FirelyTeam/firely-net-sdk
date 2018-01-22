@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public interface ISchemaProvider
+    public interface ISchemaResolver
     {
-        IAssertion GetSchema();
+        ElementSchema GetSchema(Uri schemaUri);
     }
 }

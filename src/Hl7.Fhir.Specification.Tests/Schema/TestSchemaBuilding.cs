@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Source;
@@ -13,29 +14,23 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         public static void SetupSource(TestContext t)
         {
             source = ZipSource.CreateValidationSource();
+            converter = new ElementSchemaResolver(source);
         }
 
         static IConformanceSource source = null;
+        static ISchemaResolver converter = null;
 
         [TestMethod]
         public void BuildSchema()
         {
-            var patDef = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
-            var nav = new ElementDefinitionNavigator(patDef);
-            nav.MoveToFirstChild();
-
-            var schema = nav.GetSchema();
+            var schema = converter.GetSchema(ResourceIdentity.Core(FHIRDefinedType.Patient));
             var json = schema.ToJson();
         }
 
         [TestMethod]
         public void BuildSchema2()
         {
-            var patDef = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Uuid);
-            var nav = new ElementDefinitionNavigator(patDef);
-            nav.MoveToFirstChild();
-
-            var schema = nav.GetSchema();
+            var schema = converter.GetSchema(ResourceIdentity.Core(FHIRDefinedType.Uuid));
             var json = schema.ToJson();
         }
 

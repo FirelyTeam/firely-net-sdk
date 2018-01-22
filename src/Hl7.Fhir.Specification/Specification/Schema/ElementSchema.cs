@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace Hl7.Fhir.Specification.Schema
     {
         public static readonly ElementSchema Empty = new ElementSchema();
 
-        public readonly string Id;
+        public readonly Uri Id;
         public readonly Assertions Members;
 
         public ElementSchema(Assertions assertions)
@@ -22,20 +23,39 @@ namespace Hl7.Fhir.Specification.Schema
 
         public ElementSchema(IEnumerable<IAssertion> assertions) : this(new Assertions(assertions))    { }
 
-        public ElementSchema(string id, params IAssertion[] assertions) : this(assertions)
+        public ElementSchema(Uri id, params IAssertion[] assertions) : this(assertions)
         {
             Id = id;
+        }
+
+        public ElementSchema(Uri id, IEnumerable<IAssertion> assertions) : this(assertions)
+        {
+            Id = id;
+        }
+
+        public ElementSchema(Uri id, Assertions assertions) : this(assertions)
+        {
+            Id = id;
+        }
+
+        private static Uri buildUri(string uri) => new Uri(uri, UriKind.RelativeOrAbsolute);
+        
+        public ElementSchema(string id, params IAssertion[] assertions) : this(assertions)
+        {
+            Id = buildUri(id);
         }
 
         public ElementSchema(string id, IEnumerable<IAssertion> assertions) : this(assertions)
         {
-            Id = id;
+            Id = buildUri(id);
         }
 
         public ElementSchema(string id, Assertions assertions) : this(assertions)
         {
-            Id = id;
+            Id = buildUri(id);
         }
+
+        public bool IsEmpty => !Members.Any();
 
         public IEnumerable<Assertions> Collect()
             => Members
@@ -64,7 +84,7 @@ namespace Hl7.Fhir.Specification.Schema
         public JToken ToJson()
         {
             var result = new JObject();
-            if (Id != null) result.Add(new JProperty("id", Id));
+            if (Id != null) result.Add(new JProperty("$id", Id.ToString()));
             result.Add(Members.Select(mem => nest(mem.ToJson())));
             return result;
 
@@ -75,6 +95,20 @@ namespace Hl7.Fhir.Specification.Schema
         public IMergeable Merge(IMergeable other) =>
             other is ElementSchema schema ?  new ElementSchema(this.Members + schema.Members)
                 : throw Error.InvalidOperation($"Internal logic failed: tried to merge an ElementSchema with a {other.GetType().Name}");
+
+
+        public ElementSchema With(params IAssertion[] additional) => With(additional.AsEnumerable());            
+
+        public ElementSchema With(IEnumerable<IAssertion> additional) =>
+            new ElementSchema(this.Id, this.Members.Union(additional));
+
+        /// <summary>
+        /// Resolve the given uri within this schema
+        /// </summary>
+        /// <param name="localUri"></param>
+        /// <returns></returns>
+        /// <remarks>Resolve as per JsonSchema $id/$ref</remarks>
+        public ElementSchema Resolve(Uri localUri) => throw new NotImplementedException();
     }
 }
 
