@@ -22,6 +22,7 @@ namespace Hl7.Fhir.ElementModel
             public IEnumerable<ScopedNavigator> ContainedResources;
             public IEnumerable<BundledResource> BundledResources;
             public string FullUrl;
+            public ScopedNavigator Context;
         }
         private Cache _cache = new Cache();
 
@@ -30,6 +31,8 @@ namespace Hl7.Fhir.ElementModel
         public ScopedNavigator(IElementNavigator wrapped)
         {
             _wrapped = wrapped.Clone();
+            if (this.AtResource) ResourceContext = (ScopedNavigator)this.Clone();
+
         }
 
         public ScopedNavigator Parent { get; private set; } = null;
@@ -53,7 +56,14 @@ namespace Hl7.Fhir.ElementModel
             ScopedNavigator me = null;
 
             if (this.AtResource)
+            {
                 me = (ScopedNavigator)this.Clone();
+
+                if (Parent?.ContainedResources().FirstOrDefault() == null)
+                {
+                    ResourceContext = (ScopedNavigator)this.Clone();
+                }
+            }
 
             if (!_wrapped.MoveToFirstChild(nameFilter)) return false;
 
@@ -68,6 +78,16 @@ namespace Hl7.Fhir.ElementModel
 
         public bool AtResource => Type != null ? Char.IsUpper(Type[0]) && ModelInfo.IsKnownResource(Type) : false;
         public bool AtBundle => Type != null ? Type == "Bundle" : false;
+        public ScopedNavigator ResourceContext { get; private set; } = null;
+
+        public IElementNavigator Context()
+        {
+            if (_cache.Context == null)
+            {
+
+            }
+            return _cache.Context;
+        }
 
         public IEnumerable<ScopedNavigator> Parents()
         {
@@ -148,7 +168,8 @@ namespace Hl7.Fhir.ElementModel
         {
             return new ScopedNavigator(_wrapped)
             {
-                Parent = this.Parent
+                Parent = this.Parent,
+                ResourceContext = this.ResourceContext
             };
         }        
     }

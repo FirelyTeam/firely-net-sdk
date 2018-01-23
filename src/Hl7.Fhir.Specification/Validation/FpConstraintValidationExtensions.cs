@@ -25,6 +25,13 @@ namespace Hl7.Fhir.Validation
 
     internal static class FpConstraintValidationExtensions
     {
+        private static ScopedNavigator getTopLevelResource(ScopedNavigator instance)
+        {
+            if (instance.AtResource && instance.Name != "contained" ) return instance;
+
+            return getTopLevelResource(instance.Parent);
+        }
+
         public static OperationOutcome ValidateFp(this Validator v, ElementDefinition definition, ScopedNavigator instance)
         {
             var outcome = new OperationOutcome();
@@ -32,12 +39,16 @@ namespace Hl7.Fhir.Validation
             if (!definition.Constraint.Any()) return outcome;
             if (v.Settings.SkipConstraintValidation) return outcome;
 
-            var context = instance.AtResource ? instance : instance.Parent;
+            //var context = instance.AtResource ? instance : instance.Parent;
+            var context = instance.ResourceContext;
+
+            //if (context != instance.Context)
+            //    throw new Exception("Bla");
 
             foreach (var constraintElement in definition.Constraint)
             {
                 bool success = false;
-
+               
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
