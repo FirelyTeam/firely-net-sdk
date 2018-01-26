@@ -50,6 +50,12 @@ namespace Hl7.Fhir.Specification.Schema
                 throw Error.InvalidOperation($"Internal logic failed: tried to merge a ResultAssertion with an {other.GetType().Name}");
         }
 
-        public JToken ToJson() => new JProperty("result", Result.ToString());
+        public JToken ToJson()
+        {
+            var evidence = new JArray(Evidence.Select(e => e.ToJson().MakeNestedProp()));
+            return new JProperty("raise", new JObject(
+                new JProperty("result", Result.ToString()),
+                new JProperty("evidence", evidence)));
+        }
     }
 }

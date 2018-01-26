@@ -135,8 +135,8 @@ namespace Hl7.Fhir.Specification.Schema
             if (def is JProperty) def = new JObject(def);
 
             return new JProperty("slice", new JObject(
-                new JProperty("ordered", Ordered.ToString()),
-                new JProperty("slice", new JArray() { Slices.Select(s => s.ToJson()) }),
+                new JProperty("ordered", Ordered),
+                new JProperty("case", new JArray() { Slices.Select(s => s.ToJson()) }),
                 new JProperty("default", def)));
         }
     }

@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        public static bool IsChoice(this ElementDefinition definition)
+        public static bool HasMultipleTypeChoices(this  ElementDefinition definition)
         {
             return definition.Type.Where(tr => tr.Code != null).Distinct().Count() > 1;
         }

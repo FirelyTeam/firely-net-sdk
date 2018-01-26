@@ -14,21 +14,16 @@ namespace Hl7.Fhir.Specification.Schema
     {
         public readonly string Message;
         public readonly Issue Details;
-        public readonly string Location;
 
-        public Trace(string message, string location=null, Issue details=null)
+        public Trace(string message, Issue details=null)
         {
             Message = message ?? throw new ArgumentNullException(nameof(message));
-            Location = location;
             Details = details;
         }
 
         public JToken ToJson()
         {
             var trace = new JObject(new JProperty("message", Message));
-
-            if(Location != null)
-                trace.Add(new JProperty("location", Location));
 
             if (Details != null)
             {

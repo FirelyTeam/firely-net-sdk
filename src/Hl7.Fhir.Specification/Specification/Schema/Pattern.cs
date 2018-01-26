@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Schema
 
             if (!success)
                 return new Assertions(new Trace($"Value '{value}' does not match regex '{RegularExpression}'",
-                    input.Location, Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE));
+                    Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE));
             else
                 return Assertions.Success;
 
