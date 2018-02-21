@@ -39,7 +39,7 @@ using System.Text;
 namespace Hl7.Fhir.Model.STU3
 {
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class ResourceReference
+    public partial class ResourceReference : IResourceReference
     {
         public ResourceReference(string reference)
         {
@@ -55,6 +55,29 @@ namespace Hl7.Fhir.Model.STU3
         public ResourceReference()
         {
 
+        }
+
+        public ResourceReference(IResourceReference resourceReference)
+        {
+            if (resourceReference == null) throw new ArgumentNullException(nameof(resourceReference));
+
+            Reference = resourceReference.Reference;
+            Display = resourceReference.Display;
+            if (resourceReference.Identifier != null)
+            {
+                Identifier = new Identifier(resourceReference.Identifier);
+            }
+        }
+
+        public static implicit operator ResourceReference(Model.ResourceReference resourceReference)
+        {
+            if (resourceReference == null) return null;
+            return new ResourceReference(resourceReference);
+        }
+
+        IIdentifier IResourceReference.Identifier
+        {
+            get { return Identifier; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

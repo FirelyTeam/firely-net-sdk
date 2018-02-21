@@ -29,17 +29,39 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
+
 
 namespace Hl7.Fhir.Model.STU3
 {
     [System.Diagnostics.DebuggerDisplay(@"\{ Value={ValueElement.Value} System={System}}")]
-    public partial class Identifier
+    public partial class Identifier : IIdentifier
     {
+        public Identifier(IIdentifier identifier)
+        {
+            if (identifier == null) throw new ArgumentNullException(nameof(identifier));
+
+            Use = identifier.Use;
+            Type = identifier.Type;
+            System = identifier.System;
+            Value = identifier.Value;
+            Period = identifier.Period;
+            if (identifier.Assigner != null)
+            {
+                Assigner = new ResourceReference(identifier.Assigner);
+            }
+        }
+
+        public static implicit operator Identifier(Model.Identifier identifier)
+        {
+            if (identifier == null) return null;
+            return new Identifier(identifier);
+        }
+
         public const string SYSTEM_URI = "urn:ietf:rfc:3986";
 
+        IResourceReference IIdentifier.Assigner
+        {
+            get { return Assigner; }
+        }
     }
 }
