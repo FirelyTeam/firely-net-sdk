@@ -21,7 +21,6 @@ namespace Hl7.Fhir.Serialization
     {
         private IFhirWriter _writer;
         private ModelInspector _inspector;
-        private readonly Model.Version _version;
 
         internal enum SerializationMode
         {
@@ -32,13 +31,10 @@ namespace Hl7.Fhir.Serialization
 
         public ParserSettings Settings { get; private set; }
 
-        public ComplexTypeWriter(IFhirWriter writer, ParserSettings settings, Model.Version version)
+        public ComplexTypeWriter(IFhirWriter writer, ParserSettings settings)
         {
-            if (version == Model.Version.All) throw new ArgumentException("Must use a specific version", nameof(version));
-
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
-            _version = version;
             Settings = settings;
         }
 
@@ -92,7 +88,9 @@ namespace Hl7.Fhir.Serialization
         {
             if (instance is IBundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
                 || prop.Name == "id"
-                || summary == Rest.SummaryType.True && prop.InSummary != null && (prop.InSummary.Contains(Model.Version.All) || prop.InSummary.Contains(_version))
+                // Being part of the summary depends on the version, but we do not really want to make the serializers 
+                // version-dependent just for that, so we consider a property as part of the summary if it is so in ANY version 
+                || summary == Rest.SummaryType.True && prop.InSummary != null && prop.InSummary.Any()
                 || summary == Rest.SummaryType.False
                 || summary == Rest.SummaryType.Data && !(prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative")
                 || summary == Rest.SummaryType.Text && ((prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative") || (prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") || prop.IsMandatoryElement)
@@ -146,7 +144,7 @@ namespace Hl7.Fhir.Serialization
 
                 _writer.WriteStartProperty(memberName);
                
-                var writer = new DispatchingWriter(_writer, Settings, _version);
+                var writer = new DispatchingWriter(_writer, Settings);
 
                 // Now, if our writer does not use dual properties for primitive values + rest (xml),
                 // or this is a complex property without value element, serialize data normally
