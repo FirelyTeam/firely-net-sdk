@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMetaXml()
         {
-            var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(metaPoco,root:"meta");
+            var xml = new FhirXmlSerializer().SerializeToString(metaPoco,root:"meta");
             Assert.AreEqual(metaXml, xml);
         }
 
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMetaJson()
         {
-            var json = new FhirJsonSerializer(Fhir.Model.Version.DSTU2).SerializeToString(metaPoco);
+            var json = new FhirJsonSerializer().SerializeToString(metaPoco);
             Assert.AreEqual(metaJson, json);
         }
 
@@ -46,14 +46,14 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParseMetaXml()
         {
             var poco = (Meta)(new FhirXmlParser().Parse(metaXml, typeof(Meta)));
-            var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(poco,root:"meta");
+            var xml = new FhirXmlSerializer().SerializeToString(poco,root:"meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaXml, xml);
         }
 
-        internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.DSTU2);
-        internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.DSTU2);
+        internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
+        internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
 
         [TestMethod]
         public void ParseMetaJson()
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             b.NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative);
 
-            var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(b);
+            var xml = new FhirXmlSerializer().SerializeToString(b);
 
             b = FhirXmlParser.Parse<Bundle>(xml);
 
@@ -354,16 +354,16 @@ namespace Hl7.Fhir.Tests.Serialization
                     }
                 }
             };
-            var completeStu3Data = new FhirXmlSerializer(Fhir.Model.Version.STU3).SerializeToString(p, Fhir.Rest.SummaryType.False);
+            var completeStu3Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.False);
             Assert.IsTrue(completeStu3Data.Contains("<name value=\"N\""));
             Assert.IsTrue(completeStu3Data.Contains("<valueString value=\"V\""));
-            var summaryStu3Data = new FhirXmlSerializer(Fhir.Model.Version.STU3).SerializeToString(p, Fhir.Rest.SummaryType.True);
+            var summaryStu3Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summaryStu3Data.Contains("<name value=\"N\""));
             Assert.IsTrue(summaryStu3Data.Contains("<valueString value=\"V\""));
-            var completeDstu2Data = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(p, Fhir.Rest.SummaryType.False);
+            var completeDstu2Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.False);
             Assert.IsTrue(completeDstu2Data.Contains("<name value=\"N\""));
             Assert.IsTrue(completeDstu2Data.Contains("<valueString value=\"V\""));
-            var summaryDstu2Data = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(p, Fhir.Rest.SummaryType.True);
+            var summaryDstu2Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.True);
             Assert.IsFalse(summaryDstu2Data.Contains("<name"));
             Assert.IsFalse(summaryDstu2Data.Contains("<value"));
         }

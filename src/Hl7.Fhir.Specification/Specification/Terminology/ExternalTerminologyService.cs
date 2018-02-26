@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Specification.Terminology
                         coding = new Coding(system, code, display);
 
                     // Serialize the code or coding to json for display purposes in the issue
-                    var jsonSer = new FhirJsonSerializer(Model.Version.DSTU2);
+                    var jsonSer = new FhirJsonSerializer();
                     var codeDisplay = codeableConcept != null ? jsonSer.SerializeToString(codeableConcept)
                                             : jsonSer.SerializeToString(coding);
 

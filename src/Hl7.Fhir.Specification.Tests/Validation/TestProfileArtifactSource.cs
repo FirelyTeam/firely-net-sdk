@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Validation
                 .OrType(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
                 .OrType(FHIRDefinedType.String));
 
-            Debug.WriteLine(new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(result));
+            Debug.WriteLine(new FhirXmlSerializer().SerializeToString(result));
             return result;
         }
 

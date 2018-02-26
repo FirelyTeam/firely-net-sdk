@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Validation
             if (value is Primitive)
                 return value.ToString();
             else
-                return new FhirJsonSerializer(Model.Version.DSTU2).SerializeToString(value);
+                return new FhirJsonSerializer().SerializeToString(value);
         }
 
         public static bool IsExactlyEqualTo(this IElementNavigator left, IElementNavigator right)
