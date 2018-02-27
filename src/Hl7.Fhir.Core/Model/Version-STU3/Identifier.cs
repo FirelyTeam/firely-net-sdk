@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model.STU3
             }
         }
 
-        public static implicit operator Identifier(Model.Identifier identifier)
+        public static implicit operator Identifier(CommonIdentifier identifier)
         {
             if (identifier == null) return null;
             return new Identifier(identifier);

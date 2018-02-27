@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model.DSTU2
             Display = resourceReference.Display;
         }
 
-        public static implicit operator ResourceReference(Model.ResourceReference resourceReference)
+        public static implicit operator ResourceReference(CommonResourceReference resourceReference)
         {
             if (resourceReference == null) return null;
             return new ResourceReference(resourceReference);

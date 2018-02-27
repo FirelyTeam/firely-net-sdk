@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hl7.Fhir.Introspection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,15 +44,17 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifier class common accross different versions
+    /// Identifier class common across different versions
     /// </summary>
-    public class Identifier : IIdentifier
+    /// <remarks>Not to be serialized / de-serialized, hence the NotMapped attribute</remarks>
+    [NotMapped]
+    public class CommonIdentifier : IIdentifier
     {
-        public Identifier()
+        public CommonIdentifier()
         {
         }
 
-        public Identifier(string system, string value)
+        public CommonIdentifier(string system, string value)
         {
             System = system;
             Value = value;

@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model.STU3
             }
         }
 
-        public static implicit operator ResourceReference(Model.ResourceReference resourceReference)
+        public static implicit operator ResourceReference(CommonResourceReference resourceReference)
         {
             if (resourceReference == null) return null;
             return new ResourceReference(resourceReference);

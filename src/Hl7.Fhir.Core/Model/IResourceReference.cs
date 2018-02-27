@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hl7.Fhir.Introspection;
+using System;
 
 namespace Hl7.Fhir.Model
 {
@@ -34,22 +35,24 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Common interface for different version-specific variants of ResourceReference
+    /// Resource reference class common across different versions
     /// </summary>
-    public class ResourceReference : IResourceReference
+    /// <remarks>Not to be serialized / de-serialized, hence the NotMapped attribute</remarks>
+    [NotMapped]
+    public class CommonResourceReference : IResourceReference
     {
-        public ResourceReference(string reference)
+        public CommonResourceReference(string reference)
         {
             Reference = reference;
         }
 
-        public ResourceReference(string reference, string display)
+        public CommonResourceReference(string reference, string display)
         {
             Reference = reference;
             Display = display;
         }
 
-        public ResourceReference()
+        public CommonResourceReference()
         {
 
         }
