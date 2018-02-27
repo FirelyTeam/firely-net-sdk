@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A reference to a code defined by a terminology system
     /// </summary>
-    [FhirType("Coding")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Coding")]
     [DataContract]
     public partial class Coding : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

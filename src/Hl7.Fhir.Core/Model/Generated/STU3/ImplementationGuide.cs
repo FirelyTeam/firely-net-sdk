@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A set of rules about how FHIR is used
     /// </summary>
-    [FhirType("ImplementationGuide", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ImplementationGuide", IsResource=true)]
     [DataContract]
     public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ImplementationGuide"; } }
     
     
-        [FhirType("DependencyComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DependencyComponent")]
         [DataContract]
         public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("PackageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PackageComponent")]
         [DataContract]
         public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ResourceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ResourceComponent")]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("GlobalComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "GlobalComponent")]
         [DataContract]
         public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("PageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PageComponent")]
         [DataContract]
         public partial class PageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

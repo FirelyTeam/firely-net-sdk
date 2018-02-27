@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Definition of an element in a resource or extension
     /// </summary>
-    [FhirType("ElementDefinition")]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ElementDefinition")]
     [DataContract]
     public partial class ElementDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "ElementDefinition"; } }
     
     
-        [FhirType("SlicingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SlicingComponent")]
         [DataContract]
         public partial class SlicingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("BaseComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "BaseComponent")]
         [DataContract]
         public partial class BaseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("TypeRefComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TypeRefComponent")]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ConstraintComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ConstraintComponent")]
         [DataContract]
         public partial class ConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("BindingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "BindingComponent")]
         [DataContract]
         public partial class BindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("MappingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MappingComponent")]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {

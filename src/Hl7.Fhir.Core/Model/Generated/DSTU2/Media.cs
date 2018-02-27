@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A photo, video, or audio recording acquired or used in healthcare. The actual content may be inline or provided by direct reference
     /// </summary>
-    [FhirType("Media", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Media", IsResource=true)]
     [DataContract]
     public partial class Media : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

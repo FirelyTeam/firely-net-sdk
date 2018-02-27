@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Request for a medication, substance or device
     /// </summary>
-    [FhirType("SupplyRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SupplyRequest", IsResource=true)]
     [DataContract]
     public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "SupplyRequest"; } }
     
     
-        [FhirType("WhenComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "WhenComponent")]
         [DataContract]
         public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

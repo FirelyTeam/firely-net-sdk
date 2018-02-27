@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Record of medication being taken by a patient
     /// </summary>
-    [FhirType("MedicationStatement", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MedicationStatement", IsResource=true)]
     [DataContract]
     public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "MedicationStatement"; } }
     
     
-        [FhirType("DosageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DosageComponent")]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

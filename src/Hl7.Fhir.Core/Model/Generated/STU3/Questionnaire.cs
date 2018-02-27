@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A structured set of questions
     /// </summary>
-    [FhirType("Questionnaire", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Questionnaire", IsResource=true)]
     [DataContract]
     public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Questionnaire"; } }
     
     
-        [FhirType("ItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ItemComponent")]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("EnableWhenComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "EnableWhenComponent")]
         [DataContract]
         public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("OptionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "OptionComponent")]
         [DataContract]
         public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

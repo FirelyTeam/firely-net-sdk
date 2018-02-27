@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Key information to flag to healthcare providers
     /// </summary>
-    [FhirType("Flag", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Flag", IsResource=true)]
     [DataContract]
     public partial class Flag : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

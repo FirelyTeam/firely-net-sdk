@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// An action that is being or was performed on a patient
     /// </summary>
-    [FhirType("Procedure", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Procedure", IsResource=true)]
     [DataContract]
     public partial class Procedure : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Procedure"; } }
     
     
-        [FhirType("PerformerComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PerformerComponent")]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("FocalDeviceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "FocalDeviceComponent")]
         [DataContract]
         public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -42,7 +42,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("markdown")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "markdown")]
     [DataContract]
     public partial class Markdown : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {

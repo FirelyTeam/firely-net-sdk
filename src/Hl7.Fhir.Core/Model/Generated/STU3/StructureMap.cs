@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A Map of relationships between 2 structures that can be used to transform data
     /// </summary>
-    [FhirType("StructureMap", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "StructureMap", IsResource=true)]
     [DataContract]
     public partial class StructureMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "StructureMap"; } }
     
     
-        [FhirType("StructureComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StructureComponent")]
         [DataContract]
         public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("GroupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("InputComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "InputComponent")]
         [DataContract]
         public partial class InputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("RuleComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RuleComponent")]
         [DataContract]
         public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SourceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SourceComponent")]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1414,7 +1414,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TargetComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TargetComponent")]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1769,7 +1769,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ParameterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterComponent")]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1858,7 +1858,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DependentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DependentComponent")]
         [DataContract]
         public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

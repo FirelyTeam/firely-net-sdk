@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Remittance resource
     /// </summary>
-    [FhirType("ExplanationOfBenefit", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ExplanationOfBenefit", IsResource=true)]
     [DataContract]
     public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

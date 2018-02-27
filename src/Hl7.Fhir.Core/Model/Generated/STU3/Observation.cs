@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Measurements and simple assertions
     /// </summary>
-    [FhirType("Observation", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Observation", IsResource=true)]
     [DataContract]
     public partial class Observation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Observation"; } }
     
     
-        [FhirType("ReferenceRangeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ReferenceRangeComponent")]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("RelatedComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatedComponent")]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ComponentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ComponentComponent")]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

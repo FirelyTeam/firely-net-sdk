@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Event record kept for security purposes
     /// </summary>
-    [FhirType("AuditEvent", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AuditEvent", IsResource=true)]
     [DataContract]
     public partial class AuditEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "AuditEvent"; } }
     
     
-        [FhirType("EventComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EventComponent")]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("NetworkComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "NetworkComponent")]
         [DataContract]
         public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SourceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SourceComponent")]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -973,7 +973,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ObjectComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ObjectComponent")]
         [DataContract]
         public partial class ObjectComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1284,7 +1284,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("DetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DetailComponent")]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

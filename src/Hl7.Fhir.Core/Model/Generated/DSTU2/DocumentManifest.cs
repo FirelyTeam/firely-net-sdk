@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A manifest that defines a set of documents
     /// </summary>
-    [FhirType("DocumentManifest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DocumentManifest", IsResource=true)]
     [DataContract]
     public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "DocumentManifest"; } }
     
     
-        [FhirType("ContentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContentComponent")]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("RelatedComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RelatedComponent")]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

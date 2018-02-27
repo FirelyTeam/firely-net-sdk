@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Describes the intended objective(s) for a patient, group or organization
     /// </summary>
-    [FhirType("Goal", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Goal", IsResource=true)]
     [DataContract]
     public partial class Goal : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Goal"; } }
     
     
-        [FhirType("TargetComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TargetComponent")]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

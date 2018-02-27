@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Contact information
     /// </summary>
-    [FhirType("ContactDetail")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ContactDetail")]
     [DataContract]
     public partial class ContactDetail : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

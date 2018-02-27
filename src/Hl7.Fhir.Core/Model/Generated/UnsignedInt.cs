@@ -42,7 +42,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("unsignedInt")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "unsignedInt")]
     [DataContract]
     public partial class UnsignedInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged
     {

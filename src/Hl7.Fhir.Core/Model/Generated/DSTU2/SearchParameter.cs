@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Search Parameter for a resource
     /// </summary>
-    [FhirType("SearchParameter", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SearchParameter", IsResource=true)]
     [DataContract]
     public partial class SearchParameter : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "SearchParameter"; } }
     
     
-        [FhirType("ContactComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

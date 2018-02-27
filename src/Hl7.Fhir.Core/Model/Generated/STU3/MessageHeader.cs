@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A resource that describes a message that is exchanged between systems
     /// </summary>
-    [FhirType("MessageHeader", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "MessageHeader", IsResource=true)]
     [DataContract]
     public partial class MessageHeader : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "MessageHeader"; } }
     
     
-        [FhirType("MessageDestinationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "MessageDestinationComponent")]
         [DataContract]
         public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("MessageSourceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "MessageSourceComponent")]
         [DataContract]
         public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ResponseComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ResponseComponent")]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

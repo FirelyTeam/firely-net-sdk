@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A request for referral or transfer of care
     /// </summary>
-    [FhirType("ReferralRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ReferralRequest", IsResource=true)]
     [DataContract]
     public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ReferralRequest"; } }
     
     
-        [FhirType("RequesterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RequesterComponent")]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

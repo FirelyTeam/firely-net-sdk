@@ -42,7 +42,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("uuid")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "uuid")]
     [DataContract]
     public partial class Uuid : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {

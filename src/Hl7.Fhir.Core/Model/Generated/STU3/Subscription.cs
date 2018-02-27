@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A server push subscription criteria
     /// </summary>
-    [FhirType("Subscription", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Subscription", IsResource=true)]
     [DataContract]
     public partial class Subscription : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Subscription"; } }
     
     
-        [FhirType("ChannelComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ChannelComponent")]
         [DataContract]
         public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A quality measure definition
     /// </summary>
-    [FhirType("Measure", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Measure", IsResource=true)]
     [DataContract]
     public partial class Measure : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Measure"; } }
     
     
-        [FhirType("GroupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("PopulationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PopulationComponent")]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("StratifierComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StratifierComponent")]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SupplementalDataComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SupplementalDataComponent")]
         [DataContract]
         public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

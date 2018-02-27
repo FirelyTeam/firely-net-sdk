@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection
     /// </summary>
-    [FhirType("AppointmentResponse", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "AppointmentResponse", IsResource=true)]
     [DataContract]
     public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

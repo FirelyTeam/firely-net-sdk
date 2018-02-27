@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A map from one set of concepts to one or more other concepts
     /// </summary>
-    [FhirType("ConceptMap", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ConceptMap", IsResource=true)]
     [DataContract]
     public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "ConceptMap"; } }
     
     
-        [FhirType("ContactComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SourceElementComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SourceElementComponent")]
         [DataContract]
         public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("TargetElementComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TargetElementComponent")]
         [DataContract]
         public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("OtherElementComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OtherElementComponent")]
         [DataContract]
         public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

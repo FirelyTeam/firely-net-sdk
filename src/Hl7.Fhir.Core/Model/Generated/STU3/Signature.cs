@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A digital Signature - XML DigSig, JWT, Graphical image of signature, etc.
     /// </summary>
-    [FhirType("Signature")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Signature")]
     [DataContract]
     public partial class Signature : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

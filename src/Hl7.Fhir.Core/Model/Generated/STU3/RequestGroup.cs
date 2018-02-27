@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A group of related requests
     /// </summary>
-    [FhirType("RequestGroup", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "RequestGroup", IsResource=true)]
     [DataContract]
     public partial class RequestGroup : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "RequestGroup"; } }
     
     
-        [FhirType("ActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ActionComponent")]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ConditionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ConditionComponent")]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("RelatedActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatedActionComponent")]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

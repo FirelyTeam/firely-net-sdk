@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A set of codes drawn from one or more code systems
     /// </summary>
-    [FhirType("CodeSystem", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "CodeSystem", IsResource=true)]
     [DataContract]
     public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "CodeSystem"; } }
     
     
-        [FhirType("FilterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "FilterComponent")]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("PropertyComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PropertyComponent")]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ConceptDefinitionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ConceptDefinitionComponent")]
         [DataContract]
         public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DesignationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationComponent")]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ConceptPropertyComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ConceptPropertyComponent")]
         [DataContract]
         public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

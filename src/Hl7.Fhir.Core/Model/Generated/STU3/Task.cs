@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A task to be performed
     /// </summary>
-    [FhirType("Task", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Task", IsResource=true)]
     [DataContract]
     public partial class Task : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Task"; } }
     
     
-        [FhirType("RequesterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RequesterComponent")]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("RestrictionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RestrictionComponent")]
         [DataContract]
         public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ParameterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterComponent")]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("OutputComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "OutputComponent")]
         [DataContract]
         public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

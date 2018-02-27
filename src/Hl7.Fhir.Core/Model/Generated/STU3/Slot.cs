@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A slot of time on a schedule that may be available for booking appointments
     /// </summary>
-    [FhirType("Slot", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Slot", IsResource=true)]
     [DataContract]
     public partial class Slot : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

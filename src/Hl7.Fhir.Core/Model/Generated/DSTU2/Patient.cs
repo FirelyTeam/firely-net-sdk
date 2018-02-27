@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Information about an individual or animal receiving health care services
     /// </summary>
-    [FhirType("Patient", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Patient", IsResource=true)]
     [DataContract]
     public partial class Patient : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Patient"; } }
     
     
-        [FhirType("ContactComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("AnimalComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AnimalComponent")]
         [DataContract]
         public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("CommunicationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CommunicationComponent")]
         [DataContract]
         public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("LinkComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "LinkComponent")]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

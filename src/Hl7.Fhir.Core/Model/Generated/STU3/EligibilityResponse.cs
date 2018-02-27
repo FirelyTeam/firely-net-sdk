@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// EligibilityResponse resource
     /// </summary>
-    [FhirType("EligibilityResponse", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "EligibilityResponse", IsResource=true)]
     [DataContract]
     public partial class EligibilityResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "EligibilityResponse"; } }
     
     
-        [FhirType("InsuranceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "InsuranceComponent")]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("BenefitsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "BenefitsComponent")]
         [DataContract]
         public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("BenefitComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "BenefitComponent")]
         [DataContract]
         public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ErrorsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ErrorsComponent")]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

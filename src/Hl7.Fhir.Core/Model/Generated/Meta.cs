@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Metadata about a resource
     /// </summary>
-    [FhirType("Meta")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Meta")]
     [DataContract]
     public partial class Meta : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

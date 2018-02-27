@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Enrollment request
     /// </summary>
-    [FhirType("EnrollmentRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EnrollmentRequest", IsResource=true)]
     [DataContract]
     public partial class EnrollmentRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

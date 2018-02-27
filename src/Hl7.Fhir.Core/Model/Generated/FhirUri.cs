@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive Type uri
     /// </summary>
-    [FhirType("uri")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "uri")]
     [DataContract]
     public partial class FhirUri : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {

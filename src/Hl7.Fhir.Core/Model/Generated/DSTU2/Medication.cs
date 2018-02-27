@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Definition of a Medication
     /// </summary>
-    [FhirType("Medication", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Medication", IsResource=true)]
     [DataContract]
     public partial class Medication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Medication"; } }
     
     
-        [FhirType("ProductComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProductComponent")]
         [DataContract]
         public partial class ProductComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("IngredientComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "IngredientComponent")]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("BatchComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "BatchComponent")]
         [DataContract]
         public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("PackageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PackageComponent")]
         [DataContract]
         public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ContentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContentComponent")]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

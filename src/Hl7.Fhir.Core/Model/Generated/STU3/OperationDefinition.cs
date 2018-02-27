@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Definition of an operation or a named query
     /// </summary>
-    [FhirType("OperationDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "OperationDefinition", IsResource=true)]
     [DataContract]
     public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "OperationDefinition"; } }
     
     
-        [FhirType("ParameterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterComponent")]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("BindingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "BindingComponent")]
         [DataContract]
         public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("OverloadComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "OverloadComponent")]
         [DataContract]
         public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

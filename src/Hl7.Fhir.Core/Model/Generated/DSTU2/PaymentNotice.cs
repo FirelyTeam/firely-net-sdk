@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// PaymentNotice request
     /// </summary>
-    [FhirType("PaymentNotice", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PaymentNotice", IsResource=true)]
     [DataContract]
     public partial class PaymentNotice : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

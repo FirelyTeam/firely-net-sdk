@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human-readable formatted text, including images
     /// </summary>
-    [FhirType("Narrative")]
+    [FhirType(Version.All, "Narrative")]
     [DataContract]
     public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

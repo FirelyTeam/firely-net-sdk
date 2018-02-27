@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Allergy or Intolerance (generally: Risk Of Adverse reaction to a substance)
     /// </summary>
-    [FhirType("AllergyIntolerance", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AllergyIntolerance", IsResource=true)]
     [DataContract]
     public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "AllergyIntolerance"; } }
     
     
-        [FhirType("ReactionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ReactionComponent")]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

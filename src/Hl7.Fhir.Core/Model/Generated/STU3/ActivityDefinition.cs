@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// The definition of a specific activity to be taken, independent of any particular patient or context
     /// </summary>
-    [FhirType("ActivityDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ActivityDefinition", IsResource=true)]
     [DataContract]
     public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ActivityDefinition"; } }
     
     
-        [FhirType("ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DynamicValueComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DynamicValueComponent")]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

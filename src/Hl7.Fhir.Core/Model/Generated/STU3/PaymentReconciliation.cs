@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// PaymentReconciliation resource
     /// </summary>
-    [FhirType("PaymentReconciliation", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "PaymentReconciliation", IsResource=true)]
     [DataContract]
     public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "PaymentReconciliation"; } }
     
     
-        [FhirType("DetailsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DetailsComponent")]
         [DataContract]
         public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("NotesComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "NotesComponent")]
         [DataContract]
         public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

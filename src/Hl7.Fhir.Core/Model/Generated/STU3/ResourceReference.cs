@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A reference from one resource to another
     /// </summary>
-    [FhirType("Reference")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Reference")]
     [DataContract]
     public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

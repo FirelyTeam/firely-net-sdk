@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Results of a measure evaluation
     /// </summary>
-    [FhirType("MeasureReport", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "MeasureReport", IsResource=true)]
     [DataContract]
     public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "MeasureReport"; } }
     
     
-        [FhirType("GroupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("PopulationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PopulationComponent")]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("StratifierComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StratifierComponent")]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("StratifierGroupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StratifierGroupComponent")]
         [DataContract]
         public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("StratifierGroupPopulationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StratifierGroupPopulationComponent")]
         [DataContract]
         public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A series of measurements taken by a device
     /// </summary>
-    [FhirType("SampledData")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "SampledData")]
     [DataContract]
     public partial class SampledData : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

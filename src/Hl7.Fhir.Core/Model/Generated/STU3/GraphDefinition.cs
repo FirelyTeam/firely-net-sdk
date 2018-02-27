@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Definition of an graph of resources
     /// </summary>
-    [FhirType("GraphDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "GraphDefinition", IsResource=true)]
     [DataContract]
     public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "GraphDefinition"; } }
     
     
-        [FhirType("LinkComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "LinkComponent")]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TargetComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TargetComponent")]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("CompartmentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "CompartmentComponent")]
         [DataContract]
         public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

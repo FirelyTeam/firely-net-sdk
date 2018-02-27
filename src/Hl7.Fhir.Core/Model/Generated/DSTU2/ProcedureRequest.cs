@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A request for a procedure to be performed
     /// </summary>
-    [FhirType("ProcedureRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProcedureRequest", IsResource=true)]
     [DataContract]
     public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

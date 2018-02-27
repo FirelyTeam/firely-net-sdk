@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Request for a medication, substance or device
     /// </summary>
-    [FhirType("SupplyRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "SupplyRequest", IsResource=true)]
     [DataContract]
     public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "SupplyRequest"; } }
     
     
-        [FhirType("OrderedItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "OrderedItemComponent")]
         [DataContract]
         public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("RequesterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RequesterComponent")]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

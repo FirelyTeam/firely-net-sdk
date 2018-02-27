@@ -42,7 +42,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model.DSTU2
 {
-    [FhirType("DeviceUseStatement", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DeviceUseStatement", IsResource=true)]
     [DataContract]
     public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

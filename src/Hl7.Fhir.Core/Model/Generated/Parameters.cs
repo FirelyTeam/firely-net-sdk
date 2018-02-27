@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Operation Request or Response
     /// </summary>
-    [FhirType("Parameters", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Parameters", IsResource=true)]
     [DataContract]
     public partial class Parameters : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Parameters"; } }
     
     
-        [FhirType("ParameterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "ParameterComponent")]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

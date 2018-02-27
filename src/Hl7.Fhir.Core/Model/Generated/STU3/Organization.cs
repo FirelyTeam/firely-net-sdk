@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A grouping of people or organizations with a common purpose
     /// </summary>
-    [FhirType("Organization", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Organization", IsResource=true)]
     [DataContract]
     public partial class Organization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Organization"; } }
     
     
-        [FhirType("ContactComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

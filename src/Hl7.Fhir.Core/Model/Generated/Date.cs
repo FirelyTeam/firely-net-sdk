@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive Type date
     /// </summary>
-    [FhirType("date")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "date")]
     [DataContract]
     public partial class Date : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {

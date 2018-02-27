@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Definition of a parameter to a module
     /// </summary>
-    [FhirType("ParameterDefinition")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterDefinition")]
     [DataContract]
     public partial class ParameterDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

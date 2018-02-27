@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text node with attribution
     /// </summary>
-    [FhirType("Annotation")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Annotation")]
     [DataContract]
     public partial class Annotation : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

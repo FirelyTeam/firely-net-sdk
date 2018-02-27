@@ -42,7 +42,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("oid")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "oid")]
     [DataContract]
     public partial class Oid : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {

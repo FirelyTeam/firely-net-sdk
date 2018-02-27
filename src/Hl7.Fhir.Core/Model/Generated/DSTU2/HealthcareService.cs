@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// The details of a healthcare service available at a location
     /// </summary>
-    [FhirType("HealthcareService", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "HealthcareService", IsResource=true)]
     [DataContract]
     public partial class HealthcareService : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "HealthcareService"; } }
     
     
-        [FhirType("ServiceTypeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ServiceTypeComponent")]
         [DataContract]
         public partial class ServiceTypeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("AvailableTimeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AvailableTimeComponent")]
         [DataContract]
         public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("NotAvailableComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "NotAvailableComponent")]
         [DataContract]
         public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

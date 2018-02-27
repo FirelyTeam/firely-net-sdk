@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A Diagnostic report - a combination of request information, atomic results, images, interpretation, as well as formatted reports
     /// </summary>
-    [FhirType("DiagnosticReport", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DiagnosticReport", IsResource=true)]
     [DataContract]
     public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "DiagnosticReport"; } }
     
     
-        [FhirType("ImageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ImageComponent")]
         [DataContract]
         public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

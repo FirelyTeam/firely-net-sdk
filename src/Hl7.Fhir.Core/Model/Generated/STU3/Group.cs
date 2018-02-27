@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Group of multiple entities
     /// </summary>
-    [FhirType("Group", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Group", IsResource=true)]
     [DataContract]
     public partial class Group : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Group"; } }
     
     
-        [FhirType("CharacteristicComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "CharacteristicComponent")]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("MemberComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "MemberComponent")]
         [DataContract]
         public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

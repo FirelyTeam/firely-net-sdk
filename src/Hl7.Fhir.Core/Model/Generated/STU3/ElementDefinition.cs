@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Definition of an element in a resource or extension
     /// </summary>
-    [FhirType("ElementDefinition")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ElementDefinition")]
     [DataContract]
     public partial class ElementDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ElementDefinition"; } }
     
     
-        [FhirType("SlicingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SlicingComponent")]
         [DataContract]
         public partial class SlicingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DiscriminatorComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DiscriminatorComponent")]
         [DataContract]
         public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("BaseComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "BaseComponent")]
         [DataContract]
         public partial class BaseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TypeRefComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TypeRefComponent")]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ExampleComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ExampleComponent")]
         [DataContract]
         public partial class ExampleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ConstraintComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ConstraintComponent")]
         [DataContract]
         public partial class ConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1313,7 +1313,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ElementDefinitionBindingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ElementDefinitionBindingComponent")]
         [DataContract]
         public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1478,7 +1478,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("MappingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "MappingComponent")]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {

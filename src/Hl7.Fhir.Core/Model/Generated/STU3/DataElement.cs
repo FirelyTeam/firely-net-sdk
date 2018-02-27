@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Resource data element
     /// </summary>
-    [FhirType("DataElement", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "DataElement", IsResource=true)]
     [DataContract]
     public partial class DataElement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "DataElement"; } }
     
     
-        [FhirType("MappingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "MappingComponent")]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

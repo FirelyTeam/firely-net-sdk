@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Set of values bounded by low and high
     /// </summary>
-    [FhirType("Range")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Range")]
     [DataContract]
     public partial class Range : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

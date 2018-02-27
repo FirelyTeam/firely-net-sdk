@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Record of use of a device
     /// </summary>
-    [FhirType("DeviceUseStatement", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "DeviceUseStatement", IsResource=true)]
     [DataContract]
     public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Ordering of medication for patient or group
     /// </summary>
-    [FhirType("MedicationRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "MedicationRequest", IsResource=true)]
     [DataContract]
     public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "MedicationRequest"; } }
     
     
-        [FhirType("RequesterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RequesterComponent")]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DispenseRequestComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DispenseRequestComponent")]
         [DataContract]
         public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SubstitutionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SubstitutionComponent")]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

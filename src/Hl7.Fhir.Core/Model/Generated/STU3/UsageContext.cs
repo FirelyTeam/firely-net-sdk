@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Describes the context of use for a conformance or knowledge resource
     /// </summary>
-    [FhirType("UsageContext")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "UsageContext")]
     [DataContract]
     public partial class UsageContext : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

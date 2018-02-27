@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Immunization event information
     /// </summary>
-    [FhirType("Immunization", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Immunization", IsResource=true)]
     [DataContract]
     public partial class Immunization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Immunization"; } }
     
     
-        [FhirType("PractitionerComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PractitionerComponent")]
         [DataContract]
         public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ExplanationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ExplanationComponent")]
         [DataContract]
         public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ReactionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ReactionComponent")]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("VaccinationProtocolComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "VaccinationProtocolComponent")]
         [DataContract]
         public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

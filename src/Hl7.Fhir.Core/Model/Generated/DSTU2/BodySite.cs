@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Specific and identified anatomical location
     /// </summary>
-    [FhirType("BodySite", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "BodySite", IsResource=true)]
     [DataContract]
     public partial class BodySite : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

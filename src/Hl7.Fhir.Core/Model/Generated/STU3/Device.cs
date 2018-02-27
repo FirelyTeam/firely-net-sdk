@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Item used in healthcare
     /// </summary>
-    [FhirType("Device", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Device", IsResource=true)]
     [DataContract]
     public partial class Device : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Device"; } }
     
     
-        [FhirType("UdiComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "UdiComponent")]
         [DataContract]
         public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

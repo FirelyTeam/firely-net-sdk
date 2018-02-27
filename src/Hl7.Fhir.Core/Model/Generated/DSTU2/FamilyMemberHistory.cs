@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Information about patient's relatives, relevant for patient
     /// </summary>
-    [FhirType("FamilyMemberHistory", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "FamilyMemberHistory", IsResource=true)]
     [DataContract]
     public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "FamilyMemberHistory"; } }
     
     
-        [FhirType("ConditionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ConditionComponent")]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

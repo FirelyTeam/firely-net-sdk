@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Defines an expected trigger for a module
     /// </summary>
-    [FhirType("TriggerDefinition")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "TriggerDefinition")]
     [DataContract]
     public partial class TriggerDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

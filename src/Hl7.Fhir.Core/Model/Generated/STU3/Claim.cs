@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Claim, Pre-determination or Pre-authorization
     /// </summary>
-    [FhirType("Claim", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Claim", IsResource=true)]
     [DataContract]
     public partial class Claim : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Claim"; } }
     
     
-        [FhirType("RelatedClaimComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatedClaimComponent")]
         [DataContract]
         public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("PayeeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PayeeComponent")]
         [DataContract]
         public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("CareTeamComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "CareTeamComponent")]
         [DataContract]
         public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SpecialConditionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SpecialConditionComponent")]
         [DataContract]
         public partial class SpecialConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DiagnosisComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DiagnosisComponent")]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ProcedureComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ProcedureComponent")]
         [DataContract]
         public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1033,7 +1033,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("InsuranceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "InsuranceComponent")]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1293,7 +1293,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("AccidentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "AccidentComponent")]
         [DataContract]
         public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1441,7 +1441,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ItemComponent")]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2020,7 +2020,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DetailComponent")]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2349,7 +2349,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SubDetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SubDetailComponent")]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

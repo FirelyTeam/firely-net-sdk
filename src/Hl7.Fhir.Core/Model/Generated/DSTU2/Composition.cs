@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A set of resources composed into a single coherent clinical statement with clinical attestation
     /// </summary>
-    [FhirType("Composition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Composition", IsResource=true)]
     [DataContract]
     public partial class Composition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Composition"; } }
     
     
-        [FhirType("AttesterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AttesterComponent")]
         [DataContract]
         public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("EventComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EventComponent")]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SectionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SectionComponent")]
         [DataContract]
         public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

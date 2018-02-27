@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Resource for non-supported content
     /// </summary>
-    [FhirType("Basic", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Basic", IsResource=true)]
     [DataContract]
     public partial class Basic : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

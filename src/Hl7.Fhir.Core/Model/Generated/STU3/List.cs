@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Information summarized from a list of other resources
     /// </summary>
-    [FhirType("List", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "List", IsResource=true)]
     [DataContract]
     public partial class List : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "List"; } }
     
     
-        [FhirType("EntryComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "EntryComponent")]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

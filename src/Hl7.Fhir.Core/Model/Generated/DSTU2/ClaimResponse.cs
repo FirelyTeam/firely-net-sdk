@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Remittance resource
     /// </summary>
-    [FhirType("ClaimResponse", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ClaimResponse", IsResource=true)]
     [DataContract]
     public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "ClaimResponse"; } }
     
     
-        [FhirType("ItemsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ItemsComponent")]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ItemAdjudicationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ItemAdjudicationComponent")]
         [DataContract]
         public partial class ItemAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ItemDetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ItemDetailComponent")]
         [DataContract]
         public partial class ItemDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("DetailAdjudicationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DetailAdjudicationComponent")]
         [DataContract]
         public partial class DetailAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SubDetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SubDetailComponent")]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SubdetailAdjudicationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SubdetailAdjudicationComponent")]
         [DataContract]
         public partial class SubdetailAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -950,7 +950,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("AddedItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AddedItemComponent")]
         [DataContract]
         public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("AddedItemAdjudicationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AddedItemAdjudicationComponent")]
         [DataContract]
         public partial class AddedItemAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1320,7 +1320,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("AddedItemsDetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AddedItemsDetailComponent")]
         [DataContract]
         public partial class AddedItemsDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1447,7 +1447,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("AddedItemDetailAdjudicationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AddedItemDetailAdjudicationComponent")]
         [DataContract]
         public partial class AddedItemDetailAdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1592,7 +1592,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ErrorsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ErrorsComponent")]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1794,7 +1794,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("NotesComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "NotesComponent")]
         [DataContract]
         public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1957,7 +1957,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("CoverageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CoverageComponent")]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

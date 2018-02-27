@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Measurement, calculation or setting capability of a medical device
     /// </summary>
-    [FhirType("DeviceMetric", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "DeviceMetric", IsResource=true)]
     [DataContract]
     public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "DeviceMetric"; } }
     
     
-        [FhirType("CalibrationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "CalibrationComponent")]
         [DataContract]
         public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive Type instant
     /// </summary>
-    [FhirType("instant")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "instant")]
     [DataContract]
     public partial class Instant : Hl7.Fhir.Model.Primitive<DateTimeOffset?>, System.ComponentModel.INotifyPropertyChanged
     {

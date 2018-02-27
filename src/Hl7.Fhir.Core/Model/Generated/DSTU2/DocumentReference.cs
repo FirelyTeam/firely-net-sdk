@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A reference to a document
     /// </summary>
-    [FhirType("DocumentReference", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DocumentReference", IsResource=true)]
     [DataContract]
     public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "DocumentReference"; } }
     
     
-        [FhirType("RelatesToComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RelatesToComponent")]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ContentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContentComponent")]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ContextComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContextComponent")]
         [DataContract]
         public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("RelatedComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RelatedComponent")]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

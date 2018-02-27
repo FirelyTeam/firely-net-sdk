@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Information about a biological sequence
     /// </summary>
-    [FhirType("Sequence", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Sequence", IsResource=true)]
     [DataContract]
     public partial class Sequence : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Sequence"; } }
     
     
-        [FhirType("ReferenceSeqComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ReferenceSeqComponent")]
         [DataContract]
         public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("VariantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "VariantComponent")]
         [DataContract]
         public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("QualityComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "QualityComponent")]
         [DataContract]
         public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1195,7 +1195,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("RepositoryComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RepositoryComponent")]
         [DataContract]
         public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

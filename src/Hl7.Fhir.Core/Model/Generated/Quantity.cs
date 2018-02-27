@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A measured or measurable amount
     /// </summary>
-    [FhirType("Quantity")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Quantity")]
     [DataContract]
     public partial class Quantity : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

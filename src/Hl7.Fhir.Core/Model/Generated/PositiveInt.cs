@@ -42,7 +42,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("positiveInt")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "positiveInt")]
     [DataContract]
     public partial class PositiveInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged
     {

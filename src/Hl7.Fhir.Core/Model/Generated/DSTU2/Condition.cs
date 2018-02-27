@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Detailed information about conditions, problems or diagnoses
     /// </summary>
-    [FhirType("Condition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Condition", IsResource=true)]
     [DataContract]
     public partial class Condition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Condition"; } }
     
     
-        [FhirType("StageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "StageComponent")]
         [DataContract]
         public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("EvidenceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EvidenceComponent")]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

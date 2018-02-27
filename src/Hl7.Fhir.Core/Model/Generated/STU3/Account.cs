@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Tracks balance, charges, for patient or cost center
     /// </summary>
-    [FhirType("Account", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Account", IsResource=true)]
     [DataContract]
     public partial class Account : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Account"; } }
     
     
-        [FhirType("CoverageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "CoverageComponent")]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("GuarantorComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "GuarantorComponent")]
         [DataContract]
         public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

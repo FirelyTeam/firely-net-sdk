@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A set of codes drawn from one or more code systems
     /// </summary>
-    [FhirType("ValueSet", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ValueSet", IsResource=true)]
     [DataContract]
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "ValueSet"; } }
     
     
-        [FhirType("ContactComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("CodeSystemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CodeSystemComponent")]
         [DataContract]
         public partial class CodeSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ConceptDefinitionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ConceptDefinitionComponent")]
         [DataContract]
         public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("DesignationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DesignationComponent")]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -799,7 +799,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ComposeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ComposeComponent")]
         [DataContract]
         public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ConceptSetComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ConceptSetComponent")]
         [DataContract]
         public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ConceptReferenceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ConceptReferenceComponent")]
         [DataContract]
         public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1290,7 +1290,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("FilterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "FilterComponent")]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1472,7 +1472,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ExpansionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ExpansionComponent")]
         [DataContract]
         public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1728,7 +1728,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ParameterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ParameterComponent")]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1854,7 +1854,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ContainsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContainsComponent")]
         [DataContract]
         public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

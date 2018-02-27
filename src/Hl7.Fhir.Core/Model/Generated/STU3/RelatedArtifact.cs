@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Related artifacts for a knowledge resource
     /// </summary>
-    [FhirType("RelatedArtifact")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatedArtifact")]
     [DataContract]
     public partial class RelatedArtifact : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Compartment Definition for a resource
     /// </summary>
-    [FhirType("CompartmentDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "CompartmentDefinition", IsResource=true)]
     [DataContract]
     public partial class CompartmentDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "CompartmentDefinition"; } }
     
     
-        [FhirType("ResourceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ResourceComponent")]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Diet, formula or nutritional supplement request
     /// </summary>
-    [FhirType("NutritionOrder", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "NutritionOrder", IsResource=true)]
     [DataContract]
     public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "NutritionOrder"; } }
     
     
-        [FhirType("OralDietComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "OralDietComponent")]
         [DataContract]
         public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("NutrientComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "NutrientComponent")]
         [DataContract]
         public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TextureComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TextureComponent")]
         [DataContract]
         public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SupplementComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SupplementComponent")]
         [DataContract]
         public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("EnteralFormulaComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "EnteralFormulaComponent")]
         [DataContract]
         public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("AdministrationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "AdministrationComponent")]
         [DataContract]
         public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

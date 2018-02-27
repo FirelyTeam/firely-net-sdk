@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Item containing charge code(s) associated with the provision of healthcare provider products
     /// </summary>
-    [FhirType("ChargeItem", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ChargeItem", IsResource=true)]
     [DataContract]
     public partial class ChargeItem : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ChargeItem"; } }
     
     
-        [FhirType("ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

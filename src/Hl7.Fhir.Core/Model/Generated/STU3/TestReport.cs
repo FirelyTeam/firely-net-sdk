@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Describes the results of a TestScript execution
     /// </summary>
-    [FhirType("TestReport", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "TestReport", IsResource=true)]
     [DataContract]
     public partial class TestReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "TestReport"; } }
     
     
-        [FhirType("ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SetupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SetupComponent")]
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SetupActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SetupActionComponent")]
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("OperationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "OperationComponent")]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("AssertComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "AssertComponent")]
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TestComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TestComponent")]
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -948,7 +948,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TestActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TestActionComponent")]
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1052,7 +1052,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TeardownComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TeardownComponent")]
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TeardownActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TeardownActionComponent")]
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

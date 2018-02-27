@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A postal address
     /// </summary>
-    [FhirType("Address")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Address")]
     [DataContract]
     public partial class Address : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

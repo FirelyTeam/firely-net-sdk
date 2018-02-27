@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A response to an order
     /// </summary>
-    [FhirType("OrderResponse", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OrderResponse", IsResource=true)]
     [DataContract]
     public partial class OrderResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

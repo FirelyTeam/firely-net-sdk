@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Represents a library of quality improvement components
     /// </summary>
-    [FhirType("Library", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Library", IsResource=true)]
     [DataContract]
     public partial class Library : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

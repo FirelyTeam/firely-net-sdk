@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Process request
     /// </summary>
-    [FhirType("ProcessRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProcessRequest", IsResource=true)]
     [DataContract]
     public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "ProcessRequest"; } }
     
     
-        [FhirType("ItemsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ItemsComponent")]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// The technical details of an endpoint that can be used for electronic services
     /// </summary>
-    [FhirType("Endpoint", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Endpoint", IsResource=true)]
     [DataContract]
     public partial class Endpoint : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

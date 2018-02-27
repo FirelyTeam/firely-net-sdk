@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// An person that is related to a patient, but who is not a direct target of care
     /// </summary>
-    [FhirType("RelatedPerson", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RelatedPerson", IsResource=true)]
     [DataContract]
     public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A request for information to be sent to a receiver
     /// </summary>
-    [FhirType("CommunicationRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CommunicationRequest", IsResource=true)]
     [DataContract]
     public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "CommunicationRequest"; } }
     
     
-        [FhirType("PayloadComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PayloadComponent")]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

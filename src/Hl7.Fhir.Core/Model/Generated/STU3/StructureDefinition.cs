@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Structural Definition
     /// </summary>
-    [FhirType("StructureDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "StructureDefinition", IsResource=true)]
     [DataContract]
     public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "StructureDefinition"; } }
     
     
-        [FhirType("MappingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "MappingComponent")]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SnapshotComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SnapshotComponent")]
         [DataContract]
         public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DifferentialComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DifferentialComponent")]
         [DataContract]
         public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive Type boolean
     /// </summary>
-    [FhirType("boolean")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "boolean")]
     [DataContract]
     public partial class FhirBoolean : Hl7.Fhir.Model.Primitive<bool?>, System.ComponentModel.INotifyPropertyChanged
     {

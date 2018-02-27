@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A set of images produced in single study (one or more series of references images)
     /// </summary>
-    [FhirType("ImagingStudy", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ImagingStudy", IsResource=true)]
     [DataContract]
     public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ImagingStudy"; } }
     
     
-        [FhirType("SeriesComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SeriesComponent")]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("InstanceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "InstanceComponent")]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

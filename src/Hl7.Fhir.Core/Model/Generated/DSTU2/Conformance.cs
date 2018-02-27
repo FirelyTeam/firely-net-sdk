@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A conformance statement
     /// </summary>
-    [FhirType("Conformance", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Conformance", IsResource=true)]
     [DataContract]
     public partial class Conformance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Conformance"; } }
     
     
-        [FhirType("ContactComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SoftwareComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SoftwareComponent")]
         [DataContract]
         public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ImplementationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ImplementationComponent")]
         [DataContract]
         public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("RestComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RestComponent")]
         [DataContract]
         public partial class RestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SecurityComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SecurityComponent")]
         [DataContract]
         public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("CertificateComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CertificateComponent")]
         [DataContract]
         public partial class CertificateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ResourceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ResourceComponent")]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1608,7 +1608,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ResourceInteractionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ResourceInteractionComponent")]
         [DataContract]
         public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1751,7 +1751,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SearchParamComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SearchParamComponent")]
         [DataContract]
         public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2083,7 +2083,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SystemInteractionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SystemInteractionComponent")]
         [DataContract]
         public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2226,7 +2226,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("OperationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OperationComponent")]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2353,7 +2353,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("MessagingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MessagingComponent")]
         [DataContract]
         public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2533,7 +2533,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("EndpointComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EndpointComponent")]
         [DataContract]
         public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2658,7 +2658,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("EventComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EventComponent")]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2937,7 +2937,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("DocumentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DocumentComponent")]
         [DataContract]
         public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Request to perform some action on or in regards to an existing resource
     /// </summary>
-    [FhirType("ProcessRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ProcessRequest", IsResource=true)]
     [DataContract]
     public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ProcessRequest"; } }
     
     
-        [FhirType("ItemsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ItemsComponent")]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

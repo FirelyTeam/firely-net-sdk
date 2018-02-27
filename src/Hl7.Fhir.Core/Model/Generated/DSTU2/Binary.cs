@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Pure binary content defined by some other format than FHIR
     /// </summary>
-    [FhirType("Binary", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Binary", IsResource=true)]
     [DataContract]
     public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Roles/organizations the practitioner is associated with
     /// </summary>
-    [FhirType("PractitionerRole", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "PractitionerRole", IsResource=true)]
     [DataContract]
     public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "PractitionerRole"; } }
     
     
-        [FhirType("AvailableTimeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "AvailableTimeComponent")]
         [DataContract]
         public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("NotAvailableComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "NotAvailableComponent")]
         [DataContract]
         public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

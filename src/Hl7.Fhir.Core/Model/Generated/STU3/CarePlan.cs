@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Healthcare plan for patient or group
     /// </summary>
-    [FhirType("CarePlan", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "CarePlan", IsResource=true)]
     [DataContract]
     public partial class CarePlan : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "CarePlan"; } }
     
     
-        [FhirType("ActivityComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ActivityComponent")]
         [DataContract]
         public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DetailComponent")]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Event record kept for security purposes
     /// </summary>
-    [FhirType("AuditEvent", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "AuditEvent", IsResource=true)]
     [DataContract]
     public partial class AuditEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "AuditEvent"; } }
     
     
-        [FhirType("AgentComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "AgentComponent")]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("NetworkComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "NetworkComponent")]
         [DataContract]
         public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SourceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SourceComponent")]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("EntityComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "EntityComponent")]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DetailComponent")]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

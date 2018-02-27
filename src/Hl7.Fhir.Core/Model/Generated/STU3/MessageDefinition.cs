@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A resource that defines a type of message that can be exchanged between systems
     /// </summary>
-    [FhirType("MessageDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "MessageDefinition", IsResource=true)]
     [DataContract]
     public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "MessageDefinition"; } }
     
     
-        [FhirType("FocusComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "FocusComponent")]
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("AllowedResponseComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "AllowedResponseComponent")]
         [DataContract]
         public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

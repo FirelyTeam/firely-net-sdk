@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Claim, Pre-determination or Pre-authorization
     /// </summary>
-    [FhirType("Claim", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Claim", IsResource=true)]
     [DataContract]
     public partial class Claim : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Claim"; } }
     
     
-        [FhirType("PayeeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PayeeComponent")]
         [DataContract]
         public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("DiagnosisComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DiagnosisComponent")]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("CoverageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CoverageComponent")]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ItemsComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ItemsComponent")]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1126,7 +1126,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("DetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DetailComponent")]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1445,7 +1445,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SubDetailComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SubDetailComponent")]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1744,7 +1744,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ProsthesisComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProsthesisComponent")]
         [DataContract]
         public partial class ProsthesisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1907,7 +1907,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("MissingTeethComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MissingTeethComponent")]
         [DataContract]
         public partial class MissingTeethComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

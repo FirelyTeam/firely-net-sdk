@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A request for a patient to use or be given a medical device
     /// </summary>
-    [FhirType("DeviceUseRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DeviceUseRequest", IsResource=true)]
     [DataContract]
     public partial class DeviceUseRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

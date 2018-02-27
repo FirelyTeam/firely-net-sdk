@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Contract
     /// </summary>
-    [FhirType("Contract", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Contract", IsResource=true)]
     [DataContract]
     public partial class Contract : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Contract"; } }
     
     
-        [FhirType("ActorComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ActorComponent")]
         [DataContract]
         public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ValuedItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ValuedItemComponent")]
         [DataContract]
         public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SignatoryComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SignatoryComponent")]
         [DataContract]
         public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("TermComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TermComponent")]
         [DataContract]
         public partial class TermComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("TermActorComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TermActorComponent")]
         [DataContract]
         public partial class TermActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("TermValuedItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TermValuedItemComponent")]
         [DataContract]
         public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1289,7 +1289,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("FriendlyLanguageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "FriendlyLanguageComponent")]
         [DataContract]
         public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1378,7 +1378,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("LegalLanguageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "LegalLanguageComponent")]
         [DataContract]
         public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1467,7 +1467,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ComputableLanguageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ComputableLanguageComponent")]
         [DataContract]
         public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

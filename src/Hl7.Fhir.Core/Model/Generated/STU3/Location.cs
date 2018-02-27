@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Details and position information for a physical place
     /// </summary>
-    [FhirType("Location", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Location", IsResource=true)]
     [DataContract]
     public partial class Location : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Location"; } }
     
     
-        [FhirType("PositionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PositionComponent")]
         [DataContract]
         public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

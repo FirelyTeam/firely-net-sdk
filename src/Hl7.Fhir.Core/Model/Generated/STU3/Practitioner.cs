@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A person with a  formal responsibility in the provisioning of healthcare or related services
     /// </summary>
-    [FhirType("Practitioner", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Practitioner", IsResource=true)]
     [DataContract]
     public partial class Practitioner : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Practitioner"; } }
     
     
-        [FhirType("QualificationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "QualificationComponent")]
         [DataContract]
         public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Information about the success/failure of an action
     /// </summary>
-    [FhirType("OperationOutcome", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OperationOutcome", IsResource=true)]
     [DataContract]
     public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "OperationOutcome"; } }
     
     
-        [FhirType("IssueComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "IssueComponent")]
         [DataContract]
         public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

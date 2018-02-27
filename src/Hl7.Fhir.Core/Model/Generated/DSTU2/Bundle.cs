@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Contains a collection of resources
     /// </summary>
-    [FhirType("Bundle", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Bundle", IsResource=true)]
     [DataContract]
     public partial class Bundle : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Bundle"; } }
     
     
-        [FhirType("LinkComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "LinkComponent")]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("EntryComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EntryComponent")]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SearchComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SearchComponent")]
         [DataContract]
         public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("RequestComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RequestComponent")]
         [DataContract]
         public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ResponseComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ResponseComponent")]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A timing schedule that specifies an event that may occur multiple times
     /// </summary>
-    [FhirType("Timing")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Timing")]
     [DataContract]
     public partial class Timing : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Timing"; } }
     
     
-        [FhirType("RepeatComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RepeatComponent")]
         [DataContract]
         public partial class RepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {

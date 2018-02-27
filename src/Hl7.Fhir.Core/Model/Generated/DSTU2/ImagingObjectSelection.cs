@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Key Object Selection
     /// </summary>
-    [FhirType("ImagingObjectSelection", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ImagingObjectSelection", IsResource=true)]
     [DataContract]
     public partial class ImagingObjectSelection : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "ImagingObjectSelection"; } }
     
     
-        [FhirType("StudyComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "StudyComponent")]
         [DataContract]
         public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("SeriesComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SeriesComponent")]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("InstanceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "InstanceComponent")]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("FramesComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "FramesComponent")]
         [DataContract]
         public partial class FramesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

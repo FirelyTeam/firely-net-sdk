@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Planned participants in the coordination and delivery of care for a patient or group
     /// </summary>
-    [FhirType("CareTeam", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "CareTeam", IsResource=true)]
     [DataContract]
     public partial class CareTeam : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "CareTeam"; } }
     
     
-        [FhirType("ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

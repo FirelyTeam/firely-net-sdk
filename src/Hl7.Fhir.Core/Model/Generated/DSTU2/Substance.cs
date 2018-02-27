@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A homogeneous material with a definite composition
     /// </summary>
-    [FhirType("Substance", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Substance", IsResource=true)]
     [DataContract]
     public partial class Substance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Substance"; } }
     
     
-        [FhirType("InstanceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "InstanceComponent")]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("IngredientComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "IngredientComponent")]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

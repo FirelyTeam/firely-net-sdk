@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A map from one set of concepts to one or more other concepts
     /// </summary>
-    [FhirType("ConceptMap", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ConceptMap", IsResource=true)]
     [DataContract]
     public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ConceptMap"; } }
     
     
-        [FhirType("GroupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SourceElementComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SourceElementComponent")]
         [DataContract]
         public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TargetElementComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TargetElementComponent")]
         [DataContract]
         public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("OtherElementComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "OtherElementComponent")]
         [DataContract]
         public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("UnmappedComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "UnmappedComponent")]
         [DataContract]
         public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

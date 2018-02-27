@@ -83,10 +83,10 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType]
     public class Way : Resource { public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } }
     
-    [FhirType("Way", Profile="http://nu.nl/profile#street")]
+    [FhirType(Fhir.Model.Version.All, "Way", Profile="http://nu.nl/profile#street")]
     public class ProfiledWay : Resource { public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } }
 
-    [FhirType("Street", IsResource=true)]
+    [FhirType(Fhir.Model.Version.All, "Street", IsResource=true)]
     public class NewStreet { }
 
 
@@ -96,9 +96,9 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType]
     public class AnimalName { }
 
-    [FhirType("AnimalName")]
+    [FhirType(Fhir.Model.Version.All, "AnimalName")]
     public class NewAnimalName : AnimalName { }
 
-    [FhirType("Complex", Profile = "http://hl7.org/profiles/test")]
+    [FhirType(Fhir.Model.Version.All, "Complex", Profile = "http://hl7.org/profiles/test")]
     public class ComplexNumber { }
 }

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A description of decision support service functionality
     /// </summary>
-    [FhirType("ServiceDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ServiceDefinition", IsResource=true)]
     [DataContract]
     public partial class ServiceDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

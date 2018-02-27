@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Contributor information
     /// </summary>
-    [FhirType("Contributor")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Contributor")]
     [DataContract]
     public partial class Contributor : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

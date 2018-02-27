@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// The definition of a plan for a series of actions, independent of any specific patient or context
     /// </summary>
-    [FhirType("PlanDefinition", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "PlanDefinition", IsResource=true)]
     [DataContract]
     public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "PlanDefinition"; } }
     
     
-        [FhirType("GoalComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "GoalComponent")]
         [DataContract]
         public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("TargetComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "TargetComponent")]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ActionComponent")]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1103,7 +1103,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ConditionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ConditionComponent")]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1320,7 +1320,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("RelatedActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatedActionComponent")]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1484,7 +1484,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1608,7 +1608,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DynamicValueComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DynamicValueComponent")]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

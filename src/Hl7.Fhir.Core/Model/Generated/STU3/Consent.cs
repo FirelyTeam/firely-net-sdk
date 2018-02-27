@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A healthcare consumer's policy choices to permits or denies recipients or roles to perform actions for specific purposes and periods of time
     /// </summary>
-    [FhirType("Consent", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Consent", IsResource=true)]
     [DataContract]
     public partial class Consent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Consent"; } }
     
     
-        [FhirType("ActorComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ActorComponent")]
         [DataContract]
         public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("PolicyComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PolicyComponent")]
         [DataContract]
         public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DataComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DataComponent")]
         [DataContract]
         public partial class DataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ExceptComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ExceptComponent")]
         [DataContract]
         public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ExceptActorComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ExceptActorComponent")]
         [DataContract]
         public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ExceptDataComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ExceptDataComponent")]
         [DataContract]
         public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

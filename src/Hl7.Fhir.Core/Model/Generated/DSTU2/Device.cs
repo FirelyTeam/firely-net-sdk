@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// An instance of a manufactured te that is used in the provision of healthcare
     /// </summary>
-    [FhirType("Device", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Device", IsResource=true)]
     [DataContract]
     public partial class Device : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

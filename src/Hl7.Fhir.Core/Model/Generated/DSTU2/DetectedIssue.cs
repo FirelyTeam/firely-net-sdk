@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Clinical issue with action
     /// </summary>
-    [FhirType("DetectedIssue", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DetectedIssue", IsResource=true)]
     [DataContract]
     public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "DetectedIssue"; } }
     
     
-        [FhirType("MitigationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MitigationComponent")]
         [DataContract]
         public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

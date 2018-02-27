@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A structured set of questions
     /// </summary>
-    [FhirType("Questionnaire", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Questionnaire", IsResource=true)]
     [DataContract]
     public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Questionnaire"; } }
     
     
-        [FhirType("GroupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("QuestionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "QuestionComponent")]
         [DataContract]
         public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

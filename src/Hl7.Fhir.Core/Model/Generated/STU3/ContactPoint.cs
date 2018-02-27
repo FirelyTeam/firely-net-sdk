@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Details of a Technology mediated contact point (phone, fax, email, etc.)
     /// </summary>
-    [FhirType("ContactPoint")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ContactPoint")]
     [DataContract]
     public partial class ContactPoint : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_Url}}")]
-    [FhirType("Extension")]
+    [FhirType(Version.All, "Extension")]
     [DataContract]
     public partial class Extension : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

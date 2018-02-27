@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Sample for analysis
     /// </summary>
-    [FhirType("Specimen", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Specimen", IsResource=true)]
     [DataContract]
     public partial class Specimen : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Specimen"; } }
     
     
-        [FhirType("CollectionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "CollectionComponent")]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ProcessingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ProcessingComponent")]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ContainerComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ContainerComponent")]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

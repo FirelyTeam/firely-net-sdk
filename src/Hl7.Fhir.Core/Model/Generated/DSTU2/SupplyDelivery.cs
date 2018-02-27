@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Delivery of Supply
     /// </summary>
-    [FhirType("SupplyDelivery", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SupplyDelivery", IsResource=true)]
     [DataContract]
     public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

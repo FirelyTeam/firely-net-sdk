@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// An identifier intended for computation
     /// </summary>
-    [FhirType("Identifier")]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Identifier")]
     [DataContract]
     public partial class Identifier : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

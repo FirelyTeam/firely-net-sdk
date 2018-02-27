@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Investigation to increase healthcare-related patient-independent knowledge
     /// </summary>
-    [FhirType("ResearchStudy", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ResearchStudy", IsResource=true)]
     [DataContract]
     public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ResearchStudy"; } }
     
     
-        [FhirType("ArmComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ArmComponent")]
         [DataContract]
         public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

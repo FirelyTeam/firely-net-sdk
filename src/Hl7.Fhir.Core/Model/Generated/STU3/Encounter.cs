@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// An interaction during which services are provided to the patient
     /// </summary>
-    [FhirType("Encounter", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Encounter", IsResource=true)]
     [DataContract]
     public partial class Encounter : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "Encounter"; } }
     
     
-        [FhirType("StatusHistoryComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StatusHistoryComponent")]
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ClassHistoryComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ClassHistoryComponent")]
         [DataContract]
         public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DiagnosisComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DiagnosisComponent")]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("HospitalizationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "HospitalizationComponent")]
         [DataContract]
         public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("LocationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "LocationComponent")]
         [DataContract]
         public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

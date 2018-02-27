@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time range defined by start and end date/time
     /// </summary>
-    [FhirType("Period")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Period")]
     [DataContract]
     public partial class Period : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

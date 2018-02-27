@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Content in a format defined elsewhere
     /// </summary>
-    [FhirType("Attachment")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Attachment")]
     [DataContract]
     public partial class Attachment : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

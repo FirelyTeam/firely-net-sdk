@@ -722,6 +722,10 @@ public class ResourceDetails
 
     private IEnumerable<string> RenderAny()
     {
+        var version = Versions.Count == 1 ?
+            Versions[0].Version :
+            "All";
+        version = "Hl7.Fhir.Model.Version." + version;
         var isElement = BaseType == "Hl7.Fhir.Model.Element" || IsPrimitive;
         foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
         if (!AbstractType)
@@ -729,7 +733,7 @@ public class ResourceDetails
             var isResource = !isElement ?
                 ", IsResource=true" :
                 string.Empty;
-            yield return $"[FhirType(\"{ RawName }\"{ isResource })]";
+            yield return $"[FhirType({version}, \"{ RawName }\"{ isResource })]";
         }
         yield return $"[DataContract]";
 
@@ -792,7 +796,7 @@ public class ResourceDetails
         {
             yield return string.Empty;
             yield return string.Empty;
-            foreach (var line in component.Render()) yield return "    " + line;
+            foreach (var line in component.Render(version)) yield return "    " + line;
         }
 
         if (!IsPrimitive)
@@ -840,8 +844,12 @@ public class ResourceDetails
 
     private IEnumerable<string> RenderQuantity()
     {
+        var version = Versions.Count == 1 ?
+            Versions[0].Version :
+            "All";
+        version = "Hl7.Fhir.Model.Version." + version;
         foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
-        yield return $"[FhirType(\"Quantity\")]";
+        yield return $"[FhirType({version}, \"Quantity\")]";
         yield return $"public partial class { Name } : Quantity";
         yield return $"{{";
         yield return $"    [NotMapped]";
@@ -1334,9 +1342,9 @@ public class ComponentDetails
         };
     }
 
-    public IEnumerable<string> Render()
+    public IEnumerable<string> Render(string version)
     {
-        yield return $"[FhirType(\"{ Name }\")]";
+        yield return $"[FhirType({version}, \"{ Name }\")]";
         yield return $"[DataContract]";
         yield return $"public partial class { Name } : { BaseType }, System.ComponentModel.INotifyPropertyChanged";
         yield return $"{{";

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// EnrollmentResponse resource
     /// </summary>
-    [FhirType("EnrollmentResponse", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EnrollmentResponse", IsResource=true)]
     [DataContract]
     public partial class EnrollmentResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Record of medication being taken by a patient
     /// </summary>
-    [FhirType("MedicationStatement", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "MedicationStatement", IsResource=true)]
     [DataContract]
     public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

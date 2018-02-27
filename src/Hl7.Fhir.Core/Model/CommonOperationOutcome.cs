@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>Must be compatible with the OperationOutcome classes of the specific versions - e.g. serialzations of this class must be de-serializable in the 
     /// version-specific OperationOutcome classes</remarks>
-    [FhirType("OperationOutcome", IsResource=true)]
+    [FhirType(Version.All, "OperationOutcome", IsResource=true)]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{{ToString()}}")]
     public partial class CommonOperationOutcome : DomainResource, System.ComponentModel.INotifyPropertyChanged
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "OperationOutcome"; } }
     
     
-        [FhirType("IssueComponent")]
+        [FhirType(Version.All, "IssueComponent")]
         [DataContract]
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class IssueComponent : BackboneElement, System.ComponentModel.INotifyPropertyChanged

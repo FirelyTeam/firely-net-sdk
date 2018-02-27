@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
     }
 
-    [FhirType("Patient")]   // implicitly, this is a resource
+    [FhirType(Fhir.Model.Version.All, "Patient")]   // implicitly, this is a resource
     public class NewPatient : Patient { }
 
     public class TestCreate 

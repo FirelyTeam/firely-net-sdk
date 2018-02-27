@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Describes a required data item
     /// </summary>
-    [FhirType("DataRequirement")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "DataRequirement")]
     [DataContract]
     public partial class DataRequirement : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "DataRequirement"; } }
     
     
-        [FhirType("CodeFilterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "CodeFilterComponent")]
         [DataContract]
         public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DateFilterComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DateFilterComponent")]
         [DataContract]
         public partial class DateFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {

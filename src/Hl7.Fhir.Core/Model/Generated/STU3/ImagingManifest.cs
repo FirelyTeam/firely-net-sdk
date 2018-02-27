@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Key Object Selection
     /// </summary>
-    [FhirType("ImagingManifest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ImagingManifest", IsResource=true)]
     [DataContract]
     public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ImagingManifest"; } }
     
     
-        [FhirType("StudyComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StudyComponent")]
         [DataContract]
         public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("SeriesComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SeriesComponent")]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("InstanceComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "InstanceComponent")]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

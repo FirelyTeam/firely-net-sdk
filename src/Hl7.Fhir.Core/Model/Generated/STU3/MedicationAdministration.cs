@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Administration of medication to a patient
     /// </summary>
-    [FhirType("MedicationAdministration", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "MedicationAdministration", IsResource=true)]
     [DataContract]
     public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "MedicationAdministration"; } }
     
     
-        [FhirType("PerformerComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "PerformerComponent")]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DosageComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DosageComponent")]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

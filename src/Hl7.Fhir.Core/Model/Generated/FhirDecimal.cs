@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive Type decimal
     /// </summary>
-    [FhirType("decimal")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "decimal")]
     [DataContract]
     public partial class FhirDecimal : Hl7.Fhir.Model.Primitive<decimal?>, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A request for referral or transfer of care
     /// </summary>
-    [FhirType("ReferralRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ReferralRequest", IsResource=true)]
     [DataContract]
     public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

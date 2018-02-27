@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Guidance or advice relating to an immunization
     /// </summary>
-    [FhirType("ImmunizationRecommendation", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ImmunizationRecommendation", IsResource=true)]
     [DataContract]
     public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
     
     
-        [FhirType("RecommendationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RecommendationComponent")]
         [DataContract]
         public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("DateCriterionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DateCriterionComponent")]
         [DataContract]
         public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ProtocolComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProtocolComponent")]
         [DataContract]
         public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

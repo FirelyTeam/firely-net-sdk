@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A request for a diagnostic service
     /// </summary>
-    [FhirType("DiagnosticOrder", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DiagnosticOrder", IsResource=true)]
     [DataContract]
     public partial class DiagnosticOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "DiagnosticOrder"; } }
     
     
-        [FhirType("EventComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EventComponent")]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        [FhirType("ItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ItemComponent")]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

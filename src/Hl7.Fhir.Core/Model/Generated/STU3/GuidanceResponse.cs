@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// The formal response to a guidance request
     /// </summary>
-    [FhirType("GuidanceResponse", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "GuidanceResponse", IsResource=true)]
     [DataContract]
     public partial class GuidanceResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

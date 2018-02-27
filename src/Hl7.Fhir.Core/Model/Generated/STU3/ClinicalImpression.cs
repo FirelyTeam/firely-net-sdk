@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// A clinical assessment performed when planning treatments and management strategies for a patient
     /// </summary>
-    [FhirType("ClinicalImpression", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ClinicalImpression", IsResource=true)]
     [DataContract]
     public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ClinicalImpression"; } }
     
     
-        [FhirType("InvestigationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "InvestigationComponent")]
         [DataContract]
         public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("FindingComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "FindingComponent")]
         [DataContract]
         public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

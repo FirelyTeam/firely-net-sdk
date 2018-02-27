@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Potential outcomes for a subject with likelihood
     /// </summary>
-    [FhirType("RiskAssessment", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RiskAssessment", IsResource=true)]
     [DataContract]
     public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "RiskAssessment"; } }
     
     
-        [FhirType("PredictionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PredictionComponent")]
         [DataContract]
         public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

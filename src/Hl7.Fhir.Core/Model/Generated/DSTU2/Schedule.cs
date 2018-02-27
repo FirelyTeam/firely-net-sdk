@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A container for slot(s) of time that may be available for booking appointments
     /// </summary>
-    [FhirType("Schedule", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Schedule", IsResource=true)]
     [DataContract]
     public partial class Schedule : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

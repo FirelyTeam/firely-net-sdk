@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// An association of a Patient with an Organization and  Healthcare Provider(s) for a period of time that the Organization assumes some level of responsibility
     /// </summary>
-    [FhirType("EpisodeOfCare", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "EpisodeOfCare", IsResource=true)]
     [DataContract]
     public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "EpisodeOfCare"; } }
     
     
-        [FhirType("StatusHistoryComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "StatusHistoryComponent")]
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DiagnosisComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DiagnosisComponent")]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

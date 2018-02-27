@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive Type string
     /// </summary>
-    [FhirType("string")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "string")]
     [DataContract]
     public partial class FhirString : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {

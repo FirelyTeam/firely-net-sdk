@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// A record of information transmitted from a sender to a receiver
     /// </summary>
-    [FhirType("Communication", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Communication", IsResource=true)]
     [DataContract]
     public partial class Communication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "Communication"; } }
     
     
-        [FhirType("PayloadComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PayloadComponent")]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

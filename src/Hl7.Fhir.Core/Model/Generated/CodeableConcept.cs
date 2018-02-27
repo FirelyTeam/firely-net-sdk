@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Concept - reference to a terminology or just  text
     /// </summary>
-    [FhirType("CodeableConcept")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "CodeableConcept")]
     [DataContract]
     public partial class CodeableConcept : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// How the medication is/was taken or should be taken
     /// </summary>
-    [FhirType("Dosage")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Dosage")]
     [DataContract]
     public partial class Dosage : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

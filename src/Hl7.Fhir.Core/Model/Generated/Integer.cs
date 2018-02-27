@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive Type integer
     /// </summary>
-    [FhirType("integer")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "integer")]
     [DataContract]
     public partial class Integer : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged
     {

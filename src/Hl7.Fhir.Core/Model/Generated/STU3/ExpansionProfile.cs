@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Defines behaviour and contraints on the ValueSet Expansion operation
     /// </summary>
-    [FhirType("ExpansionProfile", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "ExpansionProfile", IsResource=true)]
     [DataContract]
     public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "ExpansionProfile"; } }
     
     
-        [FhirType("FixedVersionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "FixedVersionComponent")]
         [DataContract]
         public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("ExcludedSystemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "ExcludedSystemComponent")]
         [DataContract]
         public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DesignationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationComponent")]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DesignationIncludeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationIncludeComponent")]
         [DataContract]
         public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DesignationIncludeDesignationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationIncludeDesignationComponent")]
         [DataContract]
         public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DesignationExcludeComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationExcludeComponent")]
         [DataContract]
         public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType("DesignationExcludeDesignationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationExcludeDesignationComponent")]
         [DataContract]
         public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

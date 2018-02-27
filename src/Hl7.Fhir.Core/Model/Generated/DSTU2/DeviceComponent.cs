@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// An instance of a medical-related component of a medical device
     /// </summary>
-    [FhirType("DeviceComponent", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DeviceComponent", IsResource=true)]
     [DataContract]
     public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         public override string TypeName { get { return "DeviceComponent"; } }
     
     
-        [FhirType("ProductionSpecificationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProductionSpecificationComponent")]
         [DataContract]
         public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

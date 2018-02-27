@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
 #if NET45
     [Serializable]
 #endif
-    [FhirType("codeOfT")]
+    [FhirType(Version.All, "codeOfT")]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public class Code<T> : Primitive<T>, INullableValue<T>, ISystemAndCode where T : struct

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// <summary>
     /// Insurance or medical plan
     /// </summary>
-    [FhirType("Coverage", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Coverage", IsResource=true)]
     [DataContract]
     public partial class Coverage : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {

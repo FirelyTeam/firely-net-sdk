@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Name of a human - parts and usage
     /// </summary>
-    [FhirType("HumanName")]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "HumanName")]
     [DataContract]
     public partial class HumanName : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {

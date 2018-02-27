@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model.STU3
     /// <summary>
     /// Delivery of bulk Supplies
     /// </summary>
-    [FhirType("SupplyDelivery", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "SupplyDelivery", IsResource=true)]
     [DataContract]
     public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "SupplyDelivery"; } }
     
     
-        [FhirType("SuppliedItemComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.STU3, "SuppliedItemComponent")]
         [DataContract]
         public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
