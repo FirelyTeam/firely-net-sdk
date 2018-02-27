@@ -341,34 +341,6 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void TestVersionDependentInSummary()
-        {
-            var p = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "N",
-                        Value = new FhirString("V")
-                    }
-                }
-            };
-            var completeStu3Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.False);
-            Assert.IsTrue(completeStu3Data.Contains("<name value=\"N\""));
-            Assert.IsTrue(completeStu3Data.Contains("<valueString value=\"V\""));
-            var summaryStu3Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.True);
-            Assert.IsTrue(summaryStu3Data.Contains("<name value=\"N\""));
-            Assert.IsTrue(summaryStu3Data.Contains("<valueString value=\"V\""));
-            var completeDstu2Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.False);
-            Assert.IsTrue(completeDstu2Data.Contains("<name value=\"N\""));
-            Assert.IsTrue(completeDstu2Data.Contains("<valueString value=\"V\""));
-            var summaryDstu2Data = new FhirXmlSerializer().SerializeToString(p, Fhir.Rest.SummaryType.True);
-            Assert.IsFalse(summaryDstu2Data.Contains("<name"));
-            Assert.IsFalse(summaryDstu2Data.Contains("<value"));
-        }
-
-        [TestMethod]
         public void TestDecimalPrecisionSerializationInJson()
         {
             var dec6 = 6m;
