@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Validation
             foreach (var constraintElement in definition.Constraint)
             {
                 bool success = false;
-
+               
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
