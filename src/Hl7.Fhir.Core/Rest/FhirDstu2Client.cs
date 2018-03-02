@@ -24,9 +24,12 @@ namespace Hl7.Fhir.Rest
         public FhirDstu2Client(Uri endpoint, bool verifyFhirVersion = false) :
             base(
                 endpoint,
-                Model.DSTU2.ModelInfo.Version,
-                exception => Model.DSTU2.OperationOutcome.ForException(exception, Model.IssueType.Invalid),
-                (data, contentType) => new Model.DSTU2.Binary { Content = data, ContentType = contentType },
+                new FhirVersionSettings<Model.DSTU2.OperationOutcome>(
+                    Model.Version.DSTU2,
+                    Model.DSTU2.ModelInfo.Version,
+                    exception => Model.DSTU2.OperationOutcome.ForException(exception, Model.IssueType.Invalid),
+                    (data, contentType) => new Model.DSTU2.Binary { Content = data, ContentType = contentType }
+                ),
                 verifyFhirVersion
             )
         {}

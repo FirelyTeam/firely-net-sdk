@@ -17,11 +17,11 @@ namespace Hl7.Fhir.Introspection
     //TODO: Find out the right way to handle named resource-local component types (i.e. Patient.AnimalComponent)
     public class ModelInspector
     {
-        // Index for easy lookup of resources, key is Tuple<upper resourcename, upper profile>
-        private Dictionary<Tuple<string,string>,ClassMapping> _resourceClasses = new Dictionary<Tuple<string,string>,ClassMapping>();
+        // Index for easy lookup of resources, key is Tuple<version, upper resourcename, upper profile>
+        private Dictionary<Tuple<Model.Version, string, string>, ClassMapping> _resourceClasses = new Dictionary<Tuple<Model.Version, string, string>, ClassMapping>();
 
-        // Index for easy lookup of datatypes, key is upper typenanme
-        private Dictionary<string, ClassMapping> _dataTypeClasses = new Dictionary<string,ClassMapping>();
+        // Index for easy lookup of datatypes, key is Tuple<version, upper typenanme>
+        private Dictionary<Tuple<Model.Version, string>, ClassMapping> _dataTypeClasses = new Dictionary<Tuple<Model.Version, string>, ClassMapping>();
 
         // Index for easy lookup of classmappings, key is Type
         private Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
@@ -73,12 +73,12 @@ namespace Hl7.Fhir.Introspection
 
                 if (mapping.IsResource)
                 {
-                    var key = buildResourceKey(mapping.Name, mapping.Profile);
+                    var key = buildResourceKey(mapping.Version, mapping.Name, mapping.Profile);
                     _resourceClasses[key] = mapping;
                 }
                 else
                 {
-                    var key = mapping.Name.ToUpperInvariant();
+                    var key = Tuple.Create(mapping.Version, mapping.Name.ToUpperInvariant());
                     _dataTypeClasses[key] = mapping;
                 }
             }
@@ -87,53 +87,62 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-        private static Tuple<string, string> buildResourceKey(string name, string profile)
+        private static Tuple<Model.Version, string, string> buildResourceKey(Model.Version version, string name, string profile)
         {
             var normalizedName = name.ToUpperInvariant();
             var normalizedProfile = profile != null ? profile.ToUpperInvariant() : null;
 
-            return Tuple.Create(normalizedName, normalizedProfile);
+            return Tuple.Create(version, normalizedName, normalizedProfile);
         }
 
-        public ClassMapping FindClassMappingForResource(string name, string profile = null)
+        public ClassMapping FindClassMappingForResource(Model.Version version, string name, string profile = null)
         {
-            var key = buildResourceKey(name, profile);
-            var noProfileKey = buildResourceKey(name, null);
+            var key = buildResourceKey(version, name, profile);
 
-            ClassMapping entry = null;
-
-            // Try finding a resource with the specified profile first
-            var success = _resourceClasses.TryGetValue(key, out entry);
-
-            // If that didn't work, try again with no profile
-            if(!success)
-                success = _resourceClasses.TryGetValue(noProfileKey, out entry);
-
-            if (success)
+            // Try finding a resource with the specified version & profile first
+            if (_resourceClasses.TryGetValue(key, out var entry))
                 return entry;
-            else
-                return null;
-        }
 
-        public ClassMapping FindClassMappingForFhirDataType(string name)
-        {
-            var key = name.ToUpperInvariant();
-
-            ClassMapping entry = null;
-            var success = _dataTypeClasses.TryGetValue(key, out entry);
-
-            if (success)
+            // If that didn't work, try again for the common (all versions) resources
+            var allVersionsKey = buildResourceKey(Model.Version.All, name, profile);
+            if (_resourceClasses.TryGetValue(allVersionsKey, out entry))
                 return entry;
-            else
-                return null;
+
+            if (profile != null)
+            {
+                // If even that didn't work and we were looking for a specific profile, try again with no profile
+                var noProfileKey = buildResourceKey(version, name, null);
+                if (_resourceClasses.TryGetValue(noProfileKey, out entry))
+                    return entry;
+
+                // Finally, try for the comman (all versions) resources without a profile
+                var noProfileAllVersionsKey = buildResourceKey(Model.Version.All, name, null);
+                if (_resourceClasses.TryGetValue(noProfileAllVersionsKey, out entry))
+                    return entry;
+            }
+
+            return null;
         }
 
-        public ClassMapping FindClassMappingByType(string typeName)
+        public ClassMapping FindClassMappingForFhirDataType(Model.Version version, string name)
         {
-            var result = FindClassMappingForResource(typeName);
+            var key = Tuple.Create(version, name.ToUpperInvariant());
+            if (_dataTypeClasses.TryGetValue(key, out var entry))
+                return entry;
+
+            var allVersionsKey = Tuple.Create(Model.Version.All, name.ToUpperInvariant());
+            if (_dataTypeClasses.TryGetValue(allVersionsKey, out entry))
+                return entry;
+
+            return null;
+        }
+
+        public ClassMapping FindClassMappingByType(Model.Version version, string typeName)
+        {
+            var result = FindClassMappingForResource(version, typeName);
             if (result != null) return result;
 
-            return FindClassMappingForFhirDataType(typeName);
+            return FindClassMappingForFhirDataType(version, typeName);
         }
 
         public ClassMapping FindClassMappingByType(Type type)
@@ -148,7 +157,7 @@ namespace Hl7.Fhir.Introspection
             // was found.
             if (entry.IsResource)
             {
-                return FindClassMappingForResource(entry.Name, entry.Profile);
+                return FindClassMappingForResource(entry.Version, entry.Name, entry.Profile);
             }
             else
                 return entry;   // NB: no extra lookup for non-resource types

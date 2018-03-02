@@ -21,6 +21,16 @@ namespace Hl7.Fhir.Introspection
     {
         private const string RESOURCENAME_SUFFIX = "Resource";
 
+        public ClassMapping()
+        {
+            Version = Model.Version.All;
+        }
+
+        /// <summary>
+        /// The FHIR version of the datatype/resource this class represents
+        /// </summary>
+        public Model.Version Version { get; private set; }
+
         /// <summary>
         /// Name of the FHIR datatype/resource this class represents
         /// </summary>
@@ -108,7 +118,7 @@ namespace Hl7.Fhir.Introspection
 
             if (IsMappableType(type))
             {
-                result.Name = collectTypeName(type);
+                (result.Version, result.Name) = collectTypeVersionAndName(type);
                 result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
 
@@ -184,12 +194,12 @@ namespace Hl7.Fhir.Introspection
             return attr != null ? attr.Profile : null;
         }
 
-        private static string collectTypeName(Type type)
+        private static Tuple<Model.Version, string> collectTypeVersionAndName(Type type)
         {
             var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
             string name;
 
-            if (attr != null && attr.Name != null)
+            if (attr?.Name != null)
                 name =  attr.Name;
             else
                 name = type.Name;
@@ -202,7 +212,10 @@ namespace Hl7.Fhir.Introspection
 				name += ">";
 			}
 
-            return name;
+            return Tuple.Create(
+                attr?.Version ?? Model.Version.All, 
+                name
+            );
         }
 
         public static bool IsFhirResource(Type type)

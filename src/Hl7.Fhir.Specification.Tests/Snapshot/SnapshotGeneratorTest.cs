@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Specification.Tests
             var tempPath = Path.GetTempPath();
             var sdSave = (StructureDefinition)sd.DeepCopy();
             sdSave.Snapshot.Element = expanded.ToList();
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), new FhirXmlSerializer().SerializeToString(sdSave));
+            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), new FhirXmlSerializer(Model.Version.DSTU2).SerializeToString(sdSave));
 
             foreach (var elem in expanded)
             {
@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Specification.Tests
             // if (!areEqual)
             // {
             var tempPath = Path.GetTempPath();
-            var xmlSer = new FhirXmlSerializer();
+            var xmlSer = new FhirXmlSerializer(Model.Version.DSTU2);
             File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), xmlSer.SerializeToString(original));
             File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), xmlSer.SerializeToString(expanded));
             // }
@@ -2289,7 +2289,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             using (var reader = XmlReader.Create(stream))
             {
-                var parser = new FhirXmlParser();
+                var parser = new FhirXmlParser(Fhir.Model.Version.DSTU2);
                 var bundle = parser.Parse<Bundle>(reader);
                 foreach (var entry in bundle.Entry)
                 {

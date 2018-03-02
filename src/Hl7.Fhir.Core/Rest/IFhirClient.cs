@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Rest
         HttpWebRequest LastRequest { get; }
         HttpWebResponse LastResponse { get; }
         Response LastResult { get; }
-        ParserSettings ParserSettings { get; set; }
+        ParserSettings ParserSettings { get; }
         ResourceFormat PreferredFormat { get; set; }
         bool ReturnFullResource { get; set; }
         int Timeout { get; set; }

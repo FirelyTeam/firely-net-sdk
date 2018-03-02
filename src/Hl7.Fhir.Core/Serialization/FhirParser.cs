@@ -22,14 +22,11 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirXmlParser : BaseFhirParser
     {
-        public FhirXmlParser() : base()
-        {
-
-        }
+        public FhirXmlParser(Model.Version version) : base(version)
+        { }
 
         public FhirXmlParser(ParserSettings settings) : base(settings)
-        {
-        }
+        { }
 
         [Obsolete("Create a new navigating parser (XmlDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
         public static IFhirReader CreateFhirReader(string xml, bool disallowXsiAttributesOnRoot)
@@ -57,14 +54,11 @@ namespace Hl7.Fhir.Serialization
 
     public class FhirJsonParser : BaseFhirParser
     {
-        public FhirJsonParser() : base()
-        {
-
-        }
+        public FhirJsonParser(Model.Version version) : base(version)
+        { }
 
         public FhirJsonParser(ParserSettings settings) : base(settings)
-        {
-        }
+        { }
 
         [Obsolete("Create a new navigating parser (JsonDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
         public static IFhirReader CreateFhirReader(string json) =>  new ElementNavFhirReader(JsonDomFhirNavigator.Create(json));
@@ -95,15 +89,12 @@ namespace Hl7.Fhir.Serialization
     {
         public ParserSettings Settings { get; private set; }
 
+        public BaseFhirParser(Model.Version version) : this(new ParserSettings(version))
+        { }
+
         public BaseFhirParser(ParserSettings settings)
         {
-            if (settings == null) throw Error.ArgumentNull(nameof(settings));
-            Settings = settings;
-        }
-
-        public BaseFhirParser()
-        {
-            Settings = new ParserSettings();
+            Settings = settings ?? throw Error.ArgumentNull(nameof(settings));
         }
 
         private static Lazy<ModelInspector> _inspector = createDefaultModelInspector();
@@ -159,96 +150,6 @@ namespace Hl7.Fhir.Serialization
                 return new ResourceReader(reader, Settings).Deserialize();
             else
                 return new ComplexTypeReader(reader, Settings).Deserialize(dataType);
-        }
-    }
-
-
-    public static class FhirParser
-    {
-        #region Helper methods / stream creation methods
-
-        [Obsolete("Use SerializationUtil.ProbeIsXml() instead")]
-        public static bool ProbeIsXml(string data) => SerializationUtil.ProbeIsXml(data);
-
-        [Obsolete("Use SerializationUtil.ProbeIsJson() instead")]
-        public static bool ProbeIsJson(string data) => SerializationUtil.ProbeIsJson(data);
-
-        [Obsolete("Use SerializationUtil.XDocumentFromXmlText() instead")]
-        public static XDocument XDocumentFromXml(string xml) => SerializationUtil.XDocumentFromXmlText(xml);
-
-        [Obsolete("Use FhirXmlParser.CreateFhirReader() instead")]
-        public static IFhirReader FhirReaderFromXml(string xml, bool disallowXsiAttributesOnRoot = false) => FhirXmlParser.CreateFhirReader(xml, disallowXsiAttributesOnRoot);
-
-        [Obsolete("Use FhirJsonParser.CreateFhirReader() instead")]
-        public static IFhirReader FhirReaderFromJson(string json) => FhirJsonParser.CreateFhirReader(json);
-
-        #endregion
-
-        private static FhirXmlParser _xmlParser = new FhirXmlParser();
-        private static FhirJsonParser _jsonParser = new FhirJsonParser();
-
-        [Obsolete("Create an instance of FhirXmlParser and call Parse<Resource>()")]
-        public static Resource ParseResourceFromXml(string xml)
-        {
-            return _xmlParser.Parse<Resource>(xml);
-        }
-
-        [Obsolete("Create an instance of FhirXmlParser and call Parse()")]
-        public static Base ParseFromXml(string xml, Type dataType = null)
-        {
-            if (dataType == null)
-                return _xmlParser.Parse<Base>(xml);
-            else
-                return _xmlParser.Parse(xml, dataType);
-        }
-
-        [Obsolete("Create an instance of FhirJsonParser and call Parse<Resource>()")]
-        public static Resource ParseResourceFromJson(string json)
-        {
-            return _jsonParser.Parse<Resource>(json);
-        }
-
-        [Obsolete("Create an instance of FhirJsonParser and call Parse()")]
-        public static Base ParseFromJson(string json, Type dataType = null)
-        {
-            if (dataType == null)
-                return _jsonParser.Parse<Base>(json);
-            else
-                return _jsonParser.Parse(json, dataType);
-        }
-
-        [Obsolete("Create an instance of FhirXmlParser and call Parse<Resource>()")]
-        // [WMR 20160421] Caller is responsible for disposing reader
-        public static Resource ParseResource(XmlReader reader)
-        {
-            return _xmlParser.Parse<Resource>(reader);
-        }
-
-        [Obsolete("Create an instance of FhirJsonParser and call Parse<Resource>()")]
-        // [WMR 20160421] Caller is responsible for disposing reader
-        public static Resource ParseResource(JsonReader reader)
-        {
-            return _jsonParser.Parse<Resource>(reader);
-        }
-
-        [Obsolete("Create an instance of FhirXmlParser and call Parse()")]
-        // [WMR 20160421] Caller is responsible for disposing reader
-        public static Base Parse(XmlReader reader, Type dataType = null)
-        {
-            if (dataType == null)
-                return _xmlParser.Parse<Base>(reader);
-            else
-                return _xmlParser.Parse(reader, dataType);
-        }
-
-        [Obsolete("Create an instance of FhirJsonParser and call Parse()")]
-        // [WMR 20160421] Caller is responsible for disposing reader
-        public static Base Parse(JsonReader reader, Type dataType = null)
-        {
-            if (dataType == null)
-                return _jsonParser.Parse<Base>(reader);
-            else
-                return _jsonParser.Parse(reader, dataType);
         }
     }
 }

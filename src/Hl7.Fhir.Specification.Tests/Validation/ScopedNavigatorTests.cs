@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         {
             var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
 
-            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            var bundle = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
             _bundleNav = new PocoNavigator(bundle);
         }

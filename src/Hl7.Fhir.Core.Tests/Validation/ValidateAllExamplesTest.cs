@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamples()
         {
-            FhirXmlParser parser = new FhirXmlParser();
+            FhirXmlParser parser = new FhirXmlParser(Fhir.Model.Version.DSTU2);
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             }
 
                             Trace.WriteLine("-------------------------");
-                            Trace.WriteLine(new FhirXmlSerializer().SerializeToString(resource));
+                            Trace.WriteLine(new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource));
                             Trace.WriteLine("-------------------------");
                         }
                         if (issues.Count != 0)
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
            string profiles = TestDataHelper.GetFullPathForExample("profiles-others.xml");
 
-            FhirXmlParser parser = new FhirXmlParser();
+            FhirXmlParser parser = new FhirXmlParser(Fhir.Model.Version.DSTU2);
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var invariantCache = new Dictionary<string, List<ElementDefinitionConstraint>>();
             using (Stream streamOther = File.OpenRead(profiles))
             {
-                otherSDs = new Fhir.Serialization.FhirXmlParser().Parse<Bundle>(SerializationUtil.XmlReaderFromStream(streamOther));
+                otherSDs = new FhirXmlParser(Fhir.Model.Version.DSTU2).Parse<Bundle>(SerializationUtil.XmlReaderFromStream(streamOther));
                 foreach (StructureDefinition resource in otherSDs.Entry.Select(e => e.Resource).Where(r => r != null && r is StructureDefinition))
                 {
                     List<ElementDefinitionConstraint> cacheForResource;

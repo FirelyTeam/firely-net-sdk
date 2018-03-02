@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Support.Tests.Model
 
             var validator = new Validator(ctx);
 
-            var pat = new FhirJsonParser().Parse<Fhir.Model.DSTU2.Patient>(json);
+            var pat = new FhirJsonParser(Fhir.Model.Version.DSTU2).Parse<Fhir.Model.DSTU2.Patient>(json);
 
             var report = validator.Validate(pat);
             Assert.IsTrue(report.Success);

@@ -88,9 +88,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (instance is IBundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
                 || prop.Name == "id"
-                // Being part of the summary depends on the version, but we do not really want to make the serializers 
-                // version-dependent just for that, so we consider a property as part of the summary if it is so in ANY version 
-                || summary == Rest.SummaryType.True && prop.InSummary != null && prop.InSummary.Any()
+                || summary == Rest.SummaryType.True && prop.InSummary != null && (prop.InSummary.Contains(Model.Version.All) || prop.InSummary.Contains(Settings.Version))
                 || summary == Rest.SummaryType.False
                 || summary == Rest.SummaryType.Data && !(prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative")
                 || summary == Rest.SummaryType.Text && ((prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative") || (prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") || prop.IsMandatoryElement)

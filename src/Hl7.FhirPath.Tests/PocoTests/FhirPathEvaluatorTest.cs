@@ -36,7 +36,7 @@ namespace Hl7.FhirPath.Tests
     
         public PatientFixture()
         {
-            var parser = new Hl7.Fhir.Serialization.FhirXmlParser();
+            var parser = new Hl7.Fhir.Serialization.FhirXmlParser(Fhir.Model.Version.DSTU2);
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
             var patient = parser.Parse<Patient>(tpXml);

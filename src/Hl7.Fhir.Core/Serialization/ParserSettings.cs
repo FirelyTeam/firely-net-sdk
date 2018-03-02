@@ -14,7 +14,22 @@ namespace Hl7.Fhir.Serialization
 {
     public class ParserSettings
     {
-        public static readonly ParserSettings Default = new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false, DisallowXsiAttributesOnRoot = true };
+        public ParserSettings(Model.Version version)
+        {
+            Version = version;
+        }
+
+        public static ParserSettings CreateDefault(Model.Version version)
+        {
+            return new ParserSettings(version)
+            {
+                AcceptUnknownMembers = false,
+                AllowUnrecognizedEnums = false,
+                DisallowXsiAttributesOnRoot = true
+            };
+        }
+
+        public Model.Version Version { get; }
 
         public bool AcceptUnknownMembers { get; set; }
 

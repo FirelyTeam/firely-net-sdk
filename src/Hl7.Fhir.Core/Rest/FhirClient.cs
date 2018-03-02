@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Rest
     {
         private Requester<TOperationOutcome> _requester;
 
-        public FhirClient(Uri endpoint, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource, bool verifyFhirVersion)
+        public FhirClient(Uri endpoint, FhirVersionSettings<TOperationOutcome> versionSettings, bool verifyFhirVersion)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Rest
 
             Endpoint = endpoint;
 
-            _requester = new Requester<TOperationOutcome>(Endpoint, fhirVersion, operationOutcomeFromException, makeBinaryResource)
+            _requester = new Requester<TOperationOutcome>(Endpoint, versionSettings)
             {
                 BeforeRequest = this.BeforeRequest,
                 AfterResponse = this.AfterResponse
@@ -125,7 +125,6 @@ namespace Hl7.Fhir.Rest
         public ParserSettings ParserSettings
         {
             get { return _requester.ParserSettings;  }
-            set { _requester.ParserSettings = value;  }
         }
 
 

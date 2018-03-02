@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Introspection
     {
         public FhirTypeAttribute()
         {
-            // No arg constructor - use defaults
+            Version = Model.Version.All;
         }
 
         public FhirTypeAttribute(Model.Version version, string name)

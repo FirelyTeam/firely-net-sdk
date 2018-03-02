@@ -167,7 +167,7 @@ namespace Hl7.Fhir
         {
             var json = TestDataHelper.ReadTestData("TestPatient.json");
 
-            var pocoP = new PocoNavigator((new FhirJsonParser()).Parse<Patient>(json));
+            var pocoP = new PocoNavigator((new FhirJsonParser(Model.Version.DSTU2)).Parse<Patient>(json));
             var jsonP = JsonDomFhirNavigator.Create(json);
 
             var compare = pocoP.IsEqualTo(jsonP);
@@ -183,7 +183,7 @@ namespace Hl7.Fhir
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
             var xml = File.ReadAllText(@"TestData\issue-444-testdata.xml");
-            var cs = (new FhirXmlParser()).Parse<Conformance>(xml);
+            var cs = (new FhirXmlParser(Model.Version.DSTU2)).Parse<Conformance>(xml);
             var nav = new PocoNavigator(cs);
 
             nav.MoveToFirstChild();

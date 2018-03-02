@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
 
-            var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
+            var questionnaire = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Questionnaire>(questionnaireXml);
             Assert.NotNull(questionnaire);
 
             // the questionnaire instance references the profile to be validated:
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
 
-            var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
+            var careplan = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
             var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
 
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
 
-            var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
+            var questionnaire = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Questionnaire>(questionnaireXml);
             Assert.NotNull(questionnaire);
 
             var sw = new Stopwatch();
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
 
-            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            var bundle = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Bundle>(bundleXml);
             Assert.NotNull(bundle);
 
             var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, ResolveExteralReferences = true, Trace = false };
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ValidateExtensionExamples()
         {
             var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
-            var levin = (new FhirXmlParser()).Parse<Patient>(levinXml);
+            var levin = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Patient>(levinXml);
             Assert.NotNull(levin);
 
             var report = _validator.Validate(levin);
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (File.Exists(path))
                 {
                     var xml = File.ReadAllText(path);
-                    return (new FhirXmlParser()).Parse<Resource>(xml);
+                    return (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Resource>(xml);
                 }
                 else
                     return null;
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Specification.Tests
             // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
 
             var jsonPatient = File.ReadAllText(@"TestData\validation\patient-ck.json");
-            var parser = new FhirJsonParser();
+            var parser = new FhirJsonParser(Fhir.Model.Version.DSTU2);
             var patient = parser.Parse<Patient>(jsonPatient);
             Assert.NotNull(patient);
 

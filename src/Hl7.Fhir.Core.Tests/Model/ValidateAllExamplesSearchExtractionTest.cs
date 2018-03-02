@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
-            FhirXmlParser parser = new FhirXmlParser();
+            FhirXmlParser parser = new FhirXmlParser(Fhir.Model.Version.DSTU2);
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();

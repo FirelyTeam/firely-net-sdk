@@ -105,7 +105,7 @@ namespace Hl7.FhirPath.Tests
 
         private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected)
         {
-            var tpXml = new FhirXmlSerializer().SerializeToString(resource);
+            var tpXml = new FhirXmlSerializer(Model.Version.DSTU2).SerializeToString(resource);
             var npoco = new PocoNavigator(resource);
             //       FhirPathEvaluatorTest.Render(npoco);
 
@@ -215,7 +215,7 @@ namespace Hl7.FhirPath.Tests
 
                 if (!_cache.ContainsKey(inputfile))
                 {                    
-                    _cache.Add(inputfile, (Model.DomainResource)(new FhirXmlParser().Parse<Model.DomainResource>(
+                    _cache.Add(inputfile, (Model.DomainResource)(new FhirXmlParser(Model.Version.DSTU2).Parse<Model.DomainResource>(
                         File.ReadAllText(Path.Combine(basepath, inputfile)))));
                 }
                 resource = _cache[inputfile];
@@ -329,7 +329,7 @@ namespace Hl7.FhirPath.Tests
         {
             // obsolete:
             // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlParser(Model.Version.DSTU2);
             Model.DSTU2.Bundle b = parser.Parse<Model.DSTU2.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
 
             foreach (Model.DSTU2.Bundle.EntryComponent be in b.Entry)

@@ -22,26 +22,44 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var mapping = ClassMapping.Create(typeof(Road));
             Assert.IsTrue(mapping.IsResource);
+            Assert.AreEqual(Fhir.Model.Version.All, mapping.Version);
             Assert.AreEqual("Road", mapping.Name);
             Assert.AreEqual(typeof(Road), mapping.NativeType);
             Assert.IsNull(mapping.Profile);
 
             mapping = ClassMapping.Create(typeof(Way));
             Assert.IsTrue(mapping.IsResource);
+            Assert.AreEqual(Fhir.Model.Version.All, mapping.Version);
             Assert.AreEqual("Way", mapping.Name);
             Assert.AreEqual(typeof(Way), mapping.NativeType);
             Assert.IsNull(mapping.Profile);
 
             mapping = ClassMapping.Create(typeof(ProfiledWay));
             Assert.IsTrue(mapping.IsResource);
+            Assert.AreEqual(Fhir.Model.Version.All, mapping.Version);
             Assert.AreEqual("Way", mapping.Name);
             Assert.AreEqual(typeof(ProfiledWay), mapping.NativeType);
             Assert.IsNotNull(mapping.Profile);
 
             mapping = ClassMapping.Create(typeof(NewStreet));
             Assert.IsTrue(mapping.IsResource);
+            Assert.AreEqual(Fhir.Model.Version.All, mapping.Version);
             Assert.AreEqual("Street", mapping.Name);
             Assert.AreEqual(typeof(NewStreet), mapping.NativeType);
+            Assert.IsNull(mapping.Profile);
+
+            mapping = ClassMapping.Create(typeof(LaneV2));
+            Assert.IsTrue(mapping.IsResource);
+            Assert.AreEqual(Fhir.Model.Version.DSTU2, mapping.Version);
+            Assert.AreEqual("Lane", mapping.Name);
+            Assert.AreEqual(typeof(LaneV2), mapping.NativeType);
+            Assert.IsNull(mapping.Profile);
+
+            mapping = ClassMapping.Create(typeof(LaneV3));
+            Assert.IsTrue(mapping.IsResource);
+            Assert.AreEqual(Fhir.Model.Version.STU3, mapping.Version);
+            Assert.AreEqual("Lane", mapping.Name);
+            Assert.AreEqual(typeof(LaneV3), mapping.NativeType);
             Assert.IsNull(mapping.Profile);
         }
 
@@ -64,7 +82,6 @@ namespace Hl7.Fhir.Tests.Introspection
 
 
         [TestMethod]
-
         public void TestMixedDataTypeDetection()
         {
             Assert.ThrowsException<ArgumentException>(() => ClassMapping.Create(typeof(ComplexNumber)));
@@ -89,6 +106,11 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType(Fhir.Model.Version.All, "Street", IsResource=true)]
     public class NewStreet { }
 
+    [FhirType(Fhir.Model.Version.DSTU2, "Lane", IsResource = true)]
+    public class LaneV2 { }
+
+    [FhirType(Fhir.Model.Version.STU3, "Lane", IsResource = true)]
+    public class LaneV3 { }
 
     /* 
      * Datatype classes for tests

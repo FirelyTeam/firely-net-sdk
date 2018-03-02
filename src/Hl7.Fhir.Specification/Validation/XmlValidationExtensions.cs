@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Validation
                     instance = doc.CreateReader();
                 }
 
-                poco = (Resource)(new FhirXmlParser()).Parse(instance, typeof(Resource));
+                poco = (Resource)(new FhirXmlParser(Model.Version.DSTU2)).Parse(instance, typeof(Resource));
             }
             catch (Exception e)
             {

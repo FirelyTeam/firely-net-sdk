@@ -23,7 +23,7 @@ namespace Hl7.Fhir
         {
             var xml = TestDataHelper.ReadTestData("Large-QuestionnaireResponse.xml");
 
-            var qr = (new FhirXmlParser()).Parse<QuestionnaireResponse>(xml);
+            var qr = (new FhirXmlParser(Model.Version.DSTU2)).Parse<QuestionnaireResponse>(xml);
 
             var trace = Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.Filter("trace", 2);
             SymbolTableExtensions.Add(Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable, "dateadd",

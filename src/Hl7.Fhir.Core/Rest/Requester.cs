@@ -17,10 +17,29 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
+    public class FhirVersionSettings<TOperationOutcome> where TOperationOutcome : Resource
+    {
+        public FhirVersionSettings(Model.Version version, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource)
+        {
+            if (version == Model.Version.All) throw new ArgumentException("Must be a specific version", nameof(version));
+            if (string.IsNullOrEmpty(fhirVersion)) throw new ArgumentException("Cannot be empty", nameof(version));
+
+            Version = version;
+            FhirVersion = fhirVersion;
+            OperationOutcomeFromException = operationOutcomeFromException ?? throw new ArgumentNullException(nameof(operationOutcomeFromException));
+            MakeBinaryResource = makeBinaryResource ?? throw new ArgumentNullException(nameof(makeBinaryResource));
+        }
+
+        public Model.Version Version { get; }
+        public string FhirVersion { get; }
+        public Func<Exception, TOperationOutcome> OperationOutcomeFromException;
+        public Func<byte[], string, Resource> MakeBinaryResource;
+    }
+
     internal class Requester<TOperationOutcome> where TOperationOutcome : Resource
     {
         public Uri BaseUrl { get; private set; }
-        public string FhirVersion { get; private set; }
+        public string FhirVersion { get { return _versionSettings.FhirVersion; } }
         public bool UseFormatParameter { get; set; }
         public ResourceFormat PreferredFormat { get; set; }
         public int Timeout { get; set; }           // In milliseconds
@@ -38,19 +57,17 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public bool CompressRequestBody { get; set; }
 
-        public ParserSettings ParserSettings { get; set; }
+        public ParserSettings ParserSettings { get; }
 
-        public Requester(Uri baseUrl, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource)
+        public Requester(Uri baseUrl, FhirVersionSettings<TOperationOutcome> versionSettings)
         {
             BaseUrl = baseUrl;
-            FhirVersion = fhirVersion;
+            _versionSettings = versionSettings ?? throw new ArgumentNullException(nameof(versionSettings));
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
             Prefer = Rest.Prefer.ReturnRepresentation;
-            ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
-            _operationOutcomeFromException = operationOutcomeFromException;
-            _makeBinaryResource = makeBinaryResource;
+            ParserSettings = ParserSettings.CreateDefault(versionSettings.Version);
         }
 
 
@@ -60,8 +77,7 @@ namespace Hl7.Fhir.Rest
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
-        private readonly Func<Exception, TOperationOutcome> _operationOutcomeFromException;
-        private readonly Func<byte[], string, Resource> _makeBinaryResource;
+        private readonly FhirVersionSettings<TOperationOutcome> _versionSettings;
 
         public Response Execute(Request interaction)
         {
@@ -76,7 +92,7 @@ namespace Hl7.Fhir.Rest
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(FhirVersion, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+            var request = interaction.ToHttpRequest(_versionSettings.Version, FhirVersion, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
 #if DOTNETFW
             request.Timeout = Timeout;
@@ -113,12 +129,12 @@ namespace Hl7.Fhir.Rest
 
                         if (webResponse.StatusCode.IsSuccessful())
                         {
-                            LastResult = Response.FromHttpResponse( webResponse, inBody, ParserSettings, _makeBinaryResource, throwOnFormatException: true);
+                            LastResult = Response.FromHttpResponse( webResponse, inBody, ParserSettings, _versionSettings.MakeBinaryResource, throwOnFormatException: true);
                             return LastResult;
                         }
                         else
                         {
-                            LastResult = Response.FromHttpResponse( webResponse, inBody, ParserSettings, _makeBinaryResource, throwOnFormatException: false);
+                            LastResult = Response.FromHttpResponse( webResponse, inBody, ParserSettings, _versionSettings.MakeBinaryResource, throwOnFormatException: false);
                             throw buildFhirOperationException(webResponse.StatusCode, LastResult.Resource);
                         }
                     }
@@ -130,7 +146,7 @@ namespace Hl7.Fhir.Rest
                         errorResult.Status = ((int)webResponse.StatusCode).ToString();
 
 
-                        errorResult.Resource = _operationOutcomeFromException(bte);
+                        errorResult.Resource = _versionSettings.OperationOutcomeFromException(bte);
                         LastResult = errorResult;
 
                         throw buildFhirOperationException(webResponse.StatusCode, errorResult.Resource);

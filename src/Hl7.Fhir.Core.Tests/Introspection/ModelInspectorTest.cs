@@ -30,27 +30,27 @@ namespace Hl7.Fhir.Tests.Introspection
             inspector.ImportType(typeof(NewStreet));
             //inspector.Process();
 
-            var road = inspector.FindClassMappingForResource("roAd");
+            var road = inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "roAd");
             Assert.IsNotNull(road);
             Assert.AreEqual(road.NativeType, typeof(Road));
 
-            var way = inspector.FindClassMappingForResource("Way");
+            var way = inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "Way");
             Assert.IsNotNull(way);
             Assert.AreEqual(way.NativeType, typeof(Way));
 
-            var pway = inspector.FindClassMappingForResource("way", "http://nu.nl/profile#street");
+            var pway = inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "way", "http://nu.nl/profile#street");
             Assert.IsNotNull(pway);
             Assert.AreEqual(pway.NativeType, typeof(ProfiledWay));
 
-            var pway2 = inspector.FindClassMappingForResource("way", "http://nux.nl/profile#street");
+            var pway2 = inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "way", "http://nux.nl/profile#street");
             Assert.IsNotNull(pway2);
             Assert.AreEqual(pway2.NativeType, typeof(Way));
 
-            var street = inspector.FindClassMappingForResource("Street");
+            var street = inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "Street");
             Assert.IsNotNull(street);
             Assert.AreEqual(street.NativeType, typeof(NewStreet));
 
-            var noway = inspector.FindClassMappingForResource("nonexistent");
+            var noway = inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "nonexistent");
             Assert.IsNull(noway);
         }
 
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.Introspection
             inspector.ImportType(typeof(AnimalName));
             inspector.ImportType(typeof(NewAnimalName));
 
-            var result = inspector.FindClassMappingForFhirDataType("animalname");
+            var result = inspector.FindClassMappingForFhirDataType(Fhir.Model.Version.DSTU2, "animalname");
             Assert.IsNotNull(result);
             Assert.AreEqual(result.NativeType, typeof(NewAnimalName));
 
@@ -83,15 +83,15 @@ namespace Hl7.Fhir.Tests.Introspection
             inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
 
             // Check for presence of some basic ingredients
-            Assert.IsNotNull(inspector.FindClassMappingForResource("patient"));
-            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("HumanName"));
-            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("code"));
-            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("boolean"));
+            Assert.IsNotNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "patient"));
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType(Fhir.Model.Version.DSTU2, "HumanName"));
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType(Fhir.Model.Version.DSTU2, "code"));
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType(Fhir.Model.Version.DSTU2, "boolean"));
 
             // Should have skipped abstract classes
-            Assert.IsNull(inspector.FindClassMappingForResource("ComplexElement"));
-            Assert.IsNull(inspector.FindClassMappingForResource("Element"));
-            Assert.IsNull(inspector.FindClassMappingForResource("Resource"));
+            Assert.IsNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "ComplexElement"));
+            Assert.IsNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "Element"));
+            Assert.IsNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "Resource"));
            
             // The open generic Code<> should not be there
             var codeOfT = inspector.FindClassMappingByType(typeof(Code<>));

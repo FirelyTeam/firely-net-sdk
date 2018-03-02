@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             using (var stream = fa.LoadArtifactByName("TestPatient.xml"))
             {
-                var pat = new FhirXmlParser().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                var pat = new FhirXmlParser(Fhir.Model.Version.DSTU2).Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
                 Assert.IsNotNull(pat);
             }
         }

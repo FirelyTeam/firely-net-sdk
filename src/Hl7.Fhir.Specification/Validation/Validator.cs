@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Validation
                 generator.Update(definition);
 
 #if DEBUG
-                string xml = (new FhirXmlSerializer()).SerializeToString(definition);
+                string xml = (new FhirXmlSerializer(Model.Version.DSTU2)).SerializeToString(definition);
                 string name = definition.Id ?? definition.Name.Replace(" ", "").Replace("/", "");
                 var dir = Path.Combine(Path.GetTempPath(), "validation");
 

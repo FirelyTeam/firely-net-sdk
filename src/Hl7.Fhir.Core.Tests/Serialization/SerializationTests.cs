@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMetaXml()
         {
-            var xml = new FhirXmlSerializer().SerializeToString(metaPoco,root:"meta");
+            var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(metaPoco,root:"meta");
             Assert.AreEqual(metaXml, xml);
         }
 
@@ -38,28 +38,28 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMetaJson()
         {
-            var json = new FhirJsonSerializer().SerializeToString(metaPoco);
+            var json = new FhirJsonSerializer(Fhir.Model.Version.DSTU2).SerializeToString(metaPoco);
             Assert.AreEqual(metaJson, json);
         }
 
         [TestMethod]
         public void ParseMetaXml()
         {
-            var poco = (Meta)(new FhirXmlParser().Parse(metaXml, typeof(Meta)));
-            var xml = new FhirXmlSerializer().SerializeToString(poco,root:"meta");
+            var poco = (Meta)(new FhirXmlParser(Fhir.Model.Version.DSTU2).Parse(metaXml, typeof(Meta)));
+            var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(poco,root:"meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaXml, xml);
         }
 
-        internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
-        internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
+        internal FhirXmlSerializer FhirDstu2XmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.DSTU2);
+        internal FhirJsonSerializer FhirDstu2JsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.DSTU2);
 
         [TestMethod]
         public void ParseMetaJson()
         {
-            var poco = (Meta)(new FhirJsonParser().Parse(metaJson, typeof(Meta)));
-            var json = FhirJsonSerializer.SerializeToString(poco);
+            var poco = (Meta)(new FhirJsonParser(Fhir.Model.Version.DSTU2).Parse(metaJson, typeof(Meta)));
+            var json = FhirDstu2JsonSerializer.SerializeToString(poco);
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaJson, json);
@@ -71,18 +71,18 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             Bundle b = new Bundle();
 
-            var data = FhirJsonSerializer.SerializeToBytes(b);
+            var data = FhirDstu2JsonSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            data = FhirXmlSerializer.SerializeToBytes(b);
+            data = FhirDstu2XmlSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
             Patient p = new Patient();
 
-            data = FhirJsonSerializer.SerializeToBytes(p);
+            data = FhirDstu2JsonSerializer.SerializeToBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            data = FhirXmlSerializer.SerializeToBytes(p);
+            data = FhirDstu2XmlSerializer.SerializeToBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
         }
 
@@ -110,12 +110,12 @@ namespace Hl7.Fhir.Tests.Serialization
             p.BirthDate = "1972-11-30";     // present in both summary and full
             p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
 
-            var full = FhirXmlSerializer.SerializeToString(p);
+            var full = FhirDstu2XmlSerializer.SerializeToString(p);
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
-            var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            var summ = FhirDstu2XmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Tests.Serialization
             q.Group.LinkId = "linkid";
 
             Assert.IsNull(q.Meta, "Meta element has not been created.");
-            var qfull = FhirXmlSerializer.SerializeToString(q);
+            var qfull = FhirDstu2XmlSerializer.SerializeToString(q);
             Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
             Console.WriteLine("summary: Fhir.Rest.SummaryType.False");
             Console.WriteLine(qfull);
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qfull.Contains("<text value=\"TEXT\""));
             Assert.IsTrue(qfull.Contains("<linkId value=\"linkid\""));
 
-            var qSum = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.True);
+            var qSum = FhirDstu2XmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.True);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.True");
             Console.WriteLine(qSum);
             Assert.IsFalse(qSum.Contains("Test Questionnaire"));
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(qSum.Contains("<text value=\"TEXT\""));
             Assert.IsFalse(qSum.Contains("<linkId value=\"linkid\""));
 
-            var qData = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Data);
+            var qData = FhirDstu2XmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Data);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Data");
             Console.WriteLine(qData);
             Assert.IsFalse(qData.Contains("Test Questionnaire"));
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qData.Contains("<linkId value=\"linkid\""));
 
             q.Meta = new Meta { VersionId = "v2" };
-            var qText = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Text);
+            var qText = FhirDstu2XmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Text);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Text");
             Console.WriteLine(qText);
             Assert.IsTrue(qText.Contains("Test Questionnaire"));
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...
-            var qInflate = FhirXmlParser.Parse<Questionnaire>(qText);
+            var qInflate = FhirDstu2XmlParser.Parse<Questionnaire>(qText);
             Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
@@ -188,18 +188,18 @@ namespace Hl7.Fhir.Tests.Serialization
                 BirthDate = "1972-11-30"
             };
 
-            var pSum = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            var pSum = FhirDstu2XmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsNull(p.Meta, "Meta should not be there");
 
             p.Meta = new Meta { VersionId = "v2" }; // introducing meta data ourselves. 
 
-            pSum = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            pSum = FhirDstu2XmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsNotNull(p.Meta, "Meta should still be there");
             Assert.AreEqual(0, p.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
-        private FhirXmlParser FhirXmlParser = new FhirXmlParser();
-        private FhirJsonParser FhirJsonParser = new FhirJsonParser();
+        private FhirXmlParser FhirDstu2XmlParser = new FhirXmlParser(Fhir.Model.Version.DSTU2);
+        private FhirJsonParser FhirDstu2JsonParser = new FhirJsonParser(Fhir.Model.Version.DSTU2);
 
         [TestMethod]
         public void TestBundleSummary()
@@ -213,19 +213,19 @@ namespace Hl7.Fhir.Tests.Serialization
             b.AddResourceEntry(p, "http://nu.nl/fhir/Patient/1");
             b.Total = 1;
 
-            var full = FhirXmlSerializer.SerializeToString(b);
+            var full = FhirDstu2XmlSerializer.SerializeToString(b);
             Assert.IsTrue(full.Contains("<entry"));
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsTrue(full.Contains("<total"));
 
-            var summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.True);
+            var summ = FhirDstu2XmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summ.Contains("<entry"));
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsTrue(summ.Contains("<total"));
 
-            summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.Count);
+            summ = FhirDstu2XmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.Count);
             Assert.IsFalse(summ.Contains("<entry"));
             Assert.IsFalse(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
@@ -238,15 +238,15 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string json = TestDataHelper.ReadTestData("TestPatient.json");
 
-            var pat = FhirJsonParser.Parse<Patient>(json);
+            var pat = FhirDstu2JsonParser.Parse<Patient>(json);
 
             Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
             Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
 
             pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
-            json = FhirJsonSerializer.SerializeToString(pat);
-            pat = FhirJsonParser.Parse<Patient>(json);
+            json = FhirDstu2JsonSerializer.SerializeToString(pat);
+            pat = FhirDstu2JsonParser.Parse<Patient>(json);
 
             Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
             Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
@@ -258,14 +258,14 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var pat = FhirXmlParser.Parse<Patient>(xml);
+            var pat = FhirDstu2XmlParser.Parse<Patient>(xml);
 
             Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
             Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
 
             pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
-            xml = FhirXmlSerializer.SerializeToString(pat);
+            xml = FhirDstu2XmlSerializer.SerializeToString(pat);
 
             Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
             Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
@@ -280,9 +280,9 @@ namespace Hl7.Fhir.Tests.Serialization
 
             b.NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative);
 
-            var xml = new FhirXmlSerializer().SerializeToString(b);
+            var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(b);
 
-            b = FhirXmlParser.Parse<Bundle>(xml);
+            b = FhirDstu2XmlParser.Parse<Bundle>(xml);
 
             Assert.IsTrue(!b.NextLink.ToString().EndsWith("/"));
         }
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Tests.Serialization
             p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain", Creation = "45" } };
             p.ManagingOrganization = new ResourceReference() { Display = "temp org", Reference = "#temp" };
 
-            var full = FhirXmlSerializer.SerializeToString(p);
+            var full = FhirDstu2XmlSerializer.SerializeToString(p);
             Assert.IsTrue(full.Contains("narrative"));
             Assert.IsTrue(full.Contains("dud"));
             Assert.IsTrue(full.Contains("temp org"));
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsTrue(full.Contains("text/plain"));
 
-            full = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.False);
+            full = FhirDstu2XmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.False);
             Assert.IsTrue(full.Contains("narrative"));
             Assert.IsTrue(full.Contains("dud"));
             Assert.IsTrue(full.Contains("temp org"));
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsTrue(full.Contains("text/plain"));
 
-            var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            var summ = FhirDstu2XmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsFalse(summ.Contains("narrative"));
             Assert.IsFalse(summ.Contains("dud"));
             Assert.IsFalse(summ.Contains("contain"));
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
 
-            var data = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
+            var data = FhirDstu2XmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
             Assert.IsFalse(data.Contains("narrative"));
             Assert.IsTrue(data.Contains("contain"));
             Assert.IsTrue(data.Contains("dud"));
@@ -341,19 +341,47 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void TestVersionDependentInSummary()
+        {
+            var p = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "N",
+                        Value = new FhirString("V")
+                    }
+                }
+            };
+            var completeStu3Data = new FhirXmlSerializer(Fhir.Model.Version.STU3).SerializeToString(p, Fhir.Rest.SummaryType.False);
+            Assert.IsTrue(completeStu3Data.Contains("<name value=\"N\""));
+            Assert.IsTrue(completeStu3Data.Contains("<valueString value=\"V\""));
+            var summaryStu3Data = new FhirXmlSerializer(Fhir.Model.Version.STU3).SerializeToString(p, Fhir.Rest.SummaryType.True);
+            Assert.IsTrue(summaryStu3Data.Contains("<name value=\"N\""));
+            Assert.IsTrue(summaryStu3Data.Contains("<valueString value=\"V\""));
+            var completeDstu2Data = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(p, Fhir.Rest.SummaryType.False);
+            Assert.IsTrue(completeDstu2Data.Contains("<name value=\"N\""));
+            Assert.IsTrue(completeDstu2Data.Contains("<valueString value=\"V\""));
+            var summaryDstu2Data = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(p, Fhir.Rest.SummaryType.True);
+            Assert.IsFalse(summaryDstu2Data.Contains("<name"));
+            Assert.IsFalse(summaryDstu2Data.Contains("<value"));
+        }
+
+        [TestMethod]
         public void TestDecimalPrecisionSerializationInJson()
         {
             var dec6 = 6m;
             var dec60 = 6.0m;
 
             var obs = new Observation { Value = new FhirDecimal(dec6) };
-            var json = FhirJsonSerializer.SerializeToString(obs);
-            var obs2 = FhirJsonParser.Parse<Observation>(json);
+            var json = FhirDstu2JsonSerializer.SerializeToString(obs);
+            var obs2 = FhirDstu2JsonParser.Parse<Observation>(json);
             Assert.AreEqual("6", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
 
             obs = new Observation { Value = new FhirDecimal(dec60) };
-            json = FhirJsonSerializer.SerializeToString(obs);
-            obs2 = FhirJsonParser.Parse<Observation>(json);
+            json = FhirDstu2JsonSerializer.SerializeToString(obs);
+            obs2 = FhirDstu2JsonParser.Parse<Observation>(json);
             Assert.AreEqual("6.0", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
@@ -362,8 +390,8 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var dec = 3.1415926535897932384626433833m;
             var obs = new Observation { Value = new FhirDecimal(dec) };
-            var json = FhirJsonSerializer.SerializeToString(obs);
-            var obs2 = FhirJsonParser.Parse<Observation>(json);
+            var json = FhirDstu2JsonSerializer.SerializeToString(obs);
+            var obs2 = FhirDstu2JsonParser.Parse<Observation>(json);
             Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
@@ -374,7 +402,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             x.Name.Add(HumanName.ForFamily("<script language='javascript'></script>"));
 
-            var xml = FhirXmlSerializer.SerializeToString(x);
+            var xml = FhirDstu2XmlSerializer.SerializeToString(x);
             Assert.IsFalse(xml.Contains("<script"));
         }
 
@@ -398,7 +426,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                FhirXmlParser.Parse<Resource>(input);
+                FhirDstu2XmlParser.Parse<Resource>(input);
                 Assert.Fail();
             }
             catch (Exception e)
@@ -411,15 +439,15 @@ namespace Hl7.Fhir.Tests.Serialization
         public void SerializeUnknownEnums()
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
-            var pser = new FhirXmlParser();
+            var pser = new FhirXmlParser(Fhir.Model.Version.DSTU2);
             var p = pser.Parse<Patient>(xml);
-            string outp = FhirXmlSerializer.SerializeToString(p);
+            string outp = FhirDstu2XmlSerializer.SerializeToString(p);
             Assert.IsTrue(outp.Contains("\"male\""));
 
             // Pollute the data with an incorrect administrative gender
             p.GenderElement.ObjectValue = "superman";
 
-            outp = FhirXmlSerializer.SerializeToString(p);
+            outp = FhirDstu2XmlSerializer.SerializeToString(p);
             Assert.IsFalse(outp.Contains("\"male\""));
             Assert.IsTrue(outp.Contains("\"superman\""));
         }
@@ -443,9 +471,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var xml = FhirXmlSerializer.SerializeToString(p);
+            var xml = FhirDstu2XmlSerializer.SerializeToString(p);
 
-            var p2 = (new FhirXmlParser()).Parse<Patient>(xml);
+            var p2 = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Patient>(xml);
             Assert.AreEqual(1, p2.Extension.Count);
             Assert.AreEqual(1, p2.Contact.Count);
         }
@@ -454,9 +482,9 @@ namespace Hl7.Fhir.Tests.Serialization
         public void SerializeEmptyParams()
         {
             var par = new Parameters();
-            var xml = FhirXmlSerializer.SerializeToString(par);
+            var xml = FhirDstu2XmlSerializer.SerializeToString(par);
 
-            var par2 = (new FhirXmlParser()).Parse<Parameters>(xml);
+            var par2 = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Parameters>(xml);
             Assert.AreEqual(0, par2.Parameter.Count);
         }
 
@@ -473,12 +501,146 @@ namespace Hl7.Fhir.Tests.Serialization
 
             string json = TestDataHelper.ReadTestData(@"valueset-v2-0717.json");
             Assert.IsNotNull(json);
-            var parser = new FhirJsonParser();
+            var parser = new FhirJsonParser(Fhir.Model.Version.DSTU2);
             var vs = parser.Parse<ValueSet>(json);
             Assert.IsNotNull(vs);
 
-            var xml = FhirXmlSerializer.SerializeToString(vs);
+            var xml = FhirDstu2XmlSerializer.SerializeToString(vs);
             Assert.IsNotNull(xml);
+        }
+
+        [TestMethod]
+        public void MultiVersionXmlSerialization()
+        {
+            var stu3bundle = new Fhir.Model.STU3.Bundle { Id = "101" };
+            var xml = FhirDstu2XmlSerializer.SerializeToString(stu3bundle);
+            var fhirStu3XmlParser = new FhirXmlParser(Fhir.Model.Version.STU3);
+            var deserializedStu3bundle = fhirStu3XmlParser.Parse<Resource>(xml) as Fhir.Model.STU3.Bundle;
+            Assert.IsNotNull(deserializedStu3bundle);
+            Assert.AreEqual(stu3bundle.Id, deserializedStu3bundle.Id);
+
+            var dstu2bundle = new Bundle { Id = "101" };
+            xml = FhirDstu2XmlSerializer.SerializeToString(dstu2bundle);
+            var deserializedDstu2bundle = FhirDstu2XmlParser.Parse<Resource>(xml) as Bundle;
+            Assert.IsNotNull(deserializedDstu2bundle);
+            Assert.AreEqual(dstu2bundle.Id, deserializedDstu2bundle.Id);
+        }
+
+        [TestMethod]
+        public void MultiVersionJsonSerialization()
+        {
+            var stu3bundle = new Fhir.Model.STU3.Bundle { Id = "101" };
+            var json = FhirDstu2JsonSerializer.SerializeToString(stu3bundle);
+            var fhirStu3JsonParser = new FhirJsonParser(Fhir.Model.Version.STU3);
+            var deserializedStu3bundle = fhirStu3JsonParser.Parse<Resource>(json) as Fhir.Model.STU3.Bundle;
+            Assert.IsNotNull(deserializedStu3bundle);
+            Assert.AreEqual(stu3bundle.Id, deserializedStu3bundle.Id);
+
+            var dstu2bundle = new Bundle { Id = "101" };
+            json = FhirDstu2JsonSerializer.SerializeToString(dstu2bundle);
+            var deserializedDstu2bundle = FhirDstu2JsonParser.Parse<Resource>(json) as Bundle;
+            Assert.IsNotNull(deserializedDstu2bundle);
+            Assert.AreEqual(dstu2bundle.Id, deserializedDstu2bundle.Id);
+        }
+
+        [TestMethod]
+        public void OperationOutcomeXmlSerialization()
+        {
+            var outcome = new CommonOperationOutcome
+            {
+                Text = new Narrative { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">not found!</div>", Status = Narrative.NarrativeStatus.Generated },
+                Issue = new List<CommonOperationOutcome.IssueComponent>
+                {
+                    new CommonOperationOutcome.IssueComponent
+                    {
+                        Code = IssueType.NotFound,
+                        Details = new CodeableConcept("mysystem","mycode","not found!"),
+                        Diagnostics = "diag",
+                        Location = new[] { "loc1, loc2" },
+                        Severity = IssueSeverity.Error, 
+                    }
+                }
+            };
+            var xml = FhirDstu2XmlSerializer.SerializeToString(outcome);
+
+            var dstu2outcome = FhirDstu2XmlParser.Parse<OperationOutcome>(xml);
+            Assert.AreEqual(outcome.Text.Div, dstu2outcome.Text.Div);
+            Assert.AreEqual(outcome.Issue.Count, dstu2outcome.Issue.Count);
+            var outcomeIssue = outcome.Issue[0];
+            var dstu2outcomeIssue = dstu2outcome.Issue[0];
+            Assert.AreEqual(outcomeIssue.Code, dstu2outcomeIssue.Code);
+            Assert.AreEqual(outcomeIssue.Details.Text, dstu2outcomeIssue.Details.Text);
+            Assert.AreEqual(outcomeIssue.Details.Coding.Count, dstu2outcomeIssue.Details.Coding.Count);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].System, dstu2outcomeIssue.Details.Coding[0].System);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].Code, dstu2outcomeIssue.Details.Coding[0].Code);
+            Assert.AreEqual(outcomeIssue.Diagnostics, dstu2outcomeIssue.Diagnostics);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, dstu2outcomeIssue.Location));
+            Assert.AreEqual(outcomeIssue.Severity, dstu2outcomeIssue.Severity);
+
+            var fhirStu3XmlParser = new FhirXmlParser(Fhir.Model.Version.STU3);
+
+            var stu3outcome = fhirStu3XmlParser.Parse<Fhir.Model.STU3.OperationOutcome>(xml);
+            Assert.AreEqual(outcome.Text.Div, stu3outcome.Text.Div);
+            Assert.AreEqual(outcome.Issue.Count, stu3outcome.Issue.Count);
+            var stu3outcomeIssue = stu3outcome.Issue[0];
+            Assert.AreEqual(outcomeIssue.Code, stu3outcomeIssue.Code);
+            Assert.AreEqual(outcomeIssue.Details.Text, stu3outcomeIssue.Details.Text);
+            Assert.AreEqual(outcomeIssue.Details.Coding.Count, stu3outcomeIssue.Details.Coding.Count);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].System, stu3outcomeIssue.Details.Coding[0].System);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].Code, stu3outcomeIssue.Details.Coding[0].Code);
+            Assert.AreEqual(outcomeIssue.Diagnostics, stu3outcomeIssue.Diagnostics);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, stu3outcomeIssue.Location));
+            Assert.AreEqual(outcomeIssue.Severity, stu3outcomeIssue.Severity);
+        }
+
+        [TestMethod]
+        public void OperationOutcomeJsonSerialization()
+        {
+            var outcome = new CommonOperationOutcome
+            {
+                Text = new Narrative { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">not found!</div>", Status = Narrative.NarrativeStatus.Generated },
+                Issue = new List<CommonOperationOutcome.IssueComponent>
+                {
+                    new CommonOperationOutcome.IssueComponent
+                    {
+                        Code = IssueType.NotFound,
+                        Details = new CodeableConcept("mysystem","mycode","not found!"),
+                        Diagnostics = "diag",
+                        Location = new[] { "loc1, loc2" },
+                        Severity = IssueSeverity.Error,
+                    }
+                }
+            };
+            var json = FhirDstu2JsonSerializer.SerializeToString(outcome);
+
+            var dstu2outcome = FhirDstu2JsonParser.Parse<OperationOutcome>(json);
+            Assert.AreEqual(outcome.Text.Div, dstu2outcome.Text.Div);
+            Assert.AreEqual(outcome.Issue.Count, dstu2outcome.Issue.Count);
+            var outcomeIssue = outcome.Issue[0];
+            var dstu2outcomeIssue = dstu2outcome.Issue[0];
+            Assert.AreEqual(outcomeIssue.Code, dstu2outcomeIssue.Code);
+            Assert.AreEqual(outcomeIssue.Details.Text, dstu2outcomeIssue.Details.Text);
+            Assert.AreEqual(outcomeIssue.Details.Coding.Count, dstu2outcomeIssue.Details.Coding.Count);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].System, dstu2outcomeIssue.Details.Coding[0].System);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].Code, dstu2outcomeIssue.Details.Coding[0].Code);
+            Assert.AreEqual(outcomeIssue.Diagnostics, dstu2outcomeIssue.Diagnostics);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, dstu2outcomeIssue.Location));
+            Assert.AreEqual(outcomeIssue.Severity, dstu2outcomeIssue.Severity);
+
+            var fhirStu3JsonParser = new FhirJsonParser(Fhir.Model.Version.STU3);
+
+            var stu3outcome = fhirStu3JsonParser.Parse<Fhir.Model.STU3.OperationOutcome>(json);
+            Assert.AreEqual(outcome.Text.Div, stu3outcome.Text.Div);
+            Assert.AreEqual(outcome.Issue.Count, stu3outcome.Issue.Count);
+            var stu3outcomeIssue = stu3outcome.Issue[0];
+            Assert.AreEqual(outcomeIssue.Code, stu3outcomeIssue.Code);
+            Assert.AreEqual(outcomeIssue.Details.Text, stu3outcomeIssue.Details.Text);
+            Assert.AreEqual(outcomeIssue.Details.Coding.Count, stu3outcomeIssue.Details.Coding.Count);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].System, stu3outcomeIssue.Details.Coding[0].System);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].Code, stu3outcomeIssue.Details.Coding[0].Code);
+            Assert.AreEqual(outcomeIssue.Diagnostics, stu3outcomeIssue.Diagnostics);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, stu3outcomeIssue.Location));
+            Assert.AreEqual(outcomeIssue.Severity, stu3outcomeIssue.Severity);
         }
     }
 }

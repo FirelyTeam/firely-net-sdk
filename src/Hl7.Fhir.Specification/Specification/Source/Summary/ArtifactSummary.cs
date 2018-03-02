@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                     if (nav != null)
                     {
                         // Parse target resource from navigator
-                        var parser = new BaseFhirParser();
+                        var parser = new BaseFhirParser(Model.Version.DSTU2);
                         var result = parser.Parse<T>(nav);
                         if (result != null)
                         {

@@ -27,27 +27,34 @@ namespace Hl7.Fhir.Tests.Serialization
     public class RoundtripTest
     { 
         [TestMethod]   
-        public void RoundTripOneExample()
+        public void RoundTripOneExampleDstu2()
         {
-            roundTripOneExample("testscript-example(example).xml");
-            roundTripOneExample("TestPatient.xml");
+            roundTripOneExample(Fhir.Model.Version.DSTU2, "testscript-example(example).xml");
+            roundTripOneExample(Fhir.Model.Version.DSTU2, "TestPatient.xml");
         }
 
-        private void roundTripOneExample(string filename)
+        [TestMethod]
+        public void RoundTripOneExampleStu3()
+        {
+            roundTripOneExample(Fhir.Model.Version.STU3, "testscript-example(example)-STU3.xml");
+            roundTripOneExample(Fhir.Model.Version.STU3, "TestPatient.xml");
+        }
+
+        private void roundTripOneExample(Fhir.Model.Version version, string filename)
         {
             string testFileName = filename;
             var original = TestDataHelper.ReadTestData(testFileName);
 
-            var t = new FhirXmlParser().Parse<Resource>(original);
+            var t = new FhirXmlParser(version).Parse<Resource>(original);
 
-            var outputXml = new FhirXmlSerializer().SerializeToString(t);
+            var outputXml = new FhirXmlSerializer(version).SerializeToString(t);
             XmlAssert.AreSame(testFileName, original, outputXml);
 
-            var outputJson = new FhirJsonSerializer().SerializeToString(t);
-            var t2 = new FhirJsonParser().Parse<Resource>(outputJson);
+            var outputJson = new FhirJsonSerializer(version).SerializeToString(t);
+            var t2 = new FhirJsonParser(version).Parse<Resource>(outputJson);
             Assert.IsTrue(t.IsExactly(t2));
 
-            var outputXml2 = new FhirXmlSerializer().SerializeToString(t2);
+            var outputXml2 = new FhirXmlSerializer(version).SerializeToString(t2);
             XmlAssert.AreSame(testFileName, original, outputXml2);            
         }
 
@@ -242,7 +249,7 @@ namespace Hl7.Fhir.Tests.Serialization
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = new FhirXmlParser().Parse<Resource>(xml);
+                var resource = new FhirXmlParser(Fhir.Model.Version.DSTU2).Parse<Resource>(xml);
 
                 var r2 = resource.DeepCopy();
                 Assert.IsTrue(resource.Matches(r2 as Resource), "Serialization of " + inputFile + " did not match output - Matches test");
@@ -250,14 +257,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.IsFalse(resource.Matches(null), "Serialization of " + inputFile + " matched null - Matches test");
                 Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
 
-                var json = new FhirJsonSerializer().SerializeToString(resource);
+                var json = new FhirJsonSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = new FhirXmlSerializer().SerializeToString(resource);
+                var resource = new FhirJsonParser(Fhir.Model.Version.DSTU2).Parse<Resource>(json);
+                var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }
@@ -269,16 +276,16 @@ namespace Hl7.Fhir.Tests.Serialization
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = new FhirXmlParser().Parse<Resource>(xml);
+                var resource = new FhirXmlParser(Fhir.Model.Version.DSTU2).Parse<Resource>(xml);
 
-                var json = new FhirJsonSerializer().SerializeToString(resource);
+                var json = new FhirJsonSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = new FhirXmlSerializer().SerializeToString(resource);
+                var resource = new FhirJsonParser(Fhir.Model.Version.DSTU2).Parse<Resource>(json);
+                var xml = new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }

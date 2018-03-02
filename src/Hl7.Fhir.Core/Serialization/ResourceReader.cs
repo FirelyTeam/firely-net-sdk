@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization
             // If there's no a priori knowledge of the type of Resource we will encounter,
             // we'll have to determine from the data itself. 
             var resourceTypeName = _reader.GetResourceTypeName();
-            var mapping = _inspector.FindClassMappingForResource(resourceTypeName);
+            var mapping = _inspector.FindClassMappingForResource(Settings.Version, resourceTypeName);
 
             if (mapping == null)
                 throw Error.Format("Asked to deserialize unknown resource '" + resourceTypeName + "'", _reader);

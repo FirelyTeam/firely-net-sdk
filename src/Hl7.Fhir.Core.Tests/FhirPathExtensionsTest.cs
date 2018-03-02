@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Introspection
             ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
             var bundleXml = File.ReadAllText("TestData\\bundle-contained-references.xml");
 
-            _parsed = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            _parsed = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Bundle>(bundleXml);
             _bundleNav = new ScopedNavigator(new PocoNavigator(_parsed));
         }
 
