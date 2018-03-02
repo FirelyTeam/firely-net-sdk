@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Validation
             if (!definition.Constraint.Any()) return outcome;
             if (v.Settings.SkipConstraintValidation) return outcome;
 
-            var context = instance.AtResource ? instance : instance.Parent;
+            var context = instance.ResourceContext;
 
             foreach (var constraintElement in definition.Constraint)
             {
