@@ -84,8 +84,11 @@ namespace Hl7.Fhir.ElementModel
         /// integer         long
         /// unsignedInt     long
         /// positiveInt     long
+        /// string          string
         /// code            string
-        /// uri, oid, id    string
+        /// id              string
+        /// uri, oid, uuid, 
+        /// canonical, url  string
         /// markdown        string
         /// base64Binary    string (uuencoded)
         /// </para>

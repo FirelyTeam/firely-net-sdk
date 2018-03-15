@@ -1,6 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,12 +15,14 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     [TestClass]
     public class ParseDemoPatientXml
     {
+        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, Fhir.Model.PocoModelMetadataProvider.Default);
+
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod, Ignore]
         public void CanReadThroughNavigator()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = XmlDomFhirNavigator.Create(tpXml);
+            var nav = getXmlNav(tpXml);
 
             Assert.AreEqual("Patient", nav.Name);
             Assert.AreEqual("Patient", nav.Type);
@@ -72,7 +73,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public void ElementNavPerformanceXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = XmlDomFhirNavigator.Create(tpXml);
+            var nav = getXmlNav(tpXml);
 
             var sw = new Stopwatch();
             sw.Start();
@@ -92,7 +93,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public void ProducesCorrectLocations()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var patient = XmlDomFhirNavigator.Create(tpXml);
+            var patient = getXmlNav(tpXml);
 
             Assert.AreEqual("Patient", patient.Location);
 
@@ -110,7 +111,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [TestMethod]
         public void ReadsAttributesAsElements()
         {
-            var nav = XmlDomFhirNavigator.Create("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://somenamespace' q:myattr='dummy' />");
+            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://somenamespace' q:myattr='dummy' />");
 
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
@@ -127,7 +128,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
-            var navXml = XmlDomFhirNavigator.Create(tpXml);
+            var navXml = getXmlNav(tpXml);
             var navJson = JsonDomFhirNavigator.Create(tpJson);
 
             var compare = navXml.IsEqualTo(navJson);
@@ -144,7 +145,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public void HasLineNumbersXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = XmlDomFhirNavigator.Create(tpXml);
+            var nav = getXmlNav(tpXml);
 
             Assert.IsTrue(nav.MoveToFirstChild());
 
@@ -161,7 +162,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = XmlDomFhirNavigator.Create(reader);
+            var nav = XmlDomFhirNavigator.Create(reader, Fhir.Model.PocoModelMetadataProvider.Default);
 
             Assert.AreEqual("SomeResource", nav.Name);
 
@@ -273,7 +274,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = XmlDomFhirNavigator.Create(reader);
+            var nav = XmlDomFhirNavigator.Create(reader, Fhir.Model.PocoModelMetadataProvider.Default);
 
             var xmlBuilder = new StringBuilder();
             var serializer = new NavigatorXmlWriter();

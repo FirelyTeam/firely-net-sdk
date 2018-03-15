@@ -17,6 +17,7 @@ namespace Hl7.Fhir.Serialization
         public XmlNodeType NodeType;
         public XName Name;
 
+        public bool IsNamespaceDeclaration;
 
         /// <summary>
         /// All child text nodes

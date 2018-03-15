@@ -14,11 +14,13 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     [TestClass]
     public class SerializeDemoPatientXml
     {
+        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, Fhir.Model.PocoModelMetadataProvider.Default);
+
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = XmlDomFhirNavigator.Create(tpXml);
+            var nav = getXmlNav(tpXml);
 
             var xmlBuilder = new StringBuilder();
             var serializer = new NavigatorXmlWriter();

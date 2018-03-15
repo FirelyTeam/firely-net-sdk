@@ -7,8 +7,6 @@
 */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Support.Model;
-using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -20,9 +18,10 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct XmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IOutcomeProvider
     {
-        internal XmlDomFhirNavigator(XObject current)
+        internal XmlDomFhirNavigator(XObject current, IModelMetadataProvider metadataProvider)
         {
             _current = current;
+            _metadataProvider = metadataProvider;
             _nameIndex = 0;
             _parentPath = null;
         }
@@ -30,7 +29,7 @@ namespace Hl7.Fhir.Serialization
 
         public IElementNavigator Clone()
         {
-            var copy = new XmlDomFhirNavigator(_current)
+            var copy = new XmlDomFhirNavigator(_current, _metadataProvider)
             {
                 _nameIndex = this._nameIndex,
                 _parentPath = this._parentPath,
@@ -40,6 +39,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         private XObject _current;
+        private readonly IModelMetadataProvider _metadataProvider;
         private int _nameIndex;
         private string _parentPath;
 
@@ -192,6 +192,7 @@ namespace Hl7.Fhir.Serialization
                         NodeText = _current.Text(),
                         LineNumber = this.LineNumber,
                         LinePosition = this.LinePosition,
+                        IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false
                     }
                 };
             }
@@ -205,6 +206,11 @@ namespace Hl7.Fhir.Serialization
         //public const int FORMAT_ATTRIBUTES_ON_NESTED_RESOURCE = 1002;
         //public const string SYSTEM_NAME = nameof(XmlDomFhirNavigator);
 
-        public IEnumerable<Issue> GetIssues() => Enumerable.Empty<Issue>();
+        public IEnumerable<Outcome> GetIssues() => Enumerable.Empty<Outcome>();
+
+        internal static IElementNavigator Create(string xml, object @default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

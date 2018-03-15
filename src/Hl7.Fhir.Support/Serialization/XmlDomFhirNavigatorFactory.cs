@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct XmlDomFhirNavigator
     {
-        public static IElementNavigator Create(XmlReader reader)
+        public static IElementNavigator Create(XmlReader reader, IModelMetadataProvider metadataProvider)
         {
             XDocument doc = null;
 
@@ -29,24 +29,24 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
-            return new XmlDomFhirNavigator(doc.Root);
+            return new XmlDomFhirNavigator(doc.Root, metadataProvider);
         }
 
-        public static IElementNavigator Create(XDocument doc)
+        public static IElementNavigator Create(XDocument doc, IModelMetadataProvider metadataProvider)
         {
-            return new XmlDomFhirNavigator(doc.Root);
+            return new XmlDomFhirNavigator(doc.Root, metadataProvider);
         }
 
-        public static IElementNavigator Create(XElement elem)
+        public static IElementNavigator Create(XElement elem, IModelMetadataProvider metadataProvider)
         {
-            return new XmlDomFhirNavigator(elem);
+            return new XmlDomFhirNavigator(elem, metadataProvider);
         }
 
-        public static IElementNavigator Create(string xml)
+        public static IElementNavigator Create(string xml, IModelMetadataProvider metadataProvider)
         {
             using (var reader = xmlReaderFromText(xml))
             {
-                return Create(reader);
+                return Create(reader, metadataProvider);
             }
         }
 

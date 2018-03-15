@@ -15,6 +15,42 @@ namespace Hl7.Fhir.Serialization
 {
     public static class PrimitiveTypeConverter
     {
+        public static object FromSerializedValue(string value, string primitiveType)
+        {
+            switch (primitiveType)
+            {
+                case "bool":
+                    return convertXmlStringToPrimitive(typeof(bool),value);
+                case "integer":
+                case "unsignedInt":
+                case "positiveInt":
+                    return convertXmlStringToPrimitive(typeof(long), value);
+                case "time":
+                    return convertXmlStringToPrimitive(typeof(PartialTime), value);
+                case "instant":
+                case "date":
+                case "dateTime":
+                    return convertXmlStringToPrimitive(typeof(PartialDateTime), value);
+                case "decimal":
+                    return convertXmlStringToPrimitive(typeof(decimal), value);
+                case "string":
+                case "code":
+                case "id":
+                case "uri":
+                case "oid":
+                case "uuid":
+                case "canonical":
+                case "url":
+                case "markdown":
+                case "base64Binary":
+                    return value;
+                default:
+                    throw Error.NotSupported($"Primitive type '{primitiveType}' is unknown and cannot be interpreted.");
+            }
+
+        }
+
+
         public static T ConvertTo<T>(object value)
         {
             return (T)ConvertTo(value, typeof(T));
@@ -135,6 +171,10 @@ namespace Hl7.Fhir.Serialization
                 return XmlConvert.ToDateTimeOffset(value);
             if(typeof(System.Uri) == to)
                 return new Uri(value, UriKind.RelativeOrAbsolute);
+            if (typeof(PartialDateTime) == to)
+                return PartialDateTime.Parse(value);
+            if (typeof(PartialTime) == to)
+                return PartialTime.Parse(value);
             if (to.IsEnum())
             {
                 var result = EnumUtility.ParseLiteral(value, to);

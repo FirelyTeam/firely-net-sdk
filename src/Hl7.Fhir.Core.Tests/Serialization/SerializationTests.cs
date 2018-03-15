@@ -106,10 +106,11 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestSummary()
         {
-            var p = new Patient();
-
-            p.BirthDate = "1972-11-30";     // present in both summary and full
-            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
 
             var full = FhirXmlSerializer.SerializeToString(p);
             Assert.IsTrue(full.Contains("<birthDate"));
@@ -121,14 +122,18 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
-            var q = new Questionnaire();
-            q.Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Test Questionnaire</div>" };
-            q.Status = Questionnaire.QuestionnaireStatus.Published;
-            q.Date = "2015-09-27";
-            q.Group = new Questionnaire.GroupComponent();
-            q.Group.Title = "TITLE";
-            q.Group.Text = "TEXT";
-            q.Group.LinkId = "linkid";
+            var q = new Questionnaire
+            {
+                Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Test Questionnaire</div>" },
+                Status = Questionnaire.QuestionnaireStatus.Published,
+                Date = "2015-09-27",
+                Group = new Questionnaire.GroupComponent
+                {
+                    Title = "TITLE",
+                    Text = "TEXT",
+                    LinkId = "linkid"
+                }
+            };
 
             Assert.IsNull(q.Meta, "Meta element has not been created.");
             var qfull = FhirXmlSerializer.SerializeToString(q);
@@ -205,10 +210,11 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestBundleSummary()
         {
-            var p = new Patient();
-
-            p.BirthDate = "1972-11-30";     // present in both summary and full
-            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
 
             var b = new Bundle();
             b.AddResourceEntry(p, "http://nu.nl/fhir/Patient/1");
@@ -277,9 +283,10 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void BundleLinksUnaltered()
         {
-            var b = new Bundle();
-
-            b.NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative);
+            var b = new Bundle
+            {
+                NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative)
+            };
 
             var xml = new FhirXmlSerializer().SerializeToString(b);
 
@@ -292,17 +299,25 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestIdInSummary()
         {
-            var p = new Patient();
-            p.Text = new Narrative();
-            p.Text.Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Some test narrative</div>";
-            p.Meta = new Meta();
-            p.Contained = new List<Resource>();
-            p.Contained.Add(new Organization() { Id = "temp", Name = "temp org", Active = true });
+            var p = new Patient
+            {
+                Id = "test-id-1",
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain", Creation = "45" } },
+                ManagingOrganization = new ResourceReference() { Display = "temp org", Reference = "#temp" },
+
+                Text = new Narrative
+                {
+                    Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Some test narrative</div>"
+                },
+                Meta = new Meta(),
+                Contained = new List<Resource>
+                {
+                    new Organization() { Id = "temp", Name = "temp org", Active = true }
+                }
+            };
+
             p.AddExtension("http://example.org/ext", new FhirString("dud"));
-            p.Id = "test-id-1";
-            p.BirthDate = "1972-11-30";     // present in both summary and full
-            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain", Creation = "45" } };
-            p.ManagingOrganization = new ResourceReference() { Display = "temp org", Reference = "#temp" };
 
             var full = FhirXmlSerializer.SerializeToString(p);
             Assert.IsTrue(full.Contains("narrative"));

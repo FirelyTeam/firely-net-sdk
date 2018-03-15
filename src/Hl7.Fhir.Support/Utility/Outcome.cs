@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Support.Utility
+namespace Hl7.Fhir.Utility
 {
     public interface IOutcomeProvider
     {
-        IEnumerable<Issue> GetIssues();
+        IEnumerable<Outcome> GetIssues();
     }
 
 
@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Support.Utility
     /// part of the operation. Instead of throwing exceptions in these cases, components of
     /// the library will instead create lists of Outcomes.
     /// </remarks>
-    public class Issue
+    public class Outcome
     {
         /// <summary>
         /// Name of the (part of) the system that generated the error
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Support.Utility
         /// <summary>
         /// Nested issues, possibly containing more details about the main issue
         /// </summary>
-        public IList<Issue> Nested;
+        public IList<Outcome> Nested;
 
         /// <summary>
         /// The severity of the issue, possibly 'undecided'

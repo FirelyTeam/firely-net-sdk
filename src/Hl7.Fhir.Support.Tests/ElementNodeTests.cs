@@ -22,6 +22,8 @@ namespace Hl7.FhirPath.Tests
     {
         ElementNode patient;
 
+        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, Fhir.Model.PocoModelMetadataProvider.Default);
+
         public ElementNodeTests()
         {
             var annotatedNode = ElementNode.Valued("id", "myId1");
@@ -128,7 +130,7 @@ namespace Hl7.FhirPath.Tests
         public void ReadsFromNav()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = XmlDomFhirNavigator.Create(tpXml);
+            var nav = getXmlNav(tpXml);
             var nodes = ElementNode.FromNavigator(nav);
             var nav2 = nodes.ToNavigator();
 

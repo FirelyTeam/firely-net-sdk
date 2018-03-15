@@ -137,10 +137,8 @@ namespace Hl7.Fhir.Model.Primitives
         {
             if (obj == null) return 1;
 
-            if (obj is PartialTime)
+            if (obj is PartialTime p)
             {
-                var p = (PartialTime)obj;
-
                 if (this < p) return -1;
                 if (this > p) return 1;
                 return 0;

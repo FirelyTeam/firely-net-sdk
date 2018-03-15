@@ -13,6 +13,8 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
     [TestClass]
     public class ParseDemoPatientJson
     {
+        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, Fhir.Model.PocoModelMetadataProvider.Default);
+
         [TestMethod]
         public void CanReadThroughNavigator()
         {
@@ -250,7 +252,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             var tpXml = File.ReadAllText(@"TestData\json-edge-cases.xml");
             
             var navJson = JsonDomFhirNavigator.Create(tpJson);
-            var navXml = XmlDomFhirNavigator.Create(tpXml);
+            var navXml = getXmlNav(tpXml);
 
             var compare = navJson.IsEqualTo(navXml);
 
