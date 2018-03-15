@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
-using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
+using TestClient = Hl7.Fhir.Rest.Http.FhirHttpClient;
 
 namespace Hl7.Fhir.Tests.Rest
 {

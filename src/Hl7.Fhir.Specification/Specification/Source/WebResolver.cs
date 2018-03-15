@@ -42,7 +42,8 @@ namespace Hl7.Fhir.Specification.Source
             var id = new ResourceIdentity(uri);
 
             // [WMR 20150810] Use custom FhirClient factory if specified
-            var client = _clientFactory != null ? _clientFactory(id.BaseUri) : new FhirClient(id.BaseUri) { Timeout = 5000 };
+            var client = _clientFactory != null ? _clientFactory(id.BaseUri) 
+                : new FhirClient(id.BaseUri, new FhirClientSettings() { Timeout = 5000 });
 
             try
             {

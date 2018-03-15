@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class BaseFhirClient : IDisposable, IFhirClient
+    public abstract partial class BaseFhirClient : IDisposable
     {
-        [Obsolete]
-        public abstract event EventHandler<AfterResponseEventArgs> OnAfterResponse;
-
-        [Obsolete]
-        public abstract event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
+        protected BaseFhirClient(Uri endpoint, FhirClientSettings settings=null)
+        {
+            Settings = (settings ?? new FhirClientSettings());
+            Endpoint = getValidatedEndpoint(endpoint);
+        }
 
         protected IRequester Requester { get; set; }
 
@@ -30,126 +30,18 @@ namespace Hl7.Fhir.Rest
             protected set;
         }
 
-        #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
-        public bool VerifyFhirVersion
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// The preferred format of the content to be used when communicating with the FHIR server (XML or JSON)
-        /// </summary>
-        public ResourceFormat PreferredFormat
-        {
-            get { return Requester.PreferredFormat; }
-            set { Requester.PreferredFormat = value; }
-        }
-
-        /// <summary>
-        /// When passing the content preference, use the _format parameter instead of the request header
-        /// </summary>
-        public bool UseFormatParam
-        {
-            get { return Requester.UseFormatParameter; }
-            set { Requester.UseFormatParameter = value; }
-        }
-
-        /// <summary>
-        /// The timeout (in milliseconds) to be used when making calls to the FHIR server
-        /// </summary>
-        public int Timeout
-        {
-            get { return Requester.Timeout; }
-            set { Requester.Timeout = value; }
-        }
-
-
-        //private bool _returnFullResource = false;
-
-        /// <summary>
-        /// Should calls to Create, Update and transaction operations return the whole updated content?
-        /// </summary>
-        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
-        [Obsolete("In STU3 this is no longer a true/false option, use the PreferredReturn property instead")]
-        public bool ReturnFullResource
-        {
-            get => Requester.PreferredReturn == Prefer.ReturnRepresentation;
-            set => Requester.PreferredReturn = value ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
-        }
-
-        /// <summary>
-        /// Should calls to Create, Update and transaction operations return the whole updated content, 
-        /// or an OperationOutcome?
-        /// </summary>
-        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
-
-        public Prefer? PreferredReturn
-        {
-            get => Requester.PreferredReturn;
-            set => Requester.PreferredReturn = value;
-        }
-
-        /// <summary>
-        /// Should server return which search parameters were supported after executing a search?
-        /// If true, the server should return an error for any unknown or unsupported parameter, otherwise
-        /// the server may ignore any unknown or unsupported parameter.
-        /// </summary>
-        public SearchParameterHandling? PreferredParameterHandling
-        {
-            get => Requester.PreferredParameterHandling;
-            set => Requester.PreferredParameterHandling = value;
-        }
-#endregion
-
-
-#if NET_COMPRESSION
-        /// <summary>
-        /// This will do 2 things:
-        /// 1. Add the header Accept-Encoding: gzip, deflate
-        /// 2. decompress any responses that have Content-Encoding: gzip (or deflate)
-        /// </summary>
-        public bool PreferCompressedResponses
-        {
-            get { return Requester.PreferCompressedResponses; }
-            set { Requester.PreferCompressedResponses = value; }
-        }
-        /// <summary>
-        /// Compress any Request bodies 
-        /// (warning, if a server does not handle compressed requests you will get a 415 response)
-        /// </summary>
-        public bool CompressRequestBody
-        {
-            get { return Requester.CompressRequestBody; }
-            set { Requester.CompressRequestBody = value; }
-        }
-#endif
-
+        public FhirClientSettings Settings = new FhirClientSettings();
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
         public Bundle.ResponseComponent LastResult => Requester.LastResult?.Response;
 
-        public ParserSettings ParserSettings
-        {
-            get { return Requester.ParserSettings; }
-            set { Requester.ParserSettings = value; }
-        }
+        public byte[] LastBody => LastResult?.GetBody();
+        public string LastBodyAsText => LastResult?.GetBodyAsText();
+        public Resource LastBodyAsResource => Requester.LastResult?.Resource;
 
-        public abstract byte[] LastBody { get; }
-
-        public abstract Resource LastBodyAsResource { get; }
-
-        public abstract string LastBodyAsText { get; }
-
-        [Obsolete]
-        public virtual HttpWebRequest LastRequest { get => throw new NotImplementedException(); }
-
-        [Obsolete]
-        public virtual HttpWebResponse LastResponse { get => throw new NotImplementedException(); }
-
-        protected static Uri GetValidatedEndpoint(Uri endpoint)
+        private static Uri getValidatedEndpoint(Uri endpoint)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
@@ -997,7 +889,7 @@ namespace Hl7.Fhir.Rest
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
             var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
             if (noRealBody && isPostOrPut(request)
-                && PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
+                && Settings.PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
             {
                 result = await GetAsync(response.Response.Location).ConfigureAwait(false);
@@ -1033,7 +925,7 @@ namespace Hl7.Fhir.Rest
 
         private void verifyServerVersion()
         {
-            if (!VerifyFhirVersion) return;
+            if (!Settings.VerifyFhirVersion) return;
 
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop

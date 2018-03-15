@@ -45,9 +45,8 @@ namespace Hl7.Fhir.Test
             var tx = new TransactionBuilder("http://myserver.org/fhir")
                         .Create(p);
             var b = tx.ToBundle();
-            byte[] dummy;
 
-            var request = b.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnMinimal, ResourceFormat.Json, false, false, out dummy);
+            var request = b.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnMinimal, ResourceFormat.Json, false, false, out byte[] dummy);
             Assert.AreEqual("return=minimal", request.Headers["Prefer"]);
 
             request = b.Entry[0].ToHttpRequest(SearchParameterHandling.Strict, Prefer.ReturnRepresentation, ResourceFormat.Json, false, false, out dummy);
@@ -79,7 +78,6 @@ namespace Hl7.Fhir.Test
             var tx = new TransactionBuilder("http://myserver.org/fhir")
                         .Create(p);
             var b = tx.ToBundle();
-            byte[] dummy;
 
             var request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Lenient, Prefer.ReturnMinimal, ResourceFormat.Json, false, false);
             Assert.AreEqual("return=minimal", request.Headers.GetValues("Prefer").FirstOrDefault());

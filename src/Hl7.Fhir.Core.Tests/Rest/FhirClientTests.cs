@@ -15,7 +15,7 @@ using System.Net;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
-using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
+using TestClient = Hl7.Fhir.Rest.Http.FhirHttpClient;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void FetchConformanceWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            client.ParserSettings.AllowUnrecognizedEnums = true;
+            client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
             var entry = client.CapabilityStatement();
 
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (TestClient client = new TestClient(testEndpoint))
             {
-                client.ParserSettings.AllowUnrecognizedEnums = true;
+                client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
                 var entry = client.CapabilityStatement();
 
@@ -148,8 +148,8 @@ namespace Hl7.Fhir.Tests.Rest
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            client.UseFormatParam = true;
-            client.PreferredFormat = ResourceFormat.Json;
+            client.Settings.UseFormatParameter = true;
+            client.Settings.PreferredFormat = ResourceFormat.Json;
 
             var loc = client.Read<Patient>("Patient/example");
             Assert.IsNotNull(loc);
@@ -160,8 +160,8 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (TestClient client = new TestClient(testEndpoint))
             {
-                client.UseFormatParam = true;
-                client.PreferredFormat = ResourceFormat.Json;
+                client.Settings.UseFormatParameter = true;
+                client.Settings.PreferredFormat = ResourceFormat.Json;
 
                 var loc = client.Read<Patient>("Patient/example");
                 Assert.IsNotNull(loc);
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             Bundle result;
 
-            client.CompressRequestBody = true;
+            client.Settings.CompressRequestBody = true;
             client.OnBeforeRequest += Compression_OnBeforeWebRequestGZip;
             client.OnAfterResponse += Client_OnAfterWebResponse;
 
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Bundle result;
 
-                client.CompressRequestBody = true;
+                client.Settings.CompressRequestBody = true;
                 handler.OnBeforeRequest += Compression_OnBeforeHttpRequestGZip;
 
                 result = client.Search<DiagnosticReport>();
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void PagingInJsonWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            client.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredFormat = ResourceFormat.Json;
 
             var result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (TestClient client = new TestClient(testEndpoint))
             {
-                client.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredFormat = ResourceFormat.Json;
 
                 var result = client.Search<DiagnosticReport>(pageSize: 10);
                 Assert.IsNotNull(result);
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateAndFullRepresentationWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            client.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
 
             var pat = client.Read<Patient>("Patient/glossy");
             ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Tests.Rest
             var patC = client.Create<Patient>(pat);
             Assert.IsNotNull(patC);
 
-            client.PreferredReturn = Prefer.ReturnMinimal;
+            client.Settings.PreferredReturn = Prefer.ReturnMinimal;
             patC = client.Create<Patient>(pat);
 
             Assert.IsNull(patC);
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             // Now validate this resource
-            client.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
             Parameters p = new Parameters();
             //  p.Add("mode", new FhirString("create"));
             p.Add("resource", pat);
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (TestClient client = new TestClient(testEndpoint))
             {
-                client.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
 
                 var pat = client.Read<Patient>("Patient/glossy");
                 ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Tests.Rest
                 var patC = client.Create<Patient>(pat);
                 Assert.IsNotNull(patC);
 
-                client.PreferredReturn = Prefer.ReturnMinimal;
+                client.Settings.PreferredReturn = Prefer.ReturnMinimal;
                 patC = client.Create<Patient>(pat);
 
                 Assert.IsNull(patC);
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Tests.Rest
                 }
 
                 // Now validate this resource
-                client.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
                 Parameters p = new Parameters();
                 //  p.Add("mode", new FhirString("create"));
                 p.Add("resource", pat);
@@ -890,17 +890,19 @@ namespace Hl7.Fhir.Tests.Rest
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantityWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            var observation = new Observation();
-            observation.Status = ObservationStatus.Preliminary;
-            observation.Code = new CodeableConcept("http://loinc.org", "2164-2");
-            observation.Value = new SimpleQuantity()
+            var observation = new Observation
             {
-                System = "http://unitsofmeasure.org",
-                Value = 23,
-                Code = "mg",
-                Unit = "miligram"
+                Status = ObservationStatus.Preliminary,
+                Code = new CodeableConcept("http://loinc.org", "2164-2"),
+                Value = new SimpleQuantity()
+                {
+                    System = "http://unitsofmeasure.org",
+                    Value = 23,
+                    Code = "mg",
+                    Unit = "miligram"
+                },
+                BodySite = new CodeableConcept("http://snomed.info/sct", "182756003")
             };
-            observation.BodySite = new CodeableConcept("http://snomed.info/sct", "182756003");
             var fe = client.Create(observation);
             fe = client.Read<Observation>(fe.ResourceIdentity().WithoutVersion());
             Assert.IsInstanceOfType(fe.Value, typeof(Quantity));
@@ -913,17 +915,19 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (TestClient client = new TestClient(testEndpoint))
             {
-                var observation = new Observation();
-                observation.Status = ObservationStatus.Preliminary;
-                observation.Code = new CodeableConcept("http://loinc.org", "2164-2");
-                observation.Value = new SimpleQuantity()
+                var observation = new Observation
                 {
-                    System = "http://unitsofmeasure.org",
-                    Value = 23,
-                    Code = "mg",
-                    Unit = "miligram"
+                    Status = ObservationStatus.Preliminary,
+                    Code = new CodeableConcept("http://loinc.org", "2164-2"),
+                    Value = new SimpleQuantity()
+                    {
+                        System = "http://unitsofmeasure.org",
+                        Value = 23,
+                        Code = "mg",
+                        Unit = "miligram"
+                    },
+                    BodySite = new CodeableConcept("http://snomed.info/sct", "182756003")
                 };
-                observation.BodySite = new CodeableConcept("http://snomed.info/sct", "182756003");
                 var fe = client.Create(observation);
                 fe = client.Read<Observation>(fe.ResourceIdentity().WithoutVersion());
                 Assert.IsInstanceOfType(fe.Value, typeof(Quantity));
@@ -1289,10 +1293,10 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (TestClient client = new TestClient(testEndpoint))
             {
+                var key = new Random().Next();
 
                 var pat = new Patient();
-                pat.Meta = new Meta();
-                var key = new Random().Next();
+                pat.Meta = new Meta();               
                 pat.Meta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/StructureDefinition/XYZ1-" + key));
                 pat.Meta.Security.Add(new Coding("http://mysystem.com/sec", "1234-" + key));
                 pat.Meta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag1-" + key));
@@ -1477,7 +1481,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CallsCallbacksWebClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            client.ParserSettings.AllowUnrecognizedEnums = true;
+            client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
             bool calledBefore = false;
             HttpStatusCode? status = null;
@@ -1521,7 +1525,7 @@ namespace Hl7.Fhir.Tests.Rest
             using (var handler = new Core.Rest.Http.HttpClientEventHandler())
             using (TestClient client = new TestClient(testEndpoint, messageHandler: handler))
             {
-                client.ParserSettings.AllowUnrecognizedEnums = true;
+                client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
                 bool calledBefore = false;
                 HttpStatusCode? status = null;
@@ -1589,7 +1593,7 @@ namespace Hl7.Fhir.Tests.Rest
             result.Id = null;
             result.Meta = null;
 
-            client.PreferredReturn = Prefer.ReturnRepresentation;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
             minimal = false;
             var posted = client.Create(result);
             Assert.IsNotNull(posted, "Patient example not found");
@@ -1598,7 +1602,7 @@ namespace Hl7.Fhir.Tests.Rest
             posted = client.Create(result);
             Assert.IsNotNull(posted, "Did not return a resource, even when ReturnFullResource=true");
 
-            client.PreferredReturn = Prefer.ReturnMinimal;
+            client.Settings.PreferredReturn = Prefer.ReturnMinimal;
             minimal = true;
             posted = client.Create(result);
             Assert.IsNull(posted);
@@ -1617,14 +1621,14 @@ namespace Hl7.Fhir.Tests.Rest
                 result.Id = null;
                 result.Meta = null;
 
-                client.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 var posted = client.Create(result);
                 Assert.IsNotNull(posted, "Patient example not found");
 
                 posted = client.Create(result);
                 Assert.IsNotNull(posted, "Did not return a resource, even when ReturnFullResource=true");
 
-                client.PreferredReturn = Prefer.ReturnMinimal;
+                client.Settings.PreferredReturn = Prefer.ReturnMinimal;
                 posted = client.Create(result);
                 Assert.IsNull(posted);
             }
@@ -1883,14 +1887,14 @@ namespace Hl7.Fhir.Tests.Rest
             var testEndpointDSTU23 = new Uri("http://test.fhir.org/r3");
 
             var client = new FhirClient(testEndpointDSTU1);
-            client.ParserSettings.AllowUnrecognizedEnums = true;
+            client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
             CapabilityStatement p;
 
             try
             {
                 client = new FhirClient(testEndpointDSTU23, verifyFhirVersion: true);
-                client.ParserSettings.AllowUnrecognizedEnums = true;
+                client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
                 p = client.CapabilityStatement();
             }
             catch (FhirOperationException)
@@ -1903,7 +1907,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             client = new FhirClient(testEndpointDSTU23);
-            client.ParserSettings.AllowUnrecognizedEnums = true;
+            client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
             p = client.CapabilityStatement();
 
             //client = new FhirClient(testEndpointDSTU2);
@@ -1916,7 +1920,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
             client = new FhirClient(testEndpointDSTU12);
-            client.ParserSettings.AllowUnrecognizedEnums = true;
+            client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
             try
             {
@@ -1971,11 +1975,11 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestOperationEverythingWebClient()
         {
-            FhirClient client = new FhirClient(testEndpoint)
+            FhirClient client = new FhirClient(testEndpoint, new FhirClientSettings
             {
-                UseFormatParam = true,
+                UseFormatParameter = true,
                 PreferredFormat = ResourceFormat.Json
-            };
+            });
 
             // GET operation $everything without parameters
             var loc = client.TypeOperation<Patient>("everything", null, useGet: true);
@@ -2025,11 +2029,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestOperationEverythingHttpClient()
         {
-            using (TestClient client = new TestClient(testEndpoint)
-            {
-                UseFormatParam = true,
-                PreferredFormat = ResourceFormat.Json
-            })
+            using (TestClient client = new TestClient(testEndpoint, new FhirClientSettings() { UseFormatParameter = true, PreferredFormat = ResourceFormat.Json }))
             {
                 // GET operation $everything without parameters
                 var loc = client.TypeOperation<Patient>("everything", null, true);

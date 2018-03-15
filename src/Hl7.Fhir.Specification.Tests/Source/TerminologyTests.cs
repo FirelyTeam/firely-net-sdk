@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
+using TestClient = Hl7.Fhir.Rest.Http.FhirHttpClient;
 
 namespace Hl7.Fhir.Specification.Tests
 {
