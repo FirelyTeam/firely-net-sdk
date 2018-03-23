@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 var output = new StringBuilder();
                 output.Append(elem.Path);
                 if (elem.SliceName != null) { output.Append(" : '" + elem.SliceName + "'"); }
-                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(" | ", elem.Slicing.Discriminator)); }
+                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(", ", elem.Slicing?.Discriminator?.Select(d => $"{d.Type}:{d.Path}"))); }
                 return output.ToString();
             }
         }

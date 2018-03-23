@@ -413,15 +413,16 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        internal void Trace(OperationOutcome outcome, string message, Issue issue, string location)
+        internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, string location)
         {
             if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                outcome.AddIssue(message, issue, location);
+                return outcome.AddIssue(message, issue, location);
+            return null;
         }
 
-        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
+        internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
-            Trace(outcome, message, issue, location.Location);
+            return Trace(outcome, message, issue, location.Location);
         }
 
         private string toStringRepresentation(IElementNavigator vp)
