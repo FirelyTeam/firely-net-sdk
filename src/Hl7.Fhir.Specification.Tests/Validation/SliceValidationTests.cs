@@ -107,8 +107,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Correct "work" use for slice "phone", but out of order
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Work, Value = "ewout@di.nl" });
+            DebugDumpOutputXml(p);
 
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-slice-ek");
+            DebugDumpOutputXml(outcome);
             Assert.False(outcome.Success);
             Assert.Equal(3, outcome.Errors);
             Assert.Equal(0, outcome.Warnings);  // 11 terminology warnings, reset when terminology is working again
@@ -190,6 +192,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains("a previous element already matched slice 'Patient.telecom:other' (at Patient.telecom[6])", repr);
             Assert.Contains("group at 'Patient.telecom:email' is closed. (at Patient.telecom[1])", repr);
         }
+
         private void DebugDumpOutputXml(Base fragment)
         {
             var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));

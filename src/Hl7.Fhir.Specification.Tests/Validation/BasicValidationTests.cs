@@ -22,11 +22,13 @@ namespace Hl7.Fhir.Specification.Tests
     {
         IResourceResolver _source;
         Validator _validator;
+        private readonly Xunit.Abstractions.ITestOutputHelper output;
 
-        public BasicValidationTests(ValidationFixture fixture)
+        public BasicValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
         {
             _source = fixture.Resolver;
             _validator = fixture.Validator;
+            this.output = output;
         }
 
         //[TestInitialize]
@@ -586,12 +588,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
+        private void DebugDumpOutputXml(Base fragment)
+        {
+            var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));
+            output.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
+        }
 
         [Fact]
         public void ValidateExtensionExamples()
         {
             var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
             var levin = (new FhirXmlParser()).Parse<Patient>(levinXml);
+            DebugDumpOutputXml(levin);
             Assert.NotNull(levin);
 
             var report = _validator.Validate(levin);
@@ -608,6 +616,7 @@ namespace Hl7.Fhir.Specification.Tests
             levin.Extension[1].Extension[0].Url = "NCT";
             levin.Extension[1].Extension[1].Value = new FhirString("wrong!");
             report = _validator.Validate(levin);
+            DebugDumpOutputXml(report);
             Assert.False(report.Success);
             Assert.True(report.ToString().Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')"));
         }
