@@ -282,6 +282,9 @@ namespace Hl7.Fhir.Validation
         {
             get
             {
+                // Use a provided compiler
+                if (Settings?.FhirPathCompiler != null)
+                    return Settings.FhirPathCompiler;
 
                 if (_fpCompiler == null)
                 {
@@ -290,6 +293,9 @@ namespace Hl7.Fhir.Validation
                     symbolTable.AddFhirExtensions();
 
                     _fpCompiler = new FhirPathCompiler(symbolTable);
+
+                    // Should this be exposed?
+                    Settings.FhirPathCompiler = _fpCompiler;
                 }
 
                 return _fpCompiler;
