@@ -67,16 +67,16 @@ namespace Hl7.Fhir.Model
             {
                 Code = issue?.Code;
                 Severity = issue?.Severity;
-                Details = (CodeableConcept)issue?.Details.DeepCopy();
-                Diagnostics = issue.Diagnostics;
+                Details = (CodeableConcept)issue?.Details?.DeepCopy();
+                Diagnostics = issue?.Diagnostics;
             }
 
             public IssueComponent(STU3.OperationOutcome.IssueComponent issue)
             {
                 Code = issue?.Code;
                 Severity = issue?.Severity;
-                Details = (CodeableConcept)issue?.Details.DeepCopy();
-                Diagnostics = issue.Diagnostics;
+                Details = (CodeableConcept)issue?.Details?.DeepCopy();
+                Diagnostics = issue?.Diagnostics;
             }
 
             public DSTU2.OperationOutcome.IssueComponent ToDstu2()
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
                 {
                     Code = Code,
                     Severity = Severity,
-                    Details = (CodeableConcept)Details.DeepCopy(),
+                    Details = (CodeableConcept)Details?.DeepCopy(),
                     Diagnostics = Diagnostics
                 };
             }
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
                 {
                     Code = Code,
                     Severity = Severity,
-                    Details = (CodeableConcept)Details.DeepCopy(),
+                    Details = (CodeableConcept)Details?.DeepCopy(),
                     Diagnostics = Diagnostics
                 };
             }
