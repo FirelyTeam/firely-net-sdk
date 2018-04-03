@@ -44,6 +44,8 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsCodeOfT { get; private set; }
 
+        public bool IsBackbone { get; private set; }
+
         /// <summary>
         /// PropertyMappings indexed by uppercase name for access speed
         /// </summary>
@@ -114,6 +116,8 @@ namespace Hl7.Fhir.Introspection
 
                 result.IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                     ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
+
+                result.IsBackbone = type.CanBeTreatedAsType(typeof(BackboneElement));
 
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
                     throw Error.Argument(nameof(type), "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));

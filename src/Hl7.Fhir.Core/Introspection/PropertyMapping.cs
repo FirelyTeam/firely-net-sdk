@@ -37,17 +37,12 @@ namespace Hl7.Fhir.Introspection
 
         public int Order { get; private set; }
 
-        public XmlSerializationHint SerializationHint { get; set; }
+        public XmlSerializationHint SerializationHint { get; private set; }
 
-        public ChoiceType Choice { get; set; }
+        public ChoiceType Choice { get; private set; }
+        public Type[] ChoiceTypes { get; private set; }
 
-        public static PropertyMapping Create(PropertyInfo prop)
-        {
-            IEnumerable<Type> dummy;
-
-            return Create(prop, out dummy);
-        }
-
+        public static PropertyMapping Create(PropertyInfo prop) => Create(prop, out IEnumerable<Type> dummy);
         
         internal static PropertyMapping Create(PropertyInfo prop, out IEnumerable<Type> referredTypes)        
         {
@@ -59,6 +54,7 @@ namespace Hl7.Fhir.Introspection
 
             var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
             var cardinalityAttr = prop.GetCustomAttribute<Validation.CardinalityAttribute>();
+            var allowedTypes = prop.GetCustomAttribute<Validation.AllowedTypesAttribute>();
 
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
@@ -67,6 +63,7 @@ namespace Hl7.Fhir.Introspection
             result.InSummary = elementAttr != null ? elementAttr.InSummary : false;
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
             result.Choice = elementAttr != null ? elementAttr.Choice : ChoiceType.None;
+            result.ChoiceTypes = allowedTypes?.Types;
 
             if (elementAttr != null)
             {

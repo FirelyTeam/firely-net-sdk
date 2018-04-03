@@ -184,11 +184,6 @@ namespace Hl7.Fhir.ElementModel
 
         private object lockObject = new object();
 
-        static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
-        {
-            var inspector = Serialization.BaseFhirParser.Inspector;
-            return inspector.ImportType(elementType);
-        }
 
         public bool MoveToFirstChild(string name = null)
         {
