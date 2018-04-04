@@ -441,7 +441,24 @@ namespace Hl7.Fhir.Model
         {
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
+      
+        /// <summary>
+        /// Adds a custom FHIR class to Model Info.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="name"></param>
+        public static void AddToModelInfo(Type t, string name = null)
+        {
+            if (!ReflectionHelper.CanBeTreatedAsType(t, typeof(Resource)))
+                throw new Exception("Unsupported type");           
 
+            if (string.IsNullOrEmpty(name))
+                name = t.Name;
+            SupportedResources.Add(name);
+            FhirCsTypeToString.Add(t, name);
+            FhirTypeToCsType.Add(name, t);
+            Hl7.Fhir.Serialization.BaseFhirParser.Inspector.ImportType(t);
+        }
     }
 
     public static class ModelInfoExtensions
