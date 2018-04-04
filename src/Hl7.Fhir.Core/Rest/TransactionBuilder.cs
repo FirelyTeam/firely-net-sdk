@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -336,6 +336,19 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public TransactionBuilder SearchUsingPost(SearchParams q, string resourceType = null)
+        {
+            if (q == null) throw new ArgumentNullException(nameof(q));
+
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Search);
+            var path = newRestUrl();
+            if (resourceType != null) path.AddPath(resourceType);
+            path.AddPath("_search");
+            entry.Resource = q.ToParameters();
+            addEntry(entry, path);
+
+            return this;
+        }
 
         public TransactionBuilder Transaction(Bundle transaction)
         {
