@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNotNull(valueProp);
             Assert.IsFalse(valueProp.IsCollection);
             Assert.IsTrue(valueProp.RepresentsValueElement);
-            Assert.AreEqual(typeof(Address.AddressUse),valueProp.ElementType);
+            Assert.AreEqual(typeof(Address.AddressUse),valueProp.ImplementingType);
 
             mapping = ClassMapping.Create(typeof(FhirUri));
             Assert.AreEqual("uri", mapping.Name);
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNotNull(valueProp);
             Assert.IsFalse(valueProp.IsCollection); 
             Assert.IsTrue(valueProp.RepresentsValueElement);
-            Assert.AreEqual(typeof(string),valueProp.ElementType);
+            Assert.AreEqual(typeof(string),valueProp.ImplementingType);
         }
     }
 }

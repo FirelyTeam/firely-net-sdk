@@ -11,18 +11,23 @@ namespace Hl7.Fhir.Serialization
         string ElementName { get; }
         bool MayRepeat { get; }
 
-        IComplexTypeSerializationInfo[] Type { get; }
+        ITypeSerializationInfo[] Type { get; }
     }
 
 
+    public interface ITypeSerializationInfo
+    {
+
+    }
     public interface IComplexTypeSerializationInfo : ITypeSerializationInfo
     {
         string TypeName { get; }
         IEnumerable<IElementSerializationInfo> GetChildren();
     }
 
-    public interface ITypeSerializationInfo
+    public interface ITypeReference : ITypeSerializationInfo
     {
+        string ReferencedType { get; }
     }
 
     public interface IModelMetadataProvider

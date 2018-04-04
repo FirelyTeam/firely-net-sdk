@@ -103,10 +103,12 @@ namespace Hl7.Fhir.Introspection
 
         public static ClassMapping Create(Type type)
         {
-           // checkMutualExclusiveAttributes(type);
+            // checkMutualExclusiveAttributes(type);
 
-            var result = new ClassMapping();
-            result.NativeType = type;
+            var result = new ClassMapping
+            {
+                NativeType = type
+            };
 
             if (IsMappableType(type))
             {
@@ -158,28 +160,6 @@ namespace Hl7.Fhir.Introspection
             me._orderedMappings = me._propMappings.Values.OrderBy(prop => prop.Order).ToList();
         }
 
-        //private static void checkMutualExclusiveAttributes(Type type)
-        //{
-        //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirComplexType(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
-        //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
-        //    if (ClassMapping.IsFhirComplexType(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
-        //}
-
-
-        //private static object invokeEnumParser(string input, Type enumType)
-        //{
-        //    object result = null;
-        //    bool success = EnumHelper.TryParseEnum(input, enumType, out result);
-
-        //    if (!success)
-        //        throw Error.InvalidOperation("Parsing of enum failed");
-
-        //    return result;
-        //}
-
 
         private static string getProfile(Type type)
         {
@@ -191,17 +171,11 @@ namespace Hl7.Fhir.Introspection
         private static string collectTypeName(Type type)
         {
             var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
-            string name;
-
-            if (attr != null && attr.Name != null)
-                name =  attr.Name;
-            else
-                name = type.Name;
-            
+            string name = attr?.Name ?? type.Name;
+           
             if(ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
-                //name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
                 name += String.Join(",", type.GetTypeInfo().GenericTypeArguments.Select(arg => arg.FullName));
 				name += ">";
 			}
@@ -226,8 +200,8 @@ namespace Hl7.Fhir.Introspection
 
             if (!hasAttribute) return false;
 
-            if (type.GetTypeInfo().IsAbstract)
-                throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
+            //if (type.GetTypeInfo().IsAbstract)
+            //    throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
 
             // Open generic type definitions can never appear as roots of objects
             // to parse. In instances, they will either have been used in closed type definitions

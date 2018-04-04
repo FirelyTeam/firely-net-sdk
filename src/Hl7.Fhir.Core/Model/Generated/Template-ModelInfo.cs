@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, 27 Jun 2017 15:02:56 GMT for FHIR v1.0.2
+// Generated on Wed, 04 Apr 2018 22:59:13 GMT for FHIR v1.0.2
 //
 
 using Hl7.Fhir.Model;
@@ -201,6 +201,7 @@ namespace Hl7.Fhir.Model
                 { "unsignedInt", typeof(Hl7.Fhir.Model.UnsignedInt) },
                 { "uri", typeof(Hl7.Fhir.Model.FhirUri) },
                 { "uuid", typeof(Hl7.Fhir.Model.Uuid) },
+                { "xhtml", typeof(Hl7.Fhir.Model.XHtml) },
 
                 { "Account", typeof(Hl7.Fhir.Model.Account) },
                 { "AllergyIntolerance", typeof(Hl7.Fhir.Model.AllergyIntolerance) },
@@ -348,6 +349,7 @@ namespace Hl7.Fhir.Model
                 { typeof(Hl7.Fhir.Model.UnsignedInt), "unsignedInt" },
                 { typeof(Hl7.Fhir.Model.FhirUri), "uri" },
                 { typeof(Hl7.Fhir.Model.Uuid), "uuid" },
+                { typeof(Hl7.Fhir.Model.XHtml), "xhtml" },
 
                 { typeof(Hl7.Fhir.Model.Account), "Account" },
                 { typeof(Hl7.Fhir.Model.AllergyIntolerance), "AllergyIntolerance" },

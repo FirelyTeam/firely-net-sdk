@@ -14,7 +14,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     [TestClass]
     public class SerializeDemoPatientXml
     {
-        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, Fhir.Model.PocoModelMetadataProvider.Default);
+        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider());
 
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()

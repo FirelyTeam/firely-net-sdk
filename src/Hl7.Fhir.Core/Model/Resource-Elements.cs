@@ -43,6 +43,7 @@ namespace Hl7.Fhir.Model
     /// Base Resource
     /// </summary>
     [DataContract]
+    [FhirType("Resource", IsResource = true)]
     public abstract partial class Resource : Base
     {
         [NotMapped]

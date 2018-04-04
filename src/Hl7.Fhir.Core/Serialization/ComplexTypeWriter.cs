@@ -91,11 +91,11 @@ namespace Hl7.Fhir.Serialization
                 || prop.Name == "id"
                 || summary == Rest.SummaryType.True && prop.InSummary
                 || summary == Rest.SummaryType.False
-                || summary == Rest.SummaryType.Data && !(prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative")
-                || summary == Rest.SummaryType.Text && ((prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative") || (prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") || prop.IsMandatoryElement)
+                || summary == Rest.SummaryType.Data && !(prop.Name.ToLower() == "text" && prop.ImplementingType.Name == "Narrative")
+                || summary == Rest.SummaryType.Text && ((prop.Name.ToLower() == "text" && prop.ImplementingType.Name == "Narrative") || (prop.Name.ToLower() == "meta" && prop.ImplementingType.Name == "Meta") || prop.IsMandatoryElement)
                 )
             {
-                write(mapping, instance, (summary == Rest.SummaryType.Text && prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") ? Rest.SummaryType.False : summary, prop, mode);
+                write(mapping, instance, (summary == Rest.SummaryType.Text && prop.Name.ToLower() == "meta" && prop.ImplementingType.Name == "Meta") ? Rest.SummaryType.False : summary, prop, mode);
             }
         }
 
@@ -120,12 +120,12 @@ namespace Hl7.Fhir.Serialization
 
          //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
 
-            if ((value != null || prop.RepresentsValueElement && prop.ElementType.IsEnum() && !string.IsNullOrEmpty(((Primitive)instance).ObjectValue as string)) && !isEmptyArray)
+            if ((value != null || prop.RepresentsValueElement && prop.ImplementingType.IsEnum() && !string.IsNullOrEmpty(((Primitive)instance).ObjectValue as string)) && !isEmptyArray)
             {
                 string memberName = prop.Name;
 
                 // Enumerated Primitive.Value of Code<T> will always serialize the ObjectValue, not the derived enumeration
-                if (prop.RepresentsValueElement && prop.ElementType.IsEnum())
+                if (prop.RepresentsValueElement && prop.ImplementingType.IsEnum())
                 {
                     value = ((Primitive)instance).ObjectValue;
                     //var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");

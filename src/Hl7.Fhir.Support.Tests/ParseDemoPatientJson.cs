@@ -13,7 +13,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
     [TestClass]
     public class ParseDemoPatientJson
     {
-        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, Fhir.Model.PocoModelMetadataProvider.Default);
+        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider());
 
         [TestMethod]
         public void CanReadThroughNavigator()

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1 and then post-processed by hand
 //
 namespace Hl7.Fhir.Model
 {
@@ -47,6 +47,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
 #endif
     [DataContract]
+    [FhirType("Element", IsResource=false)]
     public abstract partial class Element : Base, IExtendable
     {
         [NotMapped]
@@ -55,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// xml:id (or equivalent in JSON)
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
+        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10, TypeRedirect = typeof(Id))]
         [IdPattern]
         [DataMember]
         public string ElementId

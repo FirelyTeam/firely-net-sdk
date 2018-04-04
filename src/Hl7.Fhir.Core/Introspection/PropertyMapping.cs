@@ -32,15 +32,14 @@ namespace Hl7.Fhir.Introspection
         public bool InSummary { get; private set; }
         public bool IsMandatoryElement { get; private set; }
 
-        public Type ReturnType { get; private set; }
-        public Type ElementType { get; private set; }
+        public Type ImplementingType { get; private set; }
 
         public int Order { get; private set; }
 
         public XmlSerializationHint SerializationHint { get; private set; }
 
         public ChoiceType Choice { get; private set; }
-        public Type[] ChoiceTypes { get; private set; }
+        public Type[] FhirType { get; private set; }        // may be multiple if this is a choice
 
         public static PropertyMapping Create(PropertyInfo prop) => Create(prop, out IEnumerable<Type> dummy);
         
@@ -57,33 +56,42 @@ namespace Hl7.Fhir.Introspection
             var allowedTypes = prop.GetCustomAttribute<Validation.AllowedTypesAttribute>();
 
             result.Name = determinePropertyName(prop);
-            result.ReturnType = prop.PropertyType;
-            result.ElementType = result.ReturnType;
+            result.ImplementingType = prop.PropertyType;
 
-            result.InSummary = elementAttr != null ? elementAttr.InSummary : false;
+            result.InSummary = elementAttr?.InSummary ?? false;
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
-            result.Choice = elementAttr != null ? elementAttr.Choice : ChoiceType.None;
-            result.ChoiceTypes = allowedTypes?.Types;
-
+            result.Choice = elementAttr?.Choice ?? ChoiceType.None;
+               
             if (elementAttr != null)
             {
                 result.SerializationHint = elementAttr.XmlSerialization;
                 result.Order = elementAttr.Order;
             }
 
-            foundTypes.Add(result.ElementType);
+            foundTypes.Add(result.ImplementingType);
 
             result.IsCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
 
             // Get to the actual (native) type representing this element
-            if (result.IsCollection) result.ElementType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
-            if (ReflectionHelper.IsNullableType(result.ElementType)) result.ElementType = ReflectionHelper.GetNullableArgument(result.ElementType);
-            result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ElementType);
+            if (result.IsCollection) result.ImplementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
+            if (ReflectionHelper.IsNullableType(result.ImplementingType)) result.ImplementingType = ReflectionHelper.GetNullableArgument(result.ImplementingType);
+            result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ImplementingType);
+
+            // Derive the C# type that represents which types are allowed for this element.
+            // This may differ from the ImplementingType in several ways:
+            // * for a choice, ImplementingType = Any, but FhirType[] contains the possible choices
+            // * some elements (e.g. Extension.url) have ImplementingType = string, but FhirType = FhirUri, etc.
+            if (allowedTypes != null)
+                result.FhirType = allowedTypes.Types;
+            else if (elementAttr?.TypeRedirect != null)
+                result.FhirType = new[] { elementAttr.TypeRedirect };
+            else
+                result.FhirType = new[] { result.ImplementingType };
 
             // Check wether this property represents a native .NET type
             // marked to receive the class' primitive value in the fhir serialization
             // (e.g. the value from the Xml 'value' attribute or the Json primitive member value)
-            if(result.IsPrimitive) result.RepresentsValueElement = isPrimitiveValueElement(prop);
+            if (result.IsPrimitive) result.RepresentsValueElement = isPrimitiveValueElement(prop);
 
             referredTypes = foundTypes;
 
