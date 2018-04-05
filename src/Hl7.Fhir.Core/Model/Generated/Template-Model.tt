@@ -896,7 +896,7 @@ if(!abstractType) {
 			result.CardMin = element.SelectSingleNode("fhir:min/@value", nsR).Value;
 			result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
 
-			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary" };
+			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "url", "canonical", "base64Binary" };
 			if (NativeTypes.Contains(result.PropType))
             {
 				result.NativeName = result.Name;
@@ -1161,7 +1161,7 @@ if(!abstractType) {
 					result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + componentName.Value + "Component";
                 }
 			}
-			string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary" };
+			string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "url", "canonical", "base64Binary" };
 			if (NativeTypes.Contains(result.PropType))
             {
 				result.NativeType = result.PropType;
