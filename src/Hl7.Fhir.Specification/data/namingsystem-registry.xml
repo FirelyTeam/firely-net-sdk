@@ -7,18 +7,12 @@
     <resource>
       <NamingSystem>
         <id value="us-ssn" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="United States Social Security Number" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: us-ssn</p><p><b>name</b>: United States Social Security Number</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 31/07/2015</p><p><b>publisher</b>: United States Social Security Administration</p><p><b>contact</b>: </p><p><b>type</b>: Social Beneficiary Identifier <span>(Details : {http://hl7.org/fhir/identifier-type code 'SB' = 'Social Beneficiary Identifier)</span></p><p><b>description</b>: The SSN is represented in resources with dashes removed</p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: http://hl7.org/fhir/sid/us-ssn</p><p><b>preferred</b>: true</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.1</p></blockquote></div></text><name value="United States Social Security Number" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
         <publisher value="United States Social Security Administration" />
-        <contact>
+        <contact>  
           <telecom>
             <system value="url" />
             <value value="http://www.ssa.gov/" />
@@ -37,35 +31,29 @@
             <code value="US" />
           </coding>
         </jurisdiction>
-        <uniqueId>
+        <uniqueId>  
           <type value="uri" />
           <value value="http://hl7.org/fhir/sid/us-ssn" />
           <preferred value="true" />
-        </uniqueId>
-        <uniqueId>
+         </uniqueId>
+        <uniqueId>  
           <type value="oid" />
           <value value="2.16.840.1.113883.4.1" />
-        </uniqueId>
+         </uniqueId>
       </NamingSystem>
     </resource>
-  </entry>
+  </entry>    
   <entry>
     <fullUrl value="http://hl7.org/fhir/NamingSystem/us-medicare" />
     <resource>
       <NamingSystem>
         <id value="us-medicare" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="United States Medicare Number" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: us-medicare</p><p><b>name</b>: United States Medicare Number</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 12/07/2016</p><p><b>publisher</b>: Centers for Medicare &amp; Medicaid Services</p><p><b>contact</b>: </p><p><b>type</b>: Social Beneficiary Identifier <span>(Details : {http://hl7.org/fhir/identifier-type code 'SB' = 'Social Beneficiary Identifier)</span></p><p><b>description</b>: Medicare Numbers (HIC or HICN) are represented without any spaces or dashes</p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: http://hl7.org/fhir/sid/us-medicare</p><p><b>preferred</b>: true</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.572</p></blockquote></div></text><name value="United States Medicare Number" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
         <publisher value="Centers for Medicare &amp; Medicaid Services" />
-        <contact>
+        <contact>  
           <telecom>
             <system value="url" />
             <value value="https://www.medicare.gov/" />
@@ -84,35 +72,29 @@
             <code value="US" />
           </coding>
         </jurisdiction>
-        <uniqueId>
+        <uniqueId>  
           <type value="uri" />
           <value value="http://hl7.org/fhir/sid/us-medicare" />
           <preferred value="true" />
-        </uniqueId>
-        <uniqueId>
+         </uniqueId>
+        <uniqueId>  
           <type value="oid" />
           <value value="2.16.840.1.113883.4.572" />
-        </uniqueId>
+         </uniqueId>
       </NamingSystem>
     </resource>
-  </entry>
+  </entry>    
   <entry>
     <fullUrl value="http://hl7.org/fhir/NamingSystem/us-npi" />
     <resource>
       <NamingSystem>
         <id value="us-npi" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="United States National Provider Identifier" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: us-npi</p><p><b>name</b>: United States National Provider Identifier</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 31/07/2015</p><p><b>publisher</b>: Centers for Medicare and Medicaid Services</p><p><b>contact</b>: </p><p><b>type</b>: Provider number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'PRN' = 'Provider number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: http://hl7.org/fhir/sid/us-npi</p><p><b>preferred</b>: true</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.6</p></blockquote></div></text><name value="United States National Provider Identifier" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
         <publisher value="Centers for Medicare and Medicaid Services" />
-        <contact>
+        <contact>  
           <telecom>
             <system value="url" />
             <value value="http://www.cms.gov/" />
@@ -130,35 +112,29 @@
             <code value="US" />
           </coding>
         </jurisdiction>
-        <uniqueId>
+        <uniqueId>  
           <type value="uri" />
           <value value="http://hl7.org/fhir/sid/us-npi" />
           <preferred value="true" />
-        </uniqueId>
-        <uniqueId>
+         </uniqueId>
+        <uniqueId>  
           <type value="oid" />
           <value value="2.16.840.1.113883.4.6" />
-        </uniqueId>
+         </uniqueId>
       </NamingSystem>
     </resource>
-  </entry>
+  </entry>    
   <entry>
     <fullUrl value="http://hl7.org/fhir/NamingSystem/gtin" />
     <resource>
       <NamingSystem>
         <id value="gtin" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Global Trade Item Number (GTIN)" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: gtin</p><p><b>name</b>: Global Trade Item Number (GTIN)</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 18/12/2017</p><p><b>publisher</b>: GS1</p><p><b>contact</b>: </p><p><b>jurisdiction</b>: World <span>(Details : {http://unstats.un.org/unsd/methods/m49/m49.htm code '001' = 'World)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 1.3.160</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: https://www.gs1.org/gtin</p></blockquote></div></text><name value="Global Trade Item Number (GTIN)" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
         <publisher value="GS1" />
-        <contact>
+        <contact>  
           <telecom>
             <system value="url" />
             <value value="http://www.gs1.org/" />
@@ -186,13 +162,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.2" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Alaska Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.2</p><p><b>name</b>: Alaska Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.2</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.2</p></blockquote></div></text><name value="Alaska Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -225,13 +195,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.1" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Alabama Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.1</p><p><b>name</b>: Alabama Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.1</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.1</p></blockquote></div></text><name value="Alabama Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -264,13 +228,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.5" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Arkansas Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.5</p><p><b>name</b>: Arkansas Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.5</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.5</p></blockquote></div></text><name value="Arkansas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -303,13 +261,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.4" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Arizona Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.4</p><p><b>name</b>: Arizona Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.4</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.4</p></blockquote></div></text><name value="Arizona Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -342,13 +294,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.6" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="California Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.6</p><p><b>name</b>: California Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.6</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.6</p></blockquote></div></text><name value="California Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -381,13 +327,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.8" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Colorado Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.8</p><p><b>name</b>: Colorado Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.8</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.8</p></blockquote></div></text><name value="Colorado Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -420,13 +360,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.9" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Connecticut Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.9</p><p><b>name</b>: Connecticut Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.9</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.9</p></blockquote></div></text><name value="Connecticut Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -459,13 +393,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.11" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="DC Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.11</p><p><b>name</b>: DC Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.11</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.11</p></blockquote></div></text><name value="DC Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -498,13 +426,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.10" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Delaware Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.10</p><p><b>name</b>: Delaware Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.10</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.10</p></blockquote></div></text><name value="Delaware Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -537,13 +459,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.12" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Florida Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.12</p><p><b>name</b>: Florida Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.12</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.12</p></blockquote></div></text><name value="Florida Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -576,13 +492,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.13" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Georgia Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.13</p><p><b>name</b>: Georgia Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.13</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.13</p></blockquote></div></text><name value="Georgia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -615,13 +525,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.15" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Hawaii Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.15</p><p><b>name</b>: Hawaii Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.15</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.15</p></blockquote></div></text><name value="Hawaii Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -654,13 +558,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.18" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Indiana Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.18</p><p><b>name</b>: Indiana Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.18</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.18</p></blockquote></div></text><name value="Indiana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -693,13 +591,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.19" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Iowa Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.19</p><p><b>name</b>: Iowa Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.19</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.19</p></blockquote></div></text><name value="Iowa Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -732,13 +624,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.16" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Idaho Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.16</p><p><b>name</b>: Idaho Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.16</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.16</p></blockquote></div></text><name value="Idaho Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -771,13 +657,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.17" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Illinois Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.17</p><p><b>name</b>: Illinois Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.17</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.17</p></blockquote></div></text><name value="Illinois Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -810,13 +690,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.20" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Kansas Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.20</p><p><b>name</b>: Kansas Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.20</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.20</p></blockquote></div></text><name value="Kansas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -849,13 +723,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.21" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Kentucky Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.21</p><p><b>name</b>: Kentucky Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.21</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.21</p></blockquote></div></text><name value="Kentucky Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -888,13 +756,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.22" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Louisiana Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.22</p><p><b>name</b>: Louisiana Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.22</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.22</p></blockquote></div></text><name value="Louisiana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -927,13 +789,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.25" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Massachusetts Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.25</p><p><b>name</b>: Massachusetts Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.25</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.25</p></blockquote></div></text><name value="Massachusetts Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -966,13 +822,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.24" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Maryland Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.24</p><p><b>name</b>: Maryland Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.24</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.24</p></blockquote></div></text><name value="Maryland Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1005,13 +855,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.23" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Maine Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.23</p><p><b>name</b>: Maine Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.23</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.23</p></blockquote></div></text><name value="Maine Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1044,13 +888,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.26" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Michigan Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.26</p><p><b>name</b>: Michigan Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.26</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.26</p></blockquote></div></text><name value="Michigan Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1083,13 +921,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.27" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Minnesota Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.27</p><p><b>name</b>: Minnesota Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.27</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.27</p></blockquote></div></text><name value="Minnesota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1122,13 +954,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.29" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Missouri Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.29</p><p><b>name</b>: Missouri Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.29</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.29</p></blockquote></div></text><name value="Missouri Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1161,13 +987,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.28" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Mississippi Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.28</p><p><b>name</b>: Mississippi Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.28</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.28</p></blockquote></div></text><name value="Mississippi Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1200,13 +1020,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.30" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Montana Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.30</p><p><b>name</b>: Montana Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.30</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.30</p></blockquote></div></text><name value="Montana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1239,13 +1053,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.36" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="New York Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.36</p><p><b>name</b>: New York Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.36</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.36</p></blockquote></div></text><name value="New York Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1278,13 +1086,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.37" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="North Carolina Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.37</p><p><b>name</b>: North Carolina Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.37</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.37</p></blockquote></div></text><name value="North Carolina Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1317,13 +1119,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.38" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="North Dakota Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.38</p><p><b>name</b>: North Dakota Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.38</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.38</p></blockquote></div></text><name value="North Dakota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1356,13 +1152,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.31" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Nebraska Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.31</p><p><b>name</b>: Nebraska Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.31</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.31</p></blockquote></div></text><name value="Nebraska Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1395,13 +1185,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.33" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="New Hampshire Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.33</p><p><b>name</b>: New Hampshire Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.33</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.33</p></blockquote></div></text><name value="New Hampshire Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1434,13 +1218,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.34" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="New Jersey Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.34</p><p><b>name</b>: New Jersey Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.34</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.34</p></blockquote></div></text><name value="New Jersey Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1473,13 +1251,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.35" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="New Mexico Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.35</p><p><b>name</b>: New Mexico Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.35</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.35</p></blockquote></div></text><name value="New Mexico Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1512,13 +1284,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.32" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Nevada Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.32</p><p><b>name</b>: Nevada Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.32</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.32</p></blockquote></div></text><name value="Nevada Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1551,13 +1317,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.39" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Ohio Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.39</p><p><b>name</b>: Ohio Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.39</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.39</p></blockquote></div></text><name value="Ohio Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1590,13 +1350,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.40" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Oklahoma Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.40</p><p><b>name</b>: Oklahoma Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.40</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.40</p></blockquote></div></text><name value="Oklahoma Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1629,13 +1383,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.41" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Oregon Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.41</p><p><b>name</b>: Oregon Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.41</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.41</p></blockquote></div></text><name value="Oregon Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1668,13 +1416,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.42" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Pennsylvania Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.42</p><p><b>name</b>: Pennsylvania Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.42</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.42</p></blockquote></div></text><name value="Pennsylvania Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1707,13 +1449,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.44" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Rhode Island Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.44</p><p><b>name</b>: Rhode Island Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.44</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.44</p></blockquote></div></text><name value="Rhode Island Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1746,13 +1482,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.45" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="South Carolina Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.45</p><p><b>name</b>: South Carolina Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.45</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.45</p></blockquote></div></text><name value="South Carolina Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1785,13 +1515,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.46" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="South Dakota Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.46</p><p><b>name</b>: South Dakota Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.46</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.46</p></blockquote></div></text><name value="South Dakota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1824,13 +1548,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.47" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Tennessee Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.47</p><p><b>name</b>: Tennessee Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.47</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.47</p></blockquote></div></text><name value="Tennessee Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1863,13 +1581,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.48" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Texas Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.48</p><p><b>name</b>: Texas Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.48</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.48</p></blockquote></div></text><name value="Texas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1902,13 +1614,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.49" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Utah Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.49</p><p><b>name</b>: Utah Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.49</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.49</p></blockquote></div></text><name value="Utah Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1941,13 +1647,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.51" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Virginia Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.51</p><p><b>name</b>: Virginia Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.51</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.51</p></blockquote></div></text><name value="Virginia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -1980,13 +1680,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.50" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Vermont Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.50</p><p><b>name</b>: Vermont Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.50</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.50</p></blockquote></div></text><name value="Vermont Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -2019,13 +1713,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.53" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Washington Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.53</p><p><b>name</b>: Washington Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.53</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.53</p></blockquote></div></text><name value="Washington Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -2058,13 +1746,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.55" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Wisconsin Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.55</p><p><b>name</b>: Wisconsin Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.55</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.55</p></blockquote></div></text><name value="Wisconsin Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -2097,13 +1779,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.54" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="West Virginia Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.54</p><p><b>name</b>: West Virginia Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.54</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.54</p></blockquote></div></text><name value="West Virginia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->
@@ -2136,13 +1812,7 @@
     <resource>
       <NamingSystem>
         <id value="4.3.56" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="Wyoming Driver's License" />
+        <text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 4.3.56</p><p><b>name</b>: Wyoming Driver's License</p><p><b>status</b>: active</p><p><b>kind</b>: identifier</p><p><b>date</b>: 03/07/2015</p><p><b>publisher</b>: HL7 International</p><p><b>type</b>: Driver's license number <span>(Details : {http://hl7.org/fhir/v2/0203 code 'DL' = 'Driver's license number)</span></p><p><b>jurisdiction</b>: United States of America <span>(Details : {urn:iso:std:iso:3166 code 'US' = 'United States of America)</span></p><blockquote><p><b>uniqueId</b></p><p><b>type</b>: oid</p><p><b>value</b>: 2.16.840.1.113883.4.3.56</p></blockquote><blockquote><p><b>uniqueId</b></p><p><b>type</b>: uri</p><p><b>value</b>: urn:oid:2.16.840.1.113883.4.3.56</p></blockquote></div></text><name value="Wyoming Driver's License" />
         <status value="active" />
         <kind value="identifier" />
         <!-- Removed date -->

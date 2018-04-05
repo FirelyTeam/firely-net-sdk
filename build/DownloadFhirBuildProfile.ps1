@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/2018Jan/";
+$server = "http://hl7.org/fhir/2018May/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
