@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -124,9 +124,22 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
             
             /// <summary>
+            /// Count of products or services
+            /// </summary>
+            [FhirElement("quantity", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            
+            /// <summary>
             /// Fee, charge or cost per point
             /// </summary>
-            [FhirElement("unitPrice", Order=70)]
+            [FhirElement("unitPrice", Order=80)]
             [DataMember]
             public Money UnitPrice
             {
@@ -139,7 +152,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Servicing Facility
             /// </summary>
-            [FhirElement("facility", Order=80)]
+            [FhirElement("facility", Order=90)]
             [CLSCompliant(false)]
 			[References("Location","Organization")]
             [DataMember]
@@ -151,6 +164,20 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.ResourceReference _Facility;
             
+            /// <summary>
+            /// List of Diagnosis
+            /// </summary>
+            [FhirElement("diagnosis", Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.EligibilityRequest.DiagnosisComponent> Diagnosis
+            {
+                get { if(_Diagnosis==null) _Diagnosis = new List<Hl7.Fhir.Model.EligibilityRequest.DiagnosisComponent>(); return _Diagnosis; }
+                set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
+            }
+            
+            private List<Hl7.Fhir.Model.EligibilityRequest.DiagnosisComponent> _Diagnosis;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AuthorizationComponent;
@@ -161,8 +188,10 @@ namespace Hl7.Fhir.Model
                     if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.CodeableConcept)Service.DeepCopy();
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(UnitPrice != null) dest.UnitPrice = (Money)UnitPrice.DeepCopy();
                     if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopy();
+                    if(Diagnosis != null) dest.Diagnosis = new List<Hl7.Fhir.Model.EligibilityRequest.DiagnosisComponent>(Diagnosis.DeepCopy());
                     return dest;
                 }
                 else
@@ -183,8 +212,10 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
                 if( !DeepComparable.Matches(Service, otherT.Service)) return false;
                 if( !DeepComparable.Matches(Modifier, otherT.Modifier)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.Matches(UnitPrice, otherT.UnitPrice)) return false;
                 if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
+                if( !DeepComparable.Matches(Diagnosis, otherT.Diagnosis)) return false;
                 
                 return true;
             }
@@ -198,8 +229,10 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
                 if( !DeepComparable.IsExactly(Service, otherT.Service)) return false;
                 if( !DeepComparable.IsExactly(Modifier, otherT.Modifier)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.IsExactly(UnitPrice, otherT.UnitPrice)) return false;
                 if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
+                if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
                 
                 return true;
             }
@@ -214,8 +247,10 @@ namespace Hl7.Fhir.Model
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Service != null) yield return Service;
                     foreach (var elem in Modifier) { if (elem != null) yield return elem; }
+                    if (Quantity != null) yield return Quantity;
                     if (UnitPrice != null) yield return UnitPrice;
                     if (Facility != null) yield return Facility;
+                    foreach (var elem in Diagnosis) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -228,8 +263,98 @@ namespace Hl7.Fhir.Model
                     if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
                     if (Service != null) yield return new ElementValue("service", false, Service);
                     foreach (var elem in Modifier) { if (elem != null) yield return new ElementValue("modifier", true, elem); }
+                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
                     if (UnitPrice != null) yield return new ElementValue("unitPrice", false, UnitPrice);
                     if (Facility != null) yield return new ElementValue("facility", false, Facility);
+                    foreach (var elem in Diagnosis) { if (elem != null) yield return new ElementValue("diagnosis", true, elem); }
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("DiagnosisComponent")]
+        [DataContract]
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DiagnosisComponent"; } }
+            
+            /// <summary>
+            /// Patient's diagnosis
+            /// </summary>
+            [FhirElement("diagnosis", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Diagnosis
+            {
+                get { return _Diagnosis; }
+                set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Diagnosis;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DiagnosisComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Diagnosis != null) dest.Diagnosis = (Hl7.Fhir.Model.Element)Diagnosis.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DiagnosisComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Diagnosis, otherT.Diagnosis)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Diagnosis != null) yield return Diagnosis;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Diagnosis != null) yield return new ElementValue("diagnosis", false, Diagnosis);
                 }
             }
 
@@ -363,7 +488,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("enterer", Order=150)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
         {
@@ -378,7 +503,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("provider", Order=160)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -389,24 +514,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Provider;
         
         /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("organization", Order=170)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Organization
-        {
-            get { return _Organization; }
-            set { _Organization = value; OnPropertyChanged("Organization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Organization;
-        
-        /// <summary>
         /// Target
         /// </summary>
-        [FhirElement("insurer", Order=180)]
+        [FhirElement("insurer", Order=170)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -421,7 +531,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Servicing Facility
         /// </summary>
-        [FhirElement("facility", Order=190)]
+        [FhirElement("facility", Order=180)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -436,7 +546,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurance or medical plan
         /// </summary>
-        [FhirElement("coverage", Order=200)]
+        [FhirElement("coverage", Order=190)]
         [CLSCompliant(false)]
 		[References("Coverage")]
         [DataMember]
@@ -451,7 +561,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business agreement
         /// </summary>
-        [FhirElement("businessArrangement", Order=210)]
+        [FhirElement("businessArrangement", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString BusinessArrangementElement
         {
@@ -483,7 +593,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of services covered
         /// </summary>
-        [FhirElement("benefitCategory", Order=220)]
+        [FhirElement("benefitCategory", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BenefitCategory
         {
@@ -496,7 +606,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Detailed services covered within the type
         /// </summary>
-        [FhirElement("benefitSubCategory", Order=230)]
+        [FhirElement("benefitSubCategory", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BenefitSubCategory
         {
@@ -509,7 +619,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Services which may require prior authorization
         /// </summary>
-        [FhirElement("authorization", Order=240)]
+        [FhirElement("authorization", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EligibilityRequest.AuthorizationComponent> Authorization
@@ -542,7 +652,6 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
                 if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopy();
                 if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
@@ -575,7 +684,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
             if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
@@ -601,7 +709,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
             if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
@@ -627,7 +734,6 @@ namespace Hl7.Fhir.Model
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Enterer != null) yield return Enterer;
 				if (Provider != null) yield return Provider;
-				if (Organization != null) yield return Organization;
 				if (Insurer != null) yield return Insurer;
 				if (Facility != null) yield return Facility;
 				if (Coverage != null) yield return Coverage;
@@ -652,7 +758,6 @@ namespace Hl7.Fhir.Model
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (Enterer != null) yield return new ElementValue("enterer", false, Enterer);
                 if (Provider != null) yield return new ElementValue("provider", false, Provider);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
                 if (Insurer != null) yield return new ElementValue("insurer", false, Insurer);
                 if (Facility != null) yield return new ElementValue("facility", false, Facility);
                 if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);

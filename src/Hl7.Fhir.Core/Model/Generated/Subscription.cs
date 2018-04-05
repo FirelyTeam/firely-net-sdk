@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A server push subscription criteria
+    /// Server push subscription criteria
     /// </summary>
     [FhirType("Subscription", IsResource=true)]
     [DataContract]
@@ -172,13 +172,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("endpoint", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri EndpointElement
+            public Hl7.Fhir.Model.FhirUrl EndpointElement
             {
                 get { return _EndpointElement; }
                 set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _EndpointElement;
+            private Hl7.Fhir.Model.FhirUrl _EndpointElement;
             
             /// <summary>
             /// Where the channel points to
@@ -194,13 +194,13 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         EndpointElement = null; 
                     else
-                        EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                        EndpointElement = new Hl7.Fhir.Model.FhirUrl(value);
                     OnPropertyChanged("Endpoint");
                 }
             }
             
             /// <summary>
-            /// Mimetype to send, or omit for no payload
+            /// MIME type to send, or omit for no payload
             /// </summary>
             [FhirElement("payload", InSummary=true, Order=60)]
             [DataMember]
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _PayloadElement;
             
             /// <summary>
-            /// Mimetype to send, or omit for no payload
+            /// MIME type to send, or omit for no payload
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>)TypeElement.DeepCopy();
-                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
+                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)EndpointElement.DeepCopy();
                     if(PayloadElement != null) dest.PayloadElement = (Hl7.Fhir.Model.FhirString)PayloadElement.DeepCopy();
                     if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
                     return dest;
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Rule for server push criteria
+        /// Rule for server push
         /// </summary>
         [FhirElement("criteria", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CriteriaElement;
         
         /// <summary>
-        /// Rule for server push criteria
+        /// Rule for server push
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -82,32 +82,32 @@ namespace Hl7.Fhir.Model
             NotDone,
         }
 
-        [FhirType("PractitionerComponent")]
+        [FhirType("PerformerComponent")]
         [DataContract]
-        public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PractitionerComponent"; } }
+            public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
             /// What type of performance was done
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=40)]
+            [FhirElement("function", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Role
+            public Hl7.Fhir.Model.CodeableConcept Function
             {
-                get { return _Role; }
-                set { _Role = value; OnPropertyChanged("Role"); }
+                get { return _Function; }
+                set { _Function = value; OnPropertyChanged("Function"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Role;
+            private Hl7.Fhir.Model.CodeableConcept _Function;
             
             /// <summary>
-            /// Individual who was performing
+            /// Individual or organization who was performing
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=50)]
             [CLSCompliant(false)]
-			[References("Practitioner")]
+			[References("Practitioner","Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
@@ -120,12 +120,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PractitionerComponent;
+                var dest = other as PerformerComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                    if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopy();
                     if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                     return dest;
                 }
@@ -135,16 +135,16 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PractitionerComponent());
+                return CopyTo(new PerformerComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PractitionerComponent;
+                var otherT = other as PerformerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(Function, otherT.Function)) return false;
                 if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
                 
                 return true;
@@ -152,11 +152,11 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PractitionerComponent;
+                var otherT = other as PerformerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                if( !DeepComparable.IsExactly(Function, otherT.Function)) return false;
                 if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
                 
                 return true;
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Role != null) yield return Role;
+                    if (Function != null) yield return Function;
                     if (Actor != null) yield return Actor;
                 }
             }
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
+                    if (Function != null) yield return new ElementValue("function", false, Function);
                     if (Actor != null) yield return new ElementValue("actor", false, Actor);
                 }
             }
@@ -453,9 +453,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Reason not done
+        /// </summary>
+        [FhirElement("statusReason", Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept StatusReason
+        {
+            get { return _StatusReason; }
+            set { _StatusReason = value; OnPropertyChanged("StatusReason"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _StatusReason;
+        
+        /// <summary>
         /// Vaccine product administered
         /// </summary>
-        [FhirElement("vaccineCode", InSummary=true, Order=110)]
+        [FhirElement("vaccineCode", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept VaccineCode
@@ -469,7 +482,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who was immunized
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=120)]
+        [FhirElement("patient", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -485,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter immunization was part of
         /// </summary>
-        [FhirElement("encounter", Order=130)]
+        [FhirElement("encounter", Order=140)]
         [CLSCompliant(false)]
 		[References("Encounter")]
         [DataMember]
@@ -500,7 +513,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine administration date
         /// </summary>
-        [FhirElement("date", Order=140)]
+        [FhirElement("date", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -532,7 +545,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates context the data was recorded in
         /// </summary>
-        [FhirElement("primarySource", InSummary=true, Order=150)]
+        [FhirElement("primarySource", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean PrimarySourceElement
@@ -565,7 +578,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates the source of a secondarily reported record
         /// </summary>
-        [FhirElement("reportOrigin", Order=160)]
+        [FhirElement("reportOrigin", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ReportOrigin
         {
@@ -578,7 +591,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where immunization occurred
         /// </summary>
-        [FhirElement("location", Order=170)]
+        [FhirElement("location", Order=180)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -593,7 +606,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine manufacturer
         /// </summary>
-        [FhirElement("manufacturer", Order=180)]
+        [FhirElement("manufacturer", Order=190)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -608,7 +621,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine lot number
         /// </summary>
-        [FhirElement("lotNumber", Order=190)]
+        [FhirElement("lotNumber", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString LotNumberElement
         {
@@ -640,7 +653,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine expiration date
         /// </summary>
-        [FhirElement("expirationDate", Order=200)]
+        [FhirElement("expirationDate", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Date ExpirationDateElement
         {
@@ -672,7 +685,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Body site vaccine  was administered
         /// </summary>
-        [FhirElement("site", Order=210)]
+        [FhirElement("site", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Site
         {
@@ -685,7 +698,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How vaccine entered body
         /// </summary>
-        [FhirElement("route", Order=220)]
+        [FhirElement("route", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Route
         {
@@ -698,7 +711,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount of vaccine administered
         /// </summary>
-        [FhirElement("doseQuantity", Order=230)]
+        [FhirElement("doseQuantity", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity DoseQuantity
         {
@@ -711,21 +724,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who performed event
         /// </summary>
-        [FhirElement("practitioner", InSummary=true, Order=240)]
+        [FhirElement("performer", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Immunization.PractitionerComponent> Practitioner
+        public List<Hl7.Fhir.Model.Immunization.PerformerComponent> Performer
         {
-            get { if(_Practitioner==null) _Practitioner = new List<Hl7.Fhir.Model.Immunization.PractitionerComponent>(); return _Practitioner; }
-            set { _Practitioner = value; OnPropertyChanged("Practitioner"); }
+            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.Immunization.PerformerComponent>(); return _Performer; }
+            set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private List<Hl7.Fhir.Model.Immunization.PractitionerComponent> _Practitioner;
+        private List<Hl7.Fhir.Model.Immunization.PerformerComponent> _Performer;
         
         /// <summary>
         /// Additional immunization notes
         /// </summary>
-        [FhirElement("note", InSummary=true, Order=250)]
+        [FhirElement("note", InSummary=true, Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -737,23 +750,85 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
-        /// Why immunization did or did not occur
+        /// Why immunization occurred
         /// </summary>
-        [FhirElement("reason", Order=260)]
+        [FhirElement("reasonCode", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Reason
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
         {
-            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
-            set { _Reason = value; OnPropertyChanged("Reason"); }
+            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+        
+        /// <summary>
+        /// Why immunization occurred
+        /// </summary>
+        [FhirElement("reasonReference", Order=280)]
+        [CLSCompliant(false)]
+		[References("Condition","Observation","DiagnosticReport")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
+        {
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        
+        /// <summary>
+        /// Dose potency
+        /// </summary>
+        [FhirElement("isPotent", InSummary=true, Order=290)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean IsPotentElement
+        {
+            get { return _IsPotentElement; }
+            set { _IsPotentElement = value; OnPropertyChanged("IsPotentElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _IsPotentElement;
+        
+        /// <summary>
+        /// Dose potency
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? IsPotent
+        {
+            get { return IsPotentElement != null ? IsPotentElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  IsPotentElement = null; 
+                else
+                  IsPotentElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("IsPotent");
+            }
+        }
+        
+        /// <summary>
+        /// Reason for being subpotent
+        /// </summary>
+        [FhirElement("subpotentReason", Order=300)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> SubpotentReason
+        {
+            get { if(_SubpotentReason==null) _SubpotentReason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SubpotentReason; }
+            set { _SubpotentReason = value; OnPropertyChanged("SubpotentReason"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _SubpotentReason;
         
         /// <summary>
         /// Educational material presented to patient
         /// </summary>
-        [FhirElement("education", Order=270)]
+        [FhirElement("education", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Immunization.EducationComponent> Education
@@ -767,7 +842,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient eligibility for a vaccination program
         /// </summary>
-        [FhirElement("programEligibility", Order=280)]
+        [FhirElement("programEligibility", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ProgramEligibility
@@ -781,7 +856,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Funding source for the vaccine
         /// </summary>
-        [FhirElement("fundingSource", Order=290)]
+        [FhirElement("fundingSource", Order=330)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept FundingSource
         {
@@ -817,6 +892,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>)StatusElement.DeepCopy();
+                if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableConcept)StatusReason.DeepCopy();
                 if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
@@ -830,9 +906,12 @@ namespace Hl7.Fhir.Model
                 if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                 if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.SimpleQuantity)DoseQuantity.DeepCopy();
-                if(Practitioner != null) dest.Practitioner = new List<Hl7.Fhir.Model.Immunization.PractitionerComponent>(Practitioner.DeepCopy());
+                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Immunization.PerformerComponent>(Performer.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
+                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(IsPotentElement != null) dest.IsPotentElement = (Hl7.Fhir.Model.FhirBoolean)IsPotentElement.DeepCopy();
+                if(SubpotentReason != null) dest.SubpotentReason = new List<Hl7.Fhir.Model.CodeableConcept>(SubpotentReason.DeepCopy());
                 if(Education != null) dest.Education = new List<Hl7.Fhir.Model.Immunization.EducationComponent>(Education.DeepCopy());
                 if(ProgramEligibility != null) dest.ProgramEligibility = new List<Hl7.Fhir.Model.CodeableConcept>(ProgramEligibility.DeepCopy());
                 if(FundingSource != null) dest.FundingSource = (Hl7.Fhir.Model.CodeableConcept)FundingSource.DeepCopy();
@@ -855,6 +934,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(StatusReason, otherT.StatusReason)) return false;
             if( !DeepComparable.Matches(VaccineCode, otherT.VaccineCode)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
@@ -868,9 +948,12 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Site, otherT.Site)) return false;
             if( !DeepComparable.Matches(Route, otherT.Route)) return false;
             if( !DeepComparable.Matches(DoseQuantity, otherT.DoseQuantity)) return false;
-            if( !DeepComparable.Matches(Practitioner, otherT.Practitioner)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
-            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(IsPotentElement, otherT.IsPotentElement)) return false;
+            if( !DeepComparable.Matches(SubpotentReason, otherT.SubpotentReason)) return false;
             if( !DeepComparable.Matches(Education, otherT.Education)) return false;
             if( !DeepComparable.Matches(ProgramEligibility, otherT.ProgramEligibility)) return false;
             if( !DeepComparable.Matches(FundingSource, otherT.FundingSource)) return false;
@@ -886,6 +969,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(StatusReason, otherT.StatusReason)) return false;
             if( !DeepComparable.IsExactly(VaccineCode, otherT.VaccineCode)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
@@ -899,9 +983,12 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
             if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
             if( !DeepComparable.IsExactly(DoseQuantity, otherT.DoseQuantity)) return false;
-            if( !DeepComparable.IsExactly(Practitioner, otherT.Practitioner)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(IsPotentElement, otherT.IsPotentElement)) return false;
+            if( !DeepComparable.IsExactly(SubpotentReason, otherT.SubpotentReason)) return false;
             if( !DeepComparable.IsExactly(Education, otherT.Education)) return false;
             if( !DeepComparable.IsExactly(ProgramEligibility, otherT.ProgramEligibility)) return false;
             if( !DeepComparable.IsExactly(FundingSource, otherT.FundingSource)) return false;
@@ -917,6 +1004,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
+				if (StatusReason != null) yield return StatusReason;
 				if (VaccineCode != null) yield return VaccineCode;
 				if (Patient != null) yield return Patient;
 				if (Encounter != null) yield return Encounter;
@@ -930,9 +1018,12 @@ namespace Hl7.Fhir.Model
 				if (Site != null) yield return Site;
 				if (Route != null) yield return Route;
 				if (DoseQuantity != null) yield return DoseQuantity;
-				foreach (var elem in Practitioner) { if (elem != null) yield return elem; }
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
-				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				if (IsPotentElement != null) yield return IsPotentElement;
+				foreach (var elem in SubpotentReason) { if (elem != null) yield return elem; }
 				foreach (var elem in Education) { if (elem != null) yield return elem; }
 				foreach (var elem in ProgramEligibility) { if (elem != null) yield return elem; }
 				if (FundingSource != null) yield return FundingSource;
@@ -947,6 +1038,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (StatusReason != null) yield return new ElementValue("statusReason", false, StatusReason);
                 if (VaccineCode != null) yield return new ElementValue("vaccineCode", false, VaccineCode);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
                 if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
@@ -960,9 +1052,12 @@ namespace Hl7.Fhir.Model
                 if (Site != null) yield return new ElementValue("site", false, Site);
                 if (Route != null) yield return new ElementValue("route", false, Route);
                 if (DoseQuantity != null) yield return new ElementValue("doseQuantity", false, DoseQuantity);
-                foreach (var elem in Practitioner) { if (elem != null) yield return new ElementValue("practitioner", true, elem); }
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
+                if (IsPotentElement != null) yield return new ElementValue("isPotent", false, IsPotentElement);
+                foreach (var elem in SubpotentReason) { if (elem != null) yield return new ElementValue("subpotentReason", true, elem); }
                 foreach (var elem in Education) { if (elem != null) yield return new ElementValue("education", true, elem); }
                 foreach (var elem in ProgramEligibility) { if (elem != null) yield return new ElementValue("programEligibility", true, elem); }
                 if (FundingSource != null) yield return new ElementValue("fundingSource", false, FundingSource);

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("requestProvider", Order=120)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -942,24 +942,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _RequestProvider;
         
         /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("requestOrganization", Order=130)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestOrganization
-        {
-            get { return _RequestOrganization; }
-            set { _RequestOrganization = value; OnPropertyChanged("RequestOrganization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
-        
-        /// <summary>
         /// Eligibility reference
         /// </summary>
-        [FhirElement("request", Order=140)]
+        [FhirElement("request", Order=130)]
         [CLSCompliant(false)]
 		[References("EligibilityRequest")]
         [DataMember]
@@ -972,9 +957,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
-        /// complete | error | partial
+        /// queued | complete | error | partial
         /// </summary>
-        [FhirElement("outcome", Order=150)]
+        [FhirElement("outcome", Order=140)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement
         {
@@ -985,7 +970,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ClaimProcessingCodes> _OutcomeElement;
         
         /// <summary>
-        /// complete | error | partial
+        /// queued | complete | error | partial
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1006,7 +991,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Disposition Message
         /// </summary>
-        [FhirElement("disposition", Order=160)]
+        [FhirElement("disposition", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DispositionElement
         {
@@ -1038,7 +1023,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer issuing the coverage
         /// </summary>
-        [FhirElement("insurer", Order=170)]
+        [FhirElement("insurer", Order=160)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -1053,7 +1038,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Coverage inforce indicator
         /// </summary>
-        [FhirElement("inforce", Order=180)]
+        [FhirElement("inforce", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean InforceElement
         {
@@ -1085,7 +1070,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details by insurance coverage
         /// </summary>
-        [FhirElement("insurance", Order=190)]
+        [FhirElement("insurance", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EligibilityResponse.InsuranceComponent> Insurance
@@ -1099,7 +1084,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Pre-Authorization/Determination Reference
         /// </summary>
-        [FhirElement("preAuthRef", Order=200)]
+        [FhirElement("preAuthRef", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PreAuthRefElement
         {
@@ -1131,7 +1116,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Services which may require prior authorization
         /// </summary>
-        [FhirElement("authorization", Order=210)]
+        [FhirElement("authorization", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EligibilityResponse.AuthorizationComponent> Authorization
@@ -1145,7 +1130,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", Order=220)]
+        [FhirElement("form", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Form
         {
@@ -1158,7 +1143,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Processing errors
         /// </summary>
-        [FhirElement("error", Order=230)]
+        [FhirElement("error", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent> Error
@@ -1187,7 +1172,6 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
-                if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ClaimProcessingCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
@@ -1219,7 +1203,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
@@ -1244,7 +1227,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
@@ -1269,7 +1251,6 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (CreatedElement != null) yield return CreatedElement;
 				if (RequestProvider != null) yield return RequestProvider;
-				if (RequestOrganization != null) yield return RequestOrganization;
 				if (Request != null) yield return Request;
 				if (OutcomeElement != null) yield return OutcomeElement;
 				if (DispositionElement != null) yield return DispositionElement;
@@ -1293,7 +1274,6 @@ namespace Hl7.Fhir.Model
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
                 if (Request != null) yield return new ElementValue("request", false, Request);
                 if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);

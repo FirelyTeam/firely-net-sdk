@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -141,11 +141,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "contained.all(('#'+id in %resource.descendants().reference) or descendants().where(reference = '#').exists())",
+            Expression = "contained.all(('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists())",
             Key = "dom-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
-            Xpath = "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::reference[@value='#'])]))"
+            Xpath = "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
         };
 
         public override void AddDefaultConstraints()

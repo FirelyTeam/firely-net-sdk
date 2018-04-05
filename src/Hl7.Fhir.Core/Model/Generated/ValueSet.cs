@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -335,21 +335,21 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ValueSet.FilterComponent> _Filter;
             
             /// <summary>
-            /// Select only contents included in this value set
+            /// Select the contents included in this value set
             /// </summary>
             [FhirElement("valueSet", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirUri> ValueSetElement
+            public List<Hl7.Fhir.Model.Canonical> ValueSetElement
             {
-                get { if(_ValueSetElement==null) _ValueSetElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ValueSetElement; }
+                get { if(_ValueSetElement==null) _ValueSetElement = new List<Hl7.Fhir.Model.Canonical>(); return _ValueSetElement; }
                 set { _ValueSetElement = value; OnPropertyChanged("ValueSetElement"); }
             }
             
-            private List<Hl7.Fhir.Model.FhirUri> _ValueSetElement;
+            private List<Hl7.Fhir.Model.Canonical> _ValueSetElement;
             
             /// <summary>
-            /// Select only contents included in this value set
+            /// Select the contents included in this value set
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         ValueSetElement = null; 
                     else
-                        ValueSetElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                        ValueSetElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
                     OnPropertyChanged("ValueSet");
                 }
             }
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
                     if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                     if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptReferenceComponent>(Concept.DeepCopy());
                     if(Filter != null) dest.Filter = new List<Hl7.Fhir.Model.ValueSet.FilterComponent>(Filter.DeepCopy());
-                    if(ValueSetElement != null) dest.ValueSetElement = new List<Hl7.Fhir.Model.FhirUri>(ValueSetElement.DeepCopy());
+                    if(ValueSetElement != null) dest.ValueSetElement = new List<Hl7.Fhir.Model.Canonical>(ValueSetElement.DeepCopy());
                     return dest;
                 }
                 else
@@ -855,13 +855,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("value", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code ValueElement
+            public Hl7.Fhir.Model.FhirString ValueElement
             {
                 get { return _ValueElement; }
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
             
-            private Hl7.Fhir.Model.Code _ValueElement;
+            private Hl7.Fhir.Model.FhirString _ValueElement;
             
             /// <summary>
             /// Code from the system, or regex criteria, or boolean value for exists
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         ValueElement = null; 
                     else
-                        ValueElement = new Hl7.Fhir.Model.Code(value);
+                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(PropertyElement != null) dest.PropertyElement = (Hl7.Fhir.Model.Code)PropertyElement.DeepCopy();
                     if(OpElement != null) dest.OpElement = (Code<Hl7.Fhir.Model.FilterOperator>)OpElement.DeepCopy();
-                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.Code)ValueElement.DeepCopy();
+                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -969,7 +969,6 @@ namespace Hl7.Fhir.Model
             /// Uniquely identifies this expansion
             /// </summary>
             [FhirElement("identifier", Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri IdentifierElement
             {
@@ -1669,7 +1668,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this value set (globally unique)
+        /// Canonical identifier for this value set, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -1682,7 +1681,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this value set (globally unique)
+        /// Canonical identifier for this value set, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1701,7 +1700,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Additional identifier for the value set
+        /// Additional identifier for the value set (business identifier)
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -1876,7 +1875,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=160)]
         [DataMember]
@@ -1889,7 +1888,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1967,7 +1966,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -2085,7 +2084,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Definition of the content of the value set (CLD)
+        /// Definition of the content of the value set
         /// </summary>
         [FhirElement("compose", Order=260)]
         [DataMember]
@@ -2110,6 +2109,15 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
         
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_11 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "status='active' or compose.exists() or expansion.empty()",
+            Key = "vsd-11",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Status must = 'active' if expansion is present and compose is absent",
+            Xpath = "f:status/@value='active' or exists(f:compose) or not(exists(f:expansion)"
+        };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_5 = new ElementDefinition.ConstraintComponent()
         {
@@ -2178,6 +2186,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(ValueSet_VSD_11);
             InvariantConstraints.Add(ValueSet_VSD_5);
             InvariantConstraints.Add(ValueSet_VSD_2);
             InvariantConstraints.Add(ValueSet_VSD_3);

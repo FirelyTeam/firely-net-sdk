@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SubstanceMoiety")]
     [DataContract]
-    public partial class SubstanceMoiety : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstanceMoiety : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "SubstanceMoiety"; } }
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The role of the moiety should be specified if there is a specific role the moiety is playing
         /// </summary>
-        [FhirElement("role", InSummary=true, Order=30)]
+        [FhirElement("role", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Role
         {
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The unique identifier assigned to the substance representing the moiety based on the ISO 11238 substance controlled vocabulary
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=40)]
+        [FhirElement("identifier", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The name of the moiety shall be provided
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=50)]
+        [FhirElement("name", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Stereochemistry shall be captured as described in 4.7.1
         /// </summary>
-        [FhirElement("stereochemistry", InSummary=true, Order=60)]
+        [FhirElement("stereochemistry", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Stereochemistry
         {
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Optical activity shall be captured as described in 4.7.2
         /// </summary>
-        [FhirElement("opticalActivity", InSummary=true, Order=70)]
+        [FhirElement("opticalActivity", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept OpticalActivity
         {
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Molecular formula shall be captured as described in 4.7.3
         /// </summary>
-        [FhirElement("molecularFormula", InSummary=true, Order=80)]
+        [FhirElement("molecularFormula", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString MolecularFormulaElement
         {
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
         /// </summary>
-        [FhirElement("amount", InSummary=true, Order=90)]
+        [FhirElement("amount", InSummary=true, Order=150)]
         [DataMember]
         public SubstanceAmount Amount
         {

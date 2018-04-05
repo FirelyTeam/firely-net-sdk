@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
-            /// Who performed the administration and what they did
+            /// Type of performance
             /// </summary>
             [FhirElement("function", Order=40)]
             [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Function;
             
             /// <summary>
-            /// Individual who was performing
+            /// Who performed the medication administration
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=50)]
             [CLSCompliant(false)]
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Effective;
         
         /// <summary>
-        /// Who administered substance
+        /// Who performed the medication administration and what they did
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
         
         /// <summary>
-        /// Condition or Observation that supports why the medication was administered
+        /// Condition or observation that supports why the medication was administered
         /// </summary>
         [FhirElement("reasonReference", Order=220)]
         [CLSCompliant(false)]

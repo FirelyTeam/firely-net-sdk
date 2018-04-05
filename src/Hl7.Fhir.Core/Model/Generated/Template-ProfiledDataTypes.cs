@@ -1,7 +1,9 @@
 ﻿
 //
-// Model Generated on Sun, 07 Jan 2018 13:23:06 GMT for FHIR v3.2.0
+// Model Generated on Thu, 05 Apr 2018 21:37:12 GMT for FHIR v3.3.0
 //
+// Generated Shared Enumeration: Use
+
 // Generated Shared Enumeration: ResourceType
 
 // Generated Shared Enumeration: OperationParameterUse
@@ -16,8 +18,6 @@
 // Generated Shared Enumeration: RequestIntent
 
 // Generated Shared Enumeration: AdministrativeGender
-
-// Generated Shared Enumeration: GuidePageKind
 
 // Generated Shared Enumeration: EventStatus
 
@@ -41,8 +41,6 @@
 // Generated Shared Enumeration: FinancialResourceStatusCodes
 
 // Generated Shared Enumeration: ActionCardinalityBehavior
-
-// Generated Shared Enumeration: GuideDependencyType
 
 // Generated Shared Enumeration: ActionConditionKind
 
@@ -76,8 +74,3 @@
 // Generated helper templates
 // Generated items
 // Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs
-// Hl7.Fhir.Core\Model\Generated\Money.cs
-// Hl7.Fhir.Core\Model\Generated\Duration.cs
-// Hl7.Fhir.Core\Model\Generated\Distance.cs
-// Hl7.Fhir.Core\Model\Generated\Count.cs
-// Hl7.Fhir.Core\Model\Generated\Age.cs

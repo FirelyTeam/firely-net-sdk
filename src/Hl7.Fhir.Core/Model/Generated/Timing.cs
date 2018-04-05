@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Timing")]
     [DataContract]
-    public partial class Timing : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Timing : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Timing"; } }
@@ -876,7 +876,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the event occurs
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=30)]
+        [FhirElement("event", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirDateTime> EventElement
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the event is to occur
         /// </summary>
-        [FhirElement("repeat", InSummary=true, Order=40)]
+        [FhirElement("repeat", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Timing.RepeatComponent Repeat
         {
@@ -922,7 +922,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=50)]
+        [FhirElement("code", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {

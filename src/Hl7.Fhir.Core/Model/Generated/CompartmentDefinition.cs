@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this compartment definition (globally unique)
+        /// Canonical identifier for this compartment definition, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this compartment definition (globally unique)
+        /// Canonical identifier for this compartment definition, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -491,22 +491,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Why this compartment definition is defined
+        /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("purpose", Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.Markdown Purpose
-        {
-            get { return _Purpose; }
-            set { _Purpose = value; OnPropertyChanged("Purpose"); }
-        }
-        
-        private Hl7.Fhir.Model.Markdown _Purpose;
-        
-        /// <summary>
-        /// Context the content is intended to support
-        /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=190)]
+        [FhirElement("useContext", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -520,7 +507,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended jurisdiction for compartment definition (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=200)]
+        [FhirElement("jurisdiction", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -530,6 +517,19 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
+        
+        /// <summary>
+        /// Why this compartment definition is defined
+        /// </summary>
+        [FhirElement("purpose", Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.Markdown Purpose
+        {
+            get { return _Purpose; }
+            set { _Purpose = value; OnPropertyChanged("Purpose"); }
+        }
+        
+        private Hl7.Fhir.Model.Markdown _Purpose;
         
         /// <summary>
         /// Patient | Encounter | RelatedPerson | Practitioner | Device
@@ -634,9 +634,9 @@ namespace Hl7.Fhir.Model
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
-                if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+                if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.CompartmentType>)CodeElement.DeepCopy();
                 if(SearchElement != null) dest.SearchElement = (Hl7.Fhir.Model.FhirBoolean)SearchElement.DeepCopy();
                 if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.CompartmentDefinition.ResourceComponent>(Resource.DeepCopy());
@@ -666,9 +666,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(Description, otherT.Description)) return false;
-            if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.Matches(SearchElement, otherT.SearchElement)) return false;
             if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
@@ -691,9 +691,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
-            if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.IsExactly(SearchElement, otherT.SearchElement)) return false;
             if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
@@ -716,9 +716,9 @@ namespace Hl7.Fhir.Model
 				if (PublisherElement != null) yield return PublisherElement;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				if (Description != null) yield return Description;
-				if (Purpose != null) yield return Purpose;
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
+				if (Purpose != null) yield return Purpose;
 				if (CodeElement != null) yield return CodeElement;
 				if (SearchElement != null) yield return SearchElement;
 				foreach (var elem in Resource) { if (elem != null) yield return elem; }
@@ -740,9 +740,9 @@ namespace Hl7.Fhir.Model
                 if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
                 if (Description != null) yield return new ElementValue("description", false, Description);
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
                 foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
                 if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
                 if (SearchElement != null) yield return new ElementValue("search", false, SearchElement);
                 foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", true, elem); }

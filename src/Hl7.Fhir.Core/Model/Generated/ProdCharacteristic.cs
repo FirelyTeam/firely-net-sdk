@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ProdCharacteristic")]
     [DataContract]
-    public partial class ProdCharacteristic : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProdCharacteristic : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "ProdCharacteristic"; } }
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("height", InSummary=true, Order=30)]
+        [FhirElement("height", InSummary=true, Order=90)]
         [DataMember]
         public Quantity Height
         {
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("width", InSummary=true, Order=40)]
+        [FhirElement("width", InSummary=true, Order=100)]
         [DataMember]
         public Quantity Width
         {
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("depth", InSummary=true, Order=50)]
+        [FhirElement("depth", InSummary=true, Order=110)]
         [DataMember]
         public Quantity Depth
         {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("weight", InSummary=true, Order=60)]
+        [FhirElement("weight", InSummary=true, Order=120)]
         [DataMember]
         public Quantity Weight
         {
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("nominalVolume", InSummary=true, Order=70)]
+        [FhirElement("nominalVolume", InSummary=true, Order=130)]
         [DataMember]
         public Quantity NominalVolume
         {
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("externalDiameter", InSummary=true, Order=80)]
+        [FhirElement("externalDiameter", InSummary=true, Order=140)]
         [DataMember]
         public Quantity ExternalDiameter
         {
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
-        [FhirElement("shape", InSummary=true, Order=90)]
+        [FhirElement("shape", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ShapeElement
         {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
-        [FhirElement("color", InSummary=true, Order=100)]
+        [FhirElement("color", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ColorElement
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the imprint can be specified as text
         /// </summary>
-        [FhirElement("imprint", InSummary=true, Order=110)]
+        [FhirElement("imprint", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ImprintElement
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
         /// </summary>
-        [FhirElement("image", InSummary=true, Order=120)]
+        [FhirElement("image", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Image
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
-        [FhirElement("scoring", InSummary=true, Order=130)]
+        [FhirElement("scoring", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Scoring
         {

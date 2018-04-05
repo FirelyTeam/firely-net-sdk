@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("instance", InSummary=true, Order=40)]
             [CLSCompliant(false)]
-			[References("Substance","Medication","MedicationAdministration","MedicationStatement","Device")]
+			[References("Immunization","Procedure","Substance","Medication","MedicationAdministration","MedicationStatement","Device")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Instance
@@ -424,6 +424,7 @@ namespace Hl7.Fhir.Model
         [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Patient","Group","Practitioner","RelatedPerson")]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -434,9 +435,24 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
+        /// Encounter or episode of care that establishes the context for this AdverseEvent
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=140)]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
         /// When the event occurred
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=140)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -468,7 +484,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Effect on the subject due to this event
         /// </summary>
-        [FhirElement("resultingCondition", InSummary=true, Order=150)]
+        [FhirElement("resultingCondition", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Condition")]
         [Cardinality(Min=0,Max=-1)]
@@ -484,7 +500,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Location where adverse event occurred
         /// </summary>
-        [FhirElement("location", InSummary=true, Order=160)]
+        [FhirElement("location", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -499,7 +515,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Seriousness of the event
         /// </summary>
-        [FhirElement("seriousness", InSummary=true, Order=170)]
+        [FhirElement("seriousness", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Seriousness
         {
@@ -512,7 +528,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Mild | Moderate | Severe
         /// </summary>
-        [FhirElement("severity", InSummary=true, Order=180)]
+        [FhirElement("severity", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
         {
@@ -525,7 +541,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=190)]
+        [FhirElement("outcome", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Outcome
         {
@@ -538,7 +554,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who recorded the adverse event
         /// </summary>
-        [FhirElement("recorder", InSummary=true, Order=200)]
+        [FhirElement("recorder", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
@@ -553,49 +569,18 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who  was involved in the adverse event or the potential adverse event
         /// </summary>
-        [FhirElement("eventParticipant", InSummary=true, Order=210)]
+        [FhirElement("contributor", InSummary=true, Order=220)]
         [CLSCompliant(false)]
 		[References("Practitioner","Device")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference EventParticipant
+        public List<Hl7.Fhir.Model.ResourceReference> Contributor
         {
-            get { return _EventParticipant; }
-            set { _EventParticipant = value; OnPropertyChanged("EventParticipant"); }
+            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contributor; }
+            set { _Contributor = value; OnPropertyChanged("Contributor"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _EventParticipant;
-        
-        /// <summary>
-        /// Description of the adverse event
-        /// </summary>
-        [FhirElement("description", InSummary=true, Order=220)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement
-        {
-            get { return _DescriptionElement; }
-            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _DescriptionElement;
-        
-        /// <summary>
-        /// Description of the adverse event
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Description
-        {
-            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DescriptionElement = null; 
-                else
-                  DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Description");
-            }
-        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Contributor;
         
         /// <summary>
         /// The suspected agent causing the adverse event
@@ -616,7 +601,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("subjectMedicalHistory", InSummary=true, Order=240)]
         [CLSCompliant(false)]
-		[References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure")]
+		[References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","Media","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SubjectMedicalHistory
@@ -678,6 +663,7 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Event != null) dest.Event = (Hl7.Fhir.Model.CodeableConcept)Event.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(ResultingCondition != null) dest.ResultingCondition = new List<Hl7.Fhir.Model.ResourceReference>(ResultingCondition.DeepCopy());
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
@@ -685,8 +671,7 @@ namespace Hl7.Fhir.Model
                 if(Severity != null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)Severity.DeepCopy();
                 if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
                 if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
-                if(EventParticipant != null) dest.EventParticipant = (Hl7.Fhir.Model.ResourceReference)EventParticipant.DeepCopy();
-                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.ResourceReference>(Contributor.DeepCopy());
                 if(SuspectEntity != null) dest.SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(SuspectEntity.DeepCopy());
                 if(SubjectMedicalHistory != null) dest.SubjectMedicalHistory = new List<Hl7.Fhir.Model.ResourceReference>(SubjectMedicalHistory.DeepCopy());
                 if(ReferenceDocument != null) dest.ReferenceDocument = new List<Hl7.Fhir.Model.ResourceReference>(ReferenceDocument.DeepCopy());
@@ -713,6 +698,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(ResultingCondition, otherT.ResultingCondition)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
@@ -720,8 +706,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Severity, otherT.Severity)) return false;
             if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
             if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
-            if( !DeepComparable.Matches(EventParticipant, otherT.EventParticipant)) return false;
-            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(Contributor, otherT.Contributor)) return false;
             if( !DeepComparable.Matches(SuspectEntity, otherT.SuspectEntity)) return false;
             if( !DeepComparable.Matches(SubjectMedicalHistory, otherT.SubjectMedicalHistory)) return false;
             if( !DeepComparable.Matches(ReferenceDocument, otherT.ReferenceDocument)) return false;
@@ -741,6 +726,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(ResultingCondition, otherT.ResultingCondition)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
@@ -748,8 +734,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Severity, otherT.Severity)) return false;
             if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
             if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
-            if( !DeepComparable.IsExactly(EventParticipant, otherT.EventParticipant)) return false;
-            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Contributor, otherT.Contributor)) return false;
             if( !DeepComparable.IsExactly(SuspectEntity, otherT.SuspectEntity)) return false;
             if( !DeepComparable.IsExactly(SubjectMedicalHistory, otherT.SubjectMedicalHistory)) return false;
             if( !DeepComparable.IsExactly(ReferenceDocument, otherT.ReferenceDocument)) return false;
@@ -769,6 +754,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Event != null) yield return Event;
 				if (Subject != null) yield return Subject;
+				if (Context != null) yield return Context;
 				if (DateElement != null) yield return DateElement;
 				foreach (var elem in ResultingCondition) { if (elem != null) yield return elem; }
 				if (Location != null) yield return Location;
@@ -776,8 +762,7 @@ namespace Hl7.Fhir.Model
 				if (Severity != null) yield return Severity;
 				if (Outcome != null) yield return Outcome;
 				if (Recorder != null) yield return Recorder;
-				if (EventParticipant != null) yield return EventParticipant;
-				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Contributor) { if (elem != null) yield return elem; }
 				foreach (var elem in SuspectEntity) { if (elem != null) yield return elem; }
 				foreach (var elem in SubjectMedicalHistory) { if (elem != null) yield return elem; }
 				foreach (var elem in ReferenceDocument) { if (elem != null) yield return elem; }
@@ -796,6 +781,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 if (Event != null) yield return new ElementValue("event", false, Event);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Context != null) yield return new ElementValue("context", false, Context);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
                 foreach (var elem in ResultingCondition) { if (elem != null) yield return new ElementValue("resultingCondition", true, elem); }
                 if (Location != null) yield return new ElementValue("location", false, Location);
@@ -803,8 +789,7 @@ namespace Hl7.Fhir.Model
                 if (Severity != null) yield return new ElementValue("severity", false, Severity);
                 if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
                 if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
-                if (EventParticipant != null) yield return new ElementValue("eventParticipant", false, EventParticipant);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", true, elem); }
                 foreach (var elem in SuspectEntity) { if (elem != null) yield return new ElementValue("suspectEntity", true, elem); }
                 foreach (var elem in SubjectMedicalHistory) { if (elem != null) yield return new ElementValue("subjectMedicalHistory", true, elem); }
                 foreach (var elem in ReferenceDocument) { if (elem != null) yield return new ElementValue("referenceDocument", true, elem); }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
-        /// complete | error | partial
+        /// queued | complete | error | partial
         /// </summary>
         [FhirElement("outcome", Order=150)]
         [DataMember]
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ClaimProcessingCodes> _OutcomeElement;
         
         /// <summary>
-        /// complete | error | partial
+        /// queued | complete | error | partial
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("requestProvider", Order=170)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -620,24 +620,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _RequestProvider;
         
         /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("requestOrganization", Order=180)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestOrganization
-        {
-            get { return _RequestOrganization; }
-            set { _RequestOrganization = value; OnPropertyChanged("RequestOrganization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
-        
-        /// <summary>
         /// List of settlements
         /// </summary>
-        [FhirElement("detail", Order=190)]
+        [FhirElement("detail", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent> Detail
@@ -651,7 +636,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", Order=200)]
+        [FhirElement("form", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Form
         {
@@ -664,7 +649,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Total amount of Payment
         /// </summary>
-        [FhirElement("total", Order=210)]
+        [FhirElement("total", Order=200)]
         [DataMember]
         public Money Total
         {
@@ -677,7 +662,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Processing comments
         /// </summary>
-        [FhirElement("processNote", Order=220)]
+        [FhirElement("processNote", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> ProcessNote
@@ -711,7 +696,6 @@ namespace Hl7.Fhir.Model
                 if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ClaimProcessingCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
-                if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent>(Detail.DeepCopy());
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
                 if(Total != null) dest.Total = (Money)Total.DeepCopy();
@@ -742,7 +726,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
             if( !DeepComparable.Matches(Form, otherT.Form)) return false;
             if( !DeepComparable.Matches(Total, otherT.Total)) return false;
@@ -766,7 +749,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
             if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
             if( !DeepComparable.IsExactly(Total, otherT.Total)) return false;
@@ -790,7 +772,6 @@ namespace Hl7.Fhir.Model
 				if (OutcomeElement != null) yield return OutcomeElement;
 				if (DispositionElement != null) yield return DispositionElement;
 				if (RequestProvider != null) yield return RequestProvider;
-				if (RequestOrganization != null) yield return RequestOrganization;
 				foreach (var elem in Detail) { if (elem != null) yield return elem; }
 				if (Form != null) yield return Form;
 				if (Total != null) yield return Total;
@@ -813,7 +794,6 @@ namespace Hl7.Fhir.Model
                 if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
                 foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", true, elem); }
                 if (Form != null) yield return new ElementValue("form", false, Form);
                 if (Total != null) yield return new ElementValue("total", false, Total);

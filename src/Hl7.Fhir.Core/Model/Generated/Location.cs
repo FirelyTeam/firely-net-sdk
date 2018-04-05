@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// A list of alternate names that the location is known as, or was known as in the past
+        /// A list of alternate names that the location is known as or was known as in the past
         /// </summary>
         [FhirElement("alias", Order=130)]
         [Cardinality(Min=0,Max=-1)]
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirString> _AliasElement;
         
         /// <summary>
-        /// A list of alternate names that the location is known as, or was known as in the past
+        /// A list of alternate names that the location is known as or was known as in the past
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -693,14 +693,15 @@ namespace Hl7.Fhir.Model
         /// Type of function performed
         /// </summary>
         [FhirElement("type", InSummary=true, Order=160)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public List<Hl7.Fhir.Model.CodeableConcept> Type
         {
-            get { return _Type; }
+            get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
         /// Contact details of the location
@@ -868,7 +869,7 @@ namespace Hl7.Fhir.Model
                 if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.Location.LocationMode>)ModeElement.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                 if(PhysicalType != null) dest.PhysicalType = (Hl7.Fhir.Model.CodeableConcept)PhysicalType.DeepCopy();
@@ -956,7 +957,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
 				if (DescriptionElement != null) yield return DescriptionElement;
 				if (ModeElement != null) yield return ModeElement;
-				if (Type != null) yield return Type;
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
 				if (Address != null) yield return Address;
 				if (PhysicalType != null) yield return PhysicalType;
@@ -982,7 +983,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
                 if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                 if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
                 foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
                 if (Address != null) yield return new ElementValue("address", false, Address);
                 if (PhysicalType != null) yield return new ElementValue("physicalType", false, PhysicalType);

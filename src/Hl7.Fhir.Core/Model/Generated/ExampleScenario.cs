@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1770,7 +1770,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this example scenario (globally unique)
+        /// Canonical identifier for this example scenario, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -1783,7 +1783,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this example scenario (globally unique)
+        /// Canonical identifier for this example scenario, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1880,41 +1880,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name of example
-        /// </summary>
-        [FhirElement("title", InSummary=true, Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString TitleElement
-        {
-            get { return _TitleElement; }
-            set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _TitleElement;
-        
-        /// <summary>
-        /// Name of example
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Title
-        {
-            get { return TitleElement != null ? TitleElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  TitleElement = null; 
-                else
-                  TitleElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Title");
-            }
-        }
-        
-        /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1947,7 +1915,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=150)]
+        [FhirElement("experimental", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -1977,9 +1945,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=160)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -1990,7 +1958,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2011,7 +1979,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=170)]
+        [FhirElement("publisher", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -2043,7 +2011,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=180)]
+        [FhirElement("contact", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -2055,9 +2023,9 @@ namespace Hl7.Fhir.Model
         private List<ContactDetail> _Contact;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=190)]
+        [FhirElement("useContext", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -2071,7 +2039,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended jurisdiction for example scenario (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=200)]
+        [FhirElement("jurisdiction", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2085,7 +2053,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=210)]
+        [FhirElement("copyright", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Copyright
         {
@@ -2096,22 +2064,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Copyright;
         
         /// <summary>
-        /// Description of behaviour of the workflow example
-        /// </summary>
-        [FhirElement("description", Order=220)]
-        [DataMember]
-        public Hl7.Fhir.Model.Markdown Description
-        {
-            get { return _Description; }
-            set { _Description = value; OnPropertyChanged("Description"); }
-        }
-        
-        private Hl7.Fhir.Model.Markdown _Description;
-        
-        /// <summary>
         /// The purpose of the example, e.g. to illustrate a scenario
         /// </summary>
-        [FhirElement("purpose", Order=230)]
+        [FhirElement("purpose", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Purpose
         {
@@ -2124,7 +2079,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actor participating in the resource
         /// </summary>
-        [FhirElement("actor", Order=240)]
+        [FhirElement("actor", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ExampleScenario.ActorComponent> Actor
@@ -2138,7 +2093,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Each resource and each version that is present in the workflow
         /// </summary>
-        [FhirElement("instance", Order=250)]
+        [FhirElement("instance", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent> Instance
@@ -2152,32 +2107,49 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Each major process - a group of operations
         /// </summary>
-        [FhirElement("process", Order=260)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("process", Order=240)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ExampleScenario.ProcessComponent Process
+        public List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> Process
         {
-            get { return _Process; }
+            get { if(_Process==null) _Process = new List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent>(); return _Process; }
             set { _Process = value; OnPropertyChanged("Process"); }
         }
         
-        private Hl7.Fhir.Model.ExampleScenario.ProcessComponent _Process;
+        private List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> _Process;
         
         /// <summary>
         /// Another nested workflow
         /// </summary>
-        [FhirElement("workflow", Order=270)]
-        [CLSCompliant(false)]
-		[References("ExampleScenario")]
+        [FhirElement("workflow", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Workflow
+        public List<Hl7.Fhir.Model.Canonical> WorkflowElement
         {
-            get { if(_Workflow==null) _Workflow = new List<Hl7.Fhir.Model.ResourceReference>(); return _Workflow; }
-            set { _Workflow = value; OnPropertyChanged("Workflow"); }
+            get { if(_WorkflowElement==null) _WorkflowElement = new List<Hl7.Fhir.Model.Canonical>(); return _WorkflowElement; }
+            set { _WorkflowElement = value; OnPropertyChanged("WorkflowElement"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Workflow;
+        private List<Hl7.Fhir.Model.Canonical> _WorkflowElement;
+        
+        /// <summary>
+        /// Another nested workflow
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Workflow
+        {
+            get { return WorkflowElement != null ? WorkflowElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  WorkflowElement = null; 
+                else
+                  WorkflowElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
+                OnPropertyChanged("Workflow");
+            }
+        }
         
 
         public override void AddDefaultConstraints()
@@ -2197,7 +2169,6 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
@@ -2206,12 +2177,11 @@ namespace Hl7.Fhir.Model
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
-                if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.ExampleScenario.ActorComponent>(Actor.DeepCopy());
                 if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent>(Instance.DeepCopy());
-                if(Process != null) dest.Process = (Hl7.Fhir.Model.ExampleScenario.ProcessComponent)Process.DeepCopy();
-                if(Workflow != null) dest.Workflow = new List<Hl7.Fhir.Model.ResourceReference>(Workflow.DeepCopy());
+                if(Process != null) dest.Process = new List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent>(Process.DeepCopy());
+                if(WorkflowElement != null) dest.WorkflowElement = new List<Hl7.Fhir.Model.Canonical>(WorkflowElement.DeepCopy());
                 return dest;
             }
             else
@@ -2233,7 +2203,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
@@ -2242,12 +2211,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
-            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
             if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
             if( !DeepComparable.Matches(Process, otherT.Process)) return false;
-            if( !DeepComparable.Matches(Workflow, otherT.Workflow)) return false;
+            if( !DeepComparable.Matches(WorkflowElement, otherT.WorkflowElement)) return false;
             
             return true;
         }
@@ -2262,7 +2230,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
@@ -2271,12 +2238,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
-            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
             if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
             if( !DeepComparable.IsExactly(Process, otherT.Process)) return false;
-            if( !DeepComparable.IsExactly(Workflow, otherT.Workflow)) return false;
+            if( !DeepComparable.IsExactly(WorkflowElement, otherT.WorkflowElement)) return false;
             
             return true;
         }
@@ -2291,7 +2257,6 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
-				if (TitleElement != null) yield return TitleElement;
 				if (StatusElement != null) yield return StatusElement;
 				if (ExperimentalElement != null) yield return ExperimentalElement;
 				if (DateElement != null) yield return DateElement;
@@ -2300,12 +2265,11 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
 				if (Copyright != null) yield return Copyright;
-				if (Description != null) yield return Description;
 				if (Purpose != null) yield return Purpose;
 				foreach (var elem in Actor) { if (elem != null) yield return elem; }
 				foreach (var elem in Instance) { if (elem != null) yield return elem; }
-				if (Process != null) yield return Process;
-				foreach (var elem in Workflow) { if (elem != null) yield return elem; }
+				foreach (var elem in Process) { if (elem != null) yield return elem; }
+				foreach (var elem in WorkflowElement) { if (elem != null) yield return elem; }
             }
         }
 
@@ -2319,7 +2283,6 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
@@ -2328,12 +2291,11 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
                 if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (Description != null) yield return new ElementValue("description", false, Description);
                 if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
                 foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", true, elem); }
                 foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, elem); }
-                if (Process != null) yield return new ElementValue("process", false, Process);
-                foreach (var elem in Workflow) { if (elem != null) yield return new ElementValue("workflow", true, elem); }
+                foreach (var elem in Process) { if (elem != null) yield return new ElementValue("process", true, elem); }
+                foreach (var elem in WorkflowElement) { if (elem != null) yield return new ElementValue("workflow", true, elem); }
             }
         }
 

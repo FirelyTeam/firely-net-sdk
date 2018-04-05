@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("item", Order=50)]
             [CLSCompliant(false)]
-			[References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport","RiskAssessment","ImagingStudy")]
+			[References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport","RiskAssessment","ImagingStudy","Media")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Item
@@ -200,23 +200,35 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What was found
             /// </summary>
-            [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("itemCodeableConcept", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.CodeableConcept ItemCodeableConcept
             {
-                get { return _Item; }
-                set { _Item = value; OnPropertyChanged("Item"); }
+                get { return _ItemCodeableConcept; }
+                set { _ItemCodeableConcept = value; OnPropertyChanged("ItemCodeableConcept"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.CodeableConcept _ItemCodeableConcept;
+            
+            /// <summary>
+            /// What was found
+            /// </summary>
+            [FhirElement("itemReference", Order=50)]
+            [CLSCompliant(false)]
+			[References("Condition","Observation","Media")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference ItemReference
+            {
+                get { return _ItemReference; }
+                set { _ItemReference = value; OnPropertyChanged("ItemReference"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _ItemReference;
             
             /// <summary>
             /// Which investigations support finding
             /// </summary>
-            [FhirElement("basis", Order=50)]
+            [FhirElement("basis", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BasisElement
             {
@@ -252,7 +264,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(ItemCodeableConcept != null) dest.ItemCodeableConcept = (Hl7.Fhir.Model.CodeableConcept)ItemCodeableConcept.DeepCopy();
+                    if(ItemReference != null) dest.ItemReference = (Hl7.Fhir.Model.ResourceReference)ItemReference.DeepCopy();
                     if(BasisElement != null) dest.BasisElement = (Hl7.Fhir.Model.FhirString)BasisElement.DeepCopy();
                     return dest;
                 }
@@ -271,7 +284,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                if( !DeepComparable.Matches(ItemCodeableConcept, otherT.ItemCodeableConcept)) return false;
+                if( !DeepComparable.Matches(ItemReference, otherT.ItemReference)) return false;
                 if( !DeepComparable.Matches(BasisElement, otherT.BasisElement)) return false;
                 
                 return true;
@@ -283,7 +297,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                if( !DeepComparable.IsExactly(ItemCodeableConcept, otherT.ItemCodeableConcept)) return false;
+                if( !DeepComparable.IsExactly(ItemReference, otherT.ItemReference)) return false;
                 if( !DeepComparable.IsExactly(BasisElement, otherT.BasisElement)) return false;
                 
                 return true;
@@ -296,7 +311,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Item != null) yield return Item;
+                    if (ItemCodeableConcept != null) yield return ItemCodeableConcept;
+                    if (ItemReference != null) yield return ItemReference;
                     if (BasisElement != null) yield return BasisElement;
                 }
             }
@@ -307,7 +323,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
+                    if (ItemCodeableConcept != null) yield return new ElementValue("itemCodeableConcept", false, ItemCodeableConcept);
+                    if (ItemReference != null) yield return new ElementValue("itemReference", false, ItemReference);
                     if (BasisElement != null) yield return new ElementValue("basis", false, BasisElement);
                 }
             }
@@ -533,7 +550,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Problem;
         
         /// <summary>
-        /// One or more sets of investigations (signs, symptions, etc.)
+        /// One or more sets of investigations (signs, symptoms, etc.)
         /// </summary>
         [FhirElement("investigation", Order=200)]
         [Cardinality(Min=0,Max=-1)]

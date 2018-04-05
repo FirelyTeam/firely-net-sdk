@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -681,9 +681,24 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
+        /// Encounter when the allergy or intolerance was asserted
+        /// </summary>
+        [FhirElement("encounter", Order=170)]
+        [CLSCompliant(false)]
+		[References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        
+        /// <summary>
         /// When allergy or intolerance was identified
         /// </summary>
-        [FhirElement("onset", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onset", Order=180, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -698,7 +713,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date record was believed accurate
         /// </summary>
-        [FhirElement("assertedDate", Order=180)]
+        [FhirElement("assertedDate", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AssertedDateElement
         {
@@ -730,7 +745,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who recorded the sensitivity
         /// </summary>
-        [FhirElement("recorder", Order=190)]
+        [FhirElement("recorder", Order=200)]
         [CLSCompliant(false)]
 		[References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
@@ -745,7 +760,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Source of the information about the allergy
         /// </summary>
-        [FhirElement("asserter", InSummary=true, Order=200)]
+        [FhirElement("asserter", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[References("Patient","RelatedPerson","Practitioner")]
         [DataMember]
@@ -760,7 +775,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date(/time) of last known occurrence of a reaction
         /// </summary>
-        [FhirElement("lastOccurrence", Order=210)]
+        [FhirElement("lastOccurrence", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastOccurrenceElement
         {
@@ -792,7 +807,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional text not captured in other fields
         /// </summary>
-        [FhirElement("note", Order=220)]
+        [FhirElement("note", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -806,7 +821,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Adverse Reaction Events linked to exposure to substance
         /// </summary>
-        [FhirElement("reaction", Order=230)]
+        [FhirElement("reaction", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> Reaction
@@ -859,6 +874,7 @@ namespace Hl7.Fhir.Model
                 if(CriticalityElement != null) dest.CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>)CriticalityElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
                 if(AssertedDateElement != null) dest.AssertedDateElement = (Hl7.Fhir.Model.FhirDateTime)AssertedDateElement.DeepCopy();
                 if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
@@ -891,6 +907,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CriticalityElement, otherT.CriticalityElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Onset, otherT.Onset)) return false;
             if( !DeepComparable.Matches(AssertedDateElement, otherT.AssertedDateElement)) return false;
             if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
@@ -916,6 +933,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CriticalityElement, otherT.CriticalityElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Onset, otherT.Onset)) return false;
             if( !DeepComparable.IsExactly(AssertedDateElement, otherT.AssertedDateElement)) return false;
             if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
@@ -941,6 +959,7 @@ namespace Hl7.Fhir.Model
 				if (CriticalityElement != null) yield return CriticalityElement;
 				if (Code != null) yield return Code;
 				if (Patient != null) yield return Patient;
+				if (Encounter != null) yield return Encounter;
 				if (Onset != null) yield return Onset;
 				if (AssertedDateElement != null) yield return AssertedDateElement;
 				if (Recorder != null) yield return Recorder;
@@ -965,6 +984,7 @@ namespace Hl7.Fhir.Model
                 if (CriticalityElement != null) yield return new ElementValue("criticality", false, CriticalityElement);
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
                 if (Onset != null) yield return new ElementValue("onset", false, Onset);
                 if (AssertedDateElement != null) yield return new ElementValue("assertedDate", false, AssertedDateElement);
                 if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);

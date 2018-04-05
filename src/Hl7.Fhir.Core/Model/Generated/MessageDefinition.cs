@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -66,20 +66,53 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
-            [EnumLiteral("Consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+            [EnumLiteral("consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
             Consequence,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
-            [EnumLiteral("Currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+            [EnumLiteral("currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
             Currency,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
-            [EnumLiteral("Notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+            [EnumLiteral("notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
             Notification,
+        }
+
+        /// <summary>
+        /// HL7-defined table of codes which identify conditions under which acknowledgments are required to be returned in response to a message.
+        /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
+        /// </summary>
+        [FhirEnumeration("messageheader_response_request")]
+        public enum messageheader_response_request
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/messageheader-response-request)
+            /// </summary>
+            [EnumLiteral("always", "http://hl7.org/fhir/messageheader-response-request"), Description("Always")]
+            Always,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/messageheader-response-request)
+            /// </summary>
+            [EnumLiteral("on-error", "http://hl7.org/fhir/messageheader-response-request"), Description("Error/reject conditions only")]
+            OnError,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/messageheader-response-request)
+            /// </summary>
+            [EnumLiteral("never", "http://hl7.org/fhir/messageheader-response-request"), Description("Never")]
+            Never,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/messageheader-response-request)
+            /// </summary>
+            [EnumLiteral("on-success", "http://hl7.org/fhir/messageheader-response-request"), Description("Successful completion only")]
+            OnSuccess,
         }
 
         [FhirType("FocusComponent")]
@@ -126,21 +159,39 @@ namespace Hl7.Fhir.Model
             /// Profile that must be adhered to by focus
             /// </summary>
             [FhirElement("profile", Order=50)]
-            [CLSCompliant(false)]
-			[References("StructureDefinition")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Profile
+            public Hl7.Fhir.Model.Canonical ProfileElement
             {
-                get { return _Profile; }
-                set { _Profile = value; OnPropertyChanged("Profile"); }
+                get { return _ProfileElement; }
+                set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Profile;
+            private Hl7.Fhir.Model.Canonical _ProfileElement;
+            
+            /// <summary>
+            /// Profile that must be adhered to by focus
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Profile
+            {
+                get { return ProfileElement != null ? ProfileElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ProfileElement = null; 
+                    else
+                        ProfileElement = new Hl7.Fhir.Model.Canonical(value);
+                    OnPropertyChanged("Profile");
+                }
+            }
             
             /// <summary>
             /// Minimum number of focuses of this type
             /// </summary>
-            [FhirElement("min", Order=60)]
+            [FhirElement("min", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt MinElement
             {
@@ -209,7 +260,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.ResourceType>)CodeElement.DeepCopy();
-                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
+                    if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.Canonical)ProfileElement.DeepCopy();
                     if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.UnsignedInt)MinElement.DeepCopy();
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     return dest;
@@ -230,7 +281,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
                 if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
                 
@@ -244,7 +295,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
                 if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
                 
@@ -259,7 +310,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
-                    if (Profile != null) yield return Profile;
+                    if (ProfileElement != null) yield return ProfileElement;
                     if (MinElement != null) yield return MinElement;
                     if (MaxElement != null) yield return MaxElement;
                 }
@@ -272,7 +323,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
+                    if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
                     if (MinElement != null) yield return new ElementValue("min", false, MinElement);
                     if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
                 }
@@ -293,17 +344,34 @@ namespace Hl7.Fhir.Model
             /// Reference to allowed message definition response
             /// </summary>
             [FhirElement("message", Order=40)]
-            [CLSCompliant(false)]
-			[References("MessageDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Message
+            public Hl7.Fhir.Model.Canonical MessageElement
             {
-                get { return _Message; }
-                set { _Message = value; OnPropertyChanged("Message"); }
+                get { return _MessageElement; }
+                set { _MessageElement = value; OnPropertyChanged("MessageElement"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Message;
+            private Hl7.Fhir.Model.Canonical _MessageElement;
+            
+            /// <summary>
+            /// Reference to allowed message definition response
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Message
+            {
+                get { return MessageElement != null ? MessageElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        MessageElement = null; 
+                    else
+                        MessageElement = new Hl7.Fhir.Model.Canonical(value);
+                    OnPropertyChanged("Message");
+                }
+            }
             
             /// <summary>
             /// When should this response be used
@@ -325,7 +393,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Message != null) dest.Message = (Hl7.Fhir.Model.ResourceReference)Message.DeepCopy();
+                    if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Canonical)MessageElement.DeepCopy();
                     if(Situation != null) dest.Situation = (Hl7.Fhir.Model.Markdown)Situation.DeepCopy();
                     return dest;
                 }
@@ -344,7 +412,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Message, otherT.Message)) return false;
+                if( !DeepComparable.Matches(MessageElement, otherT.MessageElement)) return false;
                 if( !DeepComparable.Matches(Situation, otherT.Situation)) return false;
                 
                 return true;
@@ -356,7 +424,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Message, otherT.Message)) return false;
+                if( !DeepComparable.IsExactly(MessageElement, otherT.MessageElement)) return false;
                 if( !DeepComparable.IsExactly(Situation, otherT.Situation)) return false;
                 
                 return true;
@@ -369,7 +437,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Message != null) yield return Message;
+                    if (MessageElement != null) yield return MessageElement;
                     if (Situation != null) yield return Situation;
                 }
             }
@@ -380,7 +448,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Message != null) yield return new ElementValue("message", false, Message);
+                    if (MessageElement != null) yield return new ElementValue("message", false, MessageElement);
                     if (Situation != null) yield return new ElementValue("situation", false, Situation);
                 }
             }
@@ -390,7 +458,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this message definition (globally unique)
+        /// Canonical identifier for this message definition, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -403,7 +471,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this message definition (globally unique)
+        /// Canonical identifier for this message definition, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -531,9 +599,42 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Takes the place of
+        /// </summary>
+        [FhirElement("replaces", InSummary=true, Order=140)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Canonical> ReplacesElement
+        {
+            get { if(_ReplacesElement==null) _ReplacesElement = new List<Hl7.Fhir.Model.Canonical>(); return _ReplacesElement; }
+            set { _ReplacesElement = value; OnPropertyChanged("ReplacesElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Canonical> _ReplacesElement;
+        
+        /// <summary>
+        /// Takes the place of
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Replaces
+        {
+            get { return ReplacesElement != null ? ReplacesElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  ReplacesElement = null; 
+                else
+                  ReplacesElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
+                OnPropertyChanged("Replaces");
+            }
+        }
+        
+        /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
+        [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -566,7 +667,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=150)]
+        [FhirElement("experimental", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -596,9 +697,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=160)]
+        [FhirElement("date", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -610,7 +711,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -631,7 +732,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=170)]
+        [FhirElement("publisher", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -663,7 +764,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=180)]
+        [FhirElement("contact", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -677,7 +778,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the message definition
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=190)]
+        [FhirElement("description", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -688,9 +789,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=200)]
+        [FhirElement("useContext", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -704,7 +805,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended jurisdiction for message definition (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=210)]
+        [FhirElement("jurisdiction", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -718,7 +819,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why this message definition is defined
         /// </summary>
-        [FhirElement("purpose", InSummary=true, Order=220)]
+        [FhirElement("purpose", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Purpose
         {
@@ -731,7 +832,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=230)]
+        [FhirElement("copyright", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Copyright
         {
@@ -744,81 +845,83 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Definition this one is based on
         /// </summary>
-        [FhirElement("base", InSummary=true, Order=240)]
-        [CLSCompliant(false)]
-		[References("MessageDefinition")]
+        [FhirElement("base", InSummary=true, Order=250)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Base
+        public Hl7.Fhir.Model.Canonical BaseElement
         {
-            get { return _Base; }
-            set { _Base = value; OnPropertyChanged("Base"); }
+            get { return _BaseElement; }
+            set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Base;
+        private Hl7.Fhir.Model.Canonical _BaseElement;
         
         /// <summary>
-        /// Protocol/workflow this is part of
-        /// </summary>
-        [FhirElement("parent", InSummary=true, Order=250)]
-        [CLSCompliant(false)]
-		[References("ActivityDefinition","PlanDefinition")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Parent
-        {
-            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
-            set { _Parent = value; OnPropertyChanged("Parent"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
-        
-        /// <summary>
-        /// Takes the place of
-        /// </summary>
-        [FhirElement("replaces", InSummary=true, Order=260)]
-        [CLSCompliant(false)]
-		[References("MessageDefinition")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Replaces
-        {
-            get { if(_Replaces==null) _Replaces = new List<Hl7.Fhir.Model.ResourceReference>(); return _Replaces; }
-            set { _Replaces = value; OnPropertyChanged("Replaces"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
-        
-        /// <summary>
-        /// Link to the Event type
-        /// </summary>
-        [FhirElement("event", InSummary=true, Order=270)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirUri EventElement
-        {
-            get { return _EventElement; }
-            set { _EventElement = value; OnPropertyChanged("EventElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirUri _EventElement;
-        
-        /// <summary>
-        /// Link to the Event type
+        /// Definition this one is based on
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Event
+        public string Base
         {
-            get { return EventElement != null ? EventElement.Value : null; }
+            get { return BaseElement != null ? BaseElement.Value : null; }
             set
             {
                 if (value == null)
-                  EventElement = null; 
+                  BaseElement = null; 
                 else
-                  EventElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("Event");
+                  BaseElement = new Hl7.Fhir.Model.Canonical(value);
+                OnPropertyChanged("Base");
             }
         }
+        
+        /// <summary>
+        /// Protocol/workflow this is part of
+        /// </summary>
+        [FhirElement("parent", InSummary=true, Order=260)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Canonical> ParentElement
+        {
+            get { if(_ParentElement==null) _ParentElement = new List<Hl7.Fhir.Model.Canonical>(); return _ParentElement; }
+            set { _ParentElement = value; OnPropertyChanged("ParentElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Canonical> _ParentElement;
+        
+        /// <summary>
+        /// Protocol/workflow this is part of
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Parent
+        {
+            get { return ParentElement != null ? ParentElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  ParentElement = null; 
+                else
+                  ParentElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
+                OnPropertyChanged("Parent");
+            }
+        }
+        
+        /// <summary>
+        /// Event code  or link to the EventDefinition
+        /// </summary>
+        [FhirElement("event", InSummary=true, Order=270, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Event
+        {
+            get { return _Event; }
+            set { _Event = value; OnPropertyChanged("Event"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Event;
         
         /// <summary>
         /// Consequence | Currency | Notification
@@ -867,25 +970,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MessageDefinition.FocusComponent> _Focus;
         
         /// <summary>
-        /// Is a response required?
+        /// Response circumstances
         /// </summary>
         [FhirElement("responseRequired", Order=300)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ResponseRequiredElement
+        public Code<Hl7.Fhir.Model.MessageDefinition.messageheader_response_request> ResponseRequiredElement
         {
             get { return _ResponseRequiredElement; }
             set { _ResponseRequiredElement = value; OnPropertyChanged("ResponseRequiredElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirBoolean _ResponseRequiredElement;
+        private Code<Hl7.Fhir.Model.MessageDefinition.messageheader_response_request> _ResponseRequiredElement;
         
         /// <summary>
-        /// Is a response required?
+        /// Response circumstances
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public bool? ResponseRequired
+        public Hl7.Fhir.Model.MessageDefinition.messageheader_response_request? ResponseRequired
         {
             get { return ResponseRequiredElement != null ? ResponseRequiredElement.Value : null; }
             set
@@ -893,7 +996,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   ResponseRequiredElement = null; 
                 else
-                  ResponseRequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                  ResponseRequiredElement = new Code<Hl7.Fhir.Model.MessageDefinition.messageheader_response_request>(value);
                 OnPropertyChanged("ResponseRequired");
             }
         }
@@ -941,6 +1044,7 @@ namespace Hl7.Fhir.Model
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
+                if(ReplacesElement != null) dest.ReplacesElement = new List<Hl7.Fhir.Model.Canonical>(ReplacesElement.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
@@ -951,13 +1055,12 @@ namespace Hl7.Fhir.Model
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
-                if(Base != null) dest.Base = (Hl7.Fhir.Model.ResourceReference)Base.DeepCopy();
-                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
-                if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
-                if(EventElement != null) dest.EventElement = (Hl7.Fhir.Model.FhirUri)EventElement.DeepCopy();
+                if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.Canonical)BaseElement.DeepCopy();
+                if(ParentElement != null) dest.ParentElement = new List<Hl7.Fhir.Model.Canonical>(ParentElement.DeepCopy());
+                if(Event != null) dest.Event = (Hl7.Fhir.Model.Element)Event.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory>)CategoryElement.DeepCopy();
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.MessageDefinition.FocusComponent>(Focus.DeepCopy());
-                if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Hl7.Fhir.Model.FhirBoolean)ResponseRequiredElement.DeepCopy();
+                if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Code<Hl7.Fhir.Model.MessageDefinition.messageheader_response_request>)ResponseRequiredElement.DeepCopy();
                 if(AllowedResponse != null) dest.AllowedResponse = new List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent>(AllowedResponse.DeepCopy());
                 return dest;
             }
@@ -981,6 +1084,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
+            if( !DeepComparable.Matches(ReplacesElement, otherT.ReplacesElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
@@ -991,10 +1095,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
-            if( !DeepComparable.Matches(Base, otherT.Base)) return false;
-            if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
-            if( !DeepComparable.Matches(Replaces, otherT.Replaces)) return false;
-            if( !DeepComparable.Matches(EventElement, otherT.EventElement)) return false;
+            if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
+            if( !DeepComparable.Matches(ParentElement, otherT.ParentElement)) return false;
+            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
             if( !DeepComparable.Matches(ResponseRequiredElement, otherT.ResponseRequiredElement)) return false;
@@ -1014,6 +1117,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
+            if( !DeepComparable.IsExactly(ReplacesElement, otherT.ReplacesElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
@@ -1024,10 +1128,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
-            if( !DeepComparable.IsExactly(Base, otherT.Base)) return false;
-            if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
-            if( !DeepComparable.IsExactly(Replaces, otherT.Replaces)) return false;
-            if( !DeepComparable.IsExactly(EventElement, otherT.EventElement)) return false;
+            if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
+            if( !DeepComparable.IsExactly(ParentElement, otherT.ParentElement)) return false;
+            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
             if( !DeepComparable.IsExactly(ResponseRequiredElement, otherT.ResponseRequiredElement)) return false;
@@ -1047,6 +1150,7 @@ namespace Hl7.Fhir.Model
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
 				if (TitleElement != null) yield return TitleElement;
+				foreach (var elem in ReplacesElement) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (ExperimentalElement != null) yield return ExperimentalElement;
 				if (DateElement != null) yield return DateElement;
@@ -1057,10 +1161,9 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
 				if (Purpose != null) yield return Purpose;
 				if (Copyright != null) yield return Copyright;
-				if (Base != null) yield return Base;
-				foreach (var elem in Parent) { if (elem != null) yield return elem; }
-				foreach (var elem in Replaces) { if (elem != null) yield return elem; }
-				if (EventElement != null) yield return EventElement;
+				if (BaseElement != null) yield return BaseElement;
+				foreach (var elem in ParentElement) { if (elem != null) yield return elem; }
+				if (Event != null) yield return Event;
 				if (CategoryElement != null) yield return CategoryElement;
 				foreach (var elem in Focus) { if (elem != null) yield return elem; }
 				if (ResponseRequiredElement != null) yield return ResponseRequiredElement;
@@ -1079,6 +1182,7 @@ namespace Hl7.Fhir.Model
                 if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
                 if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                foreach (var elem in ReplacesElement) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
@@ -1089,10 +1193,9 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
                 if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
                 if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (Base != null) yield return new ElementValue("base", false, Base);
-                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
-                foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
-                if (EventElement != null) yield return new ElementValue("event", false, EventElement);
+                if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
+                foreach (var elem in ParentElement) { if (elem != null) yield return new ElementValue("parent", true, elem); }
+                if (Event != null) yield return new ElementValue("event", false, Event);
                 if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
                 foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
                 if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", false, ResponseRequiredElement);

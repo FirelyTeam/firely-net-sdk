@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -153,13 +153,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("profile", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirUri> ProfileElement
+        public List<Hl7.Fhir.Model.Canonical> ProfileElement
         {
-            get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
+            get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.Canonical>(); return _ProfileElement; }
             set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
+        private List<Hl7.Fhir.Model.Canonical> _ProfileElement;
         
         /// <summary>
         /// Profiles this resource claims to conform to
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   ProfileElement = null; 
                 else
-                  ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                  ProfileElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
                 OnPropertyChanged("Profile");
             }
         }
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
                 if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
                 if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopy();
                 if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
-                if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
+                if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
                 if(Security != null) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopy());
                 if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
                 return dest;

@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Defines behaviour and contraints on the ValueSet Expansion operation
+    /// Defines behavior and constraints on the ValueSet Expansion operation
     /// </summary>
     [FhirType("ExpansionProfile", IsResource=true)]
     [DataContract]
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this expansion profile (globally unique)
+        /// Canonical identifier for this expansion profile, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this expansion profile (globally unique)
+        /// Canonical identifier for this expansion profile, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1106,7 +1106,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
@@ -1119,7 +1119,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1197,7 +1197,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
@@ -1284,7 +1284,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// When the expansion profile imposes designation contraints
+        /// When the expansion profile imposes designation constraints
         /// </summary>
         [FhirElement("designation", InSummary=true, Order=240)]
         [DataMember]
@@ -1489,7 +1489,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Controls behaviour of the value set expand operation when value sets are too large to be completely expanded
+        /// Controls behavior of the value set expand operation when value sets are too large to be completely expanded
         /// </summary>
         [FhirElement("limitedExpansion", InSummary=true, Order=310)]
         [DataMember]
@@ -1502,7 +1502,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _LimitedExpansionElement;
         
         /// <summary>
-        /// Controls behaviour of the value set expand operation when value sets are too large to be completely expanded
+        /// Controls behavior of the value set expand operation when value sets are too large to be completely expanded
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

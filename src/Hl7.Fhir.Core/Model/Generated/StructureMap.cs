@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -353,13 +353,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("url", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
+            public Hl7.Fhir.Model.Canonical UrlElement
             {
                 get { return _UrlElement; }
                 set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
+            private Hl7.Fhir.Model.Canonical _UrlElement;
             
             /// <summary>
             /// Canonical URL for structure definition
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         UrlElement = null; 
                     else
-                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UrlElement = new Hl7.Fhir.Model.Canonical(value);
                     OnPropertyChanged("Url");
                 }
             }
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.Canonical)UrlElement.DeepCopy();
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapModelMode>)ModeElement.DeepCopy();
                     if(AliasElement != null) dest.AliasElement = (Hl7.Fhir.Model.FhirString)AliasElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Additional description/explaination for group
+            /// Additional description/explanation for group
             /// </summary>
             [FhirElement("documentation", InSummary=true, Order=70)]
             [DataMember]
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             /// <summary>
-            /// Additional description/explaination for group
+            /// Additional description/explanation for group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1392,7 +1392,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("defaultValue", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Dosage),typeof(ContactDetail),typeof(Contributor),typeof(DataRequirement),typeof(ParameterDefinition),typeof(RelatedArtifact),typeof(TriggerDefinition),typeof(UsageContext),typeof(Hl7.Fhir.Model.Meta))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
             [DataMember]
             public Hl7.Fhir.Model.Element DefaultValue
             {
@@ -2254,7 +2254,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this structure map (globally unique)
+        /// Canonical identifier for this structure map, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -2268,7 +2268,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this structure map (globally unique)
+        /// Canonical identifier for this structure map, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2463,7 +2463,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=160)]
         [DataMember]
@@ -2476,7 +2476,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2554,7 +2554,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -2627,13 +2627,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("import", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirUri> ImportElement
+        public List<Hl7.Fhir.Model.Canonical> ImportElement
         {
-            get { if(_ImportElement==null) _ImportElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ImportElement; }
+            get { if(_ImportElement==null) _ImportElement = new List<Hl7.Fhir.Model.Canonical>(); return _ImportElement; }
             set { _ImportElement = value; OnPropertyChanged("ImportElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirUri> _ImportElement;
+        private List<Hl7.Fhir.Model.Canonical> _ImportElement;
         
         /// <summary>
         /// Other maps used by this map (canonical URLs)
@@ -2649,7 +2649,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   ImportElement = null; 
                 else
-                  ImportElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                  ImportElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
                 OnPropertyChanged("Import");
             }
         }
@@ -2718,7 +2718,7 @@ namespace Hl7.Fhir.Model
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(Structure != null) dest.Structure = new List<Hl7.Fhir.Model.StructureMap.StructureComponent>(Structure.DeepCopy());
-                if(ImportElement != null) dest.ImportElement = new List<Hl7.Fhir.Model.FhirUri>(ImportElement.DeepCopy());
+                if(ImportElement != null) dest.ImportElement = new List<Hl7.Fhir.Model.Canonical>(ImportElement.DeepCopy());
                 if(Group != null) dest.Group = new List<Hl7.Fhir.Model.StructureMap.GroupComponent>(Group.DeepCopy());
                 return dest;
             }

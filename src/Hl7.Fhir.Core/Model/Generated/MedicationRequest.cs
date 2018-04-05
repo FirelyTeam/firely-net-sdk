@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -137,6 +137,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("order", "http://hl7.org/fhir/medication-request-intent"), Description("Order")]
             Order,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/medication-request-intent)
+            /// </summary>
+            [EnumLiteral("original-order", "http://hl7.org/fhir/medication-request-intent"), Description("Original Order")]
+            OriginalOrder,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-request-intent)
@@ -472,6 +478,7 @@ namespace Hl7.Fhir.Model
         /// active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestStatus> StatusElement
         {
@@ -501,7 +508,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposal | plan | order | instance-order | option
+        /// proposal | plan | order | original-order | instance-order | option
         /// </summary>
         [FhirElement("intent", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
@@ -515,7 +522,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent> _IntentElement;
         
         /// <summary>
-        /// proposal | plan | order | instance-order | option
+        /// proposal | plan | order | original-order | instance-order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -747,7 +754,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
         
         /// <summary>
-        /// Condition or Observation that supports why the prescription is being written
+        /// Condition or observation that supports why the prescription is being written
         /// </summary>
         [FhirElement("reasonReference", Order=240)]
         [CLSCompliant(false)]

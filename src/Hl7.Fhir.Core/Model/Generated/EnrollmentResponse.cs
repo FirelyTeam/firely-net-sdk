@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
-        /// complete | error | partial
+        /// queued | complete | error | partial
         /// </summary>
         [FhirElement("outcome", Order=120)]
         [DataMember]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ClaimProcessingCodes> _OutcomeElement;
         
         /// <summary>
-        /// complete | error | partial
+        /// queued | complete | error | partial
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("requestProvider", Order=160)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -241,21 +241,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.ResourceReference _RequestProvider;
-        
-        /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("requestOrganization", Order=170)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestOrganization
-        {
-            get { return _RequestOrganization; }
-            set { _RequestOrganization = value; OnPropertyChanged("RequestOrganization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
         
 
         public override void AddDefaultConstraints()
@@ -279,7 +264,6 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
-                if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 return dest;
             }
             else
@@ -305,7 +289,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
             
             return true;
         }
@@ -324,7 +307,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
             
             return true;
         }
@@ -343,7 +325,6 @@ namespace Hl7.Fhir.Model
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Organization != null) yield return Organization;
 				if (RequestProvider != null) yield return RequestProvider;
-				if (RequestOrganization != null) yield return RequestOrganization;
             }
         }
 
@@ -361,7 +342,6 @@ namespace Hl7.Fhir.Model
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (Organization != null) yield return new ElementValue("organization", false, Organization);
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
             }
         }
 

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Supplier;
         
         /// <summary>
-        /// Why the supply item was requested
+        /// The reason why the supply item was requested
         /// </summary>
         [FhirElement("reasonCode", Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
         
         /// <summary>
-        /// Why the supply item was requested
+        /// The reason why the supply item was requested
         /// </summary>
         [FhirElement("reasonReference", Order=210)]
         [CLSCompliant(false)]

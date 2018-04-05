@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,48 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Sequence"; } }
         
+        /// <summary>
+        /// Type for orientation
+        /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
+        /// </summary>
+        [FhirEnumeration("orientationType")]
+        public enum orientationType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/orientation-type)
+            /// </summary>
+            [EnumLiteral("sense", "http://hl7.org/fhir/orientation-type"), Description("Sense orientation of referenceSeq")]
+            Sense,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/orientation-type)
+            /// </summary>
+            [EnumLiteral("antisense", "http://hl7.org/fhir/orientation-type"), Description("Antisense orientation of referenceSeq")]
+            Antisense,
+        }
+
+        /// <summary>
+        /// Type for strand
+        /// (url: http://hl7.org/fhir/ValueSet/strand-type)
+        /// </summary>
+        [FhirEnumeration("strandType")]
+        public enum strandType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/strand-type)
+            /// </summary>
+            [EnumLiteral("watson", "http://hl7.org/fhir/strand-type"), Description("Watson strand of referenceSeq")]
+            Watson,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/strand-type)
+            /// </summary>
+            [EnumLiteral("crick", "http://hl7.org/fhir/strand-type"), Description("Crick strand of referenceSeq")]
+            Crick,
+        }
+
         /// <summary>
         /// Type for quality report
         /// (url: http://hl7.org/fhir/ValueSet/quality-type)
@@ -174,9 +216,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// sense | antisense
+            /// </summary>
+            [FhirElement("orientation", InSummary=true, Order=60)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Sequence.orientationType> OrientationElement
+            {
+                get { return _OrientationElement; }
+                set { _OrientationElement = value; OnPropertyChanged("OrientationElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.Sequence.orientationType> _OrientationElement;
+            
+            /// <summary>
+            /// sense | antisense
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Sequence.orientationType? Orientation
+            {
+                get { return OrientationElement != null ? OrientationElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        OrientationElement = null; 
+                    else
+                        OrientationElement = new Code<Hl7.Fhir.Model.Sequence.orientationType>(value);
+                    OnPropertyChanged("Orientation");
+                }
+            }
+            
+            /// <summary>
             /// Reference identifier
             /// </summary>
-            [FhirElement("referenceSeqId", InSummary=true, Order=60)]
+            [FhirElement("referenceSeqId", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ReferenceSeqId
             {
@@ -189,7 +263,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A Pointer to another Sequence entity as reference sequence
             /// </summary>
-            [FhirElement("referenceSeqPointer", InSummary=true, Order=70)]
+            [FhirElement("referenceSeqPointer", InSummary=true, Order=80)]
             [CLSCompliant(false)]
 			[References("Sequence")]
             [DataMember]
@@ -204,7 +278,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A string to represent reference sequence
             /// </summary>
-            [FhirElement("referenceSeqString", InSummary=true, Order=80)]
+            [FhirElement("referenceSeqString", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ReferenceSeqStringElement
             {
@@ -234,25 +308,25 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Directionality of DNA ( +1/-1)
+            /// watson | crick
             /// </summary>
-            [FhirElement("strand", InSummary=true, Order=90)]
+            [FhirElement("strand", InSummary=true, Order=100)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer StrandElement
+            public Code<Hl7.Fhir.Model.Sequence.strandType> StrandElement
             {
                 get { return _StrandElement; }
                 set { _StrandElement = value; OnPropertyChanged("StrandElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _StrandElement;
+            private Code<Hl7.Fhir.Model.Sequence.strandType> _StrandElement;
             
             /// <summary>
-            /// Directionality of DNA ( +1/-1)
+            /// watson | crick
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public int? Strand
+            public Hl7.Fhir.Model.Sequence.strandType? Strand
             {
                 get { return StrandElement != null ? StrandElement.Value : null; }
                 set
@@ -260,7 +334,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         StrandElement = null; 
                     else
-                        StrandElement = new Hl7.Fhir.Model.Integer(value);
+                        StrandElement = new Code<Hl7.Fhir.Model.Sequence.strandType>(value);
                     OnPropertyChanged("Strand");
                 }
             }
@@ -268,7 +342,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Start position of the window on the  reference sequence
             /// </summary>
-            [FhirElement("windowStart", InSummary=true, Order=100)]
+            [FhirElement("windowStart", InSummary=true, Order=110)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Integer WindowStartElement
@@ -301,7 +375,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// End position of the window on the reference sequence
             /// </summary>
-            [FhirElement("windowEnd", InSummary=true, Order=110)]
+            [FhirElement("windowEnd", InSummary=true, Order=120)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Integer WindowEndElement
@@ -340,10 +414,11 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Chromosome != null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)Chromosome.DeepCopy();
                     if(GenomeBuildElement != null) dest.GenomeBuildElement = (Hl7.Fhir.Model.FhirString)GenomeBuildElement.DeepCopy();
+                    if(OrientationElement != null) dest.OrientationElement = (Code<Hl7.Fhir.Model.Sequence.orientationType>)OrientationElement.DeepCopy();
                     if(ReferenceSeqId != null) dest.ReferenceSeqId = (Hl7.Fhir.Model.CodeableConcept)ReferenceSeqId.DeepCopy();
                     if(ReferenceSeqPointer != null) dest.ReferenceSeqPointer = (Hl7.Fhir.Model.ResourceReference)ReferenceSeqPointer.DeepCopy();
                     if(ReferenceSeqStringElement != null) dest.ReferenceSeqStringElement = (Hl7.Fhir.Model.FhirString)ReferenceSeqStringElement.DeepCopy();
-                    if(StrandElement != null) dest.StrandElement = (Hl7.Fhir.Model.Integer)StrandElement.DeepCopy();
+                    if(StrandElement != null) dest.StrandElement = (Code<Hl7.Fhir.Model.Sequence.strandType>)StrandElement.DeepCopy();
                     if(WindowStartElement != null) dest.WindowStartElement = (Hl7.Fhir.Model.Integer)WindowStartElement.DeepCopy();
                     if(WindowEndElement != null) dest.WindowEndElement = (Hl7.Fhir.Model.Integer)WindowEndElement.DeepCopy();
                     return dest;
@@ -365,6 +440,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Chromosome, otherT.Chromosome)) return false;
                 if( !DeepComparable.Matches(GenomeBuildElement, otherT.GenomeBuildElement)) return false;
+                if( !DeepComparable.Matches(OrientationElement, otherT.OrientationElement)) return false;
                 if( !DeepComparable.Matches(ReferenceSeqId, otherT.ReferenceSeqId)) return false;
                 if( !DeepComparable.Matches(ReferenceSeqPointer, otherT.ReferenceSeqPointer)) return false;
                 if( !DeepComparable.Matches(ReferenceSeqStringElement, otherT.ReferenceSeqStringElement)) return false;
@@ -383,6 +459,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Chromosome, otherT.Chromosome)) return false;
                 if( !DeepComparable.IsExactly(GenomeBuildElement, otherT.GenomeBuildElement)) return false;
+                if( !DeepComparable.IsExactly(OrientationElement, otherT.OrientationElement)) return false;
                 if( !DeepComparable.IsExactly(ReferenceSeqId, otherT.ReferenceSeqId)) return false;
                 if( !DeepComparable.IsExactly(ReferenceSeqPointer, otherT.ReferenceSeqPointer)) return false;
                 if( !DeepComparable.IsExactly(ReferenceSeqStringElement, otherT.ReferenceSeqStringElement)) return false;
@@ -402,6 +479,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Chromosome != null) yield return Chromosome;
                     if (GenomeBuildElement != null) yield return GenomeBuildElement;
+                    if (OrientationElement != null) yield return OrientationElement;
                     if (ReferenceSeqId != null) yield return ReferenceSeqId;
                     if (ReferenceSeqPointer != null) yield return ReferenceSeqPointer;
                     if (ReferenceSeqStringElement != null) yield return ReferenceSeqStringElement;
@@ -419,6 +497,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Chromosome != null) yield return new ElementValue("chromosome", false, Chromosome);
                     if (GenomeBuildElement != null) yield return new ElementValue("genomeBuild", false, GenomeBuildElement);
+                    if (OrientationElement != null) yield return new ElementValue("orientation", false, OrientationElement);
                     if (ReferenceSeqId != null) yield return new ElementValue("referenceSeqId", false, ReferenceSeqId);
                     if (ReferenceSeqPointer != null) yield return new ElementValue("referenceSeqPointer", false, ReferenceSeqPointer);
                     if (ReferenceSeqStringElement != null) yield return new ElementValue("referenceSeqString", false, ReferenceSeqStringElement);
@@ -2688,15 +2767,6 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:coordinateSystem[@value=0 and @value=1]) = 1"
         };
 
-        public static ElementDefinition.ConstraintComponent Sequence_SEQ_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "referenceSeq.all(strand.empty() or strand = 1 or strand = -1)",
-            Key = "seq-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Only +1 and -1 are valid for strand",
-            Xpath = "not(exists(f:strand)) or count(f:strand[@value=-1 and @value=1]) = 1"
-        };
-
         public static ElementDefinition.ConstraintComponent Sequence_SEQ_5 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
@@ -2720,7 +2790,6 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(Sequence_SEQ_3);
-            InvariantConstraints.Add(Sequence_SEQ_4);
             InvariantConstraints.Add(Sequence_SEQ_5);
             InvariantConstraints.Add(Sequence_SEQ_6);
         }

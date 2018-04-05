@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A set of codes drawn from one or more code systems
+    /// Declares the existence of and describes a code system or code system supplement
     /// </summary>
     [FhirType("CodeSystem", IsResource=true)]
     [DataContract]
@@ -170,6 +170,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("dateTime", "http://hl7.org/fhir/concept-property-type"), Description("dateTime")]
             DateTime,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/concept-property-type)
+            /// </summary>
+            [EnumLiteral("decimal", "http://hl7.org/fhir/concept-property-type"), Description("decimal")]
+            Decimal,
         }
 
         [FhirType("FilterComponent")]
@@ -496,7 +502,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// code | Coding | string | integer | boolean | dateTime
+            /// code | Coding | string | integer | boolean | dateTime | decimal
             /// </summary>
             [FhirElement("type", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
@@ -510,7 +516,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.CodeSystem.PropertyType> _TypeElement;
             
             /// <summary>
-            /// code | Coding | string | integer | boolean | dateTime
+            /// code | Coding | string | integer | boolean | dateTime | decimal
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1052,7 +1058,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -1135,7 +1141,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this code system (globally unique) (Coding.system)
+        /// Canonical identifier for this code system, represented as a URI (globally unique) (Coding.system)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -1148,7 +1154,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this code system (globally unique) (Coding.system)
+        /// Canonical identifier for this code system, represented as a URI (globally unique) (Coding.system)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1341,7 +1347,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=160)]
         [DataMember]
@@ -1354,7 +1360,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1432,7 +1438,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -1522,13 +1528,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("valueSet", InSummary=true, Order=250)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri ValueSetElement
+        public Hl7.Fhir.Model.Canonical ValueSetElement
         {
             get { return _ValueSetElement; }
             set { _ValueSetElement = value; OnPropertyChanged("ValueSetElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _ValueSetElement;
+        private Hl7.Fhir.Model.Canonical _ValueSetElement;
         
         /// <summary>
         /// Canonical URL for value set with entire code system
@@ -1544,7 +1550,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   ValueSetElement = null; 
                 else
-                  ValueSetElement = new Hl7.Fhir.Model.FhirUri(value);
+                  ValueSetElement = new Hl7.Fhir.Model.Canonical(value);
                 OnPropertyChanged("ValueSet");
             }
         }
@@ -1682,16 +1688,33 @@ namespace Hl7.Fhir.Model
         /// Code System this adds designations and properties to
         /// </summary>
         [FhirElement("supplements", InSummary=true, Order=300)]
-        [CLSCompliant(false)]
-		[References("CodeSystem")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Supplements
+        public Hl7.Fhir.Model.Canonical SupplementsElement
         {
-            get { return _Supplements; }
-            set { _Supplements = value; OnPropertyChanged("Supplements"); }
+            get { return _SupplementsElement; }
+            set { _SupplementsElement = value; OnPropertyChanged("SupplementsElement"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Supplements;
+        private Hl7.Fhir.Model.Canonical _SupplementsElement;
+        
+        /// <summary>
+        /// Code System this adds designations and properties to
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Supplements
+        {
+            get { return SupplementsElement != null ? SupplementsElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  SupplementsElement = null; 
+                else
+                  SupplementsElement = new Hl7.Fhir.Model.Canonical(value);
+                OnPropertyChanged("Supplements");
+            }
+        }
         
         /// <summary>
         /// Total concepts in the code system
@@ -1807,12 +1830,12 @@ namespace Hl7.Fhir.Model
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(CaseSensitiveElement != null) dest.CaseSensitiveElement = (Hl7.Fhir.Model.FhirBoolean)CaseSensitiveElement.DeepCopy();
-                if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.FhirUri)ValueSetElement.DeepCopy();
+                if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopy();
                 if(HierarchyMeaningElement != null) dest.HierarchyMeaningElement = (Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>)HierarchyMeaningElement.DeepCopy();
                 if(CompositionalElement != null) dest.CompositionalElement = (Hl7.Fhir.Model.FhirBoolean)CompositionalElement.DeepCopy();
                 if(VersionNeededElement != null) dest.VersionNeededElement = (Hl7.Fhir.Model.FhirBoolean)VersionNeededElement.DeepCopy();
                 if(ContentElement != null) dest.ContentElement = (Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>)ContentElement.DeepCopy();
-                if(Supplements != null) dest.Supplements = (Hl7.Fhir.Model.ResourceReference)Supplements.DeepCopy();
+                if(SupplementsElement != null) dest.SupplementsElement = (Hl7.Fhir.Model.Canonical)SupplementsElement.DeepCopy();
                 if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.UnsignedInt)CountElement.DeepCopy();
                 if(Filter != null) dest.Filter = new List<Hl7.Fhir.Model.CodeSystem.FilterComponent>(Filter.DeepCopy());
                 if(Property != null) dest.Property = new List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>(Property.DeepCopy());
@@ -1855,7 +1878,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CompositionalElement, otherT.CompositionalElement)) return false;
             if( !DeepComparable.Matches(VersionNeededElement, otherT.VersionNeededElement)) return false;
             if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
-            if( !DeepComparable.Matches(Supplements, otherT.Supplements)) return false;
+            if( !DeepComparable.Matches(SupplementsElement, otherT.SupplementsElement)) return false;
             if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
             if( !DeepComparable.Matches(Filter, otherT.Filter)) return false;
             if( !DeepComparable.Matches(Property, otherT.Property)) return false;
@@ -1891,7 +1914,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CompositionalElement, otherT.CompositionalElement)) return false;
             if( !DeepComparable.IsExactly(VersionNeededElement, otherT.VersionNeededElement)) return false;
             if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
-            if( !DeepComparable.IsExactly(Supplements, otherT.Supplements)) return false;
+            if( !DeepComparable.IsExactly(SupplementsElement, otherT.SupplementsElement)) return false;
             if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
             if( !DeepComparable.IsExactly(Filter, otherT.Filter)) return false;
             if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
@@ -1927,7 +1950,7 @@ namespace Hl7.Fhir.Model
 				if (CompositionalElement != null) yield return CompositionalElement;
 				if (VersionNeededElement != null) yield return VersionNeededElement;
 				if (ContentElement != null) yield return ContentElement;
-				if (Supplements != null) yield return Supplements;
+				if (SupplementsElement != null) yield return SupplementsElement;
 				if (CountElement != null) yield return CountElement;
 				foreach (var elem in Filter) { if (elem != null) yield return elem; }
 				foreach (var elem in Property) { if (elem != null) yield return elem; }
@@ -1962,7 +1985,7 @@ namespace Hl7.Fhir.Model
                 if (CompositionalElement != null) yield return new ElementValue("compositional", false, CompositionalElement);
                 if (VersionNeededElement != null) yield return new ElementValue("versionNeeded", false, VersionNeededElement);
                 if (ContentElement != null) yield return new ElementValue("content", false, ContentElement);
-                if (Supplements != null) yield return new ElementValue("supplements", false, Supplements);
+                if (SupplementsElement != null) yield return new ElementValue("supplements", false, SupplementsElement);
                 if (CountElement != null) yield return new ElementValue("count", false, CountElement);
                 foreach (var elem in Filter) { if (elem != null) yield return new ElementValue("filter", true, elem); }
                 foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", true, elem); }

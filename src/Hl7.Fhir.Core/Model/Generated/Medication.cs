@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -297,6 +297,38 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Identifier assigned to a drug at the time of manufacture
+            /// </summary>
+            [FhirElement("serialNumber", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString SerialNumberElement
+            {
+                get { return _SerialNumberElement; }
+                set { _SerialNumberElement = value; OnPropertyChanged("SerialNumberElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _SerialNumberElement;
+            
+            /// <summary>
+            /// Identifier assigned to a drug at the time of manufacture
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string SerialNumber
+            {
+                get { return SerialNumberElement != null ? SerialNumberElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        SerialNumberElement = null; 
+                    else
+                        SerialNumberElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("SerialNumber");
+                }
+            }
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as BatchComponent;
@@ -306,6 +338,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
                     if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
+                    if(SerialNumberElement != null) dest.SerialNumberElement = (Hl7.Fhir.Model.FhirString)SerialNumberElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -325,6 +358,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
                 if( !DeepComparable.Matches(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
+                if( !DeepComparable.Matches(SerialNumberElement, otherT.SerialNumberElement)) return false;
                 
                 return true;
             }
@@ -337,6 +371,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(LotNumberElement, otherT.LotNumberElement)) return false;
                 if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
+                if( !DeepComparable.IsExactly(SerialNumberElement, otherT.SerialNumberElement)) return false;
                 
                 return true;
             }
@@ -350,6 +385,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (LotNumberElement != null) yield return LotNumberElement;
                     if (ExpirationDateElement != null) yield return ExpirationDateElement;
+                    if (SerialNumberElement != null) yield return SerialNumberElement;
                 }
             }
 
@@ -361,6 +397,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
                     if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
+                    if (SerialNumberElement != null) yield return new ElementValue("serialNumber", false, SerialNumberElement);
                 }
             }
 

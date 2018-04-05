@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -210,13 +210,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("url", InSummary=true, Order=60)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri UrlElement
+        public Hl7.Fhir.Model.FhirUrl UrlElement
         {
             get { return _UrlElement; }
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _UrlElement;
+        private Hl7.Fhir.Model.FhirUrl _UrlElement;
         
         /// <summary>
         /// Where the artifact can be accessed
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   UrlElement = null; 
                 else
-                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                  UrlElement = new Hl7.Fhir.Model.FhirUrl(value);
                 OnPropertyChanged("Url");
             }
         }
@@ -254,16 +254,33 @@ namespace Hl7.Fhir.Model
         /// What resource is being referenced
         /// </summary>
         [FhirElement("resource", InSummary=true, Order=80)]
-        [CLSCompliant(false)]
-		[References()]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Resource
+        public Hl7.Fhir.Model.Canonical ResourceElement
         {
-            get { return _Resource; }
-            set { _Resource = value; OnPropertyChanged("Resource"); }
+            get { return _ResourceElement; }
+            set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Resource;
+        private Hl7.Fhir.Model.Canonical _ResourceElement;
+        
+        /// <summary>
+        /// What resource is being referenced
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Resource
+        {
+            get { return ResourceElement != null ? ResourceElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  ResourceElement = null; 
+                else
+                  ResourceElement = new Hl7.Fhir.Model.Canonical(value);
+                OnPropertyChanged("Resource");
+            }
+        }
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -276,9 +293,9 @@ namespace Hl7.Fhir.Model
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)TypeElement.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                 if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)CitationElement.DeepCopy();
-                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopy();
                 if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
-                if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
+                if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.Canonical)ResourceElement.DeepCopy();
                 return dest;
             }
             else
@@ -301,7 +318,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CitationElement, otherT.CitationElement)) return false;
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.Matches(Document, otherT.Document)) return false;
-            if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
+            if( !DeepComparable.Matches(ResourceElement, otherT.ResourceElement)) return false;
             
             return true;
         }
@@ -317,7 +334,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CitationElement, otherT.CitationElement)) return false;
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.IsExactly(Document, otherT.Document)) return false;
-            if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
+            if( !DeepComparable.IsExactly(ResourceElement, otherT.ResourceElement)) return false;
             
             return true;
         }
@@ -333,7 +350,7 @@ namespace Hl7.Fhir.Model
                 if (CitationElement != null) yield return CitationElement;
                 if (UrlElement != null) yield return UrlElement;
                 if (Document != null) yield return Document;
-                if (Resource != null) yield return Resource;
+                if (ResourceElement != null) yield return ResourceElement;
             }
         }
 
@@ -348,7 +365,7 @@ namespace Hl7.Fhir.Model
                 if (CitationElement != null) yield return new ElementValue("citation", false, CitationElement);
                 if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
                 if (Document != null) yield return new ElementValue("document", false, Document);
-                if (Resource != null) yield return new ElementValue("resource", false, Resource);
+                if (ResourceElement != null) yield return new ElementValue("resource", false, ResourceElement);
  
             } 
         } 

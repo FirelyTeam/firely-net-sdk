@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -80,6 +80,18 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("entered-in-error", "http://hl7.org/fhir/account-status"), Description("Entered in error")]
             EnteredInError,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/account-status)
+            /// </summary>
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/account-status"), Description("On Hold")]
+            OnHold,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/account-status)
+            /// </summary>
+            [EnumLiteral("unknown", "http://hl7.org/fhir/account-status"), Description("Unknown")]
+            Unknown,
         }
 
         [FhirType("CoverageComponent")]
@@ -367,9 +379,10 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | inactive | entered-in-error
+        /// active | inactive | entered-in-error | on-hold | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement
         {
@@ -380,7 +393,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Account.AccountStatus> _StatusElement;
         
         /// <summary>
-        /// active | inactive | entered-in-error
+        /// active | inactive | entered-in-error | on-hold | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -461,33 +474,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Transaction window
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=140)]
+        [FhirElement("servicePeriod", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.Period Period
+        public Hl7.Fhir.Model.Period ServicePeriod
         {
-            get { return _Period; }
-            set { _Period = value; OnPropertyChanged("Period"); }
+            get { return _ServicePeriod; }
+            set { _ServicePeriod = value; OnPropertyChanged("ServicePeriod"); }
         }
         
-        private Hl7.Fhir.Model.Period _Period;
-        
-        /// <summary>
-        /// Time window that transactions may be posted to this account
-        /// </summary>
-        [FhirElement("active", InSummary=true, Order=150)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period Active
-        {
-            get { return _Active; }
-            set { _Active = value; OnPropertyChanged("Active"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _Active;
+        private Hl7.Fhir.Model.Period _ServicePeriod;
         
         /// <summary>
         /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
         /// </summary>
-        [FhirElement("coverage", InSummary=true, Order=160)]
+        [FhirElement("coverage", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is responsible?
         /// </summary>
-        [FhirElement("owner", InSummary=true, Order=170)]
+        [FhirElement("owner", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Explanation of purpose/use
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=180)]
+        [FhirElement("description", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible for the account
         /// </summary>
-        [FhirElement("guarantor", Order=190)]
+        [FhirElement("guarantor", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference to a parent Account
         /// </summary>
-        [FhirElement("partOf", Order=200)]
+        [FhirElement("partOf", Order=190)]
         [CLSCompliant(false)]
 		[References("Account")]
         [DataMember]
@@ -593,8 +593,7 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Active != null) dest.Active = (Hl7.Fhir.Model.Period)Active.DeepCopy();
+                if(ServicePeriod != null) dest.ServicePeriod = (Hl7.Fhir.Model.Period)ServicePeriod.DeepCopy();
                 if(Coverage != null) dest.Coverage = new List<Hl7.Fhir.Model.Account.CoverageComponent>(Coverage.DeepCopy());
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
@@ -622,8 +621,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-            if( !DeepComparable.Matches(Active, otherT.Active)) return false;
+            if( !DeepComparable.Matches(ServicePeriod, otherT.ServicePeriod)) return false;
             if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
             if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
@@ -644,8 +642,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-            if( !DeepComparable.IsExactly(Active, otherT.Active)) return false;
+            if( !DeepComparable.IsExactly(ServicePeriod, otherT.ServicePeriod)) return false;
             if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
             if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
@@ -666,8 +663,7 @@ namespace Hl7.Fhir.Model
 				if (Type != null) yield return Type;
 				if (NameElement != null) yield return NameElement;
 				if (Subject != null) yield return Subject;
-				if (Period != null) yield return Period;
-				if (Active != null) yield return Active;
+				if (ServicePeriod != null) yield return ServicePeriod;
 				foreach (var elem in Coverage) { if (elem != null) yield return elem; }
 				if (Owner != null) yield return Owner;
 				if (DescriptionElement != null) yield return DescriptionElement;
@@ -687,8 +683,7 @@ namespace Hl7.Fhir.Model
                 if (Type != null) yield return new ElementValue("type", false, Type);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Active != null) yield return new ElementValue("active", false, Active);
+                if (ServicePeriod != null) yield return new ElementValue("servicePeriod", false, ServicePeriod);
                 foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", true, elem); }
                 if (Owner != null) yield return new ElementValue("owner", false, Owner);
                 if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);

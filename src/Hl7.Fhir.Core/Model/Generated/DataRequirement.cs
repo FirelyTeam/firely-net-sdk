@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,6 +51,27 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "DataRequirement"; } }
         
+        /// <summary>
+        /// The possible sort directions, ascending or descending
+        /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
+        /// </summary>
+        [FhirEnumeration("SortDirection")]
+        public enum SortDirection
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/sort-direction)
+            /// </summary>
+            [EnumLiteral("ascending", "http://hl7.org/fhir/sort-direction"), Description("Ascending")]
+            Ascending,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/sort-direction)
+            /// </summary>
+            [EnumLiteral("descending", "http://hl7.org/fhir/sort-direction"), Description("Descending")]
+            Descending,
+        }
+
         [FhirType("CodeFilterComponent")]
         [DataContract]
         public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -96,7 +117,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
             [DataMember]
             public Hl7.Fhir.Model.Element ValueSet
             {
@@ -316,6 +337,147 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
+        [FhirType("SortComponent")]
+        [DataContract]
+        public partial class SortComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "SortComponent"; } }
+            
+            /// <summary>
+            /// The name of the attribute to perform the sort
+            /// </summary>
+            [FhirElement("path", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString PathElement
+            {
+                get { return _PathElement; }
+                set { _PathElement = value; OnPropertyChanged("PathElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _PathElement;
+            
+            /// <summary>
+            /// The name of the attribute to perform the sort
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Path
+            {
+                get { return PathElement != null ? PathElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                      PathElement = null; 
+                    else
+                      PathElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Path");
+                }
+            }
+            
+            /// <summary>
+            /// ascending | descending
+            /// </summary>
+            [FhirElement("direction", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.DataRequirement.SortDirection> DirectionElement
+            {
+                get { return _DirectionElement; }
+                set { _DirectionElement = value; OnPropertyChanged("DirectionElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.DataRequirement.SortDirection> _DirectionElement;
+            
+            /// <summary>
+            /// ascending | descending
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.DataRequirement.SortDirection? Direction
+            {
+                get { return DirectionElement != null ? DirectionElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                      DirectionElement = null; 
+                    else
+                      DirectionElement = new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
+                    OnPropertyChanged("Direction");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as SortComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
+                    if(DirectionElement != null) dest.DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>)DirectionElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new SortComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SortComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.Matches(DirectionElement, otherT.DirectionElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SortComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(DirectionElement, otherT.DirectionElement)) return false;
+                
+                return true;
+            }
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (PathElement != null) yield return PathElement;
+                    if (DirectionElement != null) yield return DirectionElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (DirectionElement != null) yield return new ElementValue("direction", false, DirectionElement);
+ 
+                } 
+            } 
+            
+        }                
         /// <summary>
         /// The type of the required data
         /// </summary>
@@ -355,13 +517,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("profile", InSummary=true, Order=40)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirUri> ProfileElement
+        public List<Hl7.Fhir.Model.Canonical> ProfileElement
         {
-            get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
+            get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.Canonical>(); return _ProfileElement; }
             set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
+        private List<Hl7.Fhir.Model.Canonical> _ProfileElement;
         
         /// <summary>
         /// The profile of the required data
@@ -377,15 +539,30 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   ProfileElement = null; 
                 else
-                  ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                  ProfileElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
                 OnPropertyChanged("Profile");
             }
         }
         
         /// <summary>
+        /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Subject;
+        
+        /// <summary>
         /// Indicates that specific structure elements are referenced by the knowledge module
         /// </summary>
-        [FhirElement("mustSupport", InSummary=true, Order=50)]
+        [FhirElement("mustSupport", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> MustSupportElement
@@ -418,7 +595,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What codes are expected
         /// </summary>
-        [FhirElement("codeFilter", InSummary=true, Order=60)]
+        [FhirElement("codeFilter", InSummary=true, Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> CodeFilter
@@ -432,7 +609,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What dates/date ranges are expected
         /// </summary>
-        [FhirElement("dateFilter", InSummary=true, Order=70)]
+        [FhirElement("dateFilter", InSummary=true, Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> DateFilter
@@ -443,6 +620,52 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> _DateFilter;
         
+        /// <summary>
+        /// Number of results
+        /// </summary>
+        [FhirElement("limit", InSummary=true, Order=90)]
+        [DataMember]
+        public Hl7.Fhir.Model.PositiveInt LimitElement
+        {
+            get { return _LimitElement; }
+            set { _LimitElement = value; OnPropertyChanged("LimitElement"); }
+        }
+        
+        private Hl7.Fhir.Model.PositiveInt _LimitElement;
+        
+        /// <summary>
+        /// Number of results
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? Limit
+        {
+            get { return LimitElement != null ? LimitElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  LimitElement = null; 
+                else
+                  LimitElement = new Hl7.Fhir.Model.PositiveInt(value);
+                OnPropertyChanged("Limit");
+            }
+        }
+        
+        /// <summary>
+        /// Order of the results
+        /// </summary>
+        [FhirElement("sort", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.DataRequirement.SortComponent> Sort
+        {
+            get { if(_Sort==null) _Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(); return _Sort; }
+            set { _Sort = value; OnPropertyChanged("Sort"); }
+        }
+        
+        private List<Hl7.Fhir.Model.DataRequirement.SortComponent> _Sort;
+        
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -452,10 +675,13 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopy();
-                if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
+                if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
                 if(MustSupportElement != null) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopy());
                 if(CodeFilter != null) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopy());
                 if(DateFilter != null) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopy());
+                if(LimitElement != null) dest.LimitElement = (Hl7.Fhir.Model.PositiveInt)LimitElement.DeepCopy();
+                if(Sort != null) dest.Sort = new List<Hl7.Fhir.Model.DataRequirement.SortComponent>(Sort.DeepCopy());
                 return dest;
             }
             else
@@ -475,9 +701,12 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(MustSupportElement, otherT.MustSupportElement)) return false;
             if( !DeepComparable.Matches(CodeFilter, otherT.CodeFilter)) return false;
             if( !DeepComparable.Matches(DateFilter, otherT.DateFilter)) return false;
+            if( !DeepComparable.Matches(LimitElement, otherT.LimitElement)) return false;
+            if( !DeepComparable.Matches(Sort, otherT.Sort)) return false;
             
             return true;
         }
@@ -490,9 +719,12 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(MustSupportElement, otherT.MustSupportElement)) return false;
             if( !DeepComparable.IsExactly(CodeFilter, otherT.CodeFilter)) return false;
             if( !DeepComparable.IsExactly(DateFilter, otherT.DateFilter)) return false;
+            if( !DeepComparable.IsExactly(LimitElement, otherT.LimitElement)) return false;
+            if( !DeepComparable.IsExactly(Sort, otherT.Sort)) return false;
             
             return true;
         }
@@ -505,9 +737,12 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
                 if (TypeElement != null) yield return TypeElement;
                 foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
+                if (Subject != null) yield return Subject;
                 foreach (var elem in MustSupportElement) { if (elem != null) yield return elem; }
                 foreach (var elem in CodeFilter) { if (elem != null) yield return elem; }
                 foreach (var elem in DateFilter) { if (elem != null) yield return elem; }
+                if (LimitElement != null) yield return LimitElement;
+                foreach (var elem in Sort) { if (elem != null) yield return elem; }
             }
         }
 
@@ -519,9 +754,12 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item; 
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                 foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 foreach (var elem in MustSupportElement) { if (elem != null) yield return new ElementValue("mustSupport", true, elem); }
                 foreach (var elem in CodeFilter) { if (elem != null) yield return new ElementValue("codeFilter", true, elem); }
                 foreach (var elem in DateFilter) { if (elem != null) yield return new ElementValue("dateFilter", true, elem); }
+                if (LimitElement != null) yield return new ElementValue("limit", false, LimitElement);
+                foreach (var elem in Sort) { if (elem != null) yield return new ElementValue("sort", true, elem); }
  
             } 
         } 

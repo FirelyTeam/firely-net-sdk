@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -210,518 +210,6 @@ namespace Hl7.Fhir.Model
                     if (Type != null) yield return new ElementValue("type", false, Type);
                     if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
                     if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("GroupComponent")]
-        [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "GroupComponent"; } }
-            
-            /// <summary>
-            /// An identifier for the group
-            /// </summary>
-            [FhirElement("group", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString GroupElement
-            {
-                get { return _GroupElement; }
-                set { _GroupElement = value; OnPropertyChanged("GroupElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _GroupElement;
-            
-            /// <summary>
-            /// An identifier for the group
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Group
-            {
-                get { return GroupElement != null ? GroupElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        GroupElement = null; 
-                    else
-                        GroupElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Group");
-                }
-            }
-            
-            /// <summary>
-            /// Display text for an identifier for the group
-            /// </summary>
-            [FhirElement("groupDisplay", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString GroupDisplayElement
-            {
-                get { return _GroupDisplayElement; }
-                set { _GroupDisplayElement = value; OnPropertyChanged("GroupDisplayElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _GroupDisplayElement;
-            
-            /// <summary>
-            /// Display text for an identifier for the group
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string GroupDisplay
-            {
-                get { return GroupDisplayElement != null ? GroupDisplayElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        GroupDisplayElement = null; 
-                    else
-                        GroupDisplayElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("GroupDisplay");
-                }
-            }
-            
-            /// <summary>
-            /// An identifier for the subsection of the group
-            /// </summary>
-            [FhirElement("subGroup", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SubGroupElement
-            {
-                get { return _SubGroupElement; }
-                set { _SubGroupElement = value; OnPropertyChanged("SubGroupElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SubGroupElement;
-            
-            /// <summary>
-            /// An identifier for the subsection of the group
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SubGroup
-            {
-                get { return SubGroupElement != null ? SubGroupElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SubGroupElement = null; 
-                    else
-                        SubGroupElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("SubGroup");
-                }
-            }
-            
-            /// <summary>
-            /// Display text for the subsection of the group
-            /// </summary>
-            [FhirElement("subGroupDisplay", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SubGroupDisplayElement
-            {
-                get { return _SubGroupDisplayElement; }
-                set { _SubGroupDisplayElement = value; OnPropertyChanged("SubGroupDisplayElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SubGroupDisplayElement;
-            
-            /// <summary>
-            /// Display text for the subsection of the group
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SubGroupDisplay
-            {
-                get { return SubGroupDisplayElement != null ? SubGroupDisplayElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SubGroupDisplayElement = null; 
-                    else
-                        SubGroupDisplayElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("SubGroupDisplay");
-                }
-            }
-            
-            /// <summary>
-            /// An identifier for the plan
-            /// </summary>
-            [FhirElement("plan", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString PlanElement
-            {
-                get { return _PlanElement; }
-                set { _PlanElement = value; OnPropertyChanged("PlanElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _PlanElement;
-            
-            /// <summary>
-            /// An identifier for the plan
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Plan
-            {
-                get { return PlanElement != null ? PlanElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        PlanElement = null; 
-                    else
-                        PlanElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Plan");
-                }
-            }
-            
-            /// <summary>
-            /// Display text for the plan
-            /// </summary>
-            [FhirElement("planDisplay", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString PlanDisplayElement
-            {
-                get { return _PlanDisplayElement; }
-                set { _PlanDisplayElement = value; OnPropertyChanged("PlanDisplayElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _PlanDisplayElement;
-            
-            /// <summary>
-            /// Display text for the plan
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string PlanDisplay
-            {
-                get { return PlanDisplayElement != null ? PlanDisplayElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        PlanDisplayElement = null; 
-                    else
-                        PlanDisplayElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("PlanDisplay");
-                }
-            }
-            
-            /// <summary>
-            /// An identifier for the subsection of the plan
-            /// </summary>
-            [FhirElement("subPlan", InSummary=true, Order=100)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SubPlanElement
-            {
-                get { return _SubPlanElement; }
-                set { _SubPlanElement = value; OnPropertyChanged("SubPlanElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SubPlanElement;
-            
-            /// <summary>
-            /// An identifier for the subsection of the plan
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SubPlan
-            {
-                get { return SubPlanElement != null ? SubPlanElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SubPlanElement = null; 
-                    else
-                        SubPlanElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("SubPlan");
-                }
-            }
-            
-            /// <summary>
-            /// Display text for the subsection of the plan
-            /// </summary>
-            [FhirElement("subPlanDisplay", InSummary=true, Order=110)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SubPlanDisplayElement
-            {
-                get { return _SubPlanDisplayElement; }
-                set { _SubPlanDisplayElement = value; OnPropertyChanged("SubPlanDisplayElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SubPlanDisplayElement;
-            
-            /// <summary>
-            /// Display text for the subsection of the plan
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SubPlanDisplay
-            {
-                get { return SubPlanDisplayElement != null ? SubPlanDisplayElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SubPlanDisplayElement = null; 
-                    else
-                        SubPlanDisplayElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("SubPlanDisplay");
-                }
-            }
-            
-            /// <summary>
-            /// An identifier for the class
-            /// </summary>
-            [FhirElement("class", InSummary=true, Order=120)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ClassElement
-            {
-                get { return _ClassElement; }
-                set { _ClassElement = value; OnPropertyChanged("ClassElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ClassElement;
-            
-            /// <summary>
-            /// An identifier for the class
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Class
-            {
-                get { return ClassElement != null ? ClassElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ClassElement = null; 
-                    else
-                        ClassElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Class");
-                }
-            }
-            
-            /// <summary>
-            /// Display text for the class
-            /// </summary>
-            [FhirElement("classDisplay", InSummary=true, Order=130)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ClassDisplayElement
-            {
-                get { return _ClassDisplayElement; }
-                set { _ClassDisplayElement = value; OnPropertyChanged("ClassDisplayElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ClassDisplayElement;
-            
-            /// <summary>
-            /// Display text for the class
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string ClassDisplay
-            {
-                get { return ClassDisplayElement != null ? ClassDisplayElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ClassDisplayElement = null; 
-                    else
-                        ClassDisplayElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("ClassDisplay");
-                }
-            }
-            
-            /// <summary>
-            /// An identifier for the subsection of the class
-            /// </summary>
-            [FhirElement("subClass", InSummary=true, Order=140)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SubClassElement
-            {
-                get { return _SubClassElement; }
-                set { _SubClassElement = value; OnPropertyChanged("SubClassElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SubClassElement;
-            
-            /// <summary>
-            /// An identifier for the subsection of the class
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SubClass
-            {
-                get { return SubClassElement != null ? SubClassElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SubClassElement = null; 
-                    else
-                        SubClassElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("SubClass");
-                }
-            }
-            
-            /// <summary>
-            /// Display text for the subsection of the subclass
-            /// </summary>
-            [FhirElement("subClassDisplay", InSummary=true, Order=150)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SubClassDisplayElement
-            {
-                get { return _SubClassDisplayElement; }
-                set { _SubClassDisplayElement = value; OnPropertyChanged("SubClassDisplayElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SubClassDisplayElement;
-            
-            /// <summary>
-            /// Display text for the subsection of the subclass
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SubClassDisplay
-            {
-                get { return SubClassDisplayElement != null ? SubClassDisplayElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SubClassDisplayElement = null; 
-                    else
-                        SubClassDisplayElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("SubClassDisplay");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as GroupComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(GroupElement != null) dest.GroupElement = (Hl7.Fhir.Model.FhirString)GroupElement.DeepCopy();
-                    if(GroupDisplayElement != null) dest.GroupDisplayElement = (Hl7.Fhir.Model.FhirString)GroupDisplayElement.DeepCopy();
-                    if(SubGroupElement != null) dest.SubGroupElement = (Hl7.Fhir.Model.FhirString)SubGroupElement.DeepCopy();
-                    if(SubGroupDisplayElement != null) dest.SubGroupDisplayElement = (Hl7.Fhir.Model.FhirString)SubGroupDisplayElement.DeepCopy();
-                    if(PlanElement != null) dest.PlanElement = (Hl7.Fhir.Model.FhirString)PlanElement.DeepCopy();
-                    if(PlanDisplayElement != null) dest.PlanDisplayElement = (Hl7.Fhir.Model.FhirString)PlanDisplayElement.DeepCopy();
-                    if(SubPlanElement != null) dest.SubPlanElement = (Hl7.Fhir.Model.FhirString)SubPlanElement.DeepCopy();
-                    if(SubPlanDisplayElement != null) dest.SubPlanDisplayElement = (Hl7.Fhir.Model.FhirString)SubPlanDisplayElement.DeepCopy();
-                    if(ClassElement != null) dest.ClassElement = (Hl7.Fhir.Model.FhirString)ClassElement.DeepCopy();
-                    if(ClassDisplayElement != null) dest.ClassDisplayElement = (Hl7.Fhir.Model.FhirString)ClassDisplayElement.DeepCopy();
-                    if(SubClassElement != null) dest.SubClassElement = (Hl7.Fhir.Model.FhirString)SubClassElement.DeepCopy();
-                    if(SubClassDisplayElement != null) dest.SubClassDisplayElement = (Hl7.Fhir.Model.FhirString)SubClassDisplayElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new GroupComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as GroupComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(GroupElement, otherT.GroupElement)) return false;
-                if( !DeepComparable.Matches(GroupDisplayElement, otherT.GroupDisplayElement)) return false;
-                if( !DeepComparable.Matches(SubGroupElement, otherT.SubGroupElement)) return false;
-                if( !DeepComparable.Matches(SubGroupDisplayElement, otherT.SubGroupDisplayElement)) return false;
-                if( !DeepComparable.Matches(PlanElement, otherT.PlanElement)) return false;
-                if( !DeepComparable.Matches(PlanDisplayElement, otherT.PlanDisplayElement)) return false;
-                if( !DeepComparable.Matches(SubPlanElement, otherT.SubPlanElement)) return false;
-                if( !DeepComparable.Matches(SubPlanDisplayElement, otherT.SubPlanDisplayElement)) return false;
-                if( !DeepComparable.Matches(ClassElement, otherT.ClassElement)) return false;
-                if( !DeepComparable.Matches(ClassDisplayElement, otherT.ClassDisplayElement)) return false;
-                if( !DeepComparable.Matches(SubClassElement, otherT.SubClassElement)) return false;
-                if( !DeepComparable.Matches(SubClassDisplayElement, otherT.SubClassDisplayElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as GroupComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(GroupElement, otherT.GroupElement)) return false;
-                if( !DeepComparable.IsExactly(GroupDisplayElement, otherT.GroupDisplayElement)) return false;
-                if( !DeepComparable.IsExactly(SubGroupElement, otherT.SubGroupElement)) return false;
-                if( !DeepComparable.IsExactly(SubGroupDisplayElement, otherT.SubGroupDisplayElement)) return false;
-                if( !DeepComparable.IsExactly(PlanElement, otherT.PlanElement)) return false;
-                if( !DeepComparable.IsExactly(PlanDisplayElement, otherT.PlanDisplayElement)) return false;
-                if( !DeepComparable.IsExactly(SubPlanElement, otherT.SubPlanElement)) return false;
-                if( !DeepComparable.IsExactly(SubPlanDisplayElement, otherT.SubPlanDisplayElement)) return false;
-                if( !DeepComparable.IsExactly(ClassElement, otherT.ClassElement)) return false;
-                if( !DeepComparable.IsExactly(ClassDisplayElement, otherT.ClassDisplayElement)) return false;
-                if( !DeepComparable.IsExactly(SubClassElement, otherT.SubClassElement)) return false;
-                if( !DeepComparable.IsExactly(SubClassDisplayElement, otherT.SubClassDisplayElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (GroupElement != null) yield return GroupElement;
-                    if (GroupDisplayElement != null) yield return GroupDisplayElement;
-                    if (SubGroupElement != null) yield return SubGroupElement;
-                    if (SubGroupDisplayElement != null) yield return SubGroupDisplayElement;
-                    if (PlanElement != null) yield return PlanElement;
-                    if (PlanDisplayElement != null) yield return PlanDisplayElement;
-                    if (SubPlanElement != null) yield return SubPlanElement;
-                    if (SubPlanDisplayElement != null) yield return SubPlanDisplayElement;
-                    if (ClassElement != null) yield return ClassElement;
-                    if (ClassDisplayElement != null) yield return ClassDisplayElement;
-                    if (SubClassElement != null) yield return SubClassElement;
-                    if (SubClassDisplayElement != null) yield return SubClassDisplayElement;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (GroupElement != null) yield return new ElementValue("group", false, GroupElement);
-                    if (GroupDisplayElement != null) yield return new ElementValue("groupDisplay", false, GroupDisplayElement);
-                    if (SubGroupElement != null) yield return new ElementValue("subGroup", false, SubGroupElement);
-                    if (SubGroupDisplayElement != null) yield return new ElementValue("subGroupDisplay", false, SubGroupDisplayElement);
-                    if (PlanElement != null) yield return new ElementValue("plan", false, PlanElement);
-                    if (PlanDisplayElement != null) yield return new ElementValue("planDisplay", false, PlanDisplayElement);
-                    if (SubPlanElement != null) yield return new ElementValue("subPlan", false, SubPlanElement);
-                    if (SubPlanDisplayElement != null) yield return new ElementValue("subPlanDisplay", false, SubPlanDisplayElement);
-                    if (ClassElement != null) yield return new ElementValue("class", false, ClassElement);
-                    if (ClassDisplayElement != null) yield return new ElementValue("classDisplay", false, ClassDisplayElement);
-                    if (SubClassElement != null) yield return new ElementValue("subClass", false, SubClassElement);
-                    if (SubClassDisplayElement != null) yield return new ElementValue("subClassDisplay", false, SubClassDisplayElement);
                 }
             }
 
@@ -1059,54 +547,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Coverage.ClassComponent> _Class;
         
         /// <summary>
-        /// Additional coverage classifications
-        /// </summary>
-        [FhirElement("grouping", Order=210)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coverage.GroupComponent Grouping
-        {
-            get { return _Grouping; }
-            set { _Grouping = value; OnPropertyChanged("Grouping"); }
-        }
-        
-        private Hl7.Fhir.Model.Coverage.GroupComponent _Grouping;
-        
-        /// <summary>
-        /// The plan instance or sequence counter
-        /// </summary>
-        [FhirElement("sequence", InSummary=true, Order=220)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString SequenceElement
-        {
-            get { return _SequenceElement; }
-            set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _SequenceElement;
-        
-        /// <summary>
-        /// The plan instance or sequence counter
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Sequence
-        {
-            get { return SequenceElement != null ? SequenceElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  SequenceElement = null; 
-                else
-                  SequenceElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Sequence");
-            }
-        }
-        
-        /// <summary>
         /// Relative order of the coverage
         /// </summary>
-        [FhirElement("order", InSummary=true, Order=230)]
+        [FhirElement("order", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt OrderElement
         {
@@ -1138,7 +581,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer network
         /// </summary>
-        [FhirElement("network", InSummary=true, Order=240)]
+        [FhirElement("network", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NetworkElement
         {
@@ -1170,7 +613,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient payments for services/products
         /// </summary>
-        [FhirElement("copay", Order=250)]
+        [FhirElement("copay", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coverage.CoPayComponent> Copay
@@ -1184,7 +627,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract details
         /// </summary>
-        [FhirElement("contract", Order=260)]
+        [FhirElement("contract", Order=240)]
         [CLSCompliant(false)]
 		[References("Contract")]
         [Cardinality(Min=0,Max=-1)]
@@ -1223,8 +666,6 @@ namespace Hl7.Fhir.Model
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Payor != null) dest.Payor = new List<Hl7.Fhir.Model.ResourceReference>(Payor.DeepCopy());
                 if(Class != null) dest.Class = new List<Hl7.Fhir.Model.Coverage.ClassComponent>(Class.DeepCopy());
-                if(Grouping != null) dest.Grouping = (Hl7.Fhir.Model.Coverage.GroupComponent)Grouping.DeepCopy();
-                if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopy();
                 if(OrderElement != null) dest.OrderElement = (Hl7.Fhir.Model.PositiveInt)OrderElement.DeepCopy();
                 if(NetworkElement != null) dest.NetworkElement = (Hl7.Fhir.Model.FhirString)NetworkElement.DeepCopy();
                 if(Copay != null) dest.Copay = new List<Hl7.Fhir.Model.Coverage.CoPayComponent>(Copay.DeepCopy());
@@ -1258,8 +699,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Payor, otherT.Payor)) return false;
             if( !DeepComparable.Matches(Class, otherT.Class)) return false;
-            if( !DeepComparable.Matches(Grouping, otherT.Grouping)) return false;
-            if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.Matches(OrderElement, otherT.OrderElement)) return false;
             if( !DeepComparable.Matches(NetworkElement, otherT.NetworkElement)) return false;
             if( !DeepComparable.Matches(Copay, otherT.Copay)) return false;
@@ -1286,8 +725,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Payor, otherT.Payor)) return false;
             if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
-            if( !DeepComparable.IsExactly(Grouping, otherT.Grouping)) return false;
-            if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.IsExactly(OrderElement, otherT.OrderElement)) return false;
             if( !DeepComparable.IsExactly(NetworkElement, otherT.NetworkElement)) return false;
             if( !DeepComparable.IsExactly(Copay, otherT.Copay)) return false;
@@ -1314,8 +751,6 @@ namespace Hl7.Fhir.Model
 				if (Period != null) yield return Period;
 				foreach (var elem in Payor) { if (elem != null) yield return elem; }
 				foreach (var elem in Class) { if (elem != null) yield return elem; }
-				if (Grouping != null) yield return Grouping;
-				if (SequenceElement != null) yield return SequenceElement;
 				if (OrderElement != null) yield return OrderElement;
 				if (NetworkElement != null) yield return NetworkElement;
 				foreach (var elem in Copay) { if (elem != null) yield return elem; }
@@ -1341,8 +776,6 @@ namespace Hl7.Fhir.Model
                 if (Period != null) yield return new ElementValue("period", false, Period);
                 foreach (var elem in Payor) { if (elem != null) yield return new ElementValue("payor", true, elem); }
                 foreach (var elem in Class) { if (elem != null) yield return new ElementValue("class", true, elem); }
-                if (Grouping != null) yield return new ElementValue("grouping", false, Grouping);
-                if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
                 if (OrderElement != null) yield return new ElementValue("order", false, OrderElement);
                 if (NetworkElement != null) yield return new ElementValue("network", false, NetworkElement);
                 foreach (var elem in Copay) { if (elem != null) yield return new ElementValue("copay", true, elem); }

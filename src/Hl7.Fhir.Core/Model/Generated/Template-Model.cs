@@ -2,8 +2,13 @@
 
 
 //
-// Model Generated on Sun, 07 Jan 2018 13:22:02 GMT for FHIR v3.2.0
+// Model Generated on Thu, 05 Apr 2018 21:54:30 GMT for FHIR v3.3.0
 //
+// Generated Shared Enumeration: Use
+	// Used in model class (resource): Claim.use
+	// Used in model class (resource): ClaimResponse.use
+	// Used in model class (resource): ExplanationOfBenefit.use
+
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): ActivityDefinition.kind
 	// Used in model class (resource): CapabilityStatement.rest.resource.type
@@ -12,10 +17,6 @@
 	// Used in model class (resource): GraphDefinition.start
 	// Used in model class (resource): GraphDefinition.link.target.type
 	// Used in model class (resource): ImplementationGuide.global.type
-	// Used in model class (resource): ImplementationGuide.page.type
-	// Used in model class (resource): ImplementationGuideInput.global.type
-	// Used in model class (resource): ImplementationGuideInput.page.type
-	// Used in model class (resource): ImplementationGuideOutput.global.type
 	// Used in model class (resource): MessageDefinition.focus.code
 	// Used in model class (resource): OperationDefinition.resource
 	// Used in model class (resource): Questionnaire.subjectType
@@ -45,6 +46,7 @@
 	// Used in model class (resource): Task.priority
 
 // Generated Shared Enumeration: RequestIntent
+	// Used in model class (resource): NutritionOrder.intent
 	// Used in model class (resource): RequestGroup.intent
 	// Used in model class (resource): ServiceRequest.intent
 	// Used in model class (resource): Task.intent
@@ -57,12 +59,10 @@
 	// Used in model class (resource): Practitioner.gender
 	// Used in model class (resource): RelatedPerson.gender
 
-// Generated Shared Enumeration: GuidePageKind
-	// Used in model class (resource): ImplementationGuide.page.kind
-	// Used in model class (resource): ImplementationGuideInput.page.kind
-
 // Generated Shared Enumeration: EventStatus
 	// Used in model class (resource): Communication.status
+	// Used in model class (resource): Consent.status
+	// Used in model class (resource): Media.status
 	// Used in model class (resource): Procedure.status
 
 // Generated Shared Enumeration: ActionGroupingBehavior
@@ -120,11 +120,6 @@
 	// Used in model class (resource): PlanDefinition.action.cardinalityBehavior
 	// Used in model class (resource): RequestGroup.action.cardinalityBehavior
 
-// Generated Shared Enumeration: GuideDependencyType
-	// Used in model class (resource): ImplementationGuide.dependency.type
-	// Used in model class (resource): ImplementationGuideInput.dependency.type
-	// Used in model class (resource): ImplementationGuideOutput.dependency.type
-
 // Generated Shared Enumeration: ActionConditionKind
 	// Used in model class (resource): PlanDefinition.action.condition.kind
 	// Used in model class (resource): RequestGroup.action.condition.kind
@@ -155,6 +150,7 @@
 // Generated Shared Enumeration: RequestStatus
 	// Used in model class (resource): CommunicationRequest.status
 	// Used in model class (resource): DeviceRequest.status
+	// Used in model class (resource): NutritionOrder.status
 	// Used in model class (resource): RequestGroup.status
 	// Used in model class (resource): ServiceRequest.status
 
@@ -192,8 +188,6 @@
 	// Used in model class (resource): ExpansionProfile.status
 	// Used in model class (resource): GraphDefinition.status
 	// Used in model class (resource): ImplementationGuide.status
-	// Used in model class (resource): ImplementationGuideInput.status
-	// Used in model class (resource): ImplementationGuideOutput.status
 	// Used in model class (resource): Library.status
 	// Used in model class (resource): Measure.status
 	// Used in model class (resource): MessageDefinition.status
@@ -204,7 +198,6 @@
 	// Used in model class (resource): ProductPlan.status
 	// Used in model class (resource): Questionnaire.status
 	// Used in model class (resource): SearchParameter.status
-	// Used in model class (resource): ServiceDefinition.status
 	// Used in model class (resource): StructureDefinition.status
 	// Used in model class (resource): StructureMap.status
 	// Used in model class (resource): TerminologyCapabilities.status
@@ -235,7 +228,6 @@
 // Hl7.Fhir.Core\Model\Generated\Specimen.cs
 // Hl7.Fhir.Core\Model\Generated\Slot.cs
 // Hl7.Fhir.Core\Model\Generated\ServiceRequest.cs
-// Hl7.Fhir.Core\Model\Generated\ServiceDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Sequence.cs
 // Hl7.Fhir.Core\Model\Generated\SearchParameter.cs
 // Hl7.Fhir.Core\Model\Generated\Schedule.cs
@@ -291,8 +283,6 @@
 // Hl7.Fhir.Core\Model\Generated\Library.cs
 // Hl7.Fhir.Core\Model\Generated\ItemInstance.cs
 // Hl7.Fhir.Core\Model\Generated\Invoice.cs
-// Hl7.Fhir.Core\Model\Generated\ImplementationGuideOutput.cs
-// Hl7.Fhir.Core\Model\Generated\ImplementationGuideInput.cs
 // Hl7.Fhir.Core\Model\Generated\ImplementationGuide.cs
 // Hl7.Fhir.Core\Model\Generated\ImmunizationRecommendation.cs
 // Hl7.Fhir.Core\Model\Generated\ImmunizationEvaluation.cs

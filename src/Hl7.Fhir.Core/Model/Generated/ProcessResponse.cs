@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("requestProvider", Order=160)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -412,24 +412,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _RequestProvider;
         
         /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("requestOrganization", Order=170)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestOrganization
-        {
-            get { return _RequestOrganization; }
-            set { _RequestOrganization = value; OnPropertyChanged("RequestOrganization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
-        
-        /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", Order=180)]
+        [FhirElement("form", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Form
         {
@@ -442,7 +427,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Processing comments or additional requirements
         /// </summary>
-        [FhirElement("processNote", Order=190)]
+        [FhirElement("processNote", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent> ProcessNote
@@ -456,7 +441,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Error code
         /// </summary>
-        [FhirElement("error", Order=200)]
+        [FhirElement("error", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Error
@@ -470,7 +455,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request for additional information
         /// </summary>
-        [FhirElement("communicationRequest", Order=210)]
+        [FhirElement("communicationRequest", Order=200)]
         [CLSCompliant(false)]
 		[References("CommunicationRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -505,7 +490,6 @@ namespace Hl7.Fhir.Model
                 if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ProcessResponse.ProcessOutcomeCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
-                if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
                 if(ProcessNote != null) dest.ProcessNote = new List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent>(ProcessNote.DeepCopy());
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopy());
@@ -535,7 +519,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.Matches(Form, otherT.Form)) return false;
             if( !DeepComparable.Matches(ProcessNote, otherT.ProcessNote)) return false;
             if( !DeepComparable.Matches(Error, otherT.Error)) return false;
@@ -558,7 +541,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
-            if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
             if( !DeepComparable.IsExactly(ProcessNote, otherT.ProcessNote)) return false;
             if( !DeepComparable.IsExactly(Error, otherT.Error)) return false;
@@ -581,7 +563,6 @@ namespace Hl7.Fhir.Model
 				if (OutcomeElement != null) yield return OutcomeElement;
 				if (DispositionElement != null) yield return DispositionElement;
 				if (RequestProvider != null) yield return RequestProvider;
-				if (RequestOrganization != null) yield return RequestOrganization;
 				if (Form != null) yield return Form;
 				foreach (var elem in ProcessNote) { if (elem != null) yield return elem; }
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
@@ -603,7 +584,6 @@ namespace Hl7.Fhir.Model
                 if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
                 if (Form != null) yield return new ElementValue("form", false, Form);
                 foreach (var elem in ProcessNote) { if (elem != null) yield return new ElementValue("processNote", true, elem); }
                 foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, elem); }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -144,15 +144,15 @@ namespace Hl7.Fhir.Model
             /// personal | professional | legal | official
             /// </summary>
             [FhirElement("mode", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=-1)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> ModeElement
+            public Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode> ModeElement
             {
-                get { if(_ModeElement==null) _ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(); return _ModeElement; }
+                get { return _ModeElement; }
                 set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
             }
             
-            private List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> _ModeElement;
+            private Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode> _ModeElement;
             
             /// <summary>
             /// personal | professional | legal | official
@@ -160,15 +160,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.Composition.CompositionAttestationMode?> Mode
+            public Hl7.Fhir.Model.Composition.CompositionAttestationMode? Mode
             {
-                get { return ModeElement != null ? ModeElement.Select(elem => elem.Value) : null; }
+                get { return ModeElement != null ? ModeElement.Value : null; }
                 set
                 {
-                    if (value == null)
+                    if (!value.HasValue)
                         ModeElement = null; 
                     else
-                        ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
+                        ModeElement = new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(value);
                     OnPropertyChanged("Mode");
                 }
             }
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("party", InSummary=true, Order=60)]
             [CLSCompliant(false)]
-			[References("Patient","Practitioner","PractitionerRole","Organization")]
+			[References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Party
             {
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ModeElement != null) dest.ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(ModeElement.DeepCopy());
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>)ModeElement.DeepCopy();
                     if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
                     if(Party != null) dest.Party = (Hl7.Fhir.Model.ResourceReference)Party.DeepCopy();
                     return dest;
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    foreach (var elem in ModeElement) { if (elem != null) yield return elem; }
+                    if (ModeElement != null) yield return ModeElement;
                     if (TimeElement != null) yield return TimeElement;
                     if (Party != null) yield return Party;
                 }
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in ModeElement) { if (elem != null) yield return new ElementValue("mode", true, elem); }
+                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
                     if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
                     if (Party != null) yield return new ElementValue("party", false, Party);
                 }
@@ -602,9 +602,25 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
+            /// Who and/or what authored the section
+            /// </summary>
+            [FhirElement("author", InSummary=true, Order=60)]
+            [CLSCompliant(false)]
+			[References("Practitioner","PractitionerRole","Device","Patient","RelatedPerson","Organization")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Author
+            {
+                get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
+                set { _Author = value; OnPropertyChanged("Author"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Author;
+            
+            /// <summary>
             /// Text summary of the section, for human interpretation
             /// </summary>
-            [FhirElement("text", Order=60)]
+            [FhirElement("text", Order=70)]
             [DataMember]
             public Narrative Text
             {
@@ -617,7 +633,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// working | snapshot | changes
             /// </summary>
-            [FhirElement("mode", InSummary=true, Order=70)]
+            [FhirElement("mode", InSummary=true, Order=80)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ListMode> ModeElement
             {
@@ -649,7 +665,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Order of section entries
             /// </summary>
-            [FhirElement("orderedBy", Order=80)]
+            [FhirElement("orderedBy", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept OrderedBy
             {
@@ -662,7 +678,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A reference to data that supports this section
             /// </summary>
-            [FhirElement("entry", Order=90)]
+            [FhirElement("entry", Order=100)]
             [CLSCompliant(false)]
 			[References()]
             [Cardinality(Min=0,Max=-1)]
@@ -678,7 +694,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why the section is empty
             /// </summary>
-            [FhirElement("emptyReason", Order=100)]
+            [FhirElement("emptyReason", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept EmptyReason
             {
@@ -691,7 +707,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested Section
             /// </summary>
-            [FhirElement("section", Order=110)]
+            [FhirElement("section", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -711,6 +727,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
                     if(Text != null) dest.Text = (Narrative)Text.DeepCopy();
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ListMode>)ModeElement.DeepCopy();
                     if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
@@ -736,6 +753,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Author, otherT.Author)) return false;
                 if( !DeepComparable.Matches(Text, otherT.Text)) return false;
                 if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
                 if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
@@ -754,6 +772,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
                 if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
                 if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
                 if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
@@ -773,6 +792,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (TitleElement != null) yield return TitleElement;
                     if (Code != null) yield return Code;
+                    foreach (var elem in Author) { if (elem != null) yield return elem; }
                     if (Text != null) yield return Text;
                     if (ModeElement != null) yield return ModeElement;
                     if (OrderedBy != null) yield return OrderedBy;
@@ -790,6 +810,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
                     if (Code != null) yield return new ElementValue("code", false, Code);
+                    foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
                     if (Text != null) yield return new ElementValue("text", false, Text);
                     if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
                     if (OrderedBy != null) yield return new ElementValue("orderedBy", false, OrderedBy);
@@ -804,7 +825,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical identifier of composition (version-independent)
+        /// Version-independent identifier for the Composition
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]

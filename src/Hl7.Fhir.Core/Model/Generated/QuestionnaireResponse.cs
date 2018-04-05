@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -488,16 +488,33 @@ namespace Hl7.Fhir.Model
         /// Form being answered
         /// </summary>
         [FhirElement("questionnaire", InSummary=true, Order=120)]
-        [CLSCompliant(false)]
-		[References("Questionnaire")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Questionnaire
+        public Hl7.Fhir.Model.Canonical QuestionnaireElement
         {
-            get { return _Questionnaire; }
-            set { _Questionnaire = value; OnPropertyChanged("Questionnaire"); }
+            get { return _QuestionnaireElement; }
+            set { _QuestionnaireElement = value; OnPropertyChanged("QuestionnaireElement"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Questionnaire;
+        private Hl7.Fhir.Model.Canonical _QuestionnaireElement;
+        
+        /// <summary>
+        /// Form being answered
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Questionnaire
+        {
+            get { return QuestionnaireElement != null ? QuestionnaireElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  QuestionnaireElement = null; 
+                else
+                  QuestionnaireElement = new Hl7.Fhir.Model.Canonical(value);
+                OnPropertyChanged("Questionnaire");
+            }
+        }
         
         /// <summary>
         /// in-progress | completed | amended | entered-in-error | stopped
@@ -665,7 +682,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
-                if(Questionnaire != null) dest.Questionnaire = (Hl7.Fhir.Model.ResourceReference)Questionnaire.DeepCopy();
+                if(QuestionnaireElement != null) dest.QuestionnaireElement = (Hl7.Fhir.Model.Canonical)QuestionnaireElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
@@ -693,7 +710,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
-            if( !DeepComparable.Matches(Questionnaire, otherT.Questionnaire)) return false;
+            if( !DeepComparable.Matches(QuestionnaireElement, otherT.QuestionnaireElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
@@ -714,7 +731,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
-            if( !DeepComparable.IsExactly(Questionnaire, otherT.Questionnaire)) return false;
+            if( !DeepComparable.IsExactly(QuestionnaireElement, otherT.QuestionnaireElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
@@ -735,7 +752,7 @@ namespace Hl7.Fhir.Model
 				if (Identifier != null) yield return Identifier;
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
-				if (Questionnaire != null) yield return Questionnaire;
+				if (QuestionnaireElement != null) yield return QuestionnaireElement;
 				if (StatusElement != null) yield return StatusElement;
 				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;
@@ -755,7 +772,7 @@ namespace Hl7.Fhir.Model
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (Questionnaire != null) yield return new ElementValue("questionnaire", false, Questionnaire);
+                if (QuestionnaireElement != null) yield return new ElementValue("questionnaire", false, QuestionnaireElement);
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (Context != null) yield return new ElementValue("context", false, Context);

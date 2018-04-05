@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("provider", Order=140)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -335,24 +335,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Provider;
         
         /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("organization", Order=150)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Organization
-        {
-            get { return _Organization; }
-            set { _Organization = value; OnPropertyChanged("Organization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Organization;
-        
-        /// <summary>
         /// Reference to the Request resource
         /// </summary>
-        [FhirElement("request", Order=160)]
+        [FhirElement("request", Order=150)]
         [CLSCompliant(false)]
 		[References()]
         [DataMember]
@@ -367,7 +352,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference to the Response resource
         /// </summary>
-        [FhirElement("response", Order=170)]
+        [FhirElement("response", Order=160)]
         [CLSCompliant(false)]
 		[References()]
         [DataMember]
@@ -382,7 +367,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Remove history
         /// </summary>
-        [FhirElement("nullify", Order=180)]
+        [FhirElement("nullify", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NullifyElement
         {
@@ -414,7 +399,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference number/string
         /// </summary>
-        [FhirElement("reference", Order=190)]
+        [FhirElement("reference", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ReferenceElement
         {
@@ -446,7 +431,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Items to re-adjudicate
         /// </summary>
-        [FhirElement("item", Order=200)]
+        [FhirElement("item", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> Item
@@ -460,7 +445,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource type(s) to include
         /// </summary>
-        [FhirElement("include", Order=210)]
+        [FhirElement("include", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> IncludeElement
@@ -493,7 +478,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource type(s) to exclude
         /// </summary>
-        [FhirElement("exclude", Order=220)]
+        [FhirElement("exclude", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ExcludeElement
@@ -526,7 +511,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Selection period
         /// </summary>
-        [FhirElement("period", Order=230)]
+        [FhirElement("period", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -556,7 +541,6 @@ namespace Hl7.Fhir.Model
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopy();
                 if(NullifyElement != null) dest.NullifyElement = (Hl7.Fhir.Model.FhirBoolean)NullifyElement.DeepCopy();
@@ -588,7 +572,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(Response, otherT.Response)) return false;
             if( !DeepComparable.Matches(NullifyElement, otherT.NullifyElement)) return false;
@@ -613,7 +596,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
             if( !DeepComparable.IsExactly(NullifyElement, otherT.NullifyElement)) return false;
@@ -638,7 +620,6 @@ namespace Hl7.Fhir.Model
 				if (Target != null) yield return Target;
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Provider != null) yield return Provider;
-				if (Organization != null) yield return Organization;
 				if (Request != null) yield return Request;
 				if (Response != null) yield return Response;
 				if (NullifyElement != null) yield return NullifyElement;
@@ -662,7 +643,6 @@ namespace Hl7.Fhir.Model
                 if (Target != null) yield return new ElementValue("target", false, Target);
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (Provider != null) yield return new ElementValue("provider", false, Provider);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
                 if (Request != null) yield return new ElementValue("request", false, Request);
                 if (Response != null) yield return new ElementValue("response", false, Response);
                 if (NullifyElement != null) yield return new ElementValue("nullify", false, NullifyElement);

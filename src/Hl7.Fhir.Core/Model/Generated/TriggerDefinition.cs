@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// text/cql | text/fhirpath | etc
+            /// text/cql | text/fhirpath | etc.
             /// </summary>
             [FhirElement("language", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _LanguageElement;
             
             /// <summary>
-            /// text/cql | text/fhirpath | etc
+            /// text/cql | text/fhirpath | etc.
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

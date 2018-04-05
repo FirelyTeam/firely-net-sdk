@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ChargeItem"; } }
         
         /// <summary>
-        /// Codes identifying the stage lifecycle stage of a ChargeItem
+        /// Codes identifying the lifecycle stage of a ChargeItem
         /// (url: http://hl7.org/fhir/ValueSet/chargeitem-status)
         /// </summary>
         [FhirEnumeration("ChargeItemStatus")]
@@ -217,14 +217,15 @@ namespace Hl7.Fhir.Model
         /// Business Identifier for item
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Defining information about the code of this charge item
@@ -413,9 +414,24 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _RequestingOrganization;
         
         /// <summary>
+        /// Organization that has ownership of the (potential, future) revenue
+        /// </summary>
+        [FhirElement("costCenter", Order=200)]
+        [CLSCompliant(false)]
+		[References("Organization","OrganizationRole")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference CostCenter
+        {
+            get { return _CostCenter; }
+            set { _CostCenter = value; OnPropertyChanged("CostCenter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _CostCenter;
+        
+        /// <summary>
         /// Quantity of which the charge item has been serviced
         /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=200)]
+        [FhirElement("quantity", InSummary=true, Order=210)]
         [DataMember]
         public Quantity Quantity
         {
@@ -428,7 +444,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("bodysite", InSummary=true, Order=210)]
+        [FhirElement("bodysite", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Bodysite
@@ -442,7 +458,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Factor overriding the associated rules
         /// </summary>
-        [FhirElement("factorOverride", Order=220)]
+        [FhirElement("factorOverride", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal FactorOverrideElement
         {
@@ -474,7 +490,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Price overriding the associated rules
         /// </summary>
-        [FhirElement("priceOverride", Order=230)]
+        [FhirElement("priceOverride", Order=240)]
         [DataMember]
         public Money PriceOverride
         {
@@ -487,7 +503,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for overriding the list price/factor
         /// </summary>
-        [FhirElement("overrideReason", Order=240)]
+        [FhirElement("overrideReason", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString OverrideReasonElement
         {
@@ -519,7 +535,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Individual who was entering
         /// </summary>
-        [FhirElement("enterer", InSummary=true, Order=250)]
+        [FhirElement("enterer", InSummary=true, Order=260)]
         [CLSCompliant(false)]
 		[References("Practitioner","Organization","Patient","Device","RelatedPerson")]
         [DataMember]
@@ -534,7 +550,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date the charge item was entered
         /// </summary>
-        [FhirElement("enteredDate", InSummary=true, Order=260)]
+        [FhirElement("enteredDate", InSummary=true, Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime EnteredDateElement
         {
@@ -566,7 +582,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why was the charged  service rendered?
         /// </summary>
-        [FhirElement("reason", Order=270)]
+        [FhirElement("reason", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -580,7 +596,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Which rendered service is being charged?
         /// </summary>
-        [FhirElement("service", Order=280)]
+        [FhirElement("service", Order=290)]
         [CLSCompliant(false)]
 		[References("DiagnosticReport","ImagingStudy","Immunization","MedicationAdministration","MedicationDispense","Observation","Procedure","SupplyDelivery")]
         [Cardinality(Min=0,Max=-1)]
@@ -596,7 +612,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Account to place this charge
         /// </summary>
-        [FhirElement("account", InSummary=true, Order=290)]
+        [FhirElement("account", InSummary=true, Order=300)]
         [CLSCompliant(false)]
 		[References("Account")]
         [Cardinality(Min=0,Max=-1)]
@@ -612,7 +628,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments made about the ChargeItem
         /// </summary>
-        [FhirElement("note", Order=300)]
+        [FhirElement("note", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -624,9 +640,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
-        /// Further information supporting the this charge
+        /// Further information supporting this charge
         /// </summary>
-        [FhirElement("supportingInformation", Order=310)]
+        [FhirElement("supportingInformation", Order=320)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
@@ -653,7 +669,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(DefinitionElement != null) dest.DefinitionElement = new List<Hl7.Fhir.Model.FhirUri>(DefinitionElement.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus>)StatusElement.DeepCopy();
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
@@ -664,6 +680,7 @@ namespace Hl7.Fhir.Model
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.ChargeItem.ParticipantComponent>(Participant.DeepCopy());
                 if(PerformingOrganization != null) dest.PerformingOrganization = (Hl7.Fhir.Model.ResourceReference)PerformingOrganization.DeepCopy();
                 if(RequestingOrganization != null) dest.RequestingOrganization = (Hl7.Fhir.Model.ResourceReference)RequestingOrganization.DeepCopy();
+                if(CostCenter != null) dest.CostCenter = (Hl7.Fhir.Model.ResourceReference)CostCenter.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
                 if(Bodysite != null) dest.Bodysite = new List<Hl7.Fhir.Model.CodeableConcept>(Bodysite.DeepCopy());
                 if(FactorOverrideElement != null) dest.FactorOverrideElement = (Hl7.Fhir.Model.FhirDecimal)FactorOverrideElement.DeepCopy();
@@ -704,6 +721,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
             if( !DeepComparable.Matches(PerformingOrganization, otherT.PerformingOrganization)) return false;
             if( !DeepComparable.Matches(RequestingOrganization, otherT.RequestingOrganization)) return false;
+            if( !DeepComparable.Matches(CostCenter, otherT.CostCenter)) return false;
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.Matches(Bodysite, otherT.Bodysite)) return false;
             if( !DeepComparable.Matches(FactorOverrideElement, otherT.FactorOverrideElement)) return false;
@@ -737,6 +755,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
             if( !DeepComparable.IsExactly(PerformingOrganization, otherT.PerformingOrganization)) return false;
             if( !DeepComparable.IsExactly(RequestingOrganization, otherT.RequestingOrganization)) return false;
+            if( !DeepComparable.IsExactly(CostCenter, otherT.CostCenter)) return false;
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.IsExactly(Bodysite, otherT.Bodysite)) return false;
             if( !DeepComparable.IsExactly(FactorOverrideElement, otherT.FactorOverrideElement)) return false;
@@ -759,7 +778,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in DefinitionElement) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
@@ -770,6 +789,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
 				if (PerformingOrganization != null) yield return PerformingOrganization;
 				if (RequestingOrganization != null) yield return RequestingOrganization;
+				if (CostCenter != null) yield return CostCenter;
 				if (Quantity != null) yield return Quantity;
 				foreach (var elem in Bodysite) { if (elem != null) yield return elem; }
 				if (FactorOverrideElement != null) yield return FactorOverrideElement;
@@ -791,7 +811,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 foreach (var elem in DefinitionElement) { if (elem != null) yield return new ElementValue("definition", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
@@ -802,6 +822,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
                 if (PerformingOrganization != null) yield return new ElementValue("performingOrganization", false, PerformingOrganization);
                 if (RequestingOrganization != null) yield return new ElementValue("requestingOrganization", false, RequestingOrganization);
+                if (CostCenter != null) yield return new ElementValue("costCenter", false, CostCenter);
                 if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
                 foreach (var elem in Bodysite) { if (elem != null) yield return new ElementValue("bodysite", true, elem); }
                 if (FactorOverrideElement != null) yield return new ElementValue("factorOverride", false, FactorOverrideElement);

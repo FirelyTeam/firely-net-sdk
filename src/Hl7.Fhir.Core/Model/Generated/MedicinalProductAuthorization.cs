@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// Date that that application was made
+            /// Date that the application was made
             /// </summary>
             [FhirElement("date", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
-            /// Date that that application was made
+            /// Date that the application was made
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

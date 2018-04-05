@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -487,9 +487,39 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Performed;
         
         /// <summary>
+        /// Who recorded the procedure
+        /// </summary>
+        [FhirElement("recorder", InSummary=true, Order=200)]
+        [CLSCompliant(false)]
+		[References("Patient","RelatedPerson","Practitioner","PractitionerRole")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Recorder
+        {
+            get { return _Recorder; }
+            set { _Recorder = value; OnPropertyChanged("Recorder"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Recorder;
+        
+        /// <summary>
+        /// Person who asserts this procedure
+        /// </summary>
+        [FhirElement("asserter", InSummary=true, Order=210)]
+        [CLSCompliant(false)]
+		[References("Patient","RelatedPerson","Practitioner","PractitionerRole")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Asserter
+        {
+            get { return _Asserter; }
+            set { _Asserter = value; OnPropertyChanged("Asserter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Asserter;
+        
+        /// <summary>
         /// The people who performed the procedure
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=200)]
+        [FhirElement("performer", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Procedure.PerformerComponent> Performer
@@ -503,7 +533,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the procedure happened
         /// </summary>
-        [FhirElement("location", InSummary=true, Order=210)]
+        [FhirElement("location", InSummary=true, Order=230)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -518,7 +548,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Coded reason procedure performed
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=220)]
+        [FhirElement("reasonCode", InSummary=true, Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -532,7 +562,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The justification that the procedure was performed
         /// </summary>
-        [FhirElement("reasonReference", InSummary=true, Order=230)]
+        [FhirElement("reasonReference", InSummary=true, Order=250)]
         [CLSCompliant(false)]
 		[References("Condition","Observation","Procedure","DiagnosticReport","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -548,7 +578,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target body sites
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=240)]
+        [FhirElement("bodySite", InSummary=true, Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -562,7 +592,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The result of procedure
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=250)]
+        [FhirElement("outcome", InSummary=true, Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Outcome
         {
@@ -575,9 +605,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Any report resulting from the procedure
         /// </summary>
-        [FhirElement("report", Order=260)]
+        [FhirElement("report", Order=280)]
         [CLSCompliant(false)]
-		[References("DiagnosticReport")]
+		[References("DiagnosticReport","DocumentReference","Composition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Report
@@ -591,7 +621,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Complication following the procedure
         /// </summary>
-        [FhirElement("complication", Order=270)]
+        [FhirElement("complication", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Complication
@@ -603,9 +633,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Complication;
         
         /// <summary>
-        /// A condition that is a result of the procedure
+        /// A condition that is a result of the procedure
         /// </summary>
-        [FhirElement("complicationDetail", Order=280)]
+        [FhirElement("complicationDetail", Order=300)]
         [CLSCompliant(false)]
 		[References("Condition")]
         [Cardinality(Min=0,Max=-1)]
@@ -621,7 +651,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Instructions for follow up
         /// </summary>
-        [FhirElement("followUp", Order=290)]
+        [FhirElement("followUp", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> FollowUp
@@ -635,7 +665,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about the procedure
         /// </summary>
-        [FhirElement("note", Order=300)]
+        [FhirElement("note", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -649,7 +679,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manipulated, implanted, or removed device
         /// </summary>
-        [FhirElement("focalDevice", Order=310)]
+        [FhirElement("focalDevice", Order=330)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> FocalDevice
@@ -663,7 +693,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Items used during procedure
         /// </summary>
-        [FhirElement("usedReference", Order=320)]
+        [FhirElement("usedReference", Order=340)]
         [CLSCompliant(false)]
 		[References("Device","Medication","Substance")]
         [Cardinality(Min=0,Max=-1)]
@@ -679,7 +709,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Coded items used during the procedure
         /// </summary>
-        [FhirElement("usedCode", Order=330)]
+        [FhirElement("usedCode", Order=350)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> UsedCode
@@ -715,6 +745,8 @@ namespace Hl7.Fhir.Model
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Performed != null) dest.Performed = (Hl7.Fhir.Model.Element)Performed.DeepCopy();
+                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
+                if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(Performer.DeepCopy());
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
@@ -757,6 +789,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Performed, otherT.Performed)) return false;
+            if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.Matches(Asserter, otherT.Asserter)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
@@ -792,6 +826,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Performed, otherT.Performed)) return false;
+            if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.IsExactly(Asserter, otherT.Asserter)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
@@ -827,6 +863,8 @@ namespace Hl7.Fhir.Model
 				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;
 				if (Performed != null) yield return Performed;
+				if (Recorder != null) yield return Recorder;
+				if (Asserter != null) yield return Asserter;
 				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				if (Location != null) yield return Location;
 				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
@@ -861,6 +899,8 @@ namespace Hl7.Fhir.Model
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (Context != null) yield return new ElementValue("context", false, Context);
                 if (Performed != null) yield return new ElementValue("performed", false, Performed);
+                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
+                if (Asserter != null) yield return new ElementValue("asserter", false, Asserter);
                 foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
                 if (Location != null) yield return new ElementValue("location", false, Location);
                 foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }

@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Definition of an graph of resources
+    /// Definition of a graph of resources
     /// </summary>
     [FhirType("GraphDefinition", IsResource=true)]
     [DataContract]
@@ -458,13 +458,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("profile", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri ProfileElement
+            public Hl7.Fhir.Model.Canonical ProfileElement
             {
                 get { return _ProfileElement; }
                 set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _ProfileElement;
+            private Hl7.Fhir.Model.Canonical _ProfileElement;
             
             /// <summary>
             /// Profile for the target resource
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         ProfileElement = null; 
                     else
-                        ProfileElement = new Hl7.Fhir.Model.FhirUri(value);
+                        ProfileElement = new Hl7.Fhir.Model.Canonical(value);
                     OnPropertyChanged("Profile");
                 }
             }
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResourceType>)TypeElement.DeepCopy();
                     if(ParamsElement != null) dest.ParamsElement = (Hl7.Fhir.Model.FhirString)ParamsElement.DeepCopy();
-                    if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.FhirUri)ProfileElement.DeepCopy();
+                    if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.Canonical)ProfileElement.DeepCopy();
                     if(Compartment != null) dest.Compartment = new List<Hl7.Fhir.Model.GraphDefinition.CompartmentComponent>(Compartment.DeepCopy());
                     if(Link != null) dest.Link = new List<Hl7.Fhir.Model.GraphDefinition.LinkComponent>(Link.DeepCopy());
                     return dest;
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this graph definition (globally unique)
+        /// Canonical identifier for this graph definition, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this graph definition (globally unique)
+        /// Canonical identifier for this graph definition, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1109,7 +1109,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
@@ -1187,13 +1187,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("profile", Order=220)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri ProfileElement
+        public Hl7.Fhir.Model.Canonical ProfileElement
         {
             get { return _ProfileElement; }
             set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _ProfileElement;
+        private Hl7.Fhir.Model.Canonical _ProfileElement;
         
         /// <summary>
         /// Profile on base resource
@@ -1209,7 +1209,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   ProfileElement = null; 
                 else
-                  ProfileElement = new Hl7.Fhir.Model.FhirUri(value);
+                  ProfileElement = new Hl7.Fhir.Model.Canonical(value);
                 OnPropertyChanged("Profile");
             }
         }
@@ -1255,7 +1255,7 @@ namespace Hl7.Fhir.Model
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Code<Hl7.Fhir.Model.ResourceType>)StartElement.DeepCopy();
-                if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.FhirUri)ProfileElement.DeepCopy();
+                if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.Canonical)ProfileElement.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.GraphDefinition.LinkComponent>(Link.DeepCopy());
                 return dest;
             }

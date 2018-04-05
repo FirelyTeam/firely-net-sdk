@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,69 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "NutritionOrder"; } }
         
-        /// <summary>
-        /// Codes specifying the state of the request. Describes the lifecycle of the nutrition order.
-        /// (url: http://hl7.org/fhir/ValueSet/nutrition-request-status)
-        /// </summary>
-        [FhirEnumeration("NutritionOrderStatus")]
-        public enum NutritionOrderStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("proposed", "http://hl7.org/fhir/nutrition-request-status"), Description("Proposed")]
-            Proposed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("draft", "http://hl7.org/fhir/nutrition-request-status"), Description("Draft")]
-            Draft,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("planned", "http://hl7.org/fhir/nutrition-request-status"), Description("Planned")]
-            Planned,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("requested", "http://hl7.org/fhir/nutrition-request-status"), Description("Requested")]
-            Requested,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/nutrition-request-status"), Description("Active")]
-            Active,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("on-hold", "http://hl7.org/fhir/nutrition-request-status"), Description("On-Hold")]
-            OnHold,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/nutrition-request-status"), Description("Completed")]
-            Completed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("cancelled", "http://hl7.org/fhir/nutrition-request-status"), Description("Cancelled")]
-            Cancelled,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/nutrition-request-status"), Description("Entered in Error")]
-            EnteredInError,
-        }
-
         [FhirType("OralDietComponent")]
         [DataContract]
         public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -1150,17 +1087,51 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Instantiates protocol or definition
+        /// </summary>
+        [FhirElement("instantiates", Order=100)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.FhirUri> InstantiatesElement
+        {
+            get { if(_InstantiatesElement==null) _InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(); return _InstantiatesElement; }
+            set { _InstantiatesElement = value; OnPropertyChanged("InstantiatesElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.FhirUri> _InstantiatesElement;
+        
+        /// <summary>
+        /// Instantiates protocol or definition
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Instantiates
+        {
+            get { return InstantiatesElement != null ? InstantiatesElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  InstantiatesElement = null; 
+                else
+                  InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                OnPropertyChanged("Instantiates");
+            }
+        }
+        
+        /// <summary>
         /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=110)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
+        public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.RequestStatus> _StatusElement;
         
         /// <summary>
         /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
@@ -1168,7 +1139,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus? Status
+        public Hl7.Fhir.Model.RequestStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -1176,15 +1147,48 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
                 OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
+        /// proposal | plan | order
+        /// </summary>
+        [FhirElement("intent", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
+        {
+            get { return _IntentElement; }
+            set { _IntentElement = value; OnPropertyChanged("IntentElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.RequestIntent> _IntentElement;
+        
+        /// <summary>
+        /// proposal | plan | order
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.RequestIntent? Intent
+        {
+            get { return IntentElement != null ? IntentElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  IntentElement = null; 
+                else
+                  IntentElement = new Code<Hl7.Fhir.Model.RequestIntent>(value);
+                OnPropertyChanged("Intent");
             }
         }
         
         /// <summary>
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=110)]
+        [FhirElement("patient", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -1200,22 +1204,22 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter associated with this nutrition order
         /// </summary>
-        [FhirElement("encounter", Order=120)]
+        [FhirElement("context", Order=140)]
         [CLSCompliant(false)]
-		[References("Encounter")]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
+        public Hl7.Fhir.Model.ResourceReference Context
         {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
         /// Date and time the nutrition order was requested
         /// </summary>
-        [FhirElement("dateTime", InSummary=true, Order=130)]
+        [FhirElement("dateTime", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -1248,7 +1252,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("orderer", InSummary=true, Order=140)]
+        [FhirElement("orderer", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Practitioner","PractitionerRole")]
         [DataMember]
@@ -1263,7 +1267,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of the patient's food and nutrition-related allergies and intolerances
         /// </summary>
-        [FhirElement("allergyIntolerance", Order=150)]
+        [FhirElement("allergyIntolerance", Order=170)]
         [CLSCompliant(false)]
 		[References("AllergyIntolerance")]
         [Cardinality(Min=0,Max=-1)]
@@ -1279,7 +1283,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Order-specific modifier about the type of food that should be given
         /// </summary>
-        [FhirElement("foodPreferenceModifier", Order=160)]
+        [FhirElement("foodPreferenceModifier", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
@@ -1293,7 +1297,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Order-specific modifier about the type of food that should not be given
         /// </summary>
-        [FhirElement("excludeFoodModifier", Order=170)]
+        [FhirElement("excludeFoodModifier", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
@@ -1307,7 +1311,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Oral diet components
         /// </summary>
-        [FhirElement("oralDiet", Order=180)]
+        [FhirElement("oralDiet", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.NutritionOrder.OralDietComponent OralDiet
         {
@@ -1320,7 +1324,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supplement components
         /// </summary>
-        [FhirElement("supplement", Order=190)]
+        [FhirElement("supplement", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> Supplement
@@ -1334,7 +1338,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Enteral formula components
         /// </summary>
-        [FhirElement("enteralFormula", Order=200)]
+        [FhirElement("enteralFormula", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent EnteralFormula
         {
@@ -1347,7 +1351,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments
         /// </summary>
-        [FhirElement("note", Order=210)]
+        [FhirElement("note", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -1383,9 +1387,11 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>)StatusElement.DeepCopy();
+                if(InstantiatesElement != null) dest.InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(InstantiatesElement.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopy();
+                if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>)IntentElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                 if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
                 if(AllergyIntolerance != null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopy());
@@ -1413,9 +1419,11 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(InstantiatesElement, otherT.InstantiatesElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(IntentElement, otherT.IntentElement)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.Matches(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
@@ -1436,9 +1444,11 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(InstantiatesElement, otherT.InstantiatesElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(IntentElement, otherT.IntentElement)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.IsExactly(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
@@ -1459,9 +1469,11 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in InstantiatesElement) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
+				if (IntentElement != null) yield return IntentElement;
 				if (Patient != null) yield return Patient;
-				if (Encounter != null) yield return Encounter;
+				if (Context != null) yield return Context;
 				if (DateTimeElement != null) yield return DateTimeElement;
 				if (Orderer != null) yield return Orderer;
 				foreach (var elem in AllergyIntolerance) { if (elem != null) yield return elem; }
@@ -1481,9 +1493,11 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (IntentElement != null) yield return new ElementValue("intent", false, IntentElement);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Context != null) yield return new ElementValue("context", false, Context);
                 if (DateTimeElement != null) yield return new ElementValue("dateTime", false, DateTimeElement);
                 if (Orderer != null) yield return new ElementValue("orderer", false, Orderer);
                 foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", true, elem); }

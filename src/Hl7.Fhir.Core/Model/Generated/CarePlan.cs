@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -614,34 +614,34 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Do NOT do
+            /// If true, activity is prohibiting action
             /// </summary>
-            [FhirElement("prohibited", Order=120)]
+            [FhirElement("doNotPerform", Order=120)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean ProhibitedElement
+            public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
             {
-                get { return _ProhibitedElement; }
-                set { _ProhibitedElement = value; OnPropertyChanged("ProhibitedElement"); }
+                get { return _DoNotPerformElement; }
+                set { _DoNotPerformElement = value; OnPropertyChanged("DoNotPerformElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirBoolean _ProhibitedElement;
+            private Hl7.Fhir.Model.FhirBoolean _DoNotPerformElement;
             
             /// <summary>
-            /// Do NOT do
+            /// If true, activity is prohibiting action
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public bool? Prohibited
+            public bool? DoNotPerform
             {
-                get { return ProhibitedElement != null ? ProhibitedElement.Value : null; }
+                get { return DoNotPerformElement != null ? DoNotPerformElement.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                        ProhibitedElement = null; 
+                        DoNotPerformElement = null; 
                     else
-                        ProhibitedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Prohibited");
+                        DoNotPerformElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("DoNotPerform");
                 }
             }
             
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
                     if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.ResourceReference>(Goal.DeepCopy());
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>)StatusElement.DeepCopy();
                     if(StatusReasonElement != null) dest.StatusReasonElement = (Hl7.Fhir.Model.FhirString)StatusReasonElement.DeepCopy();
-                    if(ProhibitedElement != null) dest.ProhibitedElement = (Hl7.Fhir.Model.FhirBoolean)ProhibitedElement.DeepCopy();
+                    if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
                     if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Goal, otherT.Goal)) return false;
                 if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.Matches(StatusReasonElement, otherT.StatusReasonElement)) return false;
-                if( !DeepComparable.Matches(ProhibitedElement, otherT.ProhibitedElement)) return false;
+                if( !DeepComparable.Matches(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
                 if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.Matches(Location, otherT.Location)) return false;
                 if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Goal, otherT.Goal)) return false;
                 if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.IsExactly(StatusReasonElement, otherT.StatusReasonElement)) return false;
-                if( !DeepComparable.IsExactly(ProhibitedElement, otherT.ProhibitedElement)) return false;
+                if( !DeepComparable.IsExactly(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
                 if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
                 if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
                 if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
@@ -865,7 +865,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Goal) { if (elem != null) yield return elem; }
                     if (StatusElement != null) yield return StatusElement;
                     if (StatusReasonElement != null) yield return StatusReasonElement;
-                    if (ProhibitedElement != null) yield return ProhibitedElement;
+                    if (DoNotPerformElement != null) yield return DoNotPerformElement;
                     if (Scheduled != null) yield return Scheduled;
                     if (Location != null) yield return Location;
                     foreach (var elem in Performer) { if (elem != null) yield return elem; }
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Goal) { if (elem != null) yield return new ElementValue("goal", true, elem); }
                     if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                     if (StatusReasonElement != null) yield return new ElementValue("statusReason", false, StatusReasonElement);
-                    if (ProhibitedElement != null) yield return new ElementValue("prohibited", false, ProhibitedElement);
+                    if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", false, DoNotPerformElement);
                     if (Scheduled != null) yield return new ElementValue("scheduled", false, Scheduled);
                     if (Location != null) yield return new ElementValue("location", false, Location);
                     foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Fulfills care plan
+        /// Fulfills CarePlan
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=110)]
         [CLSCompliant(false)]
@@ -1081,7 +1081,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
-        /// Human-friendly name for the CarePlan
+        /// Human-friendly name for the care plan
         /// </summary>
         [FhirElement("title", InSummary=true, Order=170)]
         [DataMember]
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _TitleElement;
         
         /// <summary>
-        /// Human-friendly name for the CarePlan
+        /// Human-friendly name for the care plan
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who care plan is for
+        /// Who the care plan is for
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=190)]
         [CLSCompliant(false)]

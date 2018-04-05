@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
-            /// Code System (if value set crosses code systems)
+            /// Source system where concepts to be mapped are defined
             /// </summary>
             [FhirElement("source", Order=40)]
             [DataMember]
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _SourceElement;
             
             /// <summary>
-            /// Code System (if value set crosses code systems)
+            /// Source system where concepts to be mapped are defined
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// System of the target (if necessary)
+            /// Target system that the concepts are to be mapped to
             /// </summary>
             [FhirElement("target", Order=60)]
             [DataMember]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _TargetElement;
             
             /// <summary>
-            /// System of the target (if necessary)
+            /// Target system that the concepts are to be mapped to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> _Element;
             
             /// <summary>
-            /// When no match in the mappings
+            /// When there is no match for the source concept in the target system, so no mapping is available
             /// </summary>
             [FhirElement("unmapped", Order=90)]
             [DataMember]
@@ -640,6 +640,7 @@ namespace Hl7.Fhir.Model
             /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint
             /// </summary>
             [FhirElement("equivalence", Order=60)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement
             {
@@ -864,13 +865,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("system", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri SystemElement
+            public Hl7.Fhir.Model.Canonical SystemElement
             {
                 get { return _SystemElement; }
                 set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _SystemElement;
+            private Hl7.Fhir.Model.Canonical _SystemElement;
             
             /// <summary>
             /// Code System (if necessary)
@@ -886,7 +887,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         SystemElement = null; 
                     else
-                        SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        SystemElement = new Hl7.Fhir.Model.Canonical(value);
                     OnPropertyChanged("System");
                 }
             }
@@ -894,16 +895,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value of the referenced element
             /// </summary>
-            [FhirElement("code", Order=60)]
+            [FhirElement("value", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString CodeElement
+            public Hl7.Fhir.Model.FhirString ValueElement
             {
-                get { return _CodeElement; }
-                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+                get { return _ValueElement; }
+                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _CodeElement;
+            private Hl7.Fhir.Model.FhirString _ValueElement;
             
             /// <summary>
             /// Value of the referenced element
@@ -911,21 +912,21 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Code
+            public string Value
             {
-                get { return CodeElement != null ? CodeElement.Value : null; }
+                get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
                     if (value == null)
-                        CodeElement = null; 
+                        ValueElement = null; 
                     else
-                        CodeElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Code");
+                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Value");
                 }
             }
             
             /// <summary>
-            /// Display for the code
+            /// Display for the code (if value is a code)
             /// </summary>
             [FhirElement("display", Order=70)]
             [DataMember]
@@ -938,7 +939,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             /// <summary>
-            /// Display for the code
+            /// Display for the code (if value is a code)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -964,8 +965,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(PropertyElement != null) dest.PropertyElement = (Hl7.Fhir.Model.FhirUri)PropertyElement.DeepCopy();
-                    if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
-                    if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.FhirString)CodeElement.DeepCopy();
+                    if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.Canonical)SystemElement.DeepCopy();
+                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                     return dest;
                 }
@@ -986,7 +987,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(PropertyElement, otherT.PropertyElement)) return false;
                 if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
-                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
                 if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
                 
                 return true;
@@ -1000,7 +1001,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(PropertyElement, otherT.PropertyElement)) return false;
                 if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
-                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
                 if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
                 
                 return true;
@@ -1015,7 +1016,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (PropertyElement != null) yield return PropertyElement;
                     if (SystemElement != null) yield return SystemElement;
-                    if (CodeElement != null) yield return CodeElement;
+                    if (ValueElement != null) yield return ValueElement;
                     if (DisplayElement != null) yield return DisplayElement;
                 }
             }
@@ -1028,7 +1029,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (PropertyElement != null) yield return new ElementValue("property", false, PropertyElement);
                     if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
                     if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
                 }
             }
@@ -1142,20 +1143,20 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Canonical URL for other concept map
+            /// Canonical URI for an additional ConceptMap to use for mapping if the source concept is unmapped
             /// </summary>
             [FhirElement("url", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
+            public Hl7.Fhir.Model.Canonical UrlElement
             {
                 get { return _UrlElement; }
                 set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
+            private Hl7.Fhir.Model.Canonical _UrlElement;
             
             /// <summary>
-            /// Canonical URL for other concept map
+            /// Canonical URI for an additional ConceptMap to use for mapping if the source concept is unmapped
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1168,7 +1169,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         UrlElement = null; 
                     else
-                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UrlElement = new Hl7.Fhir.Model.Canonical(value);
                     OnPropertyChanged("Url");
                 }
             }
@@ -1183,7 +1184,7 @@ namespace Hl7.Fhir.Model
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode>)ModeElement.DeepCopy();
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.Canonical)UrlElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -1255,7 +1256,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this concept map (globally unique)
+        /// Canonical identifier for this concept map, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -1268,7 +1269,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this concept map (globally unique)
+        /// Canonical identifier for this concept map, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1461,7 +1462,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=160)]
         [DataMember]
@@ -1474,7 +1475,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1552,7 +1553,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -1606,11 +1607,11 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Copyright;
         
         /// <summary>
-        /// Identifies the source of the concepts which are being mapped
+        /// The source value set that contains the concepts that are being mapped
         /// </summary>
         [FhirElement("source", InSummary=true, Order=240, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
         [DataMember]
         public Hl7.Fhir.Model.Element Source
         {
@@ -1621,11 +1622,11 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Source;
         
         /// <summary>
-        /// Provides context to the mappings
+        /// The target value set which provides context for the mappings
         /// </summary>
         [FhirElement("target", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
         [DataMember]
         public Hl7.Fhir.Model.Element Target
         {
@@ -1664,7 +1665,7 @@ namespace Hl7.Fhir.Model
             Expression = "group.unmapped.all((mode = 'other-map') implies url.exists())",
             Key = "cmd-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the mode is 'other-map', a code must be provided",
+            Human = "If the mode is 'other-map', a url must be provided",
             Xpath = "(f:mode/@value != 'other-map') or exists(f:url)"
         };
 

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Service not availablefrom this date
+            /// Service not available from this date
             /// </summary>
             [FhirElement("during", Order=50)]
             [DataMember]
@@ -461,14 +461,15 @@ namespace Hl7.Fhir.Model
         /// Broad category of service being performed or delivered
         /// </summary>
         [FhirElement("category", InSummary=true, Order=120)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
         {
-            get { return _Category; }
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Category;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
         /// Type of service that may be delivered or performed
@@ -638,7 +639,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
-        /// Location(s) service is inteded for/available to
+        /// Location(s) service is intended for/available to
         /// </summary>
         [FhirElement("coverageArea", Order=210)]
         [CLSCompliant(false)]
@@ -898,7 +899,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(ProvidedBy != null) dest.ProvidedBy = (Hl7.Fhir.Model.ResourceReference)ProvidedBy.DeepCopy();
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
@@ -1007,7 +1008,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
 				if (ProvidedBy != null) yield return ProvidedBy;
-				if (Category != null) yield return Category;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				foreach (var elem in Type) { if (elem != null) yield return elem; }
 				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
 				foreach (var elem in Location) { if (elem != null) yield return elem; }
@@ -1040,7 +1041,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
                 if (ProvidedBy != null) yield return new ElementValue("providedBy", false, ProvidedBy);
-                if (Category != null) yield return new ElementValue("category", false, Category);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
                 foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
                 foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }

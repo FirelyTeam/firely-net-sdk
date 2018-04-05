@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -249,16 +249,33 @@ namespace Hl7.Fhir.Model
         /// What profile the value is expected to be
         /// </summary>
         [FhirElement("profile", InSummary=true, Order=90)]
-        [CLSCompliant(false)]
-		[References("StructureDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Profile
+        public Hl7.Fhir.Model.Canonical ProfileElement
         {
-            get { return _Profile; }
-            set { _Profile = value; OnPropertyChanged("Profile"); }
+            get { return _ProfileElement; }
+            set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Profile;
+        private Hl7.Fhir.Model.Canonical _ProfileElement;
+        
+        /// <summary>
+        /// What profile the value is expected to be
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Profile
+        {
+            get { return ProfileElement != null ? ProfileElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  ProfileElement = null; 
+                else
+                  ProfileElement = new Hl7.Fhir.Model.Canonical(value);
+                OnPropertyChanged("Profile");
+            }
+        }
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -274,7 +291,7 @@ namespace Hl7.Fhir.Model
                 if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                 if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopy();
-                if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
+                if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.Canonical)ProfileElement.DeepCopy();
                 return dest;
             }
             else
@@ -298,7 +315,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
             if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+            if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
             
             return true;
         }
@@ -315,7 +332,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
             if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
+            if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
             
             return true;
         }
@@ -332,7 +349,7 @@ namespace Hl7.Fhir.Model
                 if (MaxElement != null) yield return MaxElement;
                 if (DocumentationElement != null) yield return DocumentationElement;
                 if (TypeElement != null) yield return TypeElement;
-                if (Profile != null) yield return Profile;
+                if (ProfileElement != null) yield return ProfileElement;
             }
         }
 
@@ -348,7 +365,7 @@ namespace Hl7.Fhir.Model
                 if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
                 if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (Profile != null) yield return new ElementValue("profile", false, Profile);
+                if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
  
             } 
         } 

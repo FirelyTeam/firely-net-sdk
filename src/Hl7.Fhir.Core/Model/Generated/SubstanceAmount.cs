@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SubstanceAmount")]
     [DataContract]
-    public partial class SubstanceAmount : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstanceAmount : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "SubstanceAmount"; } }
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
         /// </summary>
-        [FhirElement("amount", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("amount", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements
         /// </summary>
-        [FhirElement("amountType", InSummary=true, Order=40)]
+        [FhirElement("amountType", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept AmountType
         {
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A textual comment on a numeric value
         /// </summary>
-        [FhirElement("amountText", InSummary=true, Order=50)]
+        [FhirElement("amountText", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString AmountTextElement
         {
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference range of possible or expected values
         /// </summary>
-        [FhirElement("referenceRange", InSummary=true, Order=60)]
+        [FhirElement("referenceRange", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent ReferenceRange
         {

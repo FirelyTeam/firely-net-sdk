@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "TerminologyCapabilities"; } }
         
         /// <summary>
-        /// The degree to which the the server supports the code search parameter on ValueSet, if it is supported
+        /// The degree to which the server supports the code search parameter on ValueSet, if it is supported
         /// (url: http://hl7.org/fhir/ValueSet/code-search-support)
         /// </summary>
         [FhirEnumeration("CodeSearchSupport")]
@@ -88,13 +88,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("uri", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri UriElement
+            public Hl7.Fhir.Model.Canonical UriElement
             {
                 get { return _UriElement; }
                 set { _UriElement = value; OnPropertyChanged("UriElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _UriElement;
+            private Hl7.Fhir.Model.Canonical _UriElement;
             
             /// <summary>
             /// URI for the Code System
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         UriElement = null; 
                     else
-                        UriElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UriElement = new Hl7.Fhir.Model.Canonical(value);
                     OnPropertyChanged("Uri");
                 }
             }
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
+                    if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.Canonical)UriElement.DeepCopy();
                     if(Version != null) dest.Version = new List<Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent>(Version.DeepCopy());
                     return dest;
                 }
@@ -725,32 +725,66 @@ namespace Hl7.Fhir.Model
             /// Supported fields on ExpansionProfile
             /// </summary>
             [FhirElement("definition", Order=70)]
-            [CLSCompliant(false)]
-			[References("StructureDefinition")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Definition
+            public Hl7.Fhir.Model.Canonical DefinitionElement
             {
-                get { return _Definition; }
-                set { _Definition = value; OnPropertyChanged("Definition"); }
+                get { return _DefinitionElement; }
+                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Definition;
+            private Hl7.Fhir.Model.Canonical _DefinitionElement;
+            
+            /// <summary>
+            /// Supported fields on ExpansionProfile
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Definition
+            {
+                get { return DefinitionElement != null ? DefinitionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DefinitionElement = null; 
+                    else
+                        DefinitionElement = new Hl7.Fhir.Model.Canonical(value);
+                    OnPropertyChanged("Definition");
+                }
+            }
             
             /// <summary>
             /// Supported expansion profiles
             /// </summary>
             [FhirElement("profile", Order=80)]
-            [CLSCompliant(false)]
-			[References("ExpansionProfile")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Profile
+            public List<Hl7.Fhir.Model.Canonical> ProfileElement
             {
-                get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.ResourceReference>(); return _Profile; }
-                set { _Profile = value; OnPropertyChanged("Profile"); }
+                get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.Canonical>(); return _ProfileElement; }
+                set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
             }
             
-            private List<Hl7.Fhir.Model.ResourceReference> _Profile;
+            private List<Hl7.Fhir.Model.Canonical> _ProfileElement;
+            
+            /// <summary>
+            /// Supported expansion profiles
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> Profile
+            {
+                get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        ProfileElement = null; 
+                    else
+                        ProfileElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
+                    OnPropertyChanged("Profile");
+                }
+            }
             
             /// <summary>
             /// Documentation about text searching works
@@ -775,8 +809,8 @@ namespace Hl7.Fhir.Model
                     if(HierarchicalElement != null) dest.HierarchicalElement = (Hl7.Fhir.Model.FhirBoolean)HierarchicalElement.DeepCopy();
                     if(PagingElement != null) dest.PagingElement = (Hl7.Fhir.Model.FhirBoolean)PagingElement.DeepCopy();
                     if(IncompleteElement != null) dest.IncompleteElement = (Hl7.Fhir.Model.FhirBoolean)IncompleteElement.DeepCopy();
-                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
-                    if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
+                    if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.Canonical)DefinitionElement.DeepCopy();
+                    if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
                     if(TextFilter != null) dest.TextFilter = (Hl7.Fhir.Model.Markdown)TextFilter.DeepCopy();
                     return dest;
                 }
@@ -798,8 +832,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(HierarchicalElement, otherT.HierarchicalElement)) return false;
                 if( !DeepComparable.Matches(PagingElement, otherT.PagingElement)) return false;
                 if( !DeepComparable.Matches(IncompleteElement, otherT.IncompleteElement)) return false;
-                if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
-                if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.Matches(TextFilter, otherT.TextFilter)) return false;
                 
                 return true;
@@ -814,8 +848,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(HierarchicalElement, otherT.HierarchicalElement)) return false;
                 if( !DeepComparable.IsExactly(PagingElement, otherT.PagingElement)) return false;
                 if( !DeepComparable.IsExactly(IncompleteElement, otherT.IncompleteElement)) return false;
-                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
-                if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.IsExactly(TextFilter, otherT.TextFilter)) return false;
                 
                 return true;
@@ -831,8 +865,8 @@ namespace Hl7.Fhir.Model
                     if (HierarchicalElement != null) yield return HierarchicalElement;
                     if (PagingElement != null) yield return PagingElement;
                     if (IncompleteElement != null) yield return IncompleteElement;
-                    if (Definition != null) yield return Definition;
-                    foreach (var elem in Profile) { if (elem != null) yield return elem; }
+                    if (DefinitionElement != null) yield return DefinitionElement;
+                    foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
                     if (TextFilter != null) yield return TextFilter;
                 }
             }
@@ -846,8 +880,8 @@ namespace Hl7.Fhir.Model
                     if (HierarchicalElement != null) yield return new ElementValue("hierarchical", false, HierarchicalElement);
                     if (PagingElement != null) yield return new ElementValue("paging", false, PagingElement);
                     if (IncompleteElement != null) yield return new ElementValue("incomplete", false, IncompleteElement);
-                    if (Definition != null) yield return new ElementValue("definition", false, Definition);
-                    foreach (var elem in Profile) { if (elem != null) yield return new ElementValue("profile", true, elem); }
+                    if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
+                    foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
                     if (TextFilter != null) yield return new ElementValue("textFilter", false, TextFilter);
                 }
             }
@@ -1174,7 +1208,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this terminology capabilities (globally unique)
+        /// Canonical identifier for this terminology capabilities, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -1187,7 +1221,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this terminology capabilities (globally unique)
+        /// Canonical identifier for this terminology capabilities, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1367,7 +1401,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -1381,7 +1415,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1459,7 +1493,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
@@ -1649,7 +1683,7 @@ namespace Hl7.Fhir.Model
             Key = "tcp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If there is more than one version, a version code must be defined",
-            Xpath = "(count(f:version) <= 1) or not exists(f:version[not(f:code)])"
+            Xpath = "(count(f:version) <= 1) or not(exists(f:version[not(f:code)]))"
         };
 
         public override void AddDefaultConstraints()

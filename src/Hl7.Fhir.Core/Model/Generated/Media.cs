@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,63 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Media"; } }
         
-        /// <summary>
-        /// Codes identifying the stage lifecycle stage of a event
-        /// (url: http://hl7.org/fhir/ValueSet/media-status)
-        /// </summary>
-        [FhirEnumeration("MediaStatus")]
-        public enum MediaStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("preparation", "http://hl7.org/fhir/media-status"), Description("Preparation")]
-            Preparation,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("in-progress", "http://hl7.org/fhir/media-status"), Description("In Progress")]
-            InProgress,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("not-done", "http://hl7.org/fhir/media-status"), Description("Not Done")]
-            NotDone,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("suspended", "http://hl7.org/fhir/media-status"), Description("Suspended")]
-            Suspended,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("aborted", "http://hl7.org/fhir/media-status"), Description("Aborted")]
-            Aborted,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/media-status"), Description("Completed")]
-            Completed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/media-status"), Description("Entered in Error")]
-            EnteredInError,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/media-status)
-            /// </summary>
-            [EnumLiteral("unknown", "http://hl7.org/fhir/media-status"), Description("Unknown")]
-            Unknown,
-        }
-
         /// <summary>
         /// Identifier(s) for the image
         /// </summary>
@@ -164,13 +107,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Media.MediaStatus> StatusElement
+        public Code<Hl7.Fhir.Model.EventStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Media.MediaStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.EventStatus> _StatusElement;
         
         /// <summary>
         /// preparation | in-progress | not-done | suspended | aborted | completed | entered-in-error | unknown
@@ -178,7 +121,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Media.MediaStatus? Status
+        public Hl7.Fhir.Model.EventStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -186,24 +129,23 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Media.MediaStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.EventStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
-        /// Classification of  type of media
+        /// Classification of media as image, video, or audio
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=130)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("type", InSummary=true, Order=130)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Category
+        public Hl7.Fhir.Model.CodeableConcept Type
         {
-            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
-            set { _Category = value; OnPropertyChanged("Category"); }
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+        private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
         /// The type of acquisition equipment/process
@@ -570,8 +512,8 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Media.MediaStatus>)StatusElement.DeepCopy();
-                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EventStatus>)StatusElement.DeepCopy();
+                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Modality != null) dest.Modality = (Hl7.Fhir.Model.CodeableConcept)Modality.DeepCopy();
                 if(View != null) dest.View = (Hl7.Fhir.Model.CodeableConcept)View.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
@@ -610,7 +552,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Modality, otherT.Modality)) return false;
             if( !DeepComparable.Matches(View, otherT.View)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
@@ -642,7 +584,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Modality, otherT.Modality)) return false;
             if( !DeepComparable.IsExactly(View, otherT.View)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
@@ -674,7 +616,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
-				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (Type != null) yield return Type;
 				if (Modality != null) yield return Modality;
 				if (View != null) yield return View;
 				if (Subject != null) yield return Subject;
@@ -705,7 +647,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
+                if (Type != null) yield return new ElementValue("type", false, Type);
                 if (Modality != null) yield return new ElementValue("modality", false, Modality);
                 if (View != null) yield return new ElementValue("view", false, View);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);

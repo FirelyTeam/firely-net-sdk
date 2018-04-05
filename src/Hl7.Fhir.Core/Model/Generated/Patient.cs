@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -298,129 +298,6 @@ namespace Hl7.Fhir.Model
                     if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
                     if (Organization != null) yield return new ElementValue("organization", false, Organization);
                     if (Period != null) yield return new ElementValue("period", false, Period);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("AnimalComponent")]
-        [DataContract]
-        public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "AnimalComponent"; } }
-            
-            /// <summary>
-            /// E.g. Dog, Cow
-            /// </summary>
-            [FhirElement("species", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Species
-            {
-                get { return _Species; }
-                set { _Species = value; OnPropertyChanged("Species"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Species;
-            
-            /// <summary>
-            /// E.g. Poodle, Angus
-            /// </summary>
-            [FhirElement("breed", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Breed
-            {
-                get { return _Breed; }
-                set { _Breed = value; OnPropertyChanged("Breed"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Breed;
-            
-            /// <summary>
-            /// E.g. Neutered, Intact
-            /// </summary>
-            [FhirElement("genderStatus", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept GenderStatus
-            {
-                get { return _GenderStatus; }
-                set { _GenderStatus = value; OnPropertyChanged("GenderStatus"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _GenderStatus;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as AnimalComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();
-                    if(Breed != null) dest.Breed = (Hl7.Fhir.Model.CodeableConcept)Breed.DeepCopy();
-                    if(GenderStatus != null) dest.GenderStatus = (Hl7.Fhir.Model.CodeableConcept)GenderStatus.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new AnimalComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as AnimalComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Species, otherT.Species)) return false;
-                if( !DeepComparable.Matches(Breed, otherT.Breed)) return false;
-                if( !DeepComparable.Matches(GenderStatus, otherT.GenderStatus)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as AnimalComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Species, otherT.Species)) return false;
-                if( !DeepComparable.IsExactly(Breed, otherT.Breed)) return false;
-                if( !DeepComparable.IsExactly(GenderStatus, otherT.GenderStatus)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Species != null) yield return Species;
-                    if (Breed != null) yield return Breed;
-                    if (GenderStatus != null) yield return GenderStatus;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Species != null) yield return new ElementValue("species", false, Species);
-                    if (Breed != null) yield return new ElementValue("breed", false, Breed);
-                    if (GenderStatus != null) yield return new ElementValue("genderStatus", false, GenderStatus);
                 }
             }
 
@@ -903,22 +780,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Patient.ContactComponent> _Contact;
         
         /// <summary>
-        /// This patient is known to be an animal (non-human)
-        /// </summary>
-        [FhirElement("animal", InSummary=true, Order=210)]
-        [DataMember]
-        public Hl7.Fhir.Model.Patient.AnimalComponent Animal
-        {
-            get { return _Animal; }
-            set { _Animal = value; OnPropertyChanged("Animal"); }
-        }
-        
-        private Hl7.Fhir.Model.Patient.AnimalComponent _Animal;
-        
-        /// <summary>
         /// A language which may be used to communicate with the patient about his or her health
         /// </summary>
-        [FhirElement("communication", Order=220)]
+        [FhirElement("communication", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.CommunicationComponent> Communication
@@ -932,9 +796,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient's nominated primary care provider
         /// </summary>
-        [FhirElement("generalPractitioner", Order=230)]
+        [FhirElement("generalPractitioner", Order=220)]
         [CLSCompliant(false)]
-		[References("Organization","Practitioner")]
+		[References("Organization","Practitioner","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> GeneralPractitioner
@@ -948,7 +812,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization that is the custodian of the patient record
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=240)]
+        [FhirElement("managingOrganization", InSummary=true, Order=230)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -963,7 +827,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
         /// </summary>
-        [FhirElement("link", InSummary=true, Order=250)]
+        [FhirElement("link", InSummary=true, Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.LinkComponent> Link
@@ -1010,7 +874,6 @@ namespace Hl7.Fhir.Model
                 if(MultipleBirth != null) dest.MultipleBirth = (Hl7.Fhir.Model.Element)MultipleBirth.DeepCopy();
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
-                if(Animal != null) dest.Animal = (Hl7.Fhir.Model.Patient.AnimalComponent)Animal.DeepCopy();
                 if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(Communication.DeepCopy());
                 if(GeneralPractitioner != null) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(GeneralPractitioner.DeepCopy());
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
@@ -1044,7 +907,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(MultipleBirth, otherT.MultipleBirth)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(Animal, otherT.Animal)) return false;
             if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
             if( !DeepComparable.Matches(GeneralPractitioner, otherT.GeneralPractitioner)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
@@ -1071,7 +933,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(MultipleBirth, otherT.MultipleBirth)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(Animal, otherT.Animal)) return false;
             if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
             if( !DeepComparable.IsExactly(GeneralPractitioner, otherT.GeneralPractitioner)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
@@ -1098,7 +959,6 @@ namespace Hl7.Fhir.Model
 				if (MultipleBirth != null) yield return MultipleBirth;
 				foreach (var elem in Photo) { if (elem != null) yield return elem; }
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
-				if (Animal != null) yield return Animal;
 				foreach (var elem in Communication) { if (elem != null) yield return elem; }
 				foreach (var elem in GeneralPractitioner) { if (elem != null) yield return elem; }
 				if (ManagingOrganization != null) yield return ManagingOrganization;
@@ -1124,7 +984,6 @@ namespace Hl7.Fhir.Model
                 if (MultipleBirth != null) yield return new ElementValue("multipleBirth", false, MultipleBirth);
                 foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, elem); }
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Animal != null) yield return new ElementValue("animal", false, Animal);
                 foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", true, elem); }
                 foreach (var elem in GeneralPractitioner) { if (elem != null) yield return new ElementValue("generalPractitioner", true, elem); }
                 if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);

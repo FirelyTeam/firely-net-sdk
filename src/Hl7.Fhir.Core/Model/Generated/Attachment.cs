@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("url", InSummary=true, Order=60)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri UrlElement
+        public Hl7.Fhir.Model.FhirUrl UrlElement
         {
             get { return _UrlElement; }
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _UrlElement;
+        private Hl7.Fhir.Model.FhirUrl _UrlElement;
         
         /// <summary>
         /// Uri where the data can be found
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   UrlElement = null; 
                 else
-                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                  UrlElement = new Hl7.Fhir.Model.FhirUrl(value);
                 OnPropertyChanged("Url");
             }
         }
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
                 if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                 if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
                 if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();
-                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopy();
                 if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.UnsignedInt)SizeElement.DeepCopy();
                 if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)HashElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -109,17 +109,18 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// A broad categorisation of the service that is to be performed during this appointment
+        /// A broad categorization of the service that is to be performed during this appointment
         /// </summary>
         [FhirElement("serviceCategory", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept ServiceCategory
+        public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
         {
-            get { return _ServiceCategory; }
+            get { if(_ServiceCategory==null) _ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceCategory; }
             set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCategory;
         
         /// <summary>
         /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
@@ -356,7 +357,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
+                if(ServiceCategory != null) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopy());
                 if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopy());
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
                 if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopy();
@@ -426,7 +427,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceCategory) { if (elem != null) yield return elem; }
 				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
 				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
 				if (AppointmentType != null) yield return AppointmentType;
@@ -446,7 +447,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ServiceCategory != null) yield return new ElementValue("serviceCategory", false, ServiceCategory);
+                foreach (var elem in ServiceCategory) { if (elem != null) yield return new ElementValue("serviceCategory", true, elem); }
                 foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", true, elem); }
                 foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
                 if (AppointmentType != null) yield return new ElementValue("appointmentType", false, AppointmentType);

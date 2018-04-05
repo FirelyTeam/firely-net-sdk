@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("provider", Order=130)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -164,24 +164,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Provider;
         
         /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("organization", Order=140)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Organization
-        {
-            get { return _Organization; }
-            set { _Organization = value; OnPropertyChanged("Organization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Organization;
-        
-        /// <summary>
         /// The subject to be enrolled
         /// </summary>
-        [FhirElement("candidate", Order=150)]
+        [FhirElement("candidate", Order=140)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [DataMember]
@@ -196,7 +181,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurance information
         /// </summary>
-        [FhirElement("coverage", Order=160)]
+        [FhirElement("coverage", Order=150)]
         [CLSCompliant(false)]
 		[References("Coverage")]
         [DataMember]
@@ -227,7 +212,6 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Candidate != null) dest.Candidate = (Hl7.Fhir.Model.ResourceReference)Candidate.DeepCopy();
                 if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
                 return dest;
@@ -252,7 +236,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Candidate, otherT.Candidate)) return false;
             if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
             
@@ -270,7 +253,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Candidate, otherT.Candidate)) return false;
             if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
             
@@ -288,7 +270,6 @@ namespace Hl7.Fhir.Model
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Insurer != null) yield return Insurer;
 				if (Provider != null) yield return Provider;
-				if (Organization != null) yield return Organization;
 				if (Candidate != null) yield return Candidate;
 				if (Coverage != null) yield return Coverage;
             }
@@ -305,7 +286,6 @@ namespace Hl7.Fhir.Model
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (Insurer != null) yield return new ElementValue("insurer", false, Insurer);
                 if (Provider != null) yield return new ElementValue("provider", false, Provider);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
                 if (Candidate != null) yield return new ElementValue("candidate", false, Candidate);
                 if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
             }

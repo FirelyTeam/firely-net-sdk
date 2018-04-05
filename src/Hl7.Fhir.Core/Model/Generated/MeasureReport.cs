@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
-            /// What group of the measure
+            /// Meaning of the group
             /// </summary>
             [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
@@ -767,17 +767,18 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Additional identifier for the Report
+        /// Additional identifier for the MeasureReport
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// complete | pending | error
@@ -846,20 +847,37 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// What measure was evaluated
+        /// What measure was calculated
         /// </summary>
         [FhirElement("measure", InSummary=true, Order=120)]
-        [CLSCompliant(false)]
-		[References("Measure")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Measure
+        public Hl7.Fhir.Model.Canonical MeasureElement
         {
-            get { return _Measure; }
-            set { _Measure = value; OnPropertyChanged("Measure"); }
+            get { return _MeasureElement; }
+            set { _MeasureElement = value; OnPropertyChanged("MeasureElement"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Measure;
+        private Hl7.Fhir.Model.Canonical _MeasureElement;
+        
+        /// <summary>
+        /// What measure was calculated
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Measure
+        {
+            get { return MeasureElement != null ? MeasureElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  MeasureElement = null; 
+                else
+                  MeasureElement = new Hl7.Fhir.Model.Canonical(value);
+                OnPropertyChanged("Measure");
+            }
+        }
         
         /// <summary>
         /// What individual(s) the report is for
@@ -911,17 +929,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is reporting the data
         /// </summary>
-        [FhirElement("reportingOrganization", InSummary=true, Order=150)]
+        [FhirElement("reporter", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Organization")]
+		[References("Practitioner","PractitionerRole","Location","Organization","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ReportingOrganization
+        public Hl7.Fhir.Model.ResourceReference Reporter
         {
-            get { return _ReportingOrganization; }
-            set { _ReportingOrganization = value; OnPropertyChanged("ReportingOrganization"); }
+            get { return _Reporter; }
+            set { _Reporter = value; OnPropertyChanged("Reporter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _ReportingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _Reporter;
         
         /// <summary>
         /// What period the report covers
@@ -952,7 +970,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MeasureReport.GroupComponent> _Group;
         
         /// <summary>
-        /// What data was evaluated to produce the measure score
+        /// What data was used to calculate the measure score
         /// </summary>
         [FhirElement("evaluatedResources", Order=180)]
         [CLSCompliant(false)]
@@ -980,13 +998,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>)StatusElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)TypeElement.DeepCopy();
-                if(Measure != null) dest.Measure = (Hl7.Fhir.Model.ResourceReference)Measure.DeepCopy();
+                if(MeasureElement != null) dest.MeasureElement = (Hl7.Fhir.Model.Canonical)MeasureElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(ReportingOrganization != null) dest.ReportingOrganization = (Hl7.Fhir.Model.ResourceReference)ReportingOrganization.DeepCopy();
+                if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Group != null) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(Group.DeepCopy());
                 if(EvaluatedResources != null) dest.EvaluatedResources = (Hl7.Fhir.Model.ResourceReference)EvaluatedResources.DeepCopy();
@@ -1010,10 +1028,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.Matches(Measure, otherT.Measure)) return false;
+            if( !DeepComparable.Matches(MeasureElement, otherT.MeasureElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(ReportingOrganization, otherT.ReportingOrganization)) return false;
+            if( !DeepComparable.Matches(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Group, otherT.Group)) return false;
             if( !DeepComparable.Matches(EvaluatedResources, otherT.EvaluatedResources)) return false;
@@ -1030,10 +1048,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.IsExactly(Measure, otherT.Measure)) return false;
+            if( !DeepComparable.IsExactly(MeasureElement, otherT.MeasureElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(ReportingOrganization, otherT.ReportingOrganization)) return false;
+            if( !DeepComparable.IsExactly(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
             if( !DeepComparable.IsExactly(EvaluatedResources, otherT.EvaluatedResources)) return false;
@@ -1047,13 +1065,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (TypeElement != null) yield return TypeElement;
-				if (Measure != null) yield return Measure;
+				if (MeasureElement != null) yield return MeasureElement;
 				if (Subject != null) yield return Subject;
 				if (DateElement != null) yield return DateElement;
-				if (ReportingOrganization != null) yield return ReportingOrganization;
+				if (Reporter != null) yield return Reporter;
 				if (Period != null) yield return Period;
 				foreach (var elem in Group) { if (elem != null) yield return elem; }
 				if (EvaluatedResources != null) yield return EvaluatedResources;
@@ -1066,13 +1084,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (Measure != null) yield return new ElementValue("measure", false, Measure);
+                if (MeasureElement != null) yield return new ElementValue("measure", false, MeasureElement);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (ReportingOrganization != null) yield return new ElementValue("reportingOrganization", false, ReportingOrganization);
+                if (Reporter != null) yield return new ElementValue("reporter", false, Reporter);
                 if (Period != null) yield return new ElementValue("period", false, Period);
                 foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
                 if (EvaluatedResources != null) yield return new ElementValue("evaluatedResources", false, EvaluatedResources);

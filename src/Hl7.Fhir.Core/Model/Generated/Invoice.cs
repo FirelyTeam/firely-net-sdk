@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Invoice"; } }
         
         /// <summary>
-        /// Codes identifying the stage lifecycle stage of an Invoice
+        /// Codes identifying the lifecycle stage of an Invoice
         /// (url: http://hl7.org/fhir/ValueSet/invoice-status)
         /// </summary>
         [FhirEnumeration("InvoiceStatus")]

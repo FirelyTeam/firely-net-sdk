@@ -1,8 +1,10 @@
 ﻿
 
 //
-// Model Generated on Sun, 07 Jan 2018 13:21:15 GMT for FHIR v3.2.0
+// Model Generated on Thu, 05 Apr 2018 21:37:50 GMT for FHIR v3.3.0
 //
+// Generated Shared Enumeration: Use
+
 // Generated Shared Enumeration: ResourceType
 
 // Generated Shared Enumeration: OperationParameterUse
@@ -17,8 +19,6 @@
 // Generated Shared Enumeration: RequestIntent
 
 // Generated Shared Enumeration: AdministrativeGender
-
-// Generated Shared Enumeration: GuidePageKind
 
 // Generated Shared Enumeration: EventStatus
 
@@ -42,8 +42,6 @@
 // Generated Shared Enumeration: FinancialResourceStatusCodes
 
 // Generated Shared Enumeration: ActionCardinalityBehavior
-
-// Generated Shared Enumeration: GuideDependencyType
 
 // Generated Shared Enumeration: ActionConditionKind
 
@@ -108,6 +106,7 @@
 // Hl7.Fhir.Core\Model\Generated\Annotation.cs
 // Hl7.Fhir.Core\Model\Generated\Address.cs
 // Hl7.Fhir.Core\Model\Generated\Uuid.cs
+// Hl7.Fhir.Core\Model\Generated\FhirUrl.cs
 // Hl7.Fhir.Core\Model\Generated\FhirUri.cs
 // Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs
 // Hl7.Fhir.Core\Model\Generated\Time.cs
@@ -122,6 +121,7 @@
 // Hl7.Fhir.Core\Model\Generated\FhirDateTime.cs
 // Hl7.Fhir.Core\Model\Generated\Date.cs
 // Hl7.Fhir.Core\Model\Generated\Code.cs
+// Hl7.Fhir.Core\Model\Generated\Canonical.cs
 // Hl7.Fhir.Core\Model\Generated\FhirBoolean.cs
 // Hl7.Fhir.Core\Model\Generated\Base64Binary.cs
 // Hl7.Fhir.Core\Model\Generated\BackboneElement.cs

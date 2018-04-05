@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("provider", Order=160)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -226,24 +226,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Provider;
         
         /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("organization", Order=170)]
-        [CLSCompliant(false)]
-		[References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Organization
-        {
-            get { return _Organization; }
-            set { _Organization = value; OnPropertyChanged("Organization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Organization;
-        
-        /// <summary>
         /// Whether payment has been sent or cleared
         /// </summary>
-        [FhirElement("paymentStatus", Order=180)]
+        [FhirElement("paymentStatus", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PaymentStatus
         {
@@ -275,7 +260,6 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(PaymentStatus != null) dest.PaymentStatus = (Hl7.Fhir.Model.CodeableConcept)PaymentStatus.DeepCopy();
                 return dest;
             }
@@ -302,7 +286,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(PaymentStatus, otherT.PaymentStatus)) return false;
             
             return true;
@@ -322,7 +305,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(PaymentStatus, otherT.PaymentStatus)) return false;
             
             return true;
@@ -342,7 +324,6 @@ namespace Hl7.Fhir.Model
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Target != null) yield return Target;
 				if (Provider != null) yield return Provider;
-				if (Organization != null) yield return Organization;
 				if (PaymentStatus != null) yield return PaymentStatus;
             }
         }
@@ -361,7 +342,6 @@ namespace Hl7.Fhir.Model
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
                 if (Target != null) yield return new ElementValue("target", false, Target);
                 if (Provider != null) yield return new ElementValue("provider", false, Provider);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
                 if (PaymentStatus != null) yield return new ElementValue("paymentStatus", false, PaymentStatus);
             }
         }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// A identifier for the person as this agent
+        /// An identifier for the person as this agent
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Practitioner.QualificationComponent> _Qualification;
         
         /// <summary>
-        /// A language the practitioner is able to use in patient communication
+        /// A language the practitioner can use in patient communication
         /// </summary>
         [FhirElement("communication", Order=180)]
         [Cardinality(Min=0,Max=-1)]

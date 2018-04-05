@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,8 +78,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
-            [EnumLiteral("not-done", "http://hl7.org/fhir/medication-dispense-status"), Description("Not Done")]
-            NotDone,
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/medication-dispense-status"), Description("Cancelled")]
+            Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-dispense-status)
@@ -104,6 +104,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("stopped", "http://hl7.org/fhir/medication-dispense-status"), Description("Stopped")]
             Stopped,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/medication-dispense-status)
+            /// </summary>
+            [EnumLiteral("unknown", "http://hl7.org/fhir/medication-dispense-status"), Description("Unknown")]
+            Unknown,
         }
 
         [FhirType("PerformerComponent")]
@@ -408,9 +414,10 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
-        /// preparation | in-progress | not-done | on-hold | completed | entered-in-error | stopped
+        /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=110)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> StatusElement
         {
@@ -421,7 +428,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> _StatusElement;
         
         /// <summary>
-        /// preparation | in-progress | not-done | on-hold | completed | entered-in-error | stopped
+        /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -766,7 +773,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _StatusReason;
         
         /// <summary>
-        /// A list of releveant lifecycle events
+        /// A list of relevant lifecycle events
         /// </summary>
         [FhirElement("eventHistory", Order=320)]
         [CLSCompliant(false)]

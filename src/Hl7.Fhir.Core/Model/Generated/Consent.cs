@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,84 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Consent"; } }
         
-        /// <summary>
-        /// Indicates the state of the consent
-        /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
-        /// </summary>
-        [FhirEnumeration("ConsentState")]
-        public enum ConsentState
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
-            [EnumLiteral("draft", "http://hl7.org/fhir/consent-state-codes"), Description("Pending")]
-            Draft,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
-            [EnumLiteral("proposed", "http://hl7.org/fhir/consent-state-codes"), Description("Proposed")]
-            Proposed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/consent-state-codes"), Description("Active")]
-            Active,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
-            [EnumLiteral("rejected", "http://hl7.org/fhir/consent-state-codes"), Description("Rejected")]
-            Rejected,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
-            [EnumLiteral("inactive", "http://hl7.org/fhir/consent-state-codes"), Description("Inactive")]
-            Inactive,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/consent-state-codes"), Description("Entered in Error")]
-            EnteredInError,
-        }
-
-        /// <summary>
-        /// This value set includes sample Consent Action codes.
-        /// (url: http://hl7.org/fhir/ValueSet/consent-scope)
-        /// </summary>
-        [FhirEnumeration("ConsentScopeCodes")]
-        public enum ConsentScopeCodes
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consentscope)
-            /// </summary>
-            [EnumLiteral("ADR", "http://hl7.org/fhir/consentscope"), Description("Advanced Care Directive")]
-            ADR,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consentscope)
-            /// </summary>
-            [EnumLiteral("research", "http://hl7.org/fhir/consentscope"), Description("Research")]
-            Research,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consentscope)
-            /// </summary>
-            [EnumLiteral("privacy", "http://hl7.org/fhir/consentscope"), Description("Privacy Consent")]
-            Privacy,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consentscope)
-            /// </summary>
-            [EnumLiteral("treatment", "http://hl7.org/fhir/consentscope"), Description("Treatment")]
-            Treatment,
-        }
-
         /// <summary>
         /// How a rule statement is applied, such as adding additional consent or removing consent
         /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
@@ -601,7 +523,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Coding> _Purpose;
             
             /// <summary>
-            /// e.g. Resource Type, Profile, or CDA etc
+            /// e.g. Resource Type, Profile, CDA, etc.
             /// </summary>
             [FhirElement("class", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
@@ -615,7 +537,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Coding> _Class;
             
             /// <summary>
-            /// e.g. LOINC or SNOMED CT code, etc in the content
+            /// e.g. LOINC or SNOMED CT code, etc. in the content
             /// </summary>
             [FhirElement("code", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
@@ -811,7 +733,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("reference", Order=50)]
             [CLSCompliant(false)]
-			[References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson")]
+			[References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -1024,14 +946,15 @@ namespace Hl7.Fhir.Model
         /// Identifier for this record (external references)
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// draft | proposed | active | rejected | inactive | entered-in-error
@@ -1039,13 +962,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement
+        public Code<Hl7.Fhir.Model.EventStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Consent.ConsentState> _StatusElement;
+        private Code<Hl7.Fhir.Model.EventStatus> _StatusElement;
         
         /// <summary>
         /// draft | proposed | active | rejected | inactive | entered-in-error
@@ -1053,7 +976,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Consent.ConsentState? Status
+        public Hl7.Fhir.Model.EventStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -1061,43 +984,24 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.EventStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
-        /// Which of the four areas this resource covers
+        /// Which of the four areas this resource covers (extensible)
         /// </summary>
         [FhirElement("scope", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes> ScopeElement
+        public Hl7.Fhir.Model.CodeableConcept Scope
         {
-            get { return _ScopeElement; }
-            set { _ScopeElement = value; OnPropertyChanged("ScopeElement"); }
+            get { return _Scope; }
+            set { _Scope = value; OnPropertyChanged("Scope"); }
         }
         
-        private Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes> _ScopeElement;
-        
-        /// <summary>
-        /// Which of the four areas this resource covers
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Consent.ConsentScopeCodes? Scope
-        {
-            get { return ScopeElement != null ? ScopeElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  ScopeElement = null; 
-                else
-                  ScopeElement = new Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes>(value);
-                OnPropertyChanged("Scope");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _Scope;
         
         /// <summary>
         /// Classification of the consent statement - for indexing/retrieval
@@ -1119,7 +1023,6 @@ namespace Hl7.Fhir.Model
         [FhirElement("patient", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Patient")]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -1164,18 +1067,18 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is agreeing to the policy and rules
         /// </summary>
-        [FhirElement("consentingParty", InSummary=true, Order=150)]
+        [FhirElement("performer", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Organization","Patient","Practitioner","RelatedPerson")]
+		[References("Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ConsentingParty
+        public List<Hl7.Fhir.Model.ResourceReference> Performer
         {
-            get { if(_ConsentingParty==null) _ConsentingParty = new List<Hl7.Fhir.Model.ResourceReference>(); return _ConsentingParty; }
-            set { _ConsentingParty = value; OnPropertyChanged("ConsentingParty"); }
+            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Performer; }
+            set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _ConsentingParty;
+        private List<Hl7.Fhir.Model.ResourceReference> _Performer;
         
         /// <summary>
         /// Custodian of the consent
@@ -1223,7 +1126,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Consent.PolicyComponent> _Policy;
         
         /// <summary>
-        /// Policy that this consents to
+        /// Regulation that this consents to
         /// </summary>
         [FhirElement("policyRule", InSummary=true, Order=190)]
         [DataMember]
@@ -1253,7 +1156,6 @@ namespace Hl7.Fhir.Model
         /// Constraints to the base Consent.policyRule
         /// </summary>
         [FhirElement("provision", InSummary=true, Order=210)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Consent.provisionComponent Provision
         {
@@ -1263,6 +1165,42 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Consent.provisionComponent _Provision;
         
+
+        public static ElementDefinition.ConstraintComponent Consent_PPC_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "patient.exists() or scope.coding.where(system='something' and code='adr').exists().not()",
+            Key = "ppc-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "IF Scope=adr, there must be a patient",
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr')))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Consent_PPC_5 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "patient.exists() or scope.coding.where(system='something' and code='treatment').exists().not()",
+            Key = "ppc-5",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "IF Scope=treatment, there must be a patient",
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment')))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Consent_PPC_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "patient.exists() or scope.coding.where(system='something' and code='patient-privacy').exists().not()",
+            Key = "ppc-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "IF Scope=privacy, there must be a patient",
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy')))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Consent_PPC_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "patient.exists() or scope.coding.where(system='something' and code='research').exists().not()",
+            Key = "ppc-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "IF Scope=research, there must be a patient",
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research')))"
+        };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_1 = new ElementDefinition.ConstraintComponent()
         {
@@ -1277,6 +1215,10 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(Consent_PPC_4);
+            InvariantConstraints.Add(Consent_PPC_5);
+            InvariantConstraints.Add(Consent_PPC_2);
+            InvariantConstraints.Add(Consent_PPC_3);
             InvariantConstraints.Add(Consent_PPC_1);
         }
 
@@ -1287,13 +1229,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Consent.ConsentState>)StatusElement.DeepCopy();
-                if(ScopeElement != null) dest.ScopeElement = (Code<Hl7.Fhir.Model.Consent.ConsentScopeCodes>)ScopeElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EventStatus>)StatusElement.DeepCopy();
+                if(Scope != null) dest.Scope = (Hl7.Fhir.Model.CodeableConcept)Scope.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
-                if(ConsentingParty != null) dest.ConsentingParty = new List<Hl7.Fhir.Model.ResourceReference>(ConsentingParty.DeepCopy());
+                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Organization != null) dest.Organization = new List<Hl7.Fhir.Model.ResourceReference>(Organization.DeepCopy());
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
                 if(Policy != null) dest.Policy = new List<Hl7.Fhir.Model.Consent.PolicyComponent>(Policy.DeepCopy());
@@ -1319,11 +1261,11 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(ScopeElement, otherT.ScopeElement)) return false;
+            if( !DeepComparable.Matches(Scope, otherT.Scope)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
-            if( !DeepComparable.Matches(ConsentingParty, otherT.ConsentingParty)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Policy, otherT.Policy)) return false;
@@ -1342,11 +1284,11 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(ScopeElement, otherT.ScopeElement)) return false;
+            if( !DeepComparable.IsExactly(Scope, otherT.Scope)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
-            if( !DeepComparable.IsExactly(ConsentingParty, otherT.ConsentingParty)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Policy, otherT.Policy)) return false;
@@ -1363,13 +1305,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
-				if (ScopeElement != null) yield return ScopeElement;
+				if (Scope != null) yield return Scope;
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Patient != null) yield return Patient;
 				if (DateTimeElement != null) yield return DateTimeElement;
-				foreach (var elem in ConsentingParty) { if (elem != null) yield return elem; }
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				foreach (var elem in Organization) { if (elem != null) yield return elem; }
 				if (Source != null) yield return Source;
 				foreach (var elem in Policy) { if (elem != null) yield return elem; }
@@ -1385,13 +1327,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ScopeElement != null) yield return new ElementValue("scope", false, ScopeElement);
+                if (Scope != null) yield return new ElementValue("scope", false, Scope);
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
                 if (DateTimeElement != null) yield return new ElementValue("dateTime", false, DateTimeElement);
-                foreach (var elem in ConsentingParty) { if (elem != null) yield return new ElementValue("consentingParty", true, elem); }
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
                 foreach (var elem in Organization) { if (elem != null) yield return new ElementValue("organization", true, elem); }
                 if (Source != null) yield return new ElementValue("source", false, Source);
                 foreach (var elem in Policy) { if (elem != null) yield return new ElementValue("policy", true, elem); }

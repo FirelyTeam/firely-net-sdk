@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Patient’s or family member's work information
+    /// Patient's or family member's work information (ODH)
     /// </summary>
     [FhirType("OccupationalData", IsResource=true)]
     [DataContract]
@@ -55,66 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "OccupationalData"; } }
         
-        /// <summary>
-        /// 74165-2 History of Employment Status (CodeSystem: LOINC urn:oid:2.16.840.1.113883.6.1)
-        /// (url: http://hl7.org/fhir/ValueSet/history-of-employment-status)
-        /// </summary>
-        [FhirEnumeration("HistoryOfEmploymentStatus")]
-        public enum HistoryOfEmploymentStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://loinc.org)
-            /// </summary>
-            [EnumLiteral("74165-2", "http://loinc.org"), Description("History of employment status NIOSH")]
-            N741652,
-        }
-
-        /// <summary>
-        /// 87510-4 Retirement Status (CodeSystem: LOINC urn:oid:2.16.840.1.113883.6.1)
-        /// (url: http://hl7.org/fhir/ValueSet/retirement-status)
-        /// </summary>
-        [FhirEnumeration("RetirementStatus")]
-        public enum RetirementStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/retirement-status)
-            /// </summary>
-            [EnumLiteral("87510-4", "http://hl7.org/fhir/retirement-status"), Description("Retirement Status")]
-            N875104,
-        }
-
-        /// <summary>
-        /// 87511-2 Hazardous Duty Work (CodeSystem: LOINC urn:oid:2.16.840.1.113883.6.1)
-        /// (url: http://hl7.org/fhir/ValueSet/hazadardous-duty-work)
-        /// </summary>
-        [FhirEnumeration("HazardousDutyWork")]
-        public enum HazardousDutyWork
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/hazadardous-duty-work)
-            /// </summary>
-            [EnumLiteral("87511-2", "http://hl7.org/fhir/hazadardous-duty-work"), Description("Hazardous Duty Work")]
-            N875112,
-        }
-
-        /// <summary>
-        /// 21843-8 Usual Occupation (CodeSystem: LOINC urn:oid:2.16.840.1.113883.6.1)
-        /// (url: http://hl7.org/fhir/ValueSet/usual-occupation)
-        /// </summary>
-        [FhirEnumeration("UsualOccupation")]
-        public enum UsualOccupation
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://loinc.org)
-            /// </summary>
-            [EnumLiteral("21843-8", "http://loinc.org"), Description("History of Usual occupation")]
-            N218438,
-        }
-
         [FhirType("EmploymentStatusComponent")]
         [DataContract]
         public partial class EmploymentStatusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -123,67 +63,32 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EmploymentStatusComponent"; } }
             
             /// <summary>
-            /// 74165-2
+            /// Employment status code
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.OccupationalData.HistoryOfEmploymentStatus> CodeElement
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _CodeElement; }
-                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Code<Hl7.Fhir.Model.OccupationalData.HistoryOfEmploymentStatus> _CodeElement;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// 74165-2
+            /// Employment status effective time period
             /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.OccupationalData.HistoryOfEmploymentStatus? Code
-            {
-                get { return CodeElement != null ? CodeElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        CodeElement = null; 
-                    else
-                        CodeElement = new Code<Hl7.Fhir.Model.OccupationalData.HistoryOfEmploymentStatus>(value);
-                    OnPropertyChanged("Code");
-                }
-            }
-            
-            /// <summary>
-            /// Employment status effective time
-            /// </summary>
-            [FhirElement("effective", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [FhirElement("effective", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Effective
+            public Hl7.Fhir.Model.Period Effective
             {
                 get { return _Effective; }
                 set { _Effective = value; OnPropertyChanged("Effective"); }
             }
             
-            private Hl7.Fhir.Model.Element _Effective;
-            
-            /// <summary>
-            /// Employment status value
-            /// </summary>
-            [FhirElement("value", Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Value;
+            private Hl7.Fhir.Model.Period _Effective;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -192,9 +97,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.OccupationalData.HistoryOfEmploymentStatus>)CodeElement.DeepCopy();
-                    if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Period)Effective.DeepCopy();
                     return dest;
                 }
                 else
@@ -212,9 +116,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -225,9 +128,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -239,9 +141,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (CodeElement != null) yield return CodeElement;
+                    if (Code != null) yield return Code;
                     if (Effective != null) yield return Effective;
-                    if (Value != null) yield return Value;
                 }
             }
 
@@ -251,9 +152,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
                     if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
                 }
             }
 
@@ -261,406 +161,97 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RetirementStatusComponent")]
+        [FhirType("UsualWorkComponent")]
         [DataContract]
-        public partial class RetirementStatusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UsualWorkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "RetirementStatusComponent"; } }
+            public override string TypeName { get { return "UsualWorkComponent"; } }
             
             /// <summary>
-            /// 87510-4
+            /// Usual Work occupation
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("occupation", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.OccupationalData.RetirementStatus> CodeElement
+            public Hl7.Fhir.Model.CodeableConcept Occupation
             {
-                get { return _CodeElement; }
-                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+                get { return _Occupation; }
+                set { _Occupation = value; OnPropertyChanged("Occupation"); }
             }
             
-            private Code<Hl7.Fhir.Model.OccupationalData.RetirementStatus> _CodeElement;
+            private Hl7.Fhir.Model.CodeableConcept _Occupation;
             
             /// <summary>
-            /// 87510-4
+            /// Usual Work industry
             /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.OccupationalData.RetirementStatus? Code
-            {
-                get { return CodeElement != null ? CodeElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        CodeElement = null; 
-                    else
-                        CodeElement = new Code<Hl7.Fhir.Model.OccupationalData.RetirementStatus>(value);
-                    OnPropertyChanged("Code");
-                }
-            }
-            
-            /// <summary>
-            /// Retirement status effective time
-            /// </summary>
-            [FhirElement("effective", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [FhirElement("industry", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Effective
-            {
-                get { return _Effective; }
-                set { _Effective = value; OnPropertyChanged("Effective"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Effective;
-            
-            /// <summary>
-            /// Retirement status value
-            /// </summary>
-            [FhirElement("value", Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Value;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RetirementStatusComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.OccupationalData.RetirementStatus>)CodeElement.DeepCopy();
-                    if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RetirementStatusComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RetirementStatusComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RetirementStatusComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (CodeElement != null) yield return CodeElement;
-                    if (Effective != null) yield return Effective;
-                    if (Value != null) yield return Value;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("CombatZoneHazardousDutyComponent")]
-        [DataContract]
-        public partial class CombatZoneHazardousDutyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "CombatZoneHazardousDutyComponent"; } }
-            
-            /// <summary>
-            /// 87511-2
-            /// </summary>
-            [FhirElement("code", Order=40)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Code<Hl7.Fhir.Model.OccupationalData.HazardousDutyWork>> CodeElement
-            {
-                get { if(_CodeElement==null) _CodeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.OccupationalData.HazardousDutyWork>>(); return _CodeElement; }
-                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
-            }
-            
-            private List<Code<Hl7.Fhir.Model.OccupationalData.HazardousDutyWork>> _CodeElement;
-            
-            /// <summary>
-            /// 87511-2
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.OccupationalData.HazardousDutyWork?> Code
-            {
-                get { return CodeElement != null ? CodeElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if (value == null)
-                        CodeElement = null; 
-                    else
-                        CodeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.OccupationalData.HazardousDutyWork>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.OccupationalData.HazardousDutyWork>(elem)));
-                    OnPropertyChanged("Code");
-                }
-            }
-            
-            /// <summary>
-            /// Combat Zone Hazardous Duty effective time
-            /// </summary>
-            [FhirElement("effective", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Effective
-            {
-                get { return _Effective; }
-                set { _Effective = value; OnPropertyChanged("Effective"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Effective;
-            
-            /// <summary>
-            /// Combat Zone Hazardous Duty value
-            /// </summary>
-            [FhirElement("value", Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Value;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as CombatZoneHazardousDutyComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(CodeElement != null) dest.CodeElement = new List<Code<Hl7.Fhir.Model.OccupationalData.HazardousDutyWork>>(CodeElement.DeepCopy());
-                    if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new CombatZoneHazardousDutyComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as CombatZoneHazardousDutyComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as CombatZoneHazardousDutyComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    foreach (var elem in CodeElement) { if (elem != null) yield return elem; }
-                    if (Effective != null) yield return Effective;
-                    if (Value != null) yield return Value;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in CodeElement) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                    if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("UsualOccupationComponent")]
-        [DataContract]
-        public partial class UsualOccupationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "UsualOccupationComponent"; } }
-            
-            /// <summary>
-            /// 21843-8
-            /// </summary>
-            [FhirElement("code", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.OccupationalData.UsualOccupation> CodeElement
-            {
-                get { return _CodeElement; }
-                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.OccupationalData.UsualOccupation> _CodeElement;
-            
-            /// <summary>
-            /// 21843-8
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.OccupationalData.UsualOccupation? Code
-            {
-                get { return CodeElement != null ? CodeElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        CodeElement = null; 
-                    else
-                        CodeElement = new Code<Hl7.Fhir.Model.OccupationalData.UsualOccupation>(value);
-                    OnPropertyChanged("Code");
-                }
-            }
-            
-            /// <summary>
-            /// Usual Occupation effective time
-            /// </summary>
-            [FhirElement("effective", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Effective
-            {
-                get { return _Effective; }
-                set { _Effective = value; OnPropertyChanged("Effective"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Effective;
-            
-            /// <summary>
-            /// Usual Occupation value
-            /// </summary>
-            [FhirElement("value", Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Value;
-            
-            /// <summary>
-            /// Usual Occupation duration
-            /// </summary>
-            [FhirElement("duration", Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.OccupationalData.DurationComponent Duration
-            {
-                get { return _Duration; }
-                set { _Duration = value; OnPropertyChanged("Duration"); }
-            }
-            
-            private Hl7.Fhir.Model.OccupationalData.DurationComponent _Duration;
-            
-            /// <summary>
-            /// Usual Occupation industry
-            /// </summary>
-            [FhirElement("industry", Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.OccupationalData.IndustryComponent Industry
+            public Hl7.Fhir.Model.CodeableConcept Industry
             {
                 get { return _Industry; }
                 set { _Industry = value; OnPropertyChanged("Industry"); }
             }
             
-            private Hl7.Fhir.Model.OccupationalData.IndustryComponent _Industry;
+            private Hl7.Fhir.Model.CodeableConcept _Industry;
+            
+            /// <summary>
+            /// Usual Work start time
+            /// </summary>
+            [FhirElement("start", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDateTime StartElement
+            {
+                get { return _StartElement; }
+                set { _StartElement = value; OnPropertyChanged("StartElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDateTime _StartElement;
+            
+            /// <summary>
+            /// Usual Work start time
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Start
+            {
+                get { return StartElement != null ? StartElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        StartElement = null; 
+                    else
+                        StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("Start");
+                }
+            }
+            
+            /// <summary>
+            /// Usual Work duration
+            /// </summary>
+            [FhirElement("duration", InSummary=true, Order=70)]
+            [DataMember]
+            public Duration Duration
+            {
+                get { return _Duration; }
+                set { _Duration = value; OnPropertyChanged("Duration"); }
+            }
+            
+            private Duration _Duration;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as UsualOccupationComponent;
+                var dest = other as UsualWorkComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.OccupationalData.UsualOccupation>)CodeElement.DeepCopy();
-                    if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
-                    if(Duration != null) dest.Duration = (Hl7.Fhir.Model.OccupationalData.DurationComponent)Duration.DeepCopy();
-                    if(Industry != null) dest.Industry = (Hl7.Fhir.Model.OccupationalData.IndustryComponent)Industry.DeepCopy();
+                    if(Occupation != null) dest.Occupation = (Hl7.Fhir.Model.CodeableConcept)Occupation.DeepCopy();
+                    if(Industry != null) dest.Industry = (Hl7.Fhir.Model.CodeableConcept)Industry.DeepCopy();
+                    if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)StartElement.DeepCopy();
+                    if(Duration != null) dest.Duration = (Duration)Duration.DeepCopy();
                     return dest;
                 }
                 else
@@ -669,35 +260,33 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new UsualOccupationComponent());
+                return CopyTo(new UsualWorkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as UsualOccupationComponent;
+                var otherT = other as UsualWorkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                if( !DeepComparable.Matches(Duration, otherT.Duration)) return false;
+                if( !DeepComparable.Matches(Occupation, otherT.Occupation)) return false;
                 if( !DeepComparable.Matches(Industry, otherT.Industry)) return false;
+                if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
+                if( !DeepComparable.Matches(Duration, otherT.Duration)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as UsualOccupationComponent;
+                var otherT = other as UsualWorkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                if( !DeepComparable.IsExactly(Duration, otherT.Duration)) return false;
+                if( !DeepComparable.IsExactly(Occupation, otherT.Occupation)) return false;
                 if( !DeepComparable.IsExactly(Industry, otherT.Industry)) return false;
+                if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
+                if( !DeepComparable.IsExactly(Duration, otherT.Duration)) return false;
                 
                 return true;
             }
@@ -709,11 +298,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (CodeElement != null) yield return CodeElement;
-                    if (Effective != null) yield return Effective;
-                    if (Value != null) yield return Value;
-                    if (Duration != null) yield return Duration;
+                    if (Occupation != null) yield return Occupation;
                     if (Industry != null) yield return Industry;
+                    if (StartElement != null) yield return StartElement;
+                    if (Duration != null) yield return Duration;
                 }
             }
 
@@ -723,11 +311,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
+                    if (Occupation != null) yield return new ElementValue("occupation", false, Occupation);
                     if (Industry != null) yield return new ElementValue("industry", false, Industry);
+                    if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
                 }
             }
 
@@ -735,279 +322,190 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DurationComponent")]
+        [FhirType("PastOrPresentJobComponent")]
         [DataContract]
-        public partial class DurationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PastOrPresentJobComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DurationComponent"; } }
+            public override string TypeName { get { return "PastOrPresentJobComponent"; } }
             
             /// <summary>
-            /// Usual Occupation duration code
+            /// Past or Present Job occupation
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("occupation", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public Hl7.Fhir.Model.CodeableConcept Occupation
             {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
+                get { return _Occupation; }
+                set { _Occupation = value; OnPropertyChanged("Occupation"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private Hl7.Fhir.Model.CodeableConcept _Occupation;
             
             /// <summary>
-            /// Usual Occupation duration value
+            /// Past or Present Job industry
             /// </summary>
-            [FhirElement("value", Order=50)]
+            [FhirElement("industry", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Period Value
+            public Hl7.Fhir.Model.CodeableConcept Industry
             {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
+                get { return _Industry; }
+                set { _Industry = value; OnPropertyChanged("Industry"); }
             }
             
-            private Hl7.Fhir.Model.Period _Value;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as DurationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Period)Value.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new DurationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as DurationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as DurationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Code != null) yield return Code;
-                    if (Value != null) yield return Value;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("IndustryComponent")]
-        [DataContract]
-        public partial class IndustryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "IndustryComponent"; } }
+            private Hl7.Fhir.Model.CodeableConcept _Industry;
             
             /// <summary>
-            /// Usual Occupation industry code
+            /// Past or Present Job effective time period
             /// </summary>
-            [FhirElement("code", Order=40)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("effective", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Usual Occupation industry value
-            /// </summary>
-            [FhirElement("value", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Value;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as IndustryComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new IndustryComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as IndustryComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as IndustryComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Code != null) yield return Code;
-                    if (Value != null) yield return Value;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("PastOrPresentOccupationComponent")]
-        [DataContract]
-        public partial class PastOrPresentOccupationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "PastOrPresentOccupationComponent"; } }
-            
-            /// <summary>
-            /// Past Or Present Occupation code
-            /// </summary>
-            [FhirElement("code", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Past Or Present Occupation effective time
-            /// </summary>
-            [FhirElement("effective", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Effective
+            public Hl7.Fhir.Model.Period Effective
             {
                 get { return _Effective; }
                 set { _Effective = value; OnPropertyChanged("Effective"); }
             }
             
-            private Hl7.Fhir.Model.Element _Effective;
+            private Hl7.Fhir.Model.Period _Effective;
             
             /// <summary>
-            /// Past Or Present Occupation value
+            /// Past or Present Job employer
             /// </summary>
-            [FhirElement("value", Order=60)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("employer", InSummary=true, Order=70)]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Value
+            public Hl7.Fhir.Model.ResourceReference Employer
             {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
+                get { return _Employer; }
+                set { _Employer = value; OnPropertyChanged("Employer"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Value;
+            private Hl7.Fhir.Model.ResourceReference _Employer;
+            
+            /// <summary>
+            /// Past or Present Job work classification
+            /// </summary>
+            [FhirElement("workClassification", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept WorkClassification
+            {
+                get { return _WorkClassification; }
+                set { _WorkClassification = value; OnPropertyChanged("WorkClassification"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _WorkClassification;
+            
+            /// <summary>
+            /// Past or Present Job supervisory level
+            /// </summary>
+            [FhirElement("supervisoryLevel", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept SupervisoryLevel
+            {
+                get { return _SupervisoryLevel; }
+                set { _SupervisoryLevel = value; OnPropertyChanged("SupervisoryLevel"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _SupervisoryLevel;
+            
+            /// <summary>
+            /// Past or Present Job job duty
+            /// </summary>
+            [FhirElement("jobDuty", InSummary=true, Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirString> JobDutyElement
+            {
+                get { if(_JobDutyElement==null) _JobDutyElement = new List<Hl7.Fhir.Model.FhirString>(); return _JobDutyElement; }
+                set { _JobDutyElement = value; OnPropertyChanged("JobDutyElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirString> _JobDutyElement;
+            
+            /// <summary>
+            /// Past or Present Job job duty
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> JobDuty
+            {
+                get { return JobDutyElement != null ? JobDutyElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        JobDutyElement = null; 
+                    else
+                        JobDutyElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("JobDuty");
+                }
+            }
+            
+            /// <summary>
+            /// Past or Present Job occupational hazard
+            /// </summary>
+            [FhirElement("occupationalHazard", InSummary=true, Order=110)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirString> OccupationalHazardElement
+            {
+                get { if(_OccupationalHazardElement==null) _OccupationalHazardElement = new List<Hl7.Fhir.Model.FhirString>(); return _OccupationalHazardElement; }
+                set { _OccupationalHazardElement = value; OnPropertyChanged("OccupationalHazardElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirString> _OccupationalHazardElement;
+            
+            /// <summary>
+            /// Past or Present Job occupational hazard
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> OccupationalHazard
+            {
+                get { return OccupationalHazardElement != null ? OccupationalHazardElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        OccupationalHazardElement = null; 
+                    else
+                        OccupationalHazardElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("OccupationalHazard");
+                }
+            }
+            
+            /// <summary>
+            /// Past or Present Job work schedule
+            /// </summary>
+            [FhirElement("workSchedule", InSummary=true, Order=120)]
+            [DataMember]
+            public Hl7.Fhir.Model.OccupationalData.WorkScheduleComponent WorkSchedule
+            {
+                get { return _WorkSchedule; }
+                set { _WorkSchedule = value; OnPropertyChanged("WorkSchedule"); }
+            }
+            
+            private Hl7.Fhir.Model.OccupationalData.WorkScheduleComponent _WorkSchedule;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PastOrPresentOccupationComponent;
+                var dest = other as PastOrPresentJobComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
+                    if(Occupation != null) dest.Occupation = (Hl7.Fhir.Model.CodeableConcept)Occupation.DeepCopy();
+                    if(Industry != null) dest.Industry = (Hl7.Fhir.Model.CodeableConcept)Industry.DeepCopy();
+                    if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Period)Effective.DeepCopy();
+                    if(Employer != null) dest.Employer = (Hl7.Fhir.Model.ResourceReference)Employer.DeepCopy();
+                    if(WorkClassification != null) dest.WorkClassification = (Hl7.Fhir.Model.CodeableConcept)WorkClassification.DeepCopy();
+                    if(SupervisoryLevel != null) dest.SupervisoryLevel = (Hl7.Fhir.Model.CodeableConcept)SupervisoryLevel.DeepCopy();
+                    if(JobDutyElement != null) dest.JobDutyElement = new List<Hl7.Fhir.Model.FhirString>(JobDutyElement.DeepCopy());
+                    if(OccupationalHazardElement != null) dest.OccupationalHazardElement = new List<Hl7.Fhir.Model.FhirString>(OccupationalHazardElement.DeepCopy());
+                    if(WorkSchedule != null) dest.WorkSchedule = (Hl7.Fhir.Model.OccupationalData.WorkScheduleComponent)WorkSchedule.DeepCopy();
                     return dest;
                 }
                 else
@@ -1016,31 +514,216 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PastOrPresentOccupationComponent());
+                return CopyTo(new PastOrPresentJobComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PastOrPresentOccupationComponent;
+                var otherT = other as PastOrPresentJobComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Occupation, otherT.Occupation)) return false;
+                if( !DeepComparable.Matches(Industry, otherT.Industry)) return false;
                 if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(Employer, otherT.Employer)) return false;
+                if( !DeepComparable.Matches(WorkClassification, otherT.WorkClassification)) return false;
+                if( !DeepComparable.Matches(SupervisoryLevel, otherT.SupervisoryLevel)) return false;
+                if( !DeepComparable.Matches(JobDutyElement, otherT.JobDutyElement)) return false;
+                if( !DeepComparable.Matches(OccupationalHazardElement, otherT.OccupationalHazardElement)) return false;
+                if( !DeepComparable.Matches(WorkSchedule, otherT.WorkSchedule)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PastOrPresentOccupationComponent;
+                var otherT = other as PastOrPresentJobComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Occupation, otherT.Occupation)) return false;
+                if( !DeepComparable.IsExactly(Industry, otherT.Industry)) return false;
+                if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
+                if( !DeepComparable.IsExactly(Employer, otherT.Employer)) return false;
+                if( !DeepComparable.IsExactly(WorkClassification, otherT.WorkClassification)) return false;
+                if( !DeepComparable.IsExactly(SupervisoryLevel, otherT.SupervisoryLevel)) return false;
+                if( !DeepComparable.IsExactly(JobDutyElement, otherT.JobDutyElement)) return false;
+                if( !DeepComparable.IsExactly(OccupationalHazardElement, otherT.OccupationalHazardElement)) return false;
+                if( !DeepComparable.IsExactly(WorkSchedule, otherT.WorkSchedule)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Occupation != null) yield return Occupation;
+                    if (Industry != null) yield return Industry;
+                    if (Effective != null) yield return Effective;
+                    if (Employer != null) yield return Employer;
+                    if (WorkClassification != null) yield return WorkClassification;
+                    if (SupervisoryLevel != null) yield return SupervisoryLevel;
+                    foreach (var elem in JobDutyElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in OccupationalHazardElement) { if (elem != null) yield return elem; }
+                    if (WorkSchedule != null) yield return WorkSchedule;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Occupation != null) yield return new ElementValue("occupation", false, Occupation);
+                    if (Industry != null) yield return new ElementValue("industry", false, Industry);
+                    if (Effective != null) yield return new ElementValue("effective", false, Effective);
+                    if (Employer != null) yield return new ElementValue("employer", false, Employer);
+                    if (WorkClassification != null) yield return new ElementValue("workClassification", false, WorkClassification);
+                    if (SupervisoryLevel != null) yield return new ElementValue("supervisoryLevel", false, SupervisoryLevel);
+                    foreach (var elem in JobDutyElement) { if (elem != null) yield return new ElementValue("jobDuty", true, elem); }
+                    foreach (var elem in OccupationalHazardElement) { if (elem != null) yield return new ElementValue("occupationalHazard", true, elem); }
+                    if (WorkSchedule != null) yield return new ElementValue("workSchedule", false, WorkSchedule);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("WorkScheduleComponent")]
+        [DataContract]
+        public partial class WorkScheduleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "WorkScheduleComponent"; } }
+            
+            /// <summary>
+            /// Past or Present Job work schedule code
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Past or Present Job work schedule weekly work days
+            /// </summary>
+            [FhirElement("weeklyWorkDays", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal WeeklyWorkDaysElement
+            {
+                get { return _WeeklyWorkDaysElement; }
+                set { _WeeklyWorkDaysElement = value; OnPropertyChanged("WeeklyWorkDaysElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _WeeklyWorkDaysElement;
+            
+            /// <summary>
+            /// Past or Present Job work schedule weekly work days
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? WeeklyWorkDays
+            {
+                get { return WeeklyWorkDaysElement != null ? WeeklyWorkDaysElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        WeeklyWorkDaysElement = null; 
+                    else
+                        WeeklyWorkDaysElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("WeeklyWorkDays");
+                }
+            }
+            
+            /// <summary>
+            /// Past or Present Job work schedule daily work hours
+            /// </summary>
+            [FhirElement("dailyWorkHours", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal DailyWorkHoursElement
+            {
+                get { return _DailyWorkHoursElement; }
+                set { _DailyWorkHoursElement = value; OnPropertyChanged("DailyWorkHoursElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _DailyWorkHoursElement;
+            
+            /// <summary>
+            /// Past or Present Job work schedule daily work hours
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? DailyWorkHours
+            {
+                get { return DailyWorkHoursElement != null ? DailyWorkHoursElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        DailyWorkHoursElement = null; 
+                    else
+                        DailyWorkHoursElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("DailyWorkHours");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as WorkScheduleComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(WeeklyWorkDaysElement != null) dest.WeeklyWorkDaysElement = (Hl7.Fhir.Model.FhirDecimal)WeeklyWorkDaysElement.DeepCopy();
+                    if(DailyWorkHoursElement != null) dest.DailyWorkHoursElement = (Hl7.Fhir.Model.FhirDecimal)DailyWorkHoursElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new WorkScheduleComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as WorkScheduleComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(WeeklyWorkDaysElement, otherT.WeeklyWorkDaysElement)) return false;
+                if( !DeepComparable.Matches(DailyWorkHoursElement, otherT.DailyWorkHoursElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as WorkScheduleComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(WeeklyWorkDaysElement, otherT.WeeklyWorkDaysElement)) return false;
+                if( !DeepComparable.IsExactly(DailyWorkHoursElement, otherT.DailyWorkHoursElement)) return false;
                 
                 return true;
             }
@@ -1053,8 +736,8 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
-                    if (Effective != null) yield return Effective;
-                    if (Value != null) yield return Value;
+                    if (WeeklyWorkDaysElement != null) yield return WeeklyWorkDaysElement;
+                    if (DailyWorkHoursElement != null) yield return DailyWorkHoursElement;
                 }
             }
 
@@ -1065,8 +748,8 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (WeeklyWorkDaysElement != null) yield return new ElementValue("weeklyWorkDays", false, WeeklyWorkDaysElement);
+                    if (DailyWorkHoursElement != null) yield return new ElementValue("dailyWorkHours", false, DailyWorkHoursElement);
                 }
             }
 
@@ -1075,7 +758,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Unique identifier for the occupational data record
+        /// Unique identifier for the occupational data (ODH) record
         /// </summary>
         [FhirElement("identifier", Order=90)]
         [DataMember]
@@ -1121,11 +804,11 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who the occupational data is collected about
+        /// Who the occupational data (ODH) is collected about
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=110)]
         [CLSCompliant(false)]
-		[References("Patient")]
+		[References("Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -1136,10 +819,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Occupational Data author time
+        /// Occupational Data (ODH) recording time
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=120)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("date", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -1150,7 +832,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Occupational Data author time
+        /// Occupational Data (ODH) recording time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1169,86 +851,124 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Occupational Data author
+        /// Occupational Data (ODH) recorder
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=130)]
+        [FhirElement("recorder", Order=130)]
         [CLSCompliant(false)]
 		[References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
-        [Cardinality(Min=1,Max=-1)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Author
+        public List<Hl7.Fhir.Model.ResourceReference> Recorder
         {
-            get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
+            get { if(_Recorder==null) _Recorder = new List<Hl7.Fhir.Model.ResourceReference>(); return _Recorder; }
+            set { _Recorder = value; OnPropertyChanged("Recorder"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Author;
+        private List<Hl7.Fhir.Model.ResourceReference> _Recorder;
+        
+        /// <summary>
+        /// Occupational Data (ODH) informant
+        /// </summary>
+        [FhirElement("informant", Order=140)]
+        [CLSCompliant(false)]
+		[References("Patient","RelatedPerson")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Informant
+        {
+            get { if(_Informant==null) _Informant = new List<Hl7.Fhir.Model.ResourceReference>(); return _Informant; }
+            set { _Informant = value; OnPropertyChanged("Informant"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Informant;
         
         /// <summary>
         /// Employment status
         /// </summary>
-        [FhirElement("employmentStatus", Order=140)]
+        [FhirElement("employmentStatus", InSummary=true, Order=150)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.OccupationalData.EmploymentStatusComponent EmploymentStatus
+        public List<Hl7.Fhir.Model.OccupationalData.EmploymentStatusComponent> EmploymentStatus
         {
-            get { return _EmploymentStatus; }
+            get { if(_EmploymentStatus==null) _EmploymentStatus = new List<Hl7.Fhir.Model.OccupationalData.EmploymentStatusComponent>(); return _EmploymentStatus; }
             set { _EmploymentStatus = value; OnPropertyChanged("EmploymentStatus"); }
         }
         
-        private Hl7.Fhir.Model.OccupationalData.EmploymentStatusComponent _EmploymentStatus;
+        private List<Hl7.Fhir.Model.OccupationalData.EmploymentStatusComponent> _EmploymentStatus;
         
         /// <summary>
-        /// Retirement status
+        /// Retirement date
         /// </summary>
-        [FhirElement("retirementStatus", Order=150)]
-        [DataMember]
-        public Hl7.Fhir.Model.OccupationalData.RetirementStatusComponent RetirementStatus_
-        {
-            get { return _RetirementStatus_; }
-            set { _RetirementStatus_ = value; OnPropertyChanged("RetirementStatus_"); }
-        }
-        
-        private Hl7.Fhir.Model.OccupationalData.RetirementStatusComponent _RetirementStatus_;
-        
-        /// <summary>
-        /// Combat Zone Hazardous Duty
-        /// </summary>
-        [FhirElement("combatZoneHazardousDuty", Order=160)]
+        [FhirElement("retirementDate", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.OccupationalData.CombatZoneHazardousDutyComponent> CombatZoneHazardousDuty
+        public List<Hl7.Fhir.Model.FhirDateTime> RetirementDateElement
         {
-            get { if(_CombatZoneHazardousDuty==null) _CombatZoneHazardousDuty = new List<Hl7.Fhir.Model.OccupationalData.CombatZoneHazardousDutyComponent>(); return _CombatZoneHazardousDuty; }
-            set { _CombatZoneHazardousDuty = value; OnPropertyChanged("CombatZoneHazardousDuty"); }
+            get { if(_RetirementDateElement==null) _RetirementDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(); return _RetirementDateElement; }
+            set { _RetirementDateElement = value; OnPropertyChanged("RetirementDateElement"); }
         }
         
-        private List<Hl7.Fhir.Model.OccupationalData.CombatZoneHazardousDutyComponent> _CombatZoneHazardousDuty;
+        private List<Hl7.Fhir.Model.FhirDateTime> _RetirementDateElement;
         
         /// <summary>
-        /// Usual Occupation
+        /// Retirement date
         /// </summary>
-        [FhirElement("usualOccupation", Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.OccupationalData.UsualOccupationComponent UsualOccupation_
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> RetirementDate
         {
-            get { return _UsualOccupation_; }
-            set { _UsualOccupation_ = value; OnPropertyChanged("UsualOccupation_"); }
+            get { return RetirementDateElement != null ? RetirementDateElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  RetirementDateElement = null; 
+                else
+                  RetirementDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(value.Select(elem=>new Hl7.Fhir.Model.FhirDateTime(elem)));
+                OnPropertyChanged("RetirementDate");
+            }
         }
-        
-        private Hl7.Fhir.Model.OccupationalData.UsualOccupationComponent _UsualOccupation_;
         
         /// <summary>
-        /// Past Or Present Occupation
+        /// Combat Zone Work period
         /// </summary>
-        [FhirElement("pastOrPresentOccupation", Order=180)]
+        [FhirElement("combatZonePeriod", InSummary=true, Order=170)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.OccupationalData.PastOrPresentOccupationComponent PastOrPresentOccupation
+        public List<Hl7.Fhir.Model.Period> CombatZonePeriod
         {
-            get { return _PastOrPresentOccupation; }
-            set { _PastOrPresentOccupation = value; OnPropertyChanged("PastOrPresentOccupation"); }
+            get { if(_CombatZonePeriod==null) _CombatZonePeriod = new List<Hl7.Fhir.Model.Period>(); return _CombatZonePeriod; }
+            set { _CombatZonePeriod = value; OnPropertyChanged("CombatZonePeriod"); }
         }
         
-        private Hl7.Fhir.Model.OccupationalData.PastOrPresentOccupationComponent _PastOrPresentOccupation;
+        private List<Hl7.Fhir.Model.Period> _CombatZonePeriod;
+        
+        /// <summary>
+        /// Usual Work
+        /// </summary>
+        [FhirElement("usualWork", InSummary=true, Order=180)]
+        [DataMember]
+        public Hl7.Fhir.Model.OccupationalData.UsualWorkComponent UsualWork
+        {
+            get { return _UsualWork; }
+            set { _UsualWork = value; OnPropertyChanged("UsualWork"); }
+        }
+        
+        private Hl7.Fhir.Model.OccupationalData.UsualWorkComponent _UsualWork;
+        
+        /// <summary>
+        /// Past or Present Job
+        /// </summary>
+        [FhirElement("pastOrPresentJob", InSummary=true, Order=190)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.OccupationalData.PastOrPresentJobComponent> PastOrPresentJob
+        {
+            get { if(_PastOrPresentJob==null) _PastOrPresentJob = new List<Hl7.Fhir.Model.OccupationalData.PastOrPresentJobComponent>(); return _PastOrPresentJob; }
+            set { _PastOrPresentJob = value; OnPropertyChanged("PastOrPresentJob"); }
+        }
+        
+        private List<Hl7.Fhir.Model.OccupationalData.PastOrPresentJobComponent> _PastOrPresentJob;
         
 
         public override void AddDefaultConstraints()
@@ -1268,12 +988,13 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
-                if(EmploymentStatus != null) dest.EmploymentStatus = (Hl7.Fhir.Model.OccupationalData.EmploymentStatusComponent)EmploymentStatus.DeepCopy();
-                if(RetirementStatus_ != null) dest.RetirementStatus_ = (Hl7.Fhir.Model.OccupationalData.RetirementStatusComponent)RetirementStatus_.DeepCopy();
-                if(CombatZoneHazardousDuty != null) dest.CombatZoneHazardousDuty = new List<Hl7.Fhir.Model.OccupationalData.CombatZoneHazardousDutyComponent>(CombatZoneHazardousDuty.DeepCopy());
-                if(UsualOccupation_ != null) dest.UsualOccupation_ = (Hl7.Fhir.Model.OccupationalData.UsualOccupationComponent)UsualOccupation_.DeepCopy();
-                if(PastOrPresentOccupation != null) dest.PastOrPresentOccupation = (Hl7.Fhir.Model.OccupationalData.PastOrPresentOccupationComponent)PastOrPresentOccupation.DeepCopy();
+                if(Recorder != null) dest.Recorder = new List<Hl7.Fhir.Model.ResourceReference>(Recorder.DeepCopy());
+                if(Informant != null) dest.Informant = new List<Hl7.Fhir.Model.ResourceReference>(Informant.DeepCopy());
+                if(EmploymentStatus != null) dest.EmploymentStatus = new List<Hl7.Fhir.Model.OccupationalData.EmploymentStatusComponent>(EmploymentStatus.DeepCopy());
+                if(RetirementDateElement != null) dest.RetirementDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(RetirementDateElement.DeepCopy());
+                if(CombatZonePeriod != null) dest.CombatZonePeriod = new List<Hl7.Fhir.Model.Period>(CombatZonePeriod.DeepCopy());
+                if(UsualWork != null) dest.UsualWork = (Hl7.Fhir.Model.OccupationalData.UsualWorkComponent)UsualWork.DeepCopy();
+                if(PastOrPresentJob != null) dest.PastOrPresentJob = new List<Hl7.Fhir.Model.OccupationalData.PastOrPresentJobComponent>(PastOrPresentJob.DeepCopy());
                 return dest;
             }
             else
@@ -1295,12 +1016,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+            if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.Matches(Informant, otherT.Informant)) return false;
             if( !DeepComparable.Matches(EmploymentStatus, otherT.EmploymentStatus)) return false;
-            if( !DeepComparable.Matches(RetirementStatus_, otherT.RetirementStatus_)) return false;
-            if( !DeepComparable.Matches(CombatZoneHazardousDuty, otherT.CombatZoneHazardousDuty)) return false;
-            if( !DeepComparable.Matches(UsualOccupation_, otherT.UsualOccupation_)) return false;
-            if( !DeepComparable.Matches(PastOrPresentOccupation, otherT.PastOrPresentOccupation)) return false;
+            if( !DeepComparable.Matches(RetirementDateElement, otherT.RetirementDateElement)) return false;
+            if( !DeepComparable.Matches(CombatZonePeriod, otherT.CombatZonePeriod)) return false;
+            if( !DeepComparable.Matches(UsualWork, otherT.UsualWork)) return false;
+            if( !DeepComparable.Matches(PastOrPresentJob, otherT.PastOrPresentJob)) return false;
             
             return true;
         }
@@ -1315,12 +1037,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.IsExactly(Informant, otherT.Informant)) return false;
             if( !DeepComparable.IsExactly(EmploymentStatus, otherT.EmploymentStatus)) return false;
-            if( !DeepComparable.IsExactly(RetirementStatus_, otherT.RetirementStatus_)) return false;
-            if( !DeepComparable.IsExactly(CombatZoneHazardousDuty, otherT.CombatZoneHazardousDuty)) return false;
-            if( !DeepComparable.IsExactly(UsualOccupation_, otherT.UsualOccupation_)) return false;
-            if( !DeepComparable.IsExactly(PastOrPresentOccupation, otherT.PastOrPresentOccupation)) return false;
+            if( !DeepComparable.IsExactly(RetirementDateElement, otherT.RetirementDateElement)) return false;
+            if( !DeepComparable.IsExactly(CombatZonePeriod, otherT.CombatZonePeriod)) return false;
+            if( !DeepComparable.IsExactly(UsualWork, otherT.UsualWork)) return false;
+            if( !DeepComparable.IsExactly(PastOrPresentJob, otherT.PastOrPresentJob)) return false;
             
             return true;
         }
@@ -1335,12 +1058,13 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (Subject != null) yield return Subject;
 				if (DateElement != null) yield return DateElement;
-				foreach (var elem in Author) { if (elem != null) yield return elem; }
-				if (EmploymentStatus != null) yield return EmploymentStatus;
-				if (RetirementStatus_ != null) yield return RetirementStatus_;
-				foreach (var elem in CombatZoneHazardousDuty) { if (elem != null) yield return elem; }
-				if (UsualOccupation_ != null) yield return UsualOccupation_;
-				if (PastOrPresentOccupation != null) yield return PastOrPresentOccupation;
+				foreach (var elem in Recorder) { if (elem != null) yield return elem; }
+				foreach (var elem in Informant) { if (elem != null) yield return elem; }
+				foreach (var elem in EmploymentStatus) { if (elem != null) yield return elem; }
+				foreach (var elem in RetirementDateElement) { if (elem != null) yield return elem; }
+				foreach (var elem in CombatZonePeriod) { if (elem != null) yield return elem; }
+				if (UsualWork != null) yield return UsualWork;
+				foreach (var elem in PastOrPresentJob) { if (elem != null) yield return elem; }
             }
         }
 
@@ -1354,12 +1078,13 @@ namespace Hl7.Fhir.Model
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
-                if (EmploymentStatus != null) yield return new ElementValue("employmentStatus", false, EmploymentStatus);
-                if (RetirementStatus_ != null) yield return new ElementValue("retirementStatus", false, RetirementStatus_);
-                foreach (var elem in CombatZoneHazardousDuty) { if (elem != null) yield return new ElementValue("combatZoneHazardousDuty", true, elem); }
-                if (UsualOccupation_ != null) yield return new ElementValue("usualOccupation", false, UsualOccupation_);
-                if (PastOrPresentOccupation != null) yield return new ElementValue("pastOrPresentOccupation", false, PastOrPresentOccupation);
+                foreach (var elem in Recorder) { if (elem != null) yield return new ElementValue("recorder", true, elem); }
+                foreach (var elem in Informant) { if (elem != null) yield return new ElementValue("informant", true, elem); }
+                foreach (var elem in EmploymentStatus) { if (elem != null) yield return new ElementValue("employmentStatus", true, elem); }
+                foreach (var elem in RetirementDateElement) { if (elem != null) yield return new ElementValue("retirementDate", true, elem); }
+                foreach (var elem in CombatZonePeriod) { if (elem != null) yield return new ElementValue("combatZonePeriod", true, elem); }
+                if (UsualWork != null) yield return new ElementValue("usualWork", false, UsualWork);
+                foreach (var elem in PastOrPresentJob) { if (elem != null) yield return new ElementValue("pastOrPresentJob", true, elem); }
             }
         }
 

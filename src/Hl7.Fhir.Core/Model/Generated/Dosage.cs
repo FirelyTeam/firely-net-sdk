@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -46,15 +46,139 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Dosage")]
     [DataContract]
-    public partial class Dosage : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Dosage : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Dosage"; } }
         
+        [FhirType("DoseAndRateComponent")]
+        [DataContract]
+        public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DoseAndRateComponent"; } }
+            
+            /// <summary>
+            /// The kind of dose or rate specified
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
+            /// Amount of medication per dose
+            /// </summary>
+            [FhirElement("dose", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+			[CLSCompliant(false)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Dose
+            {
+                get { return _Dose; }
+                set { _Dose = value; OnPropertyChanged("Dose"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Dose;
+            
+            /// <summary>
+            /// Amount of medication per unit of time
+            /// </summary>
+            [FhirElement("rate", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+			[CLSCompliant(false)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Rate
+            {
+                get { return _Rate; }
+                set { _Rate = value; OnPropertyChanged("Rate"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Rate;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DoseAndRateComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DoseAndRateComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DoseAndRateComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Dose, otherT.Dose)) return false;
+                if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DoseAndRateComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Dose, otherT.Dose)) return false;
+                if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
+                
+                return true;
+            }
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Type != null) yield return Type;
+                    if (Dose != null) yield return Dose;
+                    if (Rate != null) yield return Rate;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (Dose != null) yield return new ElementValue("dose", false, Dose);
+                    if (Rate != null) yield return new ElementValue("rate", false, Rate);
+ 
+                } 
+            } 
+            
+        }                
         /// <summary>
         /// The order of the dosage instructions
         /// </summary>
-        [FhirElement("sequence", InSummary=true, Order=30)]
+        [FhirElement("sequence", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SequenceElement
         {
@@ -86,7 +210,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Free text dosage instructions e.g. SIG
         /// </summary>
-        [FhirElement("text", InSummary=true, Order=40)]
+        [FhirElement("text", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
         {
@@ -118,7 +242,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
         /// </summary>
-        [FhirElement("additionalInstruction", InSummary=true, Order=50)]
+        [FhirElement("additionalInstruction", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
@@ -132,7 +256,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient or consumer oriented instructions
         /// </summary>
-        [FhirElement("patientInstruction", InSummary=true, Order=60)]
+        [FhirElement("patientInstruction", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PatientInstructionElement
         {
@@ -164,7 +288,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When medication should be administered
         /// </summary>
-        [FhirElement("timing", InSummary=true, Order=70)]
+        [FhirElement("timing", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Timing Timing
         {
@@ -177,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Take "as needed" (for x)
         /// </summary>
-        [FhirElement("asNeeded", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
@@ -192,7 +316,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Body site to administer to
         /// </summary>
-        [FhirElement("site", InSummary=true, Order=90)]
+        [FhirElement("site", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Site
         {
@@ -205,7 +329,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How drug should enter body
         /// </summary>
-        [FhirElement("route", InSummary=true, Order=100)]
+        [FhirElement("route", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Route
         {
@@ -218,7 +342,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Technique for administering medication
         /// </summary>
-        [FhirElement("method", InSummary=true, Order=110)]
+        [FhirElement("method", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
@@ -229,24 +353,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Method;
         
         /// <summary>
-        /// Amount of medication per dose
+        /// Amount of medication administered
         /// </summary>
-        [FhirElement("dose", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+        [FhirElement("doseAndRate", InSummary=true, Order=180)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Dose
+        public List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> DoseAndRate
         {
-            get { return _Dose; }
-            set { _Dose = value; OnPropertyChanged("Dose"); }
+            get { if(_DoseAndRate==null) _DoseAndRate = new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>(); return _DoseAndRate; }
+            set { _DoseAndRate = value; OnPropertyChanged("DoseAndRate"); }
         }
         
-        private Hl7.Fhir.Model.Element _Dose;
+        private List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> _DoseAndRate;
         
         /// <summary>
         /// Upper limit on medication per unit of time
         /// </summary>
-        [FhirElement("maxDosePerPeriod", InSummary=true, Order=130)]
+        [FhirElement("maxDosePerPeriod", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
         {
@@ -259,7 +382,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Upper limit on medication per administration
         /// </summary>
-        [FhirElement("maxDosePerAdministration", InSummary=true, Order=140)]
+        [FhirElement("maxDosePerAdministration", InSummary=true, Order=200)]
         [DataMember]
         public Quantity MaxDosePerAdministration
         {
@@ -272,7 +395,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Upper limit on medication per lifetime of the patient
         /// </summary>
-        [FhirElement("maxDosePerLifetime", InSummary=true, Order=150)]
+        [FhirElement("maxDosePerLifetime", InSummary=true, Order=210)]
         [DataMember]
         public Quantity MaxDosePerLifetime
         {
@@ -281,21 +404,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Quantity _MaxDosePerLifetime;
-        
-        /// <summary>
-        /// Amount of medication per unit of time
-        /// </summary>
-        [FhirElement("rate", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
-        [DataMember]
-        public Hl7.Fhir.Model.Element Rate
-        {
-            get { return _Rate; }
-            set { _Rate = value; OnPropertyChanged("Rate"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _Rate;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -314,11 +422,10 @@ namespace Hl7.Fhir.Model
                 if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
+                if(DoseAndRate != null) dest.DoseAndRate = new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>(DoseAndRate.DeepCopy());
                 if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
                 if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Quantity)MaxDosePerAdministration.DeepCopy();
                 if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Quantity)MaxDosePerLifetime.DeepCopy();
-                if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                 return dest;
             }
             else
@@ -345,11 +452,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Site, otherT.Site)) return false;
             if( !DeepComparable.Matches(Route, otherT.Route)) return false;
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
-            if( !DeepComparable.Matches(Dose, otherT.Dose)) return false;
+            if( !DeepComparable.Matches(DoseAndRate, otherT.DoseAndRate)) return false;
             if( !DeepComparable.Matches(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
             if( !DeepComparable.Matches(MaxDosePerAdministration, otherT.MaxDosePerAdministration)) return false;
             if( !DeepComparable.Matches(MaxDosePerLifetime, otherT.MaxDosePerLifetime)) return false;
-            if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
             
             return true;
         }
@@ -369,11 +475,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
             if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
-            if( !DeepComparable.IsExactly(Dose, otherT.Dose)) return false;
+            if( !DeepComparable.IsExactly(DoseAndRate, otherT.DoseAndRate)) return false;
             if( !DeepComparable.IsExactly(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
             if( !DeepComparable.IsExactly(MaxDosePerAdministration, otherT.MaxDosePerAdministration)) return false;
             if( !DeepComparable.IsExactly(MaxDosePerLifetime, otherT.MaxDosePerLifetime)) return false;
-            if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
             
             return true;
         }
@@ -393,11 +498,10 @@ namespace Hl7.Fhir.Model
                 if (Site != null) yield return Site;
                 if (Route != null) yield return Route;
                 if (Method != null) yield return Method;
-                if (Dose != null) yield return Dose;
+                foreach (var elem in DoseAndRate) { if (elem != null) yield return elem; }
                 if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
                 if (MaxDosePerAdministration != null) yield return MaxDosePerAdministration;
                 if (MaxDosePerLifetime != null) yield return MaxDosePerLifetime;
-                if (Rate != null) yield return Rate;
             }
         }
 
@@ -416,11 +520,10 @@ namespace Hl7.Fhir.Model
                 if (Site != null) yield return new ElementValue("site", false, Site);
                 if (Route != null) yield return new ElementValue("route", false, Route);
                 if (Method != null) yield return new ElementValue("method", false, Method);
-                if (Dose != null) yield return new ElementValue("dose", false, Dose);
+                foreach (var elem in DoseAndRate) { if (elem != null) yield return new ElementValue("doseAndRate", true, elem); }
                 if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", false, MaxDosePerPeriod);
                 if (MaxDosePerAdministration != null) yield return new ElementValue("maxDosePerAdministration", false, MaxDosePerAdministration);
                 if (MaxDosePerLifetime != null) yield return new ElementValue("maxDosePerLifetime", false, MaxDosePerLifetime);
-                if (Rate != null) yield return new ElementValue("rate", false, Rate);
  
             } 
         } 

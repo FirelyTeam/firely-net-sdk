@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,9 +84,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Type the reference refers to (e.g. "Patient")
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=40)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri TypeElement
+        {
+            get { return _TypeElement; }
+            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _TypeElement;
+        
+        /// <summary>
+        /// Type the reference refers to (e.g. "Patient")
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Type
+        {
+            get { return TypeElement != null ? TypeElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  TypeElement = null; 
+                else
+                  TypeElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Type");
+            }
+        }
+        
+        /// <summary>
         /// Logical reference, when literal reference is not known
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=40)]
+        [FhirElement("identifier", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -99,7 +131,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Text alternative for the resource
         /// </summary>
-        [FhirElement("display", InSummary=true, Order=50)]
+        [FhirElement("display", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {
@@ -137,6 +169,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)ReferenceElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirUri)TypeElement.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                 return dest;
@@ -157,6 +190,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
             
@@ -170,6 +204,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
             
@@ -183,6 +218,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
                 if (ReferenceElement != null) yield return ReferenceElement;
+                if (TypeElement != null) yield return TypeElement;
                 if (Identifier != null) yield return Identifier;
                 if (DisplayElement != null) yield return DisplayElement;
             }
@@ -195,6 +231,7 @@ namespace Hl7.Fhir.Model
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
                 if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                 if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
  

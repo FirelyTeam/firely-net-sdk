@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -261,70 +261,20 @@ namespace Hl7.Fhir.Model
             /// Lens prism
             /// </summary>
             [FhirElement("prism", Order=90)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal PrismElement
+            public List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> Prism
             {
-                get { return _PrismElement; }
-                set { _PrismElement = value; OnPropertyChanged("PrismElement"); }
+                get { if(_Prism==null) _Prism = new List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>(); return _Prism; }
+                set { _Prism = value; OnPropertyChanged("Prism"); }
             }
             
-            private Hl7.Fhir.Model.FhirDecimal _PrismElement;
-            
-            /// <summary>
-            /// Lens prism
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? Prism
-            {
-                get { return PrismElement != null ? PrismElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        PrismElement = null; 
-                    else
-                        PrismElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("Prism");
-                }
-            }
-            
-            /// <summary>
-            /// up | down | in | out
-            /// </summary>
-            [FhirElement("base", Order=100)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
-            {
-                get { return _BaseElement; }
-                set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> _BaseElement;
-            
-            /// <summary>
-            /// up | down | in | out
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
-            {
-                get { return BaseElement != null ? BaseElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        BaseElement = null; 
-                    else
-                        BaseElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
-                    OnPropertyChanged("Base");
-                }
-            }
+            private List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> _Prism;
             
             /// <summary>
             /// Lens add
             /// </summary>
-            [FhirElement("add", Order=110)]
+            [FhirElement("add", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal AddElement
             {
@@ -356,7 +306,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact lens power
             /// </summary>
-            [FhirElement("power", Order=120)]
+            [FhirElement("power", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PowerElement
             {
@@ -388,7 +338,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact lens back curvature
             /// </summary>
-            [FhirElement("backCurve", Order=130)]
+            [FhirElement("backCurve", Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal BackCurveElement
             {
@@ -420,7 +370,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact lens diameter
             /// </summary>
-            [FhirElement("diameter", Order=140)]
+            [FhirElement("diameter", Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DiameterElement
             {
@@ -452,7 +402,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Lens wear duration
             /// </summary>
-            [FhirElement("duration", Order=150)]
+            [FhirElement("duration", Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Duration
             {
@@ -465,7 +415,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Color required
             /// </summary>
-            [FhirElement("color", Order=160)]
+            [FhirElement("color", Order=150)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ColorElement
             {
@@ -497,7 +447,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Brand required
             /// </summary>
-            [FhirElement("brand", Order=170)]
+            [FhirElement("brand", Order=160)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BrandElement
             {
@@ -529,7 +479,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Notes for coatings
             /// </summary>
-            [FhirElement("note", Order=180)]
+            [FhirElement("note", Order=170)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Annotation> Note
@@ -552,8 +502,7 @@ namespace Hl7.Fhir.Model
                     if(SphereElement != null) dest.SphereElement = (Hl7.Fhir.Model.FhirDecimal)SphereElement.DeepCopy();
                     if(CylinderElement != null) dest.CylinderElement = (Hl7.Fhir.Model.FhirDecimal)CylinderElement.DeepCopy();
                     if(AxisElement != null) dest.AxisElement = (Hl7.Fhir.Model.Integer)AxisElement.DeepCopy();
-                    if(PrismElement != null) dest.PrismElement = (Hl7.Fhir.Model.FhirDecimal)PrismElement.DeepCopy();
-                    if(BaseElement != null) dest.BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>)BaseElement.DeepCopy();
+                    if(Prism != null) dest.Prism = new List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>(Prism.DeepCopy());
                     if(AddElement != null) dest.AddElement = (Hl7.Fhir.Model.FhirDecimal)AddElement.DeepCopy();
                     if(PowerElement != null) dest.PowerElement = (Hl7.Fhir.Model.FhirDecimal)PowerElement.DeepCopy();
                     if(BackCurveElement != null) dest.BackCurveElement = (Hl7.Fhir.Model.FhirDecimal)BackCurveElement.DeepCopy();
@@ -584,8 +533,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(SphereElement, otherT.SphereElement)) return false;
                 if( !DeepComparable.Matches(CylinderElement, otherT.CylinderElement)) return false;
                 if( !DeepComparable.Matches(AxisElement, otherT.AxisElement)) return false;
-                if( !DeepComparable.Matches(PrismElement, otherT.PrismElement)) return false;
-                if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
+                if( !DeepComparable.Matches(Prism, otherT.Prism)) return false;
                 if( !DeepComparable.Matches(AddElement, otherT.AddElement)) return false;
                 if( !DeepComparable.Matches(PowerElement, otherT.PowerElement)) return false;
                 if( !DeepComparable.Matches(BackCurveElement, otherT.BackCurveElement)) return false;
@@ -609,8 +557,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SphereElement, otherT.SphereElement)) return false;
                 if( !DeepComparable.IsExactly(CylinderElement, otherT.CylinderElement)) return false;
                 if( !DeepComparable.IsExactly(AxisElement, otherT.AxisElement)) return false;
-                if( !DeepComparable.IsExactly(PrismElement, otherT.PrismElement)) return false;
-                if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
+                if( !DeepComparable.IsExactly(Prism, otherT.Prism)) return false;
                 if( !DeepComparable.IsExactly(AddElement, otherT.AddElement)) return false;
                 if( !DeepComparable.IsExactly(PowerElement, otherT.PowerElement)) return false;
                 if( !DeepComparable.IsExactly(BackCurveElement, otherT.BackCurveElement)) return false;
@@ -635,8 +582,7 @@ namespace Hl7.Fhir.Model
                     if (SphereElement != null) yield return SphereElement;
                     if (CylinderElement != null) yield return CylinderElement;
                     if (AxisElement != null) yield return AxisElement;
-                    if (PrismElement != null) yield return PrismElement;
-                    if (BaseElement != null) yield return BaseElement;
+                    foreach (var elem in Prism) { if (elem != null) yield return elem; }
                     if (AddElement != null) yield return AddElement;
                     if (PowerElement != null) yield return PowerElement;
                     if (BackCurveElement != null) yield return BackCurveElement;
@@ -659,8 +605,7 @@ namespace Hl7.Fhir.Model
                     if (SphereElement != null) yield return new ElementValue("sphere", false, SphereElement);
                     if (CylinderElement != null) yield return new ElementValue("cylinder", false, CylinderElement);
                     if (AxisElement != null) yield return new ElementValue("axis", false, AxisElement);
-                    if (PrismElement != null) yield return new ElementValue("prism", false, PrismElement);
-                    if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
+                    foreach (var elem in Prism) { if (elem != null) yield return new ElementValue("prism", true, elem); }
                     if (AddElement != null) yield return new ElementValue("add", false, AddElement);
                     if (PowerElement != null) yield return new ElementValue("power", false, PowerElement);
                     if (BackCurveElement != null) yield return new ElementValue("backCurve", false, BackCurveElement);
@@ -669,6 +614,150 @@ namespace Hl7.Fhir.Model
                     if (ColorElement != null) yield return new ElementValue("color", false, ColorElement);
                     if (BrandElement != null) yield return new ElementValue("brand", false, BrandElement);
                     foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("PrismComponent")]
+        [DataContract]
+        public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PrismComponent"; } }
+            
+            /// <summary>
+            /// Amount of adjustment
+            /// </summary>
+            [FhirElement("amount", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal AmountElement
+            {
+                get { return _AmountElement; }
+                set { _AmountElement = value; OnPropertyChanged("AmountElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _AmountElement;
+            
+            /// <summary>
+            /// Amount of adjustment
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? Amount
+            {
+                get { return AmountElement != null ? AmountElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        AmountElement = null; 
+                    else
+                        AmountElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("Amount");
+                }
+            }
+            
+            /// <summary>
+            /// up | down | in | out
+            /// </summary>
+            [FhirElement("base", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
+            {
+                get { return _BaseElement; }
+                set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> _BaseElement;
+            
+            /// <summary>
+            /// up | down | in | out
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
+            {
+                get { return BaseElement != null ? BaseElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        BaseElement = null; 
+                    else
+                        BaseElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
+                    OnPropertyChanged("Base");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PrismComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(AmountElement != null) dest.AmountElement = (Hl7.Fhir.Model.FhirDecimal)AmountElement.DeepCopy();
+                    if(BaseElement != null) dest.BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>)BaseElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PrismComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PrismComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(AmountElement, otherT.AmountElement)) return false;
+                if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PrismComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(AmountElement, otherT.AmountElement)) return false;
+                if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (AmountElement != null) yield return AmountElement;
+                    if (BaseElement != null) yield return BaseElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (AmountElement != null) yield return new ElementValue("amount", false, AmountElement);
+                    if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
                 }
             }
 
@@ -789,7 +878,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("prescriber", Order=140)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescriber
         {

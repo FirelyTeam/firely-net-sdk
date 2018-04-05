@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "kind != 'root' or uniqueId.type = 'uuid'",
+            Expression = "kind != 'root' or uniqueId.all(type != 'uuid')",
             Key = "nsd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Root systems cannot have uuid identifiers",

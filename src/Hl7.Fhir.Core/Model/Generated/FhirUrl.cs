@@ -42,20 +42,38 @@ using Hl7.Fhir.Utility;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An amount of economic utility in some recognized currency
+    /// Primitive Type url
     /// </summary>
-    [FhirType("Money")]
-    public partial class Money : Quantity
+    [FhirType("url")]
+    [DataContract]
+    public partial class FhirUrl : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "Money"; } }
+        public override string TypeName { get { return "url"; } }
         
-        public override IDeepCopyable DeepCopy()
+        // Must conform to the pattern "\S*"
+        public const string PATTERN = @"\S*";
+
+		public FhirUrl(string value)
+		{
+			Value = value;
+		}
+
+		public FhirUrl(): this((string)null) {}
+
+        /// <summary>
+        /// Primitive value of the element
+        /// </summary>
+        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
+        [DataMember]
+        public string Value
         {
-            return CopyTo(new Money());
+            get { return (string)ObjectValue; }
+            set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
         
-        // TODO: Add code to enforce these constraints:
-        // * An amount of economic utility in some recognized currency.
+
+    
     }
+    
 }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -142,13 +142,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("endpoint", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri EndpointElement
+            public Hl7.Fhir.Model.FhirUrl EndpointElement
             {
                 get { return _EndpointElement; }
                 set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _EndpointElement;
+            private Hl7.Fhir.Model.FhirUrl _EndpointElement;
             
             /// <summary>
             /// Actual destination address or id
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         EndpointElement = null; 
                     else
-                        EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                        EndpointElement = new Hl7.Fhir.Model.FhirUrl(value);
                     OnPropertyChanged("Endpoint");
                 }
             }
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
-                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
+                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)EndpointElement.DeepCopy();
                     if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
                     return dest;
                 }
@@ -387,13 +387,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("endpoint", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri EndpointElement
+            public Hl7.Fhir.Model.FhirUrl EndpointElement
             {
                 get { return _EndpointElement; }
                 set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _EndpointElement;
+            private Hl7.Fhir.Model.FhirUrl _EndpointElement;
             
             /// <summary>
             /// Actual message source address or id
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         EndpointElement = null; 
                     else
-                        EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                        EndpointElement = new Hl7.Fhir.Model.FhirUrl(value);
                     OnPropertyChanged("Endpoint");
                 }
             }
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
                     if(SoftwareElement != null) dest.SoftwareElement = (Hl7.Fhir.Model.FhirString)SoftwareElement.DeepCopy();
                     if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                     if(Contact != null) dest.Contact = (Hl7.Fhir.Model.ContactPoint)Contact.DeepCopy();
-                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
+                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)EndpointElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -665,18 +665,20 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Code for the event this message represents
+        /// Code for the event this message represents or link to event definition
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=90)]
+        [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Event
+        public Hl7.Fhir.Model.Element Event
         {
             get { return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         
-        private Hl7.Fhir.Model.Coding _Event;
+        private Hl7.Fhir.Model.Element _Event;
         
         /// <summary>
         /// Message destination application(s)
@@ -813,13 +815,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("definition", InSummary=true, Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri DefinitionElement
+        public Hl7.Fhir.Model.Canonical DefinitionElement
         {
             get { return _DefinitionElement; }
             set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _DefinitionElement;
+        private Hl7.Fhir.Model.Canonical _DefinitionElement;
         
         /// <summary>
         /// Link to the definition for this message
@@ -835,7 +837,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   DefinitionElement = null; 
                 else
-                  DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+                  DefinitionElement = new Hl7.Fhir.Model.Canonical(value);
                 OnPropertyChanged("Definition");
             }
         }
@@ -854,7 +856,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
+                if(Event != null) dest.Event = (Hl7.Fhir.Model.Element)Event.DeepCopy();
                 if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(Destination.DeepCopy());
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
@@ -864,7 +866,7 @@ namespace Hl7.Fhir.Model
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
                 if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.ResponseComponent)Response.DeepCopy();
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
-                if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)DefinitionElement.DeepCopy();
+                if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.Canonical)DefinitionElement.DeepCopy();
                 return dest;
             }
             else

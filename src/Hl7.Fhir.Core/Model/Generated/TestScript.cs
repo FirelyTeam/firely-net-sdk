@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.2.0
+// Generated for FHIR v3.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "TestScript"; } }
         
         /// <summary>
-        /// Either a resource or a data type.
+        /// A list of all the concrete types defined in this version of the FHIR specification - Data Types and Resource Types
         /// (url: http://hl7.org/fhir/ValueSet/defined-types)
         /// </summary>
         [FhirEnumeration("FHIRDefinedType")]
@@ -324,6 +324,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
+            [EnumLiteral("canonical", "http://hl7.org/fhir/data-types"), Description("canonical")]
+            Canonical,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
             [EnumLiteral("code", "http://hl7.org/fhir/data-types"), Description("code")]
             Code,
             /// <summary>
@@ -404,6 +410,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("uri", "http://hl7.org/fhir/data-types"), Description("uri")]
             Uri,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("url", "http://hl7.org/fhir/data-types"), Description("url")]
+            Url,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -798,18 +810,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ImplementationGuideInput", "http://hl7.org/fhir/resource-types"), Description("ImplementationGuideInput")]
-            ImplementationGuideInput,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("ImplementationGuideOutput", "http://hl7.org/fhir/resource-types"), Description("ImplementationGuideOutput")]
-            ImplementationGuideOutput,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("Invoice", "http://hl7.org/fhir/resource-types"), Description("Invoice")]
             Invoice,
             /// <summary>
@@ -1142,12 +1142,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Sequence", "http://hl7.org/fhir/resource-types"), Description("Sequence")]
             Sequence,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("ServiceDefinition", "http://hl7.org/fhir/resource-types"), Description("ServiceDefinition")]
-            ServiceDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -2008,6 +2002,7 @@ namespace Hl7.Fhir.Model
             /// Are the capabilities required?
             /// </summary>
             [FhirElement("required", Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -2040,6 +2035,7 @@ namespace Hl7.Fhir.Model
             /// Are the capabilities validated?
             /// </summary>
             [FhirElement("validated", Order=50)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ValidatedElement
             {
@@ -2202,17 +2198,34 @@ namespace Hl7.Fhir.Model
             /// Required Capability Statement
             /// </summary>
             [FhirElement("capabilities", Order=100)]
-            [CLSCompliant(false)]
-			[References("CapabilityStatement")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Capabilities
+            public Hl7.Fhir.Model.Canonical CapabilitiesElement
             {
-                get { return _Capabilities; }
-                set { _Capabilities = value; OnPropertyChanged("Capabilities"); }
+                get { return _CapabilitiesElement; }
+                set { _CapabilitiesElement = value; OnPropertyChanged("CapabilitiesElement"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Capabilities;
+            private Hl7.Fhir.Model.Canonical _CapabilitiesElement;
+            
+            /// <summary>
+            /// Required Capability Statement
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Capabilities
+            {
+                get { return CapabilitiesElement != null ? CapabilitiesElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        CapabilitiesElement = null; 
+                    else
+                        CapabilitiesElement = new Hl7.Fhir.Model.Canonical(value);
+                    OnPropertyChanged("Capabilities");
+                }
+            }
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -2227,7 +2240,7 @@ namespace Hl7.Fhir.Model
                     if(OriginElement != null) dest.OriginElement = new List<Hl7.Fhir.Model.Integer>(OriginElement.DeepCopy());
                     if(DestinationElement != null) dest.DestinationElement = (Hl7.Fhir.Model.Integer)DestinationElement.DeepCopy();
                     if(LinkElement != null) dest.LinkElement = new List<Hl7.Fhir.Model.FhirUri>(LinkElement.DeepCopy());
-                    if(Capabilities != null) dest.Capabilities = (Hl7.Fhir.Model.ResourceReference)Capabilities.DeepCopy();
+                    if(CapabilitiesElement != null) dest.CapabilitiesElement = (Hl7.Fhir.Model.Canonical)CapabilitiesElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -2251,7 +2264,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.Matches(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.Matches(LinkElement, otherT.LinkElement)) return false;
-                if( !DeepComparable.Matches(Capabilities, otherT.Capabilities)) return false;
+                if( !DeepComparable.Matches(CapabilitiesElement, otherT.CapabilitiesElement)) return false;
                 
                 return true;
             }
@@ -2268,7 +2281,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.IsExactly(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.IsExactly(LinkElement, otherT.LinkElement)) return false;
-                if( !DeepComparable.IsExactly(Capabilities, otherT.Capabilities)) return false;
+                if( !DeepComparable.IsExactly(CapabilitiesElement, otherT.CapabilitiesElement)) return false;
                 
                 return true;
             }
@@ -2286,7 +2299,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in OriginElement) { if (elem != null) yield return elem; }
                     if (DestinationElement != null) yield return DestinationElement;
                     foreach (var elem in LinkElement) { if (elem != null) yield return elem; }
-                    if (Capabilities != null) yield return Capabilities;
+                    if (CapabilitiesElement != null) yield return CapabilitiesElement;
                 }
             }
 
@@ -2302,7 +2315,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in OriginElement) { if (elem != null) yield return new ElementValue("origin", true, elem); }
                     if (DestinationElement != null) yield return new ElementValue("destination", false, DestinationElement);
                     foreach (var elem in LinkElement) { if (elem != null) yield return new ElementValue("link", true, elem); }
-                    if (Capabilities != null) yield return new ElementValue("capabilities", false, Capabilities);
+                    if (CapabilitiesElement != null) yield return new ElementValue("capabilities", false, CapabilitiesElement);
                 }
             }
 
@@ -2321,6 +2334,7 @@ namespace Hl7.Fhir.Model
             /// Whether or not to implicitly create the fixture during setup
             /// </summary>
             [FhirElement("autocreate", Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean AutocreateElement
             {
@@ -2353,6 +2367,7 @@ namespace Hl7.Fhir.Model
             /// Whether or not to implicitly delete the fixture during teardown
             /// </summary>
             [FhirElement("autodelete", Order=50)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean AutodeleteElement
             {
@@ -2577,7 +2592,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The fluentpath expression against the fixture body
+            /// The FHIRPath expression against the fixture body
             /// </summary>
             [FhirElement("expression", Order=70)]
             [DataMember]
@@ -2590,7 +2605,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ExpressionElement;
             
             /// <summary>
-            /// The fluentpath expression against the fixture body
+            /// The FHIRPath expression against the fixture body
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -3871,6 +3886,7 @@ namespace Hl7.Fhir.Model
             /// Whether or not to send the request url in encoded format
             /// </summary>
             [FhirElement("encodeRequestUrl", Order=110)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean EncodeRequestUrlElement
             {
@@ -4558,7 +4574,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The fluentpath expression to evaluate against the source fixture
+            /// The FHIRPath expression to evaluate against the source fixture
             /// </summary>
             [FhirElement("compareToSourceExpression", Order=80)]
             [DataMember]
@@ -4571,7 +4587,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _CompareToSourceExpressionElement;
             
             /// <summary>
-            /// The fluentpath expression to evaluate against the source fixture
+            /// The FHIRPath expression to evaluate against the source fixture
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -4654,7 +4670,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The fluentpath expression to be evaluated
+            /// The FHIRPath expression to be evaluated
             /// </summary>
             [FhirElement("expression", Order=110)]
             [DataMember]
@@ -4667,7 +4683,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ExpressionElement;
             
             /// <summary>
-            /// The fluentpath expression to be evaluated
+            /// The FHIRPath expression to be evaluated
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -5131,6 +5147,7 @@ namespace Hl7.Fhir.Model
             /// Will this assert produce a warning only on error?
             /// </summary>
             [FhirElement("warningOnly", Order=270)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean WarningOnlyElement
             {
@@ -6443,7 +6460,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical URI to reference this test script (globally unique)
+        /// Canonical identifier for this test script, represented as a URI (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -6457,7 +6474,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URI to reference this test script (globally unique)
+        /// Canonical identifier for this test script, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -6651,7 +6668,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         [FhirElement("date", InSummary=true, Order=160)]
         [DataMember]
@@ -6664,7 +6681,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date this was last changed
+        /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -6742,7 +6759,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Context the content is intended to support
+        /// The context that the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
