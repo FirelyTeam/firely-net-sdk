@@ -143,6 +143,28 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
+        bool SkipFile(string file)
+        {
+            if (file.Contains(".profile"))
+                return true;
+            if (file.Contains(".schema"))
+                return true;
+            if (file.Contains(".diff"))
+                return true;
+            if (file.EndsWith("package.json"))
+                return true;
+            if (file.Contains("plandefinition-example-cardiology-os"))
+                return true; // this example has some issues to say the least
+            if (file.Contains("examplescenario-example"))
+                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
+            if (file.Contains("medicationadministration0306"))
+                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
+            if (file.Contains("medicationadministration0307"))
+                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
+            if (file.Contains("medicationadministration0309"))
+                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
+            return false;
+        }
 
         private void convertFiles(string inputPath, string outputPath)
         {
@@ -151,11 +173,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             foreach (string file in files)
             {
-                if (file.Contains(".profile"))
-                    continue;
-                if (file.Contains(".schema"))
-                    continue;
-                if (file.Contains(".diff"))
+                if (SkipFile(file))
                     continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string ext = Path.GetExtension(file);
@@ -170,10 +188,7 @@ namespace Hl7.Fhir.Tests.Serialization
 #endif
                 if (file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets."))
                     continue;
-                if (!isFeed(file))
-                    convertResource(file, outputFile);
-                else
-                    convertFeed(file, outputFile);
+                convertResource(file, outputFile);
             }
 
             Debug.WriteLine("Done!");
@@ -186,11 +201,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             foreach (string file in files)
             {
-                if (file.Contains(".profile"))
-                    continue;
-                if (file.Contains(".schema"))
-                    continue;
-                if (file.Contains(".diff"))
+                if (SkipFile(file))
                     continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string extension = Path.GetExtension(file);
@@ -224,24 +235,6 @@ namespace Hl7.Fhir.Tests.Serialization
             }
         }
 
-        private bool isFeed(string filename)
-        {
-            var buffer = new char[250];
-
-
-            using (var reader = new StreamReader(new FileStream(filename, FileMode.Open)))
-            {
-                reader.Read(buffer, 0, buffer.Length);
-                var data = new String(buffer);
-
-                if (data.Contains("<feed")) return true;
-                if (data.Contains("resourceType") && data.Contains("Bundle") && !data.Contains("NewBundle")) return true;
-
-                return false;
-            }
-        }
-
-
         private void convertResource(string inputFile, string outputFile)
         {
             //TODO: call validation after reading
@@ -257,27 +250,6 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.IsTrue(resource.IsExactly(r2 as Resource), "Serialization of " + inputFile + " did not match output - IsExactly test");
                 Assert.IsFalse(resource.Matches(null), "Serialization of " + inputFile + " matched null - Matches test");
                 Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
-
-                var json = new FhirJsonSerializer().SerializeToString(resource);
-                File.WriteAllText(outputFile, json);
-            }
-            else
-            {
-                var json = File.ReadAllText(inputFile);
-                var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = new FhirXmlSerializer().SerializeToString(resource);
-                File.WriteAllText(outputFile, xml);
-            }
-        }
-
-        private void convertFeed(string inputFile, string outputFile)
-        {
-            //TODO: call validation after reading
-
-            if (inputFile.EndsWith(".xml"))
-            {
-                var xml = File.ReadAllText(inputFile);
-                var resource = new FhirXmlParser().Parse<Resource>(xml);
 
                 var json = new FhirJsonSerializer().SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
