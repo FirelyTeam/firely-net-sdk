@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    [Obsolete]
+    // [Obsolete]
     public partial class FhirClient : BaseFhirClient
     {
         /// <summary>
@@ -90,13 +90,13 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Called just before the Http call is done
         /// </summary>
-        [Obsolete]
+        //[Obsolete]
         public override event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         /// <summary>
         /// Called just after the response was received
         /// </summary>
-        [Obsolete]
+        //[Obsolete]
         public override event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
         /// <summary>

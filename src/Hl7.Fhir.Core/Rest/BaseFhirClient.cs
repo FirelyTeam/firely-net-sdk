@@ -12,10 +12,10 @@ namespace Hl7.Fhir.Rest
 {
     public abstract partial class BaseFhirClient : IDisposable, IFhirClient
     {
-        [Obsolete]
+        // [Obsolete]
         public abstract event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
-        [Obsolete]
+        // [Obsolete]
         public abstract event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         protected IRequester Requester { get; set; }
