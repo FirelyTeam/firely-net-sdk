@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Test
             var tx = new TransactionBuilder("http://myserver.org/fhir")
                         .Create(p);
             var b = tx.ToBundle();
-            byte[] dummy;
+            // byte[] dummy;
 
             var request = b.Entry[0].ToHttpRequestMessage(SearchParameterHandling.Lenient, Prefer.ReturnMinimal, ResourceFormat.Json, false, false);
             Assert.AreEqual("return=minimal", request.Headers.GetValues("Prefer").FirstOrDefault());
