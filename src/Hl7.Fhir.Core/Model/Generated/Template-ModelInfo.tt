@@ -291,6 +291,8 @@ namespace Hl7.Fhir.Model
 				case "oid" : return "Hl7.Fhir.Model.Oid";
 				case "Annotation" : return "Hl7.Fhir.Model.Annotation";
 				case "uri" : return "Hl7.Fhir.Model.FhirUri";
+				case "url" : return "Hl7.Fhir.Model.FhirUrl";
+				case "canonical" : return "Hl7.Fhir.Model.Canonical";
 				case "uuid" : return "Hl7.Fhir.Model.Uuid";
 				case "boolean" : return "Hl7.Fhir.Model.FhirBoolean"; 
 				case "dateTime" : return "Hl7.Fhir.Model.FhirDateTime"; 

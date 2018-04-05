@@ -55,13 +55,13 @@
 
 			// Check to see if this is used in more than one resource
 			var nodes = docRealResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsR);
 			var nodesTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsT);
 			var nodePaths = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]", nsR);
 			var nodePathTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]", nsT);
 			if (nodes.Count + nodesTypes.Count > 1)
 			{
 				enums.Add(valuesetUrl, "Hl7.Fhir.Model." + enumName);
@@ -83,7 +83,7 @@
 	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Address' or fhir:id/@value = 'Coding' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment']", nsR))
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown']", nsR))
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/BackboneElement' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown' or fhir:id/@value = 'url' or fhir:id/@value = 'canonical']", nsR))
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -102,6 +102,14 @@
 			}
 			else if (resourceName == "uri") {
 				resourceName = "FhirUri";
+				primitiveTypeName = "string";
+			}
+			else if (resourceName == "url") {
+				resourceName = "FhirUrl";
+				primitiveTypeName = "string";
+			}
+			else if (resourceName == "canonical") {
+				resourceName = "Canonical";
 				primitiveTypeName = "string";
 			}
 			else if (resourceName == "narrative") {
@@ -174,7 +182,11 @@
             {
 				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
 				resourceBaseType = definedBaseType;
-				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
+				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/BackboneElement")
+                {
+						resourceBaseType = "Hl7.Fhir.Model.BackboneElement";
+                }
+				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
                 {
 					if (rawResourceName.Substring(0,1).ToLower() == rawResourceName.Substring(0,1))
                     {
@@ -256,7 +268,7 @@ if (!abstractType){
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>        [NotMapped]
+<# if (resourceBaseType != "Hl7.Fhir.Model.BackboneElement" && resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
 <# } #>        [NotMapped]
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
@@ -285,6 +297,7 @@ if (!abstractType){
 	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
 		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant" 
 		&& resourceName != "FhirString" && resourceName != "Markdown" && resourceName != "Base64Binary"
+		&& resourceName != "FhirUrl" && resourceName != "Canonical"
 		|| resourceName == "FhirUri")
     {
 		WriteLine("        [{0}Pattern]", resourceName.Replace("Fhir", ""));
@@ -315,7 +328,7 @@ if (!abstractType){
 						// WriteLine("//		VSU: " + n3.Value);
 						valuesetUrl = n3.Value;
                     }
-					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetReference/fhir:reference/@value", nsR);
+					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetCanonical/@value", nsR);
 					if (n4 != null)
                     {
 						// WriteLine("//		VSR: " + n4.Value);
@@ -875,6 +888,9 @@ if (!abstractType){
 				case "oid" : return "Hl7.Fhir.Model.Oid";
 				case "Annotation" : return "Hl7.Fhir.Model.Annotation";
 				case "uri" : return "Hl7.Fhir.Model.FhirUri";
+				case "url" : return "Hl7.Fhir.Model.FhirUrl";
+				case "uuid" : return "Hl7.Fhir.Model.Uuid";
+				case "canonical" : return "Hl7.Fhir.Model.Canonical";
 				case "boolean" : return "Hl7.Fhir.Model.FhirBoolean"; 
 				case "dateTime" : return "Hl7.Fhir.Model.FhirDateTime"; 
 				case "date" : return "Hl7.Fhir.Model.Date"; 
@@ -988,7 +1004,7 @@ if (!abstractType){
 			if (element.SelectSingleNode("fhir:max/@value", nsR) != null)
 				result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
 
-			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary", "markdown" };
+			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "url", "canonical", "base64Binary", "markdown" };
 			if (NativeTypes.Contains(result.PropType))
             {
 				result.NativeName = result.Name;
@@ -1029,6 +1045,9 @@ if (!abstractType){
 				case "oid" : result.PropType = "Hl7.Fhir.Model.Oid";
 								result.NativeType = "string";
 								break;
+				case "uuid" : result.PropType = "Hl7.Fhir.Model.Uuid";
+								result.NativeType = "string";
+								break;
 				case "Attachment" : result.PropType = "Hl7.Fhir.Model.Attachment"; 
 								break;
 				case "integer" : result.PropType = "Hl7.Fhir.Model.Integer"; 
@@ -1046,6 +1065,12 @@ if (!abstractType){
 				case "Coding" : result.PropType = "Hl7.Fhir.Model.Coding";
 								break;
 				case "uri" : result.PropType = "Hl7.Fhir.Model.FhirUri"; 
+								result.NativeType = "string";
+								break;
+				case "url" : result.PropType = "Hl7.Fhir.Model.FhirUrl"; 
+								result.NativeType = "string";
+								break;
+				case "canonical" : result.PropType = "Hl7.Fhir.Model.Canonical"; 
 								result.NativeType = "string";
 								break;
 				case "base64Binary" : result.PropType = "Hl7.Fhir.Model.Base64Binary"; 
@@ -1151,8 +1176,8 @@ if (!abstractType){
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR).Value;
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -1246,7 +1271,7 @@ if (!abstractType){
 					result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + componentName.Value + "Component";
                 }
 			}
-			string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary" };
+			string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "canonical", "url", "base64Binary" };
 			if (NativeTypes.Contains(result.PropType))
             {
 				result.NativeType = result.PropType;
@@ -1308,7 +1333,16 @@ if (!abstractType){
 								break;
 				case "Coding" : result.PropType = "Hl7.Fhir.Model.Coding";
 								break;
+				case "uuid" : result.PropType = "Hl7.Fhir.Model.FhirUuid"; 
+								result.NativeType = "string";
+								break;
 				case "uri" : result.PropType = "Hl7.Fhir.Model.FhirUri"; 
+								result.NativeType = "string";
+								break;
+				case "url" : result.PropType = "Hl7.Fhir.Model.FhirUrl"; 
+								result.NativeType = "string";
+								break;
+				case "canonical" : result.PropType = "Hl7.Fhir.Model.Canonical"; 
 								result.NativeType = "string";
 								break;
 				case "base64Binary" : result.PropType = "Hl7.Fhir.Model.Base64Binary"; 
@@ -1385,8 +1419,8 @@ if (!abstractType){
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR).Value;
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))

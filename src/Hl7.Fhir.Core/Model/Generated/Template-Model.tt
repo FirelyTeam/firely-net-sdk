@@ -51,13 +51,13 @@
 
 			// Check to see if this is used in more than one resource
 			var nodes = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsR);
 			var nodesTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsT);
 			var nodePaths = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]", nsR);
 			var nodePathTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]", nsT);
 			if (nodes.Count + nodesTypes.Count > 1)
 			{
 				enums.Add(valuesetUrl, "Hl7.Fhir.Model." + enumName);
@@ -193,7 +193,7 @@ if(!abstractType) {
 						// WriteLine("//		VSU: " + n3.Value);
 						valuesetUrl = n3.Value;
                     }
-					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetReference/fhir:reference/@value", nsR);
+					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetCanonical/@value", nsR);
 					if (n4 != null)
                     {
 						// WriteLine("//		VSR: " + n4.Value);
@@ -310,7 +310,7 @@ if(!abstractType) {
 		nComponentPropNum += 10;
 #>
             /// <summary>
-            /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n            /// ") #>
+            /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n            /// ") #>
             /// </summary>
             [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference" && pd.ReferenceTargets != null) {#>
@@ -342,7 +342,7 @@ if(!abstractType) {
 			{
 #>
             /// <summary>
-            /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+            /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
@@ -482,7 +482,7 @@ if(!abstractType) {
 		nPropNum += 10;
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
@@ -514,7 +514,7 @@ if(!abstractType) {
         {
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
@@ -702,6 +702,8 @@ if(!abstractType) {
 			name = name.Substring(1);
 		if (name == "=")
 			return "Equal";
+		if (name == "!=")
+			return "NotEqual";
 		if (name == "<")
 			return "LessThan";
 		if (name == "<=")
@@ -774,7 +776,10 @@ if(!abstractType) {
 				case "Timing" : return "Hl7.Fhir.Model.Timing"; 
 				case "oid" : return "Hl7.Fhir.Model.Oid";
 				case "Annotation" : return "Hl7.Fhir.Model.Annotation";
+				case "uuid" : return "Hl7.Fhir.Model.Uuid";
 				case "uri" : return "Hl7.Fhir.Model.FhirUri";
+				case "url" : return "Hl7.Fhir.Model.FhirUrl";
+				case "canonical" : return "Hl7.Fhir.Model.Canonical";
 				case "boolean" : return "Hl7.Fhir.Model.FhirBoolean"; 
 				case "dateTime" : return "Hl7.Fhir.Model.FhirDateTime"; 
 				case "date" : return "Hl7.Fhir.Model.Date"; 
@@ -951,6 +956,15 @@ if(!abstractType) {
 				case "uri" : result.PropType = "Hl7.Fhir.Model.FhirUri"; 
 								result.NativeType = "string";
 								break;
+				case "url" : result.PropType = "Hl7.Fhir.Model.FhirUrl"; 
+								result.NativeType = "string";
+								break;
+				case "uuid" : result.PropType = "Hl7.Fhir.Model.UUid"; 
+								result.NativeType = "string";
+								break;
+				case "canonical" : result.PropType = "Hl7.Fhir.Model.Canonical"; 
+								result.NativeType = "string";
+								break;
 				case "base64Binary" : result.PropType = "Hl7.Fhir.Model.Base64Binary"; 
 								result.NativeType = "byte[]";
 								break;
@@ -1052,8 +1066,8 @@ if(!abstractType) {
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR).Value;
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -1210,6 +1224,12 @@ if(!abstractType) {
 				case "uri" : result.PropType = "Hl7.Fhir.Model.FhirUri"; 
 								result.NativeType = "string";
 								break;
+				case "url" : result.PropType = "Hl7.Fhir.Model.FhirUrl"; 
+								result.NativeType = "string";
+								break;
+				case "canonical" : result.PropType = "Hl7.Fhir.Model.Canonical"; 
+								result.NativeType = "string";
+								break;
 				case "base64Binary" : result.PropType = "Hl7.Fhir.Model.Base64Binary"; 
 								result.NativeType = "byte[]";
 								break;
@@ -1285,8 +1305,8 @@ if(!abstractType) {
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR).Value;
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))

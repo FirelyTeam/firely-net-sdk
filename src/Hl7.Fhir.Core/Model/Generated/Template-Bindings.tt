@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
 						// WriteLine("//		VSU: " + n3.Value);
 						valuesetUrl = n3.Value;
                     }
-					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetReference/fhir:reference/@value", nsR);
+					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetCanonical/@value", nsR);
 					if (n4 != null)
                     {
 						// WriteLine("//		VSR: " + n4.Value);
@@ -112,9 +112,9 @@ namespace Hl7.Fhir.Model
                     }
 
 					var nodes = docResources.DocumentElement.SelectNodes(
-						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsR);
+						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsR);
 					var nodesTypes = docTypes.DocumentElement.SelectNodes(
-						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsT);
+						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsT);
 					if (nodes.Count + nodesTypes.Count < 2)
 						continue;
 
@@ -194,6 +194,8 @@ namespace Hl7.Fhir.Model
 			name = name.Substring(1);
 		if (name == "=")
 			return "Equal";
+		if (name == "!=")
+			return "NotEqual";
 		if (name == "<")
 			return "LessThan";
 		if (name == "<=")
