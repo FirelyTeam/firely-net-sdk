@@ -80,7 +80,7 @@
     }
 
 	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:derivation/@value = 'specialization' and fhir:kind:@value = 'complex-type']", nsR))
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:derivation/@value = 'constraint' and fhir:kind/@value = 'complex-type']", nsR))
     {
 		if (e is System.Xml.XmlElement)
         {
