@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Rest.Http
         /// <summary>
         /// Converts bundle http verb to corresponding <see cref="HttpMethod"/>.
         /// </summary>
-        /// <param name="verb"><see cref="Bundle.HttpVerb"/> specified by input bundle.</param>
+        /// <param name="verb"><see cref="Bundle.HTTPVerb"/> specified by input bundle.</param>
         /// <returns><see cref="HttpMethod"/> corresponding to verb specified in input bundle.</returns>
         private static HttpMethod getMethod(Bundle.HTTPVerb? verb)
         {
