@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                     TypeElement = null;
                 else
-                    TypeElement = new Hl7.Fhir.Model.Code(value);
+                    TypeElement = new Hl7.Fhir.Model.FhirUri(value);
                 OnPropertyChanged("Type");
             }
         }

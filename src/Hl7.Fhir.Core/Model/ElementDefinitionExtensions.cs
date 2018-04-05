@@ -58,10 +58,15 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, string profile = null)
         {
-            if (type == FHIRAllTypes.Reference) throw Error.InvalidOperation("Use OfReference/OrReference instead of OfType/OrType for references");
+            if (type == FHIRAllTypes.Reference)
+                throw Error.InvalidOperation("Use OfReference/OrReference instead of OfType/OrType for references");
 
             var newType = new ElementDefinition.TypeRefComponent { Code = type.GetLiteral() };
-            if (profile != null) newType.Profile = profile;
+            if (profile != null)
+            {
+                // TODO: BRIAN: Should this be TargetProfile for the reference?
+                newType.ProfileElement.Add(new Canonical(profile));
+            }
 
             ed.Type.Add(newType);
 
@@ -72,8 +77,10 @@ namespace Hl7.Fhir.Model
         {
             var newType = new ElementDefinition.TypeRefComponent { Code = FHIRAllTypes.Reference.GetLiteral() };
 
-            if (targetProfile != null) newType.TargetProfile = targetProfile;
-            if (profile != null) newType.Profile = profile;
+            if (targetProfile != null)
+                newType.TargetProfileElement.Add(new Canonical(targetProfile));
+            if (profile != null)
+                newType.ProfileElement.Add(new Canonical(profile));
             if (aggregation != null) newType.Aggregation = aggregation.Cast<ElementDefinition.AggregationMode?>();
 
             ed.Type.Add(newType);

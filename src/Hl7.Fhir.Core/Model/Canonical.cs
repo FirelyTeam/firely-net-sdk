@@ -25,44 +25,33 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
   
+
 */
 
+
 using System;
+using System.Reflection;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
+using Hl7.Fhir.Introspection;
+using System.Runtime.Serialization;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
-    // [WMR 20160803] Add common base interfaces
-    public interface IElementList : IModifierExtendable, INotifyPropertyChanged, IValidatableObject, IDeepCopyable, IDeepComparable
+#if NET45
+    [Serializable]
+#endif
+    [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    public partial class Canonical : IStringValue
     {
-        List<ElementDefinition> Element { get; set; }
-    }
-
-    // [WMR 20161005] Added specific debugger display attribute that includes the canonical url
-    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}} Url={Url}")]
-    public partial class StructureDefinition
-    {
-        public partial class SnapshotComponent : IElementList {}
-
-        public partial class DifferentialComponent : IElementList { }
-
-        [NotMapped]
-        public bool IsConstraint => Derivation == TypeDerivationRule.Constraint;
-
-        [NotMapped]
-        public bool IsExtension => Type == "Extension";
-
-        [NotMapped]
-        public bool HasSnapshot => Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
-
-        [NotMapped]
-        public bool IsCoreDefinition => Type == Id && Url == ModelInfo.CanonicalUriForFhirCoreType(Type).Value;
-
+        public static bool IsValidValue(string value)
+        {
+            return Regex.IsMatch(value, "^" + Canonical.PATTERN + "$", RegexOptions.Singleline);
+        }
     }
 }
-
-

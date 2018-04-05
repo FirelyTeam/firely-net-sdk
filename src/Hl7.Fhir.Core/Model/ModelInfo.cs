@@ -430,12 +430,12 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public static string CanonicalUriForFhirCoreType(string typename)
+        public static Canonical CanonicalUriForFhirCoreType(string typename)
         {
-            return "http://hl7.org/fhir/StructureDefinition/" + typename;
+            return new Canonical("http://hl7.org/fhir/StructureDefinition/" + typename);
         }
 
-        public static string CanonicalUriForFhirCoreType(FHIRAllTypes type)
+        public static Canonical CanonicalUriForFhirCoreType(FHIRAllTypes type)
         {
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
