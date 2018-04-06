@@ -71,9 +71,15 @@ namespace Hl7.Fhir.Model
             get { return (string)ObjectValue; }
             set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
-        
 
-    
+        public static implicit operator Canonical(string value)
+        {
+            return new Canonical(value);
+        }
+        public static implicit operator string(Canonical value)
+        {
+            return value?.Value;
+        }
     }
-    
+
 }
