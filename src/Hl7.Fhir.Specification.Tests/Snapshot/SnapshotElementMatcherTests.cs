@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Extension.GetLiteral(),
-                                    Profile = "http://example.org/fhir/StructureDefinition/myExtension"
+                                    Profile = new string[] { "http://example.org/fhir/StructureDefinition/myExtension" }
                                 }
                             }
                         }
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Extension.GetLiteral(),
-                                    Profile = "http://example.org/fhir/StructureDefinition/myExtension"
+                                    Profile = new string[] { "http://example.org/fhir/StructureDefinition/myExtension" }
                                 }
                             }
                         }
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Extension.GetLiteral(),
-                                    Profile = "http://example.org/fhir/StructureDefinition/myExtension"
+                                    Profile = new string[] { "http://example.org/fhir/StructureDefinition/myExtension" }
                                 }
                             }
                         }
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Specification.Tests
             var userProfile = (StructureDefinition)baseProfile.DeepCopy();
             // Define another extension slice in diff
             userProfile.Differential.Element.RemoveAt(1); // Remove extension slicing entry (not required)
-            userProfile.Differential.Element[1].Type[0].Profile = "http://example.org/fhir/StructureDefinition/myOtherExtension";
+            userProfile.Differential.Element[1].Type[0].Profile = new string[] { "http://example.org/fhir/StructureDefinition/myOtherExtension" };
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Extension.GetLiteral(),
-                                    Profile = "http://example.org/fhir/StructureDefinition/myExtension"
+                                    Profile = new string[] { "http://example.org/fhir/StructureDefinition/myExtension" }
                                 }
                             }
                         }
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Specification.Tests
             var userProfile = (StructureDefinition)baseProfile.DeepCopy();
             // Insert another extension slice before the existing extension
             var ext = (ElementDefinition)userProfile.Differential.Element[2].DeepCopy();
-            ext.Type[0].Profile = "http://example.org/fhir/StructureDefinition/myOtherExtension";
+            ext.Type[0].Profile = new string[] { "http://example.org/fhir/StructureDefinition/myOtherExtension" };
             userProfile.Differential.Element.Insert(2, ext);
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);

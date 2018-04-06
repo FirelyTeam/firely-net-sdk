@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (elemTypes.Count != 1) { return null; }
             var elemType = elemTypes.FirstOrDefault();
             if (elemType.Code != FHIRAllTypes.Extension.GetLiteral()) { return null; }
-            return elemType.Profile;
+            return elemType.Profile.FirstOrDefault();
         }
 
         /// <summary>Fixed default discriminator for slicing extension elements.</summary>

@@ -21,12 +21,14 @@ namespace Hl7.Fhir.Validation
 
         public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
         {
-            if (!System.String.IsNullOrEmpty(typeRef.Profile))
-                return typeRef.Profile;
-            else if (!string.IsNullOrEmpty(typeRef.Code))
+            // back to what DSTU2 had ;)
+            if (typeRef.ProfileElement.Any())
+            {
+                return typeRef.Profile.First();
+            }
+            if (!string.IsNullOrEmpty(typeRef.Code))
                 return ModelInfo.CanonicalUriForFhirCoreType(typeRef.Code);
-            else
-                return null;
+            return null;
         }
 
 

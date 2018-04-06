@@ -852,7 +852,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var primarySnapType = snap.Current.PrimaryType();
                 // if (primarySnapType == null) { return true; }
 
-                var primaryDiffTypeProfile = primaryDiffType.Profile;
+                var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
 
                 // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
                 // e.g. if the differential specifies explicit core type profile url
@@ -1584,7 +1584,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             bool isValidProfile = false;
 
             // First try to resolve the custom element type profile, if specified
-            var typeProfile = typeRef.Profile;
+            var typeProfile = typeRef.Profile.FirstOrDefault();
 
             // [WMR 20161004] Remove configuration setting; always merge type profiles
             if (!string.IsNullOrEmpty(typeProfile) && !typeRef.IsReference()) // && _settings.MergeTypeProfiles

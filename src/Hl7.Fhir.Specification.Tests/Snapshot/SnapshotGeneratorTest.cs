@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Specification.Tests
                         // Only expand extension elements with a custom name or profile
                         // Do NOT expand the core Extension.extension element, as this will trigger infinite recursion
                         typeName != FHIRAllTypes.Extension.GetLiteral()
-                        || !string.IsNullOrEmpty(type.Profile)
+                        || type.Profile.Any()
                         || element.SliceName != null
                    );
         }
@@ -786,7 +786,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(extensionType);
             Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), extensionType.Code);
             Assert.IsNotNull(extensionType.Profile);
-            var extDefUrl = extensionType.Profile;
+            var extDefUrl = extensionType.Profile.FirstOrDefault();
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyLocationExtension", extDefUrl);
             var ext = _testResolver.FindStructureDefinition(extDefUrl);
             Assert.IsNotNull(ext);
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var elemTypeCode = elemType.Code;
                 Assert.IsNotNull(elemTypeCode);
 
-                var elemProfile = elemType.Profile;
+                var elemProfile = elemType.Profile.FirstOrDefault();
                 var sdType = elemProfile != null && elemTypeCode != FHIRAllTypes.Reference.GetLiteral()
                     ? _testResolver.FindStructureDefinition(elemProfile)
                     : _testResolver.FindStructureDefinitionForCoreType(elemTypeCode);
@@ -1329,7 +1329,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static IEnumerable<string> enumerateDistinctTypeProfiles(IList<ElementDefinition> elements)
         {
-            return elements.SelectMany(e => e.Type).Select(t => t.Profile).Distinct();
+            return elements.SelectMany(e => e.Type).SelectMany(t => t.Profile).Distinct();
         }
 
         static string formatElementPathName(ElementDefinition elem)
@@ -1633,7 +1633,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Patient.identifier should reference an external type profile
             var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(elem);
-            var typeProfileUrl = elem.Type.FirstOrDefault().Profile;
+            var typeProfileUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
             Assert.IsNotNull(typeProfileUrl);
 
             var settings = new SnapshotGeneratorSettings(_settings);
@@ -1739,7 +1739,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Patient profile should reference an external extension definition, fetch the url
             var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.extension" && e.Slicing == null);
             Assert.IsNotNull(elem);
-            var extensionDefinitionUrl = elem.Type.FirstOrDefault().Profile;
+            var extensionDefinitionUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
             Assert.IsNotNull(extensionDefinitionUrl);
 
             var settings = new SnapshotGeneratorSettings(_settings);
@@ -3277,7 +3277,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 {
                                     Code = FHIRAllTypes.Extension.GetLiteral(),
                                     // INVALID - Map extension element to non-extension definition
-                                    Profile = sdLocation.Url
+                                    Profile = new string[] { sdLocation.Url }
                                 }
 
                             }
@@ -4730,8 +4730,8 @@ namespace Hl7.Fhir.Specification.Tests
             // constraints from extension profile MyPatientExtension
             var elem = sd.Snapshot.Element.FirstOrDefault(e => e.SliceName == "patientExtension");
             Assert.IsNotNull(elem);
-            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientExtension", elem.Type[0]?.Profile);
-            var sdExt = _testResolver.FindExtensionDefinition(elem.Type[0].Profile);
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientExtension", elem.Type[0]?.Profile.FirstOrDefault());
+            var sdExt = _testResolver.FindExtensionDefinition(elem.Type[0].Profile.FirstOrDefault());
             Assert.IsNotNull(sdExt);
             var extRootshort = sdExt.Differential.Element[0].Short; // Explicit constraint on ext root
             Assert.IsNotNull(extRootshort);
@@ -4746,8 +4746,8 @@ namespace Hl7.Fhir.Specification.Tests
             // constraints from element type profile MyPatientAddress
             elem = sd.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.address");
             Assert.IsNotNull(elem);
-            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientAddress", elem.Type[0]?.Profile);
-            var sdType = _testResolver.FindStructureDefinition(elem.Type[0].Profile);
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientAddress", elem.Type[0]?.Profile.FirstOrDefault());
+            var sdType = _testResolver.FindStructureDefinition(elem.Type[0].Profile.FirstOrDefault());
             Assert.IsNotNull(sdType);
             var typeChildElem = sdType.Snapshot.Element.FirstOrDefault(e => e.Path == "Address.country");
             Assert.IsNotNull(typeChildElem);
@@ -4833,7 +4833,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent()
                             {
                                 Code = FHIRAllTypes.Identifier.GetLiteral(),
-                                Profile = PatientIdentifierProfileUri
+                                Profile = new string[] { PatientIdentifierProfileUri }
                             }
                         }
                     }
@@ -5378,7 +5378,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent()
                             {
                                 Code = FHIRAllTypes.Quantity.GetLiteral(),
-                                Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity)
+                                Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity) }
                             }
                         }
                     },
@@ -5480,7 +5480,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent()
                             {
                                 Code = FHIRAllTypes.Extension.GetLiteral(),
-                                Profile = SL_HumanNameTitleSuffix.Url
+                                Profile = new string[] { SL_HumanNameTitleSuffix.Url }
                             }
                         }
                     },
@@ -5508,7 +5508,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent()
                             {
                                 Code = FHIRAllTypes.HumanName.GetLiteral(),
-                                Profile = SL_HumanNameBasis.Url
+                                Profile = new string[] { SL_HumanNameBasis.Url }
                             }
                         }
                     },
@@ -5712,7 +5712,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Extension.GetLiteral(),
-                                    Profile = sdHumanNameExtension.Url
+                                    Profile = new string[] { sdHumanNameExtension.Url }
                                 }
 
                             }
@@ -5740,7 +5740,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.HumanName.GetLiteral(),
-                                    Profile = sdHumanName.Url
+                                    Profile = new string[] { sdHumanName.Url }
                                 }
                             }
                         }
@@ -5815,7 +5815,7 @@ namespace Hl7.Fhir.Specification.Tests
                                     Code = FHIRAllTypes.Reference.GetLiteral(),
                                     // WRONG! Should be TargetProfile
                                     // Expecting outcome issue about incompatible profile
-                                    Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)
+                                    Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient) }
                                 }
                             }
                         }
@@ -5889,14 +5889,14 @@ namespace Hl7.Fhir.Specification.Tests
                                     Code = FHIRAllTypes.Reference.GetLiteral(),
                                     // WRONG! Should be TargetProfile
                                     // Expecting outcome issue about incompatible profile
-                                    Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)
+                                    Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient) }
                                 },
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Reference.GetLiteral(),
                                     // WRONG! Should be TargetProfile
                                     // Expecting outcome issue about incompatible profile
-                                    Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation)
+                                    Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation) }
                                 }
                             }
                         }
@@ -5964,12 +5964,12 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Reference.GetLiteral(),
-                                    TargetProfile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)
+                                    TargetProfile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient) }
                                 },
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Reference.GetLiteral(),
-                                    TargetProfile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation)
+                                    TargetProfile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation) }
                                 }
                             }
                         }
@@ -6131,7 +6131,7 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 new ElementDefinition.TypeRefComponent()
                                 {
-                                    Profile = @"http://fhir.nl/fhir/StructureDefinition/nl-core-humanname"
+                                    Profile = new string[] { @"http://fhir.nl/fhir/StructureDefinition/nl-core-humanname" }
                                 }
                             }
                         },
@@ -6141,11 +6141,11 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 new ElementDefinition.TypeRefComponent()
                                 {
-                                    TargetProfile = @"http://fhir.nl/fhir/StructureDefinition/nl-core-organization"
+                                    TargetProfile = new string[] { @"http://fhir.nl/fhir/StructureDefinition/nl-core-organization" }
                                 },
                                 new ElementDefinition.TypeRefComponent()
                                 {
-                                    TargetProfile = @"http://fhir.nl/fhir/StructureDefinition/nl-core-practitioner"
+                                    TargetProfile = new string[] { @"http://fhir.nl/fhir/StructureDefinition/nl-core-practitioner" }
                                 }
                             }
                         }

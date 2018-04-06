@@ -684,17 +684,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(null, elem.CommonTypeCode());
 
             var patientTypeCode = FHIRAllTypes.Patient.GetLiteral();
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = @"http://example.org/fhir/StructureDefinition/MyPatient1" });
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyPatient1" } });
             Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
 
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = @"http://example.org/fhir/StructureDefinition/MyPatient2" });
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyPatient2" } });
             Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
 
             // Invalid, type constraint without type code (required!)
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Profile = @"http://example.org/fhir/StructureDefinition/MyPatient3" });
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyPatient3" } });
             Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
 
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Observation.GetLiteral(), Profile = @"http://example.org/fhir/StructureDefinition/MyObservation" });
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Observation.GetLiteral(), Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyObservation" } });
             Assert.IsNull(elem.CommonTypeCode());
         }
 

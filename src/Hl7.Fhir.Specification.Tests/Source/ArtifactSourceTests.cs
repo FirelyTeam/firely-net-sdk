@@ -255,8 +255,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
 
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
-            var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName)).ToArray();
-            // Boths arrays should contains same urls, possibly in different order
+            var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
+            // Both arrays should contains same urls, possibly in different order
             Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
             Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
             Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Specification.Tests
                     
                     // Revoke file read permissions for the current user
                     fs.AddAccessRule(rule);
-                    Debug.Print($"Removing read permissions from fole: '{forbiddenFile}' ...");
+                    Debug.Print($"Removing read permissions from file: '{forbiddenFile}' ...");
                     
                     // Abort unit test if we can't modify file permissions
                     forbiddenFile.SetAccessControl(fs);
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Specification.Tests
                         Assert.IsFalse(urlList.Contains(profileUrl1));
                         Assert.IsTrue(urlList.Contains(profileUrl2));
                     }
-                    // API *should* grafecully handle security exceptions
+                    // API *should* gracefully handle security exceptions
                     catch (UnauthorizedAccessException ex)
                     {
                         Assert.Fail($"Failed! Unexpected UnauthorizedAccessException: {ex.Message}");
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Specification.Tests
                         Assert.IsTrue(result);
                         Debug.Print($"Restoring file read permissions...");
                         forbiddenFile.SetAccessControl(fs);
-                        Debug.Print($"Succesfully restored file read permissions.");
+                        Debug.Print($"Successfully restored file read permissions.");
 
                         // We should be able to delete the file
                         File.Delete(forbiddenFile.FullName);
@@ -376,14 +376,14 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsTrue(result);
                     Debug.Print($"Restoring folder read permissions...");
                     forbiddenDir.SetAccessControl(ds);
-                    Debug.Print($"Succesfully restored folder read permissions.");
+                    Debug.Print($"Successfully restored folder read permissions.");
 
                     // We should be able to delete the subdirectory
                     Directory.Delete(subPath2, true);
                 }
 
             }
-            // If acl initialization failed, then consume the exception and return success
+            // If ACL initialization failed, then consume the exception and return success
             // Preferably, skip this unit test / return unknown result - how?
             catch (Exception ex) when (!initialized)
             {

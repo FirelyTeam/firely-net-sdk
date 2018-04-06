@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 var primaryType = elem.Type.FirstOrDefault();
                 if (primaryType != null)
                 {
-                    return primaryType.Profile;
+                    return primaryType.Profile.FirstOrDefault();
                 }
             }
             return null;
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Specification.Navigation
             string profile = null;
             if (elemType != null)
             {
-                profile = elemType.Profile;
+                profile = elemType.Profile.FirstOrDefault();
                 if (profile == null && elemType.Code != null)
                 {
                     profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code);

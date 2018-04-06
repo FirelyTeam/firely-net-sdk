@@ -157,14 +157,16 @@ namespace Hl7.Fhir.Validation
                 // In both cases, the outcome is included in the result.
                 OperationOutcome childResult;
 
+                // TODO: BRIAN: Check that this TargetProfile.FirstOrDefault() is actually right, or should
+                //              we be permitting more than one target profile here.
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
+                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile.FirstOrDefault(), statedProfiles: null, statedCanonicals: null);
                 }
                 else
                 {
                     var newValidator = validator.NewInstance();
-                    childResult = newValidator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
+                    childResult = newValidator.Validate(referencedResource, typeRef.TargetProfile.FirstOrDefault(), statedProfiles: null, statedCanonicals: null);
                 }
 
                 // Prefix each path with the referring resource's path to keep the locations
