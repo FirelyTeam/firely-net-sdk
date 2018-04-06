@@ -57,8 +57,6 @@
       <text>
         <status value="generated"/>
         <div xmlns="http://www.w3.org/1999/xhtml">
-
-
           <pre>
             Comorbidity? YES
             Cardial Comorbidity? YES
@@ -72,122 +70,113 @@
             pT category: 1a
             ...
           </pre>
-
-
         </div>
       </text>
       <status value="draft"/>
-      <date value="2012-01"/>
+      <title value="Cancer Quality Forum Questionnaire 2012"/>
       <subjectType value="Patient"/>
-      <group>
-        <linkId value="1"/>
-        <title value="Cancer Quality Forum Questionnaire 2012"/>
-        <required value="true"/>
-        <group>
+      <date value="2012-01"/>
+        <item>
           <!--     COMORBIDITY     -->
           <!--     First main section of the form, questions about comorbidity     -->
           <linkId value="1.1"/>
-          <concept>
+          <type value="group"/>
+          <code>
             <system value="http://example.org/system/code/sections"/>
             <code value="COMORBIDITY"/>
-          </concept>
+          </code>
           <!--     section contains one question: whether there is comorbidity     -->
-          <question>
+          <item>
             <linkId value="1.1.1"/>
-            <concept>
+            <code>
               <system value="http://example.org/system/code/questions"/>
               <code value="COMORB"/>
-            </concept>
+            </code>
             <type value="choice"/>
-            <options>
-              <reference value="#yesno"/>
-            </options>
-            <group>
+            <options value="ValueSet/yesno" />
+            <item>
               <!--     COMORBIDITY/CARDIAL     -->
               <!--     Subsection about specific comorbidity: cardial     -->
               <linkId value="1.1.1.1"/>
-              <concept>
+              <type value="group"/>
+              <code>
                 <system value="http://example.org/system/code/sections"/>
                 <code value="CARDIAL"/>
-              </concept>
-              <question>
+              </code>
+              <item>
                 <linkId value="1.1.1.1.1"/>
-                <concept>
+                <code>
                   <system value="http://example.org/system/code/questions"/>
                   <code value="COMORBCAR"/>
-                </concept>
+                </code>
                 <type value="choice"/>
-                <options>
-                  <reference value="#yesno"/>
-                </options>
-              </question>
-              <question>
+                <options value="ValueSet/yesno" />
+              </item>
+              <item>
                 <!--     This answer carries both the questionnaire-specific name and an equivalent SNOMED
              CT code     -->
                 <linkId value="1.1.1.1.2"/>
-                <concept>
-                  <system value="http://example.org/system/code/questions"/>
+                <code>
+                  <system value="http://example.org/system/code/items"/>
                   <code value="COMCAR00"/>
                   <display value="Angina Pectoris"/>
-                </concept>
-                <concept>
+                </code>
+                <code>
                   <system value="http://snomed.info/sct"/>
                   <code value="194828000"/>
                   <display value="Angina (disorder)"/>
-                </concept>
+                </code>
                 <type value="choice"/>
-                <options>
-                  <reference value="#yesno"/>
-                </options>
-              </question>
-              <question>
+                <options value="ValueSet/yesno" />
+              </item>
+              <item>
                 <linkId value="1.1.1.1.3"/>
-                <concept>
+                <code>
                   <system value="http://snomed.info/sct"/>
                   <code value="22298006"/>
                   <display value="Myocardial infarction (disorder)"/>
-                </concept>
+                </code>
                 <type value="choice"/>
-                <options>
-                  <reference value="#yesno"/>
-                </options>
-              </question>
-            </group>
-            <group>
+                <options value="ValueSet/yesno" />
+              </item>
+            </item>
+            <item>
               <!--     COMORBIDITY/VASCULAR     -->
               <linkId value="1.1.1.2"/>
-              <concept>
+              <type value="group"/>
+              <code>
                 <system value="http://example.org/system/code/sections"/>
                 <code value="VASCULAR"/>
-              </concept>
-            </group>
-          </question>
-        </group>
+              </code>
+            </item>
+          </item>
+        </item>
         <!--     Todo: What's supposed to go here?     -->
-        <group>
+        <item>
           <!--     HISTOPATHOLOGY     -->
           <linkId value="1.2"/>
-          <concept>
+          <type value="group"/>
+          <code>
             <system value="http://example.org/system/code/sections"/>
             <code value="HISTOPATHOLOGY"/>
-          </concept>
-          <group>
+          </code>
+          <item>
             <linkId value="1.2.1"/>
-            <concept>
+            <type value="group"/>
+            <code>
               <system value="http://example.org/system/code/sections"/>
               <code value="ABDOMINAL"/>
-            </concept>
-            <question>
+            </code>
+            <item>
               <linkId value="1.2.1.2"/>
-              <concept>
+              <code>
                 <system value="http://example.org/system/code/questions"/>
                 <code value="STADPT"/>
                 <display value="pT category"/>
-              </concept>
-            </question>
-          </group>
-        </group>
-      </group>
+              </code>
+            </item>
+          </item>
+        </item>
     </Questionnaire>
   </contained>
   <identifier>

@@ -30,6 +30,7 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Remove="TestData\fhirpath\extension-definitions.xml" />
     <Content Include="TestData\examples.zip;TestData\examples-json.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
