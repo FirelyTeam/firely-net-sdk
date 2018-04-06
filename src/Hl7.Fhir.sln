@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core", "Hl7.Fhir.Core\Hl7.Fhir.Core.csproj", "{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Core", "Hl7.Fhir.Core\Hl7.Fhir.Core.csproj", "{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Core.Tests", "Hl7.Fhir.Core.Tests\Hl7.Fhir.Core.Tests.csproj", "{F4609F02-DD99-4DD2-9855-9BB8FF4AC68F}"
 EndProject
@@ -107,6 +107,7 @@ Global
 		{EC00C3F3-81A6-4EA8-A602-AE03D9BA7258}.Release|x86.ActiveCfg = Release|Any CPU
 		{EC00C3F3-81A6-4EA8-A602-AE03D9BA7258}.Release|x86.Build.0 = Release|Any CPU
 		{7105CDA6-4678-45E2-80DD-A6BB89705540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7105CDA6-4678-45E2-80DD-A6BB89705540}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7105CDA6-4678-45E2-80DD-A6BB89705540}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{7105CDA6-4678-45E2-80DD-A6BB89705540}.Debug|x64.Build.0 = Debug|Any CPU
 		{7105CDA6-4678-45E2-80DD-A6BB89705540}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -130,5 +131,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC5E3B15-D998-4141-9050-23874CA910B3}
 	EndGlobalSection
 EndGlobal
