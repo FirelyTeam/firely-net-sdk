@@ -6,18 +6,17 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Globalization;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Introspection;
-using System.Runtime.Serialization;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -31,7 +30,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMetaXml()
         {
-            var xml = new FhirXmlSerializer().SerializeToString(metaPoco,root:"meta");
+            var xml = new FhirXmlSerializer().SerializeToString(metaPoco, root: "meta");
             Assert.AreEqual(metaXml, xml);
         }
 
@@ -47,7 +46,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParseMetaXml()
         {
             var poco = (Meta)(new FhirXmlParser().Parse(metaXml, typeof(Meta)));
-            var xml = new FhirXmlSerializer().SerializeToString(poco,root:"meta");
+            var xml = new FhirXmlSerializer().SerializeToString(poco, root: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaXml, xml);
@@ -713,5 +712,117 @@ namespace Hl7.Fhir.Tests.Serialization
             var json = FhirJsonSerializer.SerializeToString(bundle);
             Assert.IsNotNull(json);
         }
+
+// #if NET45
+        // [WMR 20180409] NEW: Serialize to XmlDocument
+        [TestMethod]
+        public void TestSerializeToXmlDocument()
+        {
+            var patientOne = new Patient
+            {
+
+                Id = "patient-one",
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
+
+                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                Active = true,
+                BirthDate = "2015-07-09",
+                Gender = AdministrativeGender.Male
+            };
+
+            var doc = FhirXmlSerializer.SerializeToDocument(patientOne);
+            Assert.IsNotNull(doc);
+            Assert.AreEqual("#document", doc.Name);
+            Assert.IsTrue(doc.HasChildNodes);
+            Assert.AreEqual(1, doc.ChildNodes.Count);
+
+            var root = doc.FirstChild;
+            Assert.AreEqual("Patient", root.Name);
+            Assert.IsTrue(root.HasChildNodes);
+            Assert.AreEqual(7, root.ChildNodes.Count);
+        }
+// #endif
+
+        // [WMR 20180409] NEW: Serialize to JObject
+        [TestMethod]
+        public void TestSerializeToJsonDocument()
+        {
+            // Note: output order is defined by core resource/datatype definitions!
+
+            var patientOne = new Patient
+            {
+
+                Id = "patient-one",
+                Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Active = true,
+                Name = new List<HumanName> { new HumanName { Use = HumanName.NameUse.Official, Family = "Clapton" } },
+                Gender = AdministrativeGender.Male,
+                BirthDate = "2015-07-09",
+            };
+
+            var doc = FhirJsonSerializer.SerializeToDocument(patientOne);
+            Assert.IsNotNull(doc);
+
+            System.Diagnostics.Debug.Print(doc.ToString());
+
+            Assert.AreEqual(8, doc.Count); // Including resourceType
+
+            JToken assertProperty(JToken t, string expectedName)
+            {
+                Assert.AreEqual(JTokenType.Property, t.Type);
+                var p = t as JProperty;
+                Assert.IsNotNull(p);
+                Assert.AreEqual(expectedName, p.Name);
+                return t;
+            }
+
+            JToken assertPrimitiveProperty(JToken t, string expectedName, JTokenType expectedType, object expectedValue)
+            {
+                var p = t as JProperty;
+                Assert.IsNotNull(p);
+                Assert.AreEqual(expectedName, p.Name);
+                Assert.AreEqual(expectedType, p.Value.Type);
+                var v = p.Value as JValue;
+                Assert.IsNotNull(v);
+                Assert.AreEqual(expectedValue, v.Value);
+                return t;
+            }
+
+            JToken assertStringProperty(JToken t, string expectedName, object expectedValue) => assertPrimitiveProperty(t, expectedName, JTokenType.String, expectedValue);
+
+            Assert.AreEqual(JTokenType.Property, doc.First.Type);
+            var token = assertStringProperty(doc.First, "resourceType", "Patient");
+            token = assertStringProperty(token.Next, "id", patientOne.Id);
+
+            token = assertProperty(token.Next, "meta");
+            Assert.IsTrue(token.HasValues);
+            var childToken = assertStringProperty(token.Values().First(), "id", patientOne.Meta.ElementId);
+            childToken = assertStringProperty(childToken.Next, "versionId", patientOne.Meta.VersionId);
+
+            token = assertProperty(token.Next, "text");
+            Assert.IsTrue(token.HasValues);
+            childToken = assertStringProperty(token.Values().First(), "status", patientOne.Text.Status.GetLiteral());
+            childToken = assertStringProperty(childToken.Next, "div", patientOne.Text.Div);
+
+            token = assertPrimitiveProperty(token.Next, "active", JTokenType.Boolean, patientOne.Active);
+
+            token = assertProperty(token.Next, "name");
+            var values = token.First;
+            Assert.IsNotNull(values);
+            Assert.AreEqual(JTokenType.Array, values.Type);
+            childToken = values.First;
+            var grandChildToken = assertStringProperty(childToken.First, "use", patientOne.Name[0].Use.GetLiteral());
+            grandChildToken = assertStringProperty(grandChildToken.Next, "family", patientOne.Name[0].Family);
+
+            token = assertStringProperty(token.Next, "gender", patientOne.Gender.GetLiteral());
+
+            token = assertStringProperty(token.Next, "birthDate", patientOne.BirthDate);
+
+        }
+
     }
+
 }
