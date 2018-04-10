@@ -6232,7 +6232,107 @@ namespace Hl7.Fhir.Specification.Tests
             // 5. Extension: accuracyIndicator
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual("accuracyIndicator", nav.Current.SliceName);
+        }
 
+        // [WMR 20180410] Unit test to investigate issue reported by David McKillop
+        [TestMethod]
+        public void TestAuPatientDerived()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = @"http://hl7.org.au/fhir/StructureDefinition/au-patient",
+                Name = "AuPatientDerived",
+                Url = "http://example.org/fhir/StructureDefinition/AuPatientDerived",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            SliceName = "deceasedBoolean",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            SliceName = "deceasedDateTime",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceased[x].extension")
+                        {
+                            SliceName = "accuracyIndicator",
+                            MustSupport = true
+                        }
+                    }
+                }
+
+            };
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+        }
+
+        // [WMR 20180410] Cannot handle invalid (!) choice type element renaming within type slice
+        // Exception from ElementMatcher.matchBase - choiceNames.SingleOrDefault()
+        // TODO: Gracefully handle multiple matches, emit issue, use first match
+        [Ignore]
+        [TestMethod]
+        public void TestAuPatientDerived2()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = @"http://hl7.org.au/fhir/StructureDefinition/au-patient",
+                Name = "AuPatientDerived2",
+                Url = "http://example.org/fhir/StructureDefinition/AuPatientDerived2",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceasedBoolean]")
+                        {
+                            SliceName = "deceasedBoolean",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceasedDateTime")
+                        {
+                            SliceName = "deceasedDateTime",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceasedDateTime.extension")
+                        {
+                            SliceName = "accuracyIndicator",
+                            MustSupport = true
+                        }
+                    }
+                }
+
+            };
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
         }
 
     }
