@@ -156,6 +156,24 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void ExcludeSubdirectory()
+        {
+            var fa = new DirectorySource(_testPath)
+            {
+                Includes = new[] { "*.json" },
+                IncludeSubDirectories = true
+            };
+
+            var names = fa.ListArtifactNames();
+            Assert.AreEqual(1, names.Count());
+
+            fa.Excludes = new[] { "/sub/" };
+
+            names = fa.ListArtifactNames();
+            Assert.AreEqual(0, names.Count());
+        }
+
+        [TestMethod]
         public void FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
