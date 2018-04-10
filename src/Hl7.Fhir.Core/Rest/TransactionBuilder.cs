@@ -354,7 +354,10 @@ namespace Hl7.Fhir.Rest
         {
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Transaction);
             entry.Resource = transaction;
-            addEntry(entry, newRestUrl());
+            var url = _baseUrl;
+            if (url.EndsWith("/"))  // in case of a transaction the url cannot end with a forward slash. Remove it here.
+                url = url.TrimEnd('/');
+            addEntry(entry, new RestUrl(url));
 
             return this;
         }
