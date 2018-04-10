@@ -161,5 +161,22 @@ namespace Hl7.Fhir.Test
 
             Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);
         }
+
+        /// <summary>
+        /// Unit test to prove issue 536: 
+        /// https://github.com/ewoutkramer/fhir-net-api/issues/536
+        /// </summary>
+        [TestMethod]
+        public void TestTransactionWithForwardSlash()
+        {
+            var tx2 = new TransactionBuilder("http://myserver.org/fhir/");
+            var bundle = tx2.Get("@Patient/1").ToBundle();
+
+            var tx = new TransactionBuilder("http://myserver.org/fhir/")
+                .Transaction(bundle);
+
+            var b = tx.ToBundle();
+            Assert.IsFalse(b.Entry[0].Request.Url.EndsWith(@"/"), "Url cannot end with forward slash");
+        }
     }
 }
