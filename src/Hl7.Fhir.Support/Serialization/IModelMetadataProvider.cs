@@ -15,19 +15,35 @@ namespace Hl7.Fhir.Serialization
     }
 
 
+    public class ElementSerializationInfo : IElementSerializationInfo
+    {
+        public ElementSerializationInfo(string elementName, bool mayRepeat, ITypeSerializationInfo[] type)
+        {
+            ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
+            MayRepeat = mayRepeat;
+            Type = type ?? throw new ArgumentNullException(nameof(type));
+        }
+
+        public string ElementName { get; private set; }
+
+        public bool MayRepeat { get; private set; }
+
+        public ITypeSerializationInfo[] Type { get; private set; }
+    }
+
+
     public interface ITypeSerializationInfo
     {
-
+        string TypeName { get; }   
     }
     public interface IComplexTypeSerializationInfo : ITypeSerializationInfo
     {
-        string TypeName { get; }
         IEnumerable<IElementSerializationInfo> GetChildren();
     }
 
     public interface ITypeReference : ITypeSerializationInfo
     {
-        string ReferencedType { get; }
+        IComplexTypeSerializationInfo Resolve();
     }
 
     public interface IModelMetadataProvider

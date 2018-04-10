@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 using System.Linq;
 using Hl7.Fhir.Serialization;
 using System.IO;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.FhirPath.Tests
 {

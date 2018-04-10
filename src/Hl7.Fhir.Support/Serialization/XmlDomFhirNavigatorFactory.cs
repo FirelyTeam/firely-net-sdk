@@ -14,10 +14,12 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct XmlDomFhirNavigator
+    public partial class XmlDomFhirNavigator
     {
         public static IElementNavigator Create(XmlReader reader, IModelMetadataProvider metadataProvider)
         {
+            if (reader == null) throw Error.ArgumentNull(nameof(reader));
+            if (metadataProvider == null) throw Error.ArgumentNull(nameof(metadataProvider));
             XDocument doc = null;
 
             try
@@ -34,16 +36,25 @@ namespace Hl7.Fhir.Serialization
 
         public static IElementNavigator Create(XDocument doc, IModelMetadataProvider metadataProvider)
         {
+            if (doc == null) throw Error.ArgumentNull(nameof(doc));
+            if (metadataProvider == null) throw Error.ArgumentNull(nameof(metadataProvider));
+
             return new XmlDomFhirNavigator(doc.Root, metadataProvider);
         }
 
         public static IElementNavigator Create(XElement elem, IModelMetadataProvider metadataProvider)
         {
+            if (elem == null) throw Error.ArgumentNull(nameof(elem));
+            if (metadataProvider == null) throw Error.ArgumentNull(nameof(metadataProvider));
+
             return new XmlDomFhirNavigator(elem, metadataProvider);
         }
 
         public static IElementNavigator Create(string xml, IModelMetadataProvider metadataProvider)
         {
+            if (xml == null) throw Error.ArgumentNull(nameof(xml));
+            if (metadataProvider == null) throw Error.ArgumentNull(nameof(metadataProvider));
+
             using (var reader = xmlReaderFromText(xml))
             {
                 return Create(reader, metadataProvider);

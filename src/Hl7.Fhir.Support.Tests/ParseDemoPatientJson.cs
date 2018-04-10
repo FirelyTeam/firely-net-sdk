@@ -7,6 +7,7 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.Linq;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.FhirPath.Tests.JsonNavTests
 {

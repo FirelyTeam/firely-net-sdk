@@ -8,17 +8,18 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Introspection
 {
     public class PocoModelMetadataProvider : IModelMetadataProvider
     {
-        public IComplexTypeSerializationInfo GetSerializationInfoForType(string typeName)
+        public static IComplexTypeSerializationInfo GetSerializationInfoForType(string typeName)
         {
             Type csType = ModelInfo.GetTypeForFhirType(typeName);
             if (csType == null) return null;
@@ -28,6 +29,8 @@ namespace Hl7.Fhir.Serialization
 
             return new PocoComplexTypeSerializationInfo(classMapping);
         }
+
+        IComplexTypeSerializationInfo IModelMetadataProvider.GetSerializationInfoForType(string typeName) => GetSerializationInfoForType(typeName);
 
         internal static ClassMapping GetMappingForType(Type elementType)
         {
@@ -64,7 +67,9 @@ namespace Hl7.Fhir.Serialization
             _referencedType = referencedType;
         }
 
-        public string ReferencedType => _referencedType;
+        public string TypeName => _referencedType;
+
+        public IComplexTypeSerializationInfo Resolve() => PocoModelMetadataProvider.GetSerializationInfoForType(TypeName);
     }
 
 

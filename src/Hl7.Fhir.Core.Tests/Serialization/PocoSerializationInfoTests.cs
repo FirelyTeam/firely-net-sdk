@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -25,8 +26,6 @@ namespace Hl7.Fhir.Core.Tests.Serialization
         [TestMethod]
         public void TestCanLocateTypes()
         {
-            var ip = new PocoModelMetadataProvider();
-
             // Try getting a resource
             tryGetType("Patient");
 
@@ -52,7 +51,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
 
             void tryGetType(string typename, string baseTypeName=null)
             {
-                var si = ip.GetSerializationInfoForType(typename);
+                var si = PocoModelMetadataProvider.GetSerializationInfoForType(typename);
                 Assert.IsNotNull(si);
                 Assert.AreEqual(baseTypeName ?? typename, si.TypeName);
             }
@@ -61,8 +60,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
         [TestMethod]
         public void TestCanGetElements()
         {
-            var ip = new PocoModelMetadataProvider();
-            var p = ip.GetSerializationInfoForType("Patient");
+            var p = PocoModelMetadataProvider.GetSerializationInfoForType("Patient");
 
             // Simple element
             checkType(p, "active", false, "boolean");
@@ -98,7 +96,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
             Assert.IsTrue(child.Type.All(t => t is ITypeReference));
             CollectionAssert.AreEqual(types, child.Type
                 .Cast<ITypeReference>()
-                .Select(t => t.ReferencedType).ToArray());
+                .Select(t => t.TypeName).ToArray());
         }
 
         private IComplexTypeSerializationInfo checkBBType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat)
@@ -117,18 +115,16 @@ namespace Hl7.Fhir.Core.Tests.Serialization
 
         [TestMethod]
         public void TestSpecialTypes()
-        {
-            var ip = new PocoModelMetadataProvider();
-            
+        {           
             // Narrative.div
-            var div = ip.GetSerializationInfoForType("Narrative");
+            var div = PocoModelMetadataProvider.GetSerializationInfoForType("Narrative");
             Assert.IsNotNull(div);
             checkType(div, "div", false, "xhtml");
 
             // Element.id
             checkType(div, "id", false, "id");
 
-            var ext = ip.GetSerializationInfoForType("Extension");
+            var ext = PocoModelMetadataProvider.GetSerializationInfoForType("Extension");
 
             // Extension.url
             checkType(ext, "url", false, "uri");

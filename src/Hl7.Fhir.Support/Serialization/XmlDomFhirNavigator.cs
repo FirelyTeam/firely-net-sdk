@@ -16,16 +16,43 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct XmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IOutcomeProvider
+    public partial class XmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
     {
+        struct PositionedDefinition
+        {
+            public readonly IElementSerializationInfo[] Elements;
+            public IElementSerializationInfo Current;
+
+            public PositionedDefinition(IElementSerializationInfo[] elements) : this(elements, null) { }
+
+            public PositionedDefinition(IElementSerializationInfo[] elements, IElementSerializationInfo current)
+            {
+                Elements = elements;
+                Current = current;
+            }
+
+            public bool MoveTo(string name)
+            {
+                var found = Elements.FirstOrDefault(e => name.StartsWith(e.ElementName));
+                if (found != null) Current = found;
+
+                return found != null;
+            }
+        }
+
         internal XmlDomFhirNavigator(XObject current, IModelMetadataProvider metadataProvider)
         {
+            if (metadataProvider == null) Error.ArgumentNull(nameof(metadataProvider));
+
+            OnExceptionRaised = null;
             _current = current;
             _metadataProvider = metadataProvider;
             _nameIndex = 0;
             _parentPath = null;
+            _definition = _metadataProvider != null ? new Lazy<PositionedDefinition>(() => forRoot(XmlName.LocalName)) : null;
         }
 
+        public event EventHandler<ExceptionRaisedEventArgs> OnExceptionRaised;
 
         public IElementNavigator Clone()
         {
@@ -33,19 +60,102 @@ namespace Hl7.Fhir.Serialization
             {
                 _nameIndex = this._nameIndex,
                 _parentPath = this._parentPath,
+                _definition = this._definition
             };
+
+            copy.OnExceptionRaised = this.OnExceptionRaised;
 
             return copy;
         }
 
         private XObject _current;
         private readonly IModelMetadataProvider _metadataProvider;
+        private Lazy<PositionedDefinition> _definition;
+        
         private int _nameIndex;
         private string _parentPath;
 
-        public string Name => XmlName?.LocalName;
+        private PositionedDefinition? definition => _definition?.Value;
 
-        public string Type => null;
+        private PositionedDefinition forRoot(string rootType)
+        {
+            var rootDef = _metadataProvider.GetSerializationInfoForType(rootType);
+
+            if (rootDef != null)
+            {
+                var rootElement = new ElementSerializationInfo(rootType, false, new[] { rootDef });
+                return new PositionedDefinition(new[] { rootElement }, rootElement);
+            }
+            else
+                return new PositionedDefinition(new IElementSerializationInfo[] { });
+        }
+
+        //private PositionedDefinition listMembers(IElementSerializationInfo current) =>
+        //    new PositionedDefinition(_metadataProvider.GetSerializationInfoForType(typeName).GetChildren().ToArray());
+
+        private IElementSerializationInfo currentTypeInfo => definition?.Current;
+
+        // Could check namespaces too
+        public string Name => currentTypeInfo?.ElementName ?? XmlName.LocalName;
+
+        public string Type
+        {
+            get
+            {
+                if (currentTypeInfo == null)
+                {
+                    // try to get resource type from current node (or nested node within (e.g. contained))
+                    if (_current is XElement element && tryGetResourceName(element, out var name))
+                        return name;
+                    else
+                        // Else, no type information available
+                        return null;
+                }
+                else
+                {
+                    if (currentTypeInfo.Type.Length > 1)
+                    {
+                        // choice type
+                        var instanceType = XmlName.LocalName.Substring(currentTypeInfo.ElementName.Length);
+                        var choice = currentTypeInfo.Type.FirstOrDefault(t => String.Compare(t.TypeName, instanceType, StringComparison.OrdinalIgnoreCase) == 0);
+                        return choice?.TypeName;
+                    }
+                    else
+                        return currentTypeInfo.Type[0].TypeName;
+                }
+            }
+        }
+
+        private static bool tryGetResourceName(XElement xe, out string name)
+        {
+            name = null;
+
+            if (isResourceName(xe.Name))
+            {
+                name = xe.Name.LocalName;
+                return true;
+            }
+
+            // We might still be on a resource if this elements contains a
+            // contained resource
+            if (xe.HasElements)
+            {
+                var candidate = xe.Elements().First();
+
+                if (isResourceName(candidate.Name))
+                {
+                    // complain if resoure has siblings
+                    name = candidate.Name.LocalName;
+                    return true;
+                }
+            }
+
+            // Not on a resource, no name to be found
+            return false;
+
+            bool isResourceName(XName elementName) =>
+                Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
+        }
 
         public object Value
         {
@@ -53,10 +163,15 @@ namespace Hl7.Fhir.Serialization
             {
                 if (AtXhtmlDiv)
                     return ((XElement)_current).ToString(SaveOptions.DisableFormatting);
-                else if (_current is XElement xelem)
-                    return xelem.Attribute("value")?.Value;
+
+                var literal = _current is XElement xelem ? 
+                        xelem.Attribute("value")?.Value : _current.Value();
+
+                // Without type info, just return a string
+                if (literal == null || Type == null)
+                    return literal;
                 else
-                    return _current.Value();
+                    return PrimitiveTypeConverter.FromSerializedValue(literal, Type);
             }
         }
 
@@ -69,13 +184,29 @@ namespace Hl7.Fhir.Serialization
                 if (_parentPath == null)
                     return Name;
                 else
-                    return $"{_parentPath}.{Name}[{_nameIndex}]";
+                {
+                    if(currentTypeInfo == null || currentTypeInfo.MayRepeat == true || _nameIndex > 0)
+                        return $"{_parentPath}.{Name}[{_nameIndex}]";
+                    else
+                        return $"{_parentPath}.{Name}";
+                }
             }
         }
 
         private XObject nextMatch(XObject root, string name, XObject startAfter = null)
         {
-            var scan = startAfter == null ? root.FirstChild() : startAfter.NextChild();
+            XObject scan;
+
+            if (startAfter == null)
+            {
+                scan = root.FirstChild();
+                if(currentTypeInfo != null)
+                    currentTypeInfo.
+            }
+            else
+            {
+                scan = startAfter.NextChild();
+            }
 
             while (scan != null)
             {
@@ -90,8 +221,16 @@ namespace Hl7.Fhir.Serialization
 
                 if (scanName != null)
                 {
-                    if (name == null || scanName?.LocalName == name)
+                    // If no specific next child is sought, return immediately
+                    if (name == null) return scan;
+                    
+                    
+                    || scanName?.LocalName == name)
+                    {
+                        if(definition != null)
+                            definition.Value.MoveTo(
                         return scan;
+                    }
                 }
 
                 scan = scan.NextChild();
@@ -108,9 +247,16 @@ namespace Hl7.Fhir.Serialization
             var found = nextMatch(_current, nameFilter);
             if (found == null) return false;
 
-            // We've moved position, re-initialize some of the navigator status
+            // We've moved position
             _parentPath = Location;
-            _current = found;
+
+            // Move the _current position to the newly found element,
+            // unless that is the (xml) type name in a contained resource, in which case we move one level deeper
+            if (found is XElement xe && isResourceName(xe.Name))
+                _current = xe.FirstNode;
+            else
+                _current = found;
+
             _nameIndex = 0;
 
             return true;
@@ -187,6 +333,7 @@ namespace Hl7.Fhir.Serialization
                 {
                     new XmlSerializationDetails()
                     {
+                        // Add: "value in attribute"
                         NodeType = _current.NodeType,
                         Name = XmlName,
                         NodeText = _current.Text(),
@@ -198,19 +345,6 @@ namespace Hl7.Fhir.Serialization
             }
             else
                 return null;
-        }
-
-
-        //public const int FORMAT_VALUE_AND_TEXT_NODE = 1001;
-        //public const int FORMAT_REPEATED_NESTED_RESOURCES = 1002;
-        //public const int FORMAT_ATTRIBUTES_ON_NESTED_RESOURCE = 1002;
-        //public const string SYSTEM_NAME = nameof(XmlDomFhirNavigator);
-
-        public IEnumerable<Outcome> GetIssues() => Enumerable.Empty<Outcome>();
-
-        internal static IElementNavigator Create(string xml, object @default)
-        {
-            throw new NotImplementedException();
         }
     }
 }
