@@ -6335,5 +6335,104 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(_generator.Outcome);
         }
 
+        // [WMR 20180410] Add unit tests for content references
+
+        public StructureDefinition QuestionnaireWithNestedItems = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Questionnaire.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Questionnaire),
+            Name = "QuestionnaireWithNestedItems",
+            Url = "http://example.org/fhir/StructureDefinition/QuestionnaireWithNestedItems",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Questionnaire.item.type")
+                        {
+                            Short = "level 1"
+                        },
+                        new ElementDefinition("Questionnaire.item.item.type")
+                        {
+                            Comment = "level 2"
+                        }
+                    }
+            }
+        };
+
+        [TestMethod]
+        public void TestContentReferenceQuestionnaire()
+        {
+            var sd = QuestionnaireWithNestedItems;
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.type"));
+            Assert.AreEqual("level 1" ,nav.Current.Short);
+
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
+            Assert.AreEqual("level 2", nav.Current.Comment);
+            // Level 2 should NOT inherit constraints from level 1
+            Assert.AreNotEqual("level 1", nav.Current.Short);
+        }
+
+        [TestMethod]
+        public void TestContentReferenceQuestionnaireDerived()
+        {
+            var sd = new StructureDefinition
+            {
+                Type = FHIRAllTypes.Questionnaire.GetLiteral(),
+                BaseDefinition = QuestionnaireWithNestedItems.Url,
+                Name = "QuestionnaireWithNestedItemsDerived",
+                Url = "http://example.org/fhir/StructureDefinition/QuestionnaireWithNestedItemsDerived",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Questionnaire.item.type")
+                        {
+                            Comment = "level 1 *"
+                        },
+                        new ElementDefinition("Questionnaire.item.item.type")
+                        {
+                            Short = "level 2 *"
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd, QuestionnaireWithNestedItems);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            // Constraints should be merged separately on each nesting level
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.type"));
+            Assert.AreEqual("level 1", nav.Current.Short);
+            Assert.AreEqual("level 1 *", nav.Current.Comment);
+
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
+            Assert.AreEqual("level 2", nav.Current.Comment);
+            Assert.AreEqual("level 2 *", nav.Current.Short);
+        }
+
     }
 }
