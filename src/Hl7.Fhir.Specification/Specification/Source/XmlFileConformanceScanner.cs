@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Source
 
             if (found == null) return null;
 
-            var resultResource = new FhirXmlParser().Parse<Resource>(XmlDomFhirNavigator.Create(found, new PocoModelMetadataProvider()));
+            var resultResource = new FhirXmlParser().Parse<Resource>(XmlDomFhirParser.Create(found, new PocoModelMetadataProvider()));
             resultResource.SetOrigin(entry.Origin);
 
             return resultResource;

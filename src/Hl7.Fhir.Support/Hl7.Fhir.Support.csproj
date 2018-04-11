@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Compile Remove="Serialization\XmlDomFhirNavigator - Archive.cs" />
+    <Compile Remove="Serialization\XmlDomFhirNavigator - archive2.cs" />
   </ItemGroup>
 
   <ItemGroup>

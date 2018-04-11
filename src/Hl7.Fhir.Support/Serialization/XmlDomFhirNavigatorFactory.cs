@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial class XmlDomFhirNavigator
+    public partial struct XmlDomFhirParser
     {
         public static IElementNavigator Create(XmlReader reader, IModelMetadataProvider metadataProvider)
         {
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
-            return new XmlDomFhirNavigator(doc.Root, metadataProvider);
+            return new XmlDomFhirParser(doc.Root, metadataProvider);
         }
 
         public static IElementNavigator Create(XDocument doc, IModelMetadataProvider metadataProvider)
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Serialization
             if (doc == null) throw Error.ArgumentNull(nameof(doc));
             if (metadataProvider == null) throw Error.ArgumentNull(nameof(metadataProvider));
 
-            return new XmlDomFhirNavigator(doc.Root, metadataProvider);
+            return new XmlDomFhirParser(doc.Root, metadataProvider);
         }
 
         public static IElementNavigator Create(XElement elem, IModelMetadataProvider metadataProvider)
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
             if (metadataProvider == null) throw Error.ArgumentNull(nameof(metadataProvider));
 
-            return new XmlDomFhirNavigator(elem, metadataProvider);
+            return new XmlDomFhirParser(elem, metadataProvider);
         }
 
         public static IElementNavigator Create(string xml, IModelMetadataProvider metadataProvider)
