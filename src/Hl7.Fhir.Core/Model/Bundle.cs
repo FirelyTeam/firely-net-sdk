@@ -46,7 +46,6 @@ namespace Hl7.Fhir.Model
     public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
     {
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-        [System.Diagnostics.DebuggerDisplay(@"\{FullUrl={FullUrl}}")]
         public partial class EntryComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
