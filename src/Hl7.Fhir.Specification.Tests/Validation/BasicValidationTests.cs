@@ -744,8 +744,25 @@ namespace Hl7.Fhir.Specification.Tests
             assertElementConstraints(patientStructDef.Snapshot.Element);
         }
 
-        // Verify aggregated element constraints
-        static void assertElementConstraints(List<ElementDefinition> patientElems)
+        /// <summary>
+        /// Test for issue 423  (https://github.com/ewoutkramer/fhir-net-api/issues/423)
+        /// </summary>
+        [Fact]
+        public void ValidateInternalReferenceWithinContainedResources()
+        {
+            var obsOverview = File.ReadAllText(@"TestData\validation\observation-list.xml");
+            var parser = new FhirXmlParser();
+
+            var obsList = parser.Parse<List>(obsOverview);
+            Assert.NotNull(obsList);
+
+            var result = _validator.Validate(obsList);
+            Assert.True(result.Success);
+            Assert.Equal(0, result.Errors);
+        }
+
+    // Verify aggregated element constraints
+    static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
             foreach (var elem in patientElems)
             {
