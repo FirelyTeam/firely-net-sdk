@@ -18,6 +18,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from a list of other IArtifactSources
     /// </summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class MultiResolver : IResourceResolver
     {
         private readonly List<IResourceResolver> _sources = new List<IResourceResolver>();
