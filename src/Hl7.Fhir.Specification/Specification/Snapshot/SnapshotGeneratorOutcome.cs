@@ -20,6 +20,8 @@ using System.Collections.Generic;
 
 #pragma warning disable 1591 // suppress XML summary warnings
 
+#pragma warning disable 1591 // suppress XML summary warnings
+
 // [WMR 20160907] TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
 // - unresolved external (type/extension) profile
 // - invalid element order
