@@ -10,7 +10,9 @@
         <id value="servicerequest-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -1478,7 +1480,9 @@
         <id value="consentdirective" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/consentdirective" />
         <name value="ConsentDirective" />
@@ -5458,7 +5462,9 @@
         <id value="familymemberhistory-genetic" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -6767,7 +6773,9 @@
         <id value="provenance-relevant-history" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -8221,7 +8229,9 @@
         <id value="cqif-questionnaire" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -10524,7 +10534,9 @@
         <id value="shareablevalueset" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -12801,7 +12813,9 @@
         <id value="shareablecodesystem" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -14636,7 +14650,9 @@
         <id value="devicemetricobservation" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -16635,7 +16651,9 @@
         <id value="observation-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -18925,7 +18943,9 @@
         <id value="vitalsigns" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -21403,7 +21423,9 @@
         <id value="bodyweight" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -24297,7 +24319,9 @@
         <id value="resprate" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -27177,7 +27201,9 @@
         <id value="heartrate" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -30057,7 +30083,9 @@
         <id value="bodytemp" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -32951,7 +32979,9 @@
         <id value="bodyheight" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -35845,7 +35875,9 @@
         <id value="bodylength" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -38739,7 +38771,9 @@
         <id value="headcircum" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -41633,7 +41667,9 @@
         <id value="oxygensat" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -44513,7 +44549,9 @@
         <id value="bmi" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -47395,7 +47433,9 @@
         <id value="bp" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -52075,7 +52115,9 @@
         <id value="vitalspanel" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -54743,7 +54785,9 @@
         <id value="lipidprofile" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -56126,7 +56170,9 @@
         <id value="cholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -58331,7 +58377,9 @@
         <id value="triglyceride" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -60244,7 +60292,9 @@
         <id value="hdlcholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -62194,7 +62244,9 @@
         <id value="ldlcholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -64137,7 +64189,9 @@
         <id value="diagnosticreport-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -65428,7 +65482,9 @@
         <id value="hlaresult" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -66711,7 +66767,9 @@
         <id value="clinicaldocument" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -68465,7 +68523,9 @@
         <id value="catalog" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -70283,7 +70343,9 @@
         <id value="elementdefinition-de" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -73813,7 +73875,9 @@
         <id value="ehrsrle-auditevent" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />
@@ -76171,7 +76235,9 @@
         <id value="ehrsrle-provenance" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
           <valueString value="Trial Use" />

@@ -99,7 +99,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var sd = source.ListSummaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
             var sm = source.ListSummaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
-            var de = source.ListSummaries(ResourceType.DataElement); Assert.IsFalse(de.Any());
             var cf = source.ListSummaries(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
             var md = source.ListSummaries(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
             var od = source.ListSummaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
@@ -115,7 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var all = source.ListSummaries();
 
-            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
+            Assert.AreEqual(sd.Count() + sm.Count() + cf.Count() + md.Count() + od.Count() +
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
                         ep.Count() + ns.Count(), all.Count());
         }
