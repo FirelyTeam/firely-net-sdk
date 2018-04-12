@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-discoveryDateTime");
             Assert.IsNotNull(sd);
 
-            var errors = fa.Errors().ToList();
+            var errors = fa.ListSummaryErrors().ToList();
             Assert.AreEqual(1, errors.Count);
             var error = errors[0];
             Debug.Print($"{error.Origin} : {error.Error.Message}");
