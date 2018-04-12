@@ -11,6 +11,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
+using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Threading.Tasks;
@@ -56,6 +57,8 @@ namespace Hl7.Fhir.Rest
         public HttpWebRequest LastRequest { get; private set; }
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
+        public Func<Stream, WebHeaderCollection, Stream> BeforeRequestStream { get; set; }
+        public Func<Stream, WebHeaderCollection, Stream> AfterResponseStream { get; set; }
 
 
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
@@ -86,7 +89,27 @@ namespace Hl7.Fhir.Rest
 
             // Write the body to the output
             if (outBody != null)
-                request.WriteBody(compressRequestBody, outBody);
+            {
+                Func<Stream, WebHeaderCollection, Stream> streamProcessor = (Stream input, WebHeaderCollection headers) => 
+                {
+                    return input;
+                };
+
+                if (BeforeRequestStream != null) streamProcessor += BeforeRequestStream;
+
+                if (compressRequestBody)
+                {
+                    streamProcessor += (Stream input, WebHeaderCollection headers) =>
+                    {
+                        if (!string.IsNullOrEmpty(headers[HttpRequestHeader.ContentEncoding]))
+                            headers[HttpRequestHeader.ContentEncoding] += ",";
+                        headers[HttpRequestHeader.ContentEncoding] += "gzip";
+                        return new GZipStream(input, CompressionMode.Compress, true);
+                    };
+                }
+
+                request.WriteBody(outBody, streamProcessor);
+            }
 
             // Make sure the HttpResponse gets disposed!
             using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)).ConfigureAwait(false))
@@ -143,35 +166,35 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static byte[] readBody(HttpWebResponse response)
+        private byte[] readBody(HttpWebResponse response)
         {
             if (response.ContentLength != 0)
             {
                 byte[] body = null;
-                var respStream = response.GetResponseStream();
+                Func<Stream, WebHeaderCollection, Stream> streamProcessor = (Stream input, WebHeaderCollection headers) =>
+                {
 #if !DOTNETFW
-                var contentEncoding = response.Headers["Content-Encoding"];
+                    var contentEncoding = response.Headers["Content-Encoding"];
 #else
-                var contentEncoding = response.ContentEncoding;
+                    var contentEncoding = response.ContentEncoding;
 #endif
-                if (contentEncoding == "gzip")
-                {
-                    using (var decompressed = new GZipStream(respStream, CompressionMode.Decompress, true))
+                    switch (contentEncoding)
                     {
-                        body = HttpUtil.ReadAllFromStream(decompressed);
+                        case "gzip":
+                            return new GZipStream(input, CompressionMode.Decompress, true);
+                        case "deflate":
+                            return new DeflateStream(input, CompressionMode.Decompress, true);
+                        default:
+                            return input;
                     }
-                }
-                else if (contentEncoding == "deflate")
-                {
-                    using (var decompressed = new DeflateStream(respStream, CompressionMode.Decompress, true))
-                    {
-                        body = HttpUtil.ReadAllFromStream(decompressed);
-                    }
-                }
-                else
-                {
-                    body = HttpUtil.ReadAllFromStream(respStream);
-                }
+                };
+
+                if (AfterResponseStream != null) streamProcessor += AfterResponseStream;
+
+                Stream respStream = response.GetResponseStream();
+                respStream = streamProcessor(respStream, response.Headers);
+
+                body = HttpUtil.ReadAllFromStream(respStream);
                 respStream.Dispose();
 
                 if (body.Length > 0)

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
 {
     public static class WebRequestExtensions
     {
-        internal static void WriteBody(this HttpWebRequest request, bool CompressRequestBody, byte[] data)
+        internal static void WriteBody(this HttpWebRequest request, byte[] data, Func<Stream, WebHeaderCollection, Stream> streamProcessor)
         {
 #if !DOTNETFW
             Stream outs = null;
@@ -73,23 +73,10 @@ namespace Hl7.Fhir.Rest
             outs.Flush();
             outs.Dispose();
 #else
-            Stream outs;
-            Stream compressor = null;
-            if (CompressRequestBody)
-            {
-                request.Headers.Add(HttpRequestHeader.ContentEncoding, "gzip");
-                compressor = request.GetRequestStream();
-                outs = new System.IO.Compression.GZipStream(compressor, System.IO.Compression.CompressionMode.Compress, true);
-            }
-            else
-            {
-                outs = request.GetRequestStream();
-            }
+            Stream outs = streamProcessor(request.GetRequestStream(), request.Headers);
             outs.Write(data, 0, (int)data.Length);
             outs.Flush();
             outs.Dispose();
-            if (compressor != null)
-                compressor.Dispose();
 #endif
         }
 
