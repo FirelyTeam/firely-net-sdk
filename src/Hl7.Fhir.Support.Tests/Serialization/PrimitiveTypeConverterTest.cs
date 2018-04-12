@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,9 +42,11 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
         private IEnumerable<(string input, DateTime expected, bool expectException)> GetDateTimeTestdata()
         {
+            yield return ("0001-01-02+03:00", new DateTime(1, 1, 1, 21, 0, 0), false);
             yield return ("0001-01-02T00:00:00+00:00", new DateTime(1, 1, 2, 0, 0, 0), false); 
             yield return ("2018-04-12T13:22:12Z", new DateTime(2018, 4, 12, 13, 22, 12), false);
             yield return ("2018-04-12T13:22:12+02:00", new DateTime(2018, 4, 12, 11, 22, 12), false);
+            yield return ("2018-04-12+02:00", new DateTime(2018, 4, 11, 22, 0, 0), false);
         }
 
         [TestMethod]

@@ -22,8 +22,8 @@ namespace Hl7.Fhir.Serialization
 
         public static object ConvertTo(object value, Type to)
         {
-            if(to == null) throw Error.ArgumentNull(nameof(to));
-            if(value == null) throw Error.ArgumentNull(nameof(value));
+            if (to == null) throw Error.ArgumentNull(nameof(to));
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             // No conversion necessary...
             if (value.GetType() == to) return value;
@@ -55,33 +55,33 @@ namespace Hl7.Fhir.Serialization
 
         private static string convertToXmlString(object value)
         {
-            if(value is Boolean)
+            if (value is Boolean)
                 return XmlConvert.ToString((bool)value);
-            if(value is Byte)
+            if (value is Byte)
                 return XmlConvert.ToString((byte)value);        // Not used in FHIR serialization
-            if(value is Char)
+            if (value is Char)
                 return XmlConvert.ToString((char)value);        // Not used in FHIR serialization
-            if(value is DateTime)
+            if (value is DateTime)
                 return XmlConvert.ToString((DateTime)value, FMT_FULL);    // TODO: validate format, not used in model
-            if(value is Decimal)
+            if (value is Decimal)
                 return XmlConvert.ToString((decimal)value);
-            if(value is Double)
-                return XmlConvert.ToString((double)value); 
-            if(value is Int16)
-                return XmlConvert.ToString((short)value); 
-            if(value is Int32)
+            if (value is Double)
+                return XmlConvert.ToString((double)value);
+            if (value is Int16)
+                return XmlConvert.ToString((short)value);
+            if (value is Int32)
                 return XmlConvert.ToString((int)value);
-            if(value is Int64)
+            if (value is Int64)
                 return XmlConvert.ToString((long)value);       // Not used in FHIR serialization
-            if(value is SByte)
+            if (value is SByte)
                 return XmlConvert.ToString((sbyte)value);       // Not used in FHIR serialization
-            if(value is Single)
+            if (value is Single)
                 return XmlConvert.ToString((float)value);      // Not used in FHIR serialization
-            if(value is UInt16)
+            if (value is UInt16)
                 return XmlConvert.ToString((ushort)value);      // Not used in FHIR serialization
-            if(value is UInt32)
+            if (value is UInt32)
                 return XmlConvert.ToString((uint)value);      // Not used in FHIR serialization
-            if(value is UInt64)
+            if (value is UInt64)
                 return XmlConvert.ToString((ulong)value);      // Not used in FHIR serialization
             if (value is byte[])
                 return System.Convert.ToBase64String((byte[])value);
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Serialization
 
             throw Error.NotSupported($"Cannot convert '{value.GetType().Name}' value '{value}' to string");
         }
-        
+
         private static object convertXmlStringToPrimitive(Type to, string value)
         {
             if (typeof(Boolean) == to)
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Serialization
             if (typeof(Char) == to)
                 return XmlConvert.ToChar(value);        // Not used in FHIR serialization
             if (typeof(DateTime) == to)
-                return ConvertToDatetimeOffset(value).UtcDateTime; 
+                return ConvertToDatetimeOffset(value).UtcDateTime;
             if (typeof(Decimal) == to)
                 return XmlConvert.ToDecimal(value);
             if (typeof(Double) == to)
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Serialization
 
         private static DateTimeOffset ConvertToDatetimeOffset(string value)
         {
-            if (!value.Contains("T"))
+            if (!value.Contains("T") && value.Length <= 10)
             {
                 // MV: when there is no time-part, consider this then as a UTC datetime by adding Zulu = UTC(+0)
                 return XmlConvert.ToDateTimeOffset(value + "Z");
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Serialization
             if (Type.GetTypeCode(type) != TypeCode.Object) return true;
 #endif
 
-			// And some specific complex native types
+            // And some specific complex native types
             if (type == typeof(byte[]) ||
                  type == typeof(string) ||
                  type == typeof(DateTimeOffset) ||
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Serialization
             return false;
         }
 
-     
+
         //public static string GetValueAsString(this Primitive p)
         //{
         //    if (p == null) return null;
