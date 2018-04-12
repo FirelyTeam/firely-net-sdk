@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -160,6 +160,23 @@ namespace Hl7.Fhir.Test
             var b = tx.ToBundle();
 
             Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);
+        }
+
+        /// <summary>
+        /// Unit test to prove issue 536: 
+        /// https://github.com/ewoutkramer/fhir-net-api/issues/536
+        /// </summary>
+        [TestMethod]
+        public void TestTransactionWithForwardSlash()
+        {
+            var tx2 = new TransactionBuilder("http://myserver.org/fhir/");
+            var bundle = tx2.Get("@Patient/1").ToBundle();
+
+            var tx = new TransactionBuilder("http://myserver.org/fhir/")
+                .Transaction(bundle);
+
+            var b = tx.ToBundle();
+            Assert.IsFalse(b.Entry[0].Request.Url.EndsWith(@"/"), "Url cannot end with forward slash");
         }
     }
 }

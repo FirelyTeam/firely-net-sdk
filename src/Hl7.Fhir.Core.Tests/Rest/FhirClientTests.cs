@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         //public static Uri testEndpoint = new Uri("http://test.fhir.org/r2");
-        //public static Uri testEndpoint = new Uri("http://vonk.furore.com");
+        //public static Uri testEndpoint = new Uri("http://vonk.fire.ly");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
         public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");

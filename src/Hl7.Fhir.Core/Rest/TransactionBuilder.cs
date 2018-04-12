@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -354,7 +354,10 @@ namespace Hl7.Fhir.Rest
         {
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Transaction);
             entry.Resource = transaction;
-            addEntry(entry, newRestUrl());
+            var url = _baseUrl;
+            if (url.EndsWith("/"))  // in case of a transaction the url cannot end with a forward slash. Remove it here.
+                url = url.TrimEnd('/');
+            addEntry(entry, new RestUrl(url));
 
             return this;
         }
