@@ -88,8 +88,10 @@ namespace Hl7.Fhir.Serialization
 
                 _current = parent;
             }
-            else if(_current == _createdRootObject)
+            else if (_current == _createdRootObject)
+            {
                 _root.WriteTo(jw);
+            }
         }
 
         public void WriteStartComplexContent()

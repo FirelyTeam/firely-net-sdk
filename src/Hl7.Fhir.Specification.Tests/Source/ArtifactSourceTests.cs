@@ -156,6 +156,24 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void ExcludeSubdirectory()
+        {
+            var fa = new DirectorySource(_testPath)
+            {
+                Includes = new[] { "*.json" },
+                IncludeSubDirectories = true
+            };
+
+            var names = fa.ListArtifactNames();
+            Assert.AreEqual(1, names.Count());
+
+            fa.Excludes = new[] { "/sub/" };
+
+            names = fa.ListArtifactNames();
+            Assert.AreEqual(0, names.Count());
+        }
+
+        [TestMethod]
         public void FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
@@ -174,7 +192,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
             Assert.IsNotNull(sd);
 
-            var errors = fa.Errors().ToList();
+            var errors = fa.ListSummaryErrors().ToList();
             Assert.AreEqual(1, errors.Count);
             var error = errors[0];
             Debug.Print($"{error.Origin} : {error.Error.Message}");
