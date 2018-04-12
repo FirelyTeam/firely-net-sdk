@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Tests.Serialization
 	    [TestMethod]
 	    public void TestStringToDateTime()
 	    {
-		    Assert.AreEqual(PrimitiveTypeConverter.ConvertTo<DateTime>("1976-12-12"), new DateTime(1976, 12, 12));
+		    Assert.AreEqual(new DateTime(1976, 12, 12), PrimitiveTypeConverter.ConvertTo<DateTime>("1976-12-12"));
 	    }
 
 	    [TestMethod]

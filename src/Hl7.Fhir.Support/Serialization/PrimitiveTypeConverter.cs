@@ -101,39 +101,39 @@ namespace Hl7.Fhir.Serialization
         
         private static object convertXmlStringToPrimitive(Type to, string value)
         {
-            if(typeof(Boolean) == to)
+            if (typeof(Boolean) == to)
                 return XmlConvert.ToBoolean(value);
-            if(typeof(Byte) == to)
+            if (typeof(Byte) == to)
                 return XmlConvert.ToByte(value);        // Not used in FHIR serialization
-            if(typeof(Char) == to)
+            if (typeof(Char) == to)
                 return XmlConvert.ToChar(value);        // Not used in FHIR serialization
-            if(typeof(DateTime) == to)
-                return XmlConvert.ToDateTimeOffset(value).DateTime; // TODO: should handle FHIR's "instant" datatype
-            if(typeof(Decimal) == to)
+            if (typeof(DateTime) == to)
+                return ConvertToDatetimeOffset(value).UtcDateTime; 
+            if (typeof(Decimal) == to)
                 return XmlConvert.ToDecimal(value);
-            if(typeof(Double) == to)
+            if (typeof(Double) == to)
                 return XmlConvert.ToDouble(value);      // Could lead to loss in precision
-            if(typeof(Int16) == to)
+            if (typeof(Int16) == to)
                 return XmlConvert.ToInt16(value);       // Could lead to loss in precision
-            if(typeof(Int32) == to)
+            if (typeof(Int32) == to)
                 return XmlConvert.ToInt32(value);
-            if(typeof(Int64) == to)
+            if (typeof(Int64) == to)
                 return XmlConvert.ToInt64(value);       // Not used in FHIR serialization
-            if(typeof(SByte) == to)
+            if (typeof(SByte) == to)
                 return XmlConvert.ToSByte(value);       // Not used in FHIR serialization
-            if(typeof(Single) == to)
+            if (typeof(Single) == to)
                 return XmlConvert.ToSingle(value);      // Not used in FHIR serialization
-            if(typeof(UInt16) == to)
+            if (typeof(UInt16) == to)
                 return XmlConvert.ToUInt16(value);      // Not used in FHIR serialization
-            if(typeof(UInt32) == to)
+            if (typeof(UInt32) == to)
                 return XmlConvert.ToUInt32(value);      // Not used in FHIR serialization
-            if(typeof(UInt64) == to)
+            if (typeof(UInt64) == to)
                 return XmlConvert.ToUInt64(value);      // Not used in FHIR serialization
-            if(typeof(byte[]) == to)
+            if (typeof(byte[]) == to)
                 return System.Convert.FromBase64String(value);
             if (typeof(DateTimeOffset) == to)
                 return ConvertToDatetimeOffset(value);
-            if(typeof(System.Uri) == to)
+            if (typeof(System.Uri) == to)
                 return new Uri(value, UriKind.RelativeOrAbsolute);
             if (to.IsEnum())
             {
