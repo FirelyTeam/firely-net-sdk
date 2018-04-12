@@ -417,12 +417,16 @@ namespace Hl7.Fhir.Validation
         {
             if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
                 return outcome.AddIssue(message, issue, location);
+
             return null;
         }
 
         internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
-            return Trace(outcome, message, issue, location.Location);
+            if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
+                return Trace(outcome, message, issue, location.Location);
+
+            return null;
         }
 
         private string toStringRepresentation(IElementNavigator vp)

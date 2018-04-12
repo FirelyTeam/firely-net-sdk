@@ -151,8 +151,12 @@ namespace Hl7.Fhir.Specification.Tests
 
         private void DebugDumpOutputXml(Base fragment)
         {
+
+#if DUMP_OUTPUT
+            // commented out, since this will fill up the CI build's output log
             var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));
             output.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
+#endif
         }
 
         [Fact]
