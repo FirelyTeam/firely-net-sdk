@@ -6232,7 +6232,206 @@ namespace Hl7.Fhir.Specification.Tests
             // 5. Extension: accuracyIndicator
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual("accuracyIndicator", nav.Current.SliceName);
+        }
 
+        // [WMR 20180410] Unit test to investigate issue reported by David McKillop
+        [TestMethod]
+        public void TestAuPatientDerived()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = @"http://hl7.org.au/fhir/StructureDefinition/au-patient",
+                Name = "AuPatientDerived",
+                Url = "http://example.org/fhir/StructureDefinition/AuPatientDerived",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            SliceName = "deceasedBoolean",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            SliceName = "deceasedDateTime",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceased[x].extension")
+                        {
+                            SliceName = "accuracyIndicator",
+                            MustSupport = true
+                        }
+                    }
+                }
+
+            };
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+        }
+
+        // [WMR 20180410] Cannot handle invalid (!) choice type element renaming within type slice
+        // Exception from ElementMatcher.matchBase - choiceNames.SingleOrDefault()
+        // TODO: Gracefully handle multiple matches, emit issue, use first match
+        [Ignore]
+        [TestMethod]
+        public void TestAuPatientDerived2()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = @"http://hl7.org.au/fhir/StructureDefinition/au-patient",
+                Name = "AuPatientDerived2",
+                Url = "http://example.org/fhir/StructureDefinition/AuPatientDerived2",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.deceased[x]")
+                        {
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceasedBoolean]")
+                        {
+                            SliceName = "deceasedBoolean",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceasedDateTime")
+                        {
+                            SliceName = "deceasedDateTime",
+                            MustSupport = true
+                        },
+                        new ElementDefinition("Patient.deceasedDateTime.extension")
+                        {
+                            SliceName = "accuracyIndicator",
+                            MustSupport = true
+                        }
+                    }
+                }
+
+            };
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+        }
+
+        // [WMR 20180410] Add unit tests for content references
+
+        public StructureDefinition QuestionnaireWithNestedItems = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Questionnaire.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Questionnaire),
+            Name = "QuestionnaireWithNestedItems",
+            Url = "http://example.org/fhir/StructureDefinition/QuestionnaireWithNestedItems",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Questionnaire.item.type")
+                        {
+                            Short = "level 1"
+                        },
+                        new ElementDefinition("Questionnaire.item.item.type")
+                        {
+                            Comment = "level 2"
+                        }
+                    }
+            }
+        };
+
+        [TestMethod]
+        public void TestContentReferenceQuestionnaire()
+        {
+            var sd = QuestionnaireWithNestedItems;
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.type"));
+            Assert.AreEqual("level 1" ,nav.Current.Short);
+
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
+            Assert.AreEqual("level 2", nav.Current.Comment);
+            // Level 2 should NOT inherit constraints from level 1
+            Assert.AreNotEqual("level 1", nav.Current.Short);
+        }
+
+        [TestMethod]
+        public void TestContentReferenceQuestionnaireDerived()
+        {
+            var sd = new StructureDefinition
+            {
+                Type = FHIRAllTypes.Questionnaire.GetLiteral(),
+                BaseDefinition = QuestionnaireWithNestedItems.Url,
+                Name = "QuestionnaireWithNestedItemsDerived",
+                Url = "http://example.org/fhir/StructureDefinition/QuestionnaireWithNestedItemsDerived",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Questionnaire.item.type")
+                        {
+                            Comment = "level 1 *"
+                        },
+                        new ElementDefinition("Questionnaire.item.item.type")
+                        {
+                            Short = "level 2 *"
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd, QuestionnaireWithNestedItems);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            // Constraints should be merged separately on each nesting level
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.type"));
+            Assert.AreEqual("level 1", nav.Current.Short);
+            Assert.AreEqual("level 1 *", nav.Current.Comment);
+
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
+            Assert.AreEqual("level 2", nav.Current.Comment);
+            Assert.AreEqual("level 2 *", nav.Current.Short);
         }
 
     }

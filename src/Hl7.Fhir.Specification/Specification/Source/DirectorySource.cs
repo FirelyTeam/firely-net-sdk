@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class DirectorySource : IConformanceSource, IArtifactSource
+    public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource
     {
         // netstandard has no CurrentCultureIgnoreCase comparer
 #if DOTNETFW
@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private List<string> _artifactFilePaths;
         private List<ArtifactSummary> _artifactSummaries;
+        private ReadOnlyCollection<ArtifactSummary> _roArtifactSummaries;
 #if THREADSAFE
         // Shared synchronization object for _artifactFilePaths & _artifactSummaries
         private readonly object _syncRoot = new object();
@@ -353,6 +354,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 _artifactFilePaths = null;
                 _artifactSummaries = null;
+                _roArtifactSummaries = null;
                 if (force)
                 {
                     prepareSummaries();
@@ -421,7 +423,10 @@ namespace Hl7.Fhir.Specification.Source
                             var summaries = ArtifactSummaryGenerator.Generate(filePath, _settings.SummaryDetailsHarvesters);
                             _artifactSummaries.AddRange(summaries);
                         }
+                        // [WMR 20180409] No need to recreate r/o wrapper, automatically synchronized
+                        // _roArtifactSummaries = _artifactSummaries.AsReadOnly();
                     }
+
                 }
             }
         }
@@ -443,9 +448,6 @@ namespace Hl7.Fhir.Specification.Source
         #endregion
 
         #region IConformanceSource
-
-        /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => GetSummaries().AsReadOnly();
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
@@ -494,6 +496,17 @@ namespace Hl7.Fhir.Specification.Source
             return summary?.LoadResource<NamingSystem>();
         }
 
+
+        #endregion
+
+        #region ISummarySource
+
+        /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries()
+        {
+            GetSummaries();
+            return _roArtifactSummaries;
+        }
 
         #endregion
 
@@ -557,6 +570,7 @@ namespace Hl7.Fhir.Specification.Source
 
             _artifactFilePaths = filePaths;
             _artifactSummaries = null;
+            _roArtifactSummaries = null;
             return filePaths;
         }
 
@@ -732,6 +746,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             _artifactSummaries = summaries;
+            _roArtifactSummaries = summaries.AsReadOnly();
             return;
         }
 
