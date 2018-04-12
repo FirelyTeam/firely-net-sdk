@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -23,6 +23,46 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSourceTests
     {
+        private static string _testPath;
+
+        [ClassInitialize]
+        public static void SetupExampleDir(TestContext context)
+        {
+            _testPath = prepareExampleDirectory(out int numFiles);
+        }
+
+        private static string prepareExampleDirectory(out int numFiles)
+        {
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
+            var zip = new ZipCacher(zipFile);
+            var zipPath = zip.GetContentDirectory();
+
+            var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testPath);
+
+            copy(zipPath, "extension-definitions.xml", testPath);
+            copy(zipPath, "flag.xsd", testPath);
+            copy(zipPath, "patient.sch", testPath);
+            copy(@"TestData", "TestPatient.xml", testPath);
+            File.WriteAllText(Path.Combine(testPath, "bla.dll"), "This is text, acting as a dll");
+            File.WriteAllText(Path.Combine(testPath, "nonfhir.xml"), "<root>this is not a valid FHIR xml resource.</root>");
+            File.WriteAllText(Path.Combine(testPath, "invalid.xml"), "<root>this is invalid xml");
+
+            var subPath = Path.Combine(testPath, "sub");
+            Directory.CreateDirectory(subPath);
+            copy(@"TestData", "TestPatient.json", subPath);
+
+            // If you add or remove files, please correct the numFiles here below
+            numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
+
+            return testPath;
+        }
+
+        private static void copy(string dir, string file, string outputDir)
+        {
+            File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
+        }
+
         [TestMethod]
         public void ZipCacherShouldCache()
         {
@@ -76,47 +116,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(fa.IsActual());
         }
 
-        private void copy(string dir, string file, string outputDir)
-        {
-            File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
-        }
-
-        private string prepareExampleDirectory(out int numFiles)
-        {
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
-            var zip = new ZipCacher(zipFile);
-            var zipPath = zip.GetContentDirectory();
-
-            var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            Directory.CreateDirectory(testPath);
-
-            copy(zipPath, "extension-definitions.xml", testPath);
-            copy(zipPath, "flag.xsd", testPath);
-            copy(zipPath, "patient.sch", testPath);
-            copy(@"TestData", "TestPatient.xml", testPath);
-            File.WriteAllText(Path.Combine(testPath, "bla.dll"), "This is text, acting as a dll");
-            File.WriteAllText(Path.Combine(testPath, "nonfhir.xml"), "<root>this is not a valid FHIR xml resource.</root>");
-            File.WriteAllText(Path.Combine(testPath, "invalid.xml"), "<root>this is invalid xml");
-
-            var subPath = Path.Combine(testPath, "sub");
-            Directory.CreateDirectory(subPath);
-            copy(@"TestData", "TestPatient.json", subPath);
-
-            // If you add or remove files, please correct the numFiles here below
-            numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
-
-            return testPath;
-        }
-
-
-        private string _testPath;
-
-        [TestInitialize]
-        public void SetupExampleDir()
-        {
-            _testPath = prepareExampleDirectory(out int numFiles);
-        }
-
         [TestMethod]
         public void UseFileArtifactSource()
         {
@@ -157,6 +156,24 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void ExcludeSubdirectory()
+        {
+            var fa = new DirectorySource(_testPath)
+            {
+                Includes = new[] { "*.json" },
+                IncludeSubDirectories = true
+            };
+
+            var names = fa.ListArtifactNames();
+            Assert.AreEqual(1, names.Count());
+
+            fa.Excludes = new[] { "/sub/" };
+
+            names = fa.ListArtifactNames();
+            Assert.AreEqual(0, names.Count());
+        }
+
+        [TestMethod]
         public void FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
@@ -175,7 +192,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
             Assert.IsNotNull(sd);
 
-            var errors = fa.Errors().ToList();
+            var errors = fa.ListSummaryErrors().ToList();
             Assert.AreEqual(1, errors.Count);
             var error = errors[0];
             Debug.Print($"{error.Origin} : {error.Error.Message}");

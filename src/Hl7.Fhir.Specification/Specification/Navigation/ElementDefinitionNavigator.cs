@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 var output = new StringBuilder();
                 output.Append(elem.Path);
                 if (elem.SliceName != null) { output.Append(" : '" + elem.SliceName + "'"); }
-                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(" | ", elem.Slicing.Discriminator)); }
+                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(", ", elem.Slicing?.Discriminator?.Select(d => $"{d.Type}:{d.Path}"))); }
                 return output.ToString();
             }
         }

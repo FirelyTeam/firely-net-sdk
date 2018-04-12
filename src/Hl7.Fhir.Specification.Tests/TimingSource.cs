@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -23,8 +24,6 @@ namespace Hl7.Fhir.Specification.Tests
             TimeSpan _duration = TimeSpan.Zero;
 
             public TimingSource(IConformanceSource source) { _source = source; }
-
-            public IEnumerable<ArtifactSummary> ListSummaries() => throw new NotImplementedException();
 
             public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
                 => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));

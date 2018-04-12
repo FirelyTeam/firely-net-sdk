@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -92,22 +92,22 @@ namespace Hl7.FhirPath.Tests
         {
             var nav = patient.ToNavigator();
 
-            Assert.Equal(nav.Name, "Patient");
+            Assert.Equal("Patient", nav.Name);
             Assert.True(nav.MoveToFirstChild());
-            Assert.Equal(nav.Name, "active");
+            Assert.Equal("active", nav.Name);
             Assert.Equal("boolean", nav.Type);
             Assert.False(nav.MoveToNext());
 
             Assert.Equal(true, nav.Value);
             Assert.True(nav.MoveToFirstChild("id"));
-            Assert.Equal(nav.Name, "id");
+            Assert.Equal("id", nav.Name);
             Assert.False(nav.MoveToFirstChild());
             Assert.True(nav.MoveToNext());
-            Assert.Equal(nav.Name, "id");
+            Assert.Equal("id", nav.Name);
             Assert.True(nav.MoveToNext("extension"));
-            Assert.Equal(nav.Name, "extension");
+            Assert.Equal("extension", nav.Name);
             Assert.True(nav.MoveToFirstChild());
-            Assert.Equal(nav.Name, "value");
+            Assert.Equal("value", nav.Name);
         }
 
         [Fact]

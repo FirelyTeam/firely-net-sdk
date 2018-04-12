@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017+ brianpos, Furore and contributors
+ * Copyright (c) 2017+ brianpos, Firely and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license

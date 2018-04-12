@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -27,6 +27,9 @@
 // #define FIX_SLICENAMES_ON_SPECIALIZATIONS
 // Detect and fix invalid non-null sliceNames on root elements
 #define FIX_SLICENAMES_ON_ROOT_ELEMENTS
+
+// [WMR 20180409] Resolve contentReference from core resource/datatype (StructureDefinition.type)
+#define FIX_CONTENTREFERENCE
 
 using System;
 using System.Collections.Generic;
@@ -64,12 +67,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <param name="resolver">A <see cref="IResourceResolver"/> instance.</param>
         /// <param name="settings">Configuration settings that control the behavior of the snapshot generator.</param>
-        public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
+        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
+        public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings)
         {
-            if (resolver == null) { throw Error.ArgumentNull(nameof(resolver)); }
+            _resolver = verifySource(resolver, nameof(resolver));
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
-            _resolver = resolver;
-
             // [WMR 20171023] Always copy the specified settings, to prevent shared state
             // Especially important to prevent corruption of the global SnapshotGeneratorSettings.Default instance.
             _settings = new SnapshotGeneratorSettings(settings);
@@ -80,10 +82,29 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// for the specified resource resolver and with default configuration settings.
         /// </summary>
         /// <param name="resolver">A <see cref="IResourceResolver"/> instance.</param>
-        public SnapshotGenerator(IResourceResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default)
+        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
+        public SnapshotGenerator(IResourceResolver resolver)
         {
-            // ...
+            _resolver = verifySource(resolver, nameof(resolver));
+            _settings = SnapshotGeneratorSettings.CreateDefault();
         }
+
+        static IResourceResolver verifySource(IResourceResolver resolver, string name = null)
+        {
+            if (resolver == null) { throw Error.ArgumentNull(name ?? nameof(resolver)); }
+            if (resolver is SnapshotSource) { throw Error.Argument(name ?? nameof(resolver), $"Invalid argument. Cannot create a new {nameof(SnapshotGenerator)} instance from an existing {nameof(SnapshotSource)}."); }
+
+            // TODO: Verify that the specified resolver is idempotent (i.e. caching)
+            // Maybe add some interface property to detect behavior?
+            // i.e. IsIdemPotent (repeated calls return same instance)
+            // Note: cannot add new property to IResourceResolver, breaking change...
+            // Alternatively, add new secondary interface IResourceResolverProperties
+
+            return resolver;
+        }
+
+        /// <summary>Returns a reference to the associated <see cref="IResourceResolver"/> instance, as specified in the call to the constructor.</summary>
+        public IResourceResolver Source => _resolver;
 
         /// <summary>Returns the snapshot generator configuration settings.</summary>
         public SnapshotGeneratorSettings Settings => _settings;
@@ -214,7 +235,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         List<ElementDefinition> generate(StructureDefinition structure)
         {
-            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' ...");
+            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' (#{structure.GetHashCode()}) ...");
 
             List<ElementDefinition> result;
             var differential = structure.Differential;
@@ -408,7 +429,24 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (!String.IsNullOrEmpty(defn.ContentReference))
             {
+
+#if FIX_CONTENTREFERENCE
+                // [WMR 20180409] NEW
+                // Resolve contentReference from core resource/datatype definition
+                // Specified by StructureDefinition.type == root element name
+
+                var coreStructure = getStructureForContentReference(nav, true);
+                // getStructureForContentReference emits issue if profile cannot be resolved
+                if (coreStructure == null) { return false; }
+
+                var sourceNav = ElementDefinitionNavigator.ForSnapshot(coreStructure);
+#else
+                // [WMR 20180409] WRONG!
+                // Resolves contentReference from current StructureDef
+                // Recursive child items should NOT inherit constraints from parent in same profile
+
                 var sourceNav = new ElementDefinitionNavigator(nav);
+#endif
                 if (!sourceNav.JumpToNameReference(defn.ContentReference))
                 {
                     addIssueInvalidNameReference(defn);
@@ -416,12 +454,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 nav.CopyChildren(sourceNav);
 
-                // [WMR 20170710] Explicitly re-generate element ids for the copied subtree
-                // Cannot re-use original ids from reference target, as this would lead to duplicates
-                if (_settings.GenerateElementIds)
-                {
-                    ElementIdGenerator.Update(nav, true, true);
-                }
+                // [WMR 20180410]
+                // - Regenerate element IDs
+                // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
+                prepareExpandedTypeProfileElements(nav, sourceNav);
+
             }
             else if (defn.Type == null || defn.Type.Count == 0)
             {
@@ -1119,7 +1156,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Recursively re-generate IDs for elements inherited from external rebased type profile
             if (_settings.GenerateElementIds)
             {
-                ElementIdGenerator.Update(snap, true);
+                // [WMR 20180116] Fix: only update child element ids
+                ElementIdGenerator.Update(snap, true, true);
             }
 
             if (MustRaisePrepareElement)
@@ -1596,6 +1634,36 @@ namespace Hl7.Fhir.Specification.Snapshot
             return baseStructure;
         }
 
+#if FIX_CONTENTREFERENCE
+        // [WMR 20180410] Resolve the defining target structure of a contentReference
+        StructureDefinition getStructureForContentReference(ElementDefinitionNavigator nav, bool ensureSnapshot)
+        {
+            Debug.Assert(nav != null);
+            Debug.Assert(nav.Current != null);
+
+            var elementDef = nav.Current;
+            var location = elementDef.ToNamedNode();
+
+            var contentReference = elementDef.ContentReference; // e.g. "#Questionnaire.item"
+
+            var coreType = nav.StructureDefinition?.Type
+                // Fall back to root element name...?
+                ?? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1));
+
+            if (!string.IsNullOrEmpty(coreType))
+            {
+                // Try to resolve the custom element type profile reference
+                var coreSd = _resolver.FindStructureDefinitionForCoreType(coreType);
+                var isValidProfile = ensureSnapshot
+                    ? this.ensureSnapshot(coreSd, coreType, location)
+                    : this.verifyStructure(coreSd, coreType, location);
+                return coreSd;
+            }
+
+            return null;
+        }
+#endif
+
         bool verifyStructure(StructureDefinition sd, string profileUrl, IElementNavigator location = null)
         {
             if (sd == null)
@@ -1625,7 +1693,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.GenerateSnapshotForExternalProfiles
-                    && (sd.Snapshot == null || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                    && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -1779,7 +1847,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
             var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
+            // [WMR 20180108] diffRoot may be null (sparse differential w/o root)
             var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, diffRoot?.ToNamedNode()); // Recursion!
+
             if (baseRoot == null)
             {
                 addIssueSnapshotGenerationFailed(baseProfileUri);
@@ -1820,6 +1890,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Determine if the specified element names are equal. Performs an ordinal comparison.</summary>
         static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
 
+        /// <summary>Create a fully connected element tree from a sparse (differential) element list by adding missing parent element definitions.</summary>
+        /// <returns>A list of elements that represents a fully connected element tree.</returns>
+        /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
         public static List<ElementDefinition> ConstructFullTree(List<ElementDefinition> source) => DifferentialTreeConstructor.MakeTree(source);
     }
 }

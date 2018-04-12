@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -87,22 +88,28 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <remarks>If <c>true</c>, then the <see cref="Error"/> property returns detailed error information.</remarks>
         public bool IsFaulted => Error != null; // cf. Task
 
-        /// <summary>The original location of the associated artifact.</summary>
+        /// <summary>Gets the original location of the associated artifact.</summary>
         public string Origin => properties.GetOrigin();
 
+        /// <summary>Gets the size of the original artifact file.</summary>
+        public long FileSize => properties.GetFileSize();
+
+        /// <summary>Gets the last modified date of the original artifact file.</summary>
+        public DateTime LastModified => properties.GetLastModified();
+
         /// <summary>
-        /// Returns an opaque value that represents the position of the artifact within the container.
+        /// Gets an opaque value that represents the position of the artifact within the container.
         /// Allows the <see cref="DirectorySource"/> to retrieve and deserialize the associated artifact.
         /// </summary>
         public string Position => properties.GetPosition();
 
-        /// <summary>Returns the type name of the resource.</summary>
+        /// <summary>Gets the type name of the resource.</summary>
         public string ResourceTypeName => properties.GetTypeName();
 
-        /// <summary>Returns the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
+        /// <summary>Gets the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
         public ResourceType? ResourceType { get; }
 
-        /// <summary>Returns the resource uri.</summary>
+        /// <summary>Gets the resource uri.</summary>
         /// <remarks>The <see cref="DirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
         public string ResourceUri => properties.GetResourceUri();
 
@@ -140,6 +147,49 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public bool TryGetValue(string key, out object value) => properties.TryGetValue(key, out value);
 
         #endregion
+
+        /// <summary>Try to load a resource from the summary <see cref="Origin"/>.</summary>
+        /// <typeparam name="T">The resource type to return.</typeparam>
+        /// <returns>A new resource instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        /// <remarks>
+        /// This method annotates returned resource instances with an <seealso cref="OriginAnnotation"/>
+        /// that captures the value of the <see cref="Origin"/> property.
+        /// The <seealso cref="OriginAnnotationExtensions.GetOrigin(Resource)"/> extension method 
+        /// provides access to the annotated location.
+        /// </remarks>
+        public T LoadResource<T>() where T : Resource
+        {
+            // File path of the containing resource file (could be a Bundle)
+            var path = Origin;
+
+            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
+            {
+
+                // Handle exceptions & null return values?
+                // e.g. file may have been deleted/renamed since last scan
+
+                // Advance stream to the target resource (e.g. specific Bundle entry)
+                if (navStream != null && navStream.Seek(Position))
+                {
+                    // Create navigator for the target resource
+                    var nav = navStream.Current;
+                    if (nav != null)
+                    {
+                        // Parse target resource from navigator
+                        var parser = new BaseFhirParser();
+                        var result = parser.Parse<T>(nav);
+                        if (result != null)
+                        {
+                            // Add origin annotation
+                            result.SetOrigin(path);
+                            return result;
+                        }
+                    }
+                }
+
+                return null;
+            }
+        }
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

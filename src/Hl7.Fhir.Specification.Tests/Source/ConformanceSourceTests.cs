@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -194,7 +194,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(us is StructureDefinition);
         }
 
-
         [TestMethod]
         public void TestFilenameDeDuplication()
         {
@@ -328,7 +327,6 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestJsonBundleRetrieval()
         {
-            //var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
@@ -342,10 +340,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(humanName);
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestSourceSpeedTest()
         {
-            // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
@@ -357,7 +354,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
 
-            // var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
             var xmlSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
@@ -369,7 +365,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
-            // var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
             var xmlSourceLarge = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
@@ -380,24 +375,21 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
 
-            (var duration, var count) = runTest(jsonSource);
-            Debug.WriteLine($"jsonSource: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 1000);
+            runTest("profiles-types.json", jsonSource, false, 1000);
+            runTest("profiles-types.xml", xmlSource, false, 500);
+            runTest("all xml examples", xmlSourceLarge, false, 10000);
 
-            (duration, count) = runTest(xmlSource);
-            Debug.WriteLine($"xmlSource: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 500);
+            runTest("profiles-types.json", jsonSource, true, 1000);
+            runTest("profiles-types.xml", xmlSource, true, 500);
+            runTest("all xml examples", xmlSourceLarge, true, 10000);
 
-            (duration, count) = runTest(xmlSourceLarge);
-            Debug.WriteLine($"xmlSourceLarge: {count} resources, duration {duration} ms");
-            Assert.IsTrue(duration < 10000);
-
-            (long duration, int count) runTest(DirectorySource s)
+            void runTest(string title, DirectorySource s, bool multiThreaded, long maxDuration)
             {
                 var sw = new Stopwatch();
                 sw.Start();
 
                 int cnt = 0;
+                s.MultiThreaded = multiThreaded;
                 for (var repeat = 0; repeat < 10; repeat++)
                 {
                     s.Refresh();  // force reload of whole file
@@ -405,37 +397,9 @@ namespace Hl7.Fhir.Specification.Tests
                 }
 
                 sw.Stop();
-                return (sw.ElapsedMilliseconds, cnt);
+                Debug.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
+                Assert.IsTrue(sw.ElapsedMilliseconds < maxDuration);
             }
-        }
-
-        [TestMethod]
-        public void ListSummaries()
-        {
-            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
-                new DirectorySourceSettings { IncludeSubDirectories = true });
-
-            var sd = source.Summaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
-            var sm = source.Summaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
-            var de = source.Summaries(ResourceType.DataElement); Assert.IsFalse(de.Any());
-            var cf = source.Summaries(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
-            var md = source.Summaries(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
-            var od = source.Summaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
-            var sp = source.Summaries(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
-            var cd = source.Summaries(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
-            var ig = source.Summaries(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
-
-            var cs = source.Summaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
-            var vs = source.Summaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
-            var cm = source.Summaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
-            var ep = source.Summaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
-            var ns = source.Summaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
-
-            var all = source.ListSummaries();
-
-            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
-                        sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
-                        ep.Count() + ns.Count(), all.Count());
         }
 
         [TestMethod]
