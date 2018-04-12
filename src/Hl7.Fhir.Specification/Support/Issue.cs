@@ -138,17 +138,33 @@ namespace Hl7.Fhir.Support
 
     public static class OperationOutcomeIssueExtensions
     {
-        public static OperationOutcome AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
+        public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, IElementNavigator location)
         {
-            outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
+            var outcome = new OperationOutcome();
+            var issue = infoIssue.ToIssueComponent(message, location);
+            outcome.AddIssue(issue);
+            return outcome;
+        }
+        public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, string location = null)
+        {
+            var outcome = new OperationOutcome();
+            var issue = infoIssue.ToIssueComponent(message, location);
+            outcome.AddIssue(issue);
             return outcome;
         }
 
-        public static OperationOutcome AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, string location=null)
+        public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
         {
-            outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
-            return outcome;
+            var issue = infoIssue.ToIssueComponent(message, location);
+            outcome.AddIssue(issue);
+            return issue;
         }
 
+        public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, string location = null)
+        {
+            var issue = infoIssue.ToIssueComponent(message, location);
+            outcome.AddIssue(issue);
+            return issue;
+        }
     }
 }
