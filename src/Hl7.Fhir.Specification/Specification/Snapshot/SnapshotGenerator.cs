@@ -22,6 +22,9 @@
 // [WMR 20170216] Prevent slices on non-repeating non-choice type elements (max = 1)
 // #define REJECT_SLICE_NONREPEATING_ELEMENT
 
+// [WMR 20180409] Resolve contentReference from core resource/datatype (StructureDefinition.type)
+#define FIX_CONTENTREFERENCE
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -355,13 +358,36 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (!String.IsNullOrEmpty(defn.NameReference))
             {
+
+#if FIX_CONTENTREFERENCE
+                // [WMR 20180409] NEW
+                // Resolve contentReference from core resource/datatype definition
+                // Specified by StructureDefinition.type == root element name
+
+                var coreStructure = getStructureForContentReference(nav, true);
+                // getStructureForContentReference emits issue if profile cannot be resolved
+                if (coreStructure == null) { return false; }
+
+                var sourceNav = ElementDefinitionNavigator.ForSnapshot(coreStructure);
+#else
+                // [WMR 20180409] WRONG!
+                // Resolves contentReference from current StructureDef
+                // Recursive child items should NOT inherit constraints from parent in same profile
                 var sourceNav = new ElementDefinitionNavigator(nav);
+#endif
+
                 if (!sourceNav.JumpToNameReference(defn.NameReference))
                 {
                     addIssueInvalidNameReference(defn);
                     return false;
                 }
                 nav.CopyChildren(sourceNav);
+
+                // [WMR 20180410]
+                // - Regenerate element IDs
+                // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
+                prepareExpandedTypeProfileElements(nav, sourceNav);
+
             }
             else if (defn.Type == null || defn.Type.Count == 0)
             {
@@ -1439,6 +1465,36 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return baseStructure;
         }
+
+#if FIX_CONTENTREFERENCE
+        // [WMR 20180410] Resolve the defining target structure of a contentReference
+        StructureDefinition getStructureForContentReference(ElementDefinitionNavigator nav, bool ensureSnapshot)
+        {
+            Debug.Assert(nav != null);
+            Debug.Assert(nav.Current != null);
+
+            var elementDef = nav.Current;
+            var location = elementDef.ToNamedNode();
+
+            var contentReference = elementDef.NameReference; // e.g. "#Questionnaire.item"
+
+            var coreType = nav.StructureDefinition?.ConstrainedType.GetLiteral()
+                // Fall back to root element name...?
+                ?? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1));
+
+            if (!string.IsNullOrEmpty(coreType))
+            {
+                // Try to resolve the custom element type profile reference
+                var coreSd = _resolver.FindStructureDefinitionForCoreType(coreType);
+                var isValidProfile = ensureSnapshot
+                    ? this.ensureSnapshot(coreSd, coreType, location)
+                    : this.verifyStructure(coreSd, coreType, location);
+                return coreSd;
+            }
+
+            return null;
+        }
+#endif
 
         bool verifyStructure(StructureDefinition sd, string profileUrl, IElementNavigator location = null)
         {
