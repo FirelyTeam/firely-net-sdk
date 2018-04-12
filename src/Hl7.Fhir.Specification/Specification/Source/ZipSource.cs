@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class ZipSource : IConformanceSource, IArtifactSource
+    public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource
     {
         public const string SpecificationZipFileName = "specification.zip";
 
@@ -126,9 +126,6 @@ namespace Hl7.Fhir.Specification.Source
 
         #region IConformanceSource
 
-        /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
-        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
-
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
@@ -141,6 +138,13 @@ namespace Hl7.Fhir.Specification.Source
             => FileSource.FindConceptMaps(sourceUri, targetUri);
 
         public NamingSystem FindNamingSystem(string uniqueid) => FileSource.FindNamingSystem(uniqueid);
+
+        #endregion
+
+        #region ISummarySource
+
+        /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
 
         #endregion
 
