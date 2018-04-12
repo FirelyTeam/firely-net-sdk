@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Serialization
             if(typeof(Char) == to)
                 return XmlConvert.ToChar(value);        // Not used in FHIR serialization
             if(typeof(DateTime) == to)
-                return XmlConvert.ToDateTimeOffset(value); // TODO: should handle FHIR's "instant" datatype
+                return XmlConvert.ToDateTimeOffset(value).DateTime; // TODO: should handle FHIR's "instant" datatype
             if(typeof(Decimal) == to)
                 return XmlConvert.ToDecimal(value);
             if(typeof(Double) == to)
