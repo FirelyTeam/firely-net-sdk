@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -32,13 +32,13 @@ namespace Hl7.Fhir.Validation
             // bindable should be code, Coding or CodeableConcept
 
             if (binding.Strength == null)
-                return new OperationOutcome().AddIssue($"Encountered a binding element without a binding strength", Issue.PROFILE_INCOMPLETE_BINDING, _path);
+                return Issue.PROFILE_INCOMPLETE_BINDING.NewOutcomeWithIssue($"Encountered a binding element without a binding strength", _path);
 
             var uri = (binding.ValueSet as FhirUri)?.Value ??
                         (binding.ValueSet as ResourceReference)?.Reference;
 
             if (uri == null)
-                return new OperationOutcome().AddIssue($"Encountered a binding element without either a ValueSet reference or uri", Issue.PROFILE_INCOMPLETE_BINDING, _path);
+                return Issue.PROFILE_INCOMPLETE_BINDING.NewOutcomeWithIssue($"Encountered a binding element without either a ValueSet reference or uri", _path);
 
             var abstractAllowed = true;     // no way to say otherwise in the current spec?
 
@@ -49,9 +49,7 @@ namespace Hl7.Fhir.Validation
                 var isCCWithJustText = bindable is CodeableConcept cc && !String.IsNullOrEmpty(cc.Text);
                 if (isCCWithJustText)
                     return new OperationOutcome();   // OK
-                else
-                    return new OperationOutcome()
-                        .AddIssue($"No code found in instance.", Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE, _path);
+                return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE.NewOutcomeWithIssue($"No code found in instance.", _path);
             }
 
             switch (bindable)

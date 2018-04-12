@@ -5,6 +5,7 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -94,6 +95,11 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
+
+                var fi = new FileInfo(path);
+                Assert.AreEqual(fi.Length, summary.FileSize);
+                Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
+
                 Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
                 Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
 
@@ -115,6 +121,53 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [TestMethod]
+        public void TestProfilesResourcesXml()
+        {
+            const string path = @"TestData\profiles-resources.xml";
+
+            var summaries = ArtifactSummaryGenerator.Generate(path);
+            Assert.IsNotNull(summaries);
+            Assert.AreNotEqual(0, summaries.Count);
+            for (int i = 0; i < summaries.Count; i++)
+            {
+                var summary = summaries[i];
+                Assert.IsFalse(summary.IsFaulted);
+
+                // Common properties
+                Assert.AreEqual(path, summary.Origin);
+
+                var fi = new FileInfo(path);
+                Assert.AreEqual(fi.Length, summary.FileSize);
+                Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
+
+                if (StringComparer.Ordinal.Equals(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName))
+                {
+                    Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
+
+                    // Conformance resource properties
+                    Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
+                    Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
+                    Assert.IsNotNull(summary.GetConformanceName());
+                    Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+
+                    //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
+
+                    // StructureDefinition properties
+                    Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
+                    Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
+
+                    Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Resource.GetLiteral(), summary.GetStructureDefinitionKind());
+                    // If this is a constraining StructDef, then Base should also be specified
+                    Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
+
+                    // [WMR 20171218] Maturity Level extension
+                    Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
+                }
+
+            }
+        }
+
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
             var summaries = ArtifactSummaryGenerator.Generate(path, harvesters);
@@ -123,6 +176,11 @@ namespace Hl7.Fhir.Specification.Tests
             var summary = summaries[0];
             Assert.IsFalse(summary.IsFaulted);
             Assert.AreEqual(path, summary.Origin);
+
+            var fi = new FileInfo(path);
+            Assert.AreEqual(fi.Length, summary.FileSize);
+            Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
+
             return summary;
         }
     }

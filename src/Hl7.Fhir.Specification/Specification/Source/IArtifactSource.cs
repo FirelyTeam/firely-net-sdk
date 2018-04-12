@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source.Summary;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -20,6 +20,11 @@ namespace Hl7.Fhir.Specification.Source
         IEnumerable<string> ListArtifactNames();
 
         /// <summary>Load the artifact with the specified filename.</summary>
+        /// <remarks>
+        /// This method does not support duplicate file names in separate subfolders of the content directory.
+        /// The <seealso cref="ArtifactSummary"/> class provides methods to unambiguously retrieve specific
+        /// artifacts from the associated summary instance.
+        /// </remarks>
         Stream LoadArtifactByName(string artifactName);
     }
 

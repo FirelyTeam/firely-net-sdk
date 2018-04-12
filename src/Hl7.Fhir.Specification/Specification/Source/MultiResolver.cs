@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -11,12 +11,14 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using System.Linq;
 using Hl7.Fhir.Utility;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from a list of other IArtifactSources
     /// </summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class MultiResolver : IResourceResolver
     {
         private readonly List<IResourceResolver> _sources = new List<IResourceResolver>();
@@ -114,5 +116,11 @@ namespace Hl7.Fhir.Specification.Source
             // None of the IArtifactSources succeeded in returning a result
             return null;
         }
+
+        // Allow derived classes to override
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        internal protected virtual string DebuggerDisplay
+            => $"{GetType().Name} for {Sources.Count} sources: {string.Join(" | ", Sources.Select(s => s.DebuggerDisplayString()))}";
     }
 }

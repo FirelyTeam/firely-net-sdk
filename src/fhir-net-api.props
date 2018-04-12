@@ -3,17 +3,17 @@
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
 
-    <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
-    <Company>Furore (http://fhir.furore.com)</Company>
-    <Copyright>Copyright 2017 Furore Health Informatics.  Contains materials (C) HL7 International</Copyright>
+    <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
+    <Company>Firely (https://fire.ly)</Company>
+    <Copyright>Copyright 2018 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
     <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.94.0</FhirApiVersion>
-    <SupportApiVersion>0.94.0</SupportApiVersion>
+    <FhirApiVersion>0.95.0</FhirApiVersion>
+    <SupportApiVersion>0.95.0</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Compiler settings -->

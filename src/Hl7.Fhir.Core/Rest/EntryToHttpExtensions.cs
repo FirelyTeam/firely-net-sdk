@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -12,6 +12,7 @@ using System;
 using System.Net;
 using System.Reflection;
 using Hl7.Fhir.Utility;
+using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
@@ -53,9 +54,17 @@ namespace Hl7.Fhir.Rest
             {
                 request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
             }
-
+            
             if (entry.Resource != null)
-                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, out body);
+            {
+                bool searchUsingPost =
+                    interaction.Method == Bundle.HTTPVerb.POST
+                    && (entry.HasAnnotation<TransactionBuilder.InteractionType>()
+                    && entry.Annotation<TransactionBuilder.InteractionType>() == TransactionBuilder.InteractionType.Search)
+                    && entry.Resource is Parameters;
+
+                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, searchUsingPost, out body);
+            }
             // PCL doesn't support setting the length (and in this case will be empty anyway)
 #if DOTNETFW
             else
@@ -105,7 +114,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, out byte[] body)
+        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, bool searchUsingPost, out byte[] body)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -117,6 +126,17 @@ namespace Hl7.Fhir.Rest
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, bin.Content);
                 request.ContentType = bin.ContentType;
+            }
+            else if (searchUsingPost)
+            {
+                string bodyParameters = null;
+                foreach(Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
+                {
+                    if (!string.IsNullOrEmpty(bodyParameters)) bodyParameters += "&";
+                    bodyParameters += $"{parameter.Name}={parameter.Value}";
+                }
+                body = Encoding.UTF8.GetBytes(Uri.EscapeDataString(bodyParameters));
+                request.ContentType = "application/x-www-form-urlencoded";
             }
             else
             {

@@ -22,11 +22,13 @@ namespace Hl7.Fhir.Specification.Tests
     {
         IResourceResolver _source;
         Validator _validator;
+        private readonly Xunit.Abstractions.ITestOutputHelper output;
 
-        public BasicValidationTests(ValidationFixture fixture)
+        public BasicValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
         {
             _source = fixture.Resolver;
             _validator = fixture.Validator;
+            this.output = output;
         }
 
         //[TestInitialize]
@@ -111,13 +113,13 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var def = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
 
-            var instance = new Oid("1.2.3.4.q");
+            var instance = new Oid("urn:oid:1.2.3.4.q");
             var report = _validator.Validate(instance, def);
             Assert.False(report.Success);
             Assert.Equal(1, report.Errors);
             Assert.Equal(0, report.Warnings);
 
-            instance = new Oid("1.2.3.4");
+            instance = new Oid("urn:oid:1.2.3.4");
             report = _validator.Validate(instance, def);
             Assert.True(report.Success);
             Assert.Equal(0, report.Errors);
@@ -146,7 +148,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
 
-            var extensionInstance = new Extension("http://some.org/testExtension", new Oid("1.2.3.4.5"));
+            var extensionInstance = new Extension("http://some.org/testExtension", new Oid("urn:oid:1.2.3.4.5"));
 
             var report = _validator.Validate(extensionInstance, extensionSd);
 
@@ -310,6 +312,39 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
+        [Fact]
+        public void ValidateOrganizationWithRegEx()
+        {
+            var o = new Organization() { Name = "firely" };
+            var report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization");
+
+            Assert.False(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+            o = new Organization() { Name = "Firely" }; // the first char is now uppercase
+            report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization");
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+        }
+
+        [Fact]
+        public void ValidateOrganizationWithRegExOnType()
+        {
+            var o = new Organization() { Name = "firely" };
+            var report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization2");
+
+            Assert.False(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+            o = new Organization() { Name = "Firely" }; // the first char is now uppercase
+            report = _validator.Validate(o, "http://validationtest.org/fhir/StructureDefinition/MyOrganization2");
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+        }
 
         [Fact]
         public void DoNotFollowRefsSuppressesWarning()
@@ -552,12 +587,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
+        private void DebugDumpOutputXml(Base fragment)
+        {
+#if DUMP_OUTPUT
+            // Commented out to not fill up the CI builds output log 
+            var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));
+            output.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
+#endif
+        }
 
         [Fact]
         public void ValidateExtensionExamples()
         {
             var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
             var levin = (new FhirXmlParser()).Parse<Patient>(levinXml);
+            DebugDumpOutputXml(levin);
             Assert.NotNull(levin);
 
             var report = _validator.Validate(levin);
@@ -574,6 +618,7 @@ namespace Hl7.Fhir.Specification.Tests
             levin.Extension[1].Extension[0].Url = "NCT";
             levin.Extension[1].Extension[1].Value = new FhirString("wrong!");
             report = _validator.Validate(levin);
+            DebugDumpOutputXml(report);
             Assert.False(report.Success);
             Assert.True(report.ToString().Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')"));
         }
@@ -711,8 +756,25 @@ namespace Hl7.Fhir.Specification.Tests
             assertElementConstraints(patientStructDef.Snapshot.Element);
         }
 
-        // Verify aggregated element constraints
-        static void assertElementConstraints(List<ElementDefinition> patientElems)
+        /// <summary>
+        /// Test for issue 423  (https://github.com/ewoutkramer/fhir-net-api/issues/423)
+        /// </summary>
+        [Fact]
+        public void ValidateInternalReferenceWithinContainedResources()
+        {
+            var obsOverview = File.ReadAllText(@"TestData\validation\observation-list.xml");
+            var parser = new FhirXmlParser();
+
+            var obsList = parser.Parse<List>(obsOverview);
+            Assert.NotNull(obsList);
+
+            var result = _validator.Validate(obsList);
+            Assert.True(result.Success);
+            Assert.Equal(0, result.Errors);
+        }
+
+    // Verify aggregated element constraints
+    static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
             foreach (var elem in patientElems)
             {

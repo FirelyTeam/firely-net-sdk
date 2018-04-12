@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -13,6 +13,7 @@ using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class ZipSource : IConformanceSource, IArtifactSource
+    public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource
     {
         public const string SpecificationZipFileName = "specification.zip";
 
@@ -125,9 +126,6 @@ namespace Hl7.Fhir.Specification.Source
 
         #region IConformanceSource
 
-        /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
-        public IEnumerable<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
-
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
@@ -140,6 +138,13 @@ namespace Hl7.Fhir.Specification.Source
             => FileSource.FindConceptMaps(sourceUri, targetUri);
 
         public NamingSystem FindNamingSystem(string uniqueid) => FileSource.FindNamingSystem(uniqueid);
+
+        #endregion
+
+        #region ISummarySource
+
+        /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
+        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
 
         #endregion
 
@@ -182,7 +187,7 @@ namespace Hl7.Fhir.Specification.Source
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected virtual string DebuggerDisplay
+        internal protected virtual string DebuggerDisplay
             => $"{GetType().Name} for '{ZipPath}'"
             + (IsPrepared ? $" | Extracted to '{ExtractPath}'" : null);
 

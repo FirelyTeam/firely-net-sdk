@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -250,9 +250,30 @@ namespace Hl7.Fhir.Validation
             outcome.Add(ValidateMaxLength(elementConstraints, instance));
             outcome.Add(this.ValidateFp(elementConstraints, instance));
             outcome.Add(this.ValidateBinding(elementConstraints, instance));
+            outcome.Add(this.ValidateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
 
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();
+
+            return outcome;
+        }
+
+        private OperationOutcome ValidateExtension(IExtendable elementDef, IElementNavigator instance, string uri)
+        {
+            var outcome = new OperationOutcome();
+
+            var pattern = elementDef.GetStringExtension(uri);
+            if (pattern != null)
+            {
+                var regex = new Regex(pattern);
+                var value = toStringRepresentation(instance);
+                var success = Regex.Match(value, "^" + regex + "$").Success;
+
+                if (!success)
+                {
+                    Trace(outcome, $"Value '{value}' does not match regex '{regex}'", Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
+                }
+            }
 
             return outcome;
         }
@@ -355,16 +376,9 @@ namespace Hl7.Fhir.Validation
             // type? Would it convert it to a .NET native type? How to check?
 
             // The spec has no regexes for the primitives mentioned below, so don't check them
-            bool hasSingleRegExForValue = definition.Type.Count() == 1 && definition.Type.First().GetPrimitiveValueRegEx() != null;
-
-            if (hasSingleRegExForValue)
+            if  (definition.Type.Count() == 1)
             {
-                var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
-                var value = toStringRepresentation(instance);
-                var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
-
-                if (!success)
-                    Trace(outcome, $"Primitive value '{value}' does not match regex '{primitiveRegEx}'", Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
+                return ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex");
             }
 
             return outcome;
@@ -399,37 +413,27 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        internal void Trace(OperationOutcome outcome, string message, Issue issue, string location)
+        internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, string location)
         {
             if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                outcome.AddIssue(message, issue, location);
+                return outcome.AddIssue(message, issue, location);
+
+            return null;
         }
 
-        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
+        internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
-            Trace(outcome, message, issue, location.Location);
+            if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
+                return Trace(outcome, message, issue, location.Location);
+
+            return null;
         }
 
         private string toStringRepresentation(IElementNavigator vp)
         {
             if (vp == null || vp.Value == null) return null;
 
-            var val = vp.Value;
-
-            if (val is string)
-                return (string)val;
-            else if (val is long)
-                return XmlConvert.ToString((long)val);
-            else if (val is decimal)
-                return XmlConvert.ToString((decimal)val);
-            else if (val is bool)
-                return (bool)val ? "true" : "false";
-            else if (val is Model.Primitives.PartialTime)
-                return ((Model.Primitives.PartialTime)val).ToString();
-            else if (val is Model.Primitives.PartialDateTime)
-                return ((Model.Primitives.PartialDateTime)val).ToString();
-            else
-                return val.ToString();
+            return PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
         }
 
         internal IElementNavigator ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)

@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -34,9 +34,7 @@ namespace Hl7.Fhir.Validation
             //TODO: There is something smarter for this in STU3
             var path = ed.Path;
 
-            return path.Count(c => c == '.') == 1 &&
-                        path.EndsWith(".value") &&
-                        Char.IsLower(path[0]);
+            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
         }
 
         internal static bool IsResourcePlaceholder(this ElementDefinition ed)

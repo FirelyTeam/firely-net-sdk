@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Serialization
             if (instance is IList)
                 instance = ((IList)instance)[0];
 
-            if (!prop.IsPrimitive && prop.Choice != ChoiceType.ResourceChoice)
+            if (instance != null && !prop.IsPrimitive && prop.Choice != ChoiceType.ResourceChoice)
             {
                 var mapping = _inspector.ImportType(instance.GetType());
                 return mapping.HasPrimitiveValueMember;

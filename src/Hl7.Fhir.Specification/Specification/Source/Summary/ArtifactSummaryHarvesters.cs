@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -12,6 +12,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -29,6 +30,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
     public static class ArtifactSummaryProperties
     {
         public const string OriginKey = "Origin";
+        public const string FileSizeKey = "Size";
+        public const string LastModifiedKey = "LastModified";
         public const string PositionKey = "Position";
         public const string TypeNameKey = "TypeName";
         public const string ResourceUriKey = "Uri";
@@ -56,6 +59,24 @@ namespace Hl7.Fhir.Specification.Source.Summary
         internal static void SetOrigin(this ArtifactSummaryPropertyBag properties, string value)
         {
             properties[OriginKey] = value;
+        }
+
+        /// <summary>Get the Size property value from the specified artifact summary property bag, if available.</summary>
+        public static long GetFileSize(this IArtifactSummaryPropertyBag properties)
+            => (long)properties.GetValueOrDefault(FileSizeKey);
+
+        internal static void SetFileSize(this ArtifactSummaryPropertyBag properties, long value)
+        {
+            properties[FileSizeKey] = value;
+        }
+
+        /// <summary>Get the LastModified property value from the specified artifact summary property bag, if available.</summary>
+        public static DateTime GetLastModified(this IArtifactSummaryPropertyBag properties)
+            => (DateTime)properties.GetValueOrDefault(LastModifiedKey);
+
+        internal static void SetLastModified(this ArtifactSummaryPropertyBag properties, DateTime value)
+        {
+            properties[LastModifiedKey] = value;
         }
 
         /// <summary>Get the Position property value from the specified artifact summary property bag, if available.</summary>
@@ -191,6 +212,9 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public static readonly string ContextTypeKey = "StructureDefinition.contextType";
         public static readonly string BaseKey = "StructureDefinition.base";
 
+        public static readonly string FmmExtensionUrl = @"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm";
+        public static readonly string MaturityLevelKey = "StructureDefinition.maturityLevel";
+
         /// <summary>Determines if the specified instance represents summary information about a <see cref="StructureDefinition"/> resource.</summary>
         public static bool IsStructureDefinitionSummary(this IArtifactSummaryPropertyBag properties)
             => properties.GetTypeName() == StructureDefinitionTypeName;
@@ -202,6 +226,9 @@ namespace Hl7.Fhir.Specification.Source.Summary
         {
             if (IsStructureDefinitionSummary(properties))
             {
+                // [WMR 20171218] Harvest global core extensions, e.g. MaturityLevel
+                nav.HarvestExtensions(properties, harvestExtension);
+
                 // Explicit extractor chaining
                 if (ConformanceSummaryProperties.Harvest(nav, properties))
                 {
@@ -214,6 +241,15 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 return true;
             }
             return false;
+        }
+
+        // Callback for HarvestExtensions, called for each individual extension entry
+        static void harvestExtension(IElementNavigator nav, IDictionary<string, object> properties, string url)
+        {
+            if (StringComparer.Ordinal.Equals(FmmExtensionUrl, url) && nav.MoveToNext("valueInteger"))
+            {
+                properties[MaturityLevelKey] = nav.Value;
+            }
         }
 
         /// <summary>Get the <c>StructureDefinition.fhirVersion</c> property value from the specified artifact summary property bag, if available.</summary>
@@ -240,6 +276,14 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
         public static string GetStructureDefinitionBase(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(BaseKey);
+
+        /// <summary>Get the value of the maturity level extension from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>
+        /// Returns the resource maturity level, as defined by the official FHIR extension "http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm".
+        /// Only applies to summaries of <see cref="StructureDefinition"/> resources that define FHIR core resources.
+        /// </remarks>
+        public static string GetStructureDefinitionMaturityLevel(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(MaturityLevelKey);
     }
 
     /// <summary>For harvesting specific summary information from a <see cref="ValueSet"/> resource.</summary>

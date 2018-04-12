@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -11,13 +11,39 @@
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
-    /// <summary>Extension methods for filtering <see cref="IEnumerable{T}"/> sequences of <see cref="ArtifactSummary"/> instances.</summary>
+    /// <summary>Extension methods for <see cref="ArtifactSummary"/> instances and sequences.</summary>
     public static class ArtifactSummaryExtensions
     {
+        // Extension methods for ArtifactSummary
+
+
+        /// <summary>Try to load a resource from the summary origin.</summary>
+        public static Resource LoadResource(this ArtifactSummary summary) => summary.LoadResource<Resource>();
+
+        /// <summary>Try to load a structure definition from the summary origin.</summary>
+        public static StructureDefinition LoadStructure(this ArtifactSummary summary) => summary.LoadResource<StructureDefinition>();
+
+        // [WMR 20171204] SummaryGenerator only returns summaries for XML and JSON files (not XSD)
+        // So currently, this method only serves as a fall-back for xml/json files that 
+        // the FHIR parser cannot deserialize (non-FHIR, invalid, incompatible FHIR version, ...)
+
+        /// <summary>Try to open the summary origin for reading.</summary>
+        /// <returns>A <see cref="Stream"/> instance.</returns>
+        /// <remarks>
+        /// Allows processing non-FHIR/invalid/incompatible artifacts.
+        /// Use the <seealso cref="ArtifactSummary.LoadResource{T}"/> method to load FHIR resources.
+        /// </remarks>
+        public static Stream LoadArtifact(this ArtifactSummary summary) => File.OpenRead(summary.Origin);
+
+
+        // Extension methods for IEnumerable<ArtifactSummary>
+
+
         /// <summary>Filter <see cref="ArtifactSummary"/> instances with errors.</summary>
         public static IEnumerable<ArtifactSummary> Errors(this IEnumerable<ArtifactSummary> summaries)
             => summaries.Where(s => s.IsFaulted);

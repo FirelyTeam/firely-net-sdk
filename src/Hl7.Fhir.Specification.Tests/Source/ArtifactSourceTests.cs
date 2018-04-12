@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Specification.Tests
             File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
         }
 
-        private string prepareExampleDirectory(out int numFiles)
+        private (string path, int numFiles) prepareExampleDirectory()
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             var zip = new ZipCacher(zipFile);
@@ -103,18 +103,19 @@ namespace Hl7.Fhir.Specification.Tests
             copy(@"TestData", "TestPatient.json", subPath);
 
             // If you add or remove files, please correct the numFiles here below
-            numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
+            var numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
 
-            return testPath;
+            return (testPath, numFiles);
         }
 
 
         private string _testPath;
+        private int _numFiles;
 
         [TestInitialize]
         public void SetupExampleDir()
         {
-            _testPath = prepareExampleDirectory(out int numFiles);
+            (_testPath, _numFiles) = prepareExampleDirectory();
         }
 
         [TestMethod]
@@ -175,7 +176,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-discoveryDateTime");
             Assert.IsNotNull(sd);
 
-            var errors = fa.Errors().ToList();
+            var errors = fa.ListSummaryErrors().ToList();
             Assert.AreEqual(1, errors.Count);
             var error = errors[0];
             Debug.Print($"{error.Origin} : {error.Error.Message}");
@@ -193,7 +194,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ReadsSubdirectories()
         {
-            var testPath = prepareExampleDirectory(out int numFiles);
+            // var (testPath, numFiles) = prepareExampleDirectory();
+            var (testPath, numFiles) = (_testPath, _numFiles);
             var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
@@ -273,7 +275,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void TestAccessPermissions()
         {
-            var testPath = prepareExampleDirectory(out int numFiles);
+            // var (testPath, numFiles) = prepareExampleDirectory();
+            var (testPath, numFiles) = (_testPath, _numFiles);
 
             // Additional temporary folder without read permissions
             var subPath2 = Path.Combine(testPath, "sub2");

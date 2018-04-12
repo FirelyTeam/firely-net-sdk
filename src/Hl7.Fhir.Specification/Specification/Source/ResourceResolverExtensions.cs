@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -13,6 +13,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
@@ -155,5 +156,18 @@ namespace Hl7.Fhir.Specification.Source
             return isValidTypeProfile(resolver, recursionStack, type, sdBase);
         }
 
+        // Helper method to retrieve debugger display strings for well-known implementations
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        internal static string DebuggerDisplayString(this IResourceResolver resolver)
+        {
+            if (resolver is DirectorySource ds) { return ds.DebuggerDisplay; }
+            if (resolver is ZipSource zs) { return zs.DebuggerDisplay; }
+            // if (resolver is WebResolver wr) { return wr.DebuggerDisplay; }
+            if (resolver is MultiResolver mr) { return mr.DebuggerDisplay; }
+            if (resolver is CachedResolver cr) { return cr.DebuggerDisplay; }
+            if (resolver is SnapshotSource ss) { return ss.DebuggerDisplay; }
+
+            return resolver.GetType().Name;
+        }
     }
 }
