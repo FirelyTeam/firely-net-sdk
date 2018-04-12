@@ -734,14 +734,11 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var doc = FhirXmlSerializer.SerializeToDocument(patientOne);
             Assert.IsNotNull(doc);
-            Assert.AreEqual("#document", doc.Name);
-            Assert.IsTrue(doc.HasChildNodes);
-            Assert.AreEqual(1, doc.ChildNodes.Count);
 
-            var root = doc.FirstChild;
-            Assert.AreEqual("Patient", root.Name);
-            Assert.IsTrue(root.HasChildNodes);
-            Assert.AreEqual(7, root.ChildNodes.Count);
+            var root = doc.Root;
+            Assert.AreEqual("Patient", root.Name.LocalName);
+            Assert.IsTrue(root.HasElements);
+            Assert.AreEqual(7, root.Elements().Count());
         }
 // #endif
 

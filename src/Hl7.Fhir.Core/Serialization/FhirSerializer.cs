@@ -15,6 +15,7 @@ using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Serialization
 #if NET45
         // [WMR 20180409] NEW
         // https://github.com/ewoutkramer/fhir-net-api/issues/545
-        public XmlDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null)
+        public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null)
         {
             return xmlWriterToDocument(xw =>
             {
@@ -146,12 +147,11 @@ namespace Hl7.Fhir.Serialization
 #if NET45
         // [WMR 20180409] NEW
         // https://stackoverflow.com/a/1347364
-        private static XmlDocument xmlWriterToDocument(Action<XmlWriter> serializer)
+        private static XDocument xmlWriterToDocument(Action<XmlWriter> serializer)
         {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XDocument();
 
-            // using (XmlWriter xw = doc.CreateDocumentFragment().CreateNavigator().AppendChild())
-            using (XmlWriter xw = doc.CreateNavigator().AppendChild())
+            using (XmlWriter xw = doc.CreateWriter())
             {
                 // [WMR 20160421] serializer action now calls Flush before disposing
                 serializer(xw);
