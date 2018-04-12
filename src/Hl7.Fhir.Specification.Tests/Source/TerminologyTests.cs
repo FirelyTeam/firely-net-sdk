@@ -10,12 +10,15 @@ using Xunit;
 namespace Hl7.Fhir.Specification.Tests
 {
     public class TerminologyTests : IClassFixture<ValidationFixture>
-    {            
+    {
         private IResourceResolver _resolver;
+        private readonly Xunit.Abstractions.ITestOutputHelper output;
 
-        public TerminologyTests(ValidationFixture fixture)
+
+        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
         {
             _resolver = fixture.Resolver;
+            this.output = output;
         }
 
         [Fact]
@@ -79,7 +82,7 @@ namespace Hl7.Fhir.Specification.Tests
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             expander.Settings.MaxExpansionSize = 50;
 
-            Assert.Throws<ValueSetExpansionTooBigException>( () => expander.Expand(testVs) );
+            Assert.Throws<ValueSetExpansionTooBigException>(() => expander.Expand(testVs));
 
             expander.Settings.MaxExpansionSize = 500;
             expander.Expand(testVs);
@@ -91,7 +94,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var testCs = _resolver.FindCodeSystem("http://hl7.org/fhir/item-type");
 
-            var conceptGroup = testCs.Concept.Single(c=>c.Code == "group");
+            var conceptGroup = testCs.Concept.Single(c => c.Code == "group");
             var conceptQuestion = testCs.Concept.Single(c => c.Code == "question");
 
             Assert.False(conceptGroup.ListConceptProperties(testCs, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).Any());
@@ -108,11 +111,11 @@ namespace Hl7.Fhir.Specification.Tests
             result = svc.ValidateCode(vsUrl, code: "NaNX", system: "http://hl7.org/fhir/data-absent-reason");
             Assert.False(result.Success);
 
-            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", 
+            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
                 display: "Not a Number");
             Assert.True(result.Success);
 
-            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", 
+            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
                 display: "Not any Number");
             Assert.False(result.Success);
 
@@ -141,7 +144,15 @@ namespace Hl7.Fhir.Specification.Tests
 
             cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
             result = svc.ValidateCode(vsUrl, codeableConcept: cc);
+            DebugDumpOutputXml(result);
+
             Assert.True(result.Success);
+        }
+
+        private void DebugDumpOutputXml(Base fragment)
+        {
+            var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));
+            output.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
         }
 
         [Fact]
@@ -176,7 +187,7 @@ namespace Hl7.Fhir.Specification.Tests
             testService(svc);
 
             // Any good external service should be able to handle this one
-            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system:"http://snomed.info/sct");
+            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
             Assert.True(result.Success);
         }
 
