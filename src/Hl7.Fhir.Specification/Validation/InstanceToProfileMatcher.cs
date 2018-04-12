@@ -109,6 +109,7 @@ namespace Hl7.Fhir.Validation
         public List<ScopedNavigator> UnmatchedInstanceElements;
     }
 
+    [System.Diagnostics.DebuggerDisplay(@"\{{Definition.DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     internal class Match
     {
         public ElementDefinitionNavigator Definition;

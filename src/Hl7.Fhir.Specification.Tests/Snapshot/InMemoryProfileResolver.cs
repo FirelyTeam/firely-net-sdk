@@ -54,8 +54,6 @@ namespace Hl7.Fhir.Specification.Tests
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
             => _resources.Select(g => g.Key);
 
-        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => throw new NotImplementedException();
-
         #endregion
     }
 

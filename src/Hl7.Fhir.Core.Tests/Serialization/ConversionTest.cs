@@ -108,7 +108,13 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(new DateTimeOffset(2011,3,4,16,45,33, TimeSpan.Zero),ins5.Value);
         }
 
-        [TestMethod]
+	    [TestMethod]
+	    public void TestStringToDateTime()
+	    {
+		    Assert.AreEqual(new DateTime(1976, 12, 12), PrimitiveTypeConverter.ConvertTo<DateTime>("1976-12-12"));
+	    }
+
+	    [TestMethod]
         public void TestStringToUri()
         {
             var result = PrimitiveTypeConverter.ConvertTo<Uri>("http://www.nu.nl/test");

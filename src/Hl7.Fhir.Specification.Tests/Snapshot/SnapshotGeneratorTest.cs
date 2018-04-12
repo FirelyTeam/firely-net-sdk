@@ -1342,6 +1342,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = _generator.ExpandElement(elems, elem);
 
+            dumpOutcome(_generator.Outcome);
+            Assert.IsNull(_generator.Outcome);
+
             Assert.AreEqual(orgId, elem.ElementId);
  
             // Verify results
@@ -5376,6 +5379,105 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Assert.IsTrue(isChanged(type));
             }
+        }
+
+        // [WMR 20180410] Add unit tests for content references
+
+        public StructureDefinition QuestionnaireWithNestedItems = new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Questionnaire,
+            Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Questionnaire),
+            Name = "QuestionnaireWithNestedItems",
+            Url = "http://example.org/fhir/StructureDefinition/QuestionnaireWithNestedItems",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Questionnaire.group.title")
+                    {
+                        Short = "level 1"
+                    },
+                    new ElementDefinition("Questionnaire.group.group.title")
+                    {
+                        Comments = "level 2"
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestNameReferenceQuestionnaire()
+        {
+            var sd = QuestionnaireWithNestedItems;
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.group.title"));
+            Assert.AreEqual("level 1" ,nav.Current.Short);
+
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.group.group.title"));
+            Assert.AreEqual("level 2", nav.Current.Comments);
+            // Level 2 should NOT inherit constraints from level 1
+            Assert.AreNotEqual("level 1", nav.Current.Short);
+        }
+
+        [TestMethod]
+        public void TestNameReferenceQuestionnaireDerived()
+        {
+            var sd = new StructureDefinition
+            {
+                ConstrainedType = FHIRDefinedType.Questionnaire,
+                Base = QuestionnaireWithNestedItems.Url,
+                Name = "QuestionnaireWithNestedItemsDerived",
+                Url = "http://example.org/fhir/StructureDefinition/QuestionnaireWithNestedItemsDerived",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Questionnaire.group.title")
+                        {
+                            Comments = "level 1 *"
+                        },
+                        new ElementDefinition("Questionnaire.group.group.title")
+                        {
+                            Short = "level 2 *"
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd, QuestionnaireWithNestedItems);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            // Constraints should be merged separately on each nesting level
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.group.title"));
+            Assert.AreEqual("level 1", nav.Current.Short);
+            Assert.AreEqual("level 1 *", nav.Current.Comments);
+
+            Assert.IsTrue(nav.JumpToFirst("Questionnaire.group.group.title"));
+            Assert.AreEqual("level 2", nav.Current.Comments);
+            Assert.AreEqual("level 2 *", nav.Current.Short);
         }
 
     }

@@ -9,17 +9,12 @@
 using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Source.Summary;
-using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Interface for browsing and resolving FHIR conformance resources.</summary>
     public interface IConformanceSource : IResourceResolver
     {
-        /// <summary>Returns a list of summary information for all the FHIR artifacts provided by the source.</summary>
-        ReadOnlyCollection<ArtifactSummary> ListSummaries();
-
         // [WMR 20171204] We could convert the following members to extension methods (ConformanceSourceExtensions)
         // Breaking change, but decreases interface implementer burden
 
@@ -50,18 +45,6 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="uniqueid"></param>
         /// <returns></returns>
         NamingSystem FindNamingSystem(string uniqueid);
-    }
-
-    /// <summary>Extension methods for the <see cref="IConformanceSource"/> interface.</summary>
-    public static class ConformanceSourceExtensions
-    {
-        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with error information.</summary>
-        /// <returns>A <see cref="List{T}"/> of <see cref="ArtifactSummary"/> instances.</returns>
-        public static IEnumerable<ArtifactSummary> Errors(this IConformanceSource source) => source.ListSummaries().Errors();
-
-        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances for resources of the specified <see cref="ResourceType"/>.</summary>
-        /// <returns>A <see cref="List{T}"/> of <see cref="ArtifactSummary"/> instances.</returns>
-        public static IEnumerable<ArtifactSummary> Summaries(this IConformanceSource source, ResourceType resourceType) => source.ListSummaries().OfResourceType(resourceType);
     }
 
 }

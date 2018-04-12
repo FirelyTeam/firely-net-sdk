@@ -22,17 +22,17 @@ namespace Hl7.FhirPath.Tests
         public void QuantityConstructor()
         {
             var newq = new Quantity(3.14m, "kg");
-            Assert.Equal(newq.Unit, "kg");
-            Assert.Equal(newq.Value, 3.14m);
+            Assert.Equal("kg", newq.Unit);
+            Assert.Equal(3.14m, newq.Value);
 
             newq = new Quantity(3.14, "kg", "http://someothersystem.nl");
-            Assert.Equal(newq.Unit, "kg");
-            Assert.Equal(newq.Value, 3.14m);
-            Assert.Equal(newq.System, "http://someothersystem.nl");
+            Assert.Equal("kg", newq.Unit);
+            Assert.Equal(3.14m, newq.Value);
+            Assert.Equal("http://someothersystem.nl", newq.System);
         }
 
         [Fact]
-        public void Equals()
+        public void QuantityEquals()
         {
             var newq = new Quantity(3.14m, "kg");
             var newq2 = new Quantity(3.14, "kg", Quantity.UCUM);

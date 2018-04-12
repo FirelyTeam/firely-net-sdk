@@ -13,13 +13,15 @@ namespace Hl7.Fhir.Specification.Tests
     [Trait("Category", "Validation")]
     public class SliceValidationTests : IClassFixture<ValidationFixture>
     {
+        private readonly Xunit.Abstractions.ITestOutputHelper output;
         private IResourceResolver _resolver;
         private Validator _validator;
 
-        public SliceValidationTests(ValidationFixture fixture)
+        public SliceValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
         {
             _resolver = fixture.Resolver;
             _validator = fixture.Validator;
+            this.output = output;
         }
 
 
@@ -105,8 +107,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Correct "work" use for slice "phone", but out of order
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Work, Value = "ewout@di.nl" });
+            DebugDumpOutputXml(p);
 
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-slice-ek");
+            DebugDumpOutputXml(outcome);
             Assert.False(outcome.Success);
             Assert.Equal(3, outcome.Errors);
             Assert.Equal(0, outcome.Warnings);
@@ -175,7 +179,10 @@ namespace Hl7.Fhir.Specification.Tests
             // Out of order (already have telecom:other)
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
 
+            DebugDumpOutputXml(p);
+
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            DebugDumpOutputXml(outcome);
             Assert.False(outcome.Success);
             Assert.Equal(7, outcome.Errors);
             Assert.Equal(0, outcome.Warnings);
@@ -184,6 +191,15 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains("which is not allowed for an open-at-end group (at Patient.telecom[5])", repr);
             Assert.Contains("a previous element already matched slice 'Patient.telecom:other' (at Patient.telecom[6])", repr);
             Assert.Contains("group at 'Patient.telecom:email' is closed. (at Patient.telecom[1])", repr);
+        }
+
+        private void DebugDumpOutputXml(Base fragment)
+        {
+#if DUMP_OUTPUT
+            // Commented out to not fill up the CI builds output log
+            var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));
+            output.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
+#endif
         }
     }
 }
