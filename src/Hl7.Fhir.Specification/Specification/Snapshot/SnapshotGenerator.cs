@@ -1476,11 +1476,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             var elementDef = nav.Current;
             var location = elementDef.ToNamedNode();
 
-            var contentReference = elementDef.NameReference; // e.g. "#Questionnaire.item"
+            var contentReference = elementDef.NameReference; // e.g. "group"
 
             var coreType = nav.StructureDefinition?.ConstrainedType.GetLiteral()
                 // Fall back to root element name...?
-                ?? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1));
+                ?? ElementDefinitionNavigator.GetPathRoot(elementDef.Path);
 
             if (!string.IsNullOrEmpty(coreType))
             {

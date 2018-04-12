@@ -1342,6 +1342,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = _generator.ExpandElement(elems, elem);
 
+            dumpOutcome(_generator.Outcome);
+            Assert.IsNull(_generator.Outcome);
+
             Assert.AreEqual(orgId, elem.ElementId);
  
             // Verify results
