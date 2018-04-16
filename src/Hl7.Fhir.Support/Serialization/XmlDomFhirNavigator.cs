@@ -16,115 +16,65 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial class XmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
+    public partial struct XmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
     {
-        struct PositionedDefinition
+        internal static XmlDomFhirNavigator ForRoot(XElement root, IComplexTypeSerializationInfo rootType)
         {
-            public readonly IElementSerializationInfo[] Elements;
-            public IElementSerializationInfo Current;
-
-            public PositionedDefinition(IElementSerializationInfo[] elements) : this(elements, null) { }
-
-            public PositionedDefinition(IElementSerializationInfo[] elements, IElementSerializationInfo current)
+            return new XmlDomFhirNavigator()
             {
-                Elements = elements;
-                Current = current;
-            }
-
-            public bool MoveTo(string name)
-            {
-                var found = Elements.FirstOrDefault(e => name.StartsWith(e.ElementName));
-                if (found != null) Current = found;
-
-                return found != null;
-            }
-        }
-
-        internal XmlDomFhirNavigator(XObject current, IModelMetadataProvider metadataProvider)
-        {
-            if (metadataProvider == null) Error.ArgumentNull(nameof(metadataProvider));
-
-            OnExceptionRaised = null;
-            _current = current;
-            _metadataProvider = metadataProvider;
-            _nameIndex = 0;
-            _parentPath = null;
-            _definition = _metadataProvider != null ? new Lazy<PositionedDefinition>(() => forRoot(XmlName.LocalName)) : null;
+                OnExceptionRaised = null,
+                _current = root,
+                _nameIndex = 0,
+                _parentPath = null,
+                _definition = rootType != null ? SerializationInfoNavigator.ForRoot(rootType) : SerializationInfoNavigator.Empty(),
+                Type = rootType.TypeName
+            };
         }
 
         public event EventHandler<ExceptionRaisedEventArgs> OnExceptionRaised;
 
         public IElementNavigator Clone()
         {
-            var copy = new XmlDomFhirNavigator(_current, _metadataProvider)
-            {
-                _nameIndex = this._nameIndex,
-                _parentPath = this._parentPath,
-                _definition = this._definition
-            };
-
-            copy.OnExceptionRaised = this.OnExceptionRaised;
-
-            return copy;
+            return this;        // the struct will be copied upon return
         }
 
         private XObject _current;
-        private readonly IModelMetadataProvider _metadataProvider;
-        private Lazy<PositionedDefinition> _definition;
-        
+        private SerializationInfoNavigator _definition;
+
         private int _nameIndex;
         private string _parentPath;
 
-        private PositionedDefinition? definition => _definition?.Value;
-
-        private PositionedDefinition forRoot(string rootType)
-        {
-            var rootDef = _metadataProvider.GetSerializationInfoForType(rootType);
-
-            if (rootDef != null)
-            {
-                var rootElement = new ElementSerializationInfo(rootType, false, new[] { rootDef });
-                return new PositionedDefinition(new[] { rootElement }, rootElement);
-            }
-            else
-                return new PositionedDefinition(new IElementSerializationInfo[] { });
-        }
-
-        //private PositionedDefinition listMembers(IElementSerializationInfo current) =>
-        //    new PositionedDefinition(_metadataProvider.GetSerializationInfoForType(typeName).GetChildren().ToArray());
-
-        private IElementSerializationInfo currentTypeInfo => definition?.Current;
 
         // Could check namespaces too
-        public string Name => currentTypeInfo?.ElementName ?? XmlName.LocalName;
+        public string Name => _definition.IsTracking ? _definition.DefinedName : XmlName.LocalName;
 
-        public string Type
-        {
-            get
-            {
-                if (currentTypeInfo == null)
-                {
-                    // try to get resource type from current node (or nested node within (e.g. contained))
-                    if (_current is XElement element && tryGetResourceName(element, out var name))
-                        return name;
-                    else
-                        // Else, no type information available
-                        return null;
-                }
-                else
-                {
-                    if (currentTypeInfo.Type.Length > 1)
-                    {
-                        // choice type
-                        var instanceType = XmlName.LocalName.Substring(currentTypeInfo.ElementName.Length);
-                        var choice = currentTypeInfo.Type.FirstOrDefault(t => String.Compare(t.TypeName, instanceType, StringComparison.OrdinalIgnoreCase) == 0);
-                        return choice?.TypeName;
-                    }
-                    else
-                        return currentTypeInfo.Type[0].TypeName;
-                }
-            }
-        }
+        public string Type { get; private set; }
+        //{
+        //    get
+        //    {
+        //        if (currentTypeInfo == null)
+        //        {
+        //            // try to get resource type from current node (or nested node within (e.g. contained))
+        //            if (_current is XElement element && tryGetResourceName(element, out var name))
+        //                return name;
+        //            else
+        //                // Else, no type information available
+        //                return null;
+        //        }
+        //        else
+        //        {
+        //            if (currentTypeInfo.Type.Length > 1)
+        //            {
+        //                // choice type
+        //                var instanceType = XmlName.LocalName.Substring(currentTypeInfo.ElementName.Length);
+        //                var choice = currentTypeInfo.Type.FirstOrDefault(t => String.Compare(t.TypeName, instanceType, StringComparison.OrdinalIgnoreCase) == 0);
+        //                return choice?.TypeName;
+        //            }
+        //            else
+        //                return currentTypeInfo.Type[0].TypeName;
+        //        }
+        //    }
+        //}
 
         private static bool tryGetResourceName(XElement xe, out string name)
         {
@@ -153,6 +103,7 @@ namespace Hl7.Fhir.Serialization
             // Not on a resource, no name to be found
             return false;
 
+            // Should use typeinfo if available -> change interface to contain info about this
             bool isResourceName(XName elementName) =>
                 Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
         }
@@ -185,7 +136,7 @@ namespace Hl7.Fhir.Serialization
                     return Name;
                 else
                 {
-                    if(currentTypeInfo == null || currentTypeInfo.MayRepeat == true || _nameIndex > 0)
+                    if(_definition.IsTracking && _definition.Current.MayRepeat == true || _nameIndex > 0)
                         return $"{_parentPath}.{Name}[{_nameIndex}]";
                     else
                         return $"{_parentPath}.{Name}";
@@ -200,8 +151,7 @@ namespace Hl7.Fhir.Serialization
             if (startAfter == null)
             {
                 scan = root.FirstChild();
-                if(currentTypeInfo != null)
-                    currentTypeInfo.
+                _definition = _definition.Down();
             }
             else
             {
@@ -221,15 +171,18 @@ namespace Hl7.Fhir.Serialization
 
                 if (scanName != null)
                 {
+                    _definition = _definition.MoveTo(scanName.LocalName);
+
                     // If no specific next child is sought, return immediately
-                    if (name == null) return scan;
-                    
-                    
-                    || scanName?.LocalName == name)
-                    {
-                        if(definition != null)
-                            definition.Value.MoveTo(
+                    if (name == null)
                         return scan;
+                    else if (_definition.IsTracking && _definition.DefinedName == name)
+                        return scan;
+                    else
+                    {
+                        // fall back -> if current name is unknown in definition, do a direct match
+                        if (scanName.LocalName == name)
+                            return scan;
                     }
                 }
 

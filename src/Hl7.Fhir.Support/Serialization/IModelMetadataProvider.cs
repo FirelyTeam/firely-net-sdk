@@ -11,6 +11,8 @@ namespace Hl7.Fhir.Serialization
         string ElementName { get; }
         bool MayRepeat { get; }
 
+        bool IsChoiceElement { get; }
+
         ITypeSerializationInfo[] Type { get; }
     }
 

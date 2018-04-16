@@ -119,6 +119,7 @@ namespace Hl7.Fhir.Serialization
 
 
             }
+
         }
 
         public bool AtXhtmlDiv => (_current as XElement)?.Name == XmlNs.XHTMLDIV;

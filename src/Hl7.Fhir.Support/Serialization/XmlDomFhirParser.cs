@@ -16,7 +16,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct XmlDomFhirParser : INavigatingParser, IAnnotated, IPositionInfo, IExceptionSource
+    internal partial struct XmlDomFhirParser : INavigatingParser, IAnnotated, IPositionInfo, IExceptionSource
     {
         internal XmlDomFhirParser(XObject current)
         {
