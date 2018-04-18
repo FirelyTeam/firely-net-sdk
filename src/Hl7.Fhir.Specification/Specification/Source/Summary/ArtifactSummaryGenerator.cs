@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 ConformanceSummaryProperties.Harvest
             };
 
-        /// <summary>Generate a list of artifact summary information from an <see cref="INavigatorStream"/> instance.</summary>
+        /// <summary>Generate a list of artifact summary information using a <see cref="INavigatorStream"/> instance.</summary>
         /// <param name="origin">The original location of the target artifact (or the containing Bundle).</param>
         /// <param name="harvesters">
         /// An optional list of <see cref="ArtifactSummaryHarvester"/> delegates that the generator will call
@@ -94,11 +94,11 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Call default navigator factory
                 navStream = DefaultNavigatorStreamFactory.Create(origin);
 
-                // Get some source file properties
-                var fi = new FileInfo(origin);
-
                 // Factory returns null for unknown file formats
                 if (navStream == null) { return result; }
+
+                // Get some source file properties
+                var fi = new FileInfo(origin);
 
                 // Run default or specified (custom) harvesters
                 if (harvesters == null || harvesters.Length == 0)
@@ -136,6 +136,105 @@ namespace Hl7.Fhir.Specification.Source.Summary
             catch (Exception ex)
             {
                 result.Add(ArtifactSummary.FromException(ex, origin));
+            }
+            finally
+            {
+                navStream?.Dispose();
+            }
+            return result;
+        }
+
+        // [WMR 20180418] NEW: Harvest summaries from a resource stream
+
+        /// <summary>Generate a list of artifact summary information using a <see cref="INavigatorStream"/> instance.</summary>
+        /// <param name="stream">
+        /// A readable stream that returns <see cref="Hl7.Fhir.Model.Resource"/> instances.
+        /// Note: the caller is responsible for closing/disposing the specified stream.
+        /// </param>
+        /// <param name="format">
+        /// A string value that represents the FHIR resource serialization format, as defined by <see cref="FhirSerializationFormats"/>.
+        /// </param>
+        /// <param name="harvesters">
+        /// An optional list of <see cref="ArtifactSummaryHarvester"/> delegates that the generator will call
+        /// instead of the default harvesters to harvest summary information from an artifact.
+        /// </param>
+        /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
+        /// <remarks>
+        /// For each artifact, the generator executes all (default or specified) harvester delegates
+        /// in the specified order. When a delegate returns <c>true</c> to signal that harvesting has
+        /// finished, the generator will not call any of the remaining delegates and immediately
+        /// proceed to create the final <see cref="ArtifactSummary"/> return value.
+        /// <para>
+        /// By default, if the <paramref name="harvesters"/> parameter value is null or empty, the
+        /// <see cref="ArtifactSummaryGenerator"/> calls the built-in default harvesters
+        /// as specified by <see cref="ArtifactSummaryGenerator.DefaultHarvesters"/>.
+        /// However if the caller specifies one or more harvester delegates, then the summary
+        /// generator calls only the provided delegates, in the specified order.
+        /// A custom delegate array may include one or more of the default harvesters.
+        /// </para>
+        /// <para>
+        /// The generator catches all runtime exceptions that occur during harvesting and returns
+        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
+        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
+        /// </para>
+        /// </remarks>
+        public static List<ArtifactSummary> Generate(
+            Stream stream,
+            string format,
+            params ArtifactSummaryHarvester[] harvesters)
+        {
+            var result = new List<ArtifactSummary>();
+
+            // In case of error, return completed summaries and error info
+            INavigatorStream navStream = null;
+            try
+            {
+                // Call default navigator factory
+                navStream = DefaultNavigatorStreamFactory.Create(stream, format, false);
+
+                // Factory returns null for unknown file formats
+                if (navStream == null) { return result; }
+
+                // Run default or specified (custom) harvesters
+                if (harvesters == null || harvesters.Length == 0)
+                {
+                    harvesters = DefaultHarvesters;
+                }
+
+                while (navStream.MoveNext())
+                {
+                    var current = navStream.Current;
+                    if (current != null)
+                    {
+                        var properties = new ArtifactSummaryPropertyBag();
+
+                        // Initialize default summary information
+                        // Note: not exposed by IElementNavigator, cannot use harvester
+                        
+                        // properties.SetOrigin(...);
+                        // properties.SetLastModified(...);
+                        if (stream.Length > 0)
+                        {
+                            properties.SetFileSize(stream.Length);
+                        }
+                        properties.SetPosition(navStream.Position);
+                        properties.SetTypeName(current.Type);
+                        properties.SetResourceUri(navStream.Position);
+
+                        var summary = generate(properties, current, harvesters);
+
+                        result.Add(summary);
+                    }
+                }
+            }
+            // TODO Catch specific exceptions
+            // catch (System.IO.FileNotFoundException)
+            // catch (UnauthorizedAccessException)
+            // catch (System.Security.SecurityException)
+            // catch (FormatException)
+            catch (Exception ex)
+            {
+                result.Add(ArtifactSummary.FromException(ex));
             }
             finally
             {
