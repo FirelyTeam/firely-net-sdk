@@ -13,8 +13,8 @@ using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    /// <summary>Interface for browsing and resolving FHIR conformance resources with summary information.</summary>
-    public interface ISummarySource : IConformanceSource
+    /// <summary>Interface for harvesting summary information from a set of FHIR artifacts.</summary>
+    public interface ISummarySource : IResourceResolver
     {
         // <summary>Returns a list of summary information for all the FHIR artifacts provided by the source.</summary>
         ReadOnlyCollection<ArtifactSummary> ListSummaries();
