@@ -62,8 +62,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
         }
 
         /// <summary>Get the Size property value from the specified artifact summary property bag, if available.</summary>
-        public static long GetFileSize(this IArtifactSummaryPropertyBag properties)
-            => (long)properties.GetValueOrDefault(FileSizeKey);
+        public static long? GetFileSize(this IArtifactSummaryPropertyBag properties)
+            => (long?)properties.GetValueOrDefault(FileSizeKey);
 
         internal static void SetFileSize(this ArtifactSummaryPropertyBag properties, long value)
         {
@@ -71,8 +71,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
         }
 
         /// <summary>Get the LastModified property value from the specified artifact summary property bag, if available.</summary>
-        public static DateTime GetLastModified(this IArtifactSummaryPropertyBag properties)
-            => (DateTime)properties.GetValueOrDefault(LastModifiedKey);
+        public static DateTime? GetLastModified(this IArtifactSummaryPropertyBag properties)
+            => (DateTime?)properties.GetValueOrDefault(LastModifiedKey);
 
         internal static void SetLastModified(this ArtifactSummaryPropertyBag properties, DateTime value)
         {

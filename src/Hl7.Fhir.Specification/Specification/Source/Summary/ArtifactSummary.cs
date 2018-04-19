@@ -92,10 +92,10 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public string Origin => properties.GetOrigin();
 
         /// <summary>Gets the size of the original artifact file.</summary>
-        public long FileSize => properties.GetFileSize();
+        public long? FileSize => properties.GetFileSize();
 
         /// <summary>Gets the last modified date of the original artifact file.</summary>
-        public DateTime LastModified => properties.GetLastModified();
+        public DateTime? LastModified => properties.GetLastModified();
 
         /// <summary>
         /// Gets an opaque value that represents the position of the artifact within the container.
