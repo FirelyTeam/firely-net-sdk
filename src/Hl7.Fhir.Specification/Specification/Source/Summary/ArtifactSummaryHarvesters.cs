@@ -10,9 +10,11 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -32,6 +34,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public const string OriginKey = "Origin";
         public const string FileSizeKey = "Size";
         public const string LastModifiedKey = "LastModified";
+        public const string SerializationFormatKey = "Format";
         public const string PositionKey = "Position";
         public const string TypeNameKey = "TypeName";
         public const string ResourceUriKey = "Uri";
@@ -77,6 +80,19 @@ namespace Hl7.Fhir.Specification.Source.Summary
         internal static void SetLastModified(this ArtifactSummaryPropertyBag properties, DateTime value)
         {
             properties[LastModifiedKey] = value;
+        }
+
+        /// <summary>
+        /// Get a string value from the specified artifact summary property bag that represents the artifact
+        /// serialization format, as defined by the <see cref="FhirSerializationFormats"/> class, if available.
+        /// </summary>
+        public static string GetSerializationFormat(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(SerializationFormatKey);
+
+        internal static void SetSerializationFormat(this ArtifactSummaryPropertyBag properties, string value)
+        {
+            Debug.Assert(Array.IndexOf(FhirSerializationFormats.All, value) >= 0);
+            properties[SerializationFormatKey] = value;
         }
 
         /// <summary>Get the Position property value from the specified artifact summary property bag, if available.</summary>

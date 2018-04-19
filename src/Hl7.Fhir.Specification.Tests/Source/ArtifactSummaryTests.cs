@@ -1,11 +1,14 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -37,9 +40,9 @@ namespace Hl7.Fhir.Specification.Tests
         void TestPatientSummaryWithCustomHarvester(string path, params string[] expectedNames)
         {
             // Combine default harvesters and custom harvester
-            var harvesters = new ArtifactSummaryHarvester[ArtifactSummaryGenerator.DefaultHarvesters.Length + 1];
-            Array.Copy(ArtifactSummaryGenerator.DefaultHarvesters, harvesters, ArtifactSummaryGenerator.DefaultHarvesters.Length);
-            harvesters[ArtifactSummaryGenerator.DefaultHarvesters.Length] = HarvestPatientSummary;
+            var harvesters = new ArtifactSummaryHarvester[ArtifactSummaryGenerator.ConformanceHarvesters.Length + 1];
+            Array.Copy(ArtifactSummaryGenerator.ConformanceHarvesters, harvesters, ArtifactSummaryGenerator.ConformanceHarvesters.Length);
+            harvesters[ArtifactSummaryGenerator.ConformanceHarvesters.Length] = HarvestPatientSummary;
 
             var summary = assertSummary(path, harvesters);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
@@ -202,6 +205,10 @@ namespace Hl7.Fhir.Specification.Tests
 
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
+            if (harvesters == null || harvesters.Length == 0)
+            {
+                harvesters = ArtifactSummaryGenerator.ConformanceHarvesters;
+            }
             var summaries = ArtifactSummaryGenerator.Generate(path, harvesters);
             Assert.IsNotNull(summaries);
             Assert.AreEqual(1, summaries.Count);
@@ -215,5 +222,79 @@ namespace Hl7.Fhir.Specification.Tests
 
             return summary;
         }
+
+        [TestMethod]
+        public void TestZipSummary()
+        {
+            var source = ZipSource.CreateValidationSource();
+            var summaries = source.ListSummaries();
+            Assert.IsNotNull(summaries);
+            Assert.AreEqual(7670, summaries.Count);
+            Assert.AreEqual(581, summaries.OfResourceType(ResourceType.StructureDefinition).Count());
+            Assert.IsTrue(!summaries.Errors().Any());
+        }
+
+        [TestMethod]
+        public void TestLoadResourceFromZipSource()
+        {
+            var source = ZipSource.CreateValidationSource();
+            var summaries = source.ListSummaries();
+            var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
+            var patientSummary = summaries.FindConformanceResources(patientUrl).FirstOrDefault();
+            Assert.IsNotNull(patientSummary);
+            Assert.AreEqual(ResourceType.StructureDefinition, patientSummary.ResourceType);
+            Assert.AreEqual(patientUrl, patientSummary.GetConformanceCanonicalUrl());
+
+            // TODO
+            Assert.IsNotNull(patientSummary.Origin);
+            var patientStructure = patientSummary.LoadResource<StructureDefinition>();
+            Assert.IsNotNull(patientStructure);
+        }
+
+        [TestMethod]
+        public void TestLoadResourceFromZipStream()
+        {
+            // Use XmlNavigatorStream to navigate resources stored inside a zip file
+            // ZipDeflateStream does not support seeking (forward-only stream)
+            // Therefore this only works for the XmlNavigatorStream, as the ctor does NOT (need to) call Reset()
+            // JsonNavigatorStream cannot support zip streams; ctor needs to call Reset after scanning resourceType
+
+            ArtifactSummary corePatientSummary;
+            var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
+            string zipEntryName = "profiles-resources.xml";
+
+            using (var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read))
+            {
+                var entry = archive.Entries.FirstOrDefault(e => e.Name == zipEntryName);
+                Assert.IsNotNull(entry);
+
+                using (var entryStream = entry.Open())
+                {
+                    var summaries = ArtifactSummaryGenerator.Generate(entryStream, FhirSerializationFormats.Xml);
+                    Assert.IsNotNull(summaries);
+                    corePatientSummary = summaries.FindConformanceResources(corePatientUrl).FirstOrDefault();
+                }
+
+            }
+
+            Assert.IsNotNull(corePatientSummary);
+            Assert.AreEqual(ResourceType.StructureDefinition, corePatientSummary.ResourceType);
+            Assert.AreEqual(corePatientUrl, corePatientSummary.GetConformanceCanonicalUrl());
+            Assert.AreEqual(FhirSerializationFormats.Xml, corePatientSummary.SerializationFormat);
+
+            // Re-open ZIP file and try to extract a resource
+            using (var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read))
+            {
+                var entry = archive.Entries.FirstOrDefault(e => e.Name == zipEntryName);
+                using (var entryStream = entry.Open())
+                {
+                    var corePatient = corePatientSummary.LoadResource<StructureDefinition>(entryStream);
+                    Assert.IsNotNull(corePatient);
+                    Assert.AreEqual(corePatientUrl, corePatient.Url);
+                }
+            }
+
+        }
+
     }
 }

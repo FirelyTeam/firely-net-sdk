@@ -270,12 +270,12 @@ namespace Hl7.Fhir.Specification.Source
         /// summary information from an artifact.
         /// </summary>
         /// <remarks>
-        /// Allows consumers to harvest additional custom summary properties,
+        /// Allows consumers to harvest custom summary properties,
         /// depending on the resource type or other (previously harvested) information.
         /// <para>
         /// By default, if this array is null or empty, the
         /// <see cref="ArtifactSummaryGenerator"/> calls the built-in default harvesters
-        /// as specified by <see cref="ArtifactSummaryGenerator.DefaultHarvesters"/>.
+        /// as defined by the <see cref="ArtifactSummaryGenerator.ConformanceHarvesters"/> array.
         /// However if the caller specifies one or more harvester delegates, then the summary
         /// generator calls only the provided delegates, in the specified order.
         /// A custom delegate array may include one or more of the default harvesters.

@@ -761,7 +761,10 @@ namespace Hl7.Fhir.Specification.Source
             {
                 foreach (var filePath in paths)
                 {
-                    var summaries = ArtifactSummaryGenerator.Generate(filePath, harvesters);
+                    var summaries = harvesters == null || harvesters.Length == 0
+                        ? ArtifactSummaryGenerator.Generate(filePath)
+                        : ArtifactSummaryGenerator.Generate(filePath, harvesters);
+
                     scanResult.AddRange(summaries);
                 }
             }
