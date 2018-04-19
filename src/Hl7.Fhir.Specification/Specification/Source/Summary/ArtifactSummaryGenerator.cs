@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                         
                         // properties.SetOrigin(...);
                         // properties.SetLastModified(...);
-                        if (stream.Length > 0)
+                        if (stream.CanSeek && stream.Length > 0)
                         {
                             properties.SetFileSize(stream.Length);
                         }
