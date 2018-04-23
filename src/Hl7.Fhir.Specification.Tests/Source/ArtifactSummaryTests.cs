@@ -223,11 +223,13 @@ namespace Hl7.Fhir.Specification.Tests
             return summary;
         }
 
+#if NET_COMPRESSION
+
         [TestMethod]
         public void TestZipSummary()
         {
             var source = ZipSource.CreateValidationSource();
-            var summaries = source.ListSummaries();
+            var summaries = source.ListSummaries().ToList();
             Assert.IsNotNull(summaries);
             Assert.AreEqual(7670, summaries.Count);
             Assert.AreEqual(581, summaries.OfResourceType(ResourceType.StructureDefinition).Count());
@@ -237,6 +239,9 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestLoadResourceFromZipSource()
         {
+            // ZipSource extracts core ZIP archive to (temp) folder, then delegates to DirectorySource
+            // i.e. artifact summaries are harvested from files on disk
+
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries();
             var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
@@ -245,15 +250,16 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(ResourceType.StructureDefinition, patientSummary.ResourceType);
             Assert.AreEqual(patientUrl, patientSummary.GetConformanceCanonicalUrl());
 
-            // TODO
             Assert.IsNotNull(patientSummary.Origin);
-            var patientStructure = patientSummary.LoadResource<StructureDefinition>();
+            var patientStructure = source.LoadResource<StructureDefinition>(patientSummary);
             Assert.IsNotNull(patientStructure);
         }
 
         [TestMethod]
         public void TestLoadResourceFromZipStream()
         {
+            // Harvest summaries and load artifact straight from core ZIP archive
+
             // Use XmlNavigatorStream to navigate resources stored inside a zip file
             // ZipDeflateStream does not support seeking (forward-only stream)
             // Therefore this only works for the XmlNavigatorStream, as the ctor does NOT (need to) call Reset()
@@ -263,14 +269,16 @@ namespace Hl7.Fhir.Specification.Tests
             var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
             string zipEntryName = "profiles-resources.xml";
 
+            // Generate summaries from core ZIP resource definitions (extract in memory)
             using (var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read))
             {
                 var entry = archive.Entries.FirstOrDefault(e => e.Name == zipEntryName);
                 Assert.IsNotNull(entry);
 
                 using (var entryStream = entry.Open())
+                using (var navStream = new XmlNavigatorStream(entryStream))
                 {
-                    var summaries = ArtifactSummaryGenerator.Generate(entryStream, FhirSerializationFormats.Xml);
+                    var summaries = ArtifactSummaryGenerator.Generate(navStream);
                     Assert.IsNotNull(summaries);
                     corePatientSummary = summaries.FindConformanceResources(corePatientUrl).FirstOrDefault();
                 }
@@ -280,21 +288,29 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(corePatientSummary);
             Assert.AreEqual(ResourceType.StructureDefinition, corePatientSummary.ResourceType);
             Assert.AreEqual(corePatientUrl, corePatientSummary.GetConformanceCanonicalUrl());
-            Assert.AreEqual(FhirSerializationFormats.Xml, corePatientSummary.SerializationFormat);
 
-            // Re-open ZIP file and try to extract a resource
+            // Load core Patient resource from ZIP (extract in memory)
             using (var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read))
             {
                 var entry = archive.Entries.FirstOrDefault(e => e.Name == zipEntryName);
                 using (var entryStream = entry.Open())
+                using (var navStream = new XmlNavigatorStream(entryStream))
                 {
-                    var corePatient = corePatientSummary.LoadResource<StructureDefinition>(entryStream);
-                    Assert.IsNotNull(corePatient);
-                    Assert.AreEqual(corePatientUrl, corePatient.Url);
+                    var nav = navStream.Current;
+                    if (nav != null)
+                    {
+                        // Parse target resource from navigator
+                        var parser = new BaseFhirParser();
+                        var corePatient = parser.Parse<StructureDefinition>(nav);
+                        Assert.IsNotNull(corePatient);
+                        Assert.AreEqual(corePatientUrl, corePatient.Url);
+                    }
                 }
             }
 
         }
+
+#endif
 
     }
 }

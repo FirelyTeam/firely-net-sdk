@@ -13,7 +13,6 @@ using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -21,6 +20,7 @@ using System.Reflection;
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
+    /// <remarks>Extracts the ZIP archive to a temporary folder and delegates to the <see cref="DirectorySource"/>.</remarks>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource
     {
@@ -31,12 +31,11 @@ namespace Hl7.Fhir.Specification.Source
         public static ZipSource CreateValidationSource()
         {
             var path = Path.Combine(DirectorySource.SpecificationDirectory, SpecificationZipFileName);
-            if(File.Exists(path)) return new ZipSource(path);
-
-            //path = Path.Combine(DirectorySource.SpecificationDirectory, "specification-min.xml.zip");
-            //if (File.Exists(path)) return new ZipSource(path);
-
-            throw new FileNotFoundException($"Cannot create a {nameof(ZipSource)} for the core specification: '{SpecificationZipFileName}' was not found.");
+            if(!File.Exists(path))
+            {
+                throw new FileNotFoundException($"Cannot create a {nameof(ZipSource)} for the core specification: '{SpecificationZipFileName}' was not found.");
+            }
+            return new ZipSource(path);
         }
 
         private string _mask;
@@ -163,8 +162,21 @@ namespace Hl7.Fhir.Specification.Source
 
         #region ISummarySource
 
-        /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
-        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
+        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with key information about each FHIR artifact provided by the source.</summary>
+        public IEnumerable<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
+
+        /// <summary>
+        /// Load the target artifact described by the specified <see cref="ArtifactSummary"/> instance.
+        /// </summary> 
+        /// <typeparam name="T">The resource type to return.</typeparam>
+        /// <returns>A new resource instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        /// <remarks>
+        /// This implementation annotates returned resource instances with an <seealso cref="OriginAnnotation"/>
+        /// that captures the value of the <see cref="ArtifactSummary.Origin"/> property.
+        /// The <seealso cref="OriginAnnotationExtensions.GetOrigin(Resource)"/> extension method 
+        /// provides access to the annotated location.
+        /// </remarks>
+        public T LoadResource<T>(ArtifactSummary summary) where T : Resource => FileSource.LoadResource<T>(summary);
 
         #endregion
 
@@ -187,7 +199,10 @@ namespace Hl7.Fhir.Specification.Source
         /// file system and is not thread-safe.</remarks>
         private DirectorySource createSource()
         {
-            if (!File.Exists(ZipPath)) throw new FileNotFoundException(String.Format("Cannot prepare ZipArtifactSource: file '{0}' was not found", ZipPath));
+            if (!File.Exists(ZipPath))
+            {
+                throw new FileNotFoundException($"Cannot prepare {nameof(ZipSource)}: file '{ZipPath}' was not found");
+            }
 
             var zc = new ZipCacher(ZipPath, GetCacheKey());
             var source = new DirectorySource(zc.GetContentDirectory(), _settings);

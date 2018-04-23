@@ -81,6 +81,47 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public static List<ArtifactSummary> Generate(string origin) => Generate(origin, ConformanceHarvesters);
 
         /// <summary>
+        /// Generate a list of artifact summary information from a resource input stream,
+        /// using the default <see cref="ConformanceHarvesters"/>.
+        /// <para>
+        /// If the target resource represents a <see cref="Bundle"/> instance, then the generator
+        /// returns a list of summaries for all resource entries contained in the bundle.
+        /// </para>
+        /// </summary>
+        /// <param name="navStream">An <see cref="INavigatorStream"/> instance.</param>
+        /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
+        /// <remarks>
+        /// The generator catches all runtime exceptions that occur during harvesting and returns
+        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
+        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
+        /// </remarks>
+        public static List<ArtifactSummary> Generate(INavigatorStream navStream) => Generate(navStream, null, ConformanceHarvesters);
+
+        /// <summary>
+        /// Generate a list of artifact summary information from a resource input stream,
+        /// using the default <see cref="ConformanceHarvesters"/>.
+        /// <para>
+        /// If the target resource represents a <see cref="Bundle"/> instance, then the generator
+        /// returns a list of summaries for all resource entries contained in the bundle.
+        /// </para>
+        /// </summary>
+        /// <param name="navStream">An <see cref="INavigatorStream"/> instance.</param>
+        /// <param name="initProperties">
+        /// An optional summary properties initialization method, or <c>null</c>.
+        /// If specified, the generator will call this method for each generated summary,
+        /// allowing the caller to modify or enrich the set of generated summary properties.
+        /// </param>
+        /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
+        /// <remarks>
+        /// The generator catches all runtime exceptions that occur during harvesting and returns
+        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
+        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
+        /// </remarks>
+        public static List<ArtifactSummary> Generate(
+            INavigatorStream navStream,
+            Action<ArtifactSummaryPropertyBag> initProperties) => Generate(navStream, initProperties, ConformanceHarvesters);
+
+        /// <summary>
         /// Generate a list of artifact summary information for a resource file on disk,
         /// using the specified list of <see cref="ArtifactSummaryHarvester"/> instances.
         /// <para>
@@ -105,107 +146,65 @@ namespace Hl7.Fhir.Specification.Source.Summary
             string origin,
             params ArtifactSummaryHarvester[] harvesters)
         {
-            var result = new List<ArtifactSummary>();
+            List<ArtifactSummary> result = null;
 
-            // In case of error, return completed summaries and error info
+            // Try to create navigator stream factory
+            // May fail if the specified input is invalid => return error summary
             INavigatorStream navStream = null;
             try
             {
-                // Call default navigator factory
                 navStream = DefaultNavigatorStreamFactory.Create(origin);
 
                 // Factory returns null for unknown file formats
-                if (navStream == null) { return result; }
-
-                // Get some source file properties
-                var fi = new FileInfo(origin);
-
-                // Resources from same origin share a common serialization format
-                string format =
-                    fi.Extension == FhirFileFormats.XmlFileExtension ? FhirSerializationFormats.Xml
-                    : fi.Extension == FhirFileFormats.JsonFileExtension ? FhirSerializationFormats.Json
-                    : null;
-
-                while (navStream.MoveNext())
+                if (navStream != null)
                 {
-                    var current = navStream.Current;
-                    if (current != null)
-                    {
-                        var properties = new ArtifactSummaryPropertyBag();
 
-                        // Initialize default summary information
-                        // Note: not exposed by IElementNavigator, cannot use harvester
+                    // Get some source file properties
+                    var fi = new FileInfo(origin);
+
+                    // Resources from same origin share a common serialization format
+                    string format =
+                        fi.Extension == FhirFileFormats.XmlFileExtension ? FhirSerializationFormats.Xml
+                        : fi.Extension == FhirFileFormats.JsonFileExtension ? FhirSerializationFormats.Json
+                        : null;
+
+                    // Local helper method to initialize specific summary properties
+                    void InitializeSummaryFromOrigin(ArtifactSummaryPropertyBag properties)
+                    {
                         properties.SetOrigin(origin);
                         properties.SetFileSize(fi.Length);
                         properties.SetLastModified(fi.LastWriteTimeUtc);
                         properties.SetSerializationFormat(format);
-                        properties.SetPosition(navStream.Position);
-                        properties.SetTypeName(current.Type);
-                        properties.SetResourceUri(navStream.Position);
-
-                        var summary = generate(properties, current, harvesters);
-
-                        result.Add(summary);
                     }
+
+                    result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
                 }
             }
-            // TODO Catch specific exceptions
-            // catch (System.IO.FileNotFoundException)
-            // catch (UnauthorizedAccessException)
-            // catch (System.Security.SecurityException)
-            // catch (FormatException)
             catch (Exception ex)
             {
-                result.Add(ArtifactSummary.FromException(ex, origin));
+                result = new List<ArtifactSummary>
+                {
+                    ArtifactSummary.FromException(ex, origin)
+                };
             }
-            finally
-            {
-                navStream?.Dispose();
-            }
+
             return result;
+
         }
 
-        // [WMR 20180418] NEW: Harvest summaries from a resource stream
-
         /// <summary>
-        /// Generate a list of artifact summary information from a streamed resource,
+        /// Generate a list of artifact summary information from a resource input stream,
         /// using the default <see cref="ConformanceHarvesters"/>.
         /// <para>
         /// If the target resource represents a <see cref="Bundle"/> instance, then the generator
         /// returns a list of summaries for all resource entries contained in the bundle.
         /// </para>
         /// </summary>
-        /// <param name="stream">
-        /// A readable stream that returns a <see cref="Hl7.Fhir.Model.Resource"/> instance.
-        /// Note: the caller is responsible for closing/disposing the specified stream.
-        /// </param>
-        /// <param name="format">
-        /// A string value that represents the FHIR resource serialization format,
-        /// as defined by <see cref="FhirSerializationFormats"/>.
-        /// </param>
-        /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
-        /// <remarks>
-        /// The generator catches all runtime exceptions that occur during harvesting and returns
-        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
-        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
-        /// </remarks>        
-        public static List<ArtifactSummary> Generate(Stream stream, string format) => Generate(stream, format, ConformanceHarvesters);
-
-        /// <summary>
-        /// Generate a list of artifact summary information from a streamed resource,
-        /// using the specified list of <see cref="ArtifactSummaryHarvester"/> instances.
-        /// <para>
-        /// If the target resource represents a <see cref="Bundle"/> instance, then the generator
-        /// returns a list of summaries for all resource entries contained in the bundle.
-        /// </para>
-        /// </summary>
-        /// <param name="stream">
-        /// A readable stream that returns <see cref="Hl7.Fhir.Model.Resource"/> instances.
-        /// Note: the caller is responsible for closing/disposing the specified stream.
-        /// </param>
-        /// <param name="format">
-        /// A string value that represents the FHIR resource serialization format,
-        /// as defined by <see cref="FhirSerializationFormats"/>.
+        /// <param name="navStream">An <see cref="INavigatorStream"/> instance.</param>
+        /// <param name="initProperties">
+        /// An optional summary properties initialization method, or <c>null</c>.
+        /// If specified, the generator will call this method for each generated summary,
+        /// allowing the caller to modify or enrich the set of generated summary properties.
         /// </param>
         /// <param name="harvesters">
         /// A list of <see cref="ArtifactSummaryHarvester"/> delegates that the
@@ -219,23 +218,19 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
         /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
         /// </remarks>
+
         public static List<ArtifactSummary> Generate(
-            Stream stream,
-            string format,
+            INavigatorStream navStream,
+            Action<ArtifactSummaryPropertyBag> initProperties,
             params ArtifactSummaryHarvester[] harvesters)
         {
             var result = new List<ArtifactSummary>();
 
-            // In case of error, return completed summaries and error info
-            INavigatorStream navStream = null;
+            // Factory returns null for unknown file formats
+            if (navStream == null) { return result; }
+
             try
             {
-                // Call default navigator factory
-                navStream = DefaultNavigatorStreamFactory.Create(stream, format, false);
-
-                // Factory returns null for unknown file formats
-                if (navStream == null) { return result; }
-
                 // Run default or specified (custom) harvesters
                 if (harvesters == null || harvesters.Length == 0)
                 {
@@ -251,20 +246,14 @@ namespace Hl7.Fhir.Specification.Source.Summary
 
                         // Initialize default summary information
                         // Note: not exposed by IElementNavigator, cannot use harvester
-
-                        // Note: Origin & LastModified properties are unavailable for input streams
-                        // properties.SetOrigin(...);
-                        // properties.SetLastModified(...);
-
-                        properties.SetSerializationFormat(format);
-                        if (stream.CanSeek && stream.Length > 0)
-                        {
-                            properties.SetFileSize(stream.Length);
-                        }
                         properties.SetPosition(navStream.Position);
                         properties.SetTypeName(current.Type);
                         properties.SetResourceUri(navStream.Position);
 
+                        // Allow caller to modify/enrich harvested properties
+                        initProperties?.Invoke(properties);
+
+                        // Generate the final (immutable) ArtifactSummary instance
                         var summary = generate(properties, current, harvesters);
 
                         result.Add(summary);

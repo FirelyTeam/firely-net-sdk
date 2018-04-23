@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Specification.Tests
             var errors = fa.ListSummaryErrors().ToList();
             Assert.AreEqual(1, errors.Count);
             var error = errors[0];
-            Debug.Print($"{error.Origin} : {error.Error.Message}");
+            Debug.Print($"Error in file '{error.Origin}': {error.Error.Message}");
             Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));
         }
 

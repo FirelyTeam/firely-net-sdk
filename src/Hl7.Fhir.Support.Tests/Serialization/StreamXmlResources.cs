@@ -113,6 +113,8 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             Debug.WriteLine($"Scanning took {sw.ElapsedMilliseconds / 250} ms");
         }
 
+#if NET_COMPRESSION
+
         [TestMethod]
         public void NavigateZipStream()
         {
@@ -141,5 +143,8 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
             }
         }
+
+#endif
+
     }
 }

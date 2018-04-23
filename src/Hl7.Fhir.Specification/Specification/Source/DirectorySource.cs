@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private List<string> _artifactFilePaths;
         private List<ArtifactSummary> _artifactSummaries;
-        private ReadOnlyCollection<ArtifactSummary> _roArtifactSummaries;
+
 #if THREADSAFE
         // Shared synchronization object for _artifactFilePaths & _artifactSummaries
         private readonly object _syncRoot = new object();
@@ -354,7 +354,6 @@ namespace Hl7.Fhir.Specification.Source
             {
                 _artifactFilePaths = null;
                 _artifactSummaries = null;
-                _roArtifactSummaries = null;
                 if (force)
                 {
                     prepareSummaries();
@@ -423,8 +422,6 @@ namespace Hl7.Fhir.Specification.Source
                             var summaries = ArtifactSummaryGenerator.Generate(filePath, _settings.SummaryDetailsHarvesters);
                             _artifactSummaries.AddRange(summaries);
                         }
-                        // [WMR 20180409] No need to recreate r/o wrapper, automatically synchronized
-                        // _roArtifactSummaries = _artifactSummaries.AsReadOnly();
                     }
 
                 }
@@ -468,7 +465,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (valueSetUri == null) throw Error.ArgumentNull(nameof(valueSetUri));
             var summary = GetSummaries().ResolveCodeSystem(valueSetUri);
-            return summary?.LoadResource<CodeSystem>();
+            return loadResourceInternal<CodeSystem>(summary);
         }
 
         /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
@@ -483,7 +480,7 @@ namespace Hl7.Fhir.Specification.Source
                 throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} cannot both be null.");
             }
             var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
-            return summaries.Select(summary => summary?.LoadResource<ConceptMap>()).Where(r => r != null);
+            return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
         }
 
         /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
@@ -493,7 +490,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             var summary = GetSummaries().ResolveNamingSystem(uniqueId);
-            return summary?.LoadResource<NamingSystem>();
+            return loadResourceInternal<NamingSystem>(summary);
         }
 
 
@@ -501,11 +498,30 @@ namespace Hl7.Fhir.Specification.Source
 
         #region ISummarySource
 
-        /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public ReadOnlyCollection<ArtifactSummary> ListSummaries()
+        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with key information about each FHIR artifact provided by the source.</summary>
+        public IEnumerable<ArtifactSummary> ListSummaries()
         {
             GetSummaries();
-            return _roArtifactSummaries;
+            return _artifactSummaries.AsReadOnly();
+        }
+
+        /// <summary>
+        /// Load the target artifact described by the specified <see cref="ArtifactSummary"/> instance.
+        /// </summary> 
+        /// <typeparam name="T">The resource type to return.</typeparam>
+        /// <returns>A new resource instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        /// <remarks>
+        /// This implementation annotates returned resource instances with an <seealso cref="OriginAnnotation"/>
+        /// that captures the value of the <see cref="ArtifactSummary.Origin"/> property.
+        /// The <seealso cref="OriginAnnotationExtensions.GetOrigin(Resource)"/> extension method 
+        /// provides access to the annotated location.
+        /// </remarks>
+        public T LoadResource<T>(ArtifactSummary summary) where T : Resource
+        {
+            if (summary == null) { throw Error.ArgumentNull(nameof(summary)); }
+            // TODO: Verify if the specified summary was created by this instance...?
+            return loadResourceInternal<T>(summary);
+
         }
 
         #endregion
@@ -518,7 +534,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByUri(uri);
-            return summary?.LoadResource<Resource>();
+            return loadResourceInternal<Resource>(summary);
         }
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
@@ -527,7 +543,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri);
-            return summary?.LoadResource<Resource>();
+            return loadResourceInternal<Resource>(summary);
         }
 
         #endregion
@@ -570,7 +586,6 @@ namespace Hl7.Fhir.Specification.Source
 
             _artifactFilePaths = filePaths;
             _artifactSummaries = null;
-            _roArtifactSummaries = null;
             return filePaths;
         }
 
@@ -746,7 +761,6 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             _artifactSummaries = summaries;
-            _roArtifactSummaries = summaries.AsReadOnly();
             return;
         }
 
@@ -765,7 +779,11 @@ namespace Hl7.Fhir.Specification.Source
                         ? ArtifactSummaryGenerator.Generate(filePath)
                         : ArtifactSummaryGenerator.Generate(filePath, harvesters);
 
-                    scanResult.AddRange(summaries);
+                    // [WMR 20180423] Generate may return null, e.g. if specified file has unknown extension
+                    if (summaries != null)
+                    {
+                        scanResult.AddRange(summaries);
+                    }
                 }
             }
             else
@@ -818,6 +836,52 @@ namespace Hl7.Fhir.Specification.Source
 
             return scanResult;
         }
+
+        /// <summary>Returns <c>null</c> if the specified <paramref name="summary"/> equals <c>null</c>.</summary>
+        T loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
+        {
+            if (summary == null) { return null; }
+
+            // File path of the containing resource file (could be a Bundle)
+            var origin = summary.Origin;
+            if (string.IsNullOrEmpty(origin))
+            {
+                throw Error.Argument($"Cannot load resource from summary. The {nameof(ArtifactSummary.Origin)} property value is empty or missing.");
+            }
+
+            var pos = summary.Position;
+            if (string.IsNullOrEmpty(pos))
+            {
+                throw Error.Argument($"Cannot load resource from summary. The {nameof(ArtifactSummary.Position)} property value is empty or missing.");
+            }
+
+            T result = null;
+            using (var navStream = DefaultNavigatorStreamFactory.Create(origin))
+            {
+
+                // Handle exceptions & null return values?
+                // e.g. file may have been deleted/renamed since last scan
+
+                // Advance stream to the target resource (e.g. specific Bundle entry)
+                if (navStream != null && navStream.Seek(pos))
+                {
+                    // Create navigator for the target resource
+                    var nav = navStream.Current;
+                    if (nav != null)
+                    {
+                        // Parse target resource from navigator
+                        var parser = new BaseFhirParser();
+                        result = parser.Parse<T>(nav);
+                        // Add origin annotation
+                        result?.SetOrigin(origin);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
 
         #endregion
 
