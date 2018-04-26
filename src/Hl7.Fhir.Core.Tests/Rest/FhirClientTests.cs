@@ -1088,7 +1088,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// <summary>
         /// Test for showing issue https://github.com/ewoutkramer/fhir-net-api/issues/128
         /// </summary>
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestCreatingBinaryResource()
         {
             Image img = Image.FromFile(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
