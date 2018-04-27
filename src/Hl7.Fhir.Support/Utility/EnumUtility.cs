@@ -36,14 +36,14 @@ namespace Hl7.Fhir.Utility
         private static Dictionary<Type, EnumMapping> _cache = new Dictionary<Type, EnumMapping>();
         private static Object _cacheLock = new Object();
 
-        public static object ParseLiteral(string rawValue, Type enumType)
+        public static object ParseLiteral(string rawValue, Type enumType, bool ignoreCase = false)
         {
-            return GetEnumMapping(enumType).ParseLiteral(rawValue);
+            return GetEnumMapping(enumType).ParseLiteral(rawValue, ignoreCase);
         }
 
-        public static T? ParseLiteral<T>(string rawValue) where T : struct
+        public static T? ParseLiteral<T>(string rawValue, bool ignoreCase = false) where T : struct
         {
-            return (T?)ParseLiteral(rawValue, typeof(T));
+            return (T?)ParseLiteral(rawValue, typeof(T), ignoreCase);
         }
 
 		public static string GetName( Type enumType )
@@ -81,6 +81,7 @@ namespace Hl7.Fhir.Utility
             public Type EnumType { get; private set; }
 
             private Dictionary<string, Enum> _literalToEnum = new Dictionary<string, Enum>();
+            private Dictionary<string, Enum> _lowercaseLiteralToEnum = new Dictionary<string, Enum>();
             private Dictionary<Enum, string> _enumToLiteral = new Dictionary<Enum, string>();
 
             public string GetLiteral(Enum value)
@@ -89,9 +90,17 @@ namespace Hl7.Fhir.Utility
                 return result;
             }
 
-            public Enum ParseLiteral(string literal)
+            public Enum ParseLiteral(string literal, bool ignoreCase)
             {
-                _literalToEnum.TryGetValue(literal, out Enum result);
+                Enum result;
+                if (ignoreCase)
+                {
+                    _lowercaseLiteralToEnum.TryGetValue(literal.ToLowerInvariant(), out result);
+                }
+                else
+                {
+                    _literalToEnum.TryGetValue(literal, out result);
+                }
                 return result;
             }
 
@@ -107,7 +116,8 @@ namespace Hl7.Fhir.Utility
                     Name = getEnumName(enumType),
                     EnumType = enumType,
                     _enumToLiteral = new Dictionary<Enum, string>(),
-                    _literalToEnum = new Dictionary<string, Enum>()
+                    _literalToEnum = new Dictionary<string, Enum>(),
+                    _lowercaseLiteralToEnum = new Dictionary<string, Enum>()
                 };
 
                 foreach (var enumValue in ReflectionHelper.FindEnumFields(enumType))
@@ -121,6 +131,7 @@ namespace Hl7.Fhir.Utility
 
                     result._enumToLiteral.Add(value, literal);
                     result._literalToEnum.Add(literal, value);
+                    result._lowercaseLiteralToEnum.Add(literal.ToLowerInvariant(), value);
                 }
 
                 return result;
