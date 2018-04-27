@@ -11,7 +11,7 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.Tests.Introspection
+namespace Hl7.Fhir.Support.Tests.Utils
 {
     [TestClass]
     public class EnumMappingTest
@@ -24,6 +24,7 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNull(EnumUtility.ParseLiteral<TestEnum>("Item2"));
             Assert.AreEqual(TestEnum.Item2, EnumUtility.ParseLiteral<TestEnum>("ItemTwo"));
             Assert.IsNull(EnumUtility.ParseLiteral<TestEnum>("iTeM1"));
+            Assert.AreEqual(TestEnum.Item1, EnumUtility.ParseLiteral<TestEnum>("iTeM1", ignoreCase: true));
 
             Assert.AreEqual("Item1", TestEnum.Item1.GetLiteral());
             Assert.AreEqual("ItemTwo", TestEnum.Item2.GetLiteral());
