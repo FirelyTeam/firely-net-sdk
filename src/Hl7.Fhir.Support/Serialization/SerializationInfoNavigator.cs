@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
             if (rootType == null) throw new ArgumentNullException(nameof(rootType));
             if (provider == null) throw new ArgumentNullException(nameof(provider));
 
-            var rootElement = new ElementSerializationInfo(rootType.TypeName, false, new[] { rootType });
+            var rootElement = new ElementSerializationInfo(rootType.TypeName, false, false, new[] { rootType });
             return new SerializationInfoNavigator(new[] { rootElement }, provider, rootElement);
         }
 
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Serialization
         public static SerializationInfoNavigator ForType(IComplexTypeSerializationInfo type, IModelMetadataProvider provider)
             => new SerializationInfoNavigator(type.GetChildren(), provider);
 
-        public static SerializationInfoNavigator Empty() => new SerializationInfoNavigator(null, null);
+        public static SerializationInfoNavigator Empty = new SerializationInfoNavigator(null, null);
 
         private SerializationInfoNavigator(IEnumerable<IElementSerializationInfo> elements, IModelMetadataProvider provider,
             IElementSerializationInfo current = null, string suffix = null)
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Serialization
 
         public SerializationInfoNavigator Down()
         {
-            if (!IsTracking) return SerializationInfoNavigator.Empty();
+            if (!IsTracking) return SerializationInfoNavigator.Empty;
 
             IComplexTypeSerializationInfo childType = null;
 

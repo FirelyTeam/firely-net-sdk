@@ -18,16 +18,21 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct XmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
     {
-        internal static XmlDomFhirNavigator ForRoot(XElement root, IComplexTypeSerializationInfo rootType)
+        internal static XmlDomFhirNavigator ForRoot(XElement root, IModelMetadataProvider provider)
         {
+            // namespace?
+            var rootType = provider?.GetSerializationInfoForType(root.Name.LocalName);
+
             return new XmlDomFhirNavigator()
             {
                 OnExceptionRaised = null,
                 _current = root,
                 _nameIndex = 0,
                 _parentPath = null,
-                _definition = rootType != null ? SerializationInfoNavigator.ForRoot(rootType) : SerializationInfoNavigator.Empty(),
-                Type = rootType.TypeName
+
+                // Note: this will generate an Empty SerializationInfoNavigator in case there is no provider, or the type is unknown
+                // in the last case we may also prefer to report an error at this moment?
+                _definition = rootType != null ? SerializationInfoNavigator.ForRoot(rootType, provider) : SerializationInfoNavigator.Empty,
             };
         }
 
@@ -48,65 +53,10 @@ namespace Hl7.Fhir.Serialization
         // Could check namespaces too
         public string Name => _definition.IsTracking ? _definition.DefinedName : XmlName.LocalName;
 
-        public string Type { get; private set; }
-        //{
-        //    get
-        //    {
-        //        if (currentTypeInfo == null)
-        //        {
-        //            // try to get resource type from current node (or nested node within (e.g. contained))
-        //            if (_current is XElement element && tryGetResourceName(element, out var name))
-        //                return name;
-        //            else
-        //                // Else, no type information available
-        //                return null;
-        //        }
-        //        else
-        //        {
-        //            if (currentTypeInfo.Type.Length > 1)
-        //            {
-        //                // choice type
-        //                var instanceType = XmlName.LocalName.Substring(currentTypeInfo.ElementName.Length);
-        //                var choice = currentTypeInfo.Type.FirstOrDefault(t => String.Compare(t.TypeName, instanceType, StringComparison.OrdinalIgnoreCase) == 0);
-        //                return choice?.TypeName;
-        //            }
-        //            else
-        //                return currentTypeInfo.Type[0].TypeName;
-        //        }
-        //    }
-        //}
+        public string Type => _definition.IsTracking ? _definition.TypeName : null;
 
-        private static bool tryGetResourceName(XElement xe, out string name)
-        {
-            name = null;
-
-            if (isResourceName(xe.Name))
-            {
-                name = xe.Name.LocalName;
-                return true;
-            }
-
-            // We might still be on a resource if this elements contains a
-            // contained resource
-            if (xe.HasElements)
-            {
-                var candidate = xe.Elements().First();
-
-                if (isResourceName(candidate.Name))
-                {
-                    // complain if resoure has siblings
-                    name = candidate.Name.LocalName;
-                    return true;
-                }
-            }
-
-            // Not on a resource, no name to be found
-            return false;
-
-            // Should use typeinfo if available -> change interface to contain info about this
-            bool isResourceName(XName elementName) =>
-                Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
-        }
+        private static bool isResourceName(XName elementName) =>
+            Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
 
         public object Value
         {
@@ -144,52 +94,43 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private XObject nextMatch(XObject root, string name, XObject startAfter = null)
+        private static bool tryMatch((XObject,SerializationInfoNavigator) current, string name, out (XObject,SerializationInfoNavigator)? next)
         {
-            XObject scan;
+            var instance = current.Item1;
+            var def = current.Item2;
 
-            if (startAfter == null)
-            {
-                scan = root.FirstChild();
-                _definition = _definition.Down();
-            }
-            else
-            {
-                scan = startAfter.NextChild();
-            }
-
-            while (scan != null)
+            while (instance != null)
             {
                 XName scanName;
 
-                if (scan.NodeType == XmlNodeType.Element && scan is XElement element)
+                if (instance.NodeType == XmlNodeType.Element && instance is XElement element)
                     scanName = element.Name;
-                else if (scan.NodeType == XmlNodeType.Attribute && scan is XAttribute attr && !isReservedAttribute(attr))
+                else if (instance.NodeType == XmlNodeType.Attribute && instance is XAttribute attr && !isReservedAttribute(attr))
                     scanName = attr.Name;
                 else
                     scanName = null;
 
                 if (scanName != null)
                 {
-                    _definition = _definition.MoveTo(scanName.LocalName);
+                    def = def.MoveTo(scanName.LocalName);
 
                     // If no specific next child is sought, return immediately
-                    if (name == null)
-                        return scan;
-                    else if (_definition.IsTracking && _definition.DefinedName == name)
-                        return scan;
-                    else
+                    bool isMatch = name == null ||      // no name filter -> any match is ok
+                        def.IsTracking && def.DefinedName == name ||    // else, filter on the defined name is available
+                        scanName.LocalName == name;  // else, just match the element name on the filter
+
+                    if (isMatch)
                     {
-                        // fall back -> if current name is unknown in definition, do a direct match
-                        if (scanName.LocalName == name)
-                            return scan;
+                        next = (instance, def);
+                        return true;
                     }
                 }
 
-                scan = scan.NextChild();
+                instance = instance.NextChild();
             }
 
-            return null;
+            next = null;
+            return false;
         }
 
         public bool MoveToFirstChild(string nameFilter = null)
@@ -197,20 +138,28 @@ namespace Hl7.Fhir.Serialization
             // don't move into xhtml
             if (AtXhtmlDiv) return false;
 
-            var found = nextMatch(_current, nameFilter);
-            if (found == null) return false;
+            var firstChild = _current.FirstChild();
+            if (firstChild == null) return false;
 
-            // We've moved position
+            var firstChildDef = _definition.Down();
+
+            // If the child is a contained resource (the element name looks like a Resource name)
+            // move one level deeper
+            if (firstChild is XElement xe && isResourceName(xe.Name))
+            {
+                // todo: check this is in sync with firstChildDef, which should now also be
+                // a resource definition
+                firstChild = xe.FirstNode;
+            }
+
+            if (!tryMatch((firstChild, firstChildDef), nameFilter, out var match)) return false;
+
+            // Found a match, so we can alter the current position of the navigator.
+            // Modify _parentPath to be the current path before we do that
             _parentPath = Location;
-
-            // Move the _current position to the newly found element,
-            // unless that is the (xml) type name in a contained resource, in which case we move one level deeper
-            if (found is XElement xe && isResourceName(xe.Name))
-                _current = xe.FirstNode;
-            else
-                _current = found;
-
             _nameIndex = 0;
+            _current = match.Value.Item1;
+            _definition = match.Value.Item2;
 
             return true;
         }
@@ -231,7 +180,7 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private bool isReservedAttribute(XAttribute attr) => attr.IsNamespaceDeclaration || attr.Name == "value";
+        private static bool isReservedAttribute(XAttribute attr) => attr.IsNamespaceDeclaration || attr.Name == "value";
 
         public override string ToString() => _current.ToString();
 
