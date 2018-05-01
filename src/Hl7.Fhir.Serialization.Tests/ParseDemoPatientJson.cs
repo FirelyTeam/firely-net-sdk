@@ -2,7 +2,6 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
-using Xunit.Abstractions;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
@@ -14,7 +13,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
     [TestClass]
     public class ParseDemoPatientJson
     {
-        public IElementNavigator getXmlNav(string xml) => XmlDomFhirParser.Create(xml, new PocoModelMetadataProvider());
+        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider());
 
         [TestMethod]
         public void CanReadThroughNavigator()

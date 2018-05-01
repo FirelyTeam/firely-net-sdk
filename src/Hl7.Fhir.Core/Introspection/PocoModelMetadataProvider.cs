@@ -68,8 +68,6 @@ namespace Hl7.Fhir.Introspection
         }
 
         public string TypeName => _referencedType;
-
-        public IComplexTypeSerializationInfo Resolve() => PocoModelMetadataProvider.GetSerializationInfoForType(TypeName);
     }
 
 
@@ -104,10 +102,18 @@ namespace Hl7.Fhir.Introspection
                 string getFhirTypeName(Type implementingType)
                 {
                     var attr = implementingType.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
+
+                    //this is better, but slower
+                    //if (isCodeOfT(implementingType)) return "code";
+                    if (attr?.Name == "codeOfT") return "code";
                     return attr?.Name ?? implementingType.Name;
                 }
+
+                //bool isCodeOfT(Type t) => ReflectionHelper.IsClosedGenericType(t) &&
+                //            ReflectionHelper.IsConstructedFromGenericTypeDefinition(t, typeof(Code<>));
             }
         }
 
+        public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
     }
 }

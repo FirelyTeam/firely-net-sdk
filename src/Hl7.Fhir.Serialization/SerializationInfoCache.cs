@@ -1,5 +1,5 @@
 ﻿/*  
-* Copyright (c) 2016, Furore (info@furore.com) and contributors 
+* Copyright (c) 2018, Furore (info@furore.com) and contributors 
 * See the file CONTRIBUTORS for details. 
 *  
 * This file is licensed under the BSD 3-Clause license 
@@ -7,14 +7,12 @@
 */
 
 
-using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal struct SerializationInfoNavigator
+    internal struct SerializationInfoCache
     {
         public readonly IModelMetadataProvider Provider;
         public readonly IElementSerializationInfo[] Elements;
@@ -24,24 +22,21 @@ namespace Hl7.Fhir.Serialization
         public string DefinedName => Current?.ElementName;
         public string TypeName => TypeSuffix ?? (Current.Type.Length == 1 ? Current.Type[0].TypeName : null);
 
-        public static SerializationInfoNavigator ForRoot(IComplexTypeSerializationInfo rootType, IModelMetadataProvider provider)
+        public static SerializationInfoCache ForRoot(IComplexTypeSerializationInfo rootType, string rootName, IModelMetadataProvider provider)
         {
             if (rootType == null) throw new ArgumentNullException(nameof(rootType));
             if (provider == null) throw new ArgumentNullException(nameof(provider));
 
-            var rootElement = new ElementSerializationInfo(rootType.TypeName, false, false, new[] { rootType });
-            return new SerializationInfoNavigator(new[] { rootElement }, provider, rootElement);
+            var rootElement = new ElementSerializationInfo(rootName, false, false, new[] { rootType });
+            return new SerializationInfoCache(new[] { rootElement }, provider, rootElement);
         }
 
-        public static SerializationInfoNavigator ForElement(IEnumerable<IElementSerializationInfo> elements, IModelMetadataProvider provider,
-            IElementSerializationInfo current = null, string suffix = null) => new SerializationInfoNavigator(elements, provider, current, suffix);
+        public static SerializationInfoCache ForType(IComplexTypeSerializationInfo type, IModelMetadataProvider provider)
+            => new SerializationInfoCache(type.GetChildren().ToArray(), provider);
 
-        public static SerializationInfoNavigator ForType(IComplexTypeSerializationInfo type, IModelMetadataProvider provider)
-            => new SerializationInfoNavigator(type.GetChildren(), provider);
+        public static SerializationInfoCache Empty = new SerializationInfoCache(null, null);
 
-        public static SerializationInfoNavigator Empty = new SerializationInfoNavigator(null, null);
-
-        private SerializationInfoNavigator(IEnumerable<IElementSerializationInfo> elements, IModelMetadataProvider provider,
+        private SerializationInfoCache(IElementSerializationInfo[] elements, IModelMetadataProvider provider,
             IElementSerializationInfo current = null, string suffix = null)
         {
             if (elements == null)
@@ -56,8 +51,7 @@ namespace Hl7.Fhir.Serialization
 
         public bool IsEmpty => !Elements.Any();
 
-        public SerializationInfoNavigator MoveTo(string name)
-
+        public SerializationInfoCache MoveTo(string name)
         {
             if (IsEmpty) return this;        // nowhere to move -> just return my empty self
 
@@ -71,14 +65,14 @@ namespace Hl7.Fhir.Serialization
                     throw new FormatException($"Found a choice element ('{found.ElementName}') without a type indication in the name");
             }
 
-            return ForElement(this.Elements, this.Provider, found, typeSuffix);
+            return new SerializationInfoCache(this.Elements, this.Provider, found, typeSuffix);
         }
 
         public bool IsTracking => Current != null;
 
-        public SerializationInfoNavigator Down()
+        public SerializationInfoCache Down()
         {
-            if (!IsTracking) return SerializationInfoNavigator.Empty;
+            if (!IsTracking) return SerializationInfoCache.Empty;
 
             IComplexTypeSerializationInfo childType = null;
 

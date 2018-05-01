@@ -18,8 +18,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Serialization\IModelMetadataProvider.cs" />
+    <Compile Remove="Serialization\INavigatingParser.cs" />
+    <Compile Remove="Serialization\JsonDomFhirNavigator.cs" />
+    <Compile Remove="Serialization\JsonDomFhirNavigatorFactory.cs" />
+    <Compile Remove="Serialization\JsonDomFhirNavigatorNode.cs" />
+    <Compile Remove="Serialization\JsonSerializationDetails.cs" />
+    <Compile Remove="Serialization\NavigatorXmlWriter.cs" />
+    <Compile Remove="Serialization\SerializationInfoCache.cs" />
+    <Compile Remove="Serialization\SourceComments.cs" />
     <Compile Remove="Serialization\XmlDomFhirNavigator - Archive.cs" />
-    <Compile Remove="Serialization\XmlDomFhirNavigator - archive2.cs" />
+    <Compile Remove="Serialization\XmlDomFhirNavigator.cs" />
+    <Compile Remove="Serialization\XmlDomFhirNavigatorFactory.cs" />
+    <Compile Remove="Serialization\XmlDomFhirParser.cs" />
+    <Compile Remove="Serialization\XmlSerializationDetails.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ISchema design.txt" />
+    <None Remove="ISchema resource examples.txt" />
   </ItemGroup>
 
   <ItemGroup>

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization
         {
             switch (primitiveType)
             {
-                case "bool":
+                case "boolean":
                     return convertXmlStringToPrimitive(typeof(bool),value);
                 case "integer":
                 case "unsignedInt":

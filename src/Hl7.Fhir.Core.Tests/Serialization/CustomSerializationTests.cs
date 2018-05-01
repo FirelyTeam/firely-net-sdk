@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Core.Tests.Serialization
 {
@@ -79,11 +80,11 @@ namespace Hl7.Fhir.Core.Tests.Serialization
             public void OnBeforeSerializeComplexType(object instance, IFhirWriter writer)
             {
                 writer.WriteStartProperty("myProp");
-                writer.WritePrimitiveContents(true, Introspection.XmlSerializationHint.Attribute);
+                writer.WritePrimitiveContents(true, XmlSerializationHint.Attribute);
                 writer.WriteEndProperty();
 
                 writer.WriteStartProperty("myProp2");
-                writer.WritePrimitiveContents("dude", Introspection.XmlSerializationHint.Attribute);
+                writer.WritePrimitiveContents("dude", XmlSerializationHint.Attribute);
                 writer.WriteEndProperty();
             }
 
@@ -94,7 +95,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
                     writer.WriteStartProperty("active2");
                     writer.WriteStartComplexContent();
                     writer.WriteStartProperty("value");
-                    writer.WritePrimitiveContents(p.Active, Introspection.XmlSerializationHint.None);
+                    writer.WritePrimitiveContents(p.Active, XmlSerializationHint.None);
                     writer.WriteEndProperty();
                     writer.WriteEndComplexContent();
                     writer.WriteEndProperty();
@@ -102,7 +103,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
                     writer.WriteStartProperty("gender2");
                     writer.WriteStartComplexContent();
                     writer.WriteStartProperty("value");
-                    writer.WritePrimitiveContents(p.Gender, Introspection.XmlSerializationHint.TextNode);
+                    writer.WritePrimitiveContents(p.Gender, XmlSerializationHint.TextNode);
                     writer.WriteEndProperty();
                     writer.WriteEndComplexContent();
                     writer.WriteEndProperty();
@@ -166,7 +167,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
                     if (ann != null)
                     {
                         writer.WriteStartProperty("yada");
-                        writer.WritePrimitiveContents(PrimitiveTypeConverter.ConvertTo<string>(ann.Num), Introspection.XmlSerializationHint.Attribute);
+                        writer.WritePrimitiveContents(PrimitiveTypeConverter.ConvertTo<string>(ann.Num), XmlSerializationHint.Attribute);
                         writer.WriteEndProperty();
                     }
                 }

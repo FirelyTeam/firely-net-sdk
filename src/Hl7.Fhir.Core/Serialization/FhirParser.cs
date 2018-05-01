@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Serialization
 
         [Obsolete("Create a new navigating parser (XmlDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
         public static IFhirReader CreateFhirReader(string xml, bool disallowXsiAttributesOnRoot)
-            => new ElementNavFhirReader(XmlDomFhirParser.Create(xml, new PocoModelMetadataProvider()), disallowXsiAttributesOnRoot);
+            => new ElementNavFhirReader(XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider()), disallowXsiAttributesOnRoot);
 
 
         public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
@@ -42,14 +42,14 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612, 618
         public Base Parse(string xml, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(XmlDomFhirParser.Create(xml, new PocoModelMetadataProvider()), Settings.DisallowXsiAttributesOnRoot);
+            IFhirReader xmlReader = new ElementNavFhirReader(XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider()), Settings.DisallowXsiAttributesOnRoot);
             return Parse(xmlReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(XmlDomFhirParser.Create(reader, new PocoModelMetadataProvider()), Settings.DisallowXsiAttributesOnRoot);
+            IFhirReader xmlReader = new ElementNavFhirReader(XmlDomFhirNavigator.Create(reader, new PocoModelMetadataProvider()), Settings.DisallowXsiAttributesOnRoot);
             return Parse(xmlReader, dataType);
         }
 #pragma warning restore 612, 618

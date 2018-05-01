@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*  
+* Copyright (c) 2018, Furore (info@furore.com) and contributors 
+* See the file CONTRIBUTORS for details. 
+*  
+* This file is licensed under the BSD 3-Clause license 
+* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
+*/
+
+using System;
 
 namespace Hl7.Fhir.Serialization
 {
-    public interface IElementSerializationInfo
-    {
-        string ElementName { get; }
-        bool MayRepeat { get; }
-
-        bool IsChoiceElement { get; }
-
-        ITypeSerializationInfo[] Type { get; }
-    }
-
-
     public class ElementSerializationInfo : IElementSerializationInfo
     {
         public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, ITypeSerializationInfo[] type)
@@ -41,26 +34,5 @@ namespace Hl7.Fhir.Serialization
 
         public bool IsChoiceElement { get; private set; }
         public ITypeSerializationInfo[] Type { get; private set; }
-    }
-
-
-    public interface ITypeSerializationInfo
-    {
-        string TypeName { get; }   
-    }
-    public interface IComplexTypeSerializationInfo : ITypeSerializationInfo
-    {
-        IEnumerable<IElementSerializationInfo> GetChildren();
-    }
-
-    public interface ITypeReference : ITypeSerializationInfo
-    {
-    }
-
-    public interface IModelMetadataProvider
-    {
-        bool IsResource(string typeName);
-
-        IComplexTypeSerializationInfo GetSerializationInfoForType(string typeName);
     }
 }

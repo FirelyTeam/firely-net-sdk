@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Core.Tests.Serialization
+namespace Hl7.Fhir.Core.Tests.Introspection
 {
     [TestClass]
     public class PocoSerializationInfoTests
@@ -86,12 +86,17 @@ namespace Hl7.Fhir.Core.Tests.Serialization
 
             // Should not have the special "value" attribute
             Assert.IsFalse(p.GetChildren().Any(c => c.ElementName == "value"));
+
+            var b = PocoModelMetadataProvider.GetSerializationInfoForType("Bundle");
+            checkType(b, "total", false, "unsignedInt");
+            checkType(b, "type", false, "code");
         }
 
         private void checkType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat, params string[] types)
         {
             var child = parent.GetChildren().SingleOrDefault(c => c.ElementName == ename);
             Assert.IsNotNull(child);
+            Assert.AreEqual(types.Count() > 1, child.IsChoiceElement);
             Assert.AreEqual(mayRepeat, child.MayRepeat);
             Assert.IsTrue(child.Type.All(t => t is ITypeReference));
             CollectionAssert.AreEqual(types, child.Type

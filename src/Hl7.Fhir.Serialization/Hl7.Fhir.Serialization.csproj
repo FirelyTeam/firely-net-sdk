@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TargetFrameworks>net45;net40;netstandard1.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <Version>$(SupportApiVersion)</Version>
+    <PackageId>Hl7.Fhir.Serialization</PackageId>
+    <Title>HL7 FHIR serialization functionality</Title>
+    <Summary>Version-independent parsering and serialization functionality</Summary>
+    <Description>Contains general interfaces and classes for working with FHIR data, regardless of FHIR version or POCO's</Description>
+    <PackageTags>HL7;FHIR;xml;json;parsing;serialization</PackageTags>
+    <AssemblyName>Hl7.Fhir.Serialization</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+  </ItemGroup>
+</Project>
