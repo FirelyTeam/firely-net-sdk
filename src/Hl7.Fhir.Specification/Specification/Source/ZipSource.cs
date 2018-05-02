@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Specification.Source
         /// The <see cref="ArtifactSummary.Origin"/> and <see cref="ArtifactSummary.Position"/>
         /// summary properties allow the source to identify and resolve the artifact.
         /// </remarks>
-        public Resource LoadFromSummary(ArtifactSummary summary) => FileSource.LoadFromSummary(summary);
+        public Resource LoadBySummary(ArtifactSummary summary) => FileSource.LoadBySummary(summary);
 
         #endregion
 

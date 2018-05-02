@@ -325,6 +325,8 @@ namespace Hl7.Fhir.Specification.Source
             set { _settings.MultiThreaded = value; } // Refresh();
         }
 
+        #region Refresh
+
         /// <summary>Request a full re-scan of the specified content directory.</summary>
         /// <remarks>
         /// Clear the internal artifact file path and summary caches.
@@ -428,6 +430,8 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
+        #endregion
+
         #region IArtifactSource
 
         /// <summary>Gets a list of artifact filenames.</summary>
@@ -520,7 +524,7 @@ namespace Hl7.Fhir.Specification.Source
         /// The <see cref="ArtifactSummary.Origin"/> and <see cref="ArtifactSummary.Position"/>
         /// summary properties allow the source to identify and resolve the artifact.
         /// </remarks>
-        public Resource LoadFromSummary(ArtifactSummary summary)
+        public Resource LoadBySummary(ArtifactSummary summary)
         {
             if (summary == null) { throw Error.ArgumentNull(nameof(summary)); }
             return loadResourceInternal<Resource>(summary);

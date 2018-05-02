@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Specification.Source
     /// Interface for browsing and resolving FHIR artifacts by summary.
     /// Efficiently generate summaries and load resources on demand.
     /// </summary>
-    public interface ISummarySource : IResourceResolver
+    public interface ISummarySource
     {
         /// <summary>
         /// Returns a list of artifact summaries with key information
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Source
         /// The <see cref="ArtifactSummary.Origin"/> and <see cref="ArtifactSummary.Position"/>
         /// summary properties allow the source to identify and resolve the artifact.
         /// </remarks>
-        Resource LoadFromSummary(ArtifactSummary summary);
+        Resource LoadBySummary(ArtifactSummary summary);
 
 
     }

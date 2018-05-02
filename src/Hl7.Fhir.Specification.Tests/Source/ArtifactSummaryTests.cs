@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(patientUrl, patientSummary.GetConformanceCanonicalUrl());
 
             Assert.IsNotNull(patientSummary.Origin);
-            var patientStructure = source.LoadFromSummary<StructureDefinition>(patientSummary);
+            var patientStructure = source.LoadBySummary<StructureDefinition>(patientSummary);
             Assert.IsNotNull(patientStructure);
         }
 
