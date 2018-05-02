@@ -327,23 +327,31 @@ namespace Hl7.Fhir.Specification.Source
 
         #region Refresh
 
-        /// <summary>Request a full re-scan of the specified content directory.</summary>
-        /// <remarks>
-        /// Clear the internal artifact file path and summary caches.
-        /// Re-scan the current <see cref="ContentDirectory"/> and generate new summaries on demand,
-        /// during the next resolving request.
-        /// </remarks>
+        /// <summary>
+        /// Re-index the specified content directory.
+        /// <para>
+        /// Clears the internal artifact file path and summary caches.
+        /// Re-indexes the current <see cref="ContentDirectory"/> and generates new summaries on demand,
+        /// during the next resolving call.
+        /// </para>
+        /// </summary>
         public void Refresh() => Refresh(false);
 
-        /// <summary>Request a full re-scan of the specified content directory.</summary>
-        /// <param name="force">Determines if the source should perform the re-scan immediately (<c>true</c>) or on demand (<c>false</c>).</param>
-        /// <remarks>
-        /// Clear the internal artifact file path and summary caches.
-        /// Re-scan the current <see cref="ContentDirectory"/> and generate new summaries.
-        /// If <paramref name="force"/> equals <c>true</c>, then the source performs the re-scan immediately.
-        /// Otherwise, if <paramref name="force"/> equals <c>false</c>, the re-scan is performed
-        /// on demand during the next resolving request.
-        /// </remarks>
+        /// <summary>
+        /// Re-index the specified content directory.
+        /// <para>
+        /// Clears the internal artifact file path and summary caches.
+        /// Re-indexes the current <see cref="ContentDirectory"/> and generates new summaries.
+        /// </para>
+        /// <para>
+        /// If <paramref name="force"/> equals <c>true</c>, then the source performs the re-indexing immediately.
+        /// Otherwise, if <paramref name="force"/> equals <c>false</c>, then re-indexing is performed on demand
+        /// during the next resolving request.
+        /// </para>
+        /// </summary>
+        /// <param name="force">
+        /// Determines if the source should perform re-indexing immediately (<c>true</c>) or on demand (<c>false</c>).
+        /// </param>
         public void Refresh(bool force)
         {
             // OPTIMIZE: Implement incremental update
@@ -363,41 +371,44 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        /// <summary>Request a re-scan of one or more specific  artifact file(s).</summary>
-        /// <param name="filePaths">One or more artifact file path(s).</param>
-        /// <remarks>
-        /// Notify the <see cref="DirectorySource"/> that specific files in the current
+        /// <summary>
+        /// Re-index one or more specific  artifact file(s).
+        /// <para>
+        /// Notifies the <see cref="DirectorySource"/> that specific files in the current
         /// <see cref="ContentDirectory"/> have been created, updated or deleted.
         /// The <paramref name="filePaths"/> argument should specify an array of artifact
         /// file paths that (may) have been deleted, modified or created.
+        /// </para>
+        /// <para>
         /// The source will:
         /// <list type="number">
-        /// <item>
-        /// <description>
-        /// Remove any existing summary information for the specified artifacts, if available.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Try to harvest new summary information from the specified artifacts, if they still exist.
-        /// </description>
-        /// </item>
+        /// <item>remove any existing summary information for the specified artifacts, if available;</item>
+        /// <item>try to harvest updated summary information from the specified artifacts, if they still exist.</item>
         /// </list>
-        /// </remarks>
-        public void Refresh(params string[] filePaths)
+        /// </para>
+        /// </summary>
+        /// <param name="filePaths">One or more artifact file path(s).</param>
+        /// <returns>
+        /// <c>true</c> if succesful, i.e. if matching cache items have been evicted, or <c>false</c> otherwise.
+        /// </returns>
+        public bool Refresh(params string[] filePaths)
         {
             if (filePaths == null || filePaths.Length == 0)
             {
                 throw Error.ArgumentNullOrEmpty(nameof(filePaths));
             }
+
+            bool result = false;
+
 #if THREADSAFE
             lock (_syncRoot)
 #endif
             {
-                if (_artifactFilePaths == null)
+                var artifactFilePaths = _artifactFilePaths;
+                if (artifactFilePaths == null)
                 {
                     // Cache is empty, perform full scan on demand
-                    return;
+                    return false;
                 }
                 // Update file paths
                 foreach (var filePath in filePaths)
@@ -406,28 +417,43 @@ namespace Hl7.Fhir.Specification.Source
                     bool exists = File.Exists(filePath);
                     if (!exists)
                     {
-                        _artifactFilePaths.Remove(filePath);
+                        // Return true if existing file path was evicted from cache
+                        result = artifactFilePaths.Remove(filePath);
                     }
-                    else if (!_artifactFilePaths.Contains(filePath))
+                    else if (!artifactFilePaths.Contains(filePath))
                     {
-                        _artifactFilePaths.Add(filePath);
+                        // Discovered new artifact; cache file path and return true
+                        artifactFilePaths.Add(filePath);
+                        result = true;
                     }
 
                     // Update summaries (if cached)
-                    if (_artifactSummaries != null)
+                    var artifactSummaries = _artifactSummaries;
+                    if (artifactSummaries != null)
                     {
-                        _artifactSummaries.RemoveAll(s => StringComparer.OrdinalIgnoreCase.Equals(filePath, s.Origin));
+                        if (artifactSummaries.RemoveAll(s => StringComparer.OrdinalIgnoreCase.Equals(filePath, s.Origin)) > 0)
+                        {
+                            // Evicted some existing summaries from the cache; return true
+                            result = true;
+                        }
                         if (exists)
                         {
                             // May fail, e.g. if another thread/process has deleted the target file
                             // Generate will catch exceptions and return empty list
                             var summaries = ArtifactSummaryGenerator.Generate(filePath, _settings.SummaryDetailsHarvesters);
-                            _artifactSummaries.AddRange(summaries);
+                            artifactSummaries.AddRange(summaries);
+                            if (summaries.Count > 0)
+                            {
+                                // Added some new/updated summaries to the cache; return true
+                                result = true;
+                            }
                         }
                     }
 
                 }
             }
+
+            return result;
         }
 
         #endregion
