@@ -39,6 +39,9 @@ namespace Hl7.Fhir.Specification.Source
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ArtifactSummary : IArtifactSummaryPropertyBag
     {
+        /// <summary>Returns an empty <see cref="ArtifactSummary"/> instance.</summary>
+        public static ArtifactSummary Empty => new ArtifactSummary(ArtifactSummaryPropertyBag.Empty);
+
         // Note: omit leading underscore to be CLS compliant
         protected readonly IArtifactSummaryPropertyBag properties;
 
