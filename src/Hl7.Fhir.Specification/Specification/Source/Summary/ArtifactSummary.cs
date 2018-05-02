@@ -9,15 +9,15 @@
 #if NET_FILESYSTEM
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Source.Summary;
 using Errors = Hl7.Fhir.Utility.Error;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
-using Hl7.Fhir.Serialization;
-using System.IO;
 
-namespace Hl7.Fhir.Specification.Source.Summary
+namespace Hl7.Fhir.Specification.Source
 {
     // Note:
     // 1. ArtifactSummaryGenerator creates new (mutable) ArtifactSummaryPropertyBag

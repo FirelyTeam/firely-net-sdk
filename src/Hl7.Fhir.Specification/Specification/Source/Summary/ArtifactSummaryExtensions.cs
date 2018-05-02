@@ -9,11 +9,12 @@
 #if NET_FILESYSTEM
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Specification.Source.Summary
+namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Extension methods for <see cref="IEnumerable{ArtifactSummary}"/> sequences.</summary>
     public static class ArtifactSummaryExtensions
