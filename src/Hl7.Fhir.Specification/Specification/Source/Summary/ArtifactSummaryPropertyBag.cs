@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 
+// Expose low-level interfaces from a separate child namespace, to prevent pollution
 namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>Read-only dictionary interface to access harvested artifact summary properties by key.</summary>

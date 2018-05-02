@@ -12,11 +12,13 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Specification.Source.Summary
+// Expose low-level interfaces from a separate child namespace, to prevent pollution
+namespace Hl7.Fhir.Specification.Source
 {
     // Define a set of default ArtifactSummaryHarvester delegate implementations,
     // with property keys and helper extension methods for accessing the harvested properties.

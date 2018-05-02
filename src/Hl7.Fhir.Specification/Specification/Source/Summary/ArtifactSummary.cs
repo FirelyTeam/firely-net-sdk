@@ -42,6 +42,8 @@ namespace Hl7.Fhir.Specification.Source
         // Note: omit leading underscore to be CLS compliant
         protected readonly IArtifactSummaryPropertyBag properties;
 
+        #region Factory
+
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance from the specified exception.</summary>
         /// <param name="error">An exception that occured while harvesting artifact summary information.</param>
         public static ArtifactSummary FromException(Exception error) => FromException(error, null);
@@ -60,6 +62,10 @@ namespace Hl7.Fhir.Specification.Source
             }
             return new ArtifactSummary(properties, error);
         }
+
+        #endregion
+
+        #region ctor
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance from a set of harvested artifact summary properties.</summary>
         /// <param name="properties">A property bag with harvested artifact summary information.</param>
@@ -81,6 +87,10 @@ namespace Hl7.Fhir.Specification.Source
                 ResourceType = ModelInfo.FhirTypeNameToResourceType(ResourceTypeName);
             }
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>Returns information about errors that occured while generating the artifact summary.</summary>
         public Exception Error { get; }
@@ -119,6 +129,8 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Gets the resource uri.</summary>
         /// <remarks>The <see cref="DirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
         public string ResourceUri => properties.GetResourceUri();
+
+        #endregion
 
         #region IEnumerable
 

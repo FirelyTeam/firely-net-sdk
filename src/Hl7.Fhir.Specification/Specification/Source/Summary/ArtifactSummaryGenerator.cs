@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+// Expose low-level interfaces from a separate child namespace, to prevent pollution
 namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>Represents a method that tries to harvest specific summary information from an artifact.</summary>

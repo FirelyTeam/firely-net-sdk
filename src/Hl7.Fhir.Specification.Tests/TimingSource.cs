@@ -8,11 +8,9 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Tests
 {

@@ -13,6 +13,7 @@ using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
 
+// Expose low-level interfaces from a separate child namespace, to prevent pollution
 namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>
