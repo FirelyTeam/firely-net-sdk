@@ -62,19 +62,21 @@ namespace Hl7.Fhir.Serialization
             return XmlDomFhirNavigator.ForRoot(doc.Root, null);
         }
 
-        public static IElementNavigator Create(XElement elem, IModelMetadataProvider metadataProvider)
+        public static IElementNavigator Create(XElement elem, string type, IModelMetadataProvider metadataProvider)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
+            if (type == null) throw Error.ArgumentNull(nameof(type));
             if (metadataProvider == null) throw Error.ArgumentNull(nameof(metadataProvider));
 
-            return XmlDomFhirNavigator.ForRoot(elem, metadataProvider);
+            return XmlDomFhirNavigator.ForElement(elem, type, metadataProvider);
         }
 
-        public static IElementNavigator CreateUntyped(XElement elem)
+        public static IElementNavigator CreateUntyped(XElement elem, string type)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
-            return XmlDomFhirNavigator.ForRoot(elem, null);
+            return XmlDomFhirNavigator.ForElement(elem, type, null);
         }
 
 

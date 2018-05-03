@@ -240,43 +240,43 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void HandleCommentsJson()
         {
-            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            //string json = TestDataHelper.ReadTestData("TestPatient.json");
 
-            var pat = FhirJsonParser.Parse<Patient>(json);
+            //var pat = FhirJsonParser.Parse<Patient>(json);
 
-            Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
-            Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
+            //Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
+            //Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
 
-            pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
+            //pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
-            json = FhirJsonSerializer.SerializeToString(pat);
-            pat = FhirJsonParser.Parse<Patient>(json);
+            //json = FhirJsonSerializer.SerializeToString(pat);
+            //pat = FhirJsonParser.Parse<Patient>(json);
 
-            Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
-            Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
-            Assert.AreEqual("A second line", pat.Telecom[0].FhirComments.Skip(1).First());
+            //Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
+            //Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
+            //Assert.AreEqual("A second line", pat.Telecom[0].FhirComments.Skip(1).First());
         }
 
         [TestMethod, Ignore]
         public void HandleCommentsXml()
         {
-            string xml = TestDataHelper.ReadTestData("TestPatient.xml");
+        //    string xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var pat = FhirXmlParser.Parse<Patient>(xml);
+        //    var pat = FhirXmlParser.Parse<Patient>(xml);
 
-            Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
-            Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
+        //    Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
+        //    Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
 
-            pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
+        //    pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
-            xml = FhirXmlSerializer.SerializeToString(pat);
+        //    xml = FhirXmlSerializer.SerializeToString(pat);
 
-            Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
-            Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
-            Assert.AreEqual("A second line", pat.Name[0].FhirComments.Skip(1).First());
+        //    Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
+        //    Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
+        //    Assert.AreEqual("A second line", pat.Name[0].FhirComments.Skip(1).First());
         }
 
 

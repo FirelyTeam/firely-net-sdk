@@ -64,7 +64,39 @@ namespace Hl7.Fhir.Serialization
         // Could check namespaces too
         public string Name => _definition.IsTracking ? _definition.DefinedName : XmlName.LocalName;
 
-        public string Type => _definition.IsTracking ? _definition.TypeName : null;
+        public string Type
+        {
+            get
+            {
+                if (_current is XElement element)
+                {
+                    if (isResourceName(element.Name)) return element.Name.LocalName;
+                    if(tryGetNestedResourceName(element, out var name)) return name;
+                }
+                    
+                return _definition.IsTracking? _definition.TypeName: null;
+            }
+        }
+
+
+        private static bool tryGetNestedResourceName(XElement xe, out string name)
+        {
+            name = null;
+
+            if (xe.HasElements)
+            {
+                var candidate = xe.Elements().First();
+
+                if (isResourceName(candidate.Name))
+                {
+                    name = candidate.Name.LocalName;
+                    return true;
+                }
+            }
+
+            // Not on a resource, no name to be found
+            return false;
+        }
 
         private static bool isResourceName(XName elementName) =>
             Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
@@ -97,10 +129,10 @@ namespace Hl7.Fhir.Serialization
                     return Name;
                 else
                 {
-                    if (_definition.IsTracking && _definition.Current.MayRepeat == true || _nameIndex > 0)
-                        return $"{_parentPath}.{Name}[{_nameIndex}]";
-                    else
+                    if (_definition.IsTracking && _definition.Current.MayRepeat == false)
                         return $"{_parentPath}.{Name}";
+                    else
+                        return $"{_parentPath}.{Name}[{_nameIndex}]";
                 }
             }
         }
@@ -149,19 +181,24 @@ namespace Hl7.Fhir.Serialization
             // don't move into xhtml
             if (AtXhtmlDiv) return false;
 
-            var firstChild = _current.FirstChild();
-            if (firstChild == null) return false;
+            XObject firstChild = null;
 
-            var firstChildDef = _definition.Down();
+            string containedType = null;
 
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
-            if (firstChild is XElement xe && isResourceName(xe.Name))
+            if (_current is XElement xe && tryGetNestedResourceName(xe, out containedType))
             {
                 // todo: check this is in sync with firstChildDef, which should now also be
                 // a resource definition
-                firstChild = xe.FirstNode;
+                firstChild = xe.Elements().First().FirstChild();
             }
+            else
+                firstChild = _current.FirstChild();
+
+            if (firstChild == null) return false;
+
+            var firstChildDef = down();
 
             if (!tryMatch((firstChild, firstChildDef), nameFilter, out var match)) return false;
 
@@ -174,6 +211,25 @@ namespace Hl7.Fhir.Serialization
 
             return true;
         }
+
+
+        private SerializationInfoCache down()
+        {
+            if (!_definition.IsTracking) return SerializationInfoCache.Empty;
+
+            IComplexTypeSerializationInfo childType = null;
+
+            // If this is a backbone element, the child type is the nested complex type
+            if (_definition.Current.Type[0] is IComplexTypeSerializationInfo be)
+                childType = be;
+
+            else 
+                childType = _definition.Provider.GetSerializationInfoForType(this.Type);
+
+            return SerializationInfoCache.ForType(childType, _definition.Provider);
+        }
+
+
 
         public bool MoveToNext(string nameFilter)
         {

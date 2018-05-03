@@ -332,13 +332,11 @@ namespace Hl7.Fhir.Utility
         {
             if (type == null) throw Error.ArgumentNull("type");
 
-            Type genericListType;
-
             if (type.IsArray)
             {
                 return type.GetElementType();
             }
-            else if (ImplementsGenericDefinition(type, typeof(ICollection<>), out genericListType))
+            else if (ImplementsGenericDefinition(type, typeof(ICollection<>), out Type genericListType))
             {
                 //EK: If I look at ImplementsGenericDefinition, I don't think this can actually occur.
                 //if (genericListType.IsGenericTypeDefinition)
@@ -355,11 +353,8 @@ namespace Hl7.Fhir.Utility
                 throw Error.Argument("type", "Type {0} is not a collection.".FormatWith(type.Name));
             }
         }
-        public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition)
-        {
-            Type implementingType;
-            return ImplementsGenericDefinition(type, genericInterfaceDefinition, out implementingType);
-        }
+        public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition) =>
+            ImplementsGenericDefinition(type, genericInterfaceDefinition, out Type implementingType);
 
         public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, out Type implementingType)
         {

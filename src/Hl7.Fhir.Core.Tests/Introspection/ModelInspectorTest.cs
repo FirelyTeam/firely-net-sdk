@@ -88,10 +88,9 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("code"));
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("boolean"));
 
-            // Should have skipped abstract classes
-            Assert.IsNull(inspector.FindClassMappingForResource("ComplexElement"));
-            Assert.IsNull(inspector.FindClassMappingForResource("Element"));
-            Assert.IsNull(inspector.FindClassMappingForResource("Resource"));
+            // Should also have found the abstract classes
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("Element"));
+            Assert.IsNotNull(inspector.FindClassMappingForResource("Resource"));
            
             // The open generic Code<> should not be there
             var codeOfT = inspector.FindClassMappingByType(typeof(Code<>));

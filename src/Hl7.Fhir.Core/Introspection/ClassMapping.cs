@@ -46,6 +46,8 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsBackbone { get; private set; }
 
+        public bool IsAbstract { get; private set; }
+
         /// <summary>
         /// PropertyMappings indexed by uppercase name for access speed
         /// </summary>
@@ -115,7 +117,7 @@ namespace Hl7.Fhir.Introspection
                 result.Name = collectTypeName(type);
                 result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
-
+                result.IsAbstract = type.GetTypeInfo().IsAbstract;
                 result.IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                     ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
 

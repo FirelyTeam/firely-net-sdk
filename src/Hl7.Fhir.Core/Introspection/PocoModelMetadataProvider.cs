@@ -53,6 +53,8 @@ namespace Hl7.Fhir.Introspection
 
         public string TypeName => !_classMapping.IsBackbone ? _classMapping.Name : "BackboneElement";
 
+        public bool IsAbstract => _classMapping.IsAbstract;
+
         public IEnumerable<IElementSerializationInfo> GetChildren() => 
             _classMapping.PropertyMappings.Select(pm => 
             (IElementSerializationInfo)new PocoElementSerializationInfo(pm));

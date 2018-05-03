@@ -7,6 +7,7 @@
 */
 
 
+using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
 
@@ -58,37 +59,18 @@ namespace Hl7.Fhir.Serialization
             var found = Elements.FirstOrDefault(e => e.IsChoiceElement && name.StartsWith(e.ElementName) || name == e.ElementName);
             string typeSuffix = null;
 
-            if (found != null)
+            if (found != null && found.IsChoiceElement)
             {
-                typeSuffix = found.IsChoiceElement ? name.Substring(found.ElementName.Length) : null;
-                if (found.IsChoiceElement && String.IsNullOrEmpty(typeSuffix))
-                    throw new FormatException($"Found a choice element ('{found.ElementName}') without a type indication in the name");
+                var suffix = name.Substring(found.ElementName.Length);
+                if (String.IsNullOrEmpty(suffix)) throw new FormatException($"Choice element '{found.ElementName}' is not suffixed with a type.");
+
+                typeSuffix = found.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
+                if (String.IsNullOrEmpty(typeSuffix)) throw new FormatException($"Choice element is not suffixed incorrect type '{suffix}'");
             }
 
             return new SerializationInfoCache(this.Elements, this.Provider, found, typeSuffix);
         }
 
         public bool IsTracking => Current != null;
-
-        public SerializationInfoCache Down()
-        {
-            if (!IsTracking) return SerializationInfoCache.Empty;
-
-            IComplexTypeSerializationInfo childType = null;
-
-            if (Current.IsChoiceElement)
-            {
-                if (TypeSuffix != null)
-                    childType = Provider.GetSerializationInfoForType(TypeSuffix);
-                else
-                    ; // barf
-            }
-            else if (Current.Type.Single() is ITypeReference tr)
-                childType = Provider.GetSerializationInfoForType(Current.Type.Single().TypeName);
-            else
-                childType = (IComplexTypeSerializationInfo)Current.Type.Single();
-
-            return ForType(childType, Provider);
-        }
     }
 }

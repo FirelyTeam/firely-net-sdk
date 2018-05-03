@@ -83,17 +83,15 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Element;
-            
-            if (dest != null)
+            if (other is Element dest)
             {
                 base.CopyTo(dest);
-                if(ElementId != null) dest.ElementId = ElementId;
-                if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
+                if (ElementId != null) dest.ElementId = ElementId;
+                if (Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override bool Matches(IDeepComparable other)

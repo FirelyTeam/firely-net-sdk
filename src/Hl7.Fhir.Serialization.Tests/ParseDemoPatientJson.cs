@@ -13,7 +13,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
     [TestClass]
     public class ParseDemoPatientJson
     {
-        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider());
+        public IElementNavigator getXmlNavU(string xml) => XmlDomFhirNavigator.CreateUntyped(xml);
 
         [TestMethod]
         public void CanReadThroughNavigator()
@@ -51,9 +51,9 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             Assert.AreEqual("12345", identifier.Value);
             var value = identifier.Clone();
             Assert.IsTrue(value.MoveToFirstChild());
-            Assert.AreEqual("fhir_comments", value.Name);
-            Assert.AreEqual("     seems like a likely choice     ", value.Value);
-            Assert.IsFalse(value.MoveToNext());
+            //Assert.AreEqual("fhir_comments", value.Name);
+            //Assert.AreEqual("     seems like a likely choice     ", value.Value);
+            //Assert.IsFalse(value.MoveToNext());
 
             Assert.IsFalse(identifier.MoveToNext());
 
@@ -252,7 +252,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             var tpXml = File.ReadAllText(@"TestData\json-edge-cases.xml");
             
             var navJson = JsonDomFhirNavigator.Create(tpJson);
-            var navXml = getXmlNav(tpXml);
+            var navXml = getXmlNavU(tpXml);
 
             var compare = navJson.IsEqualTo(navXml);
 

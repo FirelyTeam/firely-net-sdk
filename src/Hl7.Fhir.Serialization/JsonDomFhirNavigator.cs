@@ -74,6 +74,7 @@ namespace Hl7.Fhir.Serialization
         {
             for (int scan = startAfter + 1; scan < nodes.Length; scan++)
             {
+                if (nodes[scan].Name == "fhir_comments") continue;
                 if (namefilter == null || nodes[scan].Name == namefilter || nodes[scan].Name == "_" + namefilter)
                     return scan;
             }

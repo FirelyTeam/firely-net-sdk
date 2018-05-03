@@ -8,6 +8,7 @@
 
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -21,6 +22,12 @@ namespace Hl7.Fhir.Serialization
         ITypeSerializationInfo[] Type { get; }
     }
 
+    public static class IElementSerializationInfoExceptions
+    {
+        public static bool IsBackboneElement(this IElementSerializationInfo info) =>
+            info.Type[0] is IComplexTypeSerializationInfo;
+    }
+
 
     public interface ITypeSerializationInfo
     {
@@ -29,6 +36,7 @@ namespace Hl7.Fhir.Serialization
 
     public interface IComplexTypeSerializationInfo : ITypeSerializationInfo
     {
+        bool IsAbstract { get; }
         IEnumerable<IElementSerializationInfo> GetChildren();
     }
 

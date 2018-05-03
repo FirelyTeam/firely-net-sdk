@@ -30,14 +30,14 @@ namespace Hl7.Fhir.Core.Tests.Introspection
             tryGetType("Patient");
 
             // Try getting an abstract resource
-            tryGetType("DomainResource");
-            tryGetType("Resource");
+            tryGetType("DomainResource", isAbstract:true);
+            tryGetType("Resource", isAbstract: true);
 
             // Try a complex datatype
             tryGetType("HumanName");
 
             // Try getting an abstract datatype
-            tryGetType("Element");
+            tryGetType("Element", isAbstract: true);
 
             // Try a primitive
             tryGetType("string");
@@ -49,11 +49,12 @@ namespace Hl7.Fhir.Core.Tests.Introspection
             // The weird xhtml datatype
             tryGetType("xhtml");
 
-            void tryGetType(string typename, string baseTypeName=null)
+            void tryGetType(string typename, string baseTypeName=null, bool isAbstract = false)
             {
                 var si = PocoModelMetadataProvider.GetSerializationInfoForType(typename);
                 Assert.IsNotNull(si);
                 Assert.AreEqual(baseTypeName ?? typename, si.TypeName);
+                Assert.AreEqual(isAbstract, si.IsAbstract);
             }
         }
 

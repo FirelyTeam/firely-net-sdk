@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
@@ -17,9 +18,10 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     public class ParseDemoPatientXml
     {
         public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider());
+        public IElementNavigator getXmlNavU(string xml) => XmlDomFhirNavigator.CreateUntyped(xml);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
-        [TestMethod, Ignore]
+        [TestMethod]
         public void CanReadThroughNavigator()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
@@ -31,17 +33,26 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("id", nav.Name);
             Assert.AreEqual("pat1", nav.Value);
+            Assert.AreEqual("id", nav.Type);
+
+            var pat = nav.Clone();
 
             Assert.IsFalse(nav.MoveToFirstChild());
 
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("text", nav.Name);
+            Assert.AreEqual("Narrative", nav.Type);
             var text = nav.Clone();
 
             Assert.IsTrue(text.MoveToFirstChild("status")); // status
+            Assert.AreEqual("code", text.Type); 
+            Assert.AreEqual("generated", text.Value);
+
             Assert.IsTrue(text.MoveToNext());
             Assert.AreEqual("div", text.Name);
             Assert.IsTrue(((string)text.Value).StartsWith("<div xmlns="));       // special handling of xhtml
+            Assert.AreEqual("xhtml", text.Type);
+
             Assert.IsFalse(text.MoveToFirstChild()); // cannot move into xhtml
             Assert.AreEqual("div", text.Name); // still on xhtml <div>
             Assert.IsFalse(text.MoveToNext());  // nothing more in <text>
@@ -49,10 +60,15 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.IsTrue(nav.MoveToNext()); // contained
             Assert.AreEqual("contained", nav.Name);
             Assert.AreEqual("Patient", nav.Type);
+
             Assert.IsTrue(nav.MoveToFirstChild()); // id
+            Assert.AreEqual("id", nav.Type);
+
             Assert.IsTrue(nav.MoveToNext()); // identifier
+
             var identifier = nav.Clone();
 
+            Assert.AreEqual("Identifier", identifier.Type);
             Assert.IsTrue(identifier.MoveToFirstChild()); // system
             Assert.IsTrue(identifier.MoveToNext()); // value
             Assert.IsFalse(identifier.MoveToNext()); // still value
@@ -68,6 +84,14 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("firstname", nav.Value);
             Assert.IsTrue(nav.MoveToNext());  // use (element!)
             Assert.AreEqual("use", nav.Name);
+
+            Assert.IsTrue(pat.MoveToNext("birthDate"));
+            Assert.AreEqual("date", pat.Type);
+            Assert.AreEqual(PartialDateTime.Parse("1974-12-25"), pat.Value);
+
+            Assert.IsTrue(pat.MoveToNext("deceased"));
+            Assert.AreEqual("boolean", pat.Type);
+            Assert.AreEqual(false, pat.Value);
         }
 
         [TestMethod]
@@ -87,7 +111,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             }
             sw.Stop();
 
-            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 10} micros");
+            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds/10 } micros");
         }
 
         [TestMethod]
@@ -99,14 +123,14 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("Patient", patient.Location);
 
             patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id[0]", patient.Location);
+            Assert.AreEqual("Patient.id", patient.Location);
 
             patient.MoveToNext();   // text
             patient.MoveToNext("identifier");
             Assert.AreEqual("Patient.identifier[0]", patient.Location);
 
             patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.identifier[0].use[0]", patient.Location);
+            Assert.AreEqual("Patient.identifier[0].use", patient.Location);
         }
 
         [TestMethod]

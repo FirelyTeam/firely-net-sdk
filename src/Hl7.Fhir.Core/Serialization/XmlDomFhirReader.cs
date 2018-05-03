@@ -128,7 +128,8 @@ namespace Hl7.Fhir.Serialization
                 }
                 else if(node is XComment)
                 {
-                    result.Add(Tuple.Create("fhir_comments", (IFhirReader)new XmlDomFhirReader(node)));
+                    //ignore comments
+                    //result.Add(Tuple.Create("fhir_comments", (IFhirReader)new XmlDomFhirReader(node)));
                 }
                 else
                     throw Error.Format("Encountered unexpected element member of type {0}".FormatWith(node.GetType().Name), this);

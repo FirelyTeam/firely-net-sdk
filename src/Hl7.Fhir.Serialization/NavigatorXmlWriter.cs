@@ -33,6 +33,7 @@ namespace Hl7.Fhir.Serialization
         {
             var xmlDetails = (source as IAnnotated)?.Annotation<XmlSerializationDetails>();
             var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
+            var serializationInfo = (source as IAnnotated)?.Annotation<ElementSerializationInfo>();
 
             var isXhtml = xmlDetails?.Name == XmlNs.XHTMLDIV;
             var value = source.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(source.Value) : null;
@@ -54,7 +55,8 @@ namespace Hl7.Fhir.Serialization
             var prefix = ns != null ? destination.LookupPrefix(ns) : null;
             var localName = xmlDetails?.Name.LocalName ?? source.Name;
             var usesAttribute = xmlDetails?.NodeType == XmlNodeType.Attribute;
-
+            var isContained = serializationInfo. ?.IsContainedResource() ?? false;
+            
             // If the node is represented by an attribute (e.g. an "id" child), write
             // an attribute with the child's name + the child's Value into the parent
             if(usesAttribute && destination.WriteState == WriteState.Element)
@@ -66,10 +68,14 @@ namespace Hl7.Fhir.Serialization
             // Not being xhtml or an attribute node, we can now create a new element
             // that might represent the nodes Value (if any) and/or its children
             destination.WriteStartElement(prefix, localName, ns);
-
+          
             // If the node has a value, at the standard FHIR value attribute
             if (value != null)
                 destination.WriteAttributeString("value", value);
+
+            // If this needs to be serialized as a contained resource, do so
+            if (isContained)
+                destination.WriteStartElement(prefix, serializationInfo.Type.First().TypeName, ns);
 
             // Now, do the same for the children
             if (source.HasChildren())
@@ -77,6 +83,9 @@ namespace Hl7.Fhir.Serialization
                 foreach (var child in source.Children())
                     write(child, destination);
             }
+
+            if (isContained)
+                destination.WriteEndElement();
 
             if(sourceComments?.ClosingComments != null)
                 writeComments(sourceComments.ClosingComments, destination);

@@ -39,17 +39,14 @@ namespace Hl7.Fhir.ElementModel
             // only use for clone
         }
 
-        internal PocoElementNavigator Clone()
-        {
-            var result = new PocoElementNavigator();
-
-            result._parent = this._parent;
-            result._arrayIndex = this._arrayIndex;
-            result._index = this._index;
-            result._children = this._children;
-
-            return result;
-        }
+        internal PocoElementNavigator Clone() =>
+            new PocoElementNavigator
+            {
+                _parent = this._parent,
+                _arrayIndex = this._arrayIndex,
+                _index = this._index,
+                _children = this._children
+            };
 
 
         private bool enter(Base target)
@@ -166,8 +163,6 @@ namespace Hl7.Fhir.ElementModel
                         return "id";
                     else if (Name == "div")
                         return "xhtml";
-                    else if (Name == "fhir_comments")
-                        return "string";
                     else
                         throw new NotSupportedException($"Don't know about primitive with name '{Name}'");
                 }
