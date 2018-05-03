@@ -26,7 +26,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification.Source.Summary;
+using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
@@ -35,7 +35,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {

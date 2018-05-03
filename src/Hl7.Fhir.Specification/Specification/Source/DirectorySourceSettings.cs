@@ -8,7 +8,7 @@
 
 #if NET_FILESYSTEM
 
-using Hl7.Fhir.Specification.Source.Summary;
+using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.IO;

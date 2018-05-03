@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 
 // Expose low-level interfaces from a separate child namespace, to prevent pollution
-namespace Hl7.Fhir.Specification.Source.Summary
+namespace Hl7.Fhir.Specification.Summary
 {
     /// <summary>
     /// Extension methods on <see cref="IElementNavigator"/> to facilitate harvesting summary information

@@ -10,7 +10,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification.Source.Summary;
+using Hl7.Fhir.Specification.Summary;
 using Errors = Hl7.Fhir.Utility.Error;
 using System;
 using System.Collections.Generic;

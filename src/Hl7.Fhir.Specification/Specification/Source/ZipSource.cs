@@ -9,7 +9,6 @@
 #if NET_COMPRESSION
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;

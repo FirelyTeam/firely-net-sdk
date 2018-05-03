@@ -11,12 +11,13 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 // Expose low-level interfaces from a separate child namespace, to prevent pollution
-namespace Hl7.Fhir.Specification.Source.Summary
+namespace Hl7.Fhir.Specification.Summary
 {
     /// <summary>Represents a method that tries to harvest specific summary information from an artifact.</summary>
     /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
