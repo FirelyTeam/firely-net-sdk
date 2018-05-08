@@ -60,18 +60,18 @@ namespace Vonk.Core.Tests.Support
         /// <returns></returns>
         [Theory]
         [MemberData(nameof(GetSelectMethods))]
-        [Trait("Category", "Longrunner")]
+        [Trait("TestCategory", "LongRunner")]
         public async T.Task MassiveParallelSelectsShouldBeCorrect(string testDescriptor, Func<IElementNavigator, string, EvaluationContext, IEnumerable<IElementNavigator>> selector)
         {
             var actual = new ConcurrentBag<(string canonical, DataElement resource)>();
             var buffer = new BufferBlock<DataElement>();
             var processor = new ActionBlock<DataElement>(r =>
-            {
-                var pocoNav = new PocoNavigator(r);
-                var evalContext = new EvaluationContext(new PocoNavigator(r));
-                var canonical = selector(new PocoNavigator(r), "url", evalContext).Single().Value.ToString();
-                actual.Add((canonical, r));
-            }
+                {
+                    var pocoNav = new PocoNavigator(r);
+                    var evalContext = new EvaluationContext(new PocoNavigator(r));
+                    var canonical = selector(new PocoNavigator(r), "url", evalContext).Single().Value.ToString();
+                    actual.Add((canonical, r));
+                }
                 ,
                 new ExecutionDataflowBlockOptions
                 {
