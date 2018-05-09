@@ -9,6 +9,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System;
 using System.Linq;
 using System.Xml;
 
@@ -43,7 +44,7 @@ namespace Hl7.Fhir.Serialization
             // xhtml children require special treament:
             // - They don't use an xml "value" attribute to represent the value, instead their Value is inserted verbatim into the parent
             // - They cannot have child nodes - the "Value" on the node contains all children as raw xml text
-            var isXhtml = xmlDetails?.Namespace + "div" == XmlNs.XHTMLDIV || source.Type == "xhtml";
+            var isXhtml = xmlDetails?.Namespace?.GetName("div") == XmlNs.XHTMLDIV || source.Type == "xhtml";
 
             if (isXhtml)
             {

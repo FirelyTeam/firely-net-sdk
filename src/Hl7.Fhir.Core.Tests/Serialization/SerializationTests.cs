@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void CanSerializeThroughNavigatorAndCompare()
+        public void CanSerializeFromPoco()
         {
             string xml = TestDataHelper.ReadTestData("fp-test-patient.xml");
             var pser = new FhirXmlParser();

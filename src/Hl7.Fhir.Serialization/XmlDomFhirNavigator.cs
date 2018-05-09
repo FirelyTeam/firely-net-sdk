@@ -70,10 +70,16 @@ namespace Hl7.Fhir.Serialization
             {
                 if (_current is XElement element)
                 {
-                    if (isResourceName(element.Name)) return element.Name.LocalName;
-                    if(tryGetNestedResourceName(element, out var name)) return name;
+                    // Make sure we only get the type directly from the typename when we encounter a root,
+                    // otherwise get it from the first nested element under the current element
+                    if(_parentPath == null && isResourceName(element.Name)) return element.Name.LocalName;
+                    if(_parentPath != null && tryGetNestedResourceName(element, out var name)) return name;
                 }
-                    
+
+                // Note, this is done last, since TypeName might well be the abstract Resource type on 
+                // a contained resource, so if it is not a contained resource, you can safely return the
+                // real type (not that _definition.TypeName does take type prefixes under consideration when
+                // dealing with choice types, so here the actual type used in the instance is being returned).
                 return _definition.IsTracking? _definition.TypeName: null;
             }
         }

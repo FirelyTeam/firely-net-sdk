@@ -9,6 +9,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Serialization
@@ -16,9 +17,10 @@ namespace Hl7.Fhir.Serialization
     internal struct SerializationInfoCache
     {
         public readonly IModelMetadataProvider Provider;
-        public readonly IElementSerializationInfo[] Elements;
+        public readonly Dictionary<string, IElementSerializationInfo> Elements;
         public readonly IElementSerializationInfo Current;
         public readonly string TypeSuffix;
+        public readonly bool IsEmpty;
 
         public string DefinedName => Current?.ElementName;
         public string TypeName => TypeSuffix ?? (Current.Type.Length == 1 ? Current.Type[0].TypeName : null);
@@ -29,34 +31,38 @@ namespace Hl7.Fhir.Serialization
             if (provider == null) throw new ArgumentNullException(nameof(provider));
 
             var rootElement = new ElementSerializationInfo(rootName, false, false, false, new[] { rootType });
-            return new SerializationInfoCache(new[] { rootElement }, provider, rootElement);
+            return new SerializationInfoCache(new Dictionary<string, IElementSerializationInfo> { { rootName, rootElement } }, provider, rootElement);
         }
 
         public static SerializationInfoCache ForType(IComplexTypeSerializationInfo type, IModelMetadataProvider provider)
-            => new SerializationInfoCache(type.GetChildren().ToArray(), provider);
+            => new SerializationInfoCache(type.GetChildren().ToDictionary(c => c.ElementName), provider);
 
         public static SerializationInfoCache Empty = new SerializationInfoCache(null, null);
 
-        private SerializationInfoCache(IElementSerializationInfo[] elements, IModelMetadataProvider provider,
+        private SerializationInfoCache(Dictionary<string, IElementSerializationInfo> elements, IModelMetadataProvider provider,
             IElementSerializationInfo current = null, string suffix = null)
         {
             if (elements == null)
-                Elements = new IElementSerializationInfo[0];
+                Elements = new Dictionary<string, IElementSerializationInfo>();
             else
-                Elements = elements.ToArray();
+                Elements = elements;
 
+            IsEmpty = !Elements.Any();
             Current = current;
             TypeSuffix = suffix;
             Provider = provider;
         }
 
-        public bool IsEmpty => !Elements.Any();
+
 
         public SerializationInfoCache MoveTo(string name)
         {
             if (IsEmpty) return this;        // nowhere to move -> just return my empty self
 
-            var found = Elements.FirstOrDefault(e => e.IsChoiceElement && name.StartsWith(e.ElementName) || name == e.ElementName);
+            if (!Elements.TryGetValue(name, out var found))
+                found = Elements.Values.FirstOrDefault(e => e.IsChoiceElement && name.StartsWith(e.ElementName));
+
+            //var found = Elements.FirstOrDefault(e => e.IsChoiceElement && name.StartsWith(e.ElementName) || name == e.ElementName);
             string typeSuffix = null;
 
             if (found != null && found.IsChoiceElement)

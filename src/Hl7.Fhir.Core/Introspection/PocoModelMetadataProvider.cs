@@ -55,8 +55,8 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsAbstract => _classMapping.IsAbstract;
 
-        public IEnumerable<IElementSerializationInfo> GetChildren() => 
-            _classMapping.PropertyMappings.Select(pm => 
+        public IEnumerable<IElementSerializationInfo> GetChildren() =>
+            _classMapping.PropertyMappings.Select(pm =>
             (IElementSerializationInfo)new PocoElementSerializationInfo(pm));
     }
 
@@ -76,48 +76,43 @@ namespace Hl7.Fhir.Introspection
     internal struct PocoElementSerializationInfo : IElementSerializationInfo
     {
         private readonly PropertyMapping _pm;
+        private readonly Lazy<ITypeSerializationInfo[]> _types;
 
         internal PocoElementSerializationInfo(PropertyMapping pm)
         {
             _pm = pm;
+            _types = new Lazy<ITypeSerializationInfo[]>(() => buildTypes(pm));
         }
 
         public string ElementName => _pm.Name;
 
         public bool MayRepeat => _pm.IsCollection;
 
-        public ITypeSerializationInfo[] Type
+
+        private static ITypeSerializationInfo[] buildTypes(PropertyMapping pm)
         {
-            get
+            if (pm.IsBackboneElement)
             {
-                if (_pm.ImplementingType.CanBeTreatedAsType(typeof(BackboneElement)))
-                {
-                    var mapping = PocoModelMetadataProvider.GetMappingForType(_pm.ImplementingType);
-                    return new ITypeSerializationInfo[] { new PocoComplexTypeSerializationInfo(mapping) };
-                }
-                else
-                {
-                    var names = _pm.FhirType.Select(ft => getFhirTypeName(ft));
-                    return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
-                }
+                var mapping = PocoModelMetadataProvider.GetMappingForType(pm.ImplementingType);
+                return new ITypeSerializationInfo[] { new PocoComplexTypeSerializationInfo(mapping) };
+            }
+            else
+            {              
+                var names = pm.FhirType.Select(ft => getFhirTypeName(ft));
+                return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
+            }
 
-                string getFhirTypeName(Type implementingType)
-                {
-                    var attr = implementingType.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
-
-                    //this is better, but slower
-                    //if (isCodeOfT(implementingType)) return "code";
-                    if (attr?.Name == "codeOfT") return "code";
-                    return attr?.Name ?? implementingType.Name;
-                }
-
-                //bool isCodeOfT(Type t) => ReflectionHelper.IsClosedGenericType(t) &&
-                //            ReflectionHelper.IsConstructedFromGenericTypeDefinition(t, typeof(Code<>));
+            string getFhirTypeName(Type ft)
+            {
+                var map = PocoModelMetadataProvider.GetMappingForType(ft);
+                return map.IsCodeOfT ? "code" : map.Name;
             }
         }
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
 
         public bool IsContainedResource => _pm.Choice == ChoiceType.ResourceChoice;
+
+        public ITypeSerializationInfo[] Type => _types.Value;
     }
 }

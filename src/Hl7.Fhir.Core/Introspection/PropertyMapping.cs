@@ -33,6 +33,7 @@ namespace Hl7.Fhir.Introspection
         public bool IsMandatoryElement { get; private set; }
 
         public Type ImplementingType { get; private set; }
+        public bool IsBackboneElement { get; private set; }
 
         public int Order { get; private set; }
 
@@ -61,14 +62,14 @@ namespace Hl7.Fhir.Introspection
             result.InSummary = elementAttr?.InSummary ?? false;
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
             result.Choice = elementAttr?.Choice ?? ChoiceType.None;
-               
+
             if (elementAttr != null)
             {
                 result.SerializationHint = elementAttr.XmlSerialization;
                 result.Order = elementAttr.Order;
             }
 
-            foundTypes.Add(result.ImplementingType);
+            
 
             result.IsCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
 
@@ -76,6 +77,9 @@ namespace Hl7.Fhir.Introspection
             if (result.IsCollection) result.ImplementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
             if (ReflectionHelper.IsNullableType(result.ImplementingType)) result.ImplementingType = ReflectionHelper.GetNullableArgument(result.ImplementingType);
             result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ImplementingType);
+
+            result.IsBackboneElement = result.ImplementingType.CanBeTreatedAsType(typeof(BackboneElement));
+            foundTypes.Add(result.ImplementingType);
 
             // Derive the C# type that represents which types are allowed for this element.
             // This may differ from the ImplementingType in several ways:
