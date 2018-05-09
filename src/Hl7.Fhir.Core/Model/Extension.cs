@@ -153,8 +153,8 @@ namespace Hl7.Fhir.Model
             {
                 // Extension elements 
                 foreach (var item in base.NamedChildren) yield return item;
-                if(Url != null) yield return new ElementValue("url", false, Url);
-                if (Value != null) yield return new ElementValue ("value", false, Value);
+                if(Url != null) yield return new ElementValue("url", false, false, false, Url);
+                if (Value != null) yield return new ElementValue ("value", false, true, false, Value);
             }
         } 
     }

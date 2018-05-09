@@ -530,20 +530,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, elem); }
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
-                if (Scheduled != null) yield return new ElementValue("scheduled", false, Scheduled);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Performer != null) yield return new ElementValue("performer", false, Performer);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", true, elem); }
-                if (AsNeeded != null) yield return new ElementValue("asNeeded", false, AsNeeded);
-                if (OrderedOnElement != null) yield return new ElementValue("orderedOn", false, OrderedOnElement);
-                if (Orderer != null) yield return new ElementValue("orderer", false, Orderer);
-                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
+                if (Code != null) yield return new ElementValue("code", false, false, false, Code);
+                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, false, false, elem); }
+                if (Reason != null) yield return new ElementValue("reason", false, true, false, Reason);
+                if (Scheduled != null) yield return new ElementValue("scheduled", false, true, false, Scheduled);
+                if (Encounter != null) yield return new ElementValue("encounter", false, false, false, Encounter);
+                if (Performer != null) yield return new ElementValue("performer", false, false, false, Performer);
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", true, false, false, elem); }
+                if (AsNeeded != null) yield return new ElementValue("asNeeded", false, true, false, AsNeeded);
+                if (OrderedOnElement != null) yield return new ElementValue("orderedOn", false, false, false, OrderedOnElement);
+                if (Orderer != null) yield return new ElementValue("orderer", false, false, false, Orderer);
+                if (PriorityElement != null) yield return new ElementValue("priority", false, false, false, PriorityElement);
             }
         }
 

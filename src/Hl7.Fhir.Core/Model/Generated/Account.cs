@@ -360,17 +360,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ActivePeriod != null) yield return new ElementValue("activePeriod", false, ActivePeriod);
-                if (Currency != null) yield return new ElementValue("currency", false, Currency);
-                if (Balance != null) yield return new ElementValue("balance", false, Balance);
-                if (CoveragePeriod != null) yield return new ElementValue("coveragePeriod", false, CoveragePeriod);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
+                if (NameElement != null) yield return new ElementValue("name", false, false, false, NameElement);
+                if (Type != null) yield return new ElementValue("type", false, false, false, Type);
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                if (ActivePeriod != null) yield return new ElementValue("activePeriod", false, false, false, ActivePeriod);
+                if (Currency != null) yield return new ElementValue("currency", false, false, false, Currency);
+                if (Balance != null) yield return new ElementValue("balance", false, false, false, Balance);
+                if (CoveragePeriod != null) yield return new ElementValue("coveragePeriod", false, false, false, CoveragePeriod);
+                if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
+                if (Owner != null) yield return new ElementValue("owner", false, false, false, Owner);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
             }
         }
 

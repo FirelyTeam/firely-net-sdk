@@ -737,6 +737,9 @@ if(!abstractType) {
 		public string BackboneComponentType;
 		public string CodeRequiredBinding;
 		public bool isXmlAttribute;
+		public bool IsChoice;
+		public bool IsContained;
+
 
 		public string PropTypeWithCard()
         {
@@ -1081,6 +1084,9 @@ if(!abstractType) {
 				result.NativeType = null;
             }
 
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
+
 			return result;
         }
 
@@ -1307,6 +1313,9 @@ if(!abstractType) {
 					result.NativeType = result.CodeRequiredBinding + "?";
                 }
             }
+
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 
 			return result;
         }

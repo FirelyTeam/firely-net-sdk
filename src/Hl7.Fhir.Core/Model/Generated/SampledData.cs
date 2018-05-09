@@ -342,13 +342,13 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Origin != null) yield return new ElementValue("origin", false, Origin);
-                if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
-                if (FactorElement != null) yield return new ElementValue("factor", false, FactorElement);
-                if (LowerLimitElement != null) yield return new ElementValue("lowerLimit", false, LowerLimitElement);
-                if (UpperLimitElement != null) yield return new ElementValue("upperLimit", false, UpperLimitElement);
-                if (DimensionsElement != null) yield return new ElementValue("dimensions", false, DimensionsElement);
-                if (DataElement != null) yield return new ElementValue("data", false, DataElement);
+                if (Origin != null) yield return new ElementValue("origin", false, false, false, Origin);
+                if (PeriodElement != null) yield return new ElementValue("period", false, false, false, PeriodElement);
+                if (FactorElement != null) yield return new ElementValue("factor", false, false, false, FactorElement);
+                if (LowerLimitElement != null) yield return new ElementValue("lowerLimit", false, false, false, LowerLimitElement);
+                if (UpperLimitElement != null) yield return new ElementValue("upperLimit", false, false, false, UpperLimitElement);
+                if (DimensionsElement != null) yield return new ElementValue("dimensions", false, false, false, DimensionsElement);
+                if (DataElement != null) yield return new ElementValue("data", false, false, false, DataElement);
  
             } 
         } 

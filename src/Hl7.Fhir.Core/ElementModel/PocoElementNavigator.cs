@@ -13,6 +13,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
 using System.Collections;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.ElementModel
             _parent = null;
             _index = 0;
             _arrayIndex = -1;
-            _children = new List<ElementValue>() { new ElementValue(parent.TypeName, false, parent) };
+            _children = new List<ElementValue>() { new ElementValue(parent.TypeName, false, false,false, parent) };
         }
 
         private PocoElementNavigator()

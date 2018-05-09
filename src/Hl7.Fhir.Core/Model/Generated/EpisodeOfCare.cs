@@ -215,8 +215,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                    if (Period != null) yield return new ElementValue("period", false, false, false, Period);
                 }
             }
 
@@ -339,9 +339,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", true, elem); }
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    if (Member != null) yield return new ElementValue("member", false, Member);
+                    foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", true, false, false, elem); }
+                    if (Period != null) yield return new ElementValue("period", false, false, false, Period);
+                    if (Member != null) yield return new ElementValue("member", false, false, false, Member);
                 }
             }
 
@@ -633,17 +633,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in StatusHistory) { if (elem != null) yield return new ElementValue("statusHistory", true, elem); }
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                foreach (var elem in ReferralRequest) { if (elem != null) yield return new ElementValue("referralRequest", true, elem); }
-                if (CareManager != null) yield return new ElementValue("careManager", false, CareManager);
-                foreach (var elem in CareTeam) { if (elem != null) yield return new ElementValue("careTeam", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                foreach (var elem in StatusHistory) { if (elem != null) yield return new ElementValue("statusHistory", true, false, false, elem); }
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, false, false, elem); }
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, false, false, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, false, false, ManagingOrganization);
+                if (Period != null) yield return new ElementValue("period", false, false, false, Period);
+                foreach (var elem in ReferralRequest) { if (elem != null) yield return new ElementValue("referralRequest", true, false, false, elem); }
+                if (CareManager != null) yield return new ElementValue("careManager", false, false, false, CareManager);
+                foreach (var elem in CareTeam) { if (elem != null) yield return new ElementValue("careTeam", true, false, false, elem); }
             }
         }
 

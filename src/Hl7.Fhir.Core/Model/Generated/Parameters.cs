@@ -208,10 +208,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
-                    foreach (var elem in Part) { if (elem != null) yield return new ElementValue("part", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", false, false, false, NameElement);
+                    if (Value != null) yield return new ElementValue("value", false, true, false, Value);
+                    if (Resource != null) yield return new ElementValue("resource", false, false, true, Resource);
+                    foreach (var elem in Part) { if (elem != null) yield return new ElementValue("part", true, false, false, elem); }
                 }
             }
 
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
+                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, false, false, elem); }
             }
         }
 

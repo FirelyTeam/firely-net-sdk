@@ -245,10 +245,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (IdElement != null) yield return new ElementValue("id",false, IdElement);
-                if (Meta != null) yield return new ElementValue("meta",false,Meta);
-                if (ImplicitRulesElement != null) yield return new ElementValue("implicitRules",false,ImplicitRulesElement);
-                if (LanguageElement != null) yield return new ElementValue("language",false,LanguageElement);
+                if (IdElement != null) yield return new ElementValue("id",false,false,false,IdElement);
+                if (Meta != null) yield return new ElementValue("meta",false,false,false,Meta);
+                if (ImplicitRulesElement != null) yield return new ElementValue("implicitRules",false,false,false,ImplicitRulesElement);
+                if (LanguageElement != null) yield return new ElementValue("language",false,false,false,LanguageElement);
             }
         }
     }

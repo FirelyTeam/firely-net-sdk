@@ -196,8 +196,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Div != null) yield return new ElementValue("div", false, Div);                
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                if (Div != null) yield return new ElementValue("div", false, false, false, Div);                
             }
         }
     }

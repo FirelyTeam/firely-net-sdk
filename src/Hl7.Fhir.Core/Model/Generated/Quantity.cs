@@ -318,11 +318,11 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                if (ComparatorElement != null) yield return new ElementValue("comparator", false, ComparatorElement);
-                if (UnitElement != null) yield return new ElementValue("unit", false, UnitElement);
-                if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                if (ValueElement != null) yield return new ElementValue("value", false, false, false, ValueElement);
+                if (ComparatorElement != null) yield return new ElementValue("comparator", false, false, false, ComparatorElement);
+                if (UnitElement != null) yield return new ElementValue("unit", false, false, false, UnitElement);
+                if (SystemElement != null) yield return new ElementValue("system", false, false, false, SystemElement);
+                if (CodeElement != null) yield return new ElementValue("code", false, false, false, CodeElement);
  
             } 
         } 

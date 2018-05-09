@@ -177,8 +177,8 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
-                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", false, false, false, ReferenceElement);
+                if (DisplayElement != null) yield return new ElementValue("display", false, false, false, DisplayElement);
  
             } 
         } 

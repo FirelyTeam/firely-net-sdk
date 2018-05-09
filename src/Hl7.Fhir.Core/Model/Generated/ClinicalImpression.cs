@@ -180,8 +180,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", false, false, false, Code);
+                    foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, false, false, elem); }
                 }
             }
 
@@ -304,8 +304,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (CauseElement != null) yield return new ElementValue("cause", false, CauseElement);
+                    if (Item != null) yield return new ElementValue("item", false, false, false, Item);
+                    if (CauseElement != null) yield return new ElementValue("cause", false, false, false, CauseElement);
                 }
             }
 
@@ -428,8 +428,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (ReasonElement != null) yield return new ElementValue("reason", false, ReasonElement);
+                    if (Item != null) yield return new ElementValue("item", false, false, false, Item);
+                    if (ReasonElement != null) yield return new ElementValue("reason", false, false, false, ReasonElement);
                 }
             }
 
@@ -923,23 +923,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Assessor != null) yield return new ElementValue("assessor", false, Assessor);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (Previous != null) yield return new ElementValue("previous", false, Previous);
-                foreach (var elem in Problem) { if (elem != null) yield return new ElementValue("problem", true, elem); }
-                if (Trigger != null) yield return new ElementValue("trigger", false, Trigger);
-                foreach (var elem in Investigations) { if (elem != null) yield return new ElementValue("investigations", true, elem); }
-                if (ProtocolElement != null) yield return new ElementValue("protocol", false, ProtocolElement);
-                if (SummaryElement != null) yield return new ElementValue("summary", false, SummaryElement);
-                foreach (var elem in Finding) { if (elem != null) yield return new ElementValue("finding", true, elem); }
-                foreach (var elem in Resolved) { if (elem != null) yield return new ElementValue("resolved", true, elem); }
-                foreach (var elem in RuledOut) { if (elem != null) yield return new ElementValue("ruledOut", true, elem); }
-                if (PrognosisElement != null) yield return new ElementValue("prognosis", false, PrognosisElement);
-                foreach (var elem in Plan) { if (elem != null) yield return new ElementValue("plan", true, elem); }
-                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
+                if (Assessor != null) yield return new ElementValue("assessor", false, false, false, Assessor);
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
+                if (Previous != null) yield return new ElementValue("previous", false, false, false, Previous);
+                foreach (var elem in Problem) { if (elem != null) yield return new ElementValue("problem", true, false, false, elem); }
+                if (Trigger != null) yield return new ElementValue("trigger", false, true, false, Trigger);
+                foreach (var elem in Investigations) { if (elem != null) yield return new ElementValue("investigations", true, false, false, elem); }
+                if (ProtocolElement != null) yield return new ElementValue("protocol", false, false, false, ProtocolElement);
+                if (SummaryElement != null) yield return new ElementValue("summary", false, false, false, SummaryElement);
+                foreach (var elem in Finding) { if (elem != null) yield return new ElementValue("finding", true, false, false, elem); }
+                foreach (var elem in Resolved) { if (elem != null) yield return new ElementValue("resolved", true, false, false, elem); }
+                foreach (var elem in RuledOut) { if (elem != null) yield return new ElementValue("ruledOut", true, false, false, elem); }
+                if (PrognosisElement != null) yield return new ElementValue("prognosis", false, false, false, PrognosisElement);
+                foreach (var elem in Plan) { if (elem != null) yield return new ElementValue("plan", true, false, false, elem); }
+                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, false, false, elem); }
             }
         }
 

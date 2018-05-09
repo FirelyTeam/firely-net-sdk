@@ -132,8 +132,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ElementId != null)  yield return new ElementValue("id", false, ElementId);
-                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",true, p); }
+                if (ElementId != null)  yield return new ElementValue("id", false, false, false, ElementId);
+                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",true, false, false, p); }
             }
         }
 

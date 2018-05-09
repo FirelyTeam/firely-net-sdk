@@ -393,14 +393,14 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
-                if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                if (DataElement != null) yield return new ElementValue("data", false, DataElement);
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (SizeElement != null) yield return new ElementValue("size", false, SizeElement);
-                if (HashElement != null) yield return new ElementValue("hash", false, HashElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (CreationElement != null) yield return new ElementValue("creation", false, CreationElement);
+                if (ContentTypeElement != null) yield return new ElementValue("contentType", false, false, false, ContentTypeElement);
+                if (LanguageElement != null) yield return new ElementValue("language", false, false, false, LanguageElement);
+                if (DataElement != null) yield return new ElementValue("data", false, false, false, DataElement);
+                if (UrlElement != null) yield return new ElementValue("url", false, false, false, UrlElement);
+                if (SizeElement != null) yield return new ElementValue("size", false, false, false, SizeElement);
+                if (HashElement != null) yield return new ElementValue("hash", false, false, false, HashElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, false, false, TitleElement);
+                if (CreationElement != null) yield return new ElementValue("creation", false, false, false, CreationElement);
  
             } 
         } 

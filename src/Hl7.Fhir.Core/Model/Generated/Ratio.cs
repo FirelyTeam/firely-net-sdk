@@ -139,8 +139,8 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Numerator != null) yield return new ElementValue("numerator", false, Numerator);
-                if (Denominator != null) yield return new ElementValue("denominator", false, Denominator);
+                if (Numerator != null) yield return new ElementValue("numerator", false, false, false, Numerator);
+                if (Denominator != null) yield return new ElementValue("denominator", false, false, false, Denominator);
  
             } 
         } 

@@ -336,10 +336,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
-                    if (RequiredElement != null) yield return new ElementValue("required", false, RequiredElement);
-                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, false, false, elem); }
+                    if (Actor != null) yield return new ElementValue("actor", false, false, false, Actor);
+                    if (RequiredElement != null) yield return new ElementValue("required", false, false, false, RequiredElement);
+                    if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
                 }
             }
 
@@ -780,18 +780,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
-                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
-                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
-                if (MinutesDurationElement != null) yield return new ElementValue("minutesDuration", false, MinutesDurationElement);
-                foreach (var elem in Slot) { if (elem != null) yield return new ElementValue("slot", true, elem); }
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                if (Type != null) yield return new ElementValue("type", false, false, false, Type);
+                if (Reason != null) yield return new ElementValue("reason", false, false, false, Reason);
+                if (PriorityElement != null) yield return new ElementValue("priority", false, false, false, PriorityElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
+                if (StartElement != null) yield return new ElementValue("start", false, false, false, StartElement);
+                if (EndElement != null) yield return new ElementValue("end", false, false, false, EndElement);
+                if (MinutesDurationElement != null) yield return new ElementValue("minutesDuration", false, false, false, MinutesDurationElement);
+                foreach (var elem in Slot) { if (elem != null) yield return new ElementValue("slot", true, false, false, elem); }
+                if (CommentElement != null) yield return new ElementValue("comment", false, false, false, CommentElement);
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, false, false, elem); }
             }
         }
 

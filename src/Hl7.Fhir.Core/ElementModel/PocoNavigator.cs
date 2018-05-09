@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
-    public class PocoNavigator : IElementNavigator
+    public class PocoNavigator : IElementNavigator, IElementSerializationInfo
     {
         public PocoNavigator(Base model)
         {
@@ -193,6 +193,16 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
+        public string ElementName => Name;
+
+        public bool MayRepeat => Current.AtCollection;
+
+        public bool IsChoiceElement => Current.Current.IsChoice;
+
+        public bool IsContainedResource => Current.Current.IsContained;
+
+        ITypeSerializationInfo[] IElementSerializationInfo.Type => throw new NotImplementedException();
+
         private object lockObject = new object();
 
         public bool MoveToFirstChild(string nameFilter = null)
@@ -200,10 +210,10 @@ namespace Hl7.Fhir.ElementModel
             var oldLoc = Location;
             var oldSP = ShortPath;
             var oldCP = CommonPath;
-                
+
             if (Current.MoveToFirstChild(nameFilter))
             {
-                lock(lockObject)
+                lock (lockObject)
                 {
                     _parentLocation = oldLoc;
                     _parentShortPath = oldSP;
@@ -248,24 +258,33 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            //if (type == typeof(ElementSerializationInfo))
-            //{
-            //    return new[] { new ElementSerializationInfo(_definition.Current) };
-            //}
-            //if (type == typeof(XmlSerializationDetails))
-            //{
-            //    return new[]
-            //    {
-            //        new XmlSerializationDetails()
-            //        {
-            //            NodeType = _current.NodeType,
-            //            Namespace = XmlName.NamespaceName,
-            //            NodeText = null,
-            //            IsNamespaceDeclaration = false
-            //        }
-            //    };
-            //}
-            //else
+            if (type == typeof(ElementSerializationInfo))
+            {
+                return new[]
+                {
+                    new ElementSerializationInfo(this)
+                };
+            }
+            if (type == typeof(XmlSerializationDetails))
+            {
+                return new[]
+                {
+                    new XmlSerializationDetails()
+                    {
+                        NodeType = isAttribute() ? System.Xml.XmlNodeType.Attribute : System.Xml.XmlNodeType.Element,
+                        Namespace = XmlNs.XFHIR,
+                        NodeText = null,
+                        IsNamespaceDeclaration = false
+                    }
+                };
+
+                bool isAttribute()
+                {
+                    return Current.Value is string &&
+                        (Name == "url" || Name == "id" || Name == "div");
+                }
+            }
+            else
                 return null;
         }
     }

@@ -215,9 +215,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Action != null) yield return new ElementValue("action", false, Action);
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (Author != null) yield return new ElementValue("author", false, Author);
+                    if (Action != null) yield return new ElementValue("action", false, false, false, Action);
+                    if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
+                    if (Author != null) yield return new ElementValue("author", false, false, false, Author);
                 }
             }
 
@@ -539,16 +539,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
-                foreach (var elem in Implicated) { if (elem != null) yield return new ElementValue("implicated", true, elem); }
-                if (DetailElement != null) yield return new ElementValue("detail", false, DetailElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
-                foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", true, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
+                if (Category != null) yield return new ElementValue("category", false, false, false, Category);
+                if (SeverityElement != null) yield return new ElementValue("severity", false, false, false, SeverityElement);
+                foreach (var elem in Implicated) { if (elem != null) yield return new ElementValue("implicated", true, false, false, elem); }
+                if (DetailElement != null) yield return new ElementValue("detail", false, false, false, DetailElement);
+                if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
+                if (Author != null) yield return new ElementValue("author", false, false, false, Author);
+                if (Identifier != null) yield return new ElementValue("identifier", false, false, false, Identifier);
+                if (ReferenceElement != null) yield return new ElementValue("reference", false, false, false, ReferenceElement);
+                foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", true, false, false, elem); }
             }
         }
 

@@ -305,12 +305,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
-                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
-                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", true, elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, false, false, LinkIdElement);
+                    if (TitleElement != null) yield return new ElementValue("title", false, false, false, TitleElement);
+                    if (TextElement != null) yield return new ElementValue("text", false, false, false, TextElement);
+                    if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, false, false, elem); }
+                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", true, false, false, elem); }
                 }
             }
 
@@ -469,9 +469,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, false, false, LinkIdElement);
+                    if (TextElement != null) yield return new ElementValue("text", false, false, false, TextElement);
+                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, false, false, elem); }
                 }
             }
 
@@ -577,8 +577,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
+                    if (Value != null) yield return new ElementValue("value", false, true, false, Value);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, false, false, elem); }
                 }
             }
 
@@ -858,15 +858,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (Questionnaire != null) yield return new ElementValue("questionnaire", false, Questionnaire);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (AuthoredElement != null) yield return new ElementValue("authored", false, AuthoredElement);
-                if (Source != null) yield return new ElementValue("source", false, Source);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Group != null) yield return new ElementValue("group", false, Group);
+                if (Identifier != null) yield return new ElementValue("identifier", false, false, false, Identifier);
+                if (Questionnaire != null) yield return new ElementValue("questionnaire", false, false, false, Questionnaire);
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
+                if (Author != null) yield return new ElementValue("author", false, false, false, Author);
+                if (AuthoredElement != null) yield return new ElementValue("authored", false, false, false, AuthoredElement);
+                if (Source != null) yield return new ElementValue("source", false, false, false, Source);
+                if (Encounter != null) yield return new ElementValue("encounter", false, false, false, Encounter);
+                if (Group != null) yield return new ElementValue("group", false, false, false, Group);
             }
         }
 

@@ -389,14 +389,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Appointment != null) yield return new ElementValue("appointment", false, Appointment);
-                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
-                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
-                foreach (var elem in ParticipantType) { if (elem != null) yield return new ElementValue("participantType", true, elem); }
-                if (Actor != null) yield return new ElementValue("actor", false, Actor);
-                if (ParticipantStatus_Element != null) yield return new ElementValue("participantStatus", false, ParticipantStatus_Element);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
+                if (Appointment != null) yield return new ElementValue("appointment", false, false, false, Appointment);
+                if (StartElement != null) yield return new ElementValue("start", false, false, false, StartElement);
+                if (EndElement != null) yield return new ElementValue("end", false, false, false, EndElement);
+                foreach (var elem in ParticipantType) { if (elem != null) yield return new ElementValue("participantType", true, false, false, elem); }
+                if (Actor != null) yield return new ElementValue("actor", false, false, false, Actor);
+                if (ParticipantStatus_Element != null) yield return new ElementValue("participantStatus", false, false, false, ParticipantStatus_Element);
+                if (CommentElement != null) yield return new ElementValue("comment", false, false, false, CommentElement);
             }
         }
 

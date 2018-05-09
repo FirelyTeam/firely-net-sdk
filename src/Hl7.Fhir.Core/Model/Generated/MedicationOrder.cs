@@ -357,16 +357,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    if (AdditionalInstructions != null) yield return new ElementValue("additionalInstructions", false, AdditionalInstructions);
-                    if (Timing != null) yield return new ElementValue("timing", false, Timing);
-                    if (AsNeeded != null) yield return new ElementValue("asNeeded", false, AsNeeded);
-                    if (Site != null) yield return new ElementValue("site", false, Site);
-                    if (Route != null) yield return new ElementValue("route", false, Route);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (Dose != null) yield return new ElementValue("dose", false, Dose);
-                    if (Rate != null) yield return new ElementValue("rate", false, Rate);
-                    if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", false, MaxDosePerPeriod);
+                    if (TextElement != null) yield return new ElementValue("text", false, false, false, TextElement);
+                    if (AdditionalInstructions != null) yield return new ElementValue("additionalInstructions", false, false, false, AdditionalInstructions);
+                    if (Timing != null) yield return new ElementValue("timing", false, false, false, Timing);
+                    if (AsNeeded != null) yield return new ElementValue("asNeeded", false, true, false, AsNeeded);
+                    if (Site != null) yield return new ElementValue("site", false, true, false, Site);
+                    if (Route != null) yield return new ElementValue("route", false, false, false, Route);
+                    if (Method != null) yield return new ElementValue("method", false, false, false, Method);
+                    if (Dose != null) yield return new ElementValue("dose", false, true, false, Dose);
+                    if (Rate != null) yield return new ElementValue("rate", false, true, false, Rate);
+                    if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", false, false, false, MaxDosePerPeriod);
                 }
             }
 
@@ -541,11 +541,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                    if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", false, ValidityPeriod);
-                    if (NumberOfRepeatsAllowedElement != null) yield return new ElementValue("numberOfRepeatsAllowed", false, NumberOfRepeatsAllowedElement);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (ExpectedSupplyDuration != null) yield return new ElementValue("expectedSupplyDuration", false, ExpectedSupplyDuration);
+                    if (Medication != null) yield return new ElementValue("medication", false, true, false, Medication);
+                    if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", false, false, false, ValidityPeriod);
+                    if (NumberOfRepeatsAllowedElement != null) yield return new ElementValue("numberOfRepeatsAllowed", false, false, false, NumberOfRepeatsAllowedElement);
+                    if (Quantity != null) yield return new ElementValue("quantity", false, false, false, Quantity);
+                    if (ExpectedSupplyDuration != null) yield return new ElementValue("expectedSupplyDuration", false, false, false, ExpectedSupplyDuration);
                 }
             }
 
@@ -649,8 +649,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                    if (Type != null) yield return new ElementValue("type", false, false, false, Type);
+                    if (Reason != null) yield return new ElementValue("reason", false, false, false, Reason);
                 }
             }
 
@@ -1064,21 +1064,21 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (DateWrittenElement != null) yield return new ElementValue("dateWritten", false, DateWrittenElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (DateEndedElement != null) yield return new ElementValue("dateEnded", false, DateEndedElement);
-                if (ReasonEnded != null) yield return new ElementValue("reasonEnded", false, ReasonEnded);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Prescriber != null) yield return new ElementValue("prescriber", false, Prescriber);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
-                if (NoteElement != null) yield return new ElementValue("note", false, NoteElement);
-                if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", true, elem); }
-                if (DispenseRequest != null) yield return new ElementValue("dispenseRequest", false, DispenseRequest);
-                if (Substitution != null) yield return new ElementValue("substitution", false, Substitution);
-                if (PriorPrescription != null) yield return new ElementValue("priorPrescription", false, PriorPrescription);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
+                if (DateWrittenElement != null) yield return new ElementValue("dateWritten", false, false, false, DateWrittenElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
+                if (DateEndedElement != null) yield return new ElementValue("dateEnded", false, false, false, DateEndedElement);
+                if (ReasonEnded != null) yield return new ElementValue("reasonEnded", false, false, false, ReasonEnded);
+                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
+                if (Prescriber != null) yield return new ElementValue("prescriber", false, false, false, Prescriber);
+                if (Encounter != null) yield return new ElementValue("encounter", false, false, false, Encounter);
+                if (Reason != null) yield return new ElementValue("reason", false, true, false, Reason);
+                if (NoteElement != null) yield return new ElementValue("note", false, false, false, NoteElement);
+                if (Medication != null) yield return new ElementValue("medication", false, true, false, Medication);
+                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", true, false, false, elem); }
+                if (DispenseRequest != null) yield return new ElementValue("dispenseRequest", false, false, false, DispenseRequest);
+                if (Substitution != null) yield return new ElementValue("substitution", false, false, false, Substitution);
+                if (PriorPrescription != null) yield return new ElementValue("priorPrescription", false, false, false, PriorPrescription);
             }
         }
 

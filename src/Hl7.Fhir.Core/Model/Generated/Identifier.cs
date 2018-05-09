@@ -299,12 +299,12 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (UseElement != null) yield return new ElementValue("use", false, UseElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Assigner != null) yield return new ElementValue("assigner", false, Assigner);
+                if (UseElement != null) yield return new ElementValue("use", false, false, false, UseElement);
+                if (Type != null) yield return new ElementValue("type", false, false, false, Type);
+                if (SystemElement != null) yield return new ElementValue("system", false, false, false, SystemElement);
+                if (ValueElement != null) yield return new ElementValue("value", false, false, false, ValueElement);
+                if (Period != null) yield return new ElementValue("period", false, false, false, Period);
+                if (Assigner != null) yield return new ElementValue("assigner", false, false, false, Assigner);
  
             } 
         } 

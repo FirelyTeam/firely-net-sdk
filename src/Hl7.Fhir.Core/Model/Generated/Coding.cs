@@ -285,11 +285,11 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
-                if (UserSelectedElement != null) yield return new ElementValue("userSelected", false, UserSelectedElement);
+                if (SystemElement != null) yield return new ElementValue("system", false, false, false, SystemElement);
+                if (VersionElement != null) yield return new ElementValue("version", false, false, false, VersionElement);
+                if (CodeElement != null) yield return new ElementValue("code", false, false, false, CodeElement);
+                if (DisplayElement != null) yield return new ElementValue("display", false, false, false, DisplayElement);
+                if (UserSelectedElement != null) yield return new ElementValue("userSelected", false, false, false, UserSelectedElement);
  
             } 
         } 
