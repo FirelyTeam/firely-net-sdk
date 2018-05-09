@@ -50,7 +50,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             // Check the value + extensions on Patient.identifier.value
             Assert.AreEqual("12345", identifier.Value);
             var value = identifier.Clone();
-            Assert.IsTrue(value.MoveToFirstChild());
+            Assert.IsFalse(value.MoveToFirstChild());
             //Assert.AreEqual("fhir_comments", value.Name);
             //Assert.AreEqual("     seems like a likely choice     ", value.Value);
             //Assert.IsFalse(value.MoveToNext());
@@ -284,10 +284,10 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
 
             Assert.IsTrue(nav.MoveToFirstChild());
 
-            var jsonDetails = (nav as IAnnotated)?.Annotation<JsonSerializationDetails>();
-            Assert.IsNotNull(jsonDetails);
-            Assert.AreNotEqual(-1, jsonDetails.LineNumber);
-            Assert.AreNotEqual(-1, jsonDetails.LinePosition);
+            var postInfo = (nav as IAnnotated)?.Annotation<PositionInfo>();
+            Assert.IsNotNull(postInfo);
+            Assert.AreNotEqual(-1, postInfo.LineNumber);
+            Assert.AreNotEqual(-1, postInfo.LinePosition);
         }
     }
 }

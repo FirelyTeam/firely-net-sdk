@@ -12,11 +12,12 @@ namespace Hl7.Fhir.Serialization
 {
     public class ElementSerializationInfo : IElementSerializationInfo
     {
-        public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, ITypeSerializationInfo[] type)
+        public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, bool isContained, ITypeSerializationInfo[] type)
         {
             ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
             MayRepeat = mayRepeat;
             IsChoiceElement = isChoice;
+            IsContainedResource = isContained;
             Type = type ?? throw new ArgumentNullException(nameof(type));
         }
 
@@ -25,6 +26,7 @@ namespace Hl7.Fhir.Serialization
             ElementName = source.ElementName;
             MayRepeat = source.MayRepeat;
             IsChoiceElement = source.IsChoiceElement;
+            IsContainedResource = source.IsContainedResource;
             Type = source.Type;
         }
 
@@ -33,6 +35,10 @@ namespace Hl7.Fhir.Serialization
         public bool MayRepeat { get; private set; }
 
         public bool IsChoiceElement { get; private set; }
+        public bool IsContainedResource { get; private set; }
+
         public ITypeSerializationInfo[] Type { get; private set; }
+
+        
     }
 }

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Serialization
             var xmlDetails = getXmlDetails(_current);
             if (xmlDetails != null)
             {
-                throw Error.Format($"Cannot derive type name from element with name '{xmlDetails.Name.LocalName}' and namespace '{xmlDetails.Name.NamespaceName}'", this);
+                throw Error.Format($"Cannot derive type name from element with name '{Name}' and namespace '{xmlDetails.Namespace}'", this);
             }
             else
             {
@@ -100,20 +100,20 @@ namespace Hl7.Fhir.Serialization
             if (xmlDetails.NodeType == System.Xml.XmlNodeType.Attribute)
             {
                 if (xmlDetails.IsNamespaceDeclaration) return true;      // skip xmlns declarations
-                if (xmlDetails.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !DisallowXsiAttributesOnRoot) return true; // skip xmlns:xsi declaration
-                if (xmlDetails.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !DisallowXsiAttributesOnRoot) return true;     // skip schemaLocation
+                if (xmlDetails.Namespace + "xsi" == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !DisallowXsiAttributesOnRoot) return true; // skip xmlns:xsi declaration
+                if (xmlDetails.Namespace + "schemaLocation" == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !DisallowXsiAttributesOnRoot) return true;     // skip schemaLocation
 
-                if (xmlDetails.Name.NamespaceName == "") return false;
+                if (xmlDetails.Namespace.NamespaceName == "") return false;
 
-                throw Error.Format($"Encountered unsupported attribute {xmlDetails.Name}", this);
+                throw Error.Format($"Encountered unsupported attribute {child.Name}", this);
             }
 
             else if (xmlDetails.NodeType == System.Xml.XmlNodeType.Element)
             {
-                if (xmlDetails.Name.NamespaceName == XmlNs.FHIR) return false;
-                if (xmlDetails.Name == XmlNs.XHTMLDIV) return false;
+                if (xmlDetails.Namespace == XmlNs.FHIR) return false;
+                if (xmlDetails.Namespace + "div" == XmlNs.XHTMLDIV) return false;
 
-                throw Error.Format($"Encountered element '{xmlDetails.Name.LocalName}' from unsupported namespace '{xmlDetails.Name.NamespaceName}'", this);
+                throw Error.Format($"Encountered element '{child.Name}' from unsupported namespace '{xmlDetails.Namespace}'", this);
             }
 
             else

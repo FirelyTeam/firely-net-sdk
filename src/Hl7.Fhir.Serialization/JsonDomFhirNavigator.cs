@@ -130,10 +130,12 @@ namespace Hl7.Fhir.Serialization
                     new JsonSerializationDetails()
                     {
                         RawValue = Current.JsonValue?.Value,
-                        LineNumber = Current.LineNumber,
-                        LinePosition = Current.LinePosition
                     }
                 };
+            }
+            if (type == typeof(PositionInfo))
+            {
+                return new[] { new PositionInfo { LineNumber = Current.LineNumber, LinePosition = Current.LinePosition } };
             }
             else
                 return null;

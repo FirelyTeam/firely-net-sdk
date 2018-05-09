@@ -117,5 +117,7 @@ namespace Hl7.Fhir.Introspection
         }
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
+
+        public bool IsContainedResource => _pm.Choice == ChoiceType.ResourceChoice;
     }
 }

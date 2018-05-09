@@ -8,11 +8,10 @@
 
 using Hl7.Fhir.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
+using System.Collections.Generic;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -245,6 +244,29 @@ namespace Hl7.Fhir.ElementModel
             }
 
             return result;
+        }
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            //if (type == typeof(ElementSerializationInfo))
+            //{
+            //    return new[] { new ElementSerializationInfo(_definition.Current) };
+            //}
+            //if (type == typeof(XmlSerializationDetails))
+            //{
+            //    return new[]
+            //    {
+            //        new XmlSerializationDetails()
+            //        {
+            //            NodeType = _current.NodeType,
+            //            Namespace = XmlName.NamespaceName,
+            //            NodeText = null,
+            //            IsNamespaceDeclaration = false
+            //        }
+            //    };
+            //}
+            //else
+                return null;
         }
     }
 }

@@ -141,14 +141,14 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
             var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
-            Assert.AreEqual("http://somenamespace", xmldetails.Name.NamespaceName);
+            Assert.AreEqual(XNamespace.Get("http://somenamespace"), xmldetails.Namespace);
 
             Assert.AreEqual("Patient.myattr[0]", nav.Location);
         }
 
 
         // resurface when read through a validating navigator
-        [TestMethod, Ignore]
+        [TestMethod]
         public void CompareXmlJsonParseOutcomes()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
@@ -174,10 +174,10 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             Assert.IsTrue(nav.MoveToFirstChild());
 
-            var xmlDetails = (nav as IAnnotated)?.Annotation<XmlSerializationDetails>();
-            Assert.IsNotNull(xmlDetails);
-            Assert.AreNotEqual(-1, xmlDetails.LineNumber);
-            Assert.AreNotEqual(-1, xmlDetails.LinePosition);
+            var posInfo = (nav as IAnnotated)?.Annotation<PositionInfo>();
+            Assert.IsNotNull(posInfo);
+            Assert.AreNotEqual(-1, posInfo.LineNumber);
+            Assert.AreNotEqual(-1, posInfo.LinePosition);
         }
 
         [TestMethod]
@@ -195,7 +195,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var commentdetails = (nav as IAnnotated).Annotation<SourceComments>();
             Assert.IsNotNull(xmldetails);
             Assert.AreEqual(XmlNodeType.Element, xmldetails.NodeType);
-            Assert.AreEqual("http://hl7.org/fhir", xmldetails.Name.NamespaceName);
+            Assert.AreEqual("http://hl7.org/fhir", xmldetails.Namespace.NamespaceName);
             Assert.IsTrue(commentdetails.CommentsBefore.Single().Contains("structural errors"));
             Assert.IsTrue(commentdetails.DocumentEndComments.Single().Contains("standard FHIR"));
             Assert.IsNull(nav.Value);
@@ -219,7 +219,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
                 var xd = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
                 Assert.AreEqual(XmlNodeType.Attribute, xd.NodeType);
-                Assert.AreEqual(xd.Name, XName.Get("customAttribute", "http://example.org/some-ns"));
+                Assert.AreEqual(xd.Namespace + "customAttribute", XName.Get("customAttribute", "http://example.org/some-ns"));
                 Assert.IsFalse(cn.HasChildren());
             }
 
@@ -284,7 +284,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
                 var xd = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
                 var cd = (nav as IAnnotated).Annotation<SourceComments>();
-                Assert.AreEqual(XmlNs.XHTML, xd.Name.NamespaceName);
+                Assert.AreEqual(XmlNs.XHTMLNS, xd.Namespace);
                 Assert.AreEqual(2, cd.CommentsBefore.Length);
                 Assert.AreEqual(" next line intentionally left empty ", cd.CommentsBefore.First());
                 Assert.AreEqual(" Div is really special, since the value includes the node itself ", cd.CommentsBefore.Last());
@@ -295,11 +295,15 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [TestMethod]
         public void RoundtripXml()
         {
+            // Note: this is a low-level test, just testing xml roundtripping, given that
+            // the source and destination are both XML.  It uses non-fhir data, so it would
+            // only work in that situation. Just testing whether all xml details come through
+            // to faithfully reproduce the source.
             var tpXml = File.ReadAllText(@"TestData\roundtrippable.xml");
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = XmlDomFhirNavigator.Create(reader, new PocoModelMetadataProvider());
+            var nav = XmlDomFhirNavigator.CreateUntyped(reader);
 
             var xmlBuilder = new StringBuilder();
             var serializer = new NavigatorXmlWriter();

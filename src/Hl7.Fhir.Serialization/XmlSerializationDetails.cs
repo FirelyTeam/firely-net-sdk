@@ -12,10 +12,17 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class XmlSerializationDetails : IPositionInfo
+    public class PositionInfo : IPositionInfo
+    {
+        public int LineNumber { get; internal set; }
+
+        public int LinePosition { get; internal set; }
+    }
+
+    public class XmlSerializationDetails
     {
         public XmlNodeType NodeType;
-        public XName Name;
+        public XNamespace Namespace;
 
         public bool IsNamespaceDeclaration;
 
@@ -23,9 +30,5 @@ namespace Hl7.Fhir.Serialization
         /// All child text nodes
         /// </summary>
         public string NodeText;
-
-        public int LineNumber { get; internal set; }
-
-        public int LinePosition { get; internal set; }
     }   
 }

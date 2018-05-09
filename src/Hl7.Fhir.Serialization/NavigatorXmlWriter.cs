@@ -35,7 +35,6 @@ namespace Hl7.Fhir.Serialization
             var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
             var serializationInfo = (source as IAnnotated)?.Annotation<ElementSerializationInfo>();
 
-            var isXhtml = xmlDetails?.Name == XmlNs.XHTMLDIV;
             var value = source.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(source.Value) : null;
 
             if(sourceComments?.CommentsBefore != null)
@@ -44,6 +43,8 @@ namespace Hl7.Fhir.Serialization
             // xhtml children require special treament:
             // - They don't use an xml "value" attribute to represent the value, instead their Value is inserted verbatim into the parent
             // - They cannot have child nodes - the "Value" on the node contains all children as raw xml text
+            var isXhtml = xmlDetails?.Namespace + "div" == XmlNs.XHTMLDIV || source.Type == "xhtml";
+
             if (isXhtml)
             {
                 using(var nodeReader = SerializationUtil.XmlReaderFromXmlText(value))
@@ -51,15 +52,16 @@ namespace Hl7.Fhir.Serialization
                 return;
             }
 
-            var ns = xmlDetails?.Name.NamespaceName ?? XmlNs.FHIR;
+            var ns = xmlDetails?.Namespace.NamespaceName ?? XmlNs.FHIR;
             var prefix = ns != null ? destination.LookupPrefix(ns) : null;
-            var localName = xmlDetails?.Name.LocalName ?? source.Name;
+            var localName = serializationInfo?.IsChoiceElement == true ?
+                            source.Name + source.Type.Capitalize() : source.Name;
             var usesAttribute = xmlDetails?.NodeType == XmlNodeType.Attribute;
-            var isContained = serializationInfo. ?.IsContainedResource() ?? false;
-            
+            var isContained = serializationInfo?.IsContainedResource ?? false;
+
             // If the node is represented by an attribute (e.g. an "id" child), write
             // an attribute with the child's name + the child's Value into the parent
-            if(usesAttribute && destination.WriteState == WriteState.Element)
+            if (usesAttribute && destination.WriteState == WriteState.Element)
             {
                 destination.WriteAttributeString(prefix, localName, ns, value);
                 return;
@@ -75,7 +77,7 @@ namespace Hl7.Fhir.Serialization
 
             // If this needs to be serialized as a contained resource, do so
             if (isContained)
-                destination.WriteStartElement(prefix, serializationInfo.Type.First().TypeName, ns);
+                destination.WriteStartElement(prefix, source.Type, ns);
 
             // Now, do the same for the children
             if (source.HasChildren())
@@ -99,6 +101,8 @@ namespace Hl7.Fhir.Serialization
             if (atRoot && sourceComments?.DocumentEndComments != null)
                 writeComments(sourceComments.DocumentEndComments, destination);
         }
+
+
 
 
         private void writeComments(string[] comments, XmlWriter destination)

@@ -302,12 +302,13 @@ namespace Hl7.Fhir.Serialization
 
 
             }
-            if (type == typeof(ElementSerializationInfo))
+            if (type == typeof(ElementSerializationInfo) && _definition.IsTracking)
             {
-                if (_definition.IsTracking)
-                    return new[] { new ElementSerializationInfo(_definition.Current) };
-                else
-                    return null;
+                return new[] { new ElementSerializationInfo(_definition.Current) };
+            }
+            if(type == typeof(PositionInfo))
+            {
+                return new[] { new PositionInfo { LineNumber = this.LineNumber, LinePosition = this.LinePosition } };
             }
             if (type == typeof(XmlSerializationDetails))
             {
@@ -317,10 +318,8 @@ namespace Hl7.Fhir.Serialization
                     {
                         // Add: "value in attribute"
                         NodeType = _current.NodeType,
-                        Name = XmlName,
+                        Namespace = XmlName.NamespaceName,
                         NodeText = _current.Text(),
-                        LineNumber = this.LineNumber,
-                        LinePosition = this.LinePosition,
                         IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false
                     }
                 };
