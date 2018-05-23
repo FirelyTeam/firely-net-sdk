@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-10-05T18:35:38.499+02:00" />
@@ -10,9 +10,10 @@
   <status value="draft" />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <constrainedType value="Observation" />
+  <type value="Observation" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Observation" />
@@ -28,11 +29,11 @@
       </type>
       <type>
         <code value="Quantity" />
-        <profile value="http://example.org/StructureDefinition/WeightQuantity" />
+        <targetProfile value="http://example.org/StructureDefinition/WeightQuantity" />
       </type>
       <type>
         <code value="Quantity" />
-        <profile value="http://example.org/StructureDefinition/HeightQuantity" />
+        <targetProfile value="http://example.org/StructureDefinition/HeightQuantity" />
       </type>
       <maxLength value="5" />
     </element>

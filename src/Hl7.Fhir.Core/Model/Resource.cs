@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
     [InvokeIValidatableObject]
-    public abstract partial class Resource 
+    public abstract partial class Resource
     {
         /// <summary>
         /// This is the base URL of the FHIR server that this resource is hosted on
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
         {
-            string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+            string expression = invariantRule.Expression;
             try
             {
                 // No FhirPath extension
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
         {
             if (Id == null) return null;
 
-            var result =  Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, VersionId);
+            var result = Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, VersionId);
 
             if (!string.IsNullOrEmpty(baseUrl))
                 return result.WithBase(baseUrl);
@@ -226,11 +226,11 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public string VersionId
         {
-            get 
+            get
             {
                 if (HasVersionId)
                     return Meta.VersionId;
-                else 
+                else
                     return null;
             }
             set

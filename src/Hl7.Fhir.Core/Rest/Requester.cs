@@ -24,7 +24,9 @@ namespace Hl7.Fhir.Rest
         public bool UseFormatParameter { get; set; }
         public ResourceFormat PreferredFormat { get; set; }
         public int Timeout { get; set; }           // In milliseconds
-        public Prefer Prefer { get; set; }
+
+        public Prefer? PreferredReturn { get; set; }
+        public SearchParameterHandling? PreferredParameterHandling { get; set; }
 
         /// <summary>
         /// This will do 2 things:
@@ -46,7 +48,8 @@ namespace Hl7.Fhir.Rest
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
-            Prefer = Rest.Prefer.ReturnRepresentation;
+            PreferredReturn = Rest.Prefer.ReturnRepresentation;
+            PreferredParameterHandling = null;
             ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
         }
 
@@ -56,7 +59,6 @@ namespace Hl7.Fhir.Rest
         public HttpWebRequest LastRequest { get; private set; }
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
-
 
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
@@ -70,7 +72,7 @@ namespace Hl7.Fhir.Rest
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+            var request = interaction.ToHttpRequest(this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
 #if DOTNETFW
             request.Timeout = Timeout;

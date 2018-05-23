@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,27 +64,27 @@ namespace Hl7.Fhir.Model
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
-            [EnumLiteral("ONLINE", "http://nema.org/dicom/dicm"), Description("Online")]
+            [EnumLiteral("ONLINE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Online")]
             ONLINE,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
-            [EnumLiteral("OFFLINE", "http://nema.org/dicom/dicm"), Description("Offline")]
+            [EnumLiteral("OFFLINE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Offline")]
             OFFLINE,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
-            [EnumLiteral("NEARLINE", "http://nema.org/dicom/dicm"), Description("Nearline")]
+            [EnumLiteral("NEARLINE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Nearline")]
             NEARLINE,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
-            [EnumLiteral("UNAVAILABLE", "http://nema.org/dicom/dicm"), Description("Unavailable")]
+            [EnumLiteral("UNAVAILABLE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Unavailable")]
             UNAVAILABLE,
         }
 
@@ -95,9 +96,42 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SeriesComponent"; } }
             
             /// <summary>
+            /// Formal DICOM identifier for this series
+            /// </summary>
+            [FhirElement("uid", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Oid UidElement
+            {
+                get { return _UidElement; }
+                set { _UidElement = value; OnPropertyChanged("UidElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Oid _UidElement;
+            
+            /// <summary>
+            /// Formal DICOM identifier for this series
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Uid
+            {
+                get { return UidElement != null ? UidElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        UidElement = null; 
+                    else
+                        UidElement = new Hl7.Fhir.Model.Oid(value);
+                    OnPropertyChanged("Uid");
+                }
+            }
+            
+            /// <summary>
             /// Numeric identifier of this series
             /// </summary>
-            [FhirElement("number", InSummary=true, Order=40)]
+            [FhirElement("number", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt NumberElement
             {
@@ -129,7 +163,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The modality of the instances in the series
             /// </summary>
-            [FhirElement("modality", InSummary=true, Order=50)]
+            [FhirElement("modality", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Modality
@@ -141,40 +175,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Modality;
             
             /// <summary>
-            /// Formal identifier for this series
-            /// </summary>
-            [FhirElement("uid", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Oid UidElement
-            {
-                get { return _UidElement; }
-                set { _UidElement = value; OnPropertyChanged("UidElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Oid _UidElement;
-            
-            /// <summary>
-            /// Formal identifier for this series
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Uid
-            {
-                get { return UidElement != null ? UidElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        UidElement = null; 
-                    else
-                        UidElement = new Hl7.Fhir.Model.Oid(value);
-                    OnPropertyChanged("Uid");
-                }
-            }
-            
-            /// <summary>
-            /// A description of the series
+            /// A short human readable summary of the series
             /// </summary>
             [FhirElement("description", InSummary=true, Order=70)]
             [DataMember]
@@ -187,7 +188,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
-            /// A description of the series
+            /// A short human readable summary of the series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -209,7 +210,6 @@ namespace Hl7.Fhir.Model
             /// Number of Series Related Instances
             /// </summary>
             [FhirElement("numberOfInstances", InSummary=true, Order=80)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt NumberOfInstancesElement
             {
@@ -271,36 +271,20 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Location of the referenced instance(s)
+            /// Series access endpoint
             /// </summary>
-            [FhirElement("url", InSummary=true, Order=100)]
+            [FhirElement("endpoint", InSummary=true, Order=100)]
+            [CLSCompliant(false)]
+			[References("Endpoint")]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
+            public List<Hl7.Fhir.Model.ResourceReference> Endpoint
             {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+                set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
-            
-            /// <summary>
-            /// Location of the referenced instance(s)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Url
-            {
-                get { return UrlElement != null ? UrlElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        UrlElement = null; 
-                    else
-                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
-                }
-            }
+            private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
             
             /// <summary>
             /// Body part examined
@@ -361,9 +345,25 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Who performed the series
+            /// </summary>
+            [FhirElement("performer", InSummary=true, Order=140)]
+            [CLSCompliant(false)]
+			[References("Practitioner")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Performer
+            {
+                get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Performer; }
+                set { _Performer = value; OnPropertyChanged("Performer"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Performer;
+            
+            /// <summary>
             /// A single SOP instance from the series
             /// </summary>
-            [FhirElement("instance", InSummary=true, Order=140)]
+            [FhirElement("instance", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent> Instance
@@ -381,16 +381,17 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
+                    if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                     if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
                     if(Modality != null) dest.Modality = (Hl7.Fhir.Model.Coding)Modality.DeepCopy();
-                    if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfInstancesElement.DeepCopy();
                     if(AvailabilityElement != null) dest.AvailabilityElement = (Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>)AvailabilityElement.DeepCopy();
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Coding)BodySite.DeepCopy();
                     if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.Coding)Laterality.DeepCopy();
                     if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
+                    if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                     if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent>(Instance.DeepCopy());
                     return dest;
                 }
@@ -409,16 +410,17 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.Matches(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.Matches(Modality, otherT.Modality)) return false;
-                if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(NumberOfInstancesElement, otherT.NumberOfInstancesElement)) return false;
                 if( !DeepComparable.Matches(AvailabilityElement, otherT.AvailabilityElement)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.Matches(Laterality, otherT.Laterality)) return false;
                 if( !DeepComparable.Matches(StartedElement, otherT.StartedElement)) return false;
+                if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
                 if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
                 
                 return true;
@@ -430,16 +432,17 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.IsExactly(Modality, otherT.Modality)) return false;
-                if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(NumberOfInstancesElement, otherT.NumberOfInstancesElement)) return false;
                 if( !DeepComparable.IsExactly(AvailabilityElement, otherT.AvailabilityElement)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.IsExactly(Laterality, otherT.Laterality)) return false;
                 if( !DeepComparable.IsExactly(StartedElement, otherT.StartedElement)) return false;
+                if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
                 
                 return true;
@@ -452,16 +455,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
+                    if (UidElement != null) yield return UidElement;
                     if (NumberElement != null) yield return NumberElement;
                     if (Modality != null) yield return Modality;
-                    if (UidElement != null) yield return UidElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (NumberOfInstancesElement != null) yield return NumberOfInstancesElement;
                     if (AvailabilityElement != null) yield return AvailabilityElement;
-                    if (UrlElement != null) yield return UrlElement;
+                    foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
                     if (BodySite != null) yield return BodySite;
                     if (Laterality != null) yield return Laterality;
                     if (StartedElement != null) yield return StartedElement;
+                    foreach (var elem in Performer) { if (elem != null) yield return elem; }
                     foreach (var elem in Instance) { if (elem != null) yield return elem; }
                 }
             }
@@ -472,16 +476,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
                     if (NumberElement != null) yield return new ElementValue("number", false, NumberElement);
                     if (Modality != null) yield return new ElementValue("modality", false, Modality);
-                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", false, NumberOfInstancesElement);
                     if (AvailabilityElement != null) yield return new ElementValue("availability", false, AvailabilityElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
                     if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
                     if (Laterality != null) yield return new ElementValue("laterality", false, Laterality);
                     if (StartedElement != null) yield return new ElementValue("started", false, StartedElement);
+                    foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
                     foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, elem); }
                 }
             }
@@ -498,9 +503,42 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "InstanceComponent"; } }
             
             /// <summary>
+            /// Formal DICOM identifier for this instance
+            /// </summary>
+            [FhirElement("uid", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Oid UidElement
+            {
+                get { return _UidElement; }
+                set { _UidElement = value; OnPropertyChanged("UidElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Oid _UidElement;
+            
+            /// <summary>
+            /// Formal DICOM identifier for this instance
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Uid
+            {
+                get { return UidElement != null ? UidElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        UidElement = null; 
+                    else
+                        UidElement = new Hl7.Fhir.Model.Oid(value);
+                    OnPropertyChanged("Uid");
+                }
+            }
+            
+            /// <summary>
             /// The number of this instance in the series
             /// </summary>
-            [FhirElement("number", InSummary=true, Order=40)]
+            [FhirElement("number", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt NumberElement
             {
@@ -530,42 +568,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Formal identifier for this instance
-            /// </summary>
-            [FhirElement("uid", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Oid UidElement
-            {
-                get { return _UidElement; }
-                set { _UidElement = value; OnPropertyChanged("UidElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Oid _UidElement;
-            
-            /// <summary>
-            /// Formal identifier for this instance
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Uid
-            {
-                get { return UidElement != null ? UidElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        UidElement = null; 
-                    else
-                        UidElement = new Hl7.Fhir.Model.Oid(value);
-                    OnPropertyChanged("Uid");
-                }
-            }
-            
-            /// <summary>
             /// DICOM class type
             /// </summary>
-            [FhirElement("sopClass", InSummary=true, Order=60)]
+            [FhirElement("sopClass", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid SopClassElement
@@ -596,41 +601,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Type of instance (image etc.)
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString TypeElement
-            {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _TypeElement;
-            
-            /// <summary>
-            /// Type of instance (image etc.)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Type
-            {
-                get { return TypeElement != null ? TypeElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        TypeElement = null; 
-                    else
-                        TypeElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Type");
-                }
-            }
-            
-            /// <summary>
             /// Description of instance
             /// </summary>
-            [FhirElement("title", InSummary=true, Order=80)]
+            [FhirElement("title", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
             {
@@ -659,20 +632,6 @@ namespace Hl7.Fhir.Model
                 }
             }
             
-            /// <summary>
-            /// Content of the instance
-            /// </summary>
-            [FhirElement("content", InSummary=true, Order=90)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Attachment> Content
-            {
-                get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Attachment>(); return _Content; }
-                set { _Content = value; OnPropertyChanged("Content"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Attachment> _Content;
-            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as InstanceComponent;
@@ -680,12 +639,10 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
+                    if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
                     if(SopClassElement != null) dest.SopClassElement = (Hl7.Fhir.Model.Oid)SopClassElement.DeepCopy();
-                    if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirString)TypeElement.DeepCopy();
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                    if(Content != null) dest.Content = new List<Hl7.Fhir.Model.Attachment>(Content.DeepCopy());
                     return dest;
                 }
                 else
@@ -703,12 +660,10 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
+                if( !DeepComparable.Matches(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.Matches(SopClassElement, otherT.SopClassElement)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
                 
                 return true;
             }
@@ -719,12 +674,10 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
+                if( !DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.IsExactly(SopClassElement, otherT.SopClassElement)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
             }
@@ -736,12 +689,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (NumberElement != null) yield return NumberElement;
                     if (UidElement != null) yield return UidElement;
+                    if (NumberElement != null) yield return NumberElement;
                     if (SopClassElement != null) yield return SopClassElement;
-                    if (TypeElement != null) yield return TypeElement;
                     if (TitleElement != null) yield return TitleElement;
-                    foreach (var elem in Content) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -751,12 +702,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NumberElement != null) yield return new ElementValue("number", false, NumberElement);
                     if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
+                    if (NumberElement != null) yield return new ElementValue("number", false, NumberElement);
                     if (SopClassElement != null) yield return new ElementValue("sopClass", false, SopClassElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                     if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, elem); }
                 }
             }
 
@@ -765,9 +714,146 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Formal DICOM identifier for the study
+        /// </summary>
+        [FhirElement("uid", InSummary=true, Order=90)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Oid UidElement
+        {
+            get { return _UidElement; }
+            set { _UidElement = value; OnPropertyChanged("UidElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Oid _UidElement;
+        
+        /// <summary>
+        /// Formal DICOM identifier for the study
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Uid
+        {
+            get { return UidElement != null ? UidElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  UidElement = null; 
+                else
+                  UidElement = new Hl7.Fhir.Model.Oid(value);
+                OnPropertyChanged("Uid");
+            }
+        }
+        
+        /// <summary>
+        /// Related workflow identifier ("Accession Number")
+        /// </summary>
+        [FhirElement("accession", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Accession
+        {
+            get { return _Accession; }
+            set { _Accession = value; OnPropertyChanged("Accession"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Accession;
+        
+        /// <summary>
+        /// Other identifiers for the study
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
+        /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE
+        /// </summary>
+        [FhirElement("availability", InSummary=true, Order=120)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> AvailabilityElement
+        {
+            get { return _AvailabilityElement; }
+            set { _AvailabilityElement = value; OnPropertyChanged("AvailabilityElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> _AvailabilityElement;
+        
+        /// <summary>
+        /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
+        {
+            get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  AvailabilityElement = null; 
+                else
+                  AvailabilityElement = new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
+                OnPropertyChanged("Availability");
+            }
+        }
+        
+        /// <summary>
+        /// All series modality if actual acquisition modalities
+        /// </summary>
+        [FhirElement("modalityList", InSummary=true, Order=130)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Coding> ModalityList
+        {
+            get { if(_ModalityList==null) _ModalityList = new List<Hl7.Fhir.Model.Coding>(); return _ModalityList; }
+            set { _ModalityList = value; OnPropertyChanged("ModalityList"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Coding> _ModalityList;
+        
+        /// <summary>
+        /// Who the images are of
+        /// </summary>
+        [FhirElement("patient", InSummary=true, Order=140)]
+        [CLSCompliant(false)]
+		[References("Patient")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Patient
+        {
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Patient;
+        
+        /// <summary>
+        /// Originating context
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=150)]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
         /// When the study was started
         /// </summary>
-        [FhirElement("started", InSummary=true, Order=90)]
+        [FhirElement("started", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StartedElement
         {
@@ -797,115 +883,25 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who the images are of
+        /// Request fulfilled
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=100)]
+        [FhirElement("basedOn", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[References("Patient")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
-        {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
-        /// Formal identifier for the study
-        /// </summary>
-        [FhirElement("uid", InSummary=true, Order=110)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Oid UidElement
-        {
-            get { return _UidElement; }
-            set { _UidElement = value; OnPropertyChanged("UidElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Oid _UidElement;
-        
-        /// <summary>
-        /// Formal identifier for the study
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Uid
-        {
-            get { return UidElement != null ? UidElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  UidElement = null; 
-                else
-                  UidElement = new Hl7.Fhir.Model.Oid(value);
-                OnPropertyChanged("Uid");
-            }
-        }
-        
-        /// <summary>
-        /// Related workflow identifier ("Accession Number")
-        /// </summary>
-        [FhirElement("accession", InSummary=true, Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.Identifier Accession
-        {
-            get { return _Accession; }
-            set { _Accession = value; OnPropertyChanged("Accession"); }
-        }
-        
-        private Hl7.Fhir.Model.Identifier _Accession;
-        
-        /// <summary>
-        /// Other identifiers for the study
-        /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=130)]
+		[References("ReferralRequest","CarePlan","ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier
+        public List<Hl7.Fhir.Model.ResourceReference> BasedOn
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+            set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
         }
         
-        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
         
         /// <summary>
-        /// Order(s) that caused this study to be performed
+        /// Referring physician
         /// </summary>
-        [FhirElement("order", InSummary=true, Order=140)]
-        [CLSCompliant(false)]
-		[References("DiagnosticOrder")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Order
-        {
-            get { if(_Order==null) _Order = new List<Hl7.Fhir.Model.ResourceReference>(); return _Order; }
-            set { _Order = value; OnPropertyChanged("Order"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Order;
-        
-        /// <summary>
-        /// All series modality if actual acquisition modalities
-        /// </summary>
-        [FhirElement("modalityList", InSummary=true, Order=150)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Coding> ModalityList
-        {
-            get { if(_ModalityList==null) _ModalityList = new List<Hl7.Fhir.Model.Coding>(); return _ModalityList; }
-            set { _ModalityList = value; OnPropertyChanged("ModalityList"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Coding> _ModalityList;
-        
-        /// <summary>
-        /// Referring physician (0008,0090)
-        /// </summary>
-        [FhirElement("referrer", InSummary=true, Order=160)]
+        [FhirElement("referrer", InSummary=true, Order=180)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -918,74 +914,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Referrer;
         
         /// <summary>
-        /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE (0008,0056)
+        /// Who interpreted images
         /// </summary>
-        [FhirElement("availability", InSummary=true, Order=170)]
+        [FhirElement("interpreter", InSummary=true, Order=190)]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> AvailabilityElement
+        public List<Hl7.Fhir.Model.ResourceReference> Interpreter
         {
-            get { return _AvailabilityElement; }
-            set { _AvailabilityElement = value; OnPropertyChanged("AvailabilityElement"); }
+            get { if(_Interpreter==null) _Interpreter = new List<Hl7.Fhir.Model.ResourceReference>(); return _Interpreter; }
+            set { _Interpreter = value; OnPropertyChanged("Interpreter"); }
         }
         
-        private Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> _AvailabilityElement;
+        private List<Hl7.Fhir.Model.ResourceReference> _Interpreter;
         
         /// <summary>
-        /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE (0008,0056)
+        /// Study access endpoint
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
-        {
-            get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  AvailabilityElement = null; 
-                else
-                  AvailabilityElement = new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
-                OnPropertyChanged("Availability");
-            }
-        }
-        
-        /// <summary>
-        /// Retrieve URI
-        /// </summary>
-        [FhirElement("url", InSummary=true, Order=180)]
+        [FhirElement("endpoint", InSummary=true, Order=200)]
+        [CLSCompliant(false)]
+		[References("Endpoint")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri UrlElement
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
         {
-            get { return _UrlElement; }
-            set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+            set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _UrlElement;
-        
-        /// <summary>
-        /// Retrieve URI
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Url
-        {
-            get { return UrlElement != null ? UrlElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  UrlElement = null; 
-                else
-                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("Url");
-            }
-        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
         /// <summary>
         /// Number of Study Related Series
         /// </summary>
-        [FhirElement("numberOfSeries", InSummary=true, Order=190)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("numberOfSeries", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt NumberOfSeriesElement
         {
@@ -1017,8 +980,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of Study Related Instances
         /// </summary>
-        [FhirElement("numberOfInstances", InSummary=true, Order=200)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("numberOfInstances", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt NumberOfInstancesElement
         {
@@ -1048,40 +1010,52 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Type of procedure performed
+        /// The performed Procedure reference
         /// </summary>
-        [FhirElement("procedure", InSummary=true, Order=210)]
+        [FhirElement("procedureReference", InSummary=true, Order=230)]
         [CLSCompliant(false)]
 		[References("Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Procedure
+        public List<Hl7.Fhir.Model.ResourceReference> ProcedureReference
         {
-            get { if(_Procedure==null) _Procedure = new List<Hl7.Fhir.Model.ResourceReference>(); return _Procedure; }
-            set { _Procedure = value; OnPropertyChanged("Procedure"); }
+            get { if(_ProcedureReference==null) _ProcedureReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ProcedureReference; }
+            set { _ProcedureReference = value; OnPropertyChanged("ProcedureReference"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Procedure;
+        private List<Hl7.Fhir.Model.ResourceReference> _ProcedureReference;
         
         /// <summary>
-        /// Who interpreted images
+        /// The performed procedure code
         /// </summary>
-        [FhirElement("interpreter", InSummary=true, Order=220)]
-        [CLSCompliant(false)]
-		[References("Practitioner")]
+        [FhirElement("procedureCode", InSummary=true, Order=240)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Interpreter
+        public List<Hl7.Fhir.Model.CodeableConcept> ProcedureCode
         {
-            get { return _Interpreter; }
-            set { _Interpreter = value; OnPropertyChanged("Interpreter"); }
+            get { if(_ProcedureCode==null) _ProcedureCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ProcedureCode; }
+            set { _ProcedureCode = value; OnPropertyChanged("ProcedureCode"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Interpreter;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ProcedureCode;
+        
+        /// <summary>
+        /// Why the study was requested
+        /// </summary>
+        [FhirElement("reason", InSummary=true, Order=250)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Reason
+        {
+            get { return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Reason;
         
         /// <summary>
         /// Institution-generated description
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=230)]
+        [FhirElement("description", InSummary=true, Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -1113,7 +1087,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Each study has one or more series of instances
         /// </summary>
-        [FhirElement("series", InSummary=true, Order=240)]
+        [FhirElement("series", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> Series
@@ -1138,20 +1112,23 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                 if(Accession != null) dest.Accession = (Hl7.Fhir.Model.Identifier)Accession.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Order != null) dest.Order = new List<Hl7.Fhir.Model.ResourceReference>(Order.DeepCopy());
-                if(ModalityList != null) dest.ModalityList = new List<Hl7.Fhir.Model.Coding>(ModalityList.DeepCopy());
-                if(Referrer != null) dest.Referrer = (Hl7.Fhir.Model.ResourceReference)Referrer.DeepCopy();
                 if(AvailabilityElement != null) dest.AvailabilityElement = (Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>)AvailabilityElement.DeepCopy();
-                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(ModalityList != null) dest.ModalityList = new List<Hl7.Fhir.Model.Coding>(ModalityList.DeepCopy());
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
+                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+                if(Referrer != null) dest.Referrer = (Hl7.Fhir.Model.ResourceReference)Referrer.DeepCopy();
+                if(Interpreter != null) dest.Interpreter = new List<Hl7.Fhir.Model.ResourceReference>(Interpreter.DeepCopy());
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 if(NumberOfSeriesElement != null) dest.NumberOfSeriesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfSeriesElement.DeepCopy();
                 if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfInstancesElement.DeepCopy();
-                if(Procedure != null) dest.Procedure = new List<Hl7.Fhir.Model.ResourceReference>(Procedure.DeepCopy());
-                if(Interpreter != null) dest.Interpreter = (Hl7.Fhir.Model.ResourceReference)Interpreter.DeepCopy();
+                if(ProcedureReference != null) dest.ProcedureReference = new List<Hl7.Fhir.Model.ResourceReference>(ProcedureReference.DeepCopy());
+                if(ProcedureCode != null) dest.ProcedureCode = new List<Hl7.Fhir.Model.CodeableConcept>(ProcedureCode.DeepCopy());
+                if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent>(Series.DeepCopy());
                 return dest;
@@ -1171,20 +1148,23 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(StartedElement, otherT.StartedElement)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
             if( !DeepComparable.Matches(Accession, otherT.Accession)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Order, otherT.Order)) return false;
-            if( !DeepComparable.Matches(ModalityList, otherT.ModalityList)) return false;
-            if( !DeepComparable.Matches(Referrer, otherT.Referrer)) return false;
             if( !DeepComparable.Matches(AvailabilityElement, otherT.AvailabilityElement)) return false;
-            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(ModalityList, otherT.ModalityList)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(StartedElement, otherT.StartedElement)) return false;
+            if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.Matches(Referrer, otherT.Referrer)) return false;
+            if( !DeepComparable.Matches(Interpreter, otherT.Interpreter)) return false;
+            if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
             if( !DeepComparable.Matches(NumberOfSeriesElement, otherT.NumberOfSeriesElement)) return false;
             if( !DeepComparable.Matches(NumberOfInstancesElement, otherT.NumberOfInstancesElement)) return false;
-            if( !DeepComparable.Matches(Procedure, otherT.Procedure)) return false;
-            if( !DeepComparable.Matches(Interpreter, otherT.Interpreter)) return false;
+            if( !DeepComparable.Matches(ProcedureReference, otherT.ProcedureReference)) return false;
+            if( !DeepComparable.Matches(ProcedureCode, otherT.ProcedureCode)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Series, otherT.Series)) return false;
             
@@ -1197,20 +1177,23 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(StartedElement, otherT.StartedElement)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
             if( !DeepComparable.IsExactly(Accession, otherT.Accession)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Order, otherT.Order)) return false;
-            if( !DeepComparable.IsExactly(ModalityList, otherT.ModalityList)) return false;
-            if( !DeepComparable.IsExactly(Referrer, otherT.Referrer)) return false;
             if( !DeepComparable.IsExactly(AvailabilityElement, otherT.AvailabilityElement)) return false;
-            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(ModalityList, otherT.ModalityList)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(StartedElement, otherT.StartedElement)) return false;
+            if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.IsExactly(Referrer, otherT.Referrer)) return false;
+            if( !DeepComparable.IsExactly(Interpreter, otherT.Interpreter)) return false;
+            if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
             if( !DeepComparable.IsExactly(NumberOfSeriesElement, otherT.NumberOfSeriesElement)) return false;
             if( !DeepComparable.IsExactly(NumberOfInstancesElement, otherT.NumberOfInstancesElement)) return false;
-            if( !DeepComparable.IsExactly(Procedure, otherT.Procedure)) return false;
-            if( !DeepComparable.IsExactly(Interpreter, otherT.Interpreter)) return false;
+            if( !DeepComparable.IsExactly(ProcedureReference, otherT.ProcedureReference)) return false;
+            if( !DeepComparable.IsExactly(ProcedureCode, otherT.ProcedureCode)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
             
@@ -1223,20 +1206,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (StartedElement != null) yield return StartedElement;
-				if (Patient != null) yield return Patient;
 				if (UidElement != null) yield return UidElement;
 				if (Accession != null) yield return Accession;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				foreach (var elem in Order) { if (elem != null) yield return elem; }
-				foreach (var elem in ModalityList) { if (elem != null) yield return elem; }
-				if (Referrer != null) yield return Referrer;
 				if (AvailabilityElement != null) yield return AvailabilityElement;
-				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in ModalityList) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (Context != null) yield return Context;
+				if (StartedElement != null) yield return StartedElement;
+				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
+				if (Referrer != null) yield return Referrer;
+				foreach (var elem in Interpreter) { if (elem != null) yield return elem; }
+				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
 				if (NumberOfSeriesElement != null) yield return NumberOfSeriesElement;
 				if (NumberOfInstancesElement != null) yield return NumberOfInstancesElement;
-				foreach (var elem in Procedure) { if (elem != null) yield return elem; }
-				if (Interpreter != null) yield return Interpreter;
+				foreach (var elem in ProcedureReference) { if (elem != null) yield return elem; }
+				foreach (var elem in ProcedureCode) { if (elem != null) yield return elem; }
+				if (Reason != null) yield return Reason;
 				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in Series) { if (elem != null) yield return elem; }
             }
@@ -1248,20 +1234,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (StartedElement != null) yield return new ElementValue("started", false, StartedElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
                 if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
                 if (Accession != null) yield return new ElementValue("accession", false, Accession);
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in Order) { if (elem != null) yield return new ElementValue("order", true, elem); }
-                foreach (var elem in ModalityList) { if (elem != null) yield return new ElementValue("modalityList", true, elem); }
-                if (Referrer != null) yield return new ElementValue("referrer", false, Referrer);
                 if (AvailabilityElement != null) yield return new ElementValue("availability", false, AvailabilityElement);
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in ModalityList) { if (elem != null) yield return new ElementValue("modalityList", true, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (StartedElement != null) yield return new ElementValue("started", false, StartedElement);
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                if (Referrer != null) yield return new ElementValue("referrer", false, Referrer);
+                foreach (var elem in Interpreter) { if (elem != null) yield return new ElementValue("interpreter", true, elem); }
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
                 if (NumberOfSeriesElement != null) yield return new ElementValue("numberOfSeries", false, NumberOfSeriesElement);
                 if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", false, NumberOfInstancesElement);
-                foreach (var elem in Procedure) { if (elem != null) yield return new ElementValue("procedure", true, elem); }
-                if (Interpreter != null) yield return new ElementValue("interpreter", false, Interpreter);
+                foreach (var elem in ProcedureReference) { if (elem != null) yield return new ElementValue("procedureReference", true, elem); }
+                foreach (var elem in ProcedureCode) { if (elem != null) yield return new ElementValue("procedureCode", true, elem); }
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
                 if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                 foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", true, elem); }
             }

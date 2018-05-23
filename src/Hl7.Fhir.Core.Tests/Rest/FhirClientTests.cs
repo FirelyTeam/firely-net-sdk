@@ -25,22 +25,21 @@ namespace Hl7.Fhir.Tests.Rest
     [TestClass]
     public class FhirClientTests
     {
-        //public static Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
+        //public static Uri testEndpoint = new Uri("http://spark-dstu3.furore.com/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        //public static Uri testEndpoint = new Uri("http://test.fhir.org/r2");
+        public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
         //public static Uri testEndpoint = new Uri("http://vonk.fire.ly");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
-        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-        public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
-        //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
-        //public static Uri testEndpoint = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
+        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
+        //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
+        //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
 
-        //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir");
+        //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir"); 
         public static Uri _endpointSupportingSearchUsingPost = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
 
-        public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/dstu2_1");
+        public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/stu3-latest");
 
         [TestInitialize]
         public void TestInitialize()
@@ -77,27 +76,27 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             client.ParserSettings.AllowUnrecognizedEnums = true;
 
-            var entry = client.Conformance();
+            var entry = client.CapabilityStatement();
 
             Assert.IsNotNull(entry.Text);
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
-            Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
-            entry = client.Conformance(SummaryType.True);
+            entry = client.CapabilityStatement(SummaryType.True);
 
             Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
-            Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
             Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
             Assert.AreNotEqual(0, entry.Rest[0].Resource.Count , "There is expected to be at least 1 resource defined in the conformance statement");
             Assert.IsTrue(entry.Rest[0].Resource[0].Type.HasValue, "The resource type should be provided");
-            Assert.AreEqual(0, entry.Rest[0].Operation.Count, "operations should not be listed in the summary");
+            Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
         }
 
 
@@ -154,8 +153,9 @@ namespace Hl7.Fhir.Tests.Rest
                 var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
-            catch (FhirOperationException)
+            catch (FhirOperationException ex)
             {
+                Assert.AreEqual(HttpStatusCode.NotFound, ex.Status);
                 Assert.AreEqual("404", client.LastResult.Status);
             }
 
@@ -234,11 +234,12 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [TestMethod, Ignore]   // Something does not work with the gzip
+        [TestCategory("FhirClient"), 
+            TestCategory("IntegrationTest")]
         public void Search()
         {
-            // an endpoint that is known to support compression
-            FhirClient client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
+            FhirClient client = new FhirClient(testEndpoint);
             Bundle result;
 
             client.CompressRequestBody = true;
@@ -403,16 +404,16 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateAndFullRepresentation()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            client.ReturnFullResource = true;       // which is also the default
+            client.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
 
-            var pat = client.Read<Patient>("Patient/example");
+            var pat = client.Read<Patient>("Patient/glossy");
             ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
             pat.Id = null;
             pat.Identifier.Clear();
             var patC = client.Create<Patient>(pat);
             Assert.IsNotNull(patC);
 
-            client.ReturnFullResource = false;
+            client.PreferredReturn = Prefer.ReturnMinimal;
             patC = client.Create<Patient>(pat);
 
             Assert.IsNull(patC);
@@ -424,7 +425,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             // Now validate this resource
-            client.ReturnFullResource = true;       // which is also the default
+            client.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
             Parameters p = new Parameters();
           //  p.Add("mode", new FhirString("create"));
             p.Add("resource", pat);
@@ -455,6 +456,8 @@ namespace Hl7.Fhir.Tests.Rest
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
 
+            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(pat));
+
             var fe = client.Create(pat); // Create as we are not providing the ID to be used.
             Assert.IsNotNull(fe);
             Assert.IsNotNull(fe.Id);
@@ -484,7 +487,8 @@ namespace Hl7.Fhir.Tests.Rest
             }
             catch(FhirOperationException ex)
             {
-                Assert.AreEqual(HttpStatusCode.Gone, ex.Status); //"410"
+                Assert.AreEqual(HttpStatusCode.Gone, ex.Status, "Expected the record to be gone");
+                Assert.AreEqual("410", client.LastResult.Status);
             }
         }
 
@@ -495,7 +499,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             FhirClient client = new FhirClient(testEndpoint);
             var observation = new Observation();
-            observation.Status = Observation.ObservationStatus.Preliminary;
+            observation.Status = ObservationStatus.Preliminary;
             observation.Code = new CodeableConcept("http://loinc.org", "2164-2");
             observation.Value = new SimpleQuantity()
             {
@@ -576,7 +580,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test will fail if the system records AuditEvents 
         /// and counts them in the WholeSystemHistory
         /// </summary>
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"),Ignore]  // Keeps failing periodically. Grahame's server?
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"),Ignore]     // Keeps on failing periodically. Grahames server?
         public void History()
         {
             System.Threading.Thread.Sleep(500);
@@ -601,8 +605,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type");
-
-            history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions);
+            history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
             Assert.AreEqual(4, history.Entry.Count());   // there's a race condition here, sometimes this is 5. 
@@ -611,23 +614,24 @@ namespace Hl7.Fhir.Tests.Rest
 
 
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type (using the generic method in the client)");
-
-            history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions, summary: SummaryType.True);
+            history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
-            System.Diagnostics.Trace.WriteLine("\r\nWhole system history since the start of this test");
-
-            history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
-            Assert.IsNotNull(history);
-            DebugDumpBundle(history);
-            Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
-            // Check that the number of patients that have been created is what we expected
-            Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
-            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
+            if (!testEndpoint.OriginalString.Contains("sqlonfhir-stu3"))
+            {
+                System.Diagnostics.Trace.WriteLine("\r\nWhole system history since the start of this test");
+                history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions.ToUniversalTime());
+                Assert.IsNotNull(history);
+                DebugDumpBundle(history);
+                Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
+                // Check that the number of patients that have been created is what we expected
+                Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
+                Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
+            }
         }
 
 
@@ -636,7 +640,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void TestWithParam()
         {
             var client = new FhirClient(testEndpoint);
-            var res = client.Get("ValueSet/patient-contact-relationship/$validate-code?system=http://hl7.org/fhir/patient-contact-relationship&code=emergency");
+            var res = client.Get("ValueSet/v2-0131/$validate-code?system=http://hl7.org/fhir/v2/0131&code=ep");
             Assert.IsNotNull(res);
         }
 
@@ -795,6 +799,7 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             FhirClient client = new FhirClient(testEndpoint);
+            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(furore));
 
             var fe = client.Create(furore);
             Assert.IsNotNull(fe);
@@ -824,7 +829,7 @@ namespace Hl7.Fhir.Tests.Rest
                     status = e.RawResponse.StatusCode;
                 };
 
-            var pat = client.Read<Patient>("Patient/example");
+            var pat = client.Read<Patient>("Patient/glossy");
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(status);
             Assert.IsNotNull(body);
@@ -852,8 +857,8 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2", null));
             Assert.IsTrue(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2/_history/1", null));
 
-            Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2", "application/xml+fhir"));
-            Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2/_history/1", "application/json+fhir"));
+            Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2", "application/fhir+xml"));
+            Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/Binary/2/_history/1", "application/fhir+json"));
 
             Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/ValueSet/extensional-case-1/$expand?filter=f", null));
             Assert.IsFalse(HttpToEntryExtensions.IsBinaryResponse("http://server.org/fhir/ValueSet/extensional-case-1/$expand%3Ffilter=f", null));
@@ -867,12 +872,12 @@ namespace Hl7.Fhir.Tests.Rest
             var minimal = false;
             client.OnBeforeRequest += (object s, BeforeRequestEventArgs e) => e.RawRequest.Headers["Prefer"] = minimal ? "return=minimal" : "return=representation";
 
-            var result = client.Read<Patient>("Patient/example");
+            var result = client.Read<Patient>("Patient/glossy");
             Assert.IsNotNull(result);
             result.Id = null;
             result.Meta = null;
 
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
             minimal = false;
             var posted = client.Create(result);
             Assert.IsNotNull(posted, "Patient example not found");
@@ -881,7 +886,7 @@ namespace Hl7.Fhir.Tests.Rest
             posted = client.Create(result);
             Assert.IsNotNull(posted, "Did not return a resource, even when ReturnFullResource=true");
 
-            client.ReturnFullResource = false;
+            client.PreferredReturn = Prefer.ReturnMinimal;
             minimal = true;
             posted = client.Create(result);
             Assert.IsNull(posted);
@@ -916,13 +921,13 @@ namespace Hl7.Fhir.Tests.Rest
             var client = new FhirClient(testEndpoint);
             var result = client.Read<Patient>("Patient/example");
 
-            var orig = result.Name[0].FamilyElement[0].Value;
+            var orig = result.Name[0].FamilyElement.Value;
 
-            result.Name[0].FamilyElement[0].Value = "overwritten name";
+            result.Name[0].FamilyElement.Value = "overwritten name";
 
             result = client.Refresh(result);
 
-            Assert.AreEqual(orig, result.Name[0].FamilyElement[0].Value);
+            Assert.AreEqual(orig, result.Name[0].FamilyElement.Value);
         }
 
         [TestMethod]
@@ -974,7 +979,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
-            var client = new FhirClient("http://fhir2.healthintersections.com.au/open");  // an address that returns Status 404 with an OperationOutcome
+            var client = new FhirClient("http://test.fhir.org/r3");  // an address that returns Status 404 with an OperationOutcome
 
             try
             {
@@ -1019,18 +1024,22 @@ namespace Hl7.Fhir.Tests.Rest
             var testEndpointDSTU1 = new Uri("http://spark.furore.com/fhir");
             var testEndpointDSTU12 = new Uri("http://fhirtest.uhn.ca/baseDstu1");
             var testEndpointDSTU22 = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-            var testEndpointDSTU23 = new Uri("http://fhir3.healthintersections.com.au/open");
+            var testEndpointDSTU23 = new Uri("http://test.fhir.org/r3");
 
             var client = new FhirClient(testEndpointDSTU1);
             client.ParserSettings.AllowUnrecognizedEnums = true;
 
-            Conformance p;
+            CapabilityStatement p;
 
             try
             {
                 client = new FhirClient(testEndpointDSTU23, verifyFhirVersion: true);
                 client.ParserSettings.AllowUnrecognizedEnums = true;
-                p = client.Conformance();
+                p = client.CapabilityStatement();
+            }
+            catch (FhirOperationException)
+            {
+                //Client uses 1.0.1, server states 1.0.0-7104
             }
             catch (NotSupportedException)
             {
@@ -1039,7 +1048,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             client = new FhirClient(testEndpointDSTU23);
             client.ParserSettings.AllowUnrecognizedEnums = true;
-            // p = client.Conformance(); // The STU3 server conformance resource is now called CapabilityStatement.
+            p = client.CapabilityStatement();
 
             //client = new FhirClient(testEndpointDSTU2);
             //p = client.Read<Patient>("Patient/example");
@@ -1055,7 +1064,7 @@ namespace Hl7.Fhir.Tests.Rest
                        
             try
             {
-                p = client.Conformance();
+                p = client.CapabilityStatement();
                 Assert.Fail("Getting DSTU1 data using DSTU2 parsers should have failed");
             }
             catch (Exception)

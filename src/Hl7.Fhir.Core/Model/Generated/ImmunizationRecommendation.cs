@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -98,7 +99,6 @@ namespace Hl7.Fhir.Model
             /// Vaccine recommendation applies to
             /// </summary>
             [FhirElement("vaccineCode", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept VaccineCode
             {
@@ -109,9 +109,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _VaccineCode;
             
             /// <summary>
+            /// Disease to be immunized against
+            /// </summary>
+            [FhirElement("targetDisease", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept TargetDisease
+            {
+                get { return _TargetDisease; }
+                set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _TargetDisease;
+            
+            /// <summary>
             /// Recommended dose number
             /// </summary>
-            [FhirElement("doseNumber", InSummary=true, Order=60)]
+            [FhirElement("doseNumber", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt DoseNumberElement
             {
@@ -143,7 +156,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Vaccine administration status
             /// </summary>
-            [FhirElement("forecastStatus", InSummary=true, Order=70)]
+            [FhirElement("forecastStatus", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ForecastStatus
@@ -157,7 +170,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dates governing proposed immunization
             /// </summary>
-            [FhirElement("dateCriterion", Order=80)]
+            [FhirElement("dateCriterion", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> DateCriterion
@@ -171,7 +184,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Protocol used by recommendation
             /// </summary>
-            [FhirElement("protocol", Order=90)]
+            [FhirElement("protocol", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.ImmunizationRecommendation.ProtocolComponent Protocol
             {
@@ -184,7 +197,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Past immunizations supporting recommendation
             /// </summary>
-            [FhirElement("supportingImmunization", Order=100)]
+            [FhirElement("supportingImmunization", Order=110)]
             [CLSCompliant(false)]
 			[References("Immunization")]
             [Cardinality(Min=0,Max=-1)]
@@ -200,7 +213,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Patient observations supporting recommendation
             /// </summary>
-            [FhirElement("supportingPatientInformation", Order=110)]
+            [FhirElement("supportingPatientInformation", Order=120)]
             [CLSCompliant(false)]
 			[References("Observation","AllergyIntolerance")]
             [Cardinality(Min=0,Max=-1)]
@@ -222,6 +235,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                     if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
+                    if(TargetDisease != null) dest.TargetDisease = (Hl7.Fhir.Model.CodeableConcept)TargetDisease.DeepCopy();
                     if(DoseNumberElement != null) dest.DoseNumberElement = (Hl7.Fhir.Model.PositiveInt)DoseNumberElement.DeepCopy();
                     if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
                     if(DateCriterion != null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(DateCriterion.DeepCopy());
@@ -247,6 +261,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
                 if( !DeepComparable.Matches(VaccineCode, otherT.VaccineCode)) return false;
+                if( !DeepComparable.Matches(TargetDisease, otherT.TargetDisease)) return false;
                 if( !DeepComparable.Matches(DoseNumberElement, otherT.DoseNumberElement)) return false;
                 if( !DeepComparable.Matches(ForecastStatus, otherT.ForecastStatus)) return false;
                 if( !DeepComparable.Matches(DateCriterion, otherT.DateCriterion)) return false;
@@ -265,6 +280,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
                 if( !DeepComparable.IsExactly(VaccineCode, otherT.VaccineCode)) return false;
+                if( !DeepComparable.IsExactly(TargetDisease, otherT.TargetDisease)) return false;
                 if( !DeepComparable.IsExactly(DoseNumberElement, otherT.DoseNumberElement)) return false;
                 if( !DeepComparable.IsExactly(ForecastStatus, otherT.ForecastStatus)) return false;
                 if( !DeepComparable.IsExactly(DateCriterion, otherT.DateCriterion)) return false;
@@ -284,6 +300,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (DateElement != null) yield return DateElement;
                     if (VaccineCode != null) yield return VaccineCode;
+                    if (TargetDisease != null) yield return TargetDisease;
                     if (DoseNumberElement != null) yield return DoseNumberElement;
                     if (ForecastStatus != null) yield return ForecastStatus;
                     foreach (var elem in DateCriterion) { if (elem != null) yield return elem; }
@@ -301,6 +318,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (DateElement != null) yield return new ElementValue("date", false, DateElement);
                     if (VaccineCode != null) yield return new ElementValue("vaccineCode", false, VaccineCode);
+                    if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
                     if (DoseNumberElement != null) yield return new ElementValue("doseNumber", false, DoseNumberElement);
                     if (ForecastStatus != null) yield return new ElementValue("forecastStatus", false, ForecastStatus);
                     foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", true, elem); }
@@ -451,13 +469,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("doseSequence", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer DoseSequenceElement
+            public Hl7.Fhir.Model.PositiveInt DoseSequenceElement
             {
                 get { return _DoseSequenceElement; }
                 set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _DoseSequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _DoseSequenceElement;
             
             /// <summary>
             /// Dose number within sequence
@@ -473,7 +491,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         DoseSequenceElement = null; 
                     else
-                        DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
+                        DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseSequence");
                 }
             }
@@ -564,7 +582,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.Integer)DoseSequenceElement.DeepCopy();
+                    if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt)DoseSequenceElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
@@ -683,10 +701,20 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> _Recommendation;
         
 
+        public static ElementDefinition.ConstraintComponent ImmunizationRecommendation_IMR_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "recommendation.all(vaccineCode.exists() or targetDisease.exists())",
+            Key = "imr-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "One of vaccineCode or targetDisease SHALL be present",
+            Xpath = "exists(f:vaccineCode) or exists(f:targetDisease)"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(ImmunizationRecommendation_IMR_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -17,6 +17,7 @@
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
+
   <ItemGroup>
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
       <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
@@ -27,25 +28,26 @@
       <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
       <PackageReference Include="System.AppContext" Version="4.3.0" />
   </ItemGroup>
+
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
+
   <ItemGroup>
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
   <!--
   <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Core.Tests\TestDataHelper.cs" Link="TestDataHelper.cs" />
     <Compile Include="Source\Summary\ArtifactSummaryProperties.cs" />
   </ItemGroup>
+
   -->
   <ItemGroup>
-    <Content Include="..\Hl7.Fhir.Specification\data\profiles-others.xml" Link="TestData\snapshot-test\WMR\profiles-others.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Hl7.Fhir.Specification\data\profiles-resources.xml" Link="TestData\snapshot-test\WMR\profiles-resources.xml">
+    <Content Include="..\Hl7.Fhir.Specification\data\profiles-resources.xml" Link="TestData\snapshot-test\profiles-resources.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-types.xml" Link="TestData\snapshot-test\profiles-types.xml">

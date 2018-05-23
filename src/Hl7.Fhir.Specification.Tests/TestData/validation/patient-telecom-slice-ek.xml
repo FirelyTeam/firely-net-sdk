@@ -5,14 +5,15 @@
 	<description value="Slice Patient.telecom by multiple discriminators - based on an example by Chris Grenz." />
 	<fhirVersion value="1.0.2" />
 	<kind value="resource" />
-	<constrainedType value="Patient" />
+	<type value="Patient" />
 	<abstract value="false" />
-	<base value="http://hl7.org/fhir/StructureDefinition/Patient" />	
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />	
+  <derivation value="constraint" />
 	<differential>
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator value="system" />
+				<discriminator><type value="value" /><path value="system" /></discriminator>
 				<ordered value="true" />
 				<rules value="open" />
 			</slicing>
@@ -21,7 +22,7 @@
 	    <!-- First, slice into a PHONE, use constrained to work -->
 	    <element>
 	      <path value="Patient.telecom" />
-	      <name value="phone" />
+	      <sliceName value="phone" />
 	    </element>
 
 	    <element>
@@ -38,7 +39,7 @@
 	    <!-- Then, slice into OTHER, make sure "use" cannot be used -->
 	    <element>
 	      <path value="Patient.telecom" />
-	      <name value="other" />
+	      <sliceName value="other" />
 	    </element>
 
 	    <element>

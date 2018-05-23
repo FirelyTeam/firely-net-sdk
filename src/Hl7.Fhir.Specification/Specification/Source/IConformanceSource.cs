@@ -24,27 +24,27 @@ namespace Hl7.Fhir.Specification.Source
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
 
         /// <summary>
-        /// Find ValueSets that define codes for a Codesystem with the given system uri
+        /// Find a <see cref="CodeSystem"/> resource by a <see cref="ValueSet"/> canonical url that contains all codes from that codesystem.
         /// </summary>
-        /// <param name="system"></param>
-        /// <returns></returns>
-        ValueSet FindValueSetBySystem(string system);
+        /// <param name="valueSetUri">The canonical uri of a <see cref="ValueSet"/> resource.</param>
+        /// <returns>A <see cref="CodeSystem"/> resource, or <c>null</c>.</returns>
+        /// <remarks>
+        /// It is very common for valuesets to represent all codes from a specific/smaller code system.
+        /// These are indicated by he CodeSystem.valueSet element, which is searched here.
+        /// </remarks>
+        CodeSystem FindCodeSystemByValueSet(string valueSetUri);
 
-        /// <summary>
-        /// Find ConceptMaps which map from the given sourceUri to the given targetUri
-        /// </summary>
+        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
         /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
         /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
-        /// <returns></returns>
+        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
         /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
         IEnumerable<ConceptMap> FindConceptMaps(string sourceUri=null, string targetUri=null);
 
-        /// <summary>
-        /// Finds a NamingSystem resource by matching any of a system's UniqueIds
-        /// </summary>
-        /// <param name="uniqueid"></param>
-        /// <returns></returns>
-        NamingSystem FindNamingSystem(string uniqueid);
+        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
+        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
+        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
+        NamingSystem FindNamingSystem(string uniqueId);
     }
 
 }

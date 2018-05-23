@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var srch = new SearchParams()
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpointSupportingSearchUsingPost)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var srch = new SearchParams()
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var srch = new SearchParams()
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpointSupportingSearchUsingPost)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var srch = new SearchParams()
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var srchParams = new SearchParams()
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpointSupportingSearchUsingPost)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var srchParams = new SearchParams()
@@ -240,9 +240,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
-
+            
             var result1 = await client.SearchAsync<Patient>(new []{"family=clark"});
 
             Assert.IsTrue(result1.Entry.Count >= 1);
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpointSupportingSearchUsingPost)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Chalmers" }, pageSize:5);
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" },null,1);
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             var client = new FhirClient(_endpointSupportingSearchUsingPost)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Chalmers" }, null, 1);

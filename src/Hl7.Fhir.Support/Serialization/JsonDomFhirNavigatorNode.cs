@@ -144,8 +144,10 @@ namespace Hl7.Fhir.Serialization
 
             foreach(var child in children)
             {
-                if (child.Key == JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME) continue;
-                //if (isDeferred(current)) continue;
+                // Very specific exception for STU3: Claim.payee.resourceType should not be seen as a regular "resourceType" metadata element
+                // A better (and less specific fix) would be to only look for resourceType on a root object, but I don't have that
+                // kind of context information at hand here.
+                if (child.Key == JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME && this.Name != "payee") continue;                
                 if (processed.Contains(child.Key)) continue;
 
                 (JProperty main, JProperty shadow) = getNextElementPair(child);

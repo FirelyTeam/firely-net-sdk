@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,53 +62,83 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("s", "http://unitsofmeasure.org"), Description("second")]
+            [EnumLiteral("s", "http://unitsofmeasure.org"), Description("秒")]
             S,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("min", "http://unitsofmeasure.org"), Description("minute")]
+            [EnumLiteral("min", "http://unitsofmeasure.org"), Description("分钟")]
             Min,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("h", "http://unitsofmeasure.org"), Description("hour")]
+            [EnumLiteral("h", "http://unitsofmeasure.org"), Description("小时")]
             H,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("d", "http://unitsofmeasure.org"), Description("day")]
+            [EnumLiteral("d", "http://unitsofmeasure.org"), Description("天")]
             D,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("wk", "http://unitsofmeasure.org"), Description("week")]
+            [EnumLiteral("wk", "http://unitsofmeasure.org"), Description("星期")]
             Wk,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("mo", "http://unitsofmeasure.org"), Description("month")]
+            [EnumLiteral("mo", "http://unitsofmeasure.org"), Description("月")]
             Mo,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("a", "http://unitsofmeasure.org"), Description("year")]
+            [EnumLiteral("a", "http://unitsofmeasure.org"), Description("年")]
             A,
         }
 
         /// <summary>
-        /// Real world event that the relating to the schedule.
+        /// Real world event relating to the schedule.
         /// (url: http://hl7.org/fhir/ValueSet/event-timing)
         /// </summary>
         [FhirEnumeration("EventTiming")]
         public enum EventTiming
         {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("MORN", "http://hl7.org/fhir/event-timing"), Description("Morning")]
+            MORN,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("AFT", "http://hl7.org/fhir/event-timing"), Description("Afternoon")]
+            AFT,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("EVE", "http://hl7.org/fhir/event-timing"), Description("Evening")]
+            EVE,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("NIGHT", "http://hl7.org/fhir/event-timing"), Description("Night")]
+            NIGHT,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("PHS", "http://hl7.org/fhir/event-timing"), Description("After Sleep")]
+            PHS,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
@@ -207,7 +237,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("bounds", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
+            [AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Bounds
             {
@@ -250,9 +280,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Maximum number of times to repeat
+            /// </summary>
+            [FhirElement("countMax", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Integer CountMaxElement
+            {
+                get { return _CountMaxElement; }
+                set { _CountMaxElement = value; OnPropertyChanged("CountMaxElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Integer _CountMaxElement;
+            
+            /// <summary>
+            /// Maximum number of times to repeat
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? CountMax
+            {
+                get { return CountMaxElement != null ? CountMaxElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                      CountMaxElement = null; 
+                    else
+                      CountMaxElement = new Hl7.Fhir.Model.Integer(value);
+                    OnPropertyChanged("CountMax");
+                }
+            }
+            
+            /// <summary>
             /// How long when it happens
             /// </summary>
-            [FhirElement("duration", InSummary=true, Order=60)]
+            [FhirElement("duration", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DurationElement
             {
@@ -284,7 +346,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How long when it happens (Max)
             /// </summary>
-            [FhirElement("durationMax", InSummary=true, Order=70)]
+            [FhirElement("durationMax", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DurationMaxElement
             {
@@ -316,15 +378,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("durationUnits", InSummary=true, Order=80)]
+            [FhirElement("durationUnit", InSummary=true, Order=90)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> DurationUnitsElement
+            public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> DurationUnitElement
             {
-                get { return _DurationUnitsElement; }
-                set { _DurationUnitsElement = value; OnPropertyChanged("DurationUnitsElement"); }
+                get { return _DurationUnitElement; }
+                set { _DurationUnitElement = value; OnPropertyChanged("DurationUnitElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Timing.UnitsOfTime> _DurationUnitsElement;
+            private Code<Hl7.Fhir.Model.Timing.UnitsOfTime> _DurationUnitElement;
             
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
@@ -332,23 +394,23 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Timing.UnitsOfTime? DurationUnits
+            public Hl7.Fhir.Model.Timing.UnitsOfTime? DurationUnit
             {
-                get { return DurationUnitsElement != null ? DurationUnitsElement.Value : null; }
+                get { return DurationUnitElement != null ? DurationUnitElement.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                      DurationUnitsElement = null; 
+                      DurationUnitElement = null; 
                     else
-                      DurationUnitsElement = new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
-                    OnPropertyChanged("DurationUnits");
+                      DurationUnitElement = new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
+                    OnPropertyChanged("DurationUnit");
                 }
             }
             
             /// <summary>
             /// Event occurs frequency times per period
             /// </summary>
-            [FhirElement("frequency", InSummary=true, Order=90)]
+            [FhirElement("frequency", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Integer FrequencyElement
             {
@@ -380,7 +442,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Event occurs up to frequencyMax times per period
             /// </summary>
-            [FhirElement("frequencyMax", InSummary=true, Order=100)]
+            [FhirElement("frequencyMax", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Integer FrequencyMaxElement
             {
@@ -412,7 +474,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Event occurs frequency times per period
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=110)]
+            [FhirElement("period", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PeriodElement
             {
@@ -444,7 +506,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Upper limit of period (3-4 hours)
             /// </summary>
-            [FhirElement("periodMax", InSummary=true, Order=120)]
+            [FhirElement("periodMax", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PeriodMaxElement
             {
@@ -476,15 +538,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("periodUnits", InSummary=true, Order=130)]
+            [FhirElement("periodUnit", InSummary=true, Order=140)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> PeriodUnitsElement
+            public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> PeriodUnitElement
             {
-                get { return _PeriodUnitsElement; }
-                set { _PeriodUnitsElement = value; OnPropertyChanged("PeriodUnitsElement"); }
+                get { return _PeriodUnitElement; }
+                set { _PeriodUnitElement = value; OnPropertyChanged("PeriodUnitElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Timing.UnitsOfTime> _PeriodUnitsElement;
+            private Code<Hl7.Fhir.Model.Timing.UnitsOfTime> _PeriodUnitElement;
             
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
@@ -492,31 +554,98 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Timing.UnitsOfTime? PeriodUnits
+            public Hl7.Fhir.Model.Timing.UnitsOfTime? PeriodUnit
             {
-                get { return PeriodUnitsElement != null ? PeriodUnitsElement.Value : null; }
+                get { return PeriodUnitElement != null ? PeriodUnitElement.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                      PeriodUnitsElement = null; 
+                      PeriodUnitElement = null; 
                     else
-                      PeriodUnitsElement = new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
-                    OnPropertyChanged("PeriodUnits");
+                      PeriodUnitElement = new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
+                    OnPropertyChanged("PeriodUnit");
+                }
+            }
+            
+            /// <summary>
+            /// mon | tue | wed | thu | fri | sat | sun
+            /// </summary>
+            [FhirElement("dayOfWeek", InSummary=true, Order=150)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
+            {
+                get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
+                set { _DayOfWeekElement = value; OnPropertyChanged("DayOfWeekElement"); }
+            }
+            
+            private List<Code<Hl7.Fhir.Model.DaysOfWeek>> _DayOfWeekElement;
+            
+            /// <summary>
+            /// mon | tue | wed | thu | fri | sat | sun
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DayOfWeek
+            {
+                get { return DayOfWeekElement != null ? DayOfWeekElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                      DayOfWeekElement = null; 
+                    else
+                      DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+                    OnPropertyChanged("DayOfWeek");
+                }
+            }
+            
+            /// <summary>
+            /// Time of day for action
+            /// </summary>
+            [FhirElement("timeOfDay", InSummary=true, Order=160)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Time> TimeOfDayElement
+            {
+                get { if(_TimeOfDayElement==null) _TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(); return _TimeOfDayElement; }
+                set { _TimeOfDayElement = value; OnPropertyChanged("TimeOfDayElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Time> _TimeOfDayElement;
+            
+            /// <summary>
+            /// Time of day for action
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> TimeOfDay
+            {
+                get { return TimeOfDayElement != null ? TimeOfDayElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                      TimeOfDayElement = null; 
+                    else
+                      TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(value.Select(elem=>new Hl7.Fhir.Model.Time(elem)));
+                    OnPropertyChanged("TimeOfDay");
                 }
             }
             
             /// <summary>
             /// Regular life events the event is tied to
             /// </summary>
-            [FhirElement("when", InSummary=true, Order=140)]
+            [FhirElement("when", InSummary=true, Order=170)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Timing.EventTiming> WhenElement
+            public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
             {
-                get { return _WhenElement; }
+                get { if(_WhenElement==null) _WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
                 set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Timing.EventTiming> _WhenElement;
+            private List<Code<Hl7.Fhir.Model.Timing.EventTiming>> _WhenElement;
             
             /// <summary>
             /// Regular life events the event is tied to
@@ -524,16 +653,48 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Timing.EventTiming? When
+            public IEnumerable<Hl7.Fhir.Model.Timing.EventTiming?> When
             {
-                get { return WhenElement != null ? WhenElement.Value : null; }
+                get { return WhenElement != null ? WhenElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                      WhenElement = null; 
+                    else
+                      WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
+                    OnPropertyChanged("When");
+                }
+            }
+            
+            /// <summary>
+            /// Minutes from event (before or after)
+            /// </summary>
+            [FhirElement("offset", InSummary=true, Order=180)]
+            [DataMember]
+            public Hl7.Fhir.Model.UnsignedInt OffsetElement
+            {
+                get { return _OffsetElement; }
+                set { _OffsetElement = value; OnPropertyChanged("OffsetElement"); }
+            }
+            
+            private Hl7.Fhir.Model.UnsignedInt _OffsetElement;
+            
+            /// <summary>
+            /// Minutes from event (before or after)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Offset
+            {
+                get { return OffsetElement != null ? OffsetElement.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                      WhenElement = null; 
+                      OffsetElement = null; 
                     else
-                      WhenElement = new Code<Hl7.Fhir.Model.Timing.EventTiming>(value);
-                    OnPropertyChanged("When");
+                      OffsetElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                    OnPropertyChanged("Offset");
                 }
             }
             
@@ -546,15 +707,19 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Bounds != null) dest.Bounds = (Hl7.Fhir.Model.Element)Bounds.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
+                    if(CountMaxElement != null) dest.CountMaxElement = (Hl7.Fhir.Model.Integer)CountMaxElement.DeepCopy();
                     if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)DurationElement.DeepCopy();
                     if(DurationMaxElement != null) dest.DurationMaxElement = (Hl7.Fhir.Model.FhirDecimal)DurationMaxElement.DeepCopy();
-                    if(DurationUnitsElement != null) dest.DurationUnitsElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)DurationUnitsElement.DeepCopy();
+                    if(DurationUnitElement != null) dest.DurationUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)DurationUnitElement.DeepCopy();
                     if(FrequencyElement != null) dest.FrequencyElement = (Hl7.Fhir.Model.Integer)FrequencyElement.DeepCopy();
                     if(FrequencyMaxElement != null) dest.FrequencyMaxElement = (Hl7.Fhir.Model.Integer)FrequencyMaxElement.DeepCopy();
                     if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
                     if(PeriodMaxElement != null) dest.PeriodMaxElement = (Hl7.Fhir.Model.FhirDecimal)PeriodMaxElement.DeepCopy();
-                    if(PeriodUnitsElement != null) dest.PeriodUnitsElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitsElement.DeepCopy();
-                    if(WhenElement != null) dest.WhenElement = (Code<Hl7.Fhir.Model.Timing.EventTiming>)WhenElement.DeepCopy();
+                    if(PeriodUnitElement != null) dest.PeriodUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitElement.DeepCopy();
+                    if(DayOfWeekElement != null) dest.DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DayOfWeekElement.DeepCopy());
+                    if(TimeOfDayElement != null) dest.TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(TimeOfDayElement.DeepCopy());
+                    if(WhenElement != null) dest.WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(WhenElement.DeepCopy());
+                    if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.UnsignedInt)OffsetElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -574,15 +739,19 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Bounds, otherT.Bounds)) return false;
                 if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
+                if( !DeepComparable.Matches(CountMaxElement, otherT.CountMaxElement)) return false;
                 if( !DeepComparable.Matches(DurationElement, otherT.DurationElement)) return false;
                 if( !DeepComparable.Matches(DurationMaxElement, otherT.DurationMaxElement)) return false;
-                if( !DeepComparable.Matches(DurationUnitsElement, otherT.DurationUnitsElement)) return false;
+                if( !DeepComparable.Matches(DurationUnitElement, otherT.DurationUnitElement)) return false;
                 if( !DeepComparable.Matches(FrequencyElement, otherT.FrequencyElement)) return false;
                 if( !DeepComparable.Matches(FrequencyMaxElement, otherT.FrequencyMaxElement)) return false;
                 if( !DeepComparable.Matches(PeriodElement, otherT.PeriodElement)) return false;
                 if( !DeepComparable.Matches(PeriodMaxElement, otherT.PeriodMaxElement)) return false;
-                if( !DeepComparable.Matches(PeriodUnitsElement, otherT.PeriodUnitsElement)) return false;
+                if( !DeepComparable.Matches(PeriodUnitElement, otherT.PeriodUnitElement)) return false;
+                if( !DeepComparable.Matches(DayOfWeekElement, otherT.DayOfWeekElement)) return false;
+                if( !DeepComparable.Matches(TimeOfDayElement, otherT.TimeOfDayElement)) return false;
                 if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
+                if( !DeepComparable.Matches(OffsetElement, otherT.OffsetElement)) return false;
                 
                 return true;
             }
@@ -595,15 +764,19 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Bounds, otherT.Bounds)) return false;
                 if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
+                if( !DeepComparable.IsExactly(CountMaxElement, otherT.CountMaxElement)) return false;
                 if( !DeepComparable.IsExactly(DurationElement, otherT.DurationElement)) return false;
                 if( !DeepComparable.IsExactly(DurationMaxElement, otherT.DurationMaxElement)) return false;
-                if( !DeepComparable.IsExactly(DurationUnitsElement, otherT.DurationUnitsElement)) return false;
+                if( !DeepComparable.IsExactly(DurationUnitElement, otherT.DurationUnitElement)) return false;
                 if( !DeepComparable.IsExactly(FrequencyElement, otherT.FrequencyElement)) return false;
                 if( !DeepComparable.IsExactly(FrequencyMaxElement, otherT.FrequencyMaxElement)) return false;
                 if( !DeepComparable.IsExactly(PeriodElement, otherT.PeriodElement)) return false;
                 if( !DeepComparable.IsExactly(PeriodMaxElement, otherT.PeriodMaxElement)) return false;
-                if( !DeepComparable.IsExactly(PeriodUnitsElement, otherT.PeriodUnitsElement)) return false;
+                if( !DeepComparable.IsExactly(PeriodUnitElement, otherT.PeriodUnitElement)) return false;
+                if( !DeepComparable.IsExactly(DayOfWeekElement, otherT.DayOfWeekElement)) return false;
+                if( !DeepComparable.IsExactly(TimeOfDayElement, otherT.TimeOfDayElement)) return false;
                 if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
+                if( !DeepComparable.IsExactly(OffsetElement, otherT.OffsetElement)) return false;
                 
                 return true;
             }
@@ -616,15 +789,19 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Bounds != null) yield return Bounds;
                     if (CountElement != null) yield return CountElement;
+                    if (CountMaxElement != null) yield return CountMaxElement;
                     if (DurationElement != null) yield return DurationElement;
                     if (DurationMaxElement != null) yield return DurationMaxElement;
-                    if (DurationUnitsElement != null) yield return DurationUnitsElement;
+                    if (DurationUnitElement != null) yield return DurationUnitElement;
                     if (FrequencyElement != null) yield return FrequencyElement;
                     if (FrequencyMaxElement != null) yield return FrequencyMaxElement;
                     if (PeriodElement != null) yield return PeriodElement;
                     if (PeriodMaxElement != null) yield return PeriodMaxElement;
-                    if (PeriodUnitsElement != null) yield return PeriodUnitsElement;
-                    if (WhenElement != null) yield return WhenElement;
+                    if (PeriodUnitElement != null) yield return PeriodUnitElement;
+                    foreach (var elem in DayOfWeekElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in TimeOfDayElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in WhenElement) { if (elem != null) yield return elem; }
+                    if (OffsetElement != null) yield return OffsetElement;
                 }
             }
 
@@ -636,15 +813,19 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item; 
                     if (Bounds != null) yield return new ElementValue("bounds", false, Bounds);
                     if (CountElement != null) yield return new ElementValue("count", false, CountElement);
+                    if (CountMaxElement != null) yield return new ElementValue("countMax", false, CountMaxElement);
                     if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
                     if (DurationMaxElement != null) yield return new ElementValue("durationMax", false, DurationMaxElement);
-                    if (DurationUnitsElement != null) yield return new ElementValue("durationUnits", false, DurationUnitsElement);
+                    if (DurationUnitElement != null) yield return new ElementValue("durationUnit", false, DurationUnitElement);
                     if (FrequencyElement != null) yield return new ElementValue("frequency", false, FrequencyElement);
                     if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", false, FrequencyMaxElement);
                     if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
                     if (PeriodMaxElement != null) yield return new ElementValue("periodMax", false, PeriodMaxElement);
-                    if (PeriodUnitsElement != null) yield return new ElementValue("periodUnits", false, PeriodUnitsElement);
-                    if (WhenElement != null) yield return new ElementValue("when", false, WhenElement);
+                    if (PeriodUnitElement != null) yield return new ElementValue("periodUnit", false, PeriodUnitElement);
+                    foreach (var elem in DayOfWeekElement) { if (elem != null) yield return new ElementValue("dayOfWeek", true, elem); }
+                    foreach (var elem in TimeOfDayElement) { if (elem != null) yield return new ElementValue("timeOfDay", true, elem); }
+                    foreach (var elem in WhenElement) { if (elem != null) yield return new ElementValue("when", true, elem); }
+                    if (OffsetElement != null) yield return new ElementValue("offset", false, OffsetElement);
  
                 } 
             } 
@@ -697,7 +878,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Timing.RepeatComponent _Repeat;
         
         /// <summary>
-        /// QD | QOD | Q4H | Q6H | BID | TID | QID | AM | PM +
+        /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +
         /// </summary>
         [FhirElement("code", InSummary=true, Order=50)]
         [DataMember]

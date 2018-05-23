@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -58,71 +59,71 @@ namespace Hl7.Fhir.Model
         /// Different measurement principle supported by the device.
         /// (url: http://hl7.org/fhir/ValueSet/measurement-principle)
         /// </summary>
-        [FhirEnumeration("Measmnt_Principle")]
-        public enum Measmnt_Principle
+        [FhirEnumeration("MeasmntPrinciple")]
+        public enum MeasmntPrinciple
         {
             /// <summary>
-            /// Measurement principle isn't in the list.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("other", "http://hl7.org/fhir/measurement-principle"), Description("MSP Other")]
             Other,
             /// <summary>
-            /// Measurement is done using the chemical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("chemical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Chemical")]
             Chemical,
             /// <summary>
-            /// Measurement is done using the electrical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("electrical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Electrical")]
             Electrical,
             /// <summary>
-            /// Measurement is done using the impedance principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("impedance", "http://hl7.org/fhir/measurement-principle"), Description("MSP Impedance")]
             Impedance,
             /// <summary>
-            /// Measurement is done using the nuclear principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("nuclear", "http://hl7.org/fhir/measurement-principle"), Description("MSP Nuclear")]
             Nuclear,
             /// <summary>
-            /// Measurement is done using the optical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("optical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Optical")]
             Optical,
             /// <summary>
-            /// Measurement is done using the thermal principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("thermal", "http://hl7.org/fhir/measurement-principle"), Description("MSP Thermal")]
             Thermal,
             /// <summary>
-            /// Measurement is done using the biological principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("biological", "http://hl7.org/fhir/measurement-principle"), Description("MSP Biological")]
             Biological,
             /// <summary>
-            /// Measurement is done using the mechanical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("mechanical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Mechanical")]
             Mechanical,
             /// <summary>
-            /// Measurement is done using the acoustical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("acoustical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Acoustical")]
             Acoustical,
             /// <summary>
-            /// Measurement is done using the manual principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("manual", "http://hl7.org/fhir/measurement-principle"), Description("MSP Manual")]
@@ -137,7 +138,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ProductionSpecificationComponent"; } }
             
             /// <summary>
-            /// Specification type
+            /// Type or kind of production specification, for example serial number or software revision
             /// </summary>
             [FhirElement("specType", InSummary=true, Order=40)]
             [DataMember]
@@ -271,23 +272,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// What kind of component it is
-        /// </summary>
-        [FhirElement("type", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
-        {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Type;
-        
-        /// <summary>
         /// Instance id assigned by the software stack
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -299,10 +286,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
+        /// What kind of component it is
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Type
+        {
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Type;
+        
+        /// <summary>
         /// Recent system change timestamp
         /// </summary>
         [FhirElement("lastSystemChange", InSummary=true, Order=110)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant LastSystemChangeElement
         {
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// A source device of this component
+        /// Top-level device resource link
         /// </summary>
         [FhirElement("source", InSummary=true, Order=120)]
         [CLSCompliant(false)]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
-        /// Component operational status
+        /// Current operational status of the component, for example On, Off or Standby
         /// </summary>
         [FhirElement("operationalStatus", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
@@ -393,13 +393,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle> MeasurementPrincipleElement
+        public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
         {
             get { return _MeasurementPrincipleElement; }
             set { _MeasurementPrincipleElement = value; OnPropertyChanged("MeasurementPrincipleElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle> _MeasurementPrincipleElement;
+        private Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> _MeasurementPrincipleElement;
         
         /// <summary>
         /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle? MeasurementPrinciple
+        public Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple? MeasurementPrinciple
         {
             get { return MeasurementPrincipleElement != null ? MeasurementPrincipleElement.Value : null; }
             set
@@ -415,13 +415,13 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   MeasurementPrincipleElement = null; 
                 else
-                  MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>(value);
+                  MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);
                 OnPropertyChanged("MeasurementPrinciple");
             }
         }
         
         /// <summary>
-        /// Production specification of the component
+        /// Specification details such as Component Revisions, or Serial Numbers
         /// </summary>
         [FhirElement("productionSpecification", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
@@ -461,14 +461,14 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(LastSystemChangeElement != null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)LastSystemChangeElement.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 if(OperationalStatus != null) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopy());
                 if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopy();
-                if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>)MeasurementPrincipleElement.DeepCopy();
+                if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)MeasurementPrincipleElement.DeepCopy();
                 if(ProductionSpecification != null) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(ProductionSpecification.DeepCopy());
                 if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopy();
                 return dest;
@@ -488,8 +488,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(LastSystemChangeElement, otherT.LastSystemChangeElement)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
@@ -508,8 +508,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(LastSystemChangeElement, otherT.LastSystemChangeElement)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
@@ -528,8 +528,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Type != null) yield return Type;
 				if (Identifier != null) yield return Identifier;
+				if (Type != null) yield return Type;
 				if (LastSystemChangeElement != null) yield return LastSystemChangeElement;
 				if (Source != null) yield return Source;
 				if (Parent != null) yield return Parent;
@@ -547,8 +547,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Type != null) yield return new ElementValue("type", false, Type);
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (Type != null) yield return new ElementValue("type", false, Type);
                 if (LastSystemChangeElement != null) yield return new ElementValue("lastSystemChange", false, LastSystemChangeElement);
                 if (Source != null) yield return new ElementValue("source", false, Source);
                 if (Parent != null) yield return new ElementValue("parent", false, Parent);

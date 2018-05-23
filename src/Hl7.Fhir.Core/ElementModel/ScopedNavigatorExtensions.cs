@@ -111,9 +111,9 @@ namespace Hl7.Fhir.ElementModel
             // First, get the url to fetch from the focus
             string url = null;
 
-            if (nav.Type == FHIRDefinedType.String.GetLiteral() && nav.Value is string s)
+            if (nav.Type == FHIRAllTypes.String.GetLiteral() && nav.Value is string s)
                 url = s;
-            else if (nav.Type == FHIRDefinedType.Reference.GetLiteral())
+            else if (nav.Type == FHIRAllTypes.Reference.GetLiteral())
                 url = nav.ParseResourceReference()?.Reference;
 
             if (url == null) return default(T);   // nothing found to resolve

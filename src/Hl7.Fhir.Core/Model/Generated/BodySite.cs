@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,25 +56,9 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "BodySite"; } }
         
         /// <summary>
-        /// Patient
-        /// </summary>
-        [FhirElement("patient", InSummary=true, Order=90)]
-        [CLSCompliant(false)]
-		[References("Patient")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
-        {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
         /// Bodysite identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -83,6 +68,38 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
+        /// Whether this body site record is in active use
+        /// </summary>
+        [FhirElement("active", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
+        {
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+        
+        /// <summary>
+        /// Whether this body site record is in active use
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
+        {
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
         
         /// <summary>
         /// Named anatomical location
@@ -100,19 +117,19 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Modification to location code
         /// </summary>
-        [FhirElement("modifier", Order=120)]
+        [FhirElement("qualifier", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Modifier
+        public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
         {
-            get { if(_Modifier==null) _Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Modifier; }
-            set { _Modifier = value; OnPropertyChanged("Modifier"); }
+            get { if(_Qualifier==null) _Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Qualifier; }
+            set { _Qualifier = value; OnPropertyChanged("Qualifier"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Qualifier;
         
         /// <summary>
-        /// The Description of anatomical location
+        /// Anatomical location description
         /// </summary>
         [FhirElement("description", InSummary=true, Order=130)]
         [DataMember]
@@ -125,7 +142,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// The Description of anatomical location
+        /// Anatomical location description
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -157,6 +174,22 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Attachment> _Image;
         
+        /// <summary>
+        /// Who this is about
+        /// </summary>
+        [FhirElement("patient", InSummary=true, Order=150)]
+        [CLSCompliant(false)]
+		[References("Patient")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Patient
+        {
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Patient;
+        
 
         public override void AddDefaultConstraints()
         {
@@ -171,12 +204,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
+                if(Qualifier != null) dest.Qualifier = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifier.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Image != null) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopy());
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 return dest;
             }
             else
@@ -194,12 +228,13 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-            if( !DeepComparable.Matches(Modifier, otherT.Modifier)) return false;
+            if( !DeepComparable.Matches(Qualifier, otherT.Qualifier)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Image, otherT.Image)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             
             return true;
         }
@@ -210,12 +245,13 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-            if( !DeepComparable.IsExactly(Modifier, otherT.Modifier)) return false;
+            if( !DeepComparable.IsExactly(Qualifier, otherT.Qualifier)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Image, otherT.Image)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             
             return true;
         }
@@ -226,12 +262,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Patient != null) yield return Patient;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
 				if (Code != null) yield return Code;
-				foreach (var elem in Modifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Qualifier) { if (elem != null) yield return elem; }
 				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in Image) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
             }
         }
 
@@ -241,12 +278,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
                 if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in Modifier) { if (elem != null) yield return new ElementValue("modifier", true, elem); }
+                foreach (var elem in Qualifier) { if (elem != null) yield return new ElementValue("qualifier", true, elem); }
                 if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                 foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", true, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
             }
         }
 

@@ -75,9 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
             Assert.AreEqual(@"http://example.org/ValueSet/SectionTitles", summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("MainBundle Section title codes", summary.GetConformanceName());
-            Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
-
-            Assert.IsNotNull(summary.GetValueSetSystem());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
         }
 
         [TestMethod]
@@ -107,17 +105,29 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
                 Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
                 Assert.IsNotNull(summary.GetConformanceName());
-                Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+                Assert.IsNotNull(summary.GetConformanceStatus());
+                Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
 
                 //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
                 // StructureDefinition properties
+
                 Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
                 Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
 
-                Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.GetStructureDefinitionKind());
-                // If this is a constraining StructDef, then Base should also be specified
-                Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
+                // For profiles-types, we expect Kind = ComplexType | PrimitiveType
+                Assert.IsNotNull(summary.GetStructureDefinitionKind());
+                Assert.IsTrue(
+                    summary.GetStructureDefinitionKind() == StructureDefinition.StructureDefinitionKind.ComplexType.GetLiteral()
+                    ||
+                    summary.GetStructureDefinitionKind() == StructureDefinition.StructureDefinitionKind.PrimitiveType.GetLiteral()
+                );
+
+                Assert.IsNotNull(summary.GetStructureDefinitionType());
+                // If this is a specializing StructDef, then BaseDefinition should also be specified
+                Assert.IsTrue(
+                    summary.GetStructureDefinitionDerivation() != StructureDefinition.TypeDerivationRule.Specialization.GetLiteral()
+                    || summary.GetStructureDefinitionBaseDefinition() != null);
             }
         }
 
@@ -149,7 +159,9 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
                     Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
                     Assert.IsNotNull(summary.GetConformanceName());
-                    Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+                    Assert.IsNotNull(summary.GetConformanceStatus());
+                    Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+
 
                     //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
@@ -157,12 +169,32 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
                     Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
 
-                    Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Resource.GetLiteral(), summary.GetStructureDefinitionKind());
-                    // If this is a constraining StructDef, then Base should also be specified
-                    Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
+                    // For profiles-resources, we expect Kind = Resource | Logical
+                    var kind = summary.GetStructureDefinitionKind();
+                    Assert.IsNotNull(kind);
+                    Assert.IsTrue(
+                        kind == StructureDefinition.StructureDefinitionKind.Resource.GetLiteral()
+                        ||
+                        // e.g. for MetadataResource
+                        kind == StructureDefinition.StructureDefinitionKind.Logical.GetLiteral()
+                    );
 
-                    // [WMR 20171218] Maturity Level extension
-                    Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
+                    Assert.IsNotNull(summary.GetStructureDefinitionType());
+
+                    // If this is a specializing StructDef, then BaseDefinition should also be specified
+                    var derivation = summary.GetStructureDefinitionDerivation();
+                    if (derivation != null)
+                    {
+                        // Base definition should always be specified, except for root types such as Resource
+                        Assert.IsNotNull(summary.GetStructureDefinitionBaseDefinition());
+                    }
+
+                    // [WMR 20171219] Core extensions
+                    if (kind == StructureDefinition.StructureDefinitionKind.Resource.GetLiteral())
+                    {
+                        Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
+                        Assert.IsNotNull(summary.GetStructureDefinitionWorkingGroup());
+                    }
                 }
 
             }

@@ -34,9 +34,4 @@
           <line value="1003 Healthcare Drive"/>
         </address>
     <gender value="male"/>
-    <practitionerRole>
-        <managingOrganization>
-            <reference value="Organization/hl7"/>
-        </managingOrganization>
-    </practitionerRole>
 </Practitioner>

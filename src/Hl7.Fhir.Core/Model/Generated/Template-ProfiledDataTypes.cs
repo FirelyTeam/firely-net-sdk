@@ -1,34 +1,77 @@
 ﻿
 //
-// Model Generated on Thu, 09 Mar 2017 13:20:35 GMT for FHIR v1.0.2
+// Model Generated on Thu, 27 Jul 2017 10:43:24 GMT for FHIR v3.0.1
 //
 // Generated Shared Enumeration: ResourceType
 
+// Generated Shared Enumeration: OperationParameterUse
+	// Used in model class (type): ParameterDefinition.use
+
+// Generated Shared Enumeration: FilterOperator
+
+// Generated Shared Enumeration: ActionSelectionBehavior
+
+// Generated Shared Enumeration: RequestPriority
+
+// Generated Shared Enumeration: RequestIntent
+
 // Generated Shared Enumeration: AdministrativeGender
 
-// Generated Shared Enumeration: FHIRDefinedType
-	// Used in model class (type): ElementDefinition.type.code
+// Generated Shared Enumeration: EventStatus
+
+// Generated Shared Enumeration: ActionGroupingBehavior
+
+// Generated Shared Enumeration: ObservationStatus
+
+// Generated Shared Enumeration: ActionPrecheckBehavior
 
 // Generated Shared Enumeration: BindingStrength
 	// Used in model class (type): ElementDefinition.binding.strength
 
-// Generated Shared Enumeration: RemittanceOutcome
+// Generated Shared Enumeration: ParticipationStatus
 
 // Generated Shared Enumeration: ListMode
 
 // Generated Shared Enumeration: SearchParamType
 
-// Generated Shared Enumeration: ConformanceResourceStatus
+// Generated Shared Enumeration: FinancialResourceStatusCodes
+
+// Generated Shared Enumeration: ActionCardinalityBehavior
+
+// Generated Shared Enumeration: ActionConditionKind
+
+// Generated Shared Enumeration: CompartmentType
+
+// Generated Shared Enumeration: ActionParticipantType
+
+// Generated Shared Enumeration: DaysOfWeek
+	// Used in model class (type): Timing.repeat.dayOfWeek
+
+// Generated Shared Enumeration: ActionRelationshipType
 
 // Generated Shared Enumeration: DocumentReferenceStatus
 
-// Generated Shared Enumeration: MedicationAdministrationStatus
+// Generated Shared Enumeration: RequestStatus
+
+// Generated Shared Enumeration: CompositionStatus
+
+// Generated Shared Enumeration: ActionRequiredBehavior
+
+// Generated Shared Enumeration: DocumentRelationshipType
+
+// Generated Shared Enumeration: MessageSignificanceCategory
+
+// Generated Shared Enumeration: FHIRAllTypes
+	// Used in model class (type): DataRequirement.type
+	// Used in model class (type): ParameterDefinition.type
+
+// Generated Shared Enumeration: PublicationStatus
 
 // Generated helper templates
 // Generated items
-// Hl7.Fhir.Core\Model\Generated\Age.cs
-// Hl7.Fhir.Core\Model\Generated\Distance.cs
-// Hl7.Fhir.Core\Model\Generated\Count.cs
-// Hl7.Fhir.Core\Model\Generated\Duration.cs
 // Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs
 // Hl7.Fhir.Core\Model\Generated\Money.cs
+// Hl7.Fhir.Core\Model\Generated\Duration.cs
+// Hl7.Fhir.Core\Model\Generated\Distance.cs
+// Hl7.Fhir.Core\Model\Generated\Count.cs
+// Hl7.Fhir.Core\Model\Generated\Age.cs

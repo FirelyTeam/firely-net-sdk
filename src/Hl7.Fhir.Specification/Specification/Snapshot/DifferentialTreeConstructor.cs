@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // The current element represents a sibling of the previous element
                     // Note: don't catch here, let the Snapshot Generator handle this
-                    Debug.WriteLineIf(index > 0 && diff[index].Name != null && diff[index].Name == diff[index - 1].Name && diff[index - 1].Slicing == null, $"Warning! Duplicate constraint at index {index}: '{thisPath}'");
+                    Debug.WriteLineIf(index > 0 && diff[index].SliceName != null && diff[index].SliceName == diff[index - 1].SliceName && diff[index - 1].Slicing == null, $"Warning! Duplicate constraint at index {index}: '{thisPath}'");
 
 #if CGNAMING
                     // Handle Chris Grenz naming, e.g.
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // we are going up in the hierarchy to a parent path that we have already processed
                         // Note: don't catch here, let the Snapshot Generator handle this
                         // => Must be a slice
-                        Debug.WriteLineIf(ElementDefinitionNavigator.IsChildPath(thisPath, prevPath) && diff[index].Name == null, $"Warning: unnamed slice for element {index} : '{thisPath}'");
+                        Debug.WriteLineIf(ElementDefinitionNavigator.IsChildPath(thisPath, prevPath) && diff[index].SliceName == null, $"Warning: unnamed slice for element {index} : '{thisPath}'");
 
                         // OK, proceed to next element
                         index++;
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
 #if DEBUG && DUMPOUTPUT
-            Debug.Print($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.Name}")));
+            Debug.Print($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.SliceName}")));
 #endif
 
             return diff;

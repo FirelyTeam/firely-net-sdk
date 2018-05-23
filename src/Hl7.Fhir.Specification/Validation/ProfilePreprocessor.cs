@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Validation
             _profiles.AddStatedProfile(instance.Children("meta").Children("profile").Select(p=>p.Value).Cast<string>());
 
             //Almost identically, extensions can declare adherance to a profile using the 'url' attribute
-            if (declaredTypeProfile == ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Extension))
+            if (declaredTypeProfile == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension))
             {
                 var urlDeclaration = instance.Children("url").FirstOrDefault()?.Value as string;
 

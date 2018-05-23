@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,25 +59,25 @@ namespace Hl7.Fhir.Model
         public enum QuantityComparator
         {
             /// <summary>
-            /// The actual value is less than the given value.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
             [EnumLiteral("<", "http://hl7.org/fhir/quantity-comparator"), Description("Less than")]
             LessThan,
             /// <summary>
-            /// The actual value is less than or equal to the given value.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
             [EnumLiteral("<=", "http://hl7.org/fhir/quantity-comparator"), Description("Less or Equal to")]
             LessOrEqual,
             /// <summary>
-            /// The actual value is greater than or equal to the given value.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
             [EnumLiteral(">=", "http://hl7.org/fhir/quantity-comparator"), Description("Greater or Equal to")]
             GreaterOrEqual,
             /// <summary>
-            /// The actual value is greater than the given value.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
             [EnumLiteral(">", "http://hl7.org/fhir/quantity-comparator"), Description("Greater than")]

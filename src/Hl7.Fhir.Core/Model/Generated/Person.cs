@@ -37,8 +37,10 @@ using Hl7.Fhir.Utility;
 */
 #pragma warning disable 1591 // suppress XML summary warnings
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,25 +64,25 @@ namespace Hl7.Fhir.Model
         public enum IdentityAssuranceLevel
         {
             /// <summary>
-            /// Little or no confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level1", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 1")]
             Level1,
             /// <summary>
-            /// Some confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level2", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 2")]
             Level2,
             /// <summary>
-            /// High confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level3", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 3")]
             Level3,
             /// <summary>
-            /// Very high confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level4", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 4")]

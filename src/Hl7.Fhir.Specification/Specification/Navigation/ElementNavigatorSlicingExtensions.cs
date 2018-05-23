@@ -1,11 +1,8 @@
 ﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -38,7 +35,7 @@ namespace Hl7.Fhir.Specification.Navigation
             var bm = nav.Bookmark();
             while (nav.MoveToNextSliceAtAnyLevel())
             {
-                if (StringComparer.Ordinal.Equals(nav.Current.Name, sliceName))
+                if (StringComparer.Ordinal.Equals(nav.Current.SliceName, sliceName))
                 {
                     return true;
                 }
@@ -47,25 +44,25 @@ namespace Hl7.Fhir.Specification.Navigation
             return false;
         }
 
-/*
-        /// <summary>
-        /// If the current element is a slice entry, then advance the navigator to the first associated named slice.
-        /// Otherwise remain positioned at the current element.
-        /// </summary>
-        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToFirstSlice(this ElementDefinitionNavigator nav)
-        {
-            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
-            if (nav.Current == null) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
-            if (nav.Current.Slicing != null)
-            {
-                var bm = nav.Bookmark();
-                if (nav.MoveToNextSliceAtAnyLevel()) { return true; }
-                nav.ReturnToBookmark(bm);
-            }
-            return false;
-        }
-*/
+        /*
+                /// <summary>
+                /// If the current element is a slice entry, then advance the navigator to the first associated named slice.
+                /// Otherwise remain positioned at the current element.
+                /// </summary>
+                /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+                public static bool MoveToFirstSlice(this ElementDefinitionNavigator nav)
+                {
+                    if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+                    if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
+                    if (nav.Current.Slicing != null)
+                    {
+                        var bm = nav.Bookmark();
+                        if (nav.MoveToNextSliceAtAnyLevel()) { return true; }
+                        nav.ReturnToBookmark(bm);
+                    }
+                    return false;
+                }
+        */
 
         /// <summary>
         /// Advance the navigator to the next slice in the current slice group and on the current slicing level.
@@ -76,16 +73,16 @@ namespace Hl7.Fhir.Specification.Navigation
         public static bool MoveToNextSlice(this ElementDefinitionNavigator nav)
         {
             if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
-            if (nav.Current == null) { throw Error.Argument(nameof(nav), "Cannot move navigator to next slice. Current node is not set."); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to next slice. Current node is not set."); }
 
             var bm = nav.Bookmark();
 
             var name = nav.PathName;
-            var startSliceName = nav.Current.Name;
+            var startSliceName = nav.Current.SliceName;
             var startBaseSliceName = ElementDefinitionNavigator.GetBaseSliceName(startSliceName);
             while (nav.MoveToNext(name))
             {
-                var sliceName = nav.Current.Name;
+                var sliceName = nav.Current.SliceName;
                 // Handle unnamed slices, eg. extensions
                 if (startSliceName == null && sliceName == null) { return true; }
 
@@ -114,16 +111,16 @@ namespace Hl7.Fhir.Specification.Navigation
         public static bool MoveToPreviousSlice(this ElementDefinitionNavigator nav)
         {
             if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
-            if (nav.Current == null) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
 
             var bm = nav.Bookmark();
 
             var name = nav.PathName;
-            var startSliceName = nav.Current.Name;
+            var startSliceName = nav.Current.SliceName;
             var startBaseSliceName = ElementDefinitionNavigator.GetBaseSliceName(startSliceName);
             while (nav.MoveToPrevious(name))
             {
-                var sliceName = nav.Current.Name;
+                var sliceName = nav.Current.SliceName;
                 // Handle unnamed slices, eg. extensions
                 if (startSliceName == null && sliceName == null) { return true; }
 
@@ -152,16 +149,16 @@ namespace Hl7.Fhir.Specification.Navigation
         public static bool MoveToFirstReslice(this ElementDefinitionNavigator nav)
         {
             if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
-            if (nav.Current == null) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
 
-            var sliceName = nav.Current.Name;
+            var sliceName = nav.Current.SliceName;
             if (string.IsNullOrEmpty(sliceName)) { throw Error.Argument(nameof(nav), "The current element is not a named slice."); }
 
             var bm = nav.Bookmark();
 
             if (nav.MoveToNextSliceAtAnyLevel())
             {
-                if (ElementDefinitionNavigator.IsResliceOf(nav.Current.Name, sliceName))
+                if (ElementDefinitionNavigator.IsResliceOf(nav.Current.SliceName, sliceName))
                 {
                     return true;
                 }
@@ -186,11 +183,11 @@ namespace Hl7.Fhir.Specification.Navigation
 
             var path = intro.Current.Path;
             var pathName = intro.PathName;
-            var name = intro.Current.Name;
+            var name = intro.Current.SliceName;
 
             while (intro.MoveToNext(pathName))
             {
-                var curName = intro.Current.Name;
+                var curName = intro.Current.SliceName;
                 if (atRoot)
                 {
                     // Is this the slice-intro of the un-resliced original element? Then my name == null or
@@ -228,8 +225,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns>A new <see cref="ElementDefinitionNavigator"/> instance that wraps the cloned element list.</returns>
         internal static ElementDefinitionNavigator CloneSubtree(this ElementDefinitionNavigator nav)
         {
-            if (nav == null) { throw new ArgumentNullException(nameof(nav)); }
-            if (nav.Current == null) { throw new ArgumentException(nameof(nav)); }
+            nav.ThrowIfNullOrNotPositioned(nameof(nav));
 
             var result = new ElementDefinitionNavigator(new ElementDefinition[] { (ElementDefinition)nav.Current.DeepCopy() });
             result.MoveToFirstChild();

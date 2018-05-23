@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void GetInfoFromEnumMember()
         {
-            var t = FHIRDefinedType.Markdown;
+            var t = Hl7.Fhir.Model. FHIRAllTypes.Markdown;
 
             Assert.AreEqual("markdown", t.GetLiteral());
             Assert.AreEqual("markdown", t.GetDocumentation());

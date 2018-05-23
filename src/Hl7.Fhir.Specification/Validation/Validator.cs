@@ -18,6 +18,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -50,8 +51,7 @@ namespace Hl7.Fhir.Validation
                     var resolver = Settings.ResourceResolver;
                     if (resolver != null)
                     {
-                        SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings
-                            ?? SnapshotGeneratorSettings.CreateDefault();
+                        SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.CreateDefault();
                         _snapshotGenerator = new SnapshotGenerator(resolver, settings);
                     }
 
@@ -233,14 +233,14 @@ namespace Hl7.Fhir.Validation
 
                 if (!definition.HasChildren)
                 {
-                    // No inline-children, so validation depends on the presence of a <type> or <nameReference>
-                    if (elementConstraints.Type != null || elementConstraints.NameReference != null)
+                    // No inline-children, so validation depends on the presence of a <type> or <contentReference>
+                    if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
                     {
-                        outcome.Add(this.ValidateType(elementConstraints, instance));
-                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
                     }
                     else
-                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                 }
             }
 
@@ -337,16 +337,16 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if (definition.NameReference != null)
+            if (definition.ContentReference != null)
             {
-                Trace(outcome, $"Start validation of constraints referred to by nameReference '{definition.NameReference}'", Issue.PROCESSING_PROGRESS, instance);
+                Trace(outcome, "Start validation of constraints referred to by nameReference '{0}'".FormatWith(definition.ContentReference), Issue.PROCESSING_PROGRESS, instance);
 
                 var referencedPositionNav = allDefinitions.ShallowCopy();
 
-                if (referencedPositionNav.JumpToNameReference(definition.NameReference))
+                if (referencedPositionNav.JumpToNameReference(definition.ContentReference))
                     outcome.Include(Validate(instance, referencedPositionNav));
                 else
-                    Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.NameReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
+                    Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.ContentReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
 
             }
 
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Validation
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
-                File.WriteAllText(Path.Combine(dir,name) + ".StructureDefinition.xml", xml);
+                File.WriteAllText(Path.Combine(dir, name) + ".StructureDefinition.xml", xml);
 #endif
 
 
@@ -543,15 +543,15 @@ namespace Hl7.Fhir.Validation
                    t == typeof(FhirString);
         }
 
-        public static bool IsBindeableFhirType(this FHIRDefinedType t)
+        public static bool IsBindeableFhirType(this FHIRAllTypes t)
         {
-            return t == FHIRDefinedType.Code ||
-                   t == FHIRDefinedType.Coding ||
-                   t == FHIRDefinedType.CodeableConcept ||
-                   t == FHIRDefinedType.Quantity ||
-                   t == FHIRDefinedType.Extension ||
-                   t == FHIRDefinedType.String ||
-                   t == FHIRDefinedType.Uri;
+            return t == FHIRAllTypes.Code ||
+                   t == FHIRAllTypes.Coding ||
+                   t == FHIRAllTypes.CodeableConcept ||
+                   t == FHIRAllTypes.Quantity ||
+                   t == FHIRAllTypes.Extension ||
+                   t == FHIRAllTypes.String ||
+                   t == FHIRAllTypes.Uri;
         }
     }
 

@@ -1,15 +1,12 @@
 {
     "resourceType": "Patient",
-    "identifier": [
-        {
-            "period": { "start": "2001-05-06" },
-            "assigner": { "display": "Acme\u202fHealthcare" },
-            "use": "usual",
-            "system": "urn:oid:1.2.36.146.595.217.0.1",
-            "value": "12345",     
-            "_value": { "fhir_comments": [ "     seems like a likely choice     " ] }       
-        }
-    ],
+    "identifier": [{
+        "period": {"start": "2001-05-06"},
+        "assigner": {"display": "Acme\u202fHealthcare"},
+        "use": "usual",
+        "system": "urn:oid:1.2.36.146.595.217.0.1",
+        "value": "12345"
+    }],
     "managingOrganization": {"reference": "Organization/1"},
     "_active": {"extension": [{
         "url": "http://example.org/fhir/StructureDefinition/recordStatus",
@@ -22,9 +19,8 @@
                 "James"
             ],
             "use": "official",
-            "family": ["Chalmers"]
-        },
-        {
+            "family": "Chalmers"
+        }, {
             "given": ["Jim"],
             "use": "usual"
         }
@@ -75,6 +71,10 @@
         {
             "url": "http://example.org/fhir/StructureDefinition/pi",
             "valueDecimal": 3.141592653589793
+        },
+        {
+            "url": "http://example.org/fhir/StructureDefinition/max-decimal-precision",
+            "valueDecimal": 1.00065022141624642
         }
     ],
     "gender": "male",
@@ -119,35 +119,17 @@
     ],
     "contact": [{
         "name": {
-            "family": [
-                null,
-                "du",
-                null,
-                "Marché",
-                null
-            ],
-            "_family": [
-                {"extension": [{
-                    "url": "http://example.org/fhir/StructureDefinition/nullFlavor",
-                    "valueCode": "ASKU"
-                }]},
-                {
-                    "id": "a2",
-                    "extension": [{
-                        "url": "http://example.org/fhir/StructureDefinition/qualifier",
-                        "valueCode": "VV"
-                    }]
-                },
-                {"extension": [{
-                    "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
-                    "valueCode": "ASKU"
-                }]},
-                null,
-                {"extension": [{
-                    "url": "http://hl7.org/fhir/StructureDefinition/nullFlavor",
-                    "valueCode": "ASKU"
-                }]}
-            ],
+            "family" : "du Marché",
+            "_family": {
+              "extension": [{
+                  "url": "http://example.org/fhir/StructureDefinition/qualifier",
+                  "valueString": "VV"
+                }, {
+                  "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
+                  "valueCode": "ASKU"
+                }
+              ]
+            },
             "_given": [
                 null,
                 {
@@ -174,7 +156,7 @@
             "value": "+33 (237) 998327"
         }]
     }],
-    "careProvider": [{"reference": "#org3141"}],
+    "generalPractitioner": [{"reference": "#org3141"}],
     "telecom": [
         {"use": "home"},
         {

@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,13 +57,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("origin", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity Origin
+        public Quantity Origin
         {
             get { return _Origin; }
             set { _Origin = value; OnPropertyChanged("Origin"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _Origin;
+        private Quantity _Origin;
         
         /// <summary>
         /// Number of milliseconds between samples
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Decimal values with spaces, or "E" | "U" | "L"
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=90)]
+        [FhirElement("data", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DataElement
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Origin != null) dest.Origin = (Hl7.Fhir.Model.SimpleQuantity)Origin.DeepCopy();
+                if(Origin != null) dest.Origin = (Quantity)Origin.DeepCopy();
                 if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
                 if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                 if(LowerLimitElement != null) dest.LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal)LowerLimitElement.DeepCopy();

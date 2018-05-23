@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,17 +51,27 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The Response business identifier.</xs:documentation>
+              <xs:documentation xml:lang="en">The notice business identifier.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="ruleset" minOccurs="0" maxOccurs="1" type="Coding">
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="FinancialResourceStatusCodes">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the style of resource contents. This should be mapped to the allowable profiles for this and supporting resources.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of the resource instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="originalRuleset" minOccurs="0" maxOccurs="1" type="Coding">
+          <xs:element name="request" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The style (standard) and version of the original material which was converted into this resource.</xs:documentation>
+              <xs:documentation xml:lang="en">Reference of resource for which payment is being made.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="response" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Reference of response to resource for which payment is being made.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="statusDate" minOccurs="0" maxOccurs="1" type="date">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date when the above payment action occurrred.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -84,17 +94,7 @@
               <xs:documentation xml:lang="en">The organization which is responsible for the services rendered to the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="request" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Reference of resource to reverse.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="response" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Reference of response to resource to reverse.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="paymentStatus" minOccurs="1" maxOccurs="1" type="Coding">
+          <xs:element name="paymentStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The payment status, typically paid: payment sent, cleared: payment received.</xs:documentation>
            </xs:annotation>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-08-24T16:17:38.037+02:00" />
@@ -8,9 +8,10 @@
   <status value="draft" />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <constrainedType value="Patient" />
+  <type value="Patient" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
   <snapshot>
     <element>
       <path value="Patient" />
@@ -44,7 +45,7 @@
       <path value="Patient.id" />
       <short value="Logical id of this artifact" />
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." />
-      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -77,7 +78,7 @@
       <path value="Patient.implicitRules" />
       <short value="A set of rules under which this content was created" />
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." />
-      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -95,7 +96,7 @@
       <path value="Patient.language" />
       <short value="Language of the resource content" />
       <definition value="The base language in which the resource is written." />
-      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -116,7 +117,7 @@
       <path value="Patient.text" />
       <short value="Text summary of the resource, for human interpretation" />
       <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety." />
-      <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative." />
+      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative." />
       <alias value="narrative" />
       <alias value="html" />
       <alias value="xhtml" />
@@ -141,7 +142,7 @@
       <path value="Patient.contained" />
       <short value="Contained, inline Resources" />
       <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope." />
-      <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." />
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." />
       <alias value="inline resources" />
       <alias value="anonymous resources" />
       <alias value="contained resources" />
@@ -163,7 +164,7 @@
     <element>
       <path value="Patient.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Extension" />
@@ -181,7 +182,7 @@
     </element>
     <element>
       <path value="Patient.extension" />
-      <name value="MyExtension1" />
+      <sliceName value="MyExtension1" />
       <short value="Extension" />
       <definition value="Optional Extensions Element - found in all resources." />
       <min value="0" />
@@ -198,7 +199,7 @@
     </element>
     <element>
       <path value="Patient.extension" />
-      <name value="MyExtension2" />
+      <sliceName value="MyExtension2" />
       <short value="Extension" />
       <definition value="Optional Extensions Element - found in all resources." />
       <min value="0" />
@@ -217,7 +218,7 @@
       <path value="Patient.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -273,7 +274,7 @@
       <path value="Patient.active" />
       <short value="Whether this patient's record is in active use" />
       <definition value="Whether this patient record is in active use." />
-      <comments value="Default is true. If a record is inactive, and linked to an active record, then future patient/record updates should occur on the other patient." />
+      <comment value="Default is true. If a record is inactive, and linked to an active record, then future patient/record updates should occur on the other patient." />
       <requirements value="Need to be able to mark a patient record as not to be used because it was created in error." />
       <min value="0" />
       <max value="1" />
@@ -305,7 +306,7 @@
       <path value="Patient.name" />
       <short value="A name associated with the patient" />
       <definition value="A name associated with the individual." />
-      <comments value="A patient may have multiple names with different uses or applicable periods. For animals, the name is a &quot;HumanName&quot; in the sense that is assigned and used by humans and has the same patterns." />
+      <comment value="A patient may have multiple names with different uses or applicable periods. For animals, the name is a &quot;HumanName&quot; in the sense that is assigned and used by humans and has the same patterns." />
       <requirements value="Need to be able to track the patient by multiple names. Examples are your official name and a partner name." />
       <min value="0" />
       <max value="*" />
@@ -335,7 +336,7 @@
       <path value="Patient.telecom" />
       <short value="A contact detail for the individual" />
       <definition value="A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted." />
-      <comments value="A Patient may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently and also to help with identification. The address may not go directly to the individual, but may reach another party that is able to proxy for the patient (i.e. home phone, or pet owner's phone)." />
+      <comment value="A Patient may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently and also to help with identification. The address may not go directly to the individual, but may reach another party that is able to proxy for the patient (i.e. home phone, or pet owner's phone)." />
       <requirements value="People have (primary) ways to contact them in some way such as phone, email." />
       <min value="0" />
       <max value="*" />
@@ -365,7 +366,7 @@
       <path value="Patient.gender" />
       <short value="male | female | other | unknown" />
       <definition value="Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes." />
-      <comments value="The gender may not match the biological sex as determined by genetics, or the individual's preferred identification. Note that for both humans and particularly animals, there are other legitimate possibilities than M and F, though the vast majority of systems and contexts only support M and F.  Systems providing decision support or enforcing business rules should ideally do this on the basis of Observations dealing with the specific gender aspect of interest (anatomical, chromosonal, social, etc.)  However, because these observations are infrequently recorded, defaulting to the administrative gender is common practice.  Where such defaulting occurs, rule enforcement should allow for the variation between administrative and biological, chromosonal and other gender aspects.  For example, an alert about a hysterectomy on a male should be handled as a warning or overrideable error, not a &quot;hard&quot; error." />
+      <comment value="The gender may not match the biological sex as determined by genetics, or the individual's preferred identification. Note that for both humans and particularly animals, there are other legitimate possibilities than M and F, though the vast majority of systems and contexts only support M and F.  Systems providing decision support or enforcing business rules should ideally do this on the basis of Observations dealing with the specific gender aspect of interest (anatomical, chromosonal, social, etc.)  However, because these observations are infrequently recorded, defaulting to the administrative gender is common practice.  Where such defaulting occurs, rule enforcement should allow for the variation between administrative and biological, chromosonal and other gender aspects.  For example, an alert about a hysterectomy on a male should be handled as a warning or overrideable error, not a &quot;hard&quot; error." />
       <requirements value="Needed for identification of the individual, in combination with (at least) name and birth date. Gender of individual drives many clinical processes." />
       <min value="0" />
       <max value="1" />
@@ -402,7 +403,7 @@
       <path value="Patient.birthDate" />
       <short value="The date of birth for the individual" />
       <definition value="The date of birth for the individual." />
-      <comments value="At least an estimated year should be provided as a guess if the real DOB is unknown  There is a standard extension &quot;patient-birthTime&quot; available that should be used where Time is required (such as in maternaty/infant care systems)." />
+      <comment value="At least an estimated year should be provided as a guess if the real DOB is unknown  There is a standard extension &quot;patient-birthTime&quot; available that should be used where Time is required (such as in maternaty/infant care systems)." />
       <requirements value="Age of the individual drives many clinical processes." />
       <min value="0" />
       <max value="1" />
@@ -436,7 +437,7 @@
       <path value="Patient.deceased[x]" />
       <short value="Indicates if the individual is deceased or not" />
       <definition value="Indicates if the individual is deceased or not." />
-      <comments value="If there's no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive." />
+      <comment value="If there's no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive." />
       <requirements value="The fact that a patient is deceased influences the clinical process. Also, in human communication and relation management it is necessary to know whether the person is alive." />
       <min value="0" />
       <max value="1" />
@@ -470,7 +471,7 @@
       <path value="Patient.address" />
       <short value="Addresses for the individual" />
       <definition value="Addresses for the individual." />
-      <comments value="Patient may have multiple addresses with different uses or applicable periods." />
+      <comment value="Patient may have multiple addresses with different uses or applicable periods." />
       <requirements value="May need to keep track of patient addresses for contacting, billing or reporting requirements and also to help with identification." />
       <min value="0" />
       <max value="*" />
@@ -597,7 +598,7 @@
       <path value="Patient.contact" />
       <short value="A contact party (e.g. guardian, partner, friend) for the patient" />
       <definition value="A contact party (e.g. guardian, partner, friend) for the patient." />
-      <comments value="Contact covers all kinds of contact parties: family members, business contacts, guardians, caregivers. Not applicable to register pedigree and family ties beyond use of having contact." />
+      <comment value="Contact covers all kinds of contact parties: family members, business contacts, guardians, caregivers. Not applicable to register pedigree and family ties beyond use of having contact." />
       <requirements value="Need to track people you can contact about the patient." />
       <min value="0" />
       <max value="*" />
@@ -647,7 +648,7 @@
     <element>
       <path value="Patient.contact.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Extension" />
@@ -665,7 +666,7 @@
     </element>
     <element>
       <path value="Patient.contact.extension" />
-      <name value="MyExtension1" />
+      <sliceName value="MyExtension1" />
       <short value="Extension" />
       <definition value="Optional Extensions Element - found in all resources." />
       <min value="0" />
@@ -684,7 +685,7 @@
       <path value="Patient.contact.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -771,7 +772,7 @@
       <path value="Patient.contact.telecom" />
       <short value="A contact detail for the person" />
       <definition value="A contact detail for the person, e.g. a telephone number or an email address." />
-      <comments value="Contact may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently, and also to help with identification." />
+      <comment value="Contact may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently, and also to help with identification." />
       <requirements value="People have (primary) ways to contact them in some way such as phone, email." />
       <min value="0" />
       <max value="*" />
@@ -919,7 +920,7 @@
       <path value="Patient.animal" />
       <short value="This patient is known to be an animal (non-human)" />
       <definition value="This patient is known to be an animal." />
-      <comments value="The animal element is labeled &quot;Is Modifier&quot; since patients may be non-human. Systems SHALL either handle patient details appropriately (e.g. inform users patient is not human) or reject declared animal records.   The absense of the animal element does not imply that the patient is a human. If a system requires such a positive assertion that the patient is human, an extension will be required.  (Do not use a species of homo-sapiens in animal species, as this would incorrectly infer that the patient is an animal)." />
+      <comment value="The animal element is labeled &quot;Is Modifier&quot; since patients may be non-human. Systems SHALL either handle patient details appropriately (e.g. inform users patient is not human) or reject declared animal records.   The absense of the animal element does not imply that the patient is a human. If a system requires such a positive assertion that the patient is human, an extension will be required.  (Do not use a species of homo-sapiens in animal species, as this would incorrectly infer that the patient is an animal)." />
       <requirements value="Many clinical systems are extended to care for animal patients as well as human." />
       <min value="0" />
       <max value="1" />
@@ -966,7 +967,7 @@
       <path value="Patient.animal.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -988,7 +989,7 @@
       <path value="Patient.animal.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1012,7 +1013,7 @@
       <path value="Patient.animal.species" />
       <short value="E.g. Dog, Cow" />
       <definition value="Identifies the high level taxonomic categorization of the kind of animal." />
-      <comments value="If the patient is non-human, at least a species SHALL be specified. Species SHALL be a widely recognised taxonomic classification.  It may or may not be Linnaean taxonomy and may or may not be at the level of species. If the level is finer than species--such as a breed code--the code system used SHALL allow inference of the species.  (The common example is that the word &quot;Hereford&quot; does not allow inference of the species Bos taurus, because there is a Hereford pig breed, but the SNOMED CT code for &quot;Hereford Cattle Breed&quot; does.)." />
+      <comment value="If the patient is non-human, at least a species SHALL be specified. Species SHALL be a widely recognised taxonomic classification.  It may or may not be Linnaean taxonomy and may or may not be at the level of species. If the level is finer than species--such as a breed code--the code system used SHALL allow inference of the species.  (The common example is that the word &quot;Hereford&quot; does not allow inference of the species Bos taurus, because there is a Hereford pig breed, but the SNOMED CT code for &quot;Hereford Cattle Breed&quot; does.)." />
       <requirements value="Need to know what kind of animal." />
       <min value="1" />
       <max value="1" />
@@ -1049,7 +1050,7 @@
       <path value="Patient.animal.breed" />
       <short value="E.g. Poodle, Angus" />
       <definition value="Identifies the detailed categorization of the kind of animal." />
-      <comments value="Breed MAY be used to provide further taxonomic or non-taxonomic classification.  It may involve local or proprietary designation--such as commercial strain--and/or additional information such as production type." />
+      <comment value="Breed MAY be used to provide further taxonomic or non-taxonomic classification.  It may involve local or proprietary designation--such as commercial strain--and/or additional information such as production type." />
       <requirements value="May need to know the specific kind within the species." />
       <min value="0" />
       <max value="1" />
@@ -1122,7 +1123,7 @@
       <path value="Patient.communication" />
       <short value="A list of Languages which may be used to communicate with the patient about his or her health" />
       <definition value="Languages which may be used to communicate with the patient about his or her health." />
-      <comments value="If no language is specified, this *implies* that the default local language is spoken.  If you need to convey proficiency for multiple modes then you need multiple Patient.Communication associations.   For animals, language is not a relevant field, and should be absent from the instance. If the Patient does not speak the default local language, then the Interpreter Required Standard can be used to explicitly declare that an interpreter is required." />
+      <comment value="If no language is specified, this *implies* that the default local language is spoken.  If you need to convey proficiency for multiple modes then you need multiple Patient.Communication associations.   For animals, language is not a relevant field, and should be absent from the instance. If the Patient does not speak the default local language, then the Interpreter Required Standard can be used to explicitly declare that an interpreter is required." />
       <requirements value="If a patient does not speak the local language, interpreters may be required, so languages spoken and proficiency is an important things to keep track of both for patient and other persons of interest." />
       <min value="0" />
       <max value="*" />
@@ -1167,7 +1168,7 @@
       <path value="Patient.communication.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1189,7 +1190,7 @@
       <path value="Patient.communication.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1213,7 +1214,7 @@
       <path value="Patient.communication.language" />
       <short value="The language which can be used to communicate with the patient about his or her health" />
       <definition value="The ISO-639-1 alpha 2 code in lower case for the language, optionally followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in upper case; e.g. &quot;en&quot; for English, or &quot;en-US&quot; for American English versus &quot;en-EN&quot; for England English." />
-      <comments value="The structure aa-BB with this exact casing is one the most widely used notations for locale. However not all systems actually code this but instead have it as free text. Hence CodeableConcept instead of code as the data type." />
+      <comment value="The structure aa-BB with this exact casing is one the most widely used notations for locale. However not all systems actually code this but instead have it as free text. Hence CodeableConcept instead of code as the data type." />
       <requirements value="Most systems in multilingual countries will want to convey language. Not all systems actually need the regional dialect." />
       <min value="1" />
       <max value="1" />
@@ -1247,7 +1248,7 @@
       <path value="Patient.communication.preferred" />
       <short value="Language preference indicator" />
       <definition value="Indicates whether or not the patient prefers this language (over other languages he masters up a certain level)." />
-      <comments value="This language is specifically identified for communicating healthcare information." />
+      <comment value="This language is specifically identified for communicating healthcare information." />
       <requirements value="People that master multiple languages up to certain level may prefer one or more, i.e. feel more confident in communicating in a particular language making other languages sort of a fall back method." />
       <min value="0" />
       <max value="1" />
@@ -1276,7 +1277,7 @@
       <path value="Patient.careProvider" />
       <short value="Patient's nominated primary care provider" />
       <definition value="Patient's nominated care provider." />
-      <comments value="This may be the primary care provider (in a GP context), or it may be a patient nominated care manager in a community/disablity setting, or even organization that will provide people to perform the care provider roles.  This is not to be used to record Care Teams, these should be recorded on either the CarePlan or EpisodeOfCare resources." />
+      <comment value="This may be the primary care provider (in a GP context), or it may be a patient nominated care manager in a community/disablity setting, or even organization that will provide people to perform the care provider roles.  This is not to be used to record Care Teams, these should be recorded on either the CarePlan or EpisodeOfCare resources." />
       <min value="0" />
       <max value="*" />
       <base>
@@ -1309,7 +1310,7 @@
       <path value="Patient.managingOrganization" />
       <short value="Organization that is the custodian of the patient record" />
       <definition value="Organization that is the custodian of the patient record." />
-      <comments value="There is only one managing organization for a specific patient record. Other organizations will have their own Patient record, and may use the Link property to join the records together (or a Person resource which can include confidence ratings for the association)." />
+      <comment value="There is only one managing organization for a specific patient record. Other organizations will have their own Patient record, and may use the Link property to join the records together (or a Person resource which can include confidence ratings for the association)." />
       <requirements value="Need to know who recognizes this patient record, manages and updates it." />
       <min value="0" />
       <max value="1" />
@@ -1336,7 +1337,7 @@
       <path value="Patient.link" />
       <short value="Link to another patient resource that concerns the same actual person" />
       <definition value="Link to another patient resource that concerns the same actual patient." />
-      <comments value="There is no assumption that linked patient records have mutual links." />
+      <comment value="There is no assumption that linked patient records have mutual links." />
       <requirements value="There are multiple usecases:   * Duplicate patient records due to the clerical errors associated with the difficulties of identifying humans consistently, and * Distribution of patient information across multiple servers." />
       <min value="0" />
       <max value="*" />
@@ -1382,7 +1383,7 @@
       <path value="Patient.link.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1404,7 +1405,7 @@
       <path value="Patient.link.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1495,13 +1496,13 @@
     <element>
       <path value="Patient.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Patient.extension" />
-      <name value="MyExtension1" />
+      <sliceName value="MyExtension1" />
       <!--
       <definition value="Optional Extensions Element - found in all resources." />
       -->
@@ -1514,7 +1515,7 @@
     </element>
     <element>
       <path value="Patient.extension" />
-      <name value="MyExtension2" />
+      <sliceName value="MyExtension2" />
       <!--
       <definition value="Optional Extensions Element - found in all resources." />
       -->
@@ -1528,13 +1529,13 @@
     <element>
       <path value="Patient.contact.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Patient.contact.extension" />
-      <name value="MyExtension1" />
+      <sliceName value="MyExtension1" />
       <!--
       <definition value="Optional Extensions Element - found in all resources." />
       -->

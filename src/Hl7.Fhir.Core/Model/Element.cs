@@ -56,7 +56,6 @@ namespace Hl7.Fhir.Model
         /// xml:id (or equivalent in JSON)
         /// </summary>
         [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
-        [IdPattern]
         [DataMember]
         public string ElementId
         {

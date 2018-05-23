@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
 
             var jsonSerializer = new FhirJsonSerializer(new ParserSettings() { CustomSerializer = new InsertAdditionalMembersAroundCustomSerializer() });
             var json = jsonSerializer.SerializeToString(pat);
-            Assert.AreEqual("{\"resourceType\":\"Patient\",\"myProp\":true,\"myProp2\":\"dude\",\"active\":true,\"_active\":{\"myProp\":true,\"myProp2\":\"dude\"},\"name\":[{\"myProp\":true,\"myProp2\":\"dude\",\"family\":[\"Kramer\"],\"_family\":[{\"myProp\":true,\"myProp2\":\"dude\"}],\"given\":[\"Ewout\"],\"_given\":[{\"myProp\":true,\"myProp2\":\"dude\"}]}],\"gender\":\"male\",\"_gender\":{\"myProp\":true,\"myProp2\":\"dude\"},\"active2\":{\"value\":true},\"gender2\":{\"value\":\"male\"}}", json);
+            Assert.AreEqual("{\"resourceType\":\"Patient\",\"myProp\":true,\"myProp2\":\"dude\",\"active\":true,\"_active\":{\"myProp\":true,\"myProp2\":\"dude\"},\"name\":[{\"myProp\":true,\"myProp2\":\"dude\",\"family\":\"Kramer\",\"_family\":{\"myProp\":true,\"myProp2\":\"dude\"},\"given\":[\"Ewout\"],\"_given\":[{\"myProp\":true,\"myProp2\":\"dude\"}]}],\"gender\":\"male\",\"_gender\":{\"myProp\":true,\"myProp2\":\"dude\"},\"active2\":{\"value\":true},\"gender2\":{\"value\":\"male\"}}", json);
 
         }
 

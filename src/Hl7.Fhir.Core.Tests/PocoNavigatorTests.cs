@@ -182,7 +182,7 @@ namespace Hl7.Fhir
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
             var xml = File.ReadAllText(@"TestData\issue-444-testdata.xml");
-            var cs = (new FhirXmlParser()).Parse<Conformance>(xml);
+            var cs = (new FhirXmlParser()).Parse<CapabilityStatement>(xml);
             var nav = new PocoNavigator(cs);
 
             nav.MoveToFirstChild();
@@ -191,7 +191,7 @@ namespace Hl7.Fhir
             nav.MoveToNext(); // format[1] again
             nav.MoveToNext();   // rest[0]
             
-            Assert.IsTrue(nav.Location.Contains("Conformance.rest[0]"));
+            Assert.IsTrue(nav.Location.Contains("CapabilityStatement.rest[0]"));
         }
 
     }

@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -69,35 +70,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Resource version
+        /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("ruleset", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Ruleset
+        public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
         {
-            get { return _Ruleset; }
-            set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.Coding _Ruleset;
+        private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
         
         /// <summary>
-        /// Original version
+        /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("originalRuleset", InSummary=true, Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coding OriginalRuleset
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
         {
-            get { return _OriginalRuleset; }
-            set { _OriginalRuleset = value; OnPropertyChanged("OriginalRuleset"); }
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+                OnPropertyChanged("Status");
+            }
         }
-        
-        private Hl7.Fhir.Model.Coding _OriginalRuleset;
         
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=120)]
+        [FhirElement("created", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -127,24 +134,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Insurer
+        /// Target
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=130)]
+        [FhirElement("insurer", Order=120)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Target
+        public Hl7.Fhir.Model.ResourceReference Insurer
         {
-            get { return _Target; }
-            set { _Target = value; OnPropertyChanged("Target"); }
+            get { return _Insurer; }
+            set { _Insurer = value; OnPropertyChanged("Insurer"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Target;
+        private Hl7.Fhir.Model.ResourceReference _Insurer;
         
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", InSummary=true, Order=140)]
+        [FhirElement("provider", Order=130)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -159,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=150)]
+        [FhirElement("organization", Order=140)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -174,10 +181,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The subject of the Products and Services
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=160)]
+        [FhirElement("subject", Order=150)]
         [CLSCompliant(false)]
 		[References("Patient")]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -190,10 +196,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurance information
         /// </summary>
-        [FhirElement("coverage", InSummary=true, Order=170)]
+        [FhirElement("coverage", Order=160)]
         [CLSCompliant(false)]
 		[References("Coverage")]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Coverage
         {
@@ -202,20 +207,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.ResourceReference _Coverage;
-        
-        /// <summary>
-        /// Patient relationship to subscriber
-        /// </summary>
-        [FhirElement("relationship", InSummary=true, Order=180)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coding Relationship
-        {
-            get { return _Relationship; }
-            set { _Relationship = value; OnPropertyChanged("Relationship"); }
-        }
-        
-        private Hl7.Fhir.Model.Coding _Relationship;
         
 
         public override void AddDefaultConstraints()
@@ -232,15 +223,13 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
-                if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-                if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
-                if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.Coding)Relationship.DeepCopy();
                 return dest;
             }
             else
@@ -259,15 +248,13 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
-            if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
-            if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+            if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
-            if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
             
             return true;
         }
@@ -279,15 +266,13 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
-            if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
-            if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+            if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
-            if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
             
             return true;
         }
@@ -299,15 +284,13 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (Ruleset != null) yield return Ruleset;
-				if (OriginalRuleset != null) yield return OriginalRuleset;
+				if (StatusElement != null) yield return StatusElement;
 				if (CreatedElement != null) yield return CreatedElement;
-				if (Target != null) yield return Target;
+				if (Insurer != null) yield return Insurer;
 				if (Provider != null) yield return Provider;
 				if (Organization != null) yield return Organization;
 				if (Subject != null) yield return Subject;
 				if (Coverage != null) yield return Coverage;
-				if (Relationship != null) yield return Relationship;
             }
         }
 
@@ -318,15 +301,13 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
-                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, OriginalRuleset);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Target != null) yield return new ElementValue("target", false, Target);
+                if (Insurer != null) yield return new ElementValue("insurer", false, Insurer);
                 if (Provider != null) yield return new ElementValue("provider", false, Provider);
                 if (Organization != null) yield return new ElementValue("organization", false, Organization);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
-                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
             }
         }
 

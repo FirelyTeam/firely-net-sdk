@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,25 +63,25 @@ namespace Hl7.Fhir.Model
         public enum FamilyHistoryStatus
         {
             /// <summary>
-            /// Some health information is known and captured, but not complete - see notes for details.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("partial", "http://hl7.org/fhir/history-status"), Description("Partial")]
             Partial,
             /// <summary>
-            /// All relevant health information is known and captured.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("completed", "http://hl7.org/fhir/history-status"), Description("Completed")]
             Completed,
             /// <summary>
-            /// This instance should not have been part of this patient's medical record.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in error")]
             EnteredInError,
             /// <summary>
-            /// Health information for this individual is unavailable/unknown.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health unknown")]
@@ -126,7 +127,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("onset", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
+			[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Onset
             {
@@ -140,14 +141,15 @@ namespace Hl7.Fhir.Model
             /// Extra information about condition
             /// </summary>
             [FhirElement("note", Order=70)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Annotation Note
+            public List<Hl7.Fhir.Model.Annotation> Note
             {
-                get { return _Note; }
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
                 set { _Note = value; OnPropertyChanged("Note"); }
             }
             
-            private Hl7.Fhir.Model.Annotation _Note;
+            private List<Hl7.Fhir.Model.Annotation> _Note;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -159,7 +161,7 @@ namespace Hl7.Fhir.Model
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
                     if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
-                    if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     return dest;
                 }
                 else
@@ -209,7 +211,7 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return Code;
                     if (Outcome != null) yield return Outcome;
                     if (Onset != null) yield return Onset;
-                    if (Note != null) yield return Note;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -222,7 +224,7 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
                     if (Onset != null) yield return new ElementValue("onset", false, Onset);
-                    if (Note != null) yield return new ElementValue("note", false, Note);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
                 }
             }
 
@@ -233,7 +235,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External Id(s) for this record
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -245,57 +247,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Patient history is about
+        /// Instantiates protocol or definition
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=100)]
+        [FhirElement("definition", InSummary=true, Order=100)]
         [CLSCompliant(false)]
-		[References("Patient")]
-        [Cardinality(Min=1,Max=1)]
+		[References("PlanDefinition","Questionnaire")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public List<Hl7.Fhir.Model.ResourceReference> Definition
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { if(_Definition==null) _Definition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Definition; }
+            set { _Definition = value; OnPropertyChanged("Definition"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
-        /// When history was captured/updated
-        /// </summary>
-        [FhirElement("date", InSummary=true, Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement
-        {
-            get { return _DateElement; }
-            set { _DateElement = value; OnPropertyChanged("DateElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _DateElement;
-        
-        /// <summary>
-        /// When history was captured/updated
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Date
-        {
-            get { return DateElement != null ? DateElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DateElement = null; 
-                else
-                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Date");
-            }
-        }
+        private List<Hl7.Fhir.Model.ResourceReference> _Definition;
         
         /// <summary>
         /// partial | completed | entered-in-error | health-unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus> StatusElement
@@ -326,9 +296,102 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// The taking of a family member's history did not occur
+        /// </summary>
+        [FhirElement("notDone", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean NotDoneElement
+        {
+            get { return _NotDoneElement; }
+            set { _NotDoneElement = value; OnPropertyChanged("NotDoneElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _NotDoneElement;
+        
+        /// <summary>
+        /// The taking of a family member's history did not occur
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? NotDone
+        {
+            get { return NotDoneElement != null ? NotDoneElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  NotDoneElement = null; 
+                else
+                  NotDoneElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("NotDone");
+            }
+        }
+        
+        /// <summary>
+        /// subject-unknown | withheld | unable-to-obtain | deferred
+        /// </summary>
+        [FhirElement("notDoneReason", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept NotDoneReason
+        {
+            get { return _NotDoneReason; }
+            set { _NotDoneReason = value; OnPropertyChanged("NotDoneReason"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _NotDoneReason;
+        
+        /// <summary>
+        /// Patient history is about
+        /// </summary>
+        [FhirElement("patient", InSummary=true, Order=140)]
+        [CLSCompliant(false)]
+		[References("Patient")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Patient
+        {
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Patient;
+        
+        /// <summary>
+        /// When history was captured/updated
+        /// </summary>
+        [FhirElement("date", InSummary=true, Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// When history was captured/updated
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
         /// The family member described
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=130)]
+        [FhirElement("name", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -360,7 +423,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Relationship to the subject
         /// </summary>
-        [FhirElement("relationship", InSummary=true, Order=140)]
+        [FhirElement("relationship", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Relationship
@@ -374,7 +437,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=150)]
+        [FhirElement("gender", InSummary=true, Order=180)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -406,7 +469,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// (approximate) date of birth
         /// </summary>
-        [FhirElement("born", Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -421,9 +484,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// (approximate) age
         /// </summary>
-        [FhirElement("age", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+		[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Age
         {
@@ -434,11 +497,43 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Age;
         
         /// <summary>
+        /// Age is estimated?
+        /// </summary>
+        [FhirElement("estimatedAge", InSummary=true, Order=210)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean EstimatedAgeElement
+        {
+            get { return _EstimatedAgeElement; }
+            set { _EstimatedAgeElement = value; OnPropertyChanged("EstimatedAgeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _EstimatedAgeElement;
+        
+        /// <summary>
+        /// Age is estimated?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? EstimatedAge
+        {
+            get { return EstimatedAgeElement != null ? EstimatedAgeElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  EstimatedAgeElement = null; 
+                else
+                  EstimatedAgeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("EstimatedAge");
+            }
+        }
+        
+        /// <summary>
         /// Dead? How old/when?
         /// </summary>
-        [FhirElement("deceased", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Deceased
         {
@@ -449,22 +544,53 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Deceased;
         
         /// <summary>
+        /// Why was family member history performed?
+        /// </summary>
+        [FhirElement("reasonCode", InSummary=true, Order=230)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        {
+            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+        
+        /// <summary>
+        /// Why was family member history performed?
+        /// </summary>
+        [FhirElement("reasonReference", InSummary=true, Order=240)]
+        [CLSCompliant(false)]
+		[References("Condition","Observation","AllergyIntolerance","QuestionnaireResponse")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
+        {
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        
+        /// <summary>
         /// General note about related person
         /// </summary>
-        [FhirElement("note", Order=190)]
+        [FhirElement("note", Order=250)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Annotation Note
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { return _Note; }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
             set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private Hl7.Fhir.Model.Annotation _Note;
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
         /// Condition that the related person had
         /// </summary>
-        [FhirElement("condition", Order=200)]
+        [FhirElement("condition", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> Condition
@@ -476,9 +602,27 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
         
 
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "age.exists() or estimatedAge.empty()",
+            Key = "fhs-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can only have estimatedAge if age[x] is present",
+            Xpath = "exists(*[starts-with(local-name(.), 'age')]) or not(exists(f:estimatedAge))"
+        };
+
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "notDone or notDoneReason.exists().not()",
+            Key = "fhs-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Not Done Reason can only be specified if NotDone is \"true\"",
+            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
+        };
+
         public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("age.empty() or born.empty()"))},
+            Expression = "age.empty() or born.empty()",
             Key = "fhs-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Can have age[x] or born[x], but not both",
@@ -489,6 +633,8 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(FamilyMemberHistory_FHS_2);
+            InvariantConstraints.Add(FamilyMemberHistory_FHS_3);
             InvariantConstraints.Add(FamilyMemberHistory_FHS_1);
         }
 
@@ -500,16 +646,22 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Definition != null) dest.Definition = new List<Hl7.Fhir.Model.ResourceReference>(Definition.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus>)StatusElement.DeepCopy();
+                if(NotDoneElement != null) dest.NotDoneElement = (Hl7.Fhir.Model.FhirBoolean)NotDoneElement.DeepCopy();
+                if(NotDoneReason != null) dest.NotDoneReason = (Hl7.Fhir.Model.CodeableConcept)NotDoneReason.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus>)StatusElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(Born != null) dest.Born = (Hl7.Fhir.Model.Element)Born.DeepCopy();
                 if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
+                if(EstimatedAgeElement != null) dest.EstimatedAgeElement = (Hl7.Fhir.Model.FhirBoolean)EstimatedAgeElement.DeepCopy();
                 if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
-                if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
+                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>(Condition.DeepCopy());
                 return dest;
             }
@@ -529,15 +681,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(NotDoneElement, otherT.NotDoneElement)) return false;
+            if( !DeepComparable.Matches(NotDoneReason, otherT.NotDoneReason)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.Matches(Born, otherT.Born)) return false;
             if( !DeepComparable.Matches(Age, otherT.Age)) return false;
+            if( !DeepComparable.Matches(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
             if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
+            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
             
@@ -551,15 +709,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(NotDoneElement, otherT.NotDoneElement)) return false;
+            if( !DeepComparable.IsExactly(NotDoneReason, otherT.NotDoneReason)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.IsExactly(Born, otherT.Born)) return false;
             if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
+            if( !DeepComparable.IsExactly(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
             if( !DeepComparable.IsExactly(Deceased, otherT.Deceased)) return false;
+            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
             
@@ -573,16 +737,22 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Definition) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (NotDoneElement != null) yield return NotDoneElement;
+				if (NotDoneReason != null) yield return NotDoneReason;
 				if (Patient != null) yield return Patient;
 				if (DateElement != null) yield return DateElement;
-				if (StatusElement != null) yield return StatusElement;
 				if (NameElement != null) yield return NameElement;
 				if (Relationship != null) yield return Relationship;
 				if (GenderElement != null) yield return GenderElement;
 				if (Born != null) yield return Born;
 				if (Age != null) yield return Age;
+				if (EstimatedAgeElement != null) yield return EstimatedAgeElement;
 				if (Deceased != null) yield return Deceased;
-				if (Note != null) yield return Note;
+				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				foreach (var elem in Condition) { if (elem != null) yield return elem; }
             }
         }
@@ -594,16 +764,22 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (NotDoneElement != null) yield return new ElementValue("notDone", false, NotDoneElement);
+                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", false, NotDoneReason);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
                 if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
                 if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
                 if (Born != null) yield return new ElementValue("born", false, Born);
                 if (Age != null) yield return new ElementValue("age", false, Age);
+                if (EstimatedAgeElement != null) yield return new ElementValue("estimatedAge", false, EstimatedAgeElement);
                 if (Deceased != null) yield return new ElementValue("deceased", false, Deceased);
-                if (Note != null) yield return new ElementValue("note", false, Note);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
                 foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
             }
         }

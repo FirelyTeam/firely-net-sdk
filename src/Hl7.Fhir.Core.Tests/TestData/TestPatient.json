@@ -40,9 +40,7 @@
         "   Peter James Chalmers, but called \"Jim\"   "
       ],
       "use": "official",
-      "family": [
-        "Chalmers"
-      ],
+      "family": "Chalmers",
       "given": [
         "Peter",
         "James"
@@ -113,11 +111,8 @@
         }
       ],
       "name": {
-        "family": [
-          "du",
-          "Marché"
-        ],
-        "_family": [
+        "family": "du Marché",
+        "_family": 
           {
             "extension": [
               {
@@ -129,8 +124,6 @@
               }
             ]
           },
-          null
-        ],
         "given": [
           "Bénédicte"
         ]
