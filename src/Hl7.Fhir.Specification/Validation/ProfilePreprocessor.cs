@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Validation
 
             foreach (var sd in sds)
             {
-                lock (sd)
+                lock (sd.SyncLock)
                 {
                     if (!sd.HasSnapshot)
                     {

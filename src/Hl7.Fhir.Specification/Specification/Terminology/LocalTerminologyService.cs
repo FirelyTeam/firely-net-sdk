@@ -111,8 +111,8 @@ namespace Hl7.Fhir.Specification.Terminology
         private OperationOutcome validateCodeVS(ValueSet vs, string code, string system, string display, bool? abstractAllowed)
         {
             if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-
-            lock (vs)
+            
+            lock (vs.SyncLock)
             {
                 // We might have a cached or pre-expanded version brought to us by the _source
                 if (!vs.HasExpansion)
