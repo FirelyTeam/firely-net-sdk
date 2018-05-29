@@ -17,7 +17,7 @@ using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class PocoElementNavigator
+    public class PocoElementNavigator : IAnnotated
     {
         private Base _parent;
 
@@ -199,5 +199,16 @@ namespace Hl7.Fhir.ElementModel
         {
             return next(name);
         }
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            if (FhirValue is IAnnotated ia)
+                return ia.Annotations(type);
+            else
+                return Enumerable.Empty<object>();
+        }
+
+        public bool IsAttribute => Current.Value is string &&
+                (Name == "url" || Name == "id" || Name == "div");
     }
 }

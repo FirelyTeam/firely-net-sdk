@@ -12,12 +12,13 @@ using Hl7.Fhir.Utility;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Hl7.Fhir.Serialization;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
-    public class PocoNavigator : IElementNavigator, IElementSerializationInfo
+    public class PocoNavigator : IElementNavigator, IElementSerializationInfo, IAnnotated
     {
         public PocoNavigator(Base model)
         {
@@ -201,7 +202,7 @@ namespace Hl7.Fhir.ElementModel
 
         public bool IsContainedResource => Current.Current.IsContained;
 
-        ITypeSerializationInfo[] IElementSerializationInfo.Type => throw new NotImplementedException();
+        ITypeSerializationInfo[] IElementSerializationInfo.Type => null;
 
         private object lockObject = new object();
 
@@ -258,6 +259,14 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
+            if (_nav is IAnnotated annotatedNav)
+                return annotatedNav.Annotations(type).Union(generatePocoNavAnnotations(type));
+            else
+                return generatePocoNavAnnotations(type);
+        }
+
+        private IEnumerable<object> generatePocoNavAnnotations(Type type)
+        {
             if (type == typeof(ElementSerializationInfo))
             {
                 return new[]
@@ -271,21 +280,15 @@ namespace Hl7.Fhir.ElementModel
                 {
                     new XmlSerializationDetails()
                     {
-                        NodeType = isAttribute() ? System.Xml.XmlNodeType.Attribute : System.Xml.XmlNodeType.Element,
-                        Namespace = XmlNs.XFHIR,
+                        NodeType = Current.IsAttribute ? System.Xml.XmlNodeType.Attribute : System.Xml.XmlNodeType.Element,
+                        Namespace = Current.IsAttribute ? "" :  XmlNs.XFHIR,
                         NodeText = null,
                         IsNamespaceDeclaration = false
                     }
                 };
-
-                bool isAttribute()
-                {
-                    return Current.Value is string &&
-                        (Name == "url" || Name == "id" || Name == "div");
-                }
             }
             else
-                return null;
+                return Enumerable.Empty<object>();
         }
     }
 }

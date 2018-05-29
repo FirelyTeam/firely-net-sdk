@@ -53,11 +53,12 @@ namespace Hl7.Fhir.Serialization
                 return;
             }
 
-            var ns = xmlDetails?.Namespace.NamespaceName ?? XmlNs.FHIR;
+            var usesAttribute = xmlDetails?.NodeType == XmlNodeType.Attribute;
+            var ns = xmlDetails?.Namespace.NamespaceName ?? (usesAttribute ? "" : XmlNs.FHIR);
             var prefix = ns != null ? destination.LookupPrefix(ns) : null;
             var localName = serializationInfo?.IsChoiceElement == true ?
                             source.Name + source.Type.Capitalize() : source.Name;
-            var usesAttribute = xmlDetails?.NodeType == XmlNodeType.Attribute;
+
             var isContained = serializationInfo?.IsContainedResource ?? false;
 
             // If the node is represented by an attribute (e.g. an "id" child), write
