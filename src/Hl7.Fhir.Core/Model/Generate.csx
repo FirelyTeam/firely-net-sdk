@@ -2378,7 +2378,34 @@ public class SearchParameter
     {
         _resourceName = resourceName;
         _name = sp.SelectSingleNode("fhir:name/@value", ns).Value;
-        _description = sp.SelectSingleNode("fhir:description/@value", ns).Value;
+        var appliesToMultipleResources = sp.SelectNodes("fhir:base", ns).Count > 1;
+        var description = sp.SelectSingleNode("fhir:description/@value", ns)?.Value;
+        if (!appliesToMultipleResources)
+        {
+            _description = description;
+        }
+        else
+        {
+            // For multi-resources search parameters the description is something like 
+            // 'Multiple Resources: &#xD;&#xA;&#xD;&#xA;* [ReferralRequest](referralrequest.html): Who the referral is about&#xD;&#xA;*....'
+            var resourceDescription = description
+                .Split( new[] { "\r\n" }, StringSplitOptions.None )
+                .FirstOrDefault( d => d.Contains( $"[{resourceName}]" ) );
+            if (resourceDescription == null)
+            {
+                resourceDescription = string.Empty;
+            }
+            else
+            {
+                var index = resourceDescription.IndexOf("):");
+                if (index > 0)
+                {
+                    resourceDescription = resourceDescription.Substring(index + 2);
+                }
+                resourceDescription = resourceDescription.Trim(new[] { ' ', '\r', '\n'});
+            }
+            _description = resourceDescription;
+        }
         _outputType = string.Empty;
         var searchType = sp.SelectSingleNode("fhir:type/@value", ns).Value;
         switch (searchType)
@@ -2392,26 +2419,56 @@ public class SearchParameter
             case "quantity": _outputType = "Quantity"; break;
             case "uri": _outputType = "Uri"; break;
         }
-        _path = string.Empty;
-        _xpath = string.Empty;
-        foreach (var et in sp.SelectNodes("fhir:xpath/@value", ns).OfType<XmlAttribute>())
+        var xpath = sp.SelectSingleNode("fhir:xpath/@value", ns)?.Value ??
+            string.Empty;
+        var expression = sp.SelectSingleNode("fhir:expression/@value", ns)?.Value ??
+            sp.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']/fhir:valueString/@value", ns)?.Value ??
+            string.Empty;
+        var expressions = expression.Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        var path = string.IsNullOrEmpty(expression) ?
+            string.Empty :
+            "\"" + string.Join("\", \"", expressions) + "\"";
+        if (!appliesToMultipleResources)
         {
-            _xpath = et.Value;
-            var temp = "\"" + et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]") + "\"";
-            var split = temp.Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            _path += string.Join("\", \"", split) + ", ";
+            _xpath = xpath;
+            _path += path;
+            _expression = expression;
+        }
+        else
+        {
+            var xpaths = xpath.Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var resourceXPaths = xpaths.Where(xp => xp.StartsWith($"f:{resourceName}/")).ToArray();
+            _xpath = resourceXPaths.Any() ?
+                string.Join( " | ", resourceXPaths) :
+                xpath;
+            var resourceExpressions = expressions.Where(expr => expr.StartsWith($"{resourceName}.")).ToArray();
+            if (!resourceExpressions.Any())
+            {
+                _path = path;
+                _expression = expression;
+            }
+            else
+            {
+                _path = "\"" + string.Join("\", \"", resourceExpressions) + "\"";
+                _expression = string.Join( " | ", resourceExpressions );
+            }
         }
 
-        _targets = new List<string>();
-        foreach (var et in sp.SelectNodes("fhir:target/@value", ns).OfType<XmlAttribute>())
+        var code = sp.SelectSingleNode("fhir:code/@value", ns).Value;
+        if (code == "patient" && searchType == "reference")
         {
-            _targets.Add("ResourceType." + et.Value);
+            // Hack to fix the 'patient' search parameters that incorrectly target multiple resouurces
+            _targets = new List<string> { "ResourceType.Patient" };
         }
-        _targets.Sort();
-
-        var exprNode = sp.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']/fhir:valueString/@value", ns);
-        if (exprNode != null)
-            _expression = exprNode.Value;
+        else
+        {
+            _targets = new List<string>();
+            foreach (var et in sp.SelectNodes("fhir:target/@value", ns).OfType<XmlAttribute>())
+            {
+                _targets.Add("ResourceType." + et.Value);
+            }
+            _targets.Sort();
+        }
     }
 
     public IEnumerable<string> Render()
