@@ -202,6 +202,8 @@ namespace Hl7.Fhir.ElementModel
 
         public bool IsContainedResource => Current.Current.IsContained;
 
+        public bool IsSimpleElement => Current.IsAttribute;
+
         ITypeSerializationInfo[] IElementSerializationInfo.Type => null;
 
         private object lockObject = new object();
@@ -272,19 +274,6 @@ namespace Hl7.Fhir.ElementModel
                 return new[]
                 {
                     new ElementSerializationInfo(this)
-                };
-            }
-            if (type == typeof(XmlSerializationDetails))
-            {
-                return new[]
-                {
-                    new XmlSerializationDetails()
-                    {
-                        NodeType = Current.IsAttribute ? System.Xml.XmlNodeType.Attribute : System.Xml.XmlNodeType.Element,
-                        Namespace = Current.IsAttribute ? "" :  XmlNs.XFHIR,
-                        NodeText = null,
-                        IsNamespaceDeclaration = false
-                    }
                 };
             }
             else

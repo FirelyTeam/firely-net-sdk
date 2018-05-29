@@ -88,6 +88,7 @@ namespace Hl7.Fhir.Introspection
 
         public bool MayRepeat => _pm.IsCollection;
 
+        public bool IsSimpleElement => _pm.SerializationHint == XmlSerializationHint.Attribute;
 
         private static ITypeSerializationInfo[] buildTypes(PropertyMapping pm)
         {

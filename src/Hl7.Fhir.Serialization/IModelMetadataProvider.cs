@@ -19,6 +19,8 @@ namespace Hl7.Fhir.Serialization
 
         bool IsChoiceElement { get; }
         bool IsContainedResource { get; }
+
+        bool IsSimpleElement { get; }
         ITypeSerializationInfo[] Type { get; }
     }
 

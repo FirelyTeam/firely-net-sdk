@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
             if (rootType == null) throw new ArgumentNullException(nameof(rootType));
             if (provider == null) throw new ArgumentNullException(nameof(provider));
 
-            var rootElement = new ElementSerializationInfo(rootName, false, false, false, new[] { rootType });
+            var rootElement = new ElementSerializationInfo(rootName, false, false, false, false, new[] { rootType });
             return new SerializationInfoCache(new Dictionary<string, IElementSerializationInfo> { { rootName, rootElement } }, provider, rootElement);
         }
 
