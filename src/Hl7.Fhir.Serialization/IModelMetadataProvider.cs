@@ -24,16 +24,10 @@ namespace Hl7.Fhir.Serialization
         ITypeSerializationInfo[] Type { get; }
     }
 
-    public static class IElementSerializationInfoExceptions
-    {
-        public static bool IsBackboneElement(this IElementSerializationInfo info) =>
-            info.Type[0] is IComplexTypeSerializationInfo;
-    }
-
 
     public interface ITypeSerializationInfo
     {
-        string TypeName { get; }   
+        string TypeName { get; }
     }
 
     public interface IComplexTypeSerializationInfo : ITypeSerializationInfo
@@ -48,8 +42,6 @@ namespace Hl7.Fhir.Serialization
 
     public interface IModelMetadataProvider
     {
-        bool IsResource(string typeName);
-
-        IComplexTypeSerializationInfo GetSerializationInfoForType(string typeName);
+        IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical);
     }
 }

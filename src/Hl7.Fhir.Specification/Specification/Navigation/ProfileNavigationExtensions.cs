@@ -166,6 +166,14 @@ namespace Hl7.Fhir.Specification.Navigation
             return primaryType != null && IsReference(primaryType);
         }
 
+        /// <summary>
+        /// Determines if the specified element is a backbone element
+        /// </summary>
+        /// <param name="defn"></param>
+        /// <returns></returns>
+        public static bool IsBackboneElement(this ElementDefinition defn) => defn.Type.Count == 1 && defn.Type[0].Code == FHIRDefinedType.BackboneElement;
+
+
         /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>
         /// <param name="typeRef">A <see cref="ElementDefinition.TypeRefComponent"/> instance.</param>
         /// <returns><c>true</c> if the instance defines a reference, or <c>false</c> otherwise.</returns>
@@ -200,5 +208,5 @@ namespace Hl7.Fhir.Specification.Navigation
         }
     }
 }
-    
-    
+
+

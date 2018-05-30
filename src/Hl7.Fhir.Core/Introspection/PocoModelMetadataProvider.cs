@@ -19,8 +19,16 @@ namespace Hl7.Fhir.Introspection
 {
     public class PocoModelMetadataProvider : IModelMetadataProvider
     {
-        public static IComplexTypeSerializationInfo GetSerializationInfoForType(string typeName)
+        private const string CORE_BASE_URL = "http://hl7.org/StructureDefinition/";
+
+        IComplexTypeSerializationInfo IModelMetadataProvider.GetSerializationInfoForStructure(string canonical) =>
+            GetSerializationInfoForStructure(canonical);
+
+        public static IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical)
         {
+            var typeName = canonical.StartsWith(CORE_BASE_URL) ? canonical.Substring(CORE_BASE_URL.Length) : null;
+            if (typeName == null) return null;
+
             Type csType = ModelInfo.GetTypeForFhirType(typeName);
             if (csType == null) return null;
 
@@ -30,15 +38,11 @@ namespace Hl7.Fhir.Introspection
             return new PocoComplexTypeSerializationInfo(classMapping);
         }
 
-        IComplexTypeSerializationInfo IModelMetadataProvider.GetSerializationInfoForType(string typeName) => GetSerializationInfoForType(typeName);
-
         internal static ClassMapping GetMappingForType(Type elementType)
         {
             var inspector = Serialization.BaseFhirParser.Inspector;
             return inspector.ImportType(elementType);
         }
-
-        public bool IsResource(string typeName) => ModelInfo.IsKnownResource(typeName) || typeName == "Resource" || typeName == "DomainResource";
     }
 
 
@@ -64,9 +68,9 @@ namespace Hl7.Fhir.Introspection
     {
         private readonly string _referencedType;
 
-        public PocoTypeReferenceInfo(string referencedType)
+        public PocoTypeReferenceInfo(string canonical)
         {
-            _referencedType = referencedType;
+            _referencedType = canonical;
         }
 
         public string TypeName => _referencedType;
@@ -83,12 +87,6 @@ namespace Hl7.Fhir.Introspection
             _pm = pm;
             _types = new Lazy<ITypeSerializationInfo[]>(() => buildTypes(pm));
         }
-
-        public string ElementName => _pm.Name;
-
-        public bool MayRepeat => _pm.IsCollection;
-
-        public bool IsSimpleElement => _pm.SerializationHint == XmlSerializationHint.Attribute;
 
         private static ITypeSerializationInfo[] buildTypes(PropertyMapping pm)
         {
@@ -109,6 +107,12 @@ namespace Hl7.Fhir.Introspection
                 return map.IsCodeOfT ? "code" : map.Name;
             }
         }
+
+        public string ElementName => _pm.Name;
+
+        public bool MayRepeat => _pm.IsCollection;
+
+        public bool IsSimpleElement => _pm.SerializationHint == XmlSerializationHint.Attribute;
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
 

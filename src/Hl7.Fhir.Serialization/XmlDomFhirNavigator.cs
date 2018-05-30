@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
 
         internal static XmlDomFhirNavigator ForElement(XElement root, string type, IModelMetadataProvider provider)
         {
-            var elementType = provider?.GetSerializationInfoForType(type);
+            var elementType = provider?.GetSerializationInfoForStructure(type);
 
             // Note: this will generate an Empty SerializationInfoNavigator in case there is no provider, or the type is unknown
             // in the last case we may also prefer to report an error at this moment?
@@ -49,10 +49,7 @@ namespace Hl7.Fhir.Serialization
 
         public event EventHandler<ExceptionRaisedEventArgs> OnExceptionRaised;
 
-        public IElementNavigator Clone()
-        {
-            return this;        // the struct will be copied upon return
-        }
+        public IElementNavigator Clone() => this;        // the struct will be copied upon return
 
         private XObject _current;
         private SerializationInfoCache _definition;
@@ -230,7 +227,7 @@ namespace Hl7.Fhir.Serialization
                 childType = be;
 
             else 
-                childType = _definition.Provider.GetSerializationInfoForType(this.Type);
+                childType = _definition.Provider.GetSerializationInfoForStructure(this.Type);
 
             return SerializationInfoCache.ForType(childType, _definition.Provider);
         }
