@@ -6437,5 +6437,121 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("level 2 *", nav.Current.Short);
         }
 
+        // [WMR 20180604] Issue #611
+        // https://github.com/ewoutkramer/fhir-net-api/issues/611
+
+        [TestMethod]
+        public void TestSnapshotForDerivedSlice()
+        {
+            var sdBase = new StructureDefinition
+            {
+                Type = FHIRAllTypes.PractitionerRole.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.PractitionerRole),
+                Name = "BasePractitionerRole",
+                Url = "http://example.org/fhir/StructureDefinition/BasePractitionerRole",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("PractitionerRole.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                                {
+                                    new ElementDefinition.DiscriminatorComponent()
+                                    {
+                                        Type = ElementDefinition.DiscriminatorType.Value,
+                                        Path = "system"
+                                    },
+                                },
+                            }
+                        },
+                        new ElementDefinition("PractitionerRole.identifier")
+                        {
+                            SliceName = "foo",
+                            Max = "1",
+                        },
+                        new ElementDefinition("PractitionerRole.identifier")
+                        {
+                            SliceName = "bar",
+                            Max = "1",
+                        },
+                        new ElementDefinition("PractitionerRole.identifier")
+                        {
+                            SliceName = "baz",
+                            Max = "1",
+                        }
+                    }
+                }
+            };
+
+            var sdDerived = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.PractitionerRole.GetLiteral(),
+                BaseDefinition = sdBase.Url,
+                Name = "DerivedPractitionerRole",
+                Url = "http://example.org/fhir/StructureDefinition/DerivedPractitionerRole",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("PractitionerRole.identifier")
+                        {
+                            Min = 1,
+                        },
+                        new ElementDefinition("PractitionerRole.identifier")
+                        {
+                            SliceName = "bar",
+                            Min = 1,
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sdBase, sdDerived);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(sdDerived, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+
+            Assert.IsTrue(nav.JumpToFirst("PractitionerRole.identifier"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.SliceName);
+            Assert.AreEqual(1, nav.Current.Min);    // Derived profile constraint
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("PractitionerRole.identifier", nav.Path);
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("foo", nav.Current.SliceName);
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("PractitionerRole.identifier", nav.Path);
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("bar", nav.Current.SliceName);
+            Assert.AreEqual(1, nav.Current.Min);    // Derived profile constraint
+            Assert.AreEqual("1", nav.Current.Max);  // Base profile constraint
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("PractitionerRole.identifier", nav.Path);
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("baz", nav.Current.SliceName);
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreNotEqual("PractitionerRole.identifier", nav.Path);
+
+        }
+
+
     }
 }
