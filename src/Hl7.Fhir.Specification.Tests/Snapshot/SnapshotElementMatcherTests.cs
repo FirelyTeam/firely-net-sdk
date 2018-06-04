@@ -465,7 +465,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(diffNav.MoveToNext());
         }
 
+        // [WMR 20180604] Disabled; no longer possible due to fix for issue #611
+        // Does FHIR even allow this? Relevant discussion on Zulip:
+        // https://chat.fhir.org/#narrow/stream/23-conformance/subject/Can.20a.20derived.20profile.20insert.20new.20named.20slices.3F
         [TestMethod]
+        [Ignore]
         public void TestElementMatcher_ComplexExtension_Insert()
         {
             // Insert a child extension element into an existing complex extension definition
