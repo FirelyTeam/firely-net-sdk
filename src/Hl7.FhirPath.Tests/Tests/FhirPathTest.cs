@@ -10,59 +10,54 @@
 // extern alias dstu2;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Sprache;
-using Hl7.FhirPath;
 using Hl7.FhirPath.Functions;
-using Xunit;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.FhirPath.Tests
 {
+    [TestClass]
     public class FhirPathTest
     {
-        [Fact]
+        [TestMethod]
         public void ConvertToInteger()
         {
-            Assert.Equal(1L, new ConstantValue(1).ToInteger());
-            Assert.Equal(2L, new ConstantValue("2").ToInteger());
-            Assert.Null(new ConstantValue("2.4").ToInteger());
-            Assert.Equal(1L, new ConstantValue(true).ToInteger());
-            Assert.Equal(0L, new ConstantValue(false).ToInteger());
-            Assert.Null(new ConstantValue(2.4m).ToInteger());
-            Assert.Null(new ConstantValue(DateTimeOffset.Now).ToInteger());
+            Assert.AreEqual(1L, new ConstantValue(1).ToInteger());
+            Assert.AreEqual(2L, new ConstantValue("2").ToInteger());
+            Assert.IsNull(new ConstantValue("2.4").ToInteger());
+            Assert.AreEqual(1L, new ConstantValue(true).ToInteger());
+            Assert.AreEqual(0L, new ConstantValue(false).ToInteger());
+            Assert.IsNull(new ConstantValue(2.4m).ToInteger());
+            Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToInteger());
         }
 
-        [Fact]
+        [TestMethod]
         public void ConvertToString()
         {
-            Assert.Equal("hoi", new ConstantValue("hoi").ToString());
-            Assert.Equal("3.4", new ConstantValue(3.4m).ToString());
-            Assert.Equal("4", new ConstantValue(4L).ToString());
-            Assert.Equal("true", new ConstantValue(true).ToString());
-            Assert.Equal("false", new ConstantValue(false).ToString());
-            Assert.NotNull(new ConstantValue(DateTimeOffset.Now).ToString());
+            Assert.AreEqual("hoi", new ConstantValue("hoi").ToString());
+            Assert.AreEqual("3.4", new ConstantValue(3.4m).ToString());
+            Assert.AreEqual("4", new ConstantValue(4L).ToString());
+            Assert.AreEqual("true", new ConstantValue(true).ToString());
+            Assert.AreEqual("false", new ConstantValue(false).ToString());
+            Assert.IsNotNull(new ConstantValue(DateTimeOffset.Now).ToString());
         }
 
-        [Fact]
+        [TestMethod]
         public void ConvertToDecimal()
         {
-            Assert.Equal(1m, new ConstantValue(1m).ToDecimal());
-            Assert.Equal(2.01m, new ConstantValue("2.01").ToDecimal());
-            Assert.Equal(1L, new ConstantValue(true).ToDecimal());
-            Assert.Equal(0L, new ConstantValue(false).ToDecimal());
-            Assert.Null(new ConstantValue(2).ToDecimal());
+            Assert.AreEqual(1m, new ConstantValue(1m).ToDecimal());
+            Assert.AreEqual(2.01m, new ConstantValue("2.01").ToDecimal());
+            Assert.AreEqual(1L, new ConstantValue(true).ToDecimal());
+            Assert.AreEqual(0L, new ConstantValue(false).ToDecimal());
+            Assert.IsNull(new ConstantValue(2).ToDecimal());
 //            Assert.Null(new ConstantValue("2").ToDecimal());   Not clear according to spec
-            Assert.Null(new ConstantValue(DateTimeOffset.Now).ToDecimal());
+            Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToDecimal());
         }
 
-
-        
-
-        [Fact]
+        [TestMethod]
         public void CheckTypeDetermination()
         {
             var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
@@ -77,31 +72,43 @@ namespace Hl7.FhirPath.Tests
         }
 
 
-        [Fact]
+        [TestMethod]
         public void TestItemSelection()
         {
             var values = FhirValueList.Create(1, 2, 3, 4, 5, 6, 7);
 
-            Assert.Equal((Int64)1, values.Item(0).Single().Value);
-            Assert.Equal((Int64)3, values.Item(2).Single().Value);
-            Assert.Equal((Int64)1, values.First().Value);
-            Assert.False(values.Item(100).Any());
+            Assert.AreEqual((Int64)1, values.Item(0).Single().Value);
+            Assert.AreEqual((Int64)3, values.Item(2).Single().Value);
+            Assert.AreEqual((Int64)1, values.First().Value);
+            Assert.IsFalse(values.Item(100).Any());
         }
 
-        [Fact]
+        [TestMethod]
         public void TypeInfoEquality()
         {
-            Assert.Equal(TypeInfo.Boolean, TypeInfo.Boolean);
-            Assert.True(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
-            Assert.NotEqual(TypeInfo.Boolean, TypeInfo.String);
-            Assert.True(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
-            Assert.Equal(TypeInfo.ByName("something"), TypeInfo.ByName("something"));
-            Assert.NotEqual(TypeInfo.ByName("something"), TypeInfo.ByName("somethingElse"));
-            Assert.True(TypeInfo.ByName("something") == TypeInfo.ByName("something"));
-            Assert.True(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
+            Assert.AreEqual(TypeInfo.Boolean, TypeInfo.Boolean);
+            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
+            Assert.AreNotEqual(TypeInfo.Boolean, TypeInfo.String);
+            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
+            Assert.AreEqual(TypeInfo.ByName("something"), TypeInfo.ByName("something"));
+            Assert.AreNotEqual(TypeInfo.ByName("something"), TypeInfo.ByName("somethingElse"));
+            Assert.IsTrue(TypeInfo.ByName("something") == TypeInfo.ByName("something"));
+            Assert.IsTrue(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
         }
 
-        //[Fact]
+        [TestMethod]
+        public void TestFhirPathPolymporphism()
+        {
+            var patient = new Hl7.Fhir.Model.Patient() { Active = false };
+            patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
+            var nav = new PocoNavigator(patient);
+
+            var result = nav.Select("Resource.meta.lastUpdated");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+        }
+
+        //[TestMethod]
         //public void TypeInfoAndNativeMatching()
         //{
         //    Assert.True(TypeInfo.Decimal.MapsToNative(typeof(decimal)));
