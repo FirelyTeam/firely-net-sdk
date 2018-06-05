@@ -14,6 +14,9 @@ using Hl7.Fhir.Utility;
 using Xunit;
 using System;
 using Hl7.Fhir.Validation;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -76,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.True(ChildNameMatcher.NameMatches("active", data));
             Assert.True(ChildNameMatcher.NameMatches("activeBoolean", data));
-            Assert.False(ChildNameMatcher.NameMatches("activeDateTime", data)); 
+            Assert.False(ChildNameMatcher.NameMatches("activeDateTime", data));
             Assert.True(ChildNameMatcher.NameMatches("active[x]", data));
             Assert.False(ChildNameMatcher.NameMatches("activate", data));
         }
@@ -634,7 +637,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);   // 2 warnings about valueset too complex
         }
-    
+
 
         internal class BundleExampleResolver : IResourceResolver
         {
@@ -694,7 +697,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
         // Example: Organization.partOf => Organization
-        [Fact(Skip ="Don't handle recursion yet")]
+        [Fact(Skip = "Don't handle recursion yet")]
         public void TestPatientWithOrganization()
         {
             // DirectorySource (and ResourceStreamScanner) does not support json...
@@ -773,8 +776,44 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, result.Errors);
         }
 
-    // Verify aggregated element constraints
-    static void assertElementConstraints(List<ElementDefinition> patientElems)
+        /// <summary>
+        /// Test for issue 556 (https://github.com/ewoutkramer/fhir-net-api/issues/556) 
+        /// </summary>
+        [Fact]
+        public async Task RunValueSetExpanderMultiThreaded()
+        {
+            var nrOfParrallelTasks = 50;
+            var results = new ConcurrentBag<OperationOutcome>();
+            var buffer = new BufferBlock<XDocument>();
+            var processor = new ActionBlock<XDocument>(d =>
+                {
+                    var outcome = _validator.Validate(d.CreateReader());
+                    results.Add(outcome);
+                }
+                ,
+                new ExecutionDataflowBlockOptions
+                {
+                    MaxDegreeOfParallelism = 100
+                });
+            buffer.LinkTo(processor, new DataflowLinkOptions { PropagateCompletion = true });
+
+            var careplanXml = File.ReadAllText(@"TestData\validation\careplan-example-integrated.xml");
+            var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
+
+            for (int i = 0; i < nrOfParrallelTasks; i++)
+            {
+                buffer.Post(cpDoc);
+            }
+            buffer.Complete();
+            await processor.Completion;
+
+            int successes = results.Count(r => r.Success);
+
+            Assert.Equal(nrOfParrallelTasks, successes);
+        }
+
+        // Verify aggregated element constraints
+        static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
             foreach (var elem in patientElems)
             {
