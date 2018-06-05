@@ -451,7 +451,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(diffNav.MoveToNext());
         }
 
+        // [WMR 20180604] Disabled; no longer possible due to fix for issue #611
+        // Does FHIR even allow this? Relevant discussion on Zulip:
+        // https://chat.fhir.org/#narrow/stream/23-conformance/subject/Can.20a.20derived.20profile.20insert.20new.20named.20slices.3F
+        // Grahame Grieve:
+        //   "have you seen build\tests\resources\snapshot-generation-tests.xml ?
+        //   it doesn't include that, so we can say with confidence that it's not tested behaviour
+        //   certainly if the slice is ordered, you cannot insert
+        //   if the slicing is not ordered, I don't see what the need for inseertion is"
+        // => Derived profile is NOT allowed to *insert* named slices into an existing slice group
         [TestMethod]
+        [Ignore]
         public void TestElementMatcher_ComplexExtension_Insert()
         {
             // Insert a child extension element into an existing complex extension definition
