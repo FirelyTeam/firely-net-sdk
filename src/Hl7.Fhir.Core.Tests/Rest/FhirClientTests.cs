@@ -956,7 +956,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
-            var client = new FhirDstu2Client("http://fhir2.healthintersections.com.au/open");  // an address that returns Status 404 with an OperationOutcome
+            var client = new FhirDstu2Client(testEndpoint);
 
             try
             {
