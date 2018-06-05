@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Rest
             setAgent(request, ".NET FhirClient for FHIR " + fhirVersion);
 
             if (!useFormatParameter)
-                request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(format, version, forBundle: false);
 
             if (IfMatch != null) request.Headers["If-Match"] = IfMatch;
             if (IfNoneMatch != null) request.Headers["If-None-Match"] = IfNoneMatch;
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, version, forBundle: false);
             }
         }
     }

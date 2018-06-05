@@ -4378,13 +4378,13 @@ namespace Hl7.Fhir.Model.DSTU2
     public enum ContentType
     {
         /// <summary>
-        /// XML content-type corresponding to the application/xml+fhir mime-type.
+        /// XML content-type corresponding to the application/xml+fhir (DSTU2) and application/fhir+xml (STU3+) mime-types.
         /// (system: http://hl7.org/fhir/content-type)
         /// </summary>
         [EnumLiteral("xml", "http://hl7.org/fhir/content-type"), Description("xml")]
         Xml,
         /// <summary>
-        /// JSON content-type corresponding to the application/json+fhir mime-type.
+        /// JSON content-type corresponding to the application/json+fhir (DSTU2) and application/fhir+json (STU3+) mime-types.
         /// (system: http://hl7.org/fhir/content-type)
         /// </summary>
         [EnumLiteral("json", "http://hl7.org/fhir/content-type"), Description("json")]

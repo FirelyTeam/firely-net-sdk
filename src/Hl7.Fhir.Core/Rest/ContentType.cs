@@ -28,15 +28,17 @@ namespace Hl7.Fhir.Rest
 
     public static class ContentType
     {
-        public const string JSON_CONTENT_HEADER = "application/json+fhir";  // The formal FHIR mime type (still to be registered).
+        public const string JSON_CONTENT_HEADER = "application/fhir+json";  // The formal FHIR STU3 and later JSON mime type
+        public const string JSON_DSTU2_CONTENT_HEADER = "application/json+fhir";  // The formal FHIR DSTU2 JSON mime type
         public static readonly string[] JSON_CONTENT_HEADERS = new string[]
-            { JSON_CONTENT_HEADER,
-                "application/fhir+json", "application/json", "text/json"};
+            { JSON_CONTENT_HEADER, JSON_DSTU2_CONTENT_HEADER,
+                "application/json", "text/json"};
 
-        public const string XML_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered).
+        public const string XML_CONTENT_HEADER = "application/fhir+xml";   // The formal FHIR STU3 and later XML mime type
+        public const string XML_DSTU2_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR DSTU2 XML mime type
         public static readonly string[] XML_CONTENT_HEADERS = new string[]
-            { XML_CONTENT_HEADER, "text/xml", "application/xml",
-                "application/fhir+xml", "text/xml+fhir" };
+            { XML_CONTENT_HEADER, XML_DSTU2_CONTENT_HEADER,
+                "text/xml", "application/xml", "text/xml+fhir", "text/fhir+xml" };
 
         public const string FORMAT_PARAM_XML = "xml";
         public const string FORMAT_PARAM_JSON = "json";
@@ -82,14 +84,18 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static string BuildContentType(ResourceFormat format, bool forBundle)
+        public static string BuildContentType(ResourceFormat format, Model.Version version, bool forBundle)
         {
             string contentType;
 
             if (format == ResourceFormat.Json)
-                contentType = JSON_CONTENT_HEADER;
+                contentType = version == Model.Version.DSTU2 ? 
+                    JSON_DSTU2_CONTENT_HEADER : 
+                    JSON_CONTENT_HEADER;
             else if (format == ResourceFormat.Xml)
-                contentType = XML_CONTENT_HEADER;
+                contentType = version == Model.Version.DSTU2 ? 
+                    XML_DSTU2_CONTENT_HEADER : 
+                    XML_CONTENT_HEADER;
             else
                 throw new ArgumentException("Cannot determine content type for data format " + format);
 
