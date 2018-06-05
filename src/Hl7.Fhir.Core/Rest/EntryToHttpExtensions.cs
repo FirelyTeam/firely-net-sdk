@@ -133,9 +133,9 @@ namespace Hl7.Fhir.Rest
                 foreach(Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
                     if (!string.IsNullOrEmpty(bodyParameters)) bodyParameters += "&";
-                    bodyParameters += $"{parameter.Name}={parameter.Value}";
+                    bodyParameters += $"{Uri.EscapeDataString(parameter.Name)}={Uri.EscapeDataString(parameter.Value.ToString())}";
                 }
-                body = Encoding.UTF8.GetBytes(Uri.EscapeDataString(bodyParameters));
+                body = Encoding.UTF8.GetBytes(bodyParameters);
                 request.ContentType = "application/x-www-form-urlencoded";
             }
             else
