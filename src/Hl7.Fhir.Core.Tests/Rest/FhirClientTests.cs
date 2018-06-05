@@ -19,6 +19,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Hl7.Fhir.Utility;
 using static Hl7.Fhir.Model.Bundle;
+using System.Drawing;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -32,8 +33,8 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://test.fhir.org/r2");
         //public static Uri testEndpoint = new Uri("http://vonk.fire.ly");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
-        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-        public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
+        public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
         //public static Uri testEndpoint = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
 
@@ -1082,6 +1083,43 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
             }
+        }
+
+        /// <summary>
+        /// Test for showing issue https://github.com/ewoutkramer/fhir-net-api/issues/128
+        /// </summary>
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public void TestCreatingBinaryResource()
+        {
+            Image img = Image.FromFile(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
+            byte[] arr;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                arr = ms.ToArray();
+            }
+
+            var client = new FhirClient(testEndpoint);
+
+            var binary = new Binary() { Content = arr, ContentType = "image/png" };
+            var result = client.Create(binary);
+
+            Assert.IsNotNull(result);
+
+            void Client_OnBeforeRequest(object sender, BeforeRequestEventArgs e)
+            {
+                // Removing the Accept part of the request. The server should send the resource back in the original Content-Type (in this case image/png)
+                e.RawRequest.Accept = null;
+            }
+
+            client.OnBeforeRequest += Client_OnBeforeRequest;
+
+            var result2 = client.Get($"Binary/{result.Id}");
+            Assert.IsNotNull(result2);
+            Assert.IsInstanceOfType(result2, typeof(Binary));
+            Assert.IsNotNull(result2.Id, "Binary resource should have an Id");
+            Assert.AreEqual(result2.Id, result.Id);
+            Assert.IsNotNull(result2.Meta?.VersionId, "Binary resource should have an Version"); 
         }
 
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
