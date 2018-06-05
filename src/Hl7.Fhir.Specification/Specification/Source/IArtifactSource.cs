@@ -6,7 +6,6 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 
