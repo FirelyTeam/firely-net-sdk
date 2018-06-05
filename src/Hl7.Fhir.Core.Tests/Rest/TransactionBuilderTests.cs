@@ -48,6 +48,29 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        public void TestFormBody()
+        {
+            string expected = "given=test&Key=Value&Active=true";
+
+            string endpoint = "http://myserver.org/fhir";
+            string resourceType = "Patient";
+
+            var parameters = new List<Tuple<string, string>>();
+            parameters.Add(new Tuple<string, string>("given", "test"));
+            parameters.Add(new Tuple<string, string>("Key", "Value"));
+            parameters.Add(new Tuple<string, string>("Active", "true"));
+            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
+
+            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
+            byte[] body;
+            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+
+            var bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
+
+            Assert.AreEqual(bodyText, expected);
+        }
+        
+        [TestMethod]
         public void TestUrlEncoding()
         {
             var tx = new TransactionBuilder("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f");
@@ -64,10 +87,10 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestFormUrlEncoding()
         {
-            string expected = "Key%3D%3C%26%3E%22%27%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40%21%23%C2%A4%25%2F%28%29%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
+            string expected = "Key=%3C%26%3E%22%27%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40%21%23%C2%A4%25%2F%28%29%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
 
             string specialCharacters = "<&>\"'äëïoæøå€$£@!#¤%/()=?|§¨^\\[]{}";
-            string endpoint = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
+            string endpoint = "http://myserver.org/fhir";
             string resourceType = "Patient";
             var parameters = new List<Tuple<string, string>>();
             parameters.Add(new Tuple<string, string>("Key", specialCharacters));
@@ -86,7 +109,7 @@ namespace Hl7.Fhir.Test
         {
             string expected = "POST";
 
-            string endpoint = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
+            string endpoint = "http://myserver.org/fhir";
             string resourceType = "Patient";
             
             var parameters = new List<Tuple<string, string>>();
@@ -105,7 +128,7 @@ namespace Hl7.Fhir.Test
         {
             string expected = "application/x-www-form-urlencoded";
 
-            string endpoint = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
+            string endpoint = "http://myserver.org/fhir";
             string resourceType = "Patient";
 
             var parameters = new List<Tuple<string, string>>();
@@ -122,9 +145,9 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestSearchUsingPost_UrlIsSuffixedWith_search()
         {
-            string expected = "http://nde-fhir-ehelse.azurewebsites.net/fhir/Patient/_search?_format=json";
+            string expected = "http://myserver.org/fhir/Patient/_search?_format=json";
 
-            string endpoint = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
+            string endpoint = "http://myserver.org/fhir";
             string resourceType = "Patient";
 
             var parameters = new List<Tuple<string, string>>();
