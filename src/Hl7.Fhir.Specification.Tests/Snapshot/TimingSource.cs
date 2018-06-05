@@ -1,9 +1,7 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Tests

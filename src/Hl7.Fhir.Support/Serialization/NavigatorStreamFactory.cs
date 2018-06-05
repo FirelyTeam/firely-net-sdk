@@ -34,14 +34,27 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Supports XML and JSON serialization formats.</remarks>
         /// <exception cref="NotSupportedException">The specified FHIR resource serialization format is not supported.</exception>
         /// <seealso cref="FhirSerializationFormats"/>
-        public static INavigatorStream Create(Stream stream, string format)
+        public static INavigatorStream Create(Stream stream, string format) => Create(stream, format, true);
+
+        /// <summary>
+        /// Creates a new <see cref="INavigatorStream"/> instance to access the contents of a
+        /// serialized resource stream, independent of the serialization format.
+        /// </summary>
+        /// <param name="stream">A <see cref="Stream"/> for reading a serialized FHIR resource.</param>
+        /// <param name="format">A string value that represents the FHIR resource serialization format, as defined by <see cref="FhirSerializationFormats"/>.</param>
+        /// <param name="disposeStream">Determines if the <see cref="IDisposable.Dispose()"/> method should also dispose the specified <paramref name="stream"/> instance.</param>
+        /// <returns>A new <see cref="INavigatorStream"/> instance.</returns>
+        /// <remarks>Supports XML and JSON serialization formats.</remarks>
+        /// <exception cref="NotSupportedException">The specified FHIR resource serialization format is not supported.</exception>
+        /// <seealso cref="FhirSerializationFormats"/>
+        public static INavigatorStream Create(Stream stream, string format, bool disposeStream)
         {
             switch (format)
             {
                 case FhirSerializationFormats.Xml:
-                    return new XmlNavigatorStream(stream);
+                    return new XmlNavigatorStream(stream, disposeStream);
                 case FhirSerializationFormats.Json:
-                    return new JsonNavigatorStream(stream);
+                    return new JsonNavigatorStream(stream, disposeStream);
                 default:
                     throw Error.NotSupported($"Unsupported FHIR serialization format ('{format}').");
             }

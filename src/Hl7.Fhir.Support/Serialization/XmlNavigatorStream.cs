@@ -57,7 +57,11 @@ namespace Hl7.Fhir.Serialization
         {
             _stream = stream ?? throw Error.ArgumentNull(nameof(stream));
             _disposeStream = disposeStream;
-            Reset();
+
+            // Don't reset stream by default!
+            // Relies on Stream.Seek() method, not supported by forward-only readers (e.g. zip archive)
+            // Reset();
+            initializeReader();
         }
 
         #region IDisposable
@@ -110,12 +114,28 @@ namespace Hl7.Fhir.Serialization
         /// <summary>Returns <c>true</c> if the underlying file represents a Bundle resource, or <c>false</c> otherwise.</summary>
         public bool IsBundle => ResourceType == "Bundle";
 
+        /// <summary>
+        /// Reset the stream to the start position.
+        /// Requires the internal stream, as specified in the ctor, to support seeking.
+        /// </summary>
+        /// <exception cref="NotSupportedException">The internal stream does not support seeking.</exception>
         public void Reset()
         {
             throwIfDisposed();
 
-            _stream.Seek(0, SeekOrigin.Begin);
+            // This will fail if the internal stream does not support seeking
+            var stream = _stream;
+            if (!stream.CanSeek)
+            {
+                throw Error.NotSupported($"Unable to reset the {nameof(XmlNavigatorStream)}. The internal {stream.GetType().Name} instance does not support seeking.");
+            }
+            stream.Seek(0, SeekOrigin.Begin);
 
+            initializeReader();
+        }
+
+        void initializeReader()
+        {
             disposeReader();
             _reader = SerializationUtil.XmlReaderFromStream(_stream);
 
