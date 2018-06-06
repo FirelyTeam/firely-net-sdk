@@ -428,6 +428,22 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             do
             {
+                // [WMR 20180604] Fix for issue #611
+                // "Bug: Snapshot Generator fails for derived profiles with sparse constraints on _some_ existing named slices"
+                // => First advance to matching named slice in snap;
+                // skip (consume) all preceding (unconstrained) named slices in snap
+                // Match => Merge named slice in diff to existing named slice in snap
+                // No match => Add new named slice (after all existing slices in snap)
+                // Only try to match named slices; always add unnamed (extension) slices in-order
+                if (diffNav.Current.SliceName != null)
+                {
+                    while (snapNav.Current.SliceName != diffNav.Current.SliceName && snapNav.MoveToNextSlice())
+                    {
+                        //
+                    }
+                }
+
+
                 // Named slice with a slice entry introduces a re-slice
                 if (diffNav.Current.Slicing != null)
                 {

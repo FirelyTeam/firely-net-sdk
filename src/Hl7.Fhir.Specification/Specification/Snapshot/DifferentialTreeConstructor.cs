@@ -5,7 +5,7 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
- 
+
 // #define DUMPOUTPUT
 
 // EXPERIMENTAL
@@ -43,13 +43,13 @@
 //
 // * change exceptions to operation issues...?
 
-using System;
-using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
-using System.Diagnostics;
 using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
 #if DEBUG && DUMPOUTPUT
-            Debug.Print($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.SliceName}")));
+            Debug.WriteLine($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.SliceName}")));
 #endif
 
             return diff;
