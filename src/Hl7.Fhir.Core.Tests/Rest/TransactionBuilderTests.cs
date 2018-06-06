@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Test
 
             Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
             byte[] body;
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Strict, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
             var bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
 
