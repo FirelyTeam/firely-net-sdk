@@ -62,24 +62,14 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// slicing or ElementDefn information associated with them, so they should not have any 
     /// influence on the final snapshot form.
     /// </summary>
-    internal class DifferentialTreeConstructor
+    public class DifferentialTreeConstructor
     {
         /// <summary>Create a valid tree structure from a sparse differential element list by adding missing parent element definitions.</summary>
         /// <returns>A tree structure representing the differential component.</returns>
         /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
-        public static List<ElementDefinition> MakeTree(List<ElementDefinition> elements)
+        public List<ElementDefinition> MakeTree(List<ElementDefinition> elements)
         {
-            var dtc = new DifferentialTreeConstructor(elements);
-            return dtc.makeTree();
-        }
-
-        List<ElementDefinition> _source;
-
-        DifferentialTreeConstructor(List<ElementDefinition> elements) { _source = elements; }
-
-        List<ElementDefinition> makeTree()
-        {
-            var diff = new List<ElementDefinition>(_source.DeepCopy());   // We're going to modify the differential
+            var diff = new List<ElementDefinition>(elements.DeepCopy());   // We're going to modify the differential
 
             if (diff.Count == 0 ) return diff;        // nothing to do
 
