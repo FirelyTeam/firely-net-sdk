@@ -179,17 +179,11 @@ namespace Hl7.FhirPath.Expressions
 
         public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
         {
-            Func<Closure, IEnumerable<IElementNavigator>> boundFunc = (ctx) => invokee(ctx, arguments);
-            IEnumerable<IElementNavigator> lastResult = null;
-
             return (ctx, _) =>
             {
-                //  if (lastResult != null) return lastResult;
-
                 try
                 {
-                    lastResult = boundFunc(ctx);
-                    return lastResult;
+                    return invokee(ctx, arguments);
                 }
                 catch (Exception e)
                 {

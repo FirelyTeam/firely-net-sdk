@@ -1149,7 +1149,7 @@ namespace Hl7.Fhir.Specification.Tests
             e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
             e.Add(new ElementDefinition() { Path = "A.D.F" });
 
-            var tree = DifferentialTreeConstructor.MakeTree(e);
+            var tree = (new DifferentialTreeConstructor()).MakeTree(e);
             Assert.IsNotNull(tree);
 
             var nav = new ElementDefinitionNavigator(tree);
@@ -1183,7 +1183,7 @@ namespace Hl7.Fhir.Specification.Tests
             bool exceptionRaised = false;
             try
             {
-                var tree = DifferentialTreeConstructor.MakeTree(elements);
+                var tree = (new DifferentialTreeConstructor()).MakeTree(elements);
             }
             catch (InvalidOperationException ex)
             {
@@ -1208,7 +1208,7 @@ namespace Hl7.Fhir.Specification.Tests
             elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
             elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "C/1" });
 
-            var tree = DifferentialTreeConstructor.MakeTree(elements);
+            var tree = (new DifferentialTreeConstructor()).MakeTree(elements);
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
 
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
             Assert.IsNotNull(sd);
-            var tree = DifferentialTreeConstructor.MakeTree(sd.Differential.Element);
+            var tree = (new DifferentialTreeConstructor()).MakeTree(sd.Differential.Element);
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
         }
@@ -5479,6 +5479,115 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("level 2", nav.Current.Comments);
             Assert.AreEqual("level 2 *", nav.Current.Short);
         }
+
+        // [WMR 20180604] Issue #611
+        // https://github.com/ewoutkramer/fhir-net-api/issues/611
+
+        [TestMethod]
+        public void TestSnapshotForDerivedSlice()
+        {
+            var sdBase = new StructureDefinition
+            {
+                ConstrainedType = FHIRDefinedType.Patient,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient),
+                Name = "BasePatient",
+                Url = "http://example.org/fhir/StructureDefinition/BasePatient",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new string[] { "system" },
+                            }
+                        },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Name = "foo",
+                            Max = "1",
+                        },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Name = "bar",
+                            Max = "1",
+                        },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Name = "baz",
+                            Max = "1",
+                        }
+                    }
+                }
+            };
+
+            var sdDerived = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Patient,
+                Base = sdBase.Url,
+                Name = "DerivedPatient",
+                Url = "http://example.org/fhir/StructureDefinition/DerivedPatient",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Min = 1,
+                        },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Name = "bar",
+                            Min = 1,
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sdBase, sdDerived);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(sdDerived, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Assert.IsNull(_generator.Outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+
+            Assert.IsTrue(nav.JumpToFirst("Patient.identifier"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.Name);
+            Assert.AreEqual(1, nav.Current.Min);    // Derived profile constraint
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("Patient.identifier", nav.Path);
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("foo", nav.Current.Name);
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("Patient.identifier", nav.Path);
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("bar", nav.Current.Name);
+            Assert.AreEqual(1, nav.Current.Min);    // Derived profile constraint
+            Assert.AreEqual("1", nav.Current.Max);  // Base profile constraint
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("Patient.identifier", nav.Path);
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("baz", nav.Current.Name);
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreNotEqual("Patient.identifier", nav.Path);
+
+        }
+
 
     }
 

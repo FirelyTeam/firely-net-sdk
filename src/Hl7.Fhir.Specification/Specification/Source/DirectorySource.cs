@@ -26,7 +26,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification.Source.Summary;
+using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
@@ -35,7 +35,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -60,7 +59,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private List<string> _artifactFilePaths;
         private List<ArtifactSummary> _artifactSummaries;
-        private ReadOnlyCollection<ArtifactSummary> _roArtifactSummaries;
+
 #if THREADSAFE
         // Shared synchronization object for _artifactFilePaths & _artifactSummaries
         private readonly object _syncRoot = new object();
@@ -327,23 +326,33 @@ namespace Hl7.Fhir.Specification.Source
             set { _settings.MultiThreaded = value; } // Refresh();
         }
 
-        /// <summary>Request a full re-scan of the specified content directory.</summary>
-        /// <remarks>
-        /// Clear the internal artifact file path and summary caches.
-        /// Re-scan the current <see cref="ContentDirectory"/> and generate new summaries on demand,
-        /// during the next resolving request.
-        /// </remarks>
+        #region Refresh
+
+        /// <summary>
+        /// Re-index the specified content directory.
+        /// <para>
+        /// Clears the internal artifact file path and summary caches.
+        /// Re-indexes the current <see cref="ContentDirectory"/> and generates new summaries on demand,
+        /// during the next resolving call.
+        /// </para>
+        /// </summary>
         public void Refresh() => Refresh(false);
 
-        /// <summary>Request a full re-scan of the specified content directory.</summary>
-        /// <param name="force">Determines if the source should perform the re-scan immediately (<c>true</c>) or on demand (<c>false</c>).</param>
-        /// <remarks>
-        /// Clear the internal artifact file path and summary caches.
-        /// Re-scan the current <see cref="ContentDirectory"/> and generate new summaries.
-        /// If <paramref name="force"/> equals <c>true</c>, then the source performs the re-scan immediately.
-        /// Otherwise, if <paramref name="force"/> equals <c>false</c>, the re-scan is performed
-        /// on demand during the next resolving request.
-        /// </remarks>
+        /// <summary>
+        /// Re-index the specified content directory.
+        /// <para>
+        /// Clears the internal artifact file path and summary caches.
+        /// Re-indexes the current <see cref="ContentDirectory"/> and generates new summaries.
+        /// </para>
+        /// <para>
+        /// If <paramref name="force"/> equals <c>true</c>, then the source performs the re-indexing immediately.
+        /// Otherwise, if <paramref name="force"/> equals <c>false</c>, then re-indexing is performed on demand
+        /// during the next resolving request.
+        /// </para>
+        /// </summary>
+        /// <param name="force">
+        /// Determines if the source should perform re-indexing immediately (<c>true</c>) or on demand (<c>false</c>).
+        /// </param>
         public void Refresh(bool force)
         {
             // OPTIMIZE: Implement incremental update
@@ -356,7 +365,6 @@ namespace Hl7.Fhir.Specification.Source
             {
                 _artifactFilePaths = null;
                 _artifactSummaries = null;
-                _roArtifactSummaries = null;
                 if (force)
                 {
                     prepareSummaries();
@@ -364,41 +372,44 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        /// <summary>Request a re-scan of one or more specific  artifact file(s).</summary>
-        /// <param name="filePaths">One or more artifact file path(s).</param>
-        /// <remarks>
-        /// Notify the <see cref="DirectorySource"/> that specific files in the current
+        /// <summary>
+        /// Re-index one or more specific  artifact file(s).
+        /// <para>
+        /// Notifies the <see cref="DirectorySource"/> that specific files in the current
         /// <see cref="ContentDirectory"/> have been created, updated or deleted.
         /// The <paramref name="filePaths"/> argument should specify an array of artifact
         /// file paths that (may) have been deleted, modified or created.
+        /// </para>
+        /// <para>
         /// The source will:
         /// <list type="number">
-        /// <item>
-        /// <description>
-        /// Remove any existing summary information for the specified artifacts, if available.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Try to harvest new summary information from the specified artifacts, if they still exist.
-        /// </description>
-        /// </item>
+        /// <item>remove any existing summary information for the specified artifacts, if available;</item>
+        /// <item>try to harvest updated summary information from the specified artifacts, if they still exist.</item>
         /// </list>
-        /// </remarks>
-        public void Refresh(params string[] filePaths)
+        /// </para>
+        /// </summary>
+        /// <param name="filePaths">One or more artifact file path(s).</param>
+        /// <returns>
+        /// <c>true</c> if succesful, i.e. if matching cache items have been evicted, or <c>false</c> otherwise.
+        /// </returns>
+        public bool Refresh(params string[] filePaths)
         {
             if (filePaths == null || filePaths.Length == 0)
             {
                 throw Error.ArgumentNullOrEmpty(nameof(filePaths));
             }
+
+            bool result = false;
+
 #if THREADSAFE
             lock (_syncRoot)
 #endif
             {
-                if (_artifactFilePaths == null)
+                var artifactFilePaths = _artifactFilePaths;
+                if (artifactFilePaths == null)
                 {
                     // Cache is empty, perform full scan on demand
-                    return;
+                    return false;
                 }
                 // Update file paths
                 foreach (var filePath in filePaths)
@@ -407,31 +418,46 @@ namespace Hl7.Fhir.Specification.Source
                     bool exists = File.Exists(filePath);
                     if (!exists)
                     {
-                        _artifactFilePaths.Remove(filePath);
+                        // Return true if existing file path was evicted from cache
+                        result = artifactFilePaths.Remove(filePath);
                     }
-                    else if (!_artifactFilePaths.Contains(filePath))
+                    else if (!artifactFilePaths.Contains(filePath))
                     {
-                        _artifactFilePaths.Add(filePath);
+                        // Discovered new artifact; cache file path and return true
+                        artifactFilePaths.Add(filePath);
+                        result = true;
                     }
 
                     // Update summaries (if cached)
-                    if (_artifactSummaries != null)
+                    var artifactSummaries = _artifactSummaries;
+                    if (artifactSummaries != null)
                     {
-                        _artifactSummaries.RemoveAll(s => StringComparer.OrdinalIgnoreCase.Equals(filePath, s.Origin));
+                        if (artifactSummaries.RemoveAll(s => StringComparer.OrdinalIgnoreCase.Equals(filePath, s.Origin)) > 0)
+                        {
+                            // Evicted some existing summaries from the cache; return true
+                            result = true;
+                        }
                         if (exists)
                         {
                             // May fail, e.g. if another thread/process has deleted the target file
                             // Generate will catch exceptions and return empty list
                             var summaries = ArtifactSummaryGenerator.Generate(filePath, _settings.SummaryDetailsHarvesters);
-                            _artifactSummaries.AddRange(summaries);
+                            artifactSummaries.AddRange(summaries);
+                            if (summaries.Count > 0)
+                            {
+                                // Added some new/updated summaries to the cache; return true
+                                result = true;
+                            }
                         }
-                        // [WMR 20180409] No need to recreate r/o wrapper, automatically synchronized
-                        // _roArtifactSummaries = _artifactSummaries.AsReadOnly();
                     }
 
                 }
             }
+
+            return result;
         }
+
+        #endregion
 
         #region IArtifactSource
 
@@ -462,7 +488,7 @@ namespace Hl7.Fhir.Specification.Source
             // if (system == null) throw Error.ArgumentNull(nameof(system));
             var summary = GetSummaries().ResolveValueSet(system);
             // return summary != null ? getResourceFromScannedSource<ValueSet>(summary) : null;
-            return summary?.LoadResource<ValueSet>();
+            return loadResourceInternal<ValueSet>(summary);
         }
 
         /// <summary>Resolve <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
@@ -473,8 +499,7 @@ namespace Hl7.Fhir.Specification.Source
                 throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
             }
             var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
-            // return summaries.Select(summary => getResourceFromScannedSource<ConceptMap>(summary)).Where(r => r != null);
-            return summaries.Select(summary => summary?.LoadResource<ConceptMap>()).Where(r => r != null);
+            return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
         }
 
         /// <summary>Resolve the <see cref="NamingSystem"/> resource with the specified uniqueId.</summary>
@@ -482,8 +507,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             var summary = GetSummaries().ResolveNamingSystem(uniqueId);
-            // return summary != null ? getResourceFromScannedSource<NamingSystem>(summary) : null;
-            return summary?.LoadResource<NamingSystem>();
+            return loadResourceInternal<NamingSystem>(summary);
         }
 
 
@@ -491,11 +515,33 @@ namespace Hl7.Fhir.Specification.Source
 
         #region ISummarySource
 
-        /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public ReadOnlyCollection<ArtifactSummary> ListSummaries()
+        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with key information about each FHIR artifact provided by the source.</summary>
+        public IEnumerable<ArtifactSummary> ListSummaries()
         {
             GetSummaries();
-            return _roArtifactSummaries;
+            return _artifactSummaries.AsReadOnly();
+        }
+
+        /// <summary>
+        /// Load the resource from which the specified summary was generated.
+        /// <para>
+        /// This implementation annotates returned resource instances with an <seealso cref="OriginAnnotation"/>
+        /// that captures the value of the <see cref="ArtifactSummary.Origin"/> property.
+        /// The <seealso cref="OriginAnnotationExtensions.GetOrigin(Resource)"/> extension method 
+        /// provides access to the annotated location.
+        /// </para>
+        /// </summary>
+        /// <param name="summary">An <see cref="ArtifactSummary"/> instance generated by this source.</param>
+        /// <returns>A new <see cref="Resource"/> instance, or <c>null</c>.</returns>
+        /// <remarks>
+        /// The <see cref="ArtifactSummary.Origin"/> and <see cref="ArtifactSummary.Position"/>
+        /// summary properties allow the source to identify and resolve the artifact.
+        /// </remarks>
+        public Resource LoadBySummary(ArtifactSummary summary)
+        {
+            if (summary == null) { throw Error.ArgumentNull(nameof(summary)); }
+            return loadResourceInternal<Resource>(summary);
+
         }
 
         #endregion
@@ -507,8 +553,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByUri(uri);
-            // return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
-            return summary?.LoadResource<Resource>();
+            return loadResourceInternal<Resource>(summary);
         }
 
         /// <summary>Resolve the conformance resource with the specified canonical url.</summary>
@@ -516,8 +561,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri);
-            // return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
-            return summary?.LoadResource<Resource>();
+            return loadResourceInternal<Resource>(summary);
         }
 
         #endregion
@@ -560,7 +604,6 @@ namespace Hl7.Fhir.Specification.Source
 
             _artifactFilePaths = filePaths;
             _artifactSummaries = null;
-            _roArtifactSummaries = null;
             return filePaths;
         }
 
@@ -736,7 +779,6 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             _artifactSummaries = summaries;
-            _roArtifactSummaries = summaries.AsReadOnly();
             return;
         }
 
@@ -751,8 +793,15 @@ namespace Hl7.Fhir.Specification.Source
             {
                 foreach (var filePath in paths)
                 {
-                    var summaries = ArtifactSummaryGenerator.Generate(filePath, harvesters);
-                    scanResult.AddRange(summaries);
+                    var summaries = harvesters == null || harvesters.Length == 0
+                        ? ArtifactSummaryGenerator.Generate(filePath)
+                        : ArtifactSummaryGenerator.Generate(filePath, harvesters);
+
+                    // [WMR 20180423] Generate may return null, e.g. if specified file has unknown extension
+                    if (summaries != null)
+                    {
+                        scanResult.AddRange(summaries);
+                    }
                 }
             }
             else
@@ -805,6 +854,52 @@ namespace Hl7.Fhir.Specification.Source
 
             return scanResult;
         }
+
+        /// <summary>Returns <c>null</c> if the specified <paramref name="summary"/> equals <c>null</c>.</summary>
+        T loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
+        {
+            if (summary == null) { return null; }
+
+            // File path of the containing resource file (could be a Bundle)
+            var origin = summary.Origin;
+            if (string.IsNullOrEmpty(origin))
+            {
+                throw Error.Argument($"Cannot load resource from summary. The {nameof(ArtifactSummary.Origin)} property value is empty or missing.");
+            }
+
+            var pos = summary.Position;
+            if (string.IsNullOrEmpty(pos))
+            {
+                throw Error.Argument($"Cannot load resource from summary. The {nameof(ArtifactSummary.Position)} property value is empty or missing.");
+            }
+
+            T result = null;
+            using (var navStream = DefaultNavigatorStreamFactory.Create(origin))
+            {
+
+                // Handle exceptions & null return values?
+                // e.g. file may have been deleted/renamed since last scan
+
+                // Advance stream to the target resource (e.g. specific Bundle entry)
+                if (navStream != null && navStream.Seek(pos))
+                {
+                    // Create navigator for the target resource
+                    var nav = navStream.Current;
+                    if (nav != null)
+                    {
+                        // Parse target resource from navigator
+                        var parser = new BaseFhirParser();
+                        result = parser.Parse<T>(nav);
+                        // Add origin annotation
+                        result?.SetOrigin(origin);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
 
         #endregion
 

@@ -12,7 +12,8 @@ using System;
 using System.Net;
 using System.Reflection;
 using Hl7.Fhir.Utility;
-using System.Text;
+using System.Collections.Generic;
+using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
@@ -129,13 +130,21 @@ namespace Hl7.Fhir.Rest
             }
             else if (searchUsingPost)
             {
-                string bodyParameters = null;
+                IDictionary<string, string> bodyParameters = new Dictionary<string, string>();
                 foreach(Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
-                    if (!string.IsNullOrEmpty(bodyParameters)) bodyParameters += "&";
-                    bodyParameters += $"{parameter.Name}={parameter.Value}";
+                    bodyParameters.Add(parameter.Name, parameter.Value.ToString());
                 }
-                body = Encoding.UTF8.GetBytes(Uri.EscapeDataString(bodyParameters));
+                if (bodyParameters.Count > 0)
+                {
+                    FormUrlEncodedContent content = new FormUrlEncodedContent(bodyParameters);
+                    body = content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                }
+                else
+                {
+                    body = null;
+                }
+
                 request.ContentType = "application/x-www-form-urlencoded";
             }
             else

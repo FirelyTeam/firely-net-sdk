@@ -8,10 +8,11 @@
 
 #if NET_FILESYSTEM
 
-using System;
+using Hl7.Fhir.Specification.Source;
 using System.Collections.Generic;
 
-namespace Hl7.Fhir.Specification.Source.Summary
+// Expose low-level interfaces from a separate child namespace, to prevent pollution
+namespace Hl7.Fhir.Specification.Summary
 {
     /// <summary>Read-only dictionary interface to access harvested artifact summary properties by key.</summary>
     /// <remarks>
@@ -36,8 +37,13 @@ namespace Hl7.Fhir.Specification.Source.Summary
     /// </remarks>
     public class ArtifactSummaryPropertyBag : Dictionary<string, object>, IArtifactSummaryPropertyBag
     {
+        /// <summary>Returns an empty <see cref="ArtifactSummaryPropertyBag"/> instance.</summary>
+        public static ArtifactSummaryPropertyBag Empty => new ArtifactSummaryPropertyBag();
+
+        /// <summary>Default initial capacity.</summary>
         public const int DefaultCapacity = 8;
 
+        /// <summary>Creates a new instance of the <see cref="ArtifactSummaryPropertyBag"/>.</summary>
         public ArtifactSummaryPropertyBag() : base(DefaultCapacity) { }
     }
 }
