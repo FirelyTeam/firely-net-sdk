@@ -13,7 +13,8 @@ using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
 
-namespace Hl7.Fhir.Specification.Source.Summary
+// Expose low-level interfaces from a separate child namespace, to prevent pollution
+namespace Hl7.Fhir.Specification.Summary
 {
     /// <summary>
     /// Extension methods on <see cref="IElementNavigator"/> to facilitate harvesting summary information

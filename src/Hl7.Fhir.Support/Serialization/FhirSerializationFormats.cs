@@ -20,5 +20,14 @@ namespace Hl7.Fhir.Serialization
 
         // <summary>Represents the FHIR RDF resource serialization format.</summary>
         // public const string Rdf = "rdf";
+
+
+        /// <summary>Returns an array of all defined serialization formats.</summary>
+        public static readonly string[] All = new[]
+        {
+            Xml,
+            Json,
+            // Rdf
+        };
     }
 }

@@ -298,7 +298,7 @@ if (!abstractType){
 	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
 		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant" 
 		&& resourceName != "FhirString" && resourceName != "Markdown" && resourceName != "Base64Binary"
-		&& resourceName != "FhirUrl" && resourceName != "Canonical"
+		&& resourceName != "FhirUrl" && resourceName != "Canonical" && resourceName != "FhirBoolean"
 		|| resourceName == "FhirUri")
     {
 		WriteLine("        [{0}Pattern]", resourceName.Replace("Fhir", ""));
