@@ -9,11 +9,11 @@
 
    <PropertyGroup>
     <Version>$(FhirApiVersion)</Version>
-    <PackageId>Hl7.Fhir.Core</PackageId>
-    <Title>HL7 FHIR Core support API</Title>	
-    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0.2) and STU3 (3.0.1)</Summary>
+    <PackageId>CareEvolution.Fhir.Core</PackageId>
+    <Title>HL7 FHIR Core support</Title>	
+    <Summary>.NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0.2) and STU3 (3.0.1)</Summary>
     <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers. It supports FHIR versions DSTU2 (1.0.2) and STU3 (3.0.1)</Description>
-    <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
+    <PackageTags>HL7 FHIR REST parse serialize class model DSTU2 STU3</PackageTags>
     <AssemblyName>Hl7.Fhir.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
@@ -62,8 +62,8 @@
     <None Include="Model\Source-STU3\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+    <PackageReference Include="Hl7.Fhir.Support" Version="0.94.0" />
+    <PackageReference Include="Hl7.FhirPath" Version="0.94.0" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
