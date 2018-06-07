@@ -206,7 +206,7 @@ namespace Hl7.Fhir.ElementModel
 
         ITypeSerializationInfo[] IElementSerializationInfo.Type => null;
 
-        private object lockObject = new object();
+        private readonly object lockObject = new object();
 
         public bool MoveToFirstChild(string nameFilter = null)
         {

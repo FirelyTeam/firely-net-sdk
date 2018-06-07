@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Core.Tests.Introspection
 {
-    [TestClass]
-    public class PocoSerializationInfoTests
+    public static class SerializationInfoTestHelpers
     {
         //[TestMethod]
         //public void TestResourceInfo()
@@ -23,8 +22,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
         //    Assert.IsFalse(ip.IsResource("Identifier"));
         //}
 
-        [TestMethod]
-        public void TestCanLocateTypes()
+        public static void TestCanLocateTypes(IModelMetadataProvider provider)
         {
             // Try getting a resource
             tryGetType("Patient");
@@ -51,17 +49,16 @@ namespace Hl7.Fhir.Core.Tests.Introspection
 
             void tryGetType(string typename, string baseTypeName=null, bool isAbstract = false)
             {
-                var si = PocoModelMetadataProvider.GetSerializationInfoForStructure(typename);
+                var si = provider.GetSerializationInfoForStructure(typename);
                 Assert.IsNotNull(si);
                 Assert.AreEqual(baseTypeName ?? typename, si.TypeName);
                 Assert.AreEqual(isAbstract, si.IsAbstract);
             }
         }
 
-        [TestMethod]
-        public void TestCanGetElements()
+        public static void TestCanGetElements(IModelMetadataProvider provider)
         {
-            var p = PocoModelMetadataProvider.GetSerializationInfoForStructure("Patient");
+            var p = provider.GetSerializationInfoForStructure("Patient");
 
             // Simple element
             checkType(p, "active", false, "boolean");
@@ -88,12 +85,12 @@ namespace Hl7.Fhir.Core.Tests.Introspection
             // Should not have the special "value" attribute
             Assert.IsFalse(p.GetChildren().Any(c => c.ElementName == "value"));
 
-            var b = PocoModelMetadataProvider.GetSerializationInfoForStructure("Bundle");
+            var b = provider.GetSerializationInfoForStructure("Bundle");
             checkType(b, "total", false, "unsignedInt");
             checkType(b, "type", false, "code");
         }
 
-        private void checkType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat, params string[] types)
+        private static void checkType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat, params string[] types)
         {
             var child = parent.GetChildren().SingleOrDefault(c => c.ElementName == ename);
             Assert.IsNotNull(child);
@@ -105,7 +102,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
                 .Select(t => t.TypeName).ToArray());
         }
 
-        private IComplexTypeSerializationInfo checkBBType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat)
+        private static IComplexTypeSerializationInfo checkBBType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat)
         {
             var child = parent.GetChildren().SingleOrDefault(c => c.ElementName == ename);
 
@@ -119,18 +116,17 @@ namespace Hl7.Fhir.Core.Tests.Introspection
         }
 
 
-        [TestMethod]
-        public void TestSpecialTypes()
+        public static void TestSpecialTypes(IModelMetadataProvider provider)
         {           
             // Narrative.div
-            var div = PocoModelMetadataProvider.GetSerializationInfoForStructure("Narrative");
+            var div = provider.GetSerializationInfoForStructure("Narrative");
             Assert.IsNotNull(div);
             checkType(div, "div", false, "xhtml");
 
             // Element.id
             checkType(div, "id", false, "id");
 
-            var ext = PocoModelMetadataProvider.GetSerializationInfoForStructure("Extension");
+            var ext = provider.GetSerializationInfoForStructure("Extension");
 
             // Extension.url
             checkType(ext, "url", false, "uri");

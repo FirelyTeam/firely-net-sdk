@@ -149,9 +149,6 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private static string[] dstu2quantitySubtypes = { "SimpleQuantity", "Age", "Count", "Distance", "Duration", "Money" };
-        private static string[] stu3quantitySubtypes = { "SimpleQuantity" };
-
         public string TypeName
         {
             get
@@ -171,15 +168,15 @@ namespace Hl7.Fhir.ElementModel
                 {
                     // _currentValue must now be of type Base....
                     var tn = FhirValue.TypeName;
-                    if (dstu2quantitySubtypes.Contains(tn)) tn = "Quantity";
+
+                    if (ModelInfo.IsProfiledQuantity(tn)) tn = "Quantity";
 
                     return tn;
                 }
             }
         }
 
-        private object lockObject = new object();
-
+        private readonly object lockObject = new object();
 
         public bool MoveToFirstChild(string name = null)
         {

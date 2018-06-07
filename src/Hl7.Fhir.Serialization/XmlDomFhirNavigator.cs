@@ -186,11 +186,9 @@ namespace Hl7.Fhir.Serialization
 
             XObject firstChild = null;
 
-            string containedType = null;
-
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
-            if (_current is XElement xe && tryGetNestedResourceName(xe, out containedType))
+            if (_current is XElement xe && tryGetNestedResourceName(xe, out string containedType))
             {
                 // todo: check this is in sync with firstChildDef, which should now also be
                 // a resource definition

@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -20,16 +21,37 @@ namespace Hl7.Fhir.Specification
 {
     public class StructureDefinitionMetadataProvider : IModelMetadataProvider
     {
-        private readonly IResourceResolver _resolver;
+        public delegate bool TypeNameMapper(string typeName, out string canonical);
 
-        public StructureDefinitionMetadataProvider(IResourceResolver resolver)
+        private readonly IResourceResolver _resolver;
+        private readonly TypeNameMapper _typeNameMapper;
+
+        public static bool DefaultTypeNameMapper(string name, out string canonical)
         {
-            this._resolver = resolver;
+            var typeName = ModelInfo.IsProfiledQuantity(name) ? "Quantity" : name;
+
+            canonical = ResourceIdentity.CORE_BASE_URL + typeName;
+            return true;
+        }
+
+        public StructureDefinitionMetadataProvider(IResourceResolver resolver, TypeNameMapper mapper = null)
+        {
+            _resolver = resolver;
+            _typeNameMapper = mapper ?? DefaultTypeNameMapper;
         }
 
         public IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical)
         {
-            var sd = _resolver.FindStructureDefinition(canonical, requireSnapshot: true);
+            var isLocalType = !canonical.Contains("/");
+            string mappedCanonical = canonical;
+
+            if (isLocalType)
+            {
+                var mapSuccess = _typeNameMapper(canonical, out mappedCanonical);
+                if (!mapSuccess) return null;
+            }
+
+            var sd = _resolver.FindStructureDefinition(mappedCanonical, requireSnapshot: true);
             if (sd == null) return null;
 
             return new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
@@ -81,6 +103,8 @@ namespace Hl7.Fhir.Specification
 
             try
             {
+                if (!nav.MoveToFirstChild()) yield break;
+
                 do
                 {
                     if (nav.PathName == lastName) continue;    // ignore slices

@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
@@ -19,15 +20,19 @@ namespace Hl7.Fhir.Introspection
 {
     public class PocoModelMetadataProvider : IModelMetadataProvider
     {
-        private const string CORE_BASE_URL = "http://hl7.org/StructureDefinition/";
-
-        IComplexTypeSerializationInfo IModelMetadataProvider.GetSerializationInfoForStructure(string canonical) =>
-            GetSerializationInfoForStructure(canonical);
-
-        public static IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical)
+        public IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical)
         {
-            var typeName = canonical.StartsWith(CORE_BASE_URL) ? canonical.Substring(CORE_BASE_URL.Length) : null;
-            if (typeName == null) return null;
+            var isLocalType = !canonical.Contains("/");
+            var typeName = canonical;
+
+            if(!isLocalType)
+            {
+                // So, we have received a canonical url, not being a relative path
+                // (know resource/datatype), we -for now- only know how to get a ClassMapping
+                // for this, if it's a built-in T4 generated POCO, so there's no way
+                // to find a mapping for this.
+                return null;
+            }
 
             Type csType = ModelInfo.GetTypeForFhirType(typeName);
             if (csType == null) return null;
