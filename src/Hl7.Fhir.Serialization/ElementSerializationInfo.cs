@@ -32,6 +32,9 @@ namespace Hl7.Fhir.Serialization
             Type = source.Type;
         }
 
+        public static ElementSerializationInfo ForRoot(string rootName, ITypeSerializationInfo rootType) =>
+            new ElementSerializationInfo(rootName, false, false, false, false, new[] { rootType });
+
         public string ElementName { get; private set; }
 
         public bool MayRepeat { get; private set; }

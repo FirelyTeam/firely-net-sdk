@@ -109,5 +109,7 @@ namespace Hl7.Fhir.Utility
                 scan = scan.PreviousNode;
             }
         }
+
+        public static bool AtXhtmlDiv(this XObject node) => (node as XElement)?.Name == XmlNs.XHTMLDIV;
     }
 }

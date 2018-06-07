@@ -16,31 +16,23 @@ namespace Hl7.Fhir.Serialization
 {
     internal struct SerializationInfoCache
     {
-        public readonly IModelMetadataProvider Provider;
         public readonly Dictionary<string, IElementSerializationInfo> Elements;
-        public readonly IElementSerializationInfo Current;
-        public readonly string TypeSuffix;
+
+        public static SerializationInfoCache ForType(IComplexTypeSerializationInfo type)
+            => new SerializationInfoCache(type.GetChildren().ToDictionary(c => c.ElementName));
+
+        public static SerializationInfoCache Empty = new SerializationInfoCache(null);
         public readonly bool IsEmpty;
 
-        public string DefinedName => Current?.ElementName;
-        public string TypeName => TypeSuffix ?? (Current.Type.Length == 1 ? Current.Type[0].TypeName : null);
-
-        public static SerializationInfoCache ForRoot(IComplexTypeSerializationInfo rootType, string rootName, IModelMetadataProvider provider)
+        public static SerializationInfoCache ForRoot(IElementSerializationInfo rootInfo)
         {
-            if (rootType == null) throw new ArgumentNullException(nameof(rootType));
-            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (rootInfo == null) throw new ArgumentNullException(nameof(rootInfo));
 
-            var rootElement = new ElementSerializationInfo(rootName, false, false, false, false, new[] { rootType });
-            return new SerializationInfoCache(new Dictionary<string, IElementSerializationInfo> { { rootName, rootElement } }, provider, rootElement);
+            return new SerializationInfoCache(new Dictionary<string, IElementSerializationInfo>
+                { { rootInfo.ElementName, rootInfo } });
         }
 
-        public static SerializationInfoCache ForType(IComplexTypeSerializationInfo type, IModelMetadataProvider provider)
-            => new SerializationInfoCache(type.GetChildren().ToDictionary(c => c.ElementName), provider);
-
-        public static SerializationInfoCache Empty = new SerializationInfoCache(null, null);
-
-        private SerializationInfoCache(Dictionary<string, IElementSerializationInfo> elements, IModelMetadataProvider provider,
-            IElementSerializationInfo current = null, string suffix = null)
+        private SerializationInfoCache(Dictionary<string, IElementSerializationInfo> elements)
         {
             if (elements == null)
                 Elements = new Dictionary<string, IElementSerializationInfo>();
@@ -48,35 +40,37 @@ namespace Hl7.Fhir.Serialization
                 Elements = elements;
 
             IsEmpty = !Elements.Any();
-            Current = current;
-            TypeSuffix = suffix;
-            Provider = provider;
         }
 
-
-
-        public SerializationInfoCache MoveTo(string name)
+        public bool Find(string elementName, out IElementSerializationInfo found, out string instanceType)
         {
-            if (IsEmpty) return this;        // nowhere to move -> just return my empty self
+            found = null;
+            instanceType = null;
 
-            if (!Elements.TryGetValue(name, out var found))
-                found = Elements.Values.FirstOrDefault(e => e.IsChoiceElement && name.StartsWith(e.ElementName));
+            if (IsEmpty) return false;        // nowhere to move -> just return my empty self
 
-            //var found = Elements.FirstOrDefault(e => e.IsChoiceElement && name.StartsWith(e.ElementName) || name == e.ElementName);
-            string typeSuffix = null;
+            if (!Elements.TryGetValue(elementName, out found))
+                found = Elements.Values.FirstOrDefault(e => e.IsChoiceElement && elementName.StartsWith(e.ElementName));
 
-            if (found != null && found.IsChoiceElement)
+            if (found != null)
             {
-                var suffix = name.Substring(found.ElementName.Length);
-                if (String.IsNullOrEmpty(suffix)) throw new FormatException($"Choice element '{found.ElementName}' is not suffixed with a type.");
+                if (found.IsChoiceElement)
+                {
+                    var suffix = elementName.Substring(found.ElementName.Length);
+                    if (String.IsNullOrEmpty(suffix)) throw new FormatException($"Choice element '{found.ElementName}' is not suffixed with a type.");
 
-                typeSuffix = found.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
-                if (String.IsNullOrEmpty(typeSuffix)) throw new FormatException($"Choice element is not suffixed incorrect type '{suffix}'");
+                    instanceType = found.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
+                    if (String.IsNullOrEmpty(instanceType)) throw new FormatException($"Choice element is not suffixed incorrect type '{suffix}'");
+                }
+                else
+                {
+                    instanceType = found.Type[0].TypeName;
+                }
+
+                return true;
             }
-
-            return new SerializationInfoCache(this.Elements, this.Provider, found, typeSuffix);
+            else
+                return false;
         }
-
-        public bool IsTracking => Current != null;
     }
 }

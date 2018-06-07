@@ -113,6 +113,9 @@ namespace Hl7.Fhir.Serialization
                 if (xmlDetails.Namespace == XmlNs.FHIR) return false;
                 if (xmlDetails.Namespace + "div" == XmlNs.XHTMLDIV) return false;
 
+                if(xmlDetails.Namespace.NamespaceName == "")
+                    throw Error.Format($"Encountered element '{child.Name}' missing the HL7 FHIR namespace", this);
+
                 throw Error.Format($"Encountered element '{child.Name}' from unsupported namespace '{xmlDetails.Namespace}'", this);
             }
 
