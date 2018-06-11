@@ -5,7 +5,7 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
- 
+
 // #define DUMPOUTPUT
 
 // EXPERIMENTAL
@@ -43,13 +43,13 @@
 //
 // * change exceptions to operation issues...?
 
-using System;
-using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
-using System.Diagnostics;
 using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -62,24 +62,14 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// slicing or ElementDefn information associated with them, so they should not have any 
     /// influence on the final snapshot form.
     /// </summary>
-    internal class DifferentialTreeConstructor
+    public class DifferentialTreeConstructor
     {
         /// <summary>Create a valid tree structure from a sparse differential element list by adding missing parent element definitions.</summary>
         /// <returns>A tree structure representing the differential component.</returns>
         /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
-        public static List<ElementDefinition> MakeTree(List<ElementDefinition> elements)
+        public List<ElementDefinition> MakeTree(List<ElementDefinition> elements)
         {
-            var dtc = new DifferentialTreeConstructor(elements);
-            return dtc.makeTree();
-        }
-
-        List<ElementDefinition> _source;
-
-        DifferentialTreeConstructor(List<ElementDefinition> elements) { _source = elements; }
-
-        List<ElementDefinition> makeTree()
-        {
-            var diff = new List<ElementDefinition>(_source.DeepCopy());   // We're going to modify the differential
+            var diff = new List<ElementDefinition>(elements.DeepCopy());   // We're going to modify the differential
 
             if (diff.Count == 0 ) return diff;        // nothing to do
 
@@ -197,7 +187,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
 #if DEBUG && DUMPOUTPUT
-            Debug.Print($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.SliceName}")));
+            Debug.WriteLine($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.SliceName}")));
 #endif
 
             return diff;

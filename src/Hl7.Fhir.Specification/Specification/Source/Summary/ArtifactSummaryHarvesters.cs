@@ -10,11 +10,15 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Summary;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
-namespace Hl7.Fhir.Specification.Source.Summary
+// Expose low-level interfaces from a separate child namespace, to prevent pollution
+namespace Hl7.Fhir.Specification.Source
 {
     // Define a set of default ArtifactSummaryHarvester delegate implementations,
     // with property keys and helper extension methods for accessing the harvested properties.
@@ -32,6 +36,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public const string OriginKey = "Origin";
         public const string FileSizeKey = "Size";
         public const string LastModifiedKey = "LastModified";
+        public const string SerializationFormatKey = "Format";
         public const string PositionKey = "Position";
         public const string TypeNameKey = "TypeName";
         public const string ResourceUriKey = "Uri";
@@ -62,8 +67,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
         }
 
         /// <summary>Get the Size property value from the specified artifact summary property bag, if available.</summary>
-        public static long GetFileSize(this IArtifactSummaryPropertyBag properties)
-            => (long)properties.GetValueOrDefault(FileSizeKey);
+        public static long? GetFileSize(this IArtifactSummaryPropertyBag properties)
+            => (long?)properties.GetValueOrDefault(FileSizeKey);
 
         internal static void SetFileSize(this ArtifactSummaryPropertyBag properties, long value)
         {
@@ -71,12 +76,25 @@ namespace Hl7.Fhir.Specification.Source.Summary
         }
 
         /// <summary>Get the LastModified property value from the specified artifact summary property bag, if available.</summary>
-        public static DateTime GetLastModified(this IArtifactSummaryPropertyBag properties)
-            => (DateTime)properties.GetValueOrDefault(LastModifiedKey);
+        public static DateTime? GetLastModified(this IArtifactSummaryPropertyBag properties)
+            => (DateTime?)properties.GetValueOrDefault(LastModifiedKey);
 
         internal static void SetLastModified(this ArtifactSummaryPropertyBag properties, DateTime value)
         {
             properties[LastModifiedKey] = value;
+        }
+
+        /// <summary>
+        /// Get a string value from the specified artifact summary property bag that represents the artifact
+        /// serialization format, as defined by the <see cref="FhirSerializationFormats"/> class, if available.
+        /// </summary>
+        public static string GetSerializationFormat(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(SerializationFormatKey);
+
+        internal static void SetSerializationFormat(this ArtifactSummaryPropertyBag properties, string value)
+        {
+            Debug.Assert(Array.IndexOf(FhirSerializationFormats.All, value) >= 0);
+            properties[SerializationFormatKey] = value;
         }
 
         /// <summary>Get the Position property value from the specified artifact summary property bag, if available.</summary>
