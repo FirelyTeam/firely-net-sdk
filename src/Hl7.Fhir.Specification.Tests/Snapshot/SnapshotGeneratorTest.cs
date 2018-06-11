@@ -6437,5 +6437,64 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("level 2 *", nav.Current.Short);
         }
 
+        // [WMR 20180611] New: Forge issue "Only first item in code field for element is saved"
+        // Issue: if element in diff specifies multiple codes with only display values,
+        // then element in snapshot only contains the first code entry.
+
+        [TestMethod]
+        public void TestObservationWithDisplayCodes()
+        {
+            var sd = new StructureDefinition
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = "ObservationWithDisplayCodes",
+                Url = "http://example.org/fhir/StructureDefinition/ObservationWithDisplayCodes",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation.code")
+                        {
+                            Code = new List<Coding>()
+                            {
+                                new Coding() { Display = "foo" },
+                                new Coding() { Display = "bar" }
+                            }
+                        },
+                    }
+                }
+            };
+
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // Expecting single issue about invalid slice name on SimpleQuantity root element
+            var outcome = generator.Outcome;
+            //Assert.IsNull(outcome);
+            Assert.AreEqual(1, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsNotNull(nav);
+            Assert.IsTrue(nav.JumpToFirst("Observation.code"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem);
+            // Verify that both codings are included in the snapshot
+            Assert.AreEqual(2, elem.Code.Count);
+            Assert.AreEqual("foo", elem.Code[0].Display);
+            Assert.AreEqual("bar", elem.Code[1].Display);
+        }
+
     }
 }
