@@ -28,12 +28,14 @@ namespace Hl7.Fhir.Serialization
             Provider = provider;
 
             OnExceptionRaised = null;
-            var oer = OnExceptionRaised;
 
             // Worries about dangling references...need to unsubscribe at some point...
             if (current is IExceptionSource ies)
-                ies.OnExceptionRaised += (o, e) => oer?.Invoke(o, e);
+                ies.OnExceptionRaised += onExceptionRaised;
         }
+
+
+        private void onExceptionRaised(object o, ExceptionRaisedEventArgs e) => OnExceptionRaised?.Invoke(o, e);
 
         internal static TypedNavigator ForRoot(IElementNavigator root, IModelMetadataProvider provider)
         {
@@ -125,16 +127,13 @@ namespace Hl7.Fhir.Serialization
                 var suffix = current.Name.Substring(info.ElementName.Length);
 
                 if (String.IsNullOrEmpty(suffix))
-                {
                     raiseFormatError($"Choice element '{current.Name}' is not suffixed with a type.", current);
-                }
                 else
                 {
                     instanceType = info.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
+
                     if (String.IsNullOrEmpty(instanceType))
-                    {
                         raiseFormatError($"Choice element is suffixed with unexpected type '{suffix}'", current);
-                    }
                 }
             }
             else
@@ -142,7 +141,7 @@ namespace Hl7.Fhir.Serialization
                 instanceType = info.Type.Single().TypeName;
             }
 
-            return new NavigatorPosition(current, info, current.Name, instanceType);
+            return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
         }
 
 
@@ -161,9 +160,6 @@ namespace Hl7.Fhir.Serialization
 
                 return success;
             }
-
-
-            //TODO: make sure you can always recognize a type-enhanced navigator by annotation
 
             do
             {
