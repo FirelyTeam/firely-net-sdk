@@ -30,5 +30,7 @@ namespace Hl7.Fhir.Serialization
         /// All child text nodes
         /// </summary>
         public string NodeText;
+
+        public string ResourceType;
     }   
 }

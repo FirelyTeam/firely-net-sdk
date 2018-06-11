@@ -6,18 +6,19 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class NavigatorPosition<T> where T:class
+    internal class NavigatorPosition 
     {
-        public readonly T Node;
+        public readonly IElementNavigator Node;
         public readonly IElementSerializationInfo SerializationInfo;
         public readonly string Name;
         public readonly string InstanceType;
 
-        public NavigatorPosition(T current, IElementSerializationInfo info, string name, string type)
+        public NavigatorPosition(IElementNavigator current, IElementSerializationInfo info, string name, string type)
         {
             SerializationInfo = info;
             Node = current ?? throw Error.ArgumentNull(nameof(current));
@@ -26,12 +27,12 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static NavigatorPosition<T> ForRoot(T root, IComplexTypeSerializationInfo rootType, string rootName)
+        public static NavigatorPosition ForElement(IElementNavigator element, IComplexTypeSerializationInfo elementType, string elementName)
         {
-            if (rootName == null) throw Error.ArgumentNull(nameof(rootName));
+            if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
 
-            var rootElement = rootType != null ? ElementSerializationInfo.ForRoot(rootName, rootType) : null;
-            return new NavigatorPosition<T>(root, rootElement, rootName, rootName);
+            var rootElement = elementType != null ? ElementSerializationInfo.ForRoot(elementName, elementType) : null;
+            return new NavigatorPosition(element, rootElement, elementName, elementName);
         }
 
         public bool IsTracking => SerializationInfo != null;       

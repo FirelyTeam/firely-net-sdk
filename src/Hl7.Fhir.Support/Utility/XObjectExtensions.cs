@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Utility
             return null;
         }
 
-        public static XObject NextChild(this XObject node)
+        public static XObject NextSibling(this XObject node)
         {
             if (node is XNode n)
                 return n.NextNode;

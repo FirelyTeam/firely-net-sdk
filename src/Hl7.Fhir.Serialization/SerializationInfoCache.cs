@@ -14,14 +14,17 @@ using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal struct SerializationInfoCache
+    /// <summary>
+    /// Internal class to optimize access to a list of children, basically a dictionary of
+    /// (element name, IElementSerializationInfo) pairs, optimized for quick access.
+    /// </summary>
+    internal class SerializationInfoCache : Dictionary<string, IElementSerializationInfo>
     {
-        public readonly Dictionary<string, IElementSerializationInfo> Elements;
-
         public static SerializationInfoCache ForType(IComplexTypeSerializationInfo type)
             => new SerializationInfoCache(type.GetChildren().ToDictionary(c => c.ElementName));
 
-        public static SerializationInfoCache Empty = new SerializationInfoCache(null);
+        public static SerializationInfoCache Empty = new SerializationInfoCache();
+
         public readonly bool IsEmpty;
 
         public static SerializationInfoCache ForRoot(IElementSerializationInfo rootInfo)
@@ -32,14 +35,14 @@ namespace Hl7.Fhir.Serialization
                 { { rootInfo.ElementName, rootInfo } });
         }
 
-        private SerializationInfoCache(Dictionary<string, IElementSerializationInfo> elements)
+        private SerializationInfoCache() : base(new Dictionary<string, IElementSerializationInfo>())
         {
-            if (elements == null)
-                Elements = new Dictionary<string, IElementSerializationInfo>();
-            else
-                Elements = elements;
+            IsEmpty = true;
+        }
 
-            IsEmpty = !Elements.Any();
+        private SerializationInfoCache(IDictionary<string, IElementSerializationInfo> elements) : base(elements)
+        {
+            IsEmpty = !elements.Any();
         }
 
         public bool Find(string elementName, out IElementSerializationInfo found, out string instanceType)
@@ -49,8 +52,8 @@ namespace Hl7.Fhir.Serialization
 
             if (IsEmpty) return false;        // nowhere to move -> just return my empty self
 
-            if (!Elements.TryGetValue(elementName, out found))
-                found = Elements.Values.FirstOrDefault(e => e.IsChoiceElement && elementName.StartsWith(e.ElementName));
+            if (!TryGetValue(elementName, out found))
+                found = Values.FirstOrDefault(e => e.IsChoiceElement && elementName.StartsWith(e.ElementName));
 
             if (found != null)
             {

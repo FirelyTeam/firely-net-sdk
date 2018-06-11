@@ -41,33 +41,31 @@ namespace Hl7.Fhir.ElementModel
         private string _parentShortPath;
         private string _parentCommonPath;
 
-        private PocoElementNavigator Current => _nav;
+        /// <summary>
+        /// Returns 
+        /// </summary>
+        public object Value => _nav.Value;
 
         /// <summary>
         /// Returns 
         /// </summary>
-        public object Value => Current.Value;
-
-        /// <summary>
-        /// Returns 
-        /// </summary>
-        public Base FhirValue => Current.FhirValue;
+        public Base FhirValue => _nav.FhirValue;
 
         /// <summary>
         /// Return the FHIR TypeName
         /// </summary>
-        public string Type => FhirValue is BackboneElement ? "BackboneElement" : Current.TypeName;
+        public string Type => FhirValue is BackboneElement ? "BackboneElement" : _nav.TypeName;
 
         /// <summary>
         /// The FHIR TypeName is also returned for the name of the root element
         /// </summary>
-        public string Name => Current.Name;
+        public string Name => _nav.Name;
 
         public string Location
         {
             get
             {
-                var cur = Current;
+                var cur = _nav;
                 if (String.IsNullOrEmpty(_parentLocation))
                 {
                     return cur.Name;
@@ -88,7 +86,7 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                var cur = Current;
+                var cur = _nav;
                 if (String.IsNullOrEmpty(_parentShortPath))
                 {
                     return cur.Name;
@@ -120,7 +118,7 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                var cur = Current;
+                var cur = _nav;
                 if (String.IsNullOrEmpty(_parentCommonPath))
                 {
                     return cur.Name;
@@ -196,13 +194,13 @@ namespace Hl7.Fhir.ElementModel
 
         public string ElementName => Name;
 
-        public bool MayRepeat => Current.AtCollection;
+        public bool MayRepeat => _nav.AtCollection;
 
-        public bool IsChoiceElement => Current.Current.IsChoice;
+        public bool IsChoiceElement => _nav.Current.IsChoice;
 
-        public bool IsContainedResource => Current.Current.IsContained;
+        public bool IsContainedResource => _nav.Current.IsContained;
 
-        public bool IsSimpleElement => Current.IsAttribute;
+        public bool IsSimpleElement => _nav.IsAttribute;
 
         ITypeSerializationInfo[] IElementSerializationInfo.Type => null;
 
@@ -214,7 +212,7 @@ namespace Hl7.Fhir.ElementModel
             var oldSP = ShortPath;
             var oldCP = CommonPath;
 
-            if (Current.MoveToFirstChild(nameFilter))
+            if (_nav.MoveToFirstChild(nameFilter))
             {
                 lock (lockObject)
                 {
@@ -237,7 +235,7 @@ namespace Hl7.Fhir.ElementModel
         /// </returns>
         public bool MoveToNext(string nameFilter = null)
         {
-            return Current.MoveToNext(nameFilter);
+            return _nav.MoveToNext(nameFilter);
         }
 
         /// <summary>
@@ -259,13 +257,7 @@ namespace Hl7.Fhir.ElementModel
             return result;
         }
 
-        public IEnumerable<object> Annotations(Type type)
-        {
-            if (_nav is IAnnotated annotatedNav)
-                return annotatedNav.Annotations(type).Union(generatePocoNavAnnotations(type));
-            else
-                return generatePocoNavAnnotations(type);
-        }
+        public IEnumerable<object> Annotations(Type type) => _nav.Annotations(type).Union(generatePocoNavAnnotations(type));
 
         private IEnumerable<object> generatePocoNavAnnotations(Type type)
         {

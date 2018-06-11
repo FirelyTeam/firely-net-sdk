@@ -25,5 +25,10 @@ namespace Hl7.Fhir.Serialization
         /// Comments encountered before the root element of the document
         /// </summary>
         public string[] DocumentEndComments;
-    }   
+    } 
+    
+    public class ResourceTypeIndicator
+    {
+        public string ResourceType;
+    }
 }

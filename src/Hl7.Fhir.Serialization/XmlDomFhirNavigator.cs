@@ -74,8 +74,8 @@ namespace Hl7.Fhir.Serialization
                 {
                     // Make sure we only get the type directly from the typename when we encounter a root,
                     // otherwise get it from the first nested element under the current element
-                    if(_parentPath == null && isResourceName(element.Name)) return element.Name.LocalName;
-                    if(_parentPath != null && tryGetNestedResourceName(element, out var name)) return name;
+                    if (_parentPath == null && element.Name.IsResourceName()) return element.Name.LocalName;
+                    if (_parentPath != null && element.TryGetContainedResourceName(out var name)) return name;
                 }
 
                 // If it is not a contained resource, we've already figured out the type when navigating
@@ -83,48 +83,20 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-
-        private static bool tryGetNestedResourceName(XElement xe, out string name)
-        {
-            name = null;
-
-            if (xe.HasElements)
-            {
-                var candidate = xe.Elements().First();
-
-                if (isResourceName(candidate.Name))
-                {
-                    name = candidate.Name.LocalName;
-                    return true;
-                }
-            }
-
-            // Not on a resource, no name to be found
-            return false;
-        }
-
-        private static bool isResourceName(XName elementName) =>
-            Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
-
         public object Value
         {
             get
             {
-                if (_current.Node.AtXhtmlDiv())
-                    return ((XElement)_current.Node).ToString(SaveOptions.DisableFormatting);
-
-                var literal = _current.Node is XElement xelem ?
-                        xelem.Attribute("value")?.Value : _current.Node.Value();
+                string literal = _current.Node.GetValue(Type);
 
                 // Without type info, just return a string
-                if (literal == null || Type == null)
+                if (literal == null || !_current.IsTracking)
                     return literal;
                 else
                     return PrimitiveTypeConverter.FromSerializedValue(literal, Type);
             }
         }
 
-      
         private static bool tryMatch(SerializationInfoCache dis, XObject current, string name, out NavigatorPosition<XObject> match)
         {
             var scan = current;
@@ -155,7 +127,7 @@ namespace Hl7.Fhir.Serialization
                     }
                 }
 
-                scan = scan.NextChild();
+                scan = scan.NextSibling();
             }
 
             match = null;
@@ -206,7 +178,7 @@ namespace Hl7.Fhir.Serialization
             // If this is a backbone element, the child type is the nested complex type
             if (_current.SerializationInfo.Type[0] is IComplexTypeSerializationInfo be)
                 childType = be;
-            else 
+            else
                 childType = Provider.GetSerializationInfoForStructure(this.Type);
 
             return SerializationInfoCache.ForType(childType);
@@ -216,7 +188,7 @@ namespace Hl7.Fhir.Serialization
 
         public bool MoveToNext(string nameFilter)
         {
-            var nextChild = _current.Node.NextChild();
+            var nextChild = _current.Node.NextSibling();
             if (nextChild == null) return false;
 
             if (!tryMatch(_definition, nextChild, nameFilter, out var match)) return false;
@@ -305,7 +277,7 @@ namespace Hl7.Fhir.Serialization
             {
                 return new[] { new ElementSerializationInfo(_current.SerializationInfo) };
             }
-            if(type == typeof(PositionInfo))
+            if (type == typeof(PositionInfo))
             {
                 return new[] { new PositionInfo { LineNumber = this.LineNumber, LinePosition = this.LinePosition } };
             }
