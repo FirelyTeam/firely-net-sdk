@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Serialization
         bool IsChoiceElement { get; }
         bool IsContainedResource { get; }
 
-        bool IsSimpleElement { get; }
+        bool IsAtomicValue { get; }
         ITypeSerializationInfo[] Type { get; }
     }
 

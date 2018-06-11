@@ -91,32 +91,85 @@ namespace Hl7.Fhir.Serialization
                     return PrimitiveTypeConverter.FromSerializedValue((string)underlyingValue, Type);
                 }
                 catch (FormatException fe)
-                {
-                    OnExceptionRaised?.Invoke(this, new ExceptionRaisedEventArgs(fe));
+                {                    
+                    OnExceptionRaised?.Invoke(this, ExceptionRaisedEventArgs.Error(fe));
                     return underlyingValue;
                 }
             }
         }
 
-        private static bool tryMatch(SerializationInfoCache dis, IElementNavigator current, string name, out NavigatorPosition match)
+        private void raiseFormatError(string message, IElementNavigator current)
+        {
+            OnExceptionRaised?.Invoke(this, ExceptionRaisedEventArgs.Error(
+                    Error.Format(message, current as IPositionInfo)));
+        }
+
+        private NavigatorPosition deriveInstanceType(IElementNavigator current, IElementSerializationInfo info)
+        {
+            if(info == null) return new NavigatorPosition(current, null, current.Name, null);
+
+            string instanceType = null;
+
+            if(info.IsContainedResource)
+            {
+                instanceType = current.GetResourceTypeFromAnnotation();
+                if (instanceType == null) raiseFormatError("Element is defined to contain a resource, but does not actually seem to contain a resource", current);
+                //TODO: check validity of resource type
+            }
+            else if(!info.IsContainedResource && current.GetResourceTypeFromAnnotation() != null)
+            {
+                raiseFormatError("Element is not a contained resource, but it does contain a resource", current);
+            }
+            else if(info.IsChoiceElement)
+            {
+                var suffix = current.Name.Substring(info.ElementName.Length);
+
+                if (String.IsNullOrEmpty(suffix))
+                {
+                    raiseFormatError($"Choice element '{current.Name}' is not suffixed with a type.", current);
+                }
+                else
+                {
+                    instanceType = info.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
+                    if (String.IsNullOrEmpty(instanceType))
+                    {
+                        raiseFormatError($"Choice element is suffixed with unexpected type '{suffix}'", current);
+                    }
+                }
+            }
+            else
+            {
+                instanceType = info.Type.Single().TypeName;
+            }
+
+            return new NavigatorPosition(current, info, current.Name, instanceType);
+        }
+
+
+        private bool tryMoveToElement(SerializationInfoCache dis, IElementNavigator current, string name, out NavigatorPosition match)
         {
             var scan = current.Clone();
-            var found = dis.Find(current.Name, out var elementInfo, out var instanceType);
-            var filter = found ? elementInfo.ElementName : current.Name;
+            var isKnownElement = dis.TryGetValue(name, out var elementInfo);
+            match = null;
+
+            if(name == null || !isKnownElement || (isKnownElement && !elementInfo.IsChoiceElement))
+            {
+                var success = scan.MoveToNext(name);
+
+                if (success)
+                    match = deriveInstanceType(scan, elementInfo);
+
+                return success;
+            }
+
+
+            //TODO: make sure you can always recognize a type-enhanced navigator by annotation
 
             do
             {
-
-                bool isMatch = name == null ||      // no name filter -> any match is ok
-                    filter == name;    // else, filter on the actual name
-
-                if (isMatch)
+                if (scan.Name.StartsWith(name))
                 {
-                    //If the underlying nav has a ResourceType indicator....
-                    if (scan is IAnnotated ia && ia.TryGetAnnotation<ResourceTypeIndicator>(out var rt))
-                        instanceType = rt.ResourceType;
-
-                    match = new NavigatorPosition(scan, elementInfo, filter, instanceType);
+                    match = deriveInstanceType(scan, elementInfo);
                     return true;
                 }
             }
@@ -132,7 +185,7 @@ namespace Hl7.Fhir.Serialization
 
             var firstChildDef = down();
 
-            if (!tryMatch(firstChildDef, _current.Node, nameFilter, out var match)) return false;
+            if (!tryMoveToElement(firstChildDef, _current.Node, nameFilter, out var match)) return false;
 
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
@@ -147,17 +200,13 @@ namespace Hl7.Fhir.Serialization
 
         private SerializationInfoCache down()
         {
-            if (!_current.IsTracking) return SerializationInfoCache.Empty;
-
-            IComplexTypeSerializationInfo childType = null;
+            if (!_current.IsTracking || _current.InstanceType == null) return SerializationInfoCache.Empty;
 
             // If this is a backbone element, the child type is the nested complex type
             if (_current.SerializationInfo.Type[0] is IComplexTypeSerializationInfo be)
-                childType = be;
-            else
-                childType = Provider.GetSerializationInfoForStructure(this.Type);
-
-            return SerializationInfoCache.ForType(childType);
+                return SerializationInfoCache.ForType(be);
+            else 
+                return SerializationInfoCache.ForType(Provider.GetSerializationInfoForStructure(_current.InstanceType));
         }
 
 
@@ -166,7 +215,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (!_current.Node.MoveToNext()) return false;
 
-            if (!tryMatch(_definition, _current.Node, nameFilter, out var match)) return false;
+            if (!tryMoveToElement(_definition, _current.Node, nameFilter, out var match)) return false;
 
             // store the current name before proceeding to detect repeating
             // element names and count them
@@ -206,9 +255,12 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(ElementSerializationInfo) && _current.IsTracking)
+            if (type == typeof(ElementSerializationInfo))
             {
-                return new[] { new ElementSerializationInfo(_current.SerializationInfo) };
+                return new[] 
+                {
+                     _current.IsTracking ? new ElementSerializationInfo(_current.SerializationInfo) : ElementSerializationInfo.NO_SERIALIZATION_INFO
+                };
             }
             if (type == typeof(PositionInfo))
             {

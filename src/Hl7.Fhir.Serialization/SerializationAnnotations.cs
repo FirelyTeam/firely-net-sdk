@@ -7,6 +7,9 @@
 */
 
 
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
+
 namespace Hl7.Fhir.Serialization
 {
     public class SourceComments
@@ -30,5 +33,16 @@ namespace Hl7.Fhir.Serialization
     public class ResourceTypeIndicator
     {
         public string ResourceType;
+    }
+
+    public static class SerializationNavigatorExtensions
+    {
+        public static string GetResourceTypeFromAnnotation(this IElementNavigator navigator)
+        {
+            if (navigator is IAnnotated ia && ia.TryGetAnnotation<ResourceTypeIndicator>(out var rt))
+                return rt.ResourceType;
+            else
+                return null;
+        }
     }
 }

@@ -25,8 +25,6 @@ namespace Hl7.Fhir.Serialization
 
         public static SerializationInfoCache Empty = new SerializationInfoCache();
 
-        public readonly bool IsEmpty;
-
         public static SerializationInfoCache ForRoot(IElementSerializationInfo rootInfo)
         {
             if (rootInfo == null) throw new ArgumentNullException(nameof(rootInfo));
@@ -37,43 +35,10 @@ namespace Hl7.Fhir.Serialization
 
         private SerializationInfoCache() : base(new Dictionary<string, IElementSerializationInfo>())
         {
-            IsEmpty = true;
         }
 
         private SerializationInfoCache(IDictionary<string, IElementSerializationInfo> elements) : base(elements)
         {
-            IsEmpty = !elements.Any();
-        }
-
-        public bool Find(string elementName, out IElementSerializationInfo found, out string instanceType)
-        {
-            found = null;
-            instanceType = null;
-
-            if (IsEmpty) return false;        // nowhere to move -> just return my empty self
-
-            if (!TryGetValue(elementName, out found))
-                found = Values.FirstOrDefault(e => e.IsChoiceElement && elementName.StartsWith(e.ElementName));
-
-            if (found != null)
-            {
-                if (found.IsChoiceElement)
-                {
-                    var suffix = elementName.Substring(found.ElementName.Length);
-                    if (String.IsNullOrEmpty(suffix)) throw new FormatException($"Choice element '{found.ElementName}' is not suffixed with a type.");
-
-                    instanceType = found.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
-                    if (String.IsNullOrEmpty(instanceType)) throw new FormatException($"Choice element is not suffixed incorrect type '{suffix}'");
-                }
-                else
-                {
-                    instanceType = found.Type[0].TypeName;
-                }
-
-                return true;
-            }
-            else
-                return false;
         }
     }
 }

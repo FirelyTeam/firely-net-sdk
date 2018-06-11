@@ -13,13 +13,12 @@ namespace Hl7.Fhir.Utility
 
     public class ExceptionRaisedEventArgs : EventArgs
     {
-        public ExceptionRaisedEventArgs(string message, ExceptionSeverity severity = ExceptionSeverity.Error) : this(message, null, severity)
-        {
-        }
+        public static ExceptionRaisedEventArgs Info(string message) => new ExceptionRaisedEventArgs(message, null, ExceptionSeverity.Info);
 
-        public ExceptionRaisedEventArgs(Exception exception, ExceptionSeverity severity = ExceptionSeverity.Error) : this(exception.Message, exception, severity)
-        {
-        }
+        public static ExceptionRaisedEventArgs Warning(Exception exception) => new ExceptionRaisedEventArgs(exception.Message, exception, ExceptionSeverity.Warning);
+
+        public static ExceptionRaisedEventArgs Error(Exception exception) => new ExceptionRaisedEventArgs(exception.Message, exception, ExceptionSeverity.Error);
+
         public ExceptionRaisedEventArgs(string message, Exception exception, ExceptionSeverity severity)
         {
             Exception = exception;

@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Specification
 
         public bool MayRepeat => _definition.IsRepeating();
 
-        public bool IsSimpleElement => _definition.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr);
+        public bool IsAtomicValue => _definition.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr);
 
         public bool IsChoiceElement => _definition.IsChoice();
 

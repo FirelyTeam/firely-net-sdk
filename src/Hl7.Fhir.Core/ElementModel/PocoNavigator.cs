@@ -200,7 +200,7 @@ namespace Hl7.Fhir.ElementModel
 
         public bool IsContainedResource => _nav.Current.IsContained;
 
-        public bool IsSimpleElement => _nav.IsAttribute;
+        public bool IsAtomicValue => _nav.IsAttribute;
 
         ITypeSerializationInfo[] IElementSerializationInfo.Type => null;
 

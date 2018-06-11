@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization
             }
 
             var usesAttribute = xmlDetails?.NodeType != null ? 
-                xmlDetails.NodeType == XmlNodeType.Attribute : serializationInfo?.IsSimpleElement ??  false;
+                xmlDetails.NodeType == XmlNodeType.Attribute : serializationInfo?.IsAtomicValue ??  false;
             var ns = xmlDetails?.Namespace.NamespaceName ?? (usesAttribute ? "" : XmlNs.FHIR);
             var prefix = ns != null ? destination.LookupPrefix(ns) : null;
             var localName = serializationInfo?.IsChoiceElement == true ?

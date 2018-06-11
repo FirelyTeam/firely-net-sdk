@@ -91,8 +91,14 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private static readonly XElement NoContained = new XElement("dummy");
-    
+        private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
+
+        private void raiseFormatError(string message, IElementNavigator current)
+        {
+            OnExceptionRaised?.Invoke(this, ExceptionRaisedEventArgs.Error(
+                    Error.Format(message, current as IPositionInfo)));
+        }
+
         private XElement Contained
         {
             get
@@ -102,19 +108,18 @@ namespace Hl7.Fhir.Serialization
                     if (_current is XElement xe && xe.TryGetContainedResource(out XElement contained))
                     {
                         if (contained.NextSibling() != null)
-                            OnExceptionRaised(_current, new ExceptionRaisedEventArgs(
-                                Error.Format("Contained resources should not have sibling elements", this)));
-                        if(contained.HasAttributes)
-                            OnExceptionRaised(_current, new ExceptionRaisedEventArgs(
-                                Error.Format("The root of a contained resources cannot have attributes.", this)));
+                            raiseFormatError("Contained resources should not have sibling elements", this);
+
+                        if (contained.HasAttributes)
+                            raiseFormatError("The root of a contained resources cannot have attributes.", this);
 
                         _containedResource = contained;
                     }
                     else
-                        _containedResource = NoContained;
+                        _containedResource = NO_CONTAINED_FOUND;
                 }
 
-                if (_containedResource == NoContained)
+                if (_containedResource == NO_CONTAINED_FOUND)
                     return null;
                 else
                     return _containedResource; 

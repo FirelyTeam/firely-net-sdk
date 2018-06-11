@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Introspection
 
         public bool MayRepeat => _pm.IsCollection;
 
-        public bool IsSimpleElement => _pm.SerializationHint == XmlSerializationHint.Attribute;
+        public bool IsAtomicValue => _pm.SerializationHint == XmlSerializationHint.Attribute;
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
 

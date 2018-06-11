@@ -12,13 +12,15 @@ namespace Hl7.Fhir.Serialization
 {
     public class ElementSerializationInfo : IElementSerializationInfo
     {
+        private ElementSerializationInfo() { }
+
         public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, bool isContained, bool isSimple, ITypeSerializationInfo[] type)
         {
             ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
             MayRepeat = mayRepeat;
             IsChoiceElement = isChoice;
             IsContainedResource = isContained;
-            IsSimpleElement = isSimple;
+            IsAtomicValue = isSimple;
             Type = type ?? throw new ArgumentNullException(nameof(type));
         }
 
@@ -28,7 +30,7 @@ namespace Hl7.Fhir.Serialization
             MayRepeat = source.MayRepeat;
             IsChoiceElement = source.IsChoiceElement;
             IsContainedResource = source.IsContainedResource;
-            IsSimpleElement = source.IsSimpleElement;
+            IsAtomicValue = source.IsAtomicValue;
             Type = source.Type;
         }
 
@@ -42,10 +44,10 @@ namespace Hl7.Fhir.Serialization
         public bool IsChoiceElement { get; private set; }
         public bool IsContainedResource { get; private set; }
 
-        public bool IsSimpleElement { get; private set; }
+        public bool IsAtomicValue { get; private set; }
 
         public ITypeSerializationInfo[] Type { get; private set; }
 
-        
+        public static readonly ElementSerializationInfo NO_SERIALIZATION_INFO = new ElementSerializationInfo();
     }
 }
