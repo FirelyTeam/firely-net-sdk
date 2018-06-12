@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
 
         public ParserSettings Settings { get; private set; }
 
-        public RepeatingElementReader(IFhirReader reader, ParserSettings settings)
+        internal RepeatingElementReader(IFhirReader reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;

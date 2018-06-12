@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
+        IEnumerable<Tuple<string, IFhirReader>> IFhirReader.GetMembers()
         {
             var complex = _current as JObject;
  

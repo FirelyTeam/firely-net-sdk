@@ -20,6 +20,18 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
+    //[Obsolete("Please use the more adequately named FhirXmlPocoParser")]
+    //public class FhirXmlParser : FhirXmlPocoParser
+    //{
+    //    public FhirXmlParser() : base()
+    //    {
+    //    }
+
+    //    public FhirXmlParser(ParserSettings settings) : base(settings)
+    //    {
+    //    }
+    //}
+
     public class FhirXmlParser : BaseFhirParser
     {
         public FhirXmlParser() : base()
@@ -30,10 +42,6 @@ namespace Hl7.Fhir.Serialization
         public FhirXmlParser(ParserSettings settings) : base(settings)
         {
         }
-
-        [Obsolete("Create a new navigating parser (XmlDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
-        public static IFhirReader CreateFhirReader(string xml, bool disallowXsiAttributesOnRoot)
-            => new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml), disallowXsiAttributesOnRoot);
 
         public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
         public T Parse<T>(XmlReader reader) where T : Base => (T)Parse(reader, typeof(T));
@@ -64,9 +72,6 @@ namespace Hl7.Fhir.Serialization
         public FhirJsonParser(ParserSettings settings) : base(settings)
         {
         }
-
-        [Obsolete("Create a new navigating parser (JsonDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
-        public static IFhirReader CreateFhirReader(string json) =>  new ElementNavFhirReader(JsonDomFhirNavigator.Create(json));
 
         public T Parse<T>(string json) where T:Base => (T)Parse(json, typeof(T));
 
@@ -126,14 +131,8 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        [Obsolete("Create a new navigating parser (Xml/JsonDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
-        public T Parse<T>(IFhirReader reader) where T : Base
-        {
-            return (T)Parse(reader, typeof(T));
-        }
-
-        [Obsolete("Create a new navigating parser (Xml/JsonDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
-        public Base Parse(IFhirReader reader, Type dataType)
+        [Obsolete("Create a new navigating parser using FhirXmlNavigator/FhirJsonNavigator.ForRoot()")]
+        internal Base Parse(IFhirReader reader, Type dataType)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
@@ -173,12 +172,6 @@ namespace Hl7.Fhir.Serialization
 
         [Obsolete("Use SerializationUtil.XDocumentFromXmlText() instead")]
         public static XDocument XDocumentFromXml(string xml) => SerializationUtil.XDocumentFromXmlText(xml);
-
-        [Obsolete("Use FhirXmlParser.CreateFhirReader() instead")]
-        public static IFhirReader FhirReaderFromXml(string xml, bool disallowXsiAttributesOnRoot = false) => FhirXmlParser.CreateFhirReader(xml, disallowXsiAttributesOnRoot);
-
-        [Obsolete("Use FhirJsonParser.CreateFhirReader() instead")]
-        public static IFhirReader FhirReaderFromJson(string json) => FhirJsonParser.CreateFhirReader(json);
 
         #endregion
 

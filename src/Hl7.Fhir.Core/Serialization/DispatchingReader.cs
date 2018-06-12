@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
 
         public ParserSettings Settings { get; private set; }
 
-        public DispatchingReader(IFhirReader data, ParserSettings settings, bool arrayMode)
+        internal DispatchingReader(IFhirReader data, ParserSettings settings, bool arrayMode)
         {
             _current = data;
             _inspector = BaseFhirParser.Inspector;

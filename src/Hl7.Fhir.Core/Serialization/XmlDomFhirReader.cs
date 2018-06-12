@@ -70,9 +70,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-       
-
-        public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
+        IEnumerable<Tuple<string, IFhirReader>> IFhirReader.GetMembers()
         {
             if (!(_current is XElement))
                 throw Error.Format("Cannot get members: reader not at an element", this);
@@ -144,7 +142,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public IEnumerable<IFhirReader> GetArrayElements()
+        internal IEnumerable<IFhirReader> GetArrayElements()
         {
             // Xml does not support arrays like Json. This method won't be called if CurrentToken is never set to Array
             throw new NotImplementedException();
