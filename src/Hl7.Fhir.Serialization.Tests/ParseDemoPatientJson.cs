@@ -13,7 +13,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
     [TestClass]
     public class ParseDemoPatientJson
     {
-        public IElementNavigator getXmlNavU(string xml) => XmlDomFhirNavigator.CreateUntyped(xml);
+        public IElementNavigator getXmlNavU(string xml) => FhirXmlNavigator.Untyped(xml);
 
         [TestMethod]
         public void CanReadThroughNavigator()

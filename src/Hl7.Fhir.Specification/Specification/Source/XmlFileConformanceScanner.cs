@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Source
 
             var type = found.Name.LocalName;
 
-            var resultResource = new FhirXmlParser().Parse<Resource>(XmlDomFhirNavigator.CreateUntyped(found, type));
+            var resultResource = new FhirXmlParser().Parse<Resource>(FhirXmlNavigator.Untyped(found));
             resultResource.SetOrigin(entry.Origin);
 
             return resultResource;

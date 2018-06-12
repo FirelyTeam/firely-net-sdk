@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct UntypedXmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
     {
-        private UntypedXmlDomFhirNavigator(XElement root)
+        internal UntypedXmlDomFhirNavigator(XElement root)
         {
             _current = root;
             _parentPath = null;
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Name => _current.Name()?.LocalName;
 
-        public string Type => throw new NotImplementedException("This untyped reader does not support Type");
+        public string Type => throw new NotImplementedException("This untyped reader does not support reading the Type property.");
 
         public object Value => _current.GetValue();
 

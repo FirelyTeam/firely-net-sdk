@@ -17,8 +17,8 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     [TestClass]
     public class ParseDemoPatientXml
     {
-        public IElementNavigator getXmlNav(string xml) => XmlDomFhirNavigator.Create(xml, new PocoModelMetadataProvider());
-        public IElementNavigator getXmlNavU(string xml) => XmlDomFhirNavigator.CreateUntyped(xml);
+        public IElementNavigator getXmlNav(string xml) => FhirXmlNavigator.ForRoot(xml, new PocoModelMetadataProvider());
+        public IElementNavigator getXmlNavU(string xml) => FhirXmlNavigator.Untyped(xml);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -198,7 +198,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = XmlDomFhirNavigator.Create(reader, new PocoModelMetadataProvider());
+            var nav = FhirXmlNavigator.ForRoot(reader, new PocoModelMetadataProvider());
 
             Assert.AreEqual("SomeResource", nav.Name);
 
@@ -314,7 +314,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = XmlDomFhirNavigator.CreateUntyped(reader);
+            var nav = FhirXmlNavigator.Untyped(reader);
 
             var xmlBuilder = new StringBuilder();
             var serializer = new NavigatorXmlWriter();

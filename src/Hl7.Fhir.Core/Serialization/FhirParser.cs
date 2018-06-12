@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Serialization
 
         [Obsolete("Create a new navigating parser (XmlDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
         public static IFhirReader CreateFhirReader(string xml, bool disallowXsiAttributesOnRoot)
-            => new ElementNavFhirReader(XmlDomFhirNavigator.CreateUntyped(xml), disallowXsiAttributesOnRoot);
+            => new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml), disallowXsiAttributesOnRoot);
 
         public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
         public T Parse<T>(XmlReader reader) where T : Base => (T)Parse(reader, typeof(T));
@@ -41,14 +41,14 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612, 618
         public Base Parse(string xml, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(XmlDomFhirNavigator.CreateUntyped(xml), Settings.DisallowXsiAttributesOnRoot);
+            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml), Settings.DisallowXsiAttributesOnRoot);
             return Parse(xmlReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(XmlDomFhirNavigator.CreateUntyped(reader), Settings.DisallowXsiAttributesOnRoot);
+            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader), Settings.DisallowXsiAttributesOnRoot);
             return Parse(xmlReader, dataType);
         }
 #pragma warning restore 612, 618
