@@ -30,39 +30,47 @@ using System.Xml;
 
 public static class StringUtils
 {
+    /// <summary>
+    /// Quotes a string for output in C# source code -e.g. a\b becomes "a\\b"
+    /// </summary>
     public static string Quote(string str)
     {
         return "\"" + str.Replace("\\", "\\\\").Replace("\r", "\\r").Replace("\n", "\\n").Replace("\"", "\\\"") + "\"";
     }
 
-    // convert the name into a valid Enum Value
-    public static string ConvertEnumValue(string name)
+    /// <summary>
+    /// Converts a FHIR code to a valid Pascal case C# enumeration value - e.g. entered-in-error becomes EnteredInError
+    /// </summary>
+    public static string ConvertEnumValue(string code)
     {
-        if (name.StartsWith("_"))
-            name = name.Substring(1);
-        if (name == "=")
+        if (code.StartsWith("_"))
+            code = code.Substring(1);
+        if (code == "=")
             return "Equal";
-        if (name == "<")
+        if (code == "<")
             return "LessThan";
-        if (name == "<=")
+        if (code == "<=")
             return "LessOrEqual";
-        if (name == ">=")
+        if (code == ">=")
             return "GreaterOrEqual";
-        if (name == ">")
+        if (code == ">")
             return "GreaterThan";
-        string[] bits = name.Split(new char[] { ' ', '-' });
-        string result = null;
+        var bits = code.Split(new char[] { ' ', '-' });
+        var result = string.Empty;
         foreach (var bit in bits)
         {
             result += bit.Substring(0, 1).ToUpper();
             result += bit.Substring(1);
         }
-        int IsIntegerValue;
-        if (int.TryParse(result, out IsIntegerValue))
+        if (int.TryParse(result, out var integerValue))
             result = "N" + result;
         return result;
     }
 
+    /// <summary>
+    /// Render a string as a C# 'summary' comment. New line characters in the string create separate comment lines
+    /// </summary>
+    /// <returns>Summary comment lines</returns>
     public static IEnumerable<string> RenderSummary(string comment)
     {
         if (!string.IsNullOrEmpty(comment))
@@ -73,6 +81,10 @@ public static class StringUtils
         }
     }
 
+    /// <summary>
+    /// Convert a string to a C# comment. New line characters in the string create separate comment lines
+    /// </summary>
+    /// <returns>Comment lines</returns>
     public static IEnumerable<string> ConvertToComment(string comment)
     {
         if (string.IsNullOrEmpty(comment)) return Enumerable.Empty<string>();
@@ -87,6 +99,13 @@ public static class StringUtils
             .Select(l => "/// " + l);
     }
 
+    /// <summary>
+    /// Renders (i.e. generates) the standard initial part of a generated C# source file: usings, initial comment with copyrights etc., namespace declaration
+    /// </summary>
+    /// <param name="versions">The loaded data of the FHIR version or versions the C# source file applies to: 
+    /// it can be a single element = the file applies to that one specific version and so the namespace is Hl7.Fhir.Model.[specific version],
+    /// or more elements = the file applies to all versions (e.g. contains classes that are shared by multiple FHIR versions) and the namespace is Hl7.Fhir.Model</param>
+    /// <returns>Initial lines of the C# source file (up to and including the namespace declaration)</returns>
     public static IEnumerable<string> RenderFileHeader(IEnumerable<LoadedVersion> versions)
     {
         var header = @"using System;
@@ -279,21 +298,63 @@ using Hl7.Fhir.Utility;
     }
 }
 
+/// <summary>
+/// The complete XML structure definition data of a specific FHIR version
+/// </summary>
 public class LoadedVersion
 {
+    /// <summary>
+    /// The FHIR version: 'DSTU2', 'STU3' etc.
+    /// </summary>
     public string Version;
+
+    /// <summary>
+    /// Content of 'profile-resources.xml': all resources definitions (including the abstract ones like Resource, DomainResource)
+    /// </summary>
     public XmlDocument Resources;
+    /// <summary>
+    /// Namespace manager associated with the Resources XML document
+    /// </summary>
     public XmlNamespaceManager NSR;
+
+    /// <summary>
+    /// Content of 'expansions.xml':  expansions for all the value sets that are used on an element of type 'code'
+    /// </summary>
     public XmlDocument Expansions;
+    /// <summary>
+    /// Namespace manager associated with the Expansions XML document
+    /// </summary>
     public XmlNamespaceManager NSE;
+
+    /// <summary>
+    /// Content of 'profile-types.xml': all types definitions - both primitive (e.g. dateTime) and composite (e.g. CodeableConcept)
+    /// </summary>
     public XmlDocument Types;
+    /// <summary>
+    /// Namespace manager associated with the Types XML document
+    /// </summary>
     public XmlNamespaceManager NST;
+
+    /// <summary>
+    /// Content of 'search-parameters.xml': standard search parameters definitons for all resources
+    /// </summary>
     public XmlDocument SearchParameters;
+    /// <summary>
+    /// Namespace manager associated with the SearchParameters XML document
+    /// </summary>
     public XmlNamespaceManager NSSP;
+
+    /// <summary>
+    /// The FHIR numeric version: '1.0.2', '3.0.1' etc.
+    /// </summary>
     public string FhirVersion;
 
     private const string SourceDirectoryPrefix = "Source-";
 
+    /// <summary>
+    /// Load the data for all available FHIR versions, scanning the 'Source-XXXX' sub-directories of the specified root directory
+    /// </summary>
+    /// <returns>List of loaded FHIR versions data</returns>
     public static List<LoadedVersion> LoadAll(string rootDirectory)
     {
         var sourceDirectories = Directory.GetDirectories(rootDirectory)
@@ -570,8 +631,16 @@ public class ValueSetValue
     }
 }
 
+/// <summary>
+/// Complete description of a resource (e.g. Patient) or data type (e.g. Identifier)
+/// </summary>
 public class ResourceDetails
 {
+    /// <summary>
+    /// Versions this resource or data type belongs to. 
+    /// Initially it contains only the version this resource has been loaded from (e.g. DSTU2), 
+    /// if later on the resource is determined to be common to multiple version it will contain all the versions it appears in (see the MergeSame() method)
+    /// </summary>
     public List<LoadedVersion> Versions;
     public string Name;
     public string Description;
@@ -586,11 +655,17 @@ public class ResourceDetails
     public List<ConstraintDetails> Constraints;
     public string Definition;
 
+    /// <summary>
+    /// True if this is a resource, false if it is a data type
+    /// </summary>
     public bool IsResource()
     {
         return BaseType.EndsWith(".DomainResource") || BaseType.EndsWith(".Resource") || Name == "DomainResource" || Name == "Resource";
     }
 
+    /// <summary>
+    /// Dumps the resource details onto the specified write - used for debugging
+    /// </summary>
     public void Dump(TextWriter writer)
     {
         writer.WriteLine(
@@ -639,6 +714,9 @@ public class ResourceDetails
         }
     }
 
+    /// <summary>
+    /// Checks if this resource is the same as another one - where 'the same' = representable by the same C# class
+    /// </summary>
     public bool IsSame(ResourceDetails other)
     {
         return other != null &&
@@ -654,6 +732,10 @@ public class ResourceDetails
             Components.OrderBy(c => c.Name).Zip(other.Components.OrderBy(c => c.Name), (c1, c2) => c1.IsSame(c2)).All(same => same);
     }
 
+    /// <summary>
+    /// Merge resource descriptions that are the same
+    /// </summary>
+    /// <returns>Newly created merged resource description</returns>
     public static ResourceDetails MergeSame(
         IEnumerable<ResourceDetails> resources,
         Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion
