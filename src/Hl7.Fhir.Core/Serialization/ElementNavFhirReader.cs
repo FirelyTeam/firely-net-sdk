@@ -36,37 +36,13 @@ namespace Hl7.Fhir.Serialization
 
         public object GetPrimitiveValue() => Value;
 
-        public string GetResourceTypeName()
-        {
-            if (Type != null) return Type;
-
-            // No type name on this element....give the users some details about why?
-            var xmlDetails = getXmlDetails(_current);
-            if (xmlDetails != null)
-            {
-                throw Error.Format($"Cannot derive type name from element with name '{Name}' and namespace '{xmlDetails.Namespace}'", this);
-            }
-            else
-            {
-                throw Error.Format("Cannot determine type of resource to create from json input data. " +
-                                    $"Is there a '{JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME}' member present? ", this);
-            }
-
-        }
-
+        public string GetResourceTypeName() => _current.GetResourceTypeFromAnnotation() ??
+            throw Error.Format($"Cannot retrieve type of resource for element '{Name}' from the underlying navigator.", this);
 
         private static XmlSerializationDetails getXmlDetails(IElementNavigator nav)
         {
             if (nav is IAnnotated ia)
                 return ia.Annotation<XmlSerializationDetails>();
-            else
-                return null;
-        }
-
-        private static JsonSerializationDetails getJsonDetails(IElementNavigator nav)
-        {
-            if (nav is IAnnotated ia)
-                return ia.Annotation<JsonSerializationDetails>();
             else
                 return null;
         }

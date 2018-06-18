@@ -33,18 +33,35 @@ namespace Hl7.Fhir.Serialization
         public static XObject NextElementOrAttribute(this XObject current)
         {
             var scan = current.NextSibling();
+            return scanToNextRelevantNode(scan);
+        }
 
+        public static XObject FirstElementOrAttribute(this XObject current)
+        {
+            var scan = current.FirstChild();
+            return scanToNextRelevantNode(scan);
+        }
+
+
+        private static XObject scanToNextRelevantNode(this XObject scan)
+        {
             while (scan != null)
             {
-                if (scan.NodeType == XmlNodeType.Element ||
-                    (scan.NodeType == XmlNodeType.Attribute && scan is XAttribute attr && !isReservedAttribute(attr)))
+                if (isRelevantNode(scan))
                     break;
                 scan = scan.NextSibling();
             }
 
             return scan;
+        }
 
-            bool isReservedAttribute(XAttribute attr) => attr.IsNamespaceDeclaration || attr.Name == "value";
+        private static bool isRelevantNode(this XObject scan)
+        {
+            return scan.NodeType == XmlNodeType.Element ||
+                   (scan.NodeType == XmlNodeType.Attribute &&
+                   scan is XAttribute attr && !isReservedAttribute(attr));
+
+            bool isReservedAttribute(XAttribute a) => a.IsNamespaceDeclaration || a.Name == "value";
         }
 
 

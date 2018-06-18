@@ -17,21 +17,23 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     [TestClass]
     public class ParseDemoPatientXml
     {
+        public IElementNavigator getXmlNav(string xml) => FhirXmlNavigator.ForRoot(xml, new PocoModelMetadataProvider());
         public IElementNavigator getXmlNavU(string xml) => FhirXmlNavigator.Untyped(xml);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
-        public void CanReadThroughUntypedNavigator()
+        public void CanReadThroughNavigator()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNavU(tpXml);
+            var nav = getXmlNav(tpXml);
 
             Assert.AreEqual("Patient", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceTypeFromAnnotation());
+            Assert.AreEqual("Patient", nav.Type);
 
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("id", nav.Name);
             Assert.AreEqual("pat1", nav.Value);
+            Assert.AreEqual("id", nav.Type);
 
             var pat = nav.Clone();
 
@@ -39,14 +41,17 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("text", nav.Name);
+            Assert.AreEqual("Narrative", nav.Type);
             var text = nav.Clone();
 
             Assert.IsTrue(text.MoveToFirstChild("status")); // status
+            Assert.AreEqual("code", text.Type); 
             Assert.AreEqual("generated", text.Value);
 
             Assert.IsTrue(text.MoveToNext());
             Assert.AreEqual("div", text.Name);
             Assert.IsTrue(((string)text.Value).StartsWith("<div xmlns="));       // special handling of xhtml
+            Assert.AreEqual("xhtml", text.Type);
 
             Assert.IsFalse(text.MoveToFirstChild()); // cannot move into xhtml
             Assert.AreEqual("div", text.Name); // still on xhtml <div>
@@ -54,12 +59,16 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             Assert.IsTrue(nav.MoveToNext()); // contained
             Assert.AreEqual("contained", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceTypeFromAnnotation());
+            Assert.AreEqual("Patient", nav.Type);
 
             Assert.IsTrue(nav.MoveToFirstChild()); // id
+            Assert.AreEqual("id", nav.Type);
+
             Assert.IsTrue(nav.MoveToNext()); // identifier
+
             var identifier = nav.Clone();
 
+            Assert.AreEqual("Identifier", identifier.Type);
             Assert.IsTrue(identifier.MoveToFirstChild()); // system
             Assert.IsTrue(identifier.MoveToNext()); // value
             Assert.IsFalse(identifier.MoveToNext()); // still value
@@ -77,17 +86,20 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("use", nav.Name);
 
             Assert.IsTrue(pat.MoveToNext("birthDate"));
-            Assert.AreEqual("1974-12-25", pat.Value);
+            Assert.AreEqual("date", pat.Type);
+            Assert.AreEqual(PartialDateTime.Parse("1974-12-25"), pat.Value);
 
-            Assert.IsTrue(pat.MoveToNext("deceasedBoolean"));
-            Assert.AreEqual("false", pat.Value);
+            Assert.IsTrue(pat.MoveToNext("deceased"));
+            Assert.AreEqual("boolean", pat.Type);
+            Assert.AreEqual(false, pat.Value);
         }
 
         [TestMethod]
         public void ElementNavPerformanceXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNavU(tpXml);
+            var nav = getXmlNav(tpXml);
+            //var nav = getXmlNavU(tpXml);
 
             // run extraction once to allow for caching
             extract();
@@ -114,15 +126,15 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         }
 
         [TestMethod]
-        public void ProducesCorrectUntypedLocations()
+        public void ProducesCorrectLocations()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var patient = getXmlNavU(tpXml);
+            var patient = getXmlNav(tpXml);
 
             Assert.AreEqual("Patient", patient.Location);
 
             patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id[0]", patient.Location);
+            Assert.AreEqual("Patient.id", patient.Location);
 
             patient.MoveToNext();   // text
             patient.MoveToNext("identifier");
@@ -133,16 +145,16 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("Patient.identifier[0].use[0]", patient.Location);
 
             idNav.MoveToNext(); // identifier
-            Assert.AreEqual("Patient.identifier[1]", idNav.Location);
+            Assert.AreEqual("Patient.identifier[1]", patient.Location);
 
             Assert.IsTrue(idNav.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[1].use[0]", idNav.Location);
+            Assert.AreEqual("Patient.identifier[1].use[0]", patient.Location);
         }
-        
+
         [TestMethod]
         public void ReadsAttributesAsElements()
         {
-            var nav = getXmlNavU("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://somenamespace' q:myattr='dummy' />");
+            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://somenamespace' q:myattr='dummy' />");
 
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
@@ -153,11 +165,30 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         }
 
 
+        // resurface when read through a validating navigator
         [TestMethod]
-        public void HasLineNumbers()
+        public void CompareXmlJsonParseOutcomes()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNavU(tpXml);
+            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var navXml = getXmlNav(tpXml);
+            var navJson = JsonDomFhirNavigator.Create(tpJson);
+
+            var compare = navXml.IsEqualTo(navJson);
+
+            if (compare.Success == false)
+            {
+                Debug.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
+                Assert.IsTrue(compare.Success);
+            }
+            Assert.IsTrue(compare.Success);
+        }
+
+        [TestMethod]
+        public void HasLineNumbersXml()
+        {
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var nav = getXmlNav(tpXml);
 
             Assert.IsTrue(nav.MoveToFirstChild());
 
@@ -168,13 +199,13 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         }
 
         [TestMethod]
-        public void TestAllFeatures()
+        public void TestAllFeaturesXml()
         {
             var tpXml = File.ReadAllText(@"TestData\all-xml-features.xml");
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = FhirXmlNavigator.Untyped(reader);
+            var nav = FhirXmlNavigator.ForRoot(reader, new PocoModelMetadataProvider());
 
             Assert.AreEqual("SomeResource", nav.Name);
 
@@ -302,5 +333,6 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var output = xmlBuilder.ToString();
             XmlAssert.AreSame("roundtrippable.xml", tpXml, output);            
         }
+
     }
 }

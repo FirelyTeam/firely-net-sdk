@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization
             {
                 bool isMatch =
                     name == null ||      // no name filter -> any match is ok
-                    scan.Name() == name;    // else, filter on the actual name
+                    scan.Name().LocalName == name;    // else, filter on the actual name
 
                 if (isMatch)
                 {
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Serialization
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
             XObject firstChild = Contained != null ?
-                Contained.FirstChild() : _current.FirstChild();
+                Contained.FirstElementOrAttribute() : _current.FirstElementOrAttribute();
 
             if (firstChild == null) return false;
             if (!tryFindByName(firstChild, name, out var match)) return false;
@@ -220,7 +220,10 @@ namespace Hl7.Fhir.Serialization
                 {
                     new ResourceTypeIndicator
                     {
-                        ResourceType = Contained?.Name()?.LocalName
+                        // If we're on the root, the root is the resource type,
+                        // otherwise we should have looked at a nested node.
+                        ResourceType = _parentPath != null ?
+                            Contained?.Name()?.LocalName : _current.Name().LocalName
                     }
                 };
             }
