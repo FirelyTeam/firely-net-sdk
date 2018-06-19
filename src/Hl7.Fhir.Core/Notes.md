@@ -4,7 +4,7 @@
 
 Classes and enumeration that are common for all FHIR versions are in the `Hl7.Fhir.Model` namespace
 
-Classes and enumeration that are specific for a FHIR version are in the `Hl7.Fhir.Model.XXXX` namespace , where `xxxx` = `DSTU2`, `STU3` etc.
+Classes and enumeration that are specific for a FHIR version are in the `Hl7.Fhir.Model.XXXX` namespace, where `xxxx` = `DSTU2`, `STU3` etc.
 
 So for example FHIR CodeableConcept - whose definition is the same across all FHIR version - is represented by the `Hl7.Fhir.Model.CodeableConcept` class, whereas FHIR Patient - that is different between DSTU2 and STU3 - is represented by the `Hl7.Fhir.Model.DSTU2.Patient` and `Hl7.Fhir.Model.STU3.Patient` classes.
 
@@ -24,7 +24,7 @@ All generated classes are tagged with the version they belong to via `FhirTypeAt
 
 Value sets are considered 'the same' - and hence generate a common shared enumeration - if they have the same name and values.
 
-Resources and data types are considered 'the same' - and hence generate a common shared class - if they have the same name, base type or class, primitive type (if they are primityve data type), validation pattern, abstract or concrete attribute, elements (properties) and components (sub-classes). In turn elements (properties) are considered 'the same' if they have the same name, type, minimum and maximum cardinality and target reference types (if they are a reference).
+Resources and data types are considered 'the same' - and hence generate a common shared class - if they have the same name, base type or class, primitive type (if they are primitive data type), validation pattern, abstract or concrete attribute, elements (properties) and components (sub-classes). In turn elements (properties) are considered 'the same' if they have the same name, type, minimum and maximum cardinality and target reference types (if they are a reference).
 
 Note that if a data type X is different between version this difference propagates to all resources or data types that have elements of type X - so for example ResourceReference is different between DSTU2 and STU3, and hence all resources that have a ResourceReference element are different between DSTU2 and STU3.
 
@@ -92,4 +92,39 @@ All the above interface and classes and defined and maintained manually.
 
 ## Parsing and serialization
 
+Parsing depends on the target FHIR version - to know if something like `{ "resourceType": "Patient" . . . }` results in a `Hl7.Fhir.Model.DSTU2.Patient` or `Hl7.Fhir.Model.STU3.Patient`. 
+
+The `FhirJsonParser` and `FhirXmlParser` classes have constructors accepting the target version as paremeter, so:
+
+```CSharp
+	var parser = new Hl7.Fhir.Serialization.FhirXmlParser(Fhir.Model.Version.DSTU2);
+```
+
+creates an XML parser targetting FHIR DSTU2.
+
+Similarly, the `ParserSettings` class has a `Version` property and requires a FHIR version to be created. For example:
+
+```CSharp
+  var xmlSerializer = new FhirXmlSerializer(new ParserSettings(Model.Version.DSTU2) { CustomSerializer = new DoNothingCustomSerializer() });
+```
+
+creates an XML serializer targetting FHIR DSTU2 and using a custom serializer.
+
+Serialization depends on the target FHIR version as well, because properties of classes shared by multiple version can belong or not to the summary depending on the FHIR version. 
+
+The `FhirXmlSerializer` and `FhirJsonSerializer` classes have constructors accepting the target version as paremeter, so:
+
+```CSharp
+	var jsonSer = new FhirJsonSerializer(Model.Version.DSTU2);
+```
+
+creates a JSON serializer targetting FHIR DSTU2.
+
 ## Client
+
+Client classes are version-specific, so there are separate `FhirDstu2Client` and `FhirStu3Client` classes - used to connect to FHIR DSTU2 and FHIR STU3 servers respectively.
+
+These classes are derived from a generic version-independent `FhirClient<TBundle, TMetadata, TOperationOutcome>` class, that contains most of the actual loginc and methods, so creating new version-specific clients for other FHIR versions does not require writing much new or duplicated code.
+
+The FHIR client classes implement a generic version-independent `IFhirClient<TBundle, TMetadata>` interface, allowing client code to abstract (as much as possible) from the version of the server they are connecting to.
+
