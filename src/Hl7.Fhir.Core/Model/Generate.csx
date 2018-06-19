@@ -68,6 +68,33 @@ public static class StringUtils
     }
 
     /// <summary>
+    /// Remove the namespace part of fully-qualified code types - i.e. from Hl7.Fhir.Mode.Code&lt;XXX&gt; to Code&lt;XXX&gt; 
+    /// All other types are unchanged
+    /// </summary>
+    public static string RemoveCodeNamespace(string type)
+    {
+        return type.Replace("Hl7.Fhir.Model.Code<", "Code<");
+    }
+
+    /// <summary>
+    /// Fix the FHIR version of a type - e.g. converts Hl7.Fhir.Model.Patient to Hl7.FhirModel.DSTU2.Patient because Patient is version-specific and 
+    /// leaves Hl7.Fhir.Model.Resource 'as is' because Resource is common to all versions
+    /// </summary>
+    /// <param name="type">The type to fix</param>
+    /// <param name="version">The target FHIR version</param>
+    /// <param name="resourcesByName">All FHIR resources that are specific to the target FHIR version, indexed by their name ('Patient', 'Encounter' etc)</param>
+    /// <returns>Fixed FHIR type</returns>
+    public static string FixTypeFhirVersion(string type, string version, Dictionary<string, ResourceDetails> resourcesByName)
+    {
+        const string prefix = "Hl7.Fhir.Model.";
+        if (type.StartsWith(prefix) && resourcesByName.ContainsKey(type.Substring(prefix.Length)))
+        {
+            return prefix + version + "." + type.Substring(prefix.Length);
+        }
+        return type;
+    }
+
+    /// <summary>
     /// Render a string as a C# 'summary' comment. New line characters in the string create separate comment lines
     /// </summary>
     /// <returns>Summary comment lines</returns>
@@ -161,6 +188,11 @@ using Hl7.Fhir.Utility;
         yield return $"{{";
     }
 
+    /// <summary>
+    /// Render the C# code of a list of properties
+    /// </summary>
+    /// <param name="nPropNum">Initial property number - 10, used to set FhirElementAttribute.Order</param>
+    /// <returns>Lines of C# code</returns>
     public static IEnumerable<string> RenderProperties(int nPropNum, IEnumerable<PropertyDetails> properties)
     {
         foreach (var pd in properties)
@@ -171,7 +203,13 @@ using Hl7.Fhir.Utility;
         }
     }
 
-    public static IEnumerable<string> RenderPropertiesAsChildren(IEnumerable<PropertyDetails> properties)
+    /// <summary>
+    /// Renders the Children and NamedChildren methods, that return all the properties of a FHIR resource or data type class
+    /// as enumeration of Base and ElementValue objects respectively 
+    /// </summary>
+    /// <param name="properties">The properties of the FHIR resource or data type class, that are going to be returned by the Children and NamedChildren methods</param>
+    /// <returns>Lines of C# code of the Children and NamedChildren methods</returns>
+    public static IEnumerable<string> RenderChildrenMethods(IEnumerable<PropertyDetails> properties)
     {
         yield return $"[NotMapped]";
         yield return $"public override IEnumerable<Base> Children";
@@ -200,7 +238,14 @@ using Hl7.Fhir.Utility;
         yield return $"}}";
     }
 
-    public static IEnumerable<string> RenderPropertiesMethods(string type, bool abstractType, IEnumerable<PropertyDetails> properties)
+    /// <summary>
+    /// Renders the copy (CopyTo, DeepCopy) and comparison (Matches, IsExactly) methods of a FHIR resource or data type class
+    /// </summary>
+    /// <param name="type">The FHIR resource or data type class type (e.g. Patient)</param>
+    /// <param name="abstractType">True if it is an abstract type (e.g. DomainResource)</param>
+    /// <param name="properties">The properties of the FHIR resource or data type class, that are copied or compared by the generate methods</param>
+    /// <returns>Lines of C# code of the copy and comparison methods</returns>
+    public static IEnumerable<string> RenderCopyAndComparisonMethods(string type, bool abstractType, IEnumerable<PropertyDetails> properties)
     {
         foreach (var line in RenderCopyTo(type, properties)) yield return line;
         if (!abstractType)
@@ -281,21 +326,6 @@ using Hl7.Fhir.Utility;
         yield return $"    return true;";
         yield return $"}}";
     }
-
-    public static string ConvertType(string type)
-    {
-        return type.Replace("Hl7.Fhir.Model.Code<", "Code<");
-    }
-
-    public static string FixReferencedFhirType(string type, string version, Dictionary<string, ResourceDetails> resourcesByName)
-    {
-        const string prefix = "Hl7.Fhir.Model.";
-        if (type.StartsWith(prefix) && resourcesByName.ContainsKey(type.Substring(prefix.Length)))
-        {
-            return prefix + version + "." + type.Substring(prefix.Length);
-        }
-        return type;
-    }
 }
 
 /// <summary>
@@ -349,8 +379,6 @@ public class LoadedVersion
     /// </summary>
     public string FhirVersion;
 
-    private const string SourceDirectoryPrefix = "Source-";
-
     /// <summary>
     /// Load the data for all available FHIR versions, scanning the 'Source-XXXX' sub-directories of the specified root directory
     /// </summary>
@@ -366,6 +394,8 @@ public class LoadedVersion
         }
         return result;
     }
+
+    private const string SourceDirectoryPrefix = "Source-";
 
     private static LoadedVersion Load(string sourceDirectory)
     {
@@ -399,13 +429,34 @@ public class LoadedVersion
     }
 }
 
+/// <summary>
+/// Description of a FHIR value set - and of the corresponding C# enumeration
+/// </summary>
 public class ValueSet
 {
+    /// <summary>
+    /// The C# enumeration name - e.g. AllergyIntoleranceStatus 
+    /// </summary>
     public string EnumName;
+
+    /// <summary>
+    /// URL uniquely identifying the FHIR value set - e.g. http://hl7.org/fhir/ValueSet/allergy-intolerance-status
+    /// </summary>
     public string Url;
+
+    /// <summary>
+    /// Value set / enumeration description - e.g. 'Assertion about certainty associated with a propensity, or potential risk, of a reaction to the identified Substance'
+    /// </summary>
     public string Description;
+
+    /// <summary>
+    /// All values contained in the value set, corresponding to the C# enumeration values
+    /// </summary>
     public List<ValueSetValue> Values;
 
+    /// <summary>
+    /// Checks if this value set is the same - i.e. correspond to an identical C# enumeration - as another one
+    /// </summary>
     public bool IsSame(ValueSet other)
     {
         return other != null &&
@@ -413,7 +464,7 @@ public class ValueSet
             GetSortedCodesString() == other.GetSortedCodesString();
     }
 
-    public string GetSortedCodesString()
+    private string GetSortedCodesString()
     {
         if (Values == null)
         {
@@ -422,6 +473,9 @@ public class ValueSet
         return string.Join(", ", Values.Select(v => v.Code).OrderBy(c => c));
     }
 
+    /// <summary>
+    /// Renders (generate) the C# code of the value set enumeration
+    /// </summary>
     public IEnumerable<string> Render()
     {
         if (!string.IsNullOrEmpty(Description) || !string.IsNullOrEmpty(Url))
@@ -444,6 +498,14 @@ public class ValueSet
         yield return $"}}";
     }
 
+    /// <summary>
+    /// Writes the C# enumerations of a list of value sets to a file
+    /// </summary>
+    /// <param name="filePath">Path of the destination file, that is overwritten if it already exists</param>
+    /// <param name="valueSets">Value sets to write</param>
+    /// <param name="versions">The loaded data of the FHIR version or versions the values sets belong to: 
+    /// it can be a single element = the value sets belong to that one specific version (and so their namespace is Hl7.Fhir.Model.[specific version]),
+    /// or more elements = the value sets belong to all versions (e.g. and so their namespace is Hl7.Fhir.Model</param>
     public static void Write(string filePath, IEnumerable<ValueSet> valueSets, IEnumerable<LoadedVersion> versions)
     {
         using (var writer = new StreamWriter(filePath, false, Encoding.UTF8))
@@ -459,6 +521,13 @@ public class ValueSet
         }
     }
 
+    /// <summary>
+    /// Load all the value sets from the XML structure definition data of a set of FHIR versions
+    /// </summary>
+    /// <param name="loadedVersions">The FHIR versions XML structure definition data</param>
+    /// <returns>Newly created value sets by FHIR version and by name, i.e. a dictionary indexed by FHIR version, 
+    /// with an empty string key representing value sets common to all version and 'DSTU2', 'STU3' etc representing the specific version; 
+    /// each value is a dictionary indexed by the enumeration name with the value sets as values</returns>
     public static Dictionary<string, Dictionary<string, ValueSet>> LoadAll(IEnumerable<LoadedVersion> loadedVersions)
     {
         var valueSetsByEnumNameByVersion = new Dictionary<string, Dictionary<string, ValueSet>>();
@@ -603,11 +672,29 @@ public class ValueSet
     }
 }
 
+/// <summary>
+/// Description of an individual value set value - corresponding to a C# enumeration value
+/// </summary>
 public class ValueSetValue
 {
-    public string System;
+    /// <summary>
+    /// Value code - e.g. 'active' or 'entered-in-error'
+    /// </summary>
     public string Code;
+
+    /// <summary>
+    /// Value system URI - e.g. http://hl7.org/fhir/allergy-intolerance-status
+    /// </summary>
+    public string System;
+
+    /// <summary>
+    /// Value display - e.g. 'Entered In Error'
+    /// </summary>
     public string Display;
+
+    /// <summary>
+    /// Value definition or description - e.g. 'The statement was entered in error and is not valid'
+    /// </summary>
     public string Definition;
 
     public IEnumerable<string> Render()
@@ -632,7 +719,7 @@ public class ValueSetValue
 }
 
 /// <summary>
-/// Complete description of a resource (e.g. Patient) or data type (e.g. Identifier)
+/// Complete description of a resource (e.g. Patient) or data type (e.g. Identifier), corresponding to a C# class
 /// </summary>
 public class ResourceDetails
 {
@@ -642,17 +729,65 @@ public class ResourceDetails
     /// if later on the resource is determined to be common to multiple version it will contain all the versions it appears in (see the MergeSame() method)
     /// </summary>
     public List<LoadedVersion> Versions;
+
+    /// <summary>
+    /// C# class name - e.g. 'Patient' or 'FhirBoolean'
+    /// </summary>
     public string Name;
+
+    /// <summary>
+    /// FHIR resource or data type description - e.g. 'Primitive Type boolean'
+    /// </summary>
     public string Description;
-    public string RawName;
+
+    /// <summary>
+    /// Original FHIR resource or data type name - e.g. 'Patient' or 'boolean'
+    /// </summary>
+    public string FhirName;
+
+    /// <summary>
+    /// True if the resource or data type us used only as base for other resources or data type - corresponding to an abstract C# class 
+    /// </summary>
     public bool AbstractType;
+
+    /// <summary>
+    /// Base type (class) name - e.g. DomainResource
+    /// </summary>
     public string BaseType;
+
+    /// <summary>
+    /// True if a primitive data type (e.g. boolean) as opposed to a resource or a composite data type like Attachment
+    /// </summary>
     public bool IsPrimitive;
+
+    /// <summary>
+    /// The C# primitive data type (e.g. bool) - meaningful only if this is a primitive type
+    /// </summary>
     public string PrimitiveTypeName;
+
+    /// <summary>
+    /// Validation regular expression- used for string-based primitive data types likes Uri
+    /// </summary>
     public string Pattern;
+
+    /// <summary>
+    /// Properties of the FHIR resource or data type (e.g. Id, Identifier, Active, Name etc for Patient) - corresponding to C# class properties
+    /// </summary>
     public List<PropertyDetails> Properties;
+
+    /// <summary>
+    /// Components of the FHIR resource or data type (e.g. ContactComponent, AnimalComponent, CommunicationComponent, LinkComponent for Patient) - corresponding to C# sub-classes
+    /// </summary>
     public List<ComponentDetails> Components;
+
+    /// <summary>
+    /// Validation contraints of the FHIR resourc or data type - e.g. the 'contact.all(name or telecom or address or organization)' validation expression for Patient
+    /// </summary>
     public List<ConstraintDetails> Constraints;
+
+    /// <summary>
+    /// Human-readable definition of sub-types - e.g. 'There SHALL be a code if there is a value and it SHALL be an expression of time...' for Age (detived from Quantity)
+    /// </summary>
     public string Definition;
 
     /// <summary>
@@ -664,7 +799,7 @@ public class ResourceDetails
     }
 
     /// <summary>
-    /// Dumps the resource details onto the specified write - used for debugging
+    /// Dumps the resource details to the specified text writer - used for debugging
     /// </summary>
     public void Dump(TextWriter writer)
     {
@@ -733,8 +868,10 @@ public class ResourceDetails
     }
 
     /// <summary>
-    /// Merge resource descriptions that are the same
+    /// Merge resource and data type descriptions that are the same
     /// </summary>
+    /// <param name="resources">Resources / data types to merge</param>
+    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
     /// <returns>Newly created merged resource description</returns>
     public static ResourceDetails MergeSame(
         IEnumerable<ResourceDetails> resources,
@@ -749,7 +886,7 @@ public class ResourceDetails
                 .ToList(),
             Name = firstResource.Name,
             Description = firstResource.Description,
-            RawName = firstResource.RawName,
+            FhirName = firstResource.FhirName,
             AbstractType = firstResource.AbstractType,
             BaseType = firstResource.BaseType,
             IsPrimitive = firstResource.IsPrimitive,
@@ -782,6 +919,10 @@ public class ResourceDetails
         };
     }
 
+    /// <summary>
+    /// Create a C# file containing the class corresponding to this FHIR resource or data type
+    /// </summary>
+    /// <param name="filePath">Path of the target file, that is overwritten if it alreadt exist</param>
     public void Write(string filePath)
     {
         using (var writer = new StreamWriter(filePath, false, Encoding.UTF8))
@@ -793,7 +934,7 @@ public class ResourceDetails
         }
     }
 
-    public IEnumerable<string> Render()
+    private IEnumerable<string> Render()
     {
         if (BaseType.EndsWith(".Quantity"))
         {
@@ -815,7 +956,7 @@ public class ResourceDetails
             var isResource = !isElement ?
                 ", IsResource=true" :
                 string.Empty;
-            yield return $"[FhirType({version}, \"{ RawName }\"{ isResource })]";
+            yield return $"[FhirType({version}, \"{ FhirName }\"{ isResource })]";
         }
         yield return $"[DataContract]";
 
@@ -836,7 +977,7 @@ public class ResourceDetails
         }
 
         yield return $"    [NotMapped]";
-        yield return $"    public override string TypeName {{ get {{ return \"{ RawName }\"; }} }}";
+        yield return $"    public override string TypeName {{ get {{ return \"{ FhirName }\"; }} }}";
 
         if (!string.IsNullOrEmpty(Pattern))
         {
@@ -914,10 +1055,10 @@ public class ResourceDetails
         if (!IsPrimitive)
         {
             yield return string.Empty;
-            foreach (var line in StringUtils.RenderPropertiesMethods(Name, AbstractType, Properties)) yield return "    " + line;
+            foreach (var line in StringUtils.RenderCopyAndComparisonMethods(Name, AbstractType, Properties)) yield return "    " + line;
 
             yield return string.Empty;
-            foreach (var line in StringUtils.RenderPropertiesAsChildren(Properties)) yield return "    " + line;
+            foreach (var line in StringUtils.RenderChildrenMethods(Properties)) yield return "    " + line;
         }
 
         yield return string.Empty;
@@ -935,7 +1076,7 @@ public class ResourceDetails
         yield return $"public partial class { Name } : Quantity";
         yield return $"{{";
         yield return $"    [NotMapped]";
-        yield return $"    public override string TypeName {{ get {{ return \"{ RawName }\"; }} }}";
+        yield return $"    public override string TypeName {{ get {{ return \"{ FhirName }\"; }} }}";
         yield return string.Empty;
         yield return $"    public override IDeepCopyable DeepCopy()";
         yield return $"    {{";
@@ -950,7 +1091,7 @@ public class ResourceDetails
         yield return $"}}";
     }
 
-    public IEnumerable<string> GetReferencedFhirTypes()
+    private IEnumerable<string> GetReferencedFhirTypes()
     {
         const string prefix = "Hl7.Fhir.Model.";
         return GetAllProperties()
@@ -960,9 +1101,9 @@ public class ResourceDetails
             .Select(pt => pt.Substring(prefix.Length));
     }
 
-    public void FixReferencedFhirTypes(string version, Dictionary<string,ResourceDetails> resourcesByName)
+    private void FixReferencedTypesFhirVersion(string version, Dictionary<string,ResourceDetails> resourcesByName)
     {
-        BaseType = StringUtils.FixReferencedFhirType(BaseType, version, resourcesByName);
+        BaseType = StringUtils.FixTypeFhirVersion(BaseType, version, resourcesByName);
         foreach (var prop in GetAllProperties())
         {
             prop.FixReferencedFhirTypes(version, resourcesByName);
@@ -974,6 +1115,13 @@ public class ResourceDetails
         return Properties.Concat(Components.SelectMany(c => c.Properties));
     }
 
+    /// <summary>
+    /// Load all the resources and data types from the XML structure definition data of a set of FHIR versions
+    /// </summary>
+    /// <param name="loadedVersions">The FHIR versions XML structure definition data</param>
+    /// <returns>Newly created resources and data types by FHIR version and by name, i.e. a dictionary indexed by FHIR version, 
+    /// with an empty string key representing resources and data types common to all version and 'DSTU2', 'STU3' etc representing the specific version; 
+    /// each value is a dictionary indexed by the class name with the ResourceDetails as values</returns>
     public static Dictionary<string, Dictionary<string, ResourceDetails>> LoadAll(
         IEnumerable<LoadedVersion> loadedVersions,
         Dictionary<string, Dictionary<string, ValueSet>> valueSetsByEnumNameByVersion
@@ -1052,7 +1200,7 @@ public class ResourceDetails
                     resourceBaseType = "Hl7.Fhir.Model.DomainResource";
             }
 
-            var resource = new ResourceDetails { Name = resourceName, RawName = resourceName, BaseType = resourceBaseType, Versions = new List<LoadedVersion> { loadedVersion } };
+            var resource = new ResourceDetails { Name = resourceName, FhirName = resourceName, BaseType = resourceBaseType, Versions = new List<LoadedVersion> { loadedVersion } };
             result.Add(resource);
 
             var resourceDescriptionNode = e.SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='" + resourceName + "']/fhir:short/@value", loadedVersion.NSR);
@@ -1228,7 +1376,7 @@ public class ResourceDetails
             var resource = new ResourceDetails
             {
                 Name = resourceName,
-                RawName = rawResourceName,
+                FhirName = rawResourceName,
                 PrimitiveTypeName = primitiveTypeName,
                 BaseType = resourceBaseType,
                 Versions = new List<LoadedVersion> { loadedVersion }
@@ -1350,11 +1498,11 @@ public class ResourceDetails
         {
             foreach (var resource in pair.Value.Values)
             {
-                resource.FixReferencedFhirTypes(pair.Key, pair.Value);
+                resource.FixReferencedTypesFhirVersion(pair.Key, pair.Value);
             }
             foreach (var sharedResource in sharedResourcesByName.Values)
             {
-                sharedResource.FixReferencedFhirTypes(pair.Key, pair.Value);
+                sharedResource.FixReferencedTypesFhirVersion(pair.Key, pair.Value);
             }
         }
     }
@@ -1388,12 +1536,29 @@ public class ResourceDetails
     }
 }
 
+/// <summary>
+/// Complete description of a resource component (e.g. LinkComponent within Patient), corresponding to a C# sub-class
+/// </summary>
 public class ComponentDetails
 {
+    /// <summary>
+    /// Component name = C# sub-class name (e.g. LinkComponent)
+    /// </summary>
     public string Name;
+
+    /// <summary>
+    /// Base type for the sub-class (typically BackboneElement)
+    /// </summary>
     public string BaseType;
+
+    /// <summary>
+    /// Component properties - corresponding to the C# sub-class properties
+    /// </summary>
     public List<PropertyDetails> Properties;
 
+    /// <summary>
+    /// Checks if this component is the same - i.e. correspond to an identical C# sub-class - as another one
+    /// </summary>
     public bool IsSame(ComponentDetails other)
     {
         return other != null &&
@@ -1403,6 +1568,12 @@ public class ComponentDetails
             Properties.OrderBy(p => p.Name).Zip(other.Properties.OrderBy(p => p.Name), (p1, p2) => p1.IsSame(p2)).All(same => same);
     }
 
+    /// <summary>
+    /// Merge components that are the same
+    /// </summary>
+    /// <param name="versionAndComponents">Version and component pairs to merge</param>
+    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
+    /// <returns>Newly created merged component description</returns>
     public static ComponentDetails MergeSame(
         IEnumerable<KeyValuePair<string, ComponentDetails>> versionAndComponents,
         Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion
@@ -1424,6 +1595,11 @@ public class ComponentDetails
         };
     }
 
+    /// <summary>
+    /// Renders the C# code for this component (sub-)class
+    /// </summary>
+    /// <param name="version">Target FHIR version: 'DSTU2' 'STU3' etc. or 'All' if common</param>
+    /// <returns>C# code lines</returns>
     public IEnumerable<string> Render(string version)
     {
         yield return $"[FhirType({version}, \"{ Name }\")]";
@@ -1436,11 +1612,11 @@ public class ComponentDetails
         foreach (var line in StringUtils.RenderProperties(30, Properties)) yield return "    " + line;
 
         yield return string.Empty;
-        foreach (var line in StringUtils.RenderPropertiesMethods(Name, false, Properties)) yield return "    " + line;
+        foreach (var line in StringUtils.RenderCopyAndComparisonMethods(Name, false, Properties)) yield return "    " + line;
 
         yield return string.Empty;
         yield return string.Empty;
-        foreach (var line in StringUtils.RenderPropertiesAsChildren(Properties)) yield return "    " + line;
+        foreach (var line in StringUtils.RenderChildrenMethods(Properties)) yield return "    " + line;
 
         yield return string.Empty;
         yield return string.Empty;
@@ -1448,14 +1624,39 @@ public class ComponentDetails
     }
 }
 
+/// <summary>
+/// Description of a FHIR resource or data type constraint
+/// </summary>
 public class ConstraintDetails
 {
+    /// <summary>
+    /// Key identifying the constraint - e.g. 'pat-1'
+    /// </summary>
     public string Key;
+
+    /// <summary>
+    /// Severity of constraint violation: 'Error' = the resource is invalid, 'Warning' = resource valid but violating best practice
+    /// </summary>
     public string Severity;
+
+    /// <summary>
+    /// Human-readable description of the constraint - e.g. 'SHALL at least contain a contact's details or a reference to an organization'
+    /// </summary>
     public string Human;
+
+    /// <summary>
+    /// Constraint expressed as an XPath - e.g. 'f:name or f:telecom or f:address or f:organization'
+    /// </summary>
     public string XPath;
+
+    /// <summary>
+    /// Constraint expressed as a Fluent path  - e.g. 'contact.all(name or telecom or address or organization)'
+    /// </summary>
     public string Expression;
 
+    /// <summary>
+    /// Checks if this constraint is the same as another one
+    /// </summary>
     public bool IsSame(ConstraintDetails other)
     {
         return other != null &&
@@ -1466,6 +1667,12 @@ public class ConstraintDetails
             Expression == other.Expression;
     }
 
+    /// <summary>
+    /// Merge constraints that are the same
+    /// </summary>
+    /// <param name="versionAndConstraints">FHIR version - constraint pairs to merge</param>
+    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
+    /// <returns>Newly created merged resource description</returns>
     public static ConstraintDetails MergeSame(IEnumerable<KeyValuePair<string, ConstraintDetails>> versionAndConstraints)
     {
         var firstConstraint = versionAndConstraints.First().Value;
@@ -1479,6 +1686,11 @@ public class ConstraintDetails
         };
     }
 
+    /// <summary>
+    /// Renders the C# code of the constraint
+    /// </summary>
+    /// <param name="type">Type (class) containing the constrant</param>
+    /// <returns>C# code lines</returns>
     public IEnumerable<string> Render(string type)
     {
         yield return $"public static ElementDefinitionConstraint { GetName(type) } = new ElementDefinitionConstraint";
@@ -1503,27 +1715,81 @@ public class ConstraintDetails
         yield return $"}};";
     }
 
+    /// <summary>
+    /// Generate a C#-valid name for the constraint - e.g. Patient_PAT_1
+    /// </summary>
+    /// <param name="type">Type (class) containing the constraint</param>
     public string GetName(string type)
     {
         return type + "_" + Key.Replace("-", "_").ToUpper();
     }
 }
 
+/// <summary>
+/// Descrption of a FHIR resource or data type property (aka field aka element) - corresponding to a C# property (or a couple of them for primitive types: XXXElement and XXXX)
+/// </summary>
 public class PropertyDetails
 {
+    /// <summary>
+    /// The name of the C# property - e.g. BirthDateElement
+    /// </summary>
     public string Name;
+
+    /// <summary>
+    /// The name of the FHIR resource or data type property (element) - e.g. birthDate
+    /// </summary>
     public string FhirName;
+
+    /// <summary>
+    /// C# property data type - e.g. Hl7.Fhir.Model.Date. 
+    /// If the property can have multiple values (see CardMax below) this is the type of each individual value, 
+    /// and the actual property type is List&lt;XXXX&gt; where XXXX is the value of PropType
+    /// </summary>
     public string PropType;
+
+    /// <summary>
+    /// Indicates if the property is part of the FHIR resource or data type summary: empty if the property is NOT part of the summary, 
+    /// contains only one empty string if the property is part of the summary for all FHIR versions, otherwise contains the 
+    /// version(s) for which it is part of the summary - e.g. if it contains only 'DSTU2' it means that the property is 
+    /// part of the summary for FHIR DSTU2 and not part of the summary for all other versions.
+    /// </summary>
     public HashSet<string> InSummaryVersions = new HashSet<string>();
+
+    /// <summary>
+    /// Summary description of the property - e.g. 'The date of birth for the individual'
+    /// </summary>
     public string Summary = string.Empty;
+
+    /// <summary>
+    /// Minimum cardinality of the property - either '0' (optional) or '1' (required)
+    /// </summary>
     public string CardMin;
+
+    /// <summary>
+    /// Maximum cardinality of the property - either '1' (single value) or '*' (multiple values)
+    /// </summary>
     public string CardMax;
+
     public List<string> ReferenceTargets = new List<string>();
+
+    /// <summary>
+    /// Native C# data type of the property - e.g. string
+    /// Not empty only for property types that can be represented by a native C# type: FhirString as string, FhirDateTime as DateTimeOffset etc
+    /// </summary>
     public string NativeType;
+
+    /// <summary>
+    /// Native property name - e.g. BirthDate
+    /// </summary>
     public string NativeName;
+
+    /// <summary>
+    /// Allowed data types for polymorphic properties - their PropType is Hl7.Fhir.Model.Element and AllowedTypesByVersion contains the list of allowed 
+    /// types for each FHIR version, with an empty string key representing all versions
+    /// </summary>
     public Dictionary<string, List<string>> AllowedTypesByVersion = new Dictionary<string, List<string>>();
-    public string CodeRequiredBinding;
-    public bool isXmlAttribute;
+
+    public bool IsXmlAttribute;
 
     public bool IsSame(PropertyDetails other)
     {
@@ -1536,6 +1802,12 @@ public class PropertyDetails
             ReferenceTargets.OrderBy(t => t).Zip(other.ReferenceTargets.OrderBy(t => t), (t1, t2) => t1 == t2).All(same => same);
     }
 
+    /// <summary>
+    /// Merge properties that are the same
+    /// </summary>
+    /// <param name="versionAndProperties">FHIR version - property pairs to merge</param>
+    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
+    /// <returns>Newly created merged resource description</returns>
     public static PropertyDetails MergeSame(
         IEnumerable<KeyValuePair<string, PropertyDetails>> versionAndProperties,
         Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion
@@ -1572,8 +1844,7 @@ public class PropertyDetails
             AllowedTypesByVersion = allowedTypesAreTheSameAndNotVersionSpecific ?
                 new Dictionary<string, List<string>> { { string.Empty, new List<string>(firstProperty.AllowedTypes()) } } : // All versions
                 versionAndProperties.ToDictionary(vp => vp.Key, vp => vp.Value.AllowedTypes()),
-            CodeRequiredBinding = firstProperty.CodeRequiredBinding,
-            isXmlAttribute = firstProperty.isXmlAttribute
+            IsXmlAttribute = firstProperty.IsXmlAttribute
         };
     }
 
@@ -1689,7 +1960,7 @@ public class PropertyDetails
     public IEnumerable<string> RenderAsChildWithName()
     {
         // Exclude special properties encoded as Xml attributes (Element.Id) - not derived from Base
-        if (isXmlAttribute) yield break;
+        if (IsXmlAttribute) yield break;
 
         if (IsMultiCard())
         {
@@ -1704,7 +1975,7 @@ public class PropertyDetails
     public IEnumerable<string> RenderAsChildWithoutName()
     {
         // Exclude special properties encoded as Xml attributes (Element.Id) - not derived from Base
-        if (isXmlAttribute) yield break;
+        if (IsXmlAttribute) yield break;
 
         if (IsMultiCard())
         {
@@ -1725,12 +1996,12 @@ public class PropertyDetails
 
     public string ConvertedPropType()
     {
-        return StringUtils.ConvertType(PropType);
+        return StringUtils.RemoveCodeNamespace(PropType);
     }
 
     public string ConvertedPropTypeWithCard()
     {
-        return StringUtils.ConvertType(PropTypeWithCard());
+        return StringUtils.RemoveCodeNamespace(PropTypeWithCard());
     }
 
     public bool IsMultiCard()
@@ -1752,7 +2023,7 @@ public class PropertyDetails
 
     public void FixReferencedFhirTypes(string version, Dictionary<string, ResourceDetails> resourcesByName)
     {
-        PropType = StringUtils.FixReferencedFhirType(PropType, version, resourcesByName);
+        PropType = StringUtils.FixTypeFhirVersion(PropType, version, resourcesByName);
         var allowedTypesVersion = AllowedTypesByVersion.ContainsKey(version) ?
             version :
             AllowedTypesByVersion.ContainsKey(string.Empty) ?
@@ -1761,7 +2032,7 @@ public class PropertyDetails
         if (allowedTypesVersion != null)
         {
             AllowedTypesByVersion[allowedTypesVersion] = AllowedTypesByVersion[allowedTypesVersion]
-                .Select(allowedType => StringUtils.FixReferencedFhirType(allowedType, version, resourcesByName))
+                .Select(allowedType => StringUtils.FixTypeFhirVersion(allowedType, version, resourcesByName))
                 .ToList();
         }
     }
@@ -1800,7 +2071,7 @@ public class PropertyDetails
         if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", ns) != null)
             result.InSummaryVersions.Add(string.Empty);
         if (element.SelectSingleNode("fhir:representation[@value = 'xmlAttr']", ns) != null)
-            result.isXmlAttribute = true;
+            result.IsXmlAttribute = true;
         if (element.SelectSingleNode("fhir:short/@value", ns) != null)
             result.Summary = element.SelectSingleNode("fhir:short/@value", ns).Value;
         if (element.SelectSingleNode("fhir:type/fhir:code/@value", ns) != null)
@@ -1965,29 +2236,11 @@ public class PropertyDetails
 
         if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
         {
-            // Grab the binding from the element
-            if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", ns) != null)
-                result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", ns).Value;
-            if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
+            var codeRequiredBinding = GetCodeRequiredBinding(element, ns, resourceName, enumTypesByValueSetUrl);
+            if (!string.IsNullOrEmpty(codeRequiredBinding))
             {
-                if (!enumTypesByValueSetUrl.ContainsKey(result.CodeRequiredBinding))
-                {
-                    result.CodeRequiredBinding = element.SelectSingleNode("fhir:path/@value", ns).Value;
-                    if (result.CodeRequiredBinding.Contains(resourceName + "."))
-                        result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(resourceName.Length + 1, 1).ToUpper() + result.CodeRequiredBinding.Substring(resourceName.Length + 2);
-                    while (result.CodeRequiredBinding.Contains("."))
-                    {
-                        int index = result.CodeRequiredBinding.IndexOf(".");
-                        result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(0, index) + result.CodeRequiredBinding.Substring(index + 1, 1).ToUpper() + result.CodeRequiredBinding.Substring(index + 2);
-                    }
-                }
-                else
-                {
-                    result.CodeRequiredBinding = enumTypesByValueSetUrl[result.CodeRequiredBinding];
-                }
-                // result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(resourceName.Length);
-                result.PropType = result.PropType + "<" + result.CodeRequiredBinding + ">";
-                result.NativeType = result.CodeRequiredBinding + "?";
+                result.PropType = result.PropType + "<" + codeRequiredBinding + ">";
+                result.NativeType = codeRequiredBinding + "?";
             }
         }
 
@@ -2003,9 +2256,9 @@ public class PropertyDetails
     public static PropertyDetails ParseType(XmlElement element, XmlNamespaceManager ns, Dictionary<string, string> enumTypesByValueSetUrl)
     {
         PropertyDetails result = new PropertyDetails();
-        string ResourceBase = element.SelectSingleNode("fhir:path/@value", ns).Value;
-        if (ResourceBase.Contains("."))
-            ResourceBase = ResourceBase.Substring(0, ResourceBase.IndexOf("."));
+        string resourceBase = element.SelectSingleNode("fhir:path/@value", ns).Value;
+        if (resourceBase.Contains("."))
+            resourceBase = resourceBase.Substring(0, resourceBase.IndexOf("."));
         if (element.SelectSingleNode("fhir:type/fhir:code/@value", ns) != null)
             result.PropType = element.SelectSingleNode("fhir:type/fhir:code/@value", ns).Value;
         else
@@ -2129,33 +2382,46 @@ public class PropertyDetails
 
         if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
         {
-            // Grab the binding from the element
-            if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", ns) != null)
-                result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", ns).Value;
-            if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
+            var codeRequiredBinding = GetCodeRequiredBinding(element, ns, resourceBase, enumTypesByValueSetUrl);
+            if (!string.IsNullOrEmpty(codeRequiredBinding))
             {
-                if (!enumTypesByValueSetUrl.ContainsKey(result.CodeRequiredBinding))
-                {
-                    result.CodeRequiredBinding = element.SelectSingleNode("fhir:path/@value", ns).Value;
-                    if (result.CodeRequiredBinding.Contains(ResourceBase + "."))
-                        result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(ResourceBase.Length + 1, 1).ToUpper() + result.CodeRequiredBinding.Substring(ResourceBase.Length + 2);
-                    while (result.CodeRequiredBinding.Contains("."))
-                    {
-                        int index = result.CodeRequiredBinding.IndexOf(".");
-                        result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(0, index) + result.CodeRequiredBinding.Substring(index + 1, 1).ToUpper() + result.CodeRequiredBinding.Substring(index + 2);
-                    }
-                }
-                else
-                {
-                    result.CodeRequiredBinding = enumTypesByValueSetUrl[result.CodeRequiredBinding];
-                }
-                // result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(ResourceBase.Length);
-                result.PropType = result.PropType + "<" + result.CodeRequiredBinding + ">";
-                result.NativeType = result.CodeRequiredBinding + "?";
+                result.PropType = result.PropType + "<" + codeRequiredBinding + ">";
+                result.NativeType = codeRequiredBinding + "?";
             }
         }
 
         return result;
+    }
+
+    private static string GetCodeRequiredBinding(XmlElement element, XmlNamespaceManager ns, string resourceName, Dictionary<string, string> enumTypesByValueSetUrl)
+    {
+        // Grab the required binding value set reference (if any) from the element
+        var codeRequiredBindingNode = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", ns);
+        if (codeRequiredBindingNode == null)
+        {
+            return null;
+        }
+
+        var codeRequiredBinding = codeRequiredBindingNode.Value;
+        if (string.IsNullOrEmpty(codeRequiredBinding) || codeRequiredBinding == "http://hl7.org/fhir/ValueSet/operation-parameter-type")
+        {
+            return null;
+        }
+
+        if (enumTypesByValueSetUrl.ContainsKey(codeRequiredBinding))
+        {
+            return enumTypesByValueSetUrl[codeRequiredBinding];
+        }
+
+        codeRequiredBinding = element.SelectSingleNode("fhir:path/@value", ns).Value;
+        if (codeRequiredBinding.Contains(resourceName + "."))
+            codeRequiredBinding = codeRequiredBinding.Substring(resourceName.Length + 1, 1).ToUpper() + codeRequiredBinding.Substring(resourceName.Length + 2);
+        while (codeRequiredBinding.Contains("."))
+        {
+            var index = codeRequiredBinding.IndexOf(".");
+            codeRequiredBinding = codeRequiredBinding.Substring(0, index) + codeRequiredBinding.Substring(index + 1, 1).ToUpper() + codeRequiredBinding.Substring(index + 2);
+        }
+        return codeRequiredBinding;
     }
 
     private static PropertyDetails ParseReferencedType(XmlElement element, XmlNamespaceManager ns, Dictionary<string, string> enumTypesByValueSetUrl)
@@ -2318,7 +2584,7 @@ public class AllVersionsModelInfo : ModelInfoBase
             .SelectMany(
                 pair => pair.Value.Values
                     .Where(r => !r.IsResource() && r.Name != "Xhtml")
-                    .Select(r => Tuple.Create(r.RawName, "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
+                    .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
             )
             .Distinct()
             .OrderBy(nameAndType => nameAndType.Item1)
@@ -2327,7 +2593,7 @@ public class AllVersionsModelInfo : ModelInfoBase
             .SelectMany(
                 pair => pair.Value.Values
                     .Where(r => r.IsResource())
-                    .Select(r => Tuple.Create(r.RawName, "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
+                    .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
             )
             .Distinct()
             .OrderBy(nameAndType => nameAndType.Item1)
@@ -2373,11 +2639,11 @@ public class ModelInfo : ModelInfoBase
         _version = versionResources.First().Versions.Single();
         _typesNameAndType = versionResources
             .Where(r => !r.IsResource() && r.Name != "Xhtml")
-            .Select(r => Tuple.Create(r.RawName, "Hl7.Fhir.Model." + _version.Version + "." + r.Name))
+            .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + _version.Version + "." + r.Name))
             .Concat(
                 sharedResources
                     .Where(r => !r.IsResource() && r.Name != "Xhtml")
-                    .Select(r => Tuple.Create(r.RawName, "Hl7.Fhir.Model." + r.Name))
+                    .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + r.Name))
             )
             .OrderBy(nameAndType => nameAndType.Item1)
             .ToList();
