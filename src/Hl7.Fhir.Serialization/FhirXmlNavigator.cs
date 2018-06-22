@@ -138,7 +138,8 @@ namespace Hl7.Fhir.Serialization
 
             try
             {
-                doc = XDocument.Load(SerializationUtil.WrapXmlReader(reader, ignoreComments: false));
+                doc = XDocument.Load(SerializationUtil.WrapXmlReader(reader, ignoreComments: false), 
+                    LoadOptions.SetLineInfo);
             }
             catch (XmlException xec)
             {

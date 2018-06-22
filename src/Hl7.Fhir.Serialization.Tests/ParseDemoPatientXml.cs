@@ -5,6 +5,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -161,10 +162,13 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             Assert.IsTrue(nav.MoveToFirstChild());
 
-            var posInfo = (nav as IAnnotated)?.Annotation<PositionInfo>();
+            var posInfo = (nav as IAnnotated).Annotation<PositionInfo>();
             Assert.IsNotNull(posInfo);
             Assert.AreNotEqual(-1, posInfo.LineNumber);
             Assert.AreNotEqual(-1, posInfo.LinePosition);
+            Assert.AreNotEqual(0, posInfo.LineNumber);
+            Assert.AreNotEqual(0, posInfo.LinePosition);
+
         }
 
         [TestMethod]
@@ -301,6 +305,22 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             var output = xmlBuilder.ToString();
             XmlAssert.AreSame("roundtrippable.xml", tpXml, output);            
+        }
+
+        [TestMethod]
+        public void CatchesLowLevelErrors()
+        {
+            var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
+            var patient = getXmlNavU(tpXml);
+
+            var result = new List<ExceptionRaisedEventArgs>();
+
+            using ((patient as IExceptionSource).Intercept(arg => { result.Add(arg); return true; } ))
+            {
+                var x = patient.DescendantsAndSelf().ToList();
+            }
+
+            Assert.IsTrue(result.Count > 0);
         }
     }
 }

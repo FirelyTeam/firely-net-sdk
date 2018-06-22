@@ -240,10 +240,10 @@ namespace Hl7.Fhir.Serialization
 
         public override string ToString() => $"{(_current.IsTracking ? ($"[{_current.InstanceType}] ") : "")}{_current.Node.ToString()}";
 
-        public int LineNumber => (_current.Node as PositionInfo)?.LineNumber ?? -1;
+        int IPositionInfo.LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
 
-        public int LinePosition => (_current.Node as PositionInfo)?.LinePosition ?? -1;
-  
+        int IPositionInfo.LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
+
 
         public IEnumerable<object> Annotations(Type type)
         {
@@ -256,7 +256,8 @@ namespace Hl7.Fhir.Serialization
             }
             if (type == typeof(PositionInfo))
             {
-                return new[] { new PositionInfo { LineNumber = this.LineNumber, LinePosition = this.LinePosition } };
+                var t = this as IPositionInfo;
+                return new[] { new PositionInfo { LineNumber = t.LineNumber, LinePosition = t.LinePosition } };
             }
             else
             {

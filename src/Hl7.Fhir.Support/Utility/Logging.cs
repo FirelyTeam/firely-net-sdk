@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Utility
         public static FormatException Format(string message, string location)
         {
             if (location != null)
-                message += $" (at path '{location}')";
+                message += $" (at '{location}')";
 
             return Format(message);
         }

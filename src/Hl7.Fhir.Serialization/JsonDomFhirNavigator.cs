@@ -66,9 +66,10 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public int LineNumber => Current.LineNumber;
+        int IPositionInfo.LineNumber => Current.LineNumber;
 
-        public int LinePosition => Current.LinePosition;
+        int IPositionInfo.LinePosition => Current.LinePosition;
+
 
         private int nextMatch(JsonNavigatorNode[] nodes, string namefilter = null, int startAfter = -1)
         {
