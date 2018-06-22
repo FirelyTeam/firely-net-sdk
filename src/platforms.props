@@ -40,7 +40,7 @@
     <DefineConstants>$(DefineConstants);$(NetStandard16);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <DefineConstants>$(DefineConstants);DOTNETFW</DefineConstants>
+    <DefineConstants>$(DefineConstants);DOTNETFW;NET40</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <DefineConstants>$(DefineConstants);$(NetFramework45);DOTNETFW</DefineConstants>

@@ -7,6 +7,7 @@
 */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
 using System.IO;
@@ -33,35 +34,35 @@ namespace Hl7.Fhir.Serialization
 
     public struct FhirXmlNavigator
     {
-        public static IElementNavigator Untyped(XmlReader reader)
+        public static IElementNavigator Untyped(XmlReader reader, Configuration config=null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
 
-            return createInternal(reader, null, null);
+            return createInternal(reader, null, null, config);
         }
 
-        public static IElementNavigator Untyped(string xml)
+        public static IElementNavigator Untyped(string xml, Configuration config = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
 
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: false))
             {
-                return createInternal(reader, null, null);
+                return createInternal(reader, null, null, config);
             }
         }
 
-        public static IElementNavigator ForRoot(string xml, IModelMetadataProvider provider)
+        public static IElementNavigator ForRoot(string xml, IModelMetadataProvider provider, Configuration config=null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: false))
             {
-                return createInternal(reader, null, provider);
+                return createInternal(reader, null, provider, config);
             }
         }
 
-        public static IElementNavigator ForElement(string xml, string type, IModelMetadataProvider provider)
+        public static IElementNavigator ForElement(string xml, string type, IModelMetadataProvider provider, Configuration config = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -69,69 +70,69 @@ namespace Hl7.Fhir.Serialization
 
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: false))
             {
-                return createInternal(reader, type, provider);
+                return createInternal(reader, type, provider, config);
             }
         }
 
 
-        public static IElementNavigator ForRoot(XmlReader reader, IModelMetadataProvider provider)
+        public static IElementNavigator ForRoot(XmlReader reader, IModelMetadataProvider provider, Configuration config = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
-            return createInternal(reader, null, provider);
+            return createInternal(reader, null, provider, config);
         }
 
-        public static IElementNavigator ForElement(XmlReader reader, string type, IModelMetadataProvider provider)
+        public static IElementNavigator ForElement(XmlReader reader, string type, IModelMetadataProvider provider, Configuration config = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (type == null) throw Error.ArgumentNull(nameof(type));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
-            return createInternal(reader, type, provider);
+            return createInternal(reader, type, provider, config);
         }
 
 
-        public static IElementNavigator Untyped(XDocument doc)
+        public static IElementNavigator Untyped(XDocument doc, Configuration config = null)
         {
             if (doc == null) throw Error.ArgumentNull(nameof(doc));
 
-            return createInternal(doc.Root, null, null);
+            return createInternal(doc.Root, null, null, config);
         }
 
-        public static IElementNavigator ForRoot(XDocument doc, IModelMetadataProvider provider)
+        public static IElementNavigator ForRoot(XDocument doc, IModelMetadataProvider provider, Configuration config = null)
         {
             if (doc == null) throw Error.ArgumentNull(nameof(doc));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
-            return createInternal(doc.Root, null, provider);
+            return createInternal(doc.Root, null, provider, config);
         }
 
-        public static IElementNavigator Untyped(XElement elem)
+        public static IElementNavigator Untyped(XElement elem, Configuration config = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
 
-            return createInternal(elem, null, null);
+            return createInternal(elem, null, null, config);
         }
 
-        public static IElementNavigator ForRoot(XElement elem, IModelMetadataProvider provider)
+        public static IElementNavigator ForRoot(XElement elem, IModelMetadataProvider provider, Configuration config = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
-            return createInternal(elem, null, provider);
+            return createInternal(elem, null, provider, config);
         }
 
-        public static IElementNavigator ForElement(XElement elem, string type, IModelMetadataProvider provider)
+        public static IElementNavigator ForElement(XElement elem, string type, IModelMetadataProvider provider, Configuration config = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
             if (type == null) throw Error.ArgumentNull(nameof(type));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
-            return createInternal(elem, type, provider);
+            return createInternal(elem, type, provider, config);
         }
 
-        private static IElementNavigator createInternal(XmlReader reader, string type, IModelMetadataProvider provider)
+        private static IElementNavigator createInternal(XmlReader reader, string type, IModelMetadataProvider provider, Configuration config)
         {
             XDocument doc = null;
 
@@ -144,12 +145,12 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
-            return createInternal(doc.Root, type, provider);
+            return createInternal(doc.Root, type, provider, config);
         }
 
-        private static IElementNavigator createInternal(XElement elem, string type, IModelMetadataProvider provider)
+        private static IElementNavigator createInternal(XElement elem, string type, IModelMetadataProvider provider, Configuration config)
         {
-            var untypedNav = new UntypedXmlDomFhirNavigator(elem);
+            var untypedNav = new UntypedXmlDomFhirNavigator(elem, config);
 
             if (provider == null)
                 return untypedNav;

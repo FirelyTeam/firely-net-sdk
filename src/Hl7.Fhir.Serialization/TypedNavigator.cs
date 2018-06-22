@@ -7,6 +7,7 @@
 */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -18,32 +19,30 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct TypedNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
     {
-        private TypedNavigator(NavigatorPosition current, SerializationInfoCache definition, IModelMetadataProvider provider)
+        private TypedNavigator(NavigatorPosition current, SerializationInfoCache definition, 
+            IModelMetadataProvider provider, Configuration config=null)
         {
             _current = current;
             _definition = definition;
             _parentPath = null;
             _nameIndex = 0;
 
+            Sink = config?.Get<IExceptionSink>();
+
             Provider = provider;
-
-            OnExceptionRaised = null;
-
-            // Worries about dangling references...need to unsubscribe at some point...
-            if (current is IExceptionSource ies)
-                ies.OnExceptionRaised += onExceptionRaised;
         }
 
+        public IExceptionSink Sink { get; set; }
 
-        private void onExceptionRaised(object o, ExceptionRaisedEventArgs e) => OnExceptionRaised?.Invoke(o, e);
+        private void raiseException(ExceptionRaisedEventArgs e) => Sink?.Raise(e);
 
-        internal static TypedNavigator ForRoot(IElementNavigator root, IModelMetadataProvider provider)
+        internal static TypedNavigator ForRoot(IElementNavigator root, IModelMetadataProvider provider, Configuration config=null)
         {
             var rootType = root.Name;
-            return ForElement(root, rootType, provider);
+            return ForElement(root, rootType, provider, config);
         }
 
-        internal static TypedNavigator ForElement(IElementNavigator element, string type, IModelMetadataProvider provider)
+        internal static TypedNavigator ForElement(IElementNavigator element, string type, IModelMetadataProvider provider, Configuration config = null)
         {
             var elementType = provider?.GetSerializationInfoForStructure(type);
 
@@ -51,10 +50,8 @@ namespace Hl7.Fhir.Serialization
             var definition = current.IsTracking ?
                 SerializationInfoCache.ForRoot(current.SerializationInfo) : SerializationInfoCache.Empty;
 
-            return new TypedNavigator(current, definition, provider);
+            return new TypedNavigator(current, definition, provider, config);
         }
-
-        public event EventHandler<ExceptionRaisedEventArgs> OnExceptionRaised;
 
         public IElementNavigator Clone() => this;        // the struct will be copied upon return
 
@@ -65,7 +62,7 @@ namespace Hl7.Fhir.Serialization
 
         private SerializationInfoCache _definition;
         public IModelMetadataProvider Provider { get; private set; }
-
+ 
         public string Name => _current.Name;
 
         public string Type => _current.InstanceType;
@@ -94,17 +91,15 @@ namespace Hl7.Fhir.Serialization
                 }
                 catch (FormatException fe)
                 {                    
-                    OnExceptionRaised?.Invoke(this, ExceptionRaisedEventArgs.Error(fe));
+                    raiseException(ExceptionRaisedEventArgs.Error(fe));
                     return underlyingValue;
                 }
             }
         }
 
-        private void raiseFormatError(string message, IElementNavigator current)
-        {
-            OnExceptionRaised?.Invoke(this, ExceptionRaisedEventArgs.Error(
+        private void raiseFormatError(string message, IElementNavigator current) => 
+            raiseException(ExceptionRaisedEventArgs.Error(
                     Error.Format(message, current as IPositionInfo)));
-        }
 
         private NavigatorPosition deriveInstanceType(IElementNavigator current, IElementSerializationInfo info)
         {
@@ -248,6 +243,7 @@ namespace Hl7.Fhir.Serialization
         public int LineNumber => (_current.Node as PositionInfo)?.LineNumber ?? -1;
 
         public int LinePosition => (_current.Node as PositionInfo)?.LinePosition ?? -1;
+  
 
         public IEnumerable<object> Annotations(Type type)
         {

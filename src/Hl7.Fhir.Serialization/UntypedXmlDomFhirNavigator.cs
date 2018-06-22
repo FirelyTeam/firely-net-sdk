@@ -7,6 +7,7 @@
 */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,19 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct UntypedXmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
     {
-        internal UntypedXmlDomFhirNavigator(XElement root)
+        internal UntypedXmlDomFhirNavigator(XElement root, Configuration config)
         {
             _current = root;
             _parentPath = null;
             _nameIndex = 0;
             _containedResource = null;
 
-            OnExceptionRaised = null;
+            Sink = config?.Get<IExceptionSink>();
         }
-
-        public event EventHandler<ExceptionRaisedEventArgs> OnExceptionRaised;
 
         public IElementNavigator Clone() => this;        // the struct will be copied upon return
 
         private XObject _current;
-
         private int _nameIndex;
         private string _parentPath;
         private XElement _containedResource;
@@ -93,11 +91,11 @@ namespace Hl7.Fhir.Serialization
 
         private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
 
-        private void raiseFormatError(string message, IElementNavigator current)
-        {
-            OnExceptionRaised?.Invoke(this, ExceptionRaisedEventArgs.Error(
-                    Error.Format(message, current as IPositionInfo)));
-        }
+        private void raiseException(ExceptionRaisedEventArgs e) => Sink?.Raise(e);
+
+        private void raiseFormatError(string message, IElementNavigator current) =>
+                 raiseException(ExceptionRaisedEventArgs.Error(
+                         Error.Format(message, current as IPositionInfo)));
 
         private XElement Contained
         {
@@ -156,6 +154,8 @@ namespace Hl7.Fhir.Serialization
         public int LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
 
         public int LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
+
+        public IExceptionSink Sink { get; set; }
 
         public IEnumerable<object> Annotations(Type type)
         {
