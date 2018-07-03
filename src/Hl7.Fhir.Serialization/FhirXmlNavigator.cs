@@ -10,158 +10,255 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    [Obsolete("Please use the equivalent functions on the FhirXmlNavigator factory class")]
-    public struct XmlDomFhirNavigator
+    public partial struct FhirXmlNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource, IExceptionSink
     {
-        [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static IElementNavigator Create(string xml) => FhirXmlNavigator.Untyped(xml);
-
-        [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static IElementNavigator Create(XmlReader reader) => FhirXmlNavigator.Untyped(reader);
-
-        [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static IElementNavigator Create(XDocument doc) => FhirXmlNavigator.Untyped(doc);
-
-        [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static IElementNavigator Create(XElement elem) => FhirXmlNavigator.Untyped(elem);
-    }
-
-    public struct FhirXmlNavigator
-    {
-        public static IElementNavigator Untyped(XmlReader reader, Configuration config=null)
+        public FhirXmlNavigator(XElement root, FhirXmlNavigatorSettings settings=null)
         {
-            if (reader == null) throw Error.ArgumentNull(nameof(reader));
+            _current = root;
+            _parentPath = null;
+            _nameIndex = 0;
+            _containedResource = null;
 
-            return createInternal(reader, null, null, config);
+            Sink = null;
+            AllowedExternalNamespaces = settings?.AllowedExternalNamespaces;
+            DisallowSchemaLocation = settings?.DisallowSchemaLocation ?? false;
         }
 
-        public static IElementNavigator Untyped(string xml, Configuration config = null)
-        {
-            if (xml == null) throw Error.ArgumentNull(nameof(xml));
+        public IElementNavigator Clone() => this;        // the struct will be copied upon return
 
-            using (var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: false))
+        private XObject _current;
+        private int _nameIndex;
+        private string _parentPath;
+        private XElement _containedResource;
+
+        public XNamespace[] AllowedExternalNamespaces;
+        public bool DisallowSchemaLocation;
+
+        public string Name => _current.Name()?.LocalName;
+
+        public string Type => throw new NotImplementedException("This untyped reader does not support reading the Type property.");
+
+        public object Value => _current.GetValue();
+
+        private bool tryFindByName(XObject current, string name, out XObject match)
+        {
+            var scan = current;
+
+            do
             {
-                return createInternal(reader, null, null, config);
+                verifyXObject(scan);
+
+                var scanName = scan.Name();
+                
+                bool isMatch =
+                name == null ||      // no name filter -> any match is ok
+                scan.Name().LocalName == name;    // else, filter on the actual name
+
+                if (isMatch)
+                {
+                    match = scan;
+                    return true;
+                }
+
+                scan = scan.NextElementOrAttribute();
             }
+            while (scan != null);
+
+            match = null;
+            return false;
         }
 
-        public static IElementNavigator ForRoot(string xml, IModelMetadataProvider provider, Configuration config=null)
+        private void verifyXObject(XObject node)
         {
-            if (xml == null) throw Error.ArgumentNull(nameof(xml));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            using (var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: false))
+            if (node is XAttribute xa)
             {
-                return createInternal(reader, null, provider, config);
+                if (xa.Name == XmlNs.XSCHEMALOCATION && DisallowSchemaLocation)
+                    raiseFormatError($"The 'schemaLocation' attribute is disallowed.", node.GetPositionInfo());
+                else if (xa.Name.NamespaceName != "" && !AllowedExternalNamespaces.Contains(xa.Name.NamespaceName))
+                    raiseFormatError($"The attribute '{xa.Name}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
+
+                if (xa.Value == "")
+                    raiseFormatError($"The attribute '{xa.Name.LocalName}' has an empty value, which is not allowed.", node.GetPositionInfo());
             }
-        }
-
-        public static IElementNavigator ForElement(string xml, string type, IModelMetadataProvider provider, Configuration config = null)
-        {
-            if (xml == null) throw Error.ArgumentNull(nameof(xml));
-            if (type == null) throw Error.ArgumentNull(nameof(type));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            using (var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: false))
+            else if (node is XElement xe)
             {
-                return createInternal(reader, type, provider, config);
+                if(xe.Name.Namespace != XmlNs.XFHIR && xe.Name != XmlNs.XHTMLDIV && !AllowedExternalNamespaces.Contains(xe.Name.Namespace))
+                    raiseFormatError($"The element '{xe.Name}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
             }
-        }
-
-
-        public static IElementNavigator ForRoot(XmlReader reader, IModelMetadataProvider provider, Configuration config = null)
-        {
-            if (reader == null) throw Error.ArgumentNull(nameof(reader));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            return createInternal(reader, null, provider, config);
-        }
-
-        public static IElementNavigator ForElement(XmlReader reader, string type, IModelMetadataProvider provider, Configuration config = null)
-        {
-            if (reader == null) throw Error.ArgumentNull(nameof(reader));
-            if (type == null) throw Error.ArgumentNull(nameof(type));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            return createInternal(reader, type, provider, config);
-        }
-
-
-        public static IElementNavigator Untyped(XDocument doc, Configuration config = null)
-        {
-            if (doc == null) throw Error.ArgumentNull(nameof(doc));
-
-            return createInternal(doc.Root, null, null, config);
-        }
-
-        public static IElementNavigator ForRoot(XDocument doc, IModelMetadataProvider provider, Configuration config = null)
-        {
-            if (doc == null) throw Error.ArgumentNull(nameof(doc));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            return createInternal(doc.Root, null, provider, config);
-        }
-
-        public static IElementNavigator Untyped(XElement elem, Configuration config = null)
-        {
-            if (elem == null) throw Error.ArgumentNull(nameof(elem));
-
-            return createInternal(elem, null, null, config);
-        }
-
-        public static IElementNavigator ForRoot(XElement elem, IModelMetadataProvider provider, Configuration config = null)
-        {
-            if (elem == null) throw Error.ArgumentNull(nameof(elem));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            return createInternal(elem, null, provider, config);
-        }
-
-        public static IElementNavigator ForElement(XElement elem, string type, IModelMetadataProvider provider, Configuration config = null)
-        {
-            if (elem == null) throw Error.ArgumentNull(nameof(elem));
-            if (type == null) throw Error.ArgumentNull(nameof(type));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            return createInternal(elem, type, provider, config);
-        }
-
-        private static IElementNavigator createInternal(XmlReader reader, string type, IModelMetadataProvider provider, Configuration config)
-        {
-            XDocument doc = null;
-
-            try
-            {
-                doc = XDocument.Load(SerializationUtil.WrapXmlReader(reader, ignoreComments: false), 
-                    LoadOptions.SetLineInfo);
-            }
-            catch (XmlException xec)
-            {
-                throw Error.Format("Cannot parse xml: " + xec.Message);
-            }
-
-            return createInternal(doc.Root, type, provider, config);
-        }
-
-        private static IElementNavigator createInternal(XElement elem, string type, IModelMetadataProvider provider, Configuration config)
-        {
-            var untypedNav = new UntypedXmlDomFhirNavigator(elem, config);
-
-            if (provider == null)
-                return untypedNav;
             else
+                raiseFormatError($"Xml node of type '{node.NodeType}' is unexpected at this point", node.GetPositionInfo());
+        }
+
+        public bool MoveToFirstChild(string name = null)
+        {
+            // don't move into xhtml
+            if (_current.AtXhtmlDiv()) return false;
+
+            // If the child is a contained resource (the element name looks like a Resource name)
+            // move one level deeper
+            XObject firstChild = Contained != null ?
+                Contained.FirstChildElementOrAttribute() : _current.FirstChildElementOrAttribute();
+
+            if (firstChild == null) return false;
+            if (!tryFindByName(firstChild, name, out var match)) return false;
+
+            // Found a match, so we can alter the current position of the navigator.
+            // Modify _parentPath to be the current path before we do that
+            _parentPath = Location;
+            _nameIndex = 0;
+            _current = match;
+            _containedResource = null;
+
+            return true;
+        }
+
+        private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
+
+        public bool Raise(object source, ExceptionRaisedEventArgs args) => Sink.RaiseOrThrow(source, args);
+
+        private void raiseFormatError(string message, IPositionInfo position) =>
+                 Raise(this, ExceptionRaisedEventArgs.Error(Error.Format(message, position)));
+
+        private XElement Contained
+        {
+            get
             {
-                if (type == null)
-                    return TypedNavigator.ForRoot(untypedNav, provider);
+                if (_containedResource == null)
+                {
+                    if (_current is XElement xe && xe.TryGetContainedResource(out XElement contained))
+                    {
+                        if (contained.NextSibling() != null)
+                            raiseFormatError("The root of a contained resource should not have siblings.", this);
+
+                        if (contained.HasAttributes)
+                            raiseFormatError("The root of a contained resource should not have attributes.", this);
+
+                        _containedResource = contained;
+                    }
+                    else
+                        _containedResource = NO_CONTAINED_FOUND;
+                }
+
+                if (_containedResource == NO_CONTAINED_FOUND)
+                    return null;
                 else
-                    return TypedNavigator.ForElement(untypedNav, type, provider);
+                    return _containedResource;
             }
+        }
+
+        public bool MoveToNext(string nameFilter)
+        {
+            var nextChild = _current.NextElementOrAttribute();
+            if (nextChild == null) return false;
+
+            if (!tryFindByName(nextChild, nameFilter, out var match)) return false;
+
+            // store the current name before proceeding to detect repeating
+            // element names and count them
+            var currentName = Name;
+
+            _current = match;
+
+            if (currentName == Name)
+                _nameIndex += 1;
+            else
+                _nameIndex = 0;
+
+            _containedResource = null;
+            return true;
+        }
+
+
+        public string Location => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_nameIndex}]";
+
+        public override string ToString() => _current.ToString();
+
+        int IPositionInfo.LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
+
+        int IPositionInfo.LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
+
+        public IExceptionSink Sink { get; set; }
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            if (type == typeof(SourceComments))
+            {
+                return new[]
+                {
+                    new SourceComments()
+                    {
+                        CommentsBefore = commentsBefore(_current),
+                        ClosingComments = closingComment(_current),
+                        DocumentEndComments = docEndComments(_current)
+                    }
+                };
+
+                string[] commentsBefore(XObject current) =>
+                        current is XNode xn ?
+                            filterComments(xn.PreviousNodes()) : new string[0];
+
+                string[] closingComment(XObject current)
+                {
+                    if (current is XContainer xc && xc.LastNode != null)
+                        return filterComments(cons(xc.LastNode, xc.LastNode.PreviousNodes()));
+                    return new string[0];
+                }
+
+                string[] docEndComments(XObject current) =>
+                    current is XNode xn && current.Parent is null ?
+                        filterComments(xn.NodesAfterSelf())
+                        : new string[0];
+
+                string[] filterComments(IEnumerable<XNode> source) =>
+                    source.TakeWhile(n => n.NodeType != XmlNodeType.Element)
+                            .OfType<XComment>().Select(c => c.Value).Reverse().ToArray();
+
+                IEnumerable<XNode> cons(XNode header, IEnumerable<XNode> tail) =>
+                    header == null ? tail : new[] { header }.Union(tail);
+
+
+            }
+            if (type == typeof(PositionInfo))
+            {
+                var t = this as IPositionInfo;
+                return new[] { new PositionInfo { LineNumber = t.LineNumber, LinePosition = t.LinePosition } };
+            }
+            if (type == typeof(XmlSerializationDetails))
+            {
+                return new[]
+                {
+                    new XmlSerializationDetails()
+                    {
+                        // Add: "value in attribute"
+                        NodeType = _current.NodeType,
+                        Namespace = _current.Name().NamespaceName,
+                        NodeText = _current.Text(),
+                        IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false,
+                    }
+                };
+            }
+            if (type == typeof(ResourceTypeIndicator))
+            {
+                return new[]
+                {
+                    new ResourceTypeIndicator
+                    {
+                        // If we're on the root, the root is the resource type,
+                        // otherwise we should have looked at a nested node.
+                        ResourceType = _parentPath != null ?
+                            Contained?.Name()?.LocalName : _current.Name().LocalName
+                    }
+                };
+            }
+            else
+                return Enumerable.Empty<object>();
         }
     }
 }

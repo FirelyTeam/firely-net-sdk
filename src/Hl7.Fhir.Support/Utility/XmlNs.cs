@@ -39,5 +39,6 @@ namespace Hl7.Fhir.Utility
         public static readonly XNamespace XHTMLNS = XHTML;
 
         public static readonly XName XHTMLDIV = XmlNs.XHTMLNS + "div";
+        public static readonly XName XSCHEMALOCATION = XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation");
     }
 }

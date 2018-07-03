@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Utility
 {
-    public delegate bool ExceptionRaisedHandler(ExceptionRaisedEventArgs args);
+    public delegate bool ExceptionRaisedHandler(object source, ExceptionRaisedEventArgs args);
 
     public interface IExceptionSink
     {
-        bool Raise(ExceptionRaisedEventArgs args);
+        bool Raise(object source, ExceptionRaisedEventArgs args);
     }
 
     public interface IExceptionSource
@@ -20,6 +20,9 @@ namespace Hl7.Fhir.Utility
 
     public static class ExceptionSourceExtensions
     {
+        public static bool RaiseOrThrow(this IExceptionSink sink, object source, ExceptionRaisedEventArgs args) =>
+            sink?.Raise(source, args) ?? (args.Severity == ExceptionSeverity.Error ? throw args.Exception : false);
+
         public static IDisposable Intercept(this IExceptionSource source, ExceptionRaisedHandler handler) => new ExceptionInterceptor(source, handler);
 
         public static IDisposable Intercept(this IExceptionSource source, IExceptionSink interceptor) => source.Intercept(interceptor.Raise);
@@ -37,10 +40,10 @@ namespace Hl7.Fhir.Utility
                 _handler = handler;
             }
 
-            public bool Raise(ExceptionRaisedEventArgs args)
+            public bool Raise(object source, ExceptionRaisedEventArgs args)
             {
-                if (_handler(args)) return true;
-                return _originalSink != null ? _originalSink.Raise(args) : false;
+                if (_handler(source, args)) return true;
+                return _originalSink != null ? _originalSink.Raise(source, args) : false;
             }
 
             #region IDisposable Support
@@ -52,7 +55,7 @@ namespace Hl7.Fhir.Utility
                 {
                     if (disposing)
                     {
-                        _interceptee.Sink = _originalSink;                            
+                        _interceptee.Sink = _originalSink;
                     }
 
                     disposedValue = true;

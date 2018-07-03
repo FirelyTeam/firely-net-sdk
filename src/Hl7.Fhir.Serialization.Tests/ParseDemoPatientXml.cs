@@ -315,7 +315,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             var result = new List<ExceptionRaisedEventArgs>();
 
-            using ((patient as IExceptionSource).Intercept(arg => { result.Add(arg); return true; } ))
+            using ((patient as IExceptionSource).Intercept((o,arg) => { result.Add(arg); return true; } ))
             {
                 var x = patient.DescendantsAndSelf().ToList();
             }

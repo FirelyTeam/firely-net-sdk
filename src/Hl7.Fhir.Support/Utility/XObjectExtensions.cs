@@ -69,7 +69,6 @@ namespace Hl7.Fhir.Utility
             }
         }
 
-
         public static XName Name(this XObject node)
         {
             if (node is XElement xe) return xe.Name;

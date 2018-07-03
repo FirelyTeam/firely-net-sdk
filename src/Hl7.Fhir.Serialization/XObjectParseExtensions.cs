@@ -8,6 +8,17 @@ namespace Hl7.Fhir.Serialization
 {
     internal static class XObjectParseExtensions
     {
+        public static PositionInfo GetPositionInfo(this XObject node)
+        {
+            var lineInfo = (IXmlLineInfo)node;
+
+            if (lineInfo.HasLineInfo())
+                return new PositionInfo() { LineNumber = lineInfo.LineNumber, LinePosition = lineInfo.LinePosition };
+            else
+                return new PositionInfo() { LineNumber = -1, LinePosition = -1 };
+        }
+            
+
         public static bool IsResourceName(this XName elementName) =>
             Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
 
@@ -36,7 +47,7 @@ namespace Hl7.Fhir.Serialization
             return scanToNextRelevantNode(scan);
         }
 
-        public static XObject FirstElementOrAttribute(this XObject current)
+        public static XObject FirstChildElementOrAttribute(this XObject current)
         {
             var scan = current.FirstChild();
             return scanToNextRelevantNode(scan);
@@ -71,7 +82,7 @@ namespace Hl7.Fhir.Serialization
                 return ((XElement)current).ToString(SaveOptions.DisableFormatting);
 
             return current is XElement xelem ?
-                    xelem.Attribute("value")?.Value : current.Value();
+                    xelem.Attribute("value")?.Value.Trim() : current.Value();
         }
     }
 }

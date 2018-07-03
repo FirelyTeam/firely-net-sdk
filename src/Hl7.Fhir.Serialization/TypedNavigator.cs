@@ -17,32 +17,13 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct TypedNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource
+    public partial struct TypedNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource, IExceptionSink
     {
-        private TypedNavigator(NavigatorPosition current, SerializationInfoCache definition, 
-            IModelMetadataProvider provider, Configuration config=null)
+        public TypedNavigator(IElementNavigator root, IModelMetadataProvider provider) : this(root, root.Name, provider)
         {
-            _current = current;
-            _definition = definition;
-            _parentPath = null;
-            _nameIndex = 0;
-
-            Sink = config?.Get<IExceptionSink>();
-
-            Provider = provider;
         }
 
-        public IExceptionSink Sink { get; set; }
-
-        private void raiseException(ExceptionRaisedEventArgs e) => Sink?.Raise(e);
-
-        internal static TypedNavigator ForRoot(IElementNavigator root, IModelMetadataProvider provider, Configuration config=null)
-        {
-            var rootType = root.Name;
-            return ForElement(root, rootType, provider, config);
-        }
-
-        internal static TypedNavigator ForElement(IElementNavigator element, string type, IModelMetadataProvider provider, Configuration config = null)
+        public TypedNavigator(IElementNavigator element, string type, IModelMetadataProvider provider)
         {
             var elementType = provider?.GetSerializationInfoForStructure(type);
 
@@ -50,8 +31,21 @@ namespace Hl7.Fhir.Serialization
             var definition = current.IsTracking ?
                 SerializationInfoCache.ForRoot(current.SerializationInfo) : SerializationInfoCache.Empty;
 
-            return new TypedNavigator(current, definition, provider, config);
+            _current = current;
+            _definition = definition;
+            _parentPath = null;
+            _nameIndex = 0;
+
+            Sink = null;
+            Provider = provider;
         }
+
+        public IExceptionSink Sink { get; set; }
+
+        public bool Raise(object sender, ExceptionRaisedEventArgs args) => Sink.RaiseOrThrow(sender, args);
+
+        private void raiseFormatError(string message, IElementNavigator current) =>
+            Raise(current, ExceptionRaisedEventArgs.Error(Error.Format(message, current as IPositionInfo)));
 
         public IElementNavigator Clone() => this;        // the struct will be copied upon return
 
@@ -62,7 +56,7 @@ namespace Hl7.Fhir.Serialization
 
         private SerializationInfoCache _definition;
         public IModelMetadataProvider Provider { get; private set; }
- 
+
         public string Name => _current.Name;
 
         public string Type => _current.InstanceType;
@@ -90,34 +84,31 @@ namespace Hl7.Fhir.Serialization
                     return PrimitiveTypeConverter.FromSerializedValue((string)underlyingValue, Type);
                 }
                 catch (FormatException fe)
-                {                    
-                    raiseException(ExceptionRaisedEventArgs.Error(fe));
+                {
+                    Raise(this, ExceptionRaisedEventArgs.Error(fe));
                     return underlyingValue;
                 }
             }
         }
 
-        private void raiseFormatError(string message, IElementNavigator current) => 
-            raiseException(ExceptionRaisedEventArgs.Error(
-                    Error.Format(message, current as IPositionInfo)));
 
         private NavigatorPosition deriveInstanceType(IElementNavigator current, IElementSerializationInfo info)
         {
-            if(info == null) return new NavigatorPosition(current, null, current.Name, null);
+            if (info == null) return new NavigatorPosition(current, null, current.Name, null);
 
             string instanceType = null;
 
-            if(info.IsContainedResource)
+            if (info.IsContainedResource)
             {
                 instanceType = current.GetResourceTypeFromAnnotation();
                 if (instanceType == null) raiseFormatError("Element is defined to contain a resource, but does not actually seem to contain a resource", current);
                 //TODO: check validity of resource type
             }
-            else if(!info.IsContainedResource && current.GetResourceTypeFromAnnotation() != null)
+            else if (!info.IsContainedResource && current.GetResourceTypeFromAnnotation() != null)
             {
                 raiseFormatError("Element is not a contained resource, but it does contain a resource", current);
             }
-            else if(info.IsChoiceElement)
+            else if (info.IsChoiceElement)
             {
                 var suffix = current.Name.Substring(info.ElementName.Length);
 
@@ -146,7 +137,7 @@ namespace Hl7.Fhir.Serialization
             var isKnownElement = dis.TryGetValue(name, out var elementInfo);
             match = null;
 
-            if(name == null || !isKnownElement || (isKnownElement && !elementInfo.IsChoiceElement))
+            if (name == null || !isKnownElement || (isKnownElement && !elementInfo.IsChoiceElement))
             {
                 var success = scan.MoveToNext(name);
 
@@ -196,7 +187,7 @@ namespace Hl7.Fhir.Serialization
             // If this is a backbone element, the child type is the nested complex type
             if (_current.SerializationInfo.Type[0] is IComplexTypeSerializationInfo be)
                 return SerializationInfoCache.ForType(be);
-            else 
+            else
                 return SerializationInfoCache.ForType(Provider.GetSerializationInfoForStructure(_current.InstanceType));
         }
 
@@ -249,7 +240,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (type == typeof(ElementSerializationInfo))
             {
-                return new[] 
+                return new[]
                 {
                      _current.IsTracking ? new ElementSerializationInfo(_current.SerializationInfo) : ElementSerializationInfo.NO_SERIALIZATION_INFO
                 };

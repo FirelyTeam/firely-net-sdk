@@ -10,6 +10,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using System;
@@ -46,17 +47,19 @@ namespace Hl7.Fhir.Serialization
         public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
         public T Parse<T>(XmlReader reader) where T : Base => (T)Parse(reader, typeof(T));
 
+        private static readonly FhirXmlNavigatorSettings DISALLOWSCHEMALOCATION = new FhirXmlNavigatorSettings { DisallowSchemaLocation = true };
+
 #pragma warning disable 612, 618
         public Base Parse(string xml, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml), Settings.DisallowXsiAttributesOnRoot);
+            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml,   DISALLOWSCHEMALOCATION));
             return Parse(xmlReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader), Settings.DisallowXsiAttributesOnRoot);
+            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader, DISALLOWSCHEMALOCATION));
             return Parse(xmlReader, dataType);
         }
 #pragma warning restore 612, 618
@@ -150,7 +153,7 @@ namespace Hl7.Fhir.Serialization
             if (nav == null) throw Error.ArgumentNull(nameof(nav));
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
-            var reader = new ElementNavFhirReader(nav, Settings.DisallowXsiAttributesOnRoot);
+            var reader = new ElementNavFhirReader(nav);
 
             if (dataType.CanBeTreatedAsType(typeof(Resource)))
                 return new ResourceReader(reader, Settings).Deserialize();

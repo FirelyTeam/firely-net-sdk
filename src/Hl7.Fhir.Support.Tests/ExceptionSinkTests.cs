@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Support.Tests
         {
             public List<ExceptionRaisedEventArgs> Received = new List<ExceptionRaisedEventArgs>();
 
-            public bool Raise(ExceptionRaisedEventArgs args)
+            public bool Raise(object sender, ExceptionRaisedEventArgs args)
             {
                 Received.Add(args);
                 return true;
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Support.Tests
 
             public void Test(string message)
             {
-                Sink.Raise(ExceptionRaisedEventArgs.Error(new FormatException(message)));
+                Sink.Raise(this, ExceptionRaisedEventArgs.Error(new FormatException(message)));
             }
         }
 
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Support.Tests
 
             string intercepted = null;
 
-            using (src.Intercept(args => { intercepted = args.Message; return true; }))
+            using (src.Intercept((_,args) => { intercepted = args.Message; return true; }))
             {
                 src.Test("Intercepted-true");
             }
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Support.Tests
             Assert.AreEqual("Intercepted-true", intercepted);
             Assert.AreEqual(1, ts.Received.Count());   // since interceptor returned 'true'
 
-            using (src.Intercept(args => { intercepted = args.Message; return false; }))
+            using (src.Intercept((_,args) => { intercepted = args.Message; return false; }))
             {
                 src.Test("Intercepted-false");
             }
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Support.Tests
 
             string intercepted = null;
 
-            using (src.Intercept(args => { intercepted = args.Message; return true; }))
+            using (src.Intercept((_,args) => { intercepted = args.Message; return true; }))
             {
                 src.Test("Intercepted-true");
             }

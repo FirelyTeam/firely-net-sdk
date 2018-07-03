@@ -26,11 +26,8 @@ namespace Hl7.Fhir.Serialization
     {
         private IElementNavigator _current;
 
-        public bool DisallowXsiAttributesOnRoot { get; set; }
-
-        public ElementNavFhirReader(IElementNavigator root, bool disallowXsiAttributesOnRoot = false)
+        public ElementNavFhirReader(IElementNavigator root)
         {
-            DisallowXsiAttributesOnRoot = disallowXsiAttributesOnRoot;
             _current = root;
         }
 
@@ -47,18 +44,30 @@ namespace Hl7.Fhir.Serialization
                 return null;
         }
 
+
+        private static bool errorHandler(object sender, ExceptionRaisedEventArgs a)
+        {
+            if (a.Severity == ExceptionSeverity.Error)
+                throw a.Exception;
+
+            return false;
+        }
+
 #pragma warning disable 612, 618
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
             if (Value != null)
                 yield return Tuple.Create("value", (IFhirReader)new ElementNavFhirReader(_current));
 
-            foreach (var child in _current.Children())
+            using (var curr = (_current as IExceptionSource).Intercept(errorHandler))
             {
-                bool mustSkip = verifyXmlSpecificDetails(child);
+                foreach (var child in _current.Children())
+                {
+                    bool mustSkip = verifyXmlSpecificDetails(child);
 
-                if(!mustSkip)
-                    yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
+                    if (!mustSkip)
+                        yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
+                }
             }
         }
 #pragma warning restore 612, 618
@@ -75,10 +84,6 @@ namespace Hl7.Fhir.Serialization
 
             if (xmlDetails.NodeType == System.Xml.XmlNodeType.Attribute)
             {
-                if (xmlDetails.IsNamespaceDeclaration) return true;      // skip xmlns declarations
-                if (xmlDetails.Namespace + "xsi" == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !DisallowXsiAttributesOnRoot) return true; // skip xmlns:xsi declaration
-                if (xmlDetails.Namespace + "schemaLocation" == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !DisallowXsiAttributesOnRoot) return true;     // skip schemaLocation
-
                 if (xmlDetails.Namespace.NamespaceName == "") return false;
 
                 throw Error.Format($"Encountered unsupported attribute {child.Name}", this);
@@ -104,7 +109,7 @@ namespace Hl7.Fhir.Serialization
 
         public bool MoveToFirstChild(string nameFilter = null) => _current.MoveToFirstChild(nameFilter);
 
-        public IElementNavigator Clone() => new ElementNavFhirReader(_current.Clone(), DisallowXsiAttributesOnRoot);
+        public IElementNavigator Clone() => new ElementNavFhirReader(_current.Clone());
 
         public int LineNumber => (_current as IPositionInfo)?.LineNumber ?? -1;
 
