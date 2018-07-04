@@ -1,6 +1,4 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
@@ -18,7 +16,8 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     [TestClass]
     public class ParseDemoPatientXml
     {
-        public IElementNavigator getXmlNavU(string xml) => FhirXmlNavigator.Untyped(xml);
+        public IElementNavigator getXmlNavU(string xml, FhirXmlNavigatorSettings settings = null) =>
+            FhirXmlNavigator.Untyped(xml, settings);                    
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -67,7 +66,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             Assert.AreEqual("value", identifier.Name);
             Assert.IsFalse(identifier.MoveToFirstChild());
-            Assert.AreEqual("444222222", identifier.Value);
+            Assert.AreEqual("444222222", identifier.Value);  // tests whether strings are trimmed
 
             Assert.IsTrue(nav.MoveToNext("name"));
             Assert.AreEqual("name", nav.Name);
@@ -143,14 +142,21 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [TestMethod]
         public void ReadsAttributesAsElements()
         {
-            var nav = getXmlNavU("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://somenamespace' q:myattr='dummy' />");
-
+            var nav = getXmlNavU("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://example.org' q:myattr='dummy' " +
+                "anotherattr='nons' />", 
+                new FhirXmlNavigatorSettings { AllowedExternalNamespaces = new[] { XNamespace.Get("http://example.org") } });
+            
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
             var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
-            Assert.AreEqual(XNamespace.Get("http://somenamespace"), xmldetails.Namespace);
-
+            Assert.AreEqual(XNamespace.Get("http://example.org"), xmldetails.Namespace);
             Assert.AreEqual("Patient.myattr[0]", nav.Location);
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("anotherattr", nav.Name);        // none-xmlns attributes will come through
+            xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
+            Assert.AreEqual(XNamespace.None, xmldetails.Namespace);
+
         }
 
 
@@ -172,13 +178,13 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         }
 
         [TestMethod]
-        public void TestAllFeatures()
+        public void TestPermissiveParsing()
         {
             var tpXml = File.ReadAllText(@"TestData\all-xml-features.xml");
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = FhirXmlNavigator.Untyped(reader);
+            var nav = FhirXmlNavigator.Untyped(reader, new FhirXmlNavigatorSettings { PermissiveParsing = true });
 
             Assert.AreEqual("SomeResource", nav.Name);
 
@@ -258,7 +264,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 {
                     Assert.AreEqual("ThirdChild", ccn.Name);
                     Assert.IsNull(ccn.Value);
-                    Assert.IsFalse(ccn.HasChildren());
+                    Assert.IsTrue(ccn.HasChildren());
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     var cd = (ccn as IAnnotated).Annotation<SourceComments>();
@@ -313,14 +319,31 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNavU(tpXml);
 
-            var result = new List<ExceptionRaisedEventArgs>();
-
-            using ((patient as IExceptionSource).Intercept((o,arg) => { result.Add(arg); return true; } ))
+            List<ExceptionRaisedEventArgs> runTest(IElementNavigator nav)
             {
-                var x = patient.DescendantsAndSelf().ToList();
+                var errors = new List<ExceptionRaisedEventArgs>();
+
+                using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
+                {
+                    var x = patient.DescendantsAndSelf().ToList();
+                }
+
+                return errors;
             }
 
-            Assert.IsTrue(result.Count > 0);
+            var result = runTest(patient);
+            var originalCount = result.Count;
+            Assert.AreEqual(10,result.Count);
+            Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
+
+            patient = getXmlNavU(tpXml, new FhirXmlNavigatorSettings() { DisallowSchemaLocation = true });
+            result = runTest(patient);
+            Assert.IsTrue(result.Count == originalCount+1);    // one extra error about schemaLocation being present
+            Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
+
+            patient = getXmlNavU(tpXml, new FhirXmlNavigatorSettings() { PermissiveParsing = true });
+            result = runTest(patient);
+            Assert.AreEqual(0, result.Count);
         }
     }
 }

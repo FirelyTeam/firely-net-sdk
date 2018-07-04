@@ -28,7 +28,33 @@ namespace Hl7.Fhir.Support.Tests
 
             public void Test(string message)
             {
-                Sink.Raise(this, ExceptionRaisedEventArgs.Error(new FormatException(message)));
+                Sink.RaiseOrThrow(this, ExceptionRaisedEventArgs.Error(new FormatException(message)));
+            }
+        }
+
+
+        [TestMethod]
+        public void TestRaiseOrThrow()
+        {
+            var ts = new TestSink();
+            var src = new TestSource
+            {
+                Sink = ts
+            };
+
+            src.Test("Bla");
+            // should continue;
+
+            src.Sink = null;
+
+            try
+            {
+                src.Test("Fail!!!!");
+                Assert.Fail("Should have thrown");
+            }
+            catch(FormatException)
+            {
+                // ok!
             }
         }
 
@@ -47,7 +73,7 @@ namespace Hl7.Fhir.Support.Tests
 
             string intercepted = null;
 
-            using (src.Intercept((_,args) => { intercepted = args.Message; return true; }))
+            using (src.Catch((_,args) => { intercepted = args.Message; return true; }))
             {
                 src.Test("Intercepted-true");
             }
@@ -55,7 +81,7 @@ namespace Hl7.Fhir.Support.Tests
             Assert.AreEqual("Intercepted-true", intercepted);
             Assert.AreEqual(1, ts.Received.Count());   // since interceptor returned 'true'
 
-            using (src.Intercept((_,args) => { intercepted = args.Message; return false; }))
+            using (src.Catch((_,args) => { intercepted = args.Message; return false; }))
             {
                 src.Test("Intercepted-false");
             }
@@ -82,7 +108,7 @@ namespace Hl7.Fhir.Support.Tests
 
             string intercepted = null;
 
-            using (src.Intercept((_,args) => { intercepted = args.Message; return true; }))
+            using (src.Catch((_,args) => { intercepted = args.Message; return true; }))
             {
                 src.Test("Intercepted-true");
             }

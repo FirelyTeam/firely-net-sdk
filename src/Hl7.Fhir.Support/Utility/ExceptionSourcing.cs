@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hl7.Fhir.ElementModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,15 @@ namespace Hl7.Fhir.Utility
         public static bool RaiseOrThrow(this IExceptionSink sink, object source, ExceptionRaisedEventArgs args) =>
             sink?.Raise(source, args) ?? (args.Severity == ExceptionSeverity.Error ? throw args.Exception : false);
 
-        public static IDisposable Intercept(this IExceptionSource source, ExceptionRaisedHandler handler) => new ExceptionInterceptor(source, handler);
+        public static IDisposable Catch(this IElementNavigator source, ExceptionRaisedHandler handler) =>
+            source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
 
-        public static IDisposable Intercept(this IExceptionSource source, IExceptionSink interceptor) => source.Intercept(interceptor.Raise);
+        public static IDisposable Catch(this IElementNavigator source, IExceptionSink interceptor) => source.Catch(interceptor.Raise);
+
+
+        public static IDisposable Catch(this IExceptionSource source, ExceptionRaisedHandler handler) => new ExceptionInterceptor(source, handler);
+
+        public static IDisposable Catch(this IExceptionSource source, IExceptionSink interceptor) => source.Catch(interceptor.Raise);
 
         private class ExceptionInterceptor : IDisposable, IExceptionSink
         {

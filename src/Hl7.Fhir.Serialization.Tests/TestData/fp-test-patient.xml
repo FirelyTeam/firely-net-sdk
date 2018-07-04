@@ -15,7 +15,7 @@
       <id value="1"/>     
       <identifier>
         <system value="http://hl7.org/fhir/sid/us-ssn" />
-        <value value="444222222"/>
+        <value value=" 444222222 "/>  <!-- has spaces around it to test trimming -->
       </identifier>
       <active value ="true"/>
       <name id="firstname">

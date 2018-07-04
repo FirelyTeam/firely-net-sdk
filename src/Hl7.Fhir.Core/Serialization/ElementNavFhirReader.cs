@@ -59,14 +59,11 @@ namespace Hl7.Fhir.Serialization
             if (Value != null)
                 yield return Tuple.Create("value", (IFhirReader)new ElementNavFhirReader(_current));
 
-            using (var curr = (_current as IExceptionSource).Intercept(errorHandler))
+            using (var curr = _current.Catch(errorHandler))
             {
                 foreach (var child in _current.Children())
                 {
-                    bool mustSkip = verifyXmlSpecificDetails(child);
-
-                    if (!mustSkip)
-                        yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
+                    yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
                 }
             }
         }

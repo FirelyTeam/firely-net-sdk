@@ -36,10 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TestData\with-errors.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
   </ItemGroup>
 

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct FhirXmlNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource, IExceptionSink
     {
-        public FhirXmlNavigator(XElement root, FhirXmlNavigatorSettings settings=null)
+        public FhirXmlNavigator(XElement root, FhirXmlNavigatorSettings settings = null)
         {
             _current = root;
             _parentPath = null;
@@ -27,8 +27,9 @@ namespace Hl7.Fhir.Serialization
             _containedResource = null;
 
             Sink = null;
-            AllowedExternalNamespaces = settings?.AllowedExternalNamespaces;
+            AllowedExternalNamespaces = settings?.AllowedExternalNamespaces ?? new XNamespace[0];
             DisallowSchemaLocation = settings?.DisallowSchemaLocation ?? false;
+            PermissiveParsing = settings?.PermissiveParsing ?? false;
         }
 
         public IElementNavigator Clone() => this;        // the struct will be copied upon return
@@ -38,8 +39,10 @@ namespace Hl7.Fhir.Serialization
         private string _parentPath;
         private XElement _containedResource;
 
+
         public XNamespace[] AllowedExternalNamespaces;
         public bool DisallowSchemaLocation;
+        public bool PermissiveParsing;
 
         public string Name => _current.Name()?.LocalName;
 
@@ -53,18 +56,21 @@ namespace Hl7.Fhir.Serialization
 
             do
             {
-                verifyXObject(scan);
+                if (!PermissiveParsing) verifyXObject(scan);
 
                 var scanName = scan.Name();
-                
-                bool isMatch =
-                name == null ||      // no name filter -> any match is ok
-                scan.Name().LocalName == name;    // else, filter on the actual name
 
-                if (isMatch)
+                if (scanName != "value")
                 {
-                    match = scan;
-                    return true;
+                    bool isMatch =
+                    name == null ||      // no name filter -> any match is ok
+                    scan.Name().LocalName == name;    // else, filter on the actual name
+
+                    if (isMatch)
+                    {
+                        match = scan;
+                        return true;
+                    }
                 }
 
                 scan = scan.NextElementOrAttribute();
@@ -79,18 +85,21 @@ namespace Hl7.Fhir.Serialization
         {
             if (node is XAttribute xa)
             {
-                if (xa.Name == XmlNs.XSCHEMALOCATION && DisallowSchemaLocation)
-                    raiseFormatError($"The 'schemaLocation' attribute is disallowed.", node.GetPositionInfo());
+                if (xa.Name == XmlNs.XSCHEMALOCATION)
+                {
+                    if(DisallowSchemaLocation)
+                        raiseFormatError($"The 'schemaLocation' attribute is disallowed.", node.GetPositionInfo());
+                }
                 else if (xa.Name.NamespaceName != "" && !AllowedExternalNamespaces.Contains(xa.Name.NamespaceName))
-                    raiseFormatError($"The attribute '{xa.Name}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
+                    raiseFormatError($"The attribute '{xa.Name.LocalName}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
 
-                if (xa.Value == "")
+                if (String.IsNullOrWhiteSpace(xa.Value))
                     raiseFormatError($"The attribute '{xa.Name.LocalName}' has an empty value, which is not allowed.", node.GetPositionInfo());
             }
             else if (node is XElement xe)
             {
-                if(xe.Name.Namespace != XmlNs.XFHIR && xe.Name != XmlNs.XHTMLDIV && !AllowedExternalNamespaces.Contains(xe.Name.Namespace))
-                    raiseFormatError($"The element '{xe.Name}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
+                if (xe.Name.Namespace != XmlNs.XFHIR && xe.Name != XmlNs.XHTMLDIV && !AllowedExternalNamespaces.Contains(xe.Name.Namespace))
+                    raiseFormatError($"The element '{xe.Name.LocalName}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
             }
             else
                 raiseFormatError($"Xml node of type '{node.NodeType}' is unexpected at this point", node.GetPositionInfo());
@@ -101,12 +110,22 @@ namespace Hl7.Fhir.Serialization
             // don't move into xhtml
             if (_current.AtXhtmlDiv()) return false;
 
+            // can't move into an attribute
+            if (_current is XAttribute) return false;
+
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
-            XObject firstChild = Contained != null ?
-                Contained.FirstChildElementOrAttribute() : _current.FirstChildElementOrAttribute();
+            var parent = Contained ?? _current;
+            XObject firstChild = parent.FirstChildElementOrAttribute();
 
-            if (firstChild == null) return false;
+            if (firstChild == null)
+            {
+                if(!PermissiveParsing)
+                    raiseFormatError($"Element '{parent.Name().LocalName}' must have child elements and/or a value attribute", _current.GetPositionInfo());
+
+                return false;
+            }
+
             if (!tryFindByName(firstChild, name, out var match)) return false;
 
             // Found a match, so we can alter the current position of the navigator.
@@ -134,13 +153,12 @@ namespace Hl7.Fhir.Serialization
                 {
                     if (_current is XElement xe && xe.TryGetContainedResource(out XElement contained))
                     {
-                        if (contained.NextSibling() != null)
-                            raiseFormatError("The root of a contained resource should not have siblings.", this);
+                        bool errorEncountered = verifyContained(contained);
 
-                        if (contained.HasAttributes)
-                            raiseFormatError("The root of a contained resource should not have attributes.", this);
-
-                        _containedResource = contained;
+                        if (PermissiveParsing && errorEncountered)
+                            _containedResource = NO_CONTAINED_FOUND;
+                        else
+                            _containedResource = contained;
                     }
                     else
                         _containedResource = NO_CONTAINED_FOUND;
@@ -151,6 +169,32 @@ namespace Hl7.Fhir.Serialization
                 else
                     return _containedResource;
             }
+        }
+
+        private bool verifyContained(XElement contained)
+        {
+            bool errorEncountered = false;
+            XElement container = contained.Parent;
+
+            if (container.HasAttributes && !PermissiveParsing)
+            {
+                raiseFormatError("An element with a contained resource should not have attributes.", container.Attributes().First().GetPositionInfo());
+                errorEncountered = true;
+            }
+
+            if (contained.HasAttributes && !PermissiveParsing)
+            {
+                raiseFormatError("A contained resource should not have attributes.", contained.Attributes().First().GetPositionInfo());
+                errorEncountered = true;
+            }
+
+            if (contained.NextNode != null && !PermissiveParsing)
+            {
+                raiseFormatError("An element with a contained resource should only have one child.", contained.NextNode.GetPositionInfo());
+                errorEncountered = true;
+            }
+
+            return errorEncountered;
         }
 
         public bool MoveToNext(string nameFilter)
