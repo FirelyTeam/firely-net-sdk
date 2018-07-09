@@ -31,6 +31,13 @@ namespace Hl7.Fhir.Serialization
             _current = root;
         }
 
+        public int LineNumber => getDetails(_current)?.LineNumber ?? -1;
+
+        public int LinePosition => getDetails(_current)?.LinePosition ?? -1;
+
+        private static XmlSerializationDetails getDetails(IElementNavigator node) =>
+            (node as IAnnotated)?.Annotation<XmlSerializationDetails>();
+
         public object GetPrimitiveValue() => Value;
 
         public string GetResourceTypeName() => _current.GetResourceTypeFromAnnotation() ??
@@ -69,37 +76,7 @@ namespace Hl7.Fhir.Serialization
         }
 #pragma warning restore 612, 618
 
-        /// <summary>
-        /// Verify xml specific details.
-        /// </summary>
-        /// <param name="child"></param>
-        /// <returns>'true' if the child is ok, but needs to be skipped, 'false' if it is ok and needs to be processed, throws otherwise</returns>
-        private bool verifyXmlSpecificDetails(IElementNavigator child)
-        {
-            var xmlDetails = getXmlDetails(child);
-            if (xmlDetails == null) return false;
-
-            if (xmlDetails.NodeType == System.Xml.XmlNodeType.Attribute)
-            {
-                if (xmlDetails.Namespace.NamespaceName == "") return false;
-
-                throw Error.Format($"Encountered unsupported attribute {child.Name}", this);
-            }
-
-            else if (xmlDetails.NodeType == System.Xml.XmlNodeType.Element)
-            {
-                if (xmlDetails.Namespace == XmlNs.FHIR) return false;
-                if (xmlDetails.Namespace + "div" == XmlNs.XHTMLDIV) return false;
-
-                if(xmlDetails.Namespace.NamespaceName == "")
-                    throw Error.Format($"Encountered element '{child.Name}' missing the HL7 FHIR namespace", this);
-
-                throw Error.Format($"Encountered element '{child.Name}' from unsupported namespace '{xmlDetails.Namespace}'", this);
-            }
-
-            else
-                throw Error.Format($"Xml node of type '{xmlDetails.NodeType}' is unexpected at this point", this);
-        }
+      
 
         #region IElementNavigator members
         public bool MoveToNext(string nameFilter = null) => _current.MoveToNext(nameFilter);
@@ -107,10 +84,6 @@ namespace Hl7.Fhir.Serialization
         public bool MoveToFirstChild(string nameFilter = null) => _current.MoveToFirstChild(nameFilter);
 
         public IElementNavigator Clone() => new ElementNavFhirReader(_current.Clone());
-
-        public int LineNumber => (_current as IPositionInfo)?.LineNumber ?? -1;
-
-        public int LinePosition => (_current as IPositionInfo)?.LinePosition ?? -1;
 
         public string Name => _current.Name;
 

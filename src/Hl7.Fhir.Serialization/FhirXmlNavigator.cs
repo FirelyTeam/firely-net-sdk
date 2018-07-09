@@ -17,7 +17,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct FhirXmlNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource, IExceptionSink
+    public partial struct FhirXmlNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
     {
         public FhirXmlNavigator(XElement root, FhirXmlNavigatorSettings settings = null)
         {
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Name => _current.Name()?.LocalName;
 
-        public string Type => throw new NotImplementedException("This untyped reader does not support reading the Type property.");
+        public string Type => throw Error.NotSupported("This untyped reader does not support reading the Type property.");
 
         public object Value => _current.GetValue();
 
@@ -87,22 +87,22 @@ namespace Hl7.Fhir.Serialization
             {
                 if (xa.Name == XmlNs.XSCHEMALOCATION)
                 {
-                    if(DisallowSchemaLocation)
-                        raiseFormatError($"The 'schemaLocation' attribute is disallowed.", node.GetPositionInfo());
+                    if (DisallowSchemaLocation)
+                        raiseFormatError($"The 'schemaLocation' attribute is disallowed.", node);
                 }
                 else if (xa.Name.NamespaceName != "" && !AllowedExternalNamespaces.Contains(xa.Name.NamespaceName))
-                    raiseFormatError($"The attribute '{xa.Name.LocalName}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
+                    raiseFormatError($"The attribute '{xa.Name.LocalName}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node);
 
                 if (String.IsNullOrWhiteSpace(xa.Value))
-                    raiseFormatError($"The attribute '{xa.Name.LocalName}' has an empty value, which is not allowed.", node.GetPositionInfo());
+                    raiseFormatError($"The attribute '{xa.Name.LocalName}' has an empty value, which is not allowed.", node);
             }
             else if (node is XElement xe)
             {
                 if (xe.Name.Namespace != XmlNs.XFHIR && xe.Name != XmlNs.XHTMLDIV && !AllowedExternalNamespaces.Contains(xe.Name.Namespace))
-                    raiseFormatError($"The element '{xe.Name.LocalName}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node.GetPositionInfo());
+                    raiseFormatError($"The element '{xe.Name.LocalName}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node);
             }
             else
-                raiseFormatError($"Xml node of type '{node.NodeType}' is unexpected at this point", node.GetPositionInfo());
+                raiseFormatError($"Xml node of type '{node.NodeType}' is unexpected at this point", node);
         }
 
         public bool MoveToFirstChild(string name = null)
@@ -120,8 +120,8 @@ namespace Hl7.Fhir.Serialization
 
             if (firstChild == null)
             {
-                if(!PermissiveParsing)
-                    raiseFormatError($"Element '{parent.Name().LocalName}' must have child elements and/or a value attribute", _current.GetPositionInfo());
+                if (!PermissiveParsing)
+                    raiseFormatError($"Element '{parent.Name().LocalName}' must have child elements and/or a value attribute", _current);
 
                 return false;
             }
@@ -142,8 +142,10 @@ namespace Hl7.Fhir.Serialization
 
         public bool Raise(object source, ExceptionRaisedEventArgs args) => Sink.RaiseOrThrow(source, args);
 
-        private void raiseFormatError(string message, IPositionInfo position) =>
-                 Raise(this, ExceptionRaisedEventArgs.Error(Error.Format(message, position)));
+        private void raiseFormatError(string message, XObject position)
+        {
+            Raise(this, ExceptionRaisedEventArgs.Error(Error.Format(message, LineNumber, LinePosition)));
+        }
 
         private XElement Contained
         {
@@ -178,19 +180,19 @@ namespace Hl7.Fhir.Serialization
 
             if (container.HasAttributes && !PermissiveParsing)
             {
-                raiseFormatError("An element with a contained resource should not have attributes.", container.Attributes().First().GetPositionInfo());
+                raiseFormatError("An element with a contained resource should not have attributes.", container.Attributes().First());
                 errorEncountered = true;
             }
 
             if (contained.HasAttributes && !PermissiveParsing)
             {
-                raiseFormatError("A contained resource should not have attributes.", contained.Attributes().First().GetPositionInfo());
+                raiseFormatError("A contained resource should not have attributes.", contained.Attributes().First());
                 errorEncountered = true;
             }
 
             if (contained.NextNode != null && !PermissiveParsing)
             {
-                raiseFormatError("An element with a contained resource should only have one child.", contained.NextNode.GetPositionInfo());
+                raiseFormatError("An element with a contained resource should only have one child.", contained.NextNode);
                 errorEncountered = true;
             }
 
@@ -224,9 +226,9 @@ namespace Hl7.Fhir.Serialization
 
         public override string ToString() => _current.ToString();
 
-        int IPositionInfo.LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
+        int LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
 
-        int IPositionInfo.LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
+        int LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
 
         public IExceptionSink Sink { get; set; }
 
@@ -269,11 +271,6 @@ namespace Hl7.Fhir.Serialization
 
 
             }
-            if (type == typeof(PositionInfo))
-            {
-                var t = this as IPositionInfo;
-                return new[] { new PositionInfo { LineNumber = t.LineNumber, LinePosition = t.LinePosition } };
-            }
             if (type == typeof(XmlSerializationDetails))
             {
                 return new[]
@@ -285,6 +282,9 @@ namespace Hl7.Fhir.Serialization
                         Namespace = _current.Name().NamespaceName,
                         NodeText = _current.Text(),
                         IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false,
+                        OriginalValue = _current.Value(),
+                        LineNumber = this.LineNumber,
+                        LinePosition = this.LinePosition,
                     }
                 };
             }

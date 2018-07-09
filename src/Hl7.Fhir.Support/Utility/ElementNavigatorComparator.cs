@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
+using System;
 using System.Linq;
 
 namespace Hl7.Fhir.Utility
@@ -20,7 +21,7 @@ namespace Hl7.Fhir.Utility
             public string FailureLocation;
             public string Details;
 
-            public static ComparisonResult Fail(string location, string details=null) =>
+            public static ComparisonResult Fail(string location, string details = null) =>
                 new ComparisonResult { Success = false, FailureLocation = location, Details = details };
 
             public static readonly ComparisonResult OK = new ComparisonResult() { Success = true };
@@ -30,10 +31,18 @@ namespace Hl7.Fhir.Utility
         public static ComparisonResult IsEqualTo(this IElementNavigator expected, IElementNavigator actual)
         {
             if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
-            if (!valuesEqual(expected.Value,actual.Value)) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
+            if (!valuesEqual(expected.Value, actual.Value)) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
 
             // Allow the expected navigator to have more type info than the actual navigator
-            if (expected.Type != actual.Type && actual.Type != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.Type}', expected '{expected.Type}'");
+            try
+            {
+                if (expected.Type != actual.Type && actual.Type != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.Type}', expected '{expected.Type}'");
+            }
+            catch (NotSupportedException)
+            {
+                // ok, comparing an untyped nav, nothing to do.
+            }
+
             if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"location: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)

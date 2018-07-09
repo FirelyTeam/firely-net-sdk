@@ -17,7 +17,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct TypedNavigator : IElementNavigator, IAnnotated, IPositionInfo, IExceptionSource, IExceptionSink
+    public partial struct TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
     {
         public TypedNavigator(IElementNavigator root, IModelMetadataProvider provider) : this(root, root.Name, provider)
         {
@@ -47,7 +47,16 @@ namespace Hl7.Fhir.Serialization
         private void raiseFormatError(string message, IElementNavigator current) =>
             Raise(current, ExceptionRaisedEventArgs.Error(Error.Format(message, current as IPositionInfo)));
 
-        public IElementNavigator Clone() => this;        // the struct will be copied upon return
+        public IElementNavigator Clone()
+        {
+            var clone = this;       // basic copy, since a struct
+
+            // really need a NavPosition with a cloned navigator 
+            clone._current = new NavigatorPosition(this._current.Node.Clone(), this._current.SerializationInfo,
+                                        this._current.Name, this._current.InstanceType);
+
+            return clone;
+        }
 
         private NavigatorPosition _current;
 
@@ -134,19 +143,33 @@ namespace Hl7.Fhir.Serialization
         private bool tryMoveToElement(SerializationInfoCache dis, IElementNavigator current, string name, out NavigatorPosition match)
         {
             var scan = current.Clone();
-            var isKnownElement = dis.TryGetValue(name, out var elementInfo);
-            match = null;
 
-            if (name == null || !isKnownElement || (isKnownElement && !elementInfo.IsChoiceElement))
+            // no name filter or direct hit. A very common case, and we should handle it immediately before trying more
+            // expensive methods.
+            if (name == null || name == scan.Name)
+            {
+                dis.TryGetValue(scan.Name, out var directHitInfo);
+                match = deriveInstanceType(scan, directHitInfo);
+                return true;
+            }
+
+            // No hit yet, we need to scan. There are two possibilities
+            // a) This is a known property, and it's not a choice OR it's an unknown property 
+            //          -> we can ask the underlying untyped navigator to move to it as quick as possible.
+            // b) It's a known propert and a choice
+            //          -> we need to enumerate the elements to match on a prefix (since there will
+            //          be a typename suffixed to it)
+            var knownProperty = dis.TryGetValue(name, out var elementInfo);
+            var canUseQuickScan = !knownProperty || (knownProperty && !elementInfo.IsChoiceElement);
+
+            if (canUseQuickScan)
             {
                 var success = scan.MoveToNext(name);
-
-                if (success)
-                    match = deriveInstanceType(scan, elementInfo);
-
+                match = success ? deriveInstanceType(scan, elementInfo) : null;
                 return success;
             }
 
+            // Else, use "slow" scan
             do
             {
                 if (scan.Name.StartsWith(name))
@@ -192,7 +215,6 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-
         public bool MoveToNext(string nameFilter)
         {
             if (!_current.Node.MoveToNext()) return false;
@@ -231,11 +253,6 @@ namespace Hl7.Fhir.Serialization
 
         public override string ToString() => $"{(_current.IsTracking ? ($"[{_current.InstanceType}] ") : "")}{_current.Node.ToString()}";
 
-        int IPositionInfo.LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
-
-        int IPositionInfo.LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
-
-
         public IEnumerable<object> Annotations(Type type)
         {
             if (type == typeof(ElementSerializationInfo))
@@ -244,11 +261,6 @@ namespace Hl7.Fhir.Serialization
                 {
                      _current.IsTracking ? new ElementSerializationInfo(_current.SerializationInfo) : ElementSerializationInfo.NO_SERIALIZATION_INFO
                 };
-            }
-            if (type == typeof(PositionInfo))
-            {
-                var t = this as IPositionInfo;
-                return new[] { new PositionInfo { LineNumber = t.LineNumber, LinePosition = t.LinePosition } };
             }
             else
             {

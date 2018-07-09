@@ -284,10 +284,13 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
 
             Assert.IsTrue(nav.MoveToFirstChild());
 
-            var postInfo = (nav as IAnnotated)?.Annotation<PositionInfo>();
-            Assert.IsNotNull(postInfo);
-            Assert.AreNotEqual(-1, postInfo.LineNumber);
-            Assert.AreNotEqual(-1, postInfo.LinePosition);
+            var posInfo = (nav as IAnnotated)?.Annotation<JsonSerializationDetails>();
+            Assert.IsNotNull(posInfo);
+            Assert.AreNotEqual(-1, posInfo.LineNumber);
+            Assert.AreNotEqual(-1, posInfo.LinePosition);
+            Assert.AreNotEqual(0, posInfo.LineNumber);
+            Assert.AreNotEqual(0, posInfo.LinePosition);
+
         }
     }
 }

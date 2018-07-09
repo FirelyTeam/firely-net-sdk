@@ -32,10 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ParseDemoPatientXml - Copy.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
   </ItemGroup>
 

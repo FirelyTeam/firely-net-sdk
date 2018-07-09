@@ -14,7 +14,7 @@ using System.Xml.Linq;
 namespace Hl7.FhirPath.Tests.XmlNavTests
 {
     [TestClass]
-    public class ParseDemoPatientXml
+    public class ParseDemoPatientXmlUntyped
     {
         public IElementNavigator getXmlNavU(string xml, FhirXmlNavigatorSettings settings = null) =>
             FhirXmlNavigator.Untyped(xml, settings);                    
@@ -25,92 +25,25 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
+            ParseDemoPatient.CanReadThroughTypedNavigator(nav, typed: false);
 
-            Assert.AreEqual("Patient", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceTypeFromAnnotation());
-
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual("id", nav.Name);
-            Assert.AreEqual("pat1", nav.Value);
-
-            var pat = nav.Clone();
-
-            Assert.IsFalse(nav.MoveToFirstChild());
-
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("text", nav.Name);
-            var text = nav.Clone();
-
-            Assert.IsTrue(text.MoveToFirstChild("status")); // status
-            Assert.AreEqual("generated", text.Value);
-
-            Assert.IsTrue(text.MoveToNext());
-            Assert.AreEqual("div", text.Name);
-            Assert.IsTrue(((string)text.Value).StartsWith("<div xmlns="));       // special handling of xhtml
-
-            Assert.IsFalse(text.MoveToFirstChild()); // cannot move into xhtml
-            Assert.AreEqual("div", text.Name); // still on xhtml <div>
-            Assert.IsFalse(text.MoveToNext());  // nothing more in <text>
-
-            Assert.IsTrue(nav.MoveToNext()); // contained
-            Assert.AreEqual("contained", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceTypeFromAnnotation());
-
-            Assert.IsTrue(nav.MoveToFirstChild()); // id
-            Assert.IsTrue(nav.MoveToNext()); // identifier
-            var identifier = nav.Clone();
-
-            Assert.IsTrue(identifier.MoveToFirstChild()); // system
-            Assert.IsTrue(identifier.MoveToNext()); // value
-            Assert.IsFalse(identifier.MoveToNext()); // still value
-
-            Assert.AreEqual("value", identifier.Name);
-            Assert.IsFalse(identifier.MoveToFirstChild());
-            Assert.AreEqual("444222222", identifier.Value);  // tests whether strings are trimmed
-
-            Assert.IsTrue(nav.MoveToNext("name"));
-            Assert.AreEqual("name", nav.Name);
-            Assert.IsTrue(nav.MoveToFirstChild());  // id (attribute)
-            Assert.AreEqual("id", nav.Name);
-            Assert.AreEqual("firstname", nav.Value);
-            Assert.IsTrue(nav.MoveToNext());  // use (element!)
-            Assert.AreEqual("use", nav.Name);
-
-            Assert.IsTrue(pat.MoveToNext("birthDate"));
-            Assert.AreEqual("1974-12-25", pat.Value);
-
-            Assert.IsTrue(pat.MoveToNext("deceasedBoolean"));
-            Assert.AreEqual("false", pat.Value);
         }
 
         [TestMethod]
-        public void ElementNavPerformanceXml()
+        public void CloningWorks()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
+            ParseDemoPatient.CloningWorks(nav);
+        }
 
-            // run extraction once to allow for caching
-            extract();
 
-            //System.Threading.Thread.Sleep(20000);
-
-            var sw = new Stopwatch();
-            sw.Start();
-            for (var i = 0; i < 50_000; i++)
-            {
-                extract();
-            }
-            sw.Stop();
-
-            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds/50 } micros");
-
-            void extract()
-            {
-                var usual = nav.Children("identifier").First().Children("use").First().Value;
-                var phone = nav.Children("telecom").First().Children("system").First().Value;
-                var prefs = nav.Children("communication").Where(c => c.Children("preferred").Any(pr => pr.Value is string s && s == "true")).Count();
-                var link = nav.Children("link").Children("other").Children("reference");
-            }
+        [TestMethod]
+        public void ElementNavPerformanceUntypedXml()
+        {
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var nav = getXmlNavU(tpXml);
+            ParseDemoPatient.ElementNavPerformanceXml(nav);
         }
 
         [TestMethod]
@@ -156,7 +89,6 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("anotherattr", nav.Name);        // none-xmlns attributes will come through
             xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
             Assert.AreEqual(XNamespace.None, xmldetails.Namespace);
-
         }
 
 
@@ -165,16 +97,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
-
-            Assert.IsTrue(nav.MoveToFirstChild());
-
-            var posInfo = (nav as IAnnotated).Annotation<PositionInfo>();
-            Assert.IsNotNull(posInfo);
-            Assert.AreNotEqual(-1, posInfo.LineNumber);
-            Assert.AreNotEqual(-1, posInfo.LinePosition);
-            Assert.AreNotEqual(0, posInfo.LineNumber);
-            Assert.AreNotEqual(0, posInfo.LinePosition);
-
+            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav);
         }
 
         [TestMethod]
@@ -292,25 +215,17 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [TestMethod]
         public void RoundtripXml()
         {
-            // Note: this is a low-level test, just testing xml roundtripping, given that
-            // the source and destination are both XML.  It uses non-fhir data, so it would
-            // only work in that situation. Just testing whether all xml details come through
-            // to faithfully reproduce the source.
-            var tpXml = File.ReadAllText(@"TestData\roundtrippable.xml");
+            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.Untyped(reader));
+        }
 
-            // will allow whitespace and comments to come through
-            var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = FhirXmlNavigator.Untyped(reader);
-
-            var xmlBuilder = new StringBuilder();
-            var serializer = new NavigatorXmlWriter();
-            using (var writer = XmlWriter.Create(xmlBuilder))
-            {
-                serializer.Write(nav, writer);
-            }
-
-            var output = xmlBuilder.ToString();
-            XmlAssert.AreSame("roundtrippable.xml", tpXml, output);            
+        [TestMethod]
+        public void CheckBundleEntryNavigation()
+        {
+            var bundleXml = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
+            var xmlNav = getXmlNavU(bundleXml);
+            var entryNav = xmlNav.Select("entry.resource").First();
+            var id = entryNav.Scalar("id");
+            Assert.IsNotNull(id);
         }
 
         [TestMethod]

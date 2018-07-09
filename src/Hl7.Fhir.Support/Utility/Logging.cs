@@ -130,10 +130,19 @@ namespace Hl7.Fhir.Utility
         /// </summary> 
         public static FormatException Format(string message, IPositionInfo pos)
         {
-            string location = null;
-
             if (pos != null)
-                location = $"line {pos.LineNumber}, pos {pos.LinePosition}";
+                return Format(message, pos.LineNumber, pos.LinePosition);
+            else
+                return Format(message, (string)null);
+        }
+
+        /// <summary> 
+        /// Creates an <see cref="FormatException"/> with the provided properties. 
+        /// </summary> 
+        public static FormatException Format(string message, int lineNumber, int linePosition)
+        {
+            string location = null;
+            location = $"line {lineNumber}, {linePosition}";
 
             return Format(message, location);
         }

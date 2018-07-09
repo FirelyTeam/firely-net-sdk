@@ -26,7 +26,6 @@ namespace Hl7.Fhir.Serialization
             Name = name ?? throw Error.ArgumentNull(nameof(name));
         }
 
-
         public static NavigatorPosition ForElement(IElementNavigator element, IComplexTypeSerializationInfo elementType, string elementName)
         {
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));

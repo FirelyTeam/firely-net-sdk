@@ -44,6 +44,8 @@ namespace Hl7.Fhir.Serialization
                 case "markdown":
                 case "base64Binary":
                     return value;
+                case "xhtml":
+                    return value;
                 default:
                     throw Error.NotSupported($"Primitive type '{primitiveType}' is unknown and cannot be interpreted.");
             }

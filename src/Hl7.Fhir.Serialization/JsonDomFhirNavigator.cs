@@ -19,7 +19,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct JsonDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo
+    public partial struct JsonDomFhirNavigator : IElementNavigator, IAnnotated
     {
         internal JsonDomFhirNavigator(string root, JObject current)
         {
@@ -66,9 +66,9 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        int IPositionInfo.LineNumber => Current.LineNumber;
+        int LineNumber => Current.LineNumber;
 
-        int IPositionInfo.LinePosition => Current.LinePosition;
+        int LinePosition => Current.LinePosition;
 
 
         private int nextMatch(JsonNavigatorNode[] nodes, string namefilter = null, int startAfter = -1)
@@ -131,12 +131,10 @@ namespace Hl7.Fhir.Serialization
                     new JsonSerializationDetails()
                     {
                         RawValue = Current.JsonValue?.Value,
+                        LineNumber = Current.LineNumber,
+                        LinePosition = Current.LinePosition
                     }
                 };
-            }
-            if (type == typeof(PositionInfo))
-            {
-                return new[] { new PositionInfo { LineNumber = Current.LineNumber, LinePosition = Current.LinePosition } };
             }
             else
                 return null;
