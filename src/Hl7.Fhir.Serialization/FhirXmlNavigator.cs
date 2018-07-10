@@ -23,8 +23,8 @@ namespace Hl7.Fhir.Serialization
         {
             _current = root;
             _parentPath = null;
-            _nameIndex = 0;
             _containedResource = null;
+            _names = new Dictionary<string, int>();
 
             Sink = null;
             AllowedExternalNamespaces = settings?.AllowedExternalNamespaces ?? new XNamespace[0];
@@ -32,13 +32,18 @@ namespace Hl7.Fhir.Serialization
             PermissiveParsing = settings?.PermissiveParsing ?? false;
         }
 
-        public IElementNavigator Clone() => this;        // the struct will be copied upon return
+        public IElementNavigator Clone()
+        {
+            var copy = this;
+            copy._names = new Dictionary<string, int>(_names);
+
+            return copy;
+        }
 
         private XObject _current;
-        private int _nameIndex;
         private string _parentPath;
         private XElement _containedResource;
-
+        private Dictionary<string,int> _names;
 
         public XNamespace[] AllowedExternalNamespaces;
         public bool DisallowSchemaLocation;
@@ -140,8 +145,8 @@ namespace Hl7.Fhir.Serialization
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
             _parentPath = Location;
-            _nameIndex = 0;
             _current = match;
+            _names = new Dictionary<string, int>() { { Name, 1 } };
             _containedResource = null;
 
             return true;
@@ -217,21 +222,27 @@ namespace Hl7.Fhir.Serialization
 
             // store the current name before proceeding to detect repeating
             // element names and count them
-            var currentName = Name;
+            var previousName = Name;
 
             _current = match;
-
-            if (currentName == Name)
-                _nameIndex += 1;
+            if (_names.TryGetValue(Name, out int occurs))
+            {
+                _names[Name] += 1;
+                if (previousName != Name && !PermissiveParsing)
+                {
+                    // the name appeared before, but not contiguously
+                    raiseFormatError($"Element with name '{Name}' was found multiple times, but not in sequence.", match);
+                }
+            }
             else
-                _nameIndex = 0;
+                _names[Name] = 1;
 
             _containedResource = null;
             return true;
         }
 
 
-        public string Location => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_nameIndex}]";
+        public string Location => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_names[Name]-1}]";
 
         public override string ToString() => _current.ToString();
 

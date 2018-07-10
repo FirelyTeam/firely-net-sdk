@@ -248,7 +248,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             var result = runTest(patient);
             var originalCount = result.Count;
-            Assert.AreEqual(10,result.Count);
+            Assert.AreEqual(11,result.Count);
             Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
 
             patient = getXmlNavU(tpXml, new FhirXmlNavigatorSettings() { DisallowSchemaLocation = true });

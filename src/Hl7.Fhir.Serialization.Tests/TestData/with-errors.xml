@@ -12,6 +12,7 @@
       <!-- should have just one child -->
     </Practitioner>
   </anElementWithContained>
+  <anElement value='false' /> <!-- nasty, had anElement before, but not contiguous -->
   <cust:illegalNamespace>
     <some value='dummy' />
   </cust:illegalNamespace>
