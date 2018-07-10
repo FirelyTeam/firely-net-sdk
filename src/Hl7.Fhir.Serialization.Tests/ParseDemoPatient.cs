@@ -72,7 +72,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var nav = navCreator(reader);
 
             var xmlBuilder = new StringBuilder();
-            var serializer = new NavigatorXmlWriter();
+            bool hasTypeInfo = nav.GetSerializationInfo() != null;
+
+            var serializer = new FhirXmlWriter( new FhirXmlWriterSettings { AllowUntypedSource = !hasTypeInfo } );
             using (var writer = XmlWriter.Create(xmlBuilder))
             {
                 serializer.Write(nav, writer);
@@ -86,7 +88,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public static void CanReadThroughTypedNavigator(IElementNavigator nav, bool typed)
         {
             Assert.AreEqual("Patient", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceTypeFromAnnotation());
+            Assert.AreEqual("Patient", nav.GetResourceType());
             if (typed) Assert.AreEqual("Patient", nav.Type);
 
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -118,7 +120,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             Assert.IsTrue(nav.MoveToNext()); // contained
             Assert.AreEqual("contained", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceTypeFromAnnotation());
+            Assert.AreEqual("Patient", nav.GetResourceType());
             if (typed) Assert.AreEqual("Patient", nav.Type);
 
             Assert.IsTrue(nav.MoveToFirstChild()); // id

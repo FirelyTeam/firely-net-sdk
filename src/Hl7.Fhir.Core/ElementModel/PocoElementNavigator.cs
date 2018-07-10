@@ -101,6 +101,8 @@ namespace Hl7.Fhir.ElementModel
 
         public int ArrayIndex => AtCollection ? _arrayIndex : 0;
 
+        public int Order => _index;
+
         /// <summary>
         /// This is only needed for search data extraction (and debugging)
         /// to be able to read the values from the selected node (if a coding, so can get the value and system)

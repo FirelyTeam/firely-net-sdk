@@ -123,6 +123,8 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsContainedResource => _pm.Choice == ChoiceType.ResourceChoice;
 
+        public int Order => _pm.Order;
+
         public ITypeSerializationInfo[] Type => _types.Value;
     }
 }

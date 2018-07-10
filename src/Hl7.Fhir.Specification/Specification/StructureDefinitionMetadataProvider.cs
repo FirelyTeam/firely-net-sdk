@@ -136,17 +136,17 @@ namespace Hl7.Fhir.Specification
     internal struct ElementDefinitionSerializationInfo : IElementSerializationInfo
     {
         private readonly Lazy<ITypeSerializationInfo[]> _types;
-        private readonly ElementDefinitionNavigator _nav;
         private readonly ElementDefinition _definition;
+        private readonly int _order;
 
         internal ElementDefinitionSerializationInfo(ElementDefinitionNavigator nav)
         {
             if (nav == null || nav.Current == null) throw Error.ArgumentNull(nameof(nav));
 
             _types = new Lazy<ITypeSerializationInfo[]>(() => buildTypes(nav));
-            this._nav = nav;
-            ElementName = noChoiceSuffix(_nav.PathName);
-            _definition = _nav.Current;
+            ElementName = noChoiceSuffix(nav.PathName);
+            _definition = nav.Current;
+            _order = nav.OrdinalPosition.Value;     // cannot be null, since nav.Current != null
 
             string noChoiceSuffix(string n)
             {
@@ -172,6 +172,8 @@ namespace Hl7.Fhir.Specification
         public bool IsAtomicValue => _definition.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr);
 
         public bool IsChoiceElement => _definition.IsChoice();
+
+        public int Order => _order;
 
         public bool IsContainedResource => isContainedResource(_definition);
 

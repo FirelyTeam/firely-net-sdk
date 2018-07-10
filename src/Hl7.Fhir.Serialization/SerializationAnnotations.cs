@@ -15,17 +15,17 @@ namespace Hl7.Fhir.Serialization
     public class SourceComments
     {
         /// <summary>
-        /// Comments encountered after this but before the next element in the document
+        /// Comments encountered before this node, but after the previous sibling
         /// </summary>
         public string[] CommentsBefore;
 
         /// <summary>
-        /// Comments encountered before the first child in this element
+        /// Comments encountered after the last child of this element
         /// </summary>
         public string[] ClosingComments;
 
         /// <summary>
-        /// Comments encountered before the root element of the document
+        /// Comments encountered after the root element of the document
         /// </summary>
         public string[] DocumentEndComments;
     } 
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization
 
     public static class SerializationNavigatorExtensions
     {
-        public static string GetResourceTypeFromAnnotation(this IElementNavigator navigator)
+        public static string GetResourceType(this IElementNavigator navigator)
         {
             if (navigator is IAnnotated ia && ia.TryGetAnnotation<ResourceTypeIndicator>(out var rt))
                 return rt.ResourceType;

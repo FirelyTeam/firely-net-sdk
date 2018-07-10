@@ -24,5 +24,8 @@ namespace Hl7.Fhir.Core.Tests.Introspection
 
         [TestMethod]
         public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new StructureDefinitionMetadataProvider(source));
+
+        [TestMethod]
+        public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new StructureDefinitionMetadataProvider(source));
     }
 }

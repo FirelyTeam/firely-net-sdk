@@ -22,6 +22,8 @@ namespace Hl7.Fhir.Serialization
 
         bool IsAtomicValue { get; }
         ITypeSerializationInfo[] Type { get; }
+
+        int Order { get; }
     }
 
 

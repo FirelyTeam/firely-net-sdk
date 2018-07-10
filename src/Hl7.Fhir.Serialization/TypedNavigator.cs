@@ -109,11 +109,11 @@ namespace Hl7.Fhir.Serialization
 
             if (info.IsContainedResource)
             {
-                instanceType = current.GetResourceTypeFromAnnotation();
+                instanceType = current.GetResourceType();
                 if (instanceType == null) raiseFormatError("Element is defined to contain a resource, but does not actually seem to contain a resource", current);
                 //TODO: check validity of resource type
             }
-            else if (!info.IsContainedResource && current.GetResourceTypeFromAnnotation() != null)
+            else if (!info.IsContainedResource && current.GetResourceType() != null)
             {
                 raiseFormatError("Element is not a contained resource, but it does contain a resource", current);
             }
@@ -139,33 +139,34 @@ namespace Hl7.Fhir.Serialization
             return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
         }
 
-
         private bool tryMoveToElement(SerializationInfoCache dis, IElementNavigator current, string name, out NavigatorPosition match)
         {
             var scan = current.Clone();
 
-            // no name filter or direct hit. A very common case, and we should handle it immediately before trying more
+            // no name filter: a very common case, and we should handle it immediately before trying more
             // expensive methods.
-            if (name == null || name == scan.Name)
+            if (name == null)
             {
-                dis.TryGetValue(scan.Name, out var directHitInfo);
-                match = deriveInstanceType(scan, directHitInfo);
-                return true;
+                var success = dis.TryGetBySuffixedName(scan.Name, out var info);
+                match = deriveInstanceType(scan, info);   // could be no info (null)
+                return success;
             }
 
-            // No hit yet, we need to scan. There are two possibilities
+            var knownProperty = dis.TryGetValue(name, out var elementInfo);
+
+            // Do a scan. There are two possibilities
             // a) This is a known property, and it's not a choice OR it's an unknown property 
             //          -> we can ask the underlying untyped navigator to move to it as quick as possible.
-            // b) It's a known propert and a choice
+            // b) It's a known property and a choice
             //          -> we need to enumerate the elements to match on a prefix (since there will
             //          be a typename suffixed to it)
-            var knownProperty = dis.TryGetValue(name, out var elementInfo);
             var canUseQuickScan = !knownProperty || (knownProperty && !elementInfo.IsChoiceElement);
 
             if (canUseQuickScan)
             {
-                var success = scan.MoveToNext(name);
-                match = success ? deriveInstanceType(scan, elementInfo) : null;
+                // direct hit (scan matches), or move to it
+                var success = scan.Name == name || scan.MoveToNext(name);
+                match = deriveInstanceType(scan, elementInfo);
                 return success;
             }
 

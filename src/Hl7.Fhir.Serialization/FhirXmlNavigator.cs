@@ -48,7 +48,16 @@ namespace Hl7.Fhir.Serialization
 
         public string Type => throw Error.NotSupported("This untyped reader does not support reading the Type property.");
 
-        public object Value => _current.GetValue();
+        public object Value
+        {
+            get
+            {
+                // The MoveNext()/MoveFirst() method will already have complained about empty attributes, 
+                // so make sure we nicely recover here by returning null.
+                var val = _current.GetValue();
+                return !String.IsNullOrWhiteSpace(val) ? val : null;
+            }
+        }
 
         private bool tryFindByName(XObject current, string name, out XObject match)
         {

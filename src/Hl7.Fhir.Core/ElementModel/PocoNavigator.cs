@@ -61,6 +61,8 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public string Name => _nav.Name;
 
+        public int Order => _nav.Order;
+
         public string Location
         {
             get

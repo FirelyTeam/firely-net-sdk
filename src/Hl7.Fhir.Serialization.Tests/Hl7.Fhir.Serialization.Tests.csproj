@@ -32,6 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestData\patient-out-of-order.xml" />
+    <None Remove="TestData\test-empty-nodes.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
   </ItemGroup>
 

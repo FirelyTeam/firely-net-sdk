@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
             tryGetType("Patient");
 
             // Try getting an abstract resource
-            tryGetType("DomainResource", isAbstract:true);
+            tryGetType("DomainResource", isAbstract: true);
             tryGetType("Resource", isAbstract: true);
 
             // Try a complex datatype
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
             // The weird xhtml datatype
             tryGetType("xhtml");
 
-            void tryGetType(string typename, string baseTypeName=null, bool isAbstract = false)
+            void tryGetType(string typename, string baseTypeName = null, bool isAbstract = false)
             {
                 var si = provider.GetSerializationInfoForStructure(typename);
                 Assert.IsNotNull(si);
@@ -60,14 +60,15 @@ namespace Hl7.Fhir.Core.Tests.Introspection
         {
             var p = provider.GetSerializationInfoForStructure("Patient");
 
+            // Simple element (repeating)
+            checkType(p, "identifier", true, "Identifier");
+
             // Simple element
             checkType(p, "active", false, "boolean");
 
-            // Simple element (repeating)
-            checkType(p,"identifier", true, "Identifier");
 
             // Backbone element (repeating)
-            var bbe = checkBBType(p,"contact", true);
+            var bbe = checkBBType(p, "contact", true);
 
             // Navigate into the backbone element
             checkType(bbe, "relationship", true, "CodeableConcept");
@@ -117,7 +118,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
 
 
         public static void TestSpecialTypes(IModelMetadataProvider provider)
-        {           
+        {
             // Narrative.div
             var div = provider.GetSerializationInfoForStructure("Narrative");
             Assert.IsNotNull(div);
@@ -130,6 +131,33 @@ namespace Hl7.Fhir.Core.Tests.Introspection
 
             // Extension.url
             checkType(ext, "url", false, "uri");
+        }
+
+        public static void TestProvidedOrder(IModelMetadataProvider provider)
+        {
+            hasCorrectOrder("Patient");
+            hasCorrectOrder("DomainResource");
+            hasCorrectOrder("HumanName");
+            hasCorrectOrder("Element");
+            hasCorrectOrder("string");
+            hasCorrectOrder("SimpleQuantity");
+            hasCorrectOrder("Distance");
+            hasCorrectOrder("xhtml");
+
+            void hasCorrectOrder(string typename)
+            {
+                var si = provider.GetSerializationInfoForStructure(typename);
+                var children = si.GetChildren();
+                var max = children.Aggregate(0, (a, i) =>
+                    i.Order > a ? i.Order : fail($"Order of {i.ElementName} is out of order"));
+
+                int fail(string message)
+                {
+                    Assert.Fail(message);
+                    return 0;  // will never be reached
+                }
+            }
+
         }
     }
 }

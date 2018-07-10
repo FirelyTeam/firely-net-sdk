@@ -33,6 +33,16 @@ namespace Hl7.Fhir.Serialization
                 { { rootInfo.ElementName, rootInfo } });
         }
 
+        public bool TryGetBySuffixedName(string name, out IElementSerializationInfo info)
+        {
+            // Simplest case, one on one match between name and element name
+            if (TryGetValue(name, out info))
+                return true;
+
+            info = this.Where(kvp => name.StartsWith(kvp.Key)).Select(kvp => kvp.Value).FirstOrDefault();
+            return info != null;
+        }
+
         private SerializationInfoCache() : base(new Dictionary<string, IElementSerializationInfo>())
         {
         }

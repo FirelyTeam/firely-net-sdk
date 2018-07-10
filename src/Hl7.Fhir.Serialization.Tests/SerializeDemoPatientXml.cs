@@ -10,13 +10,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Hl7.FhirPath.Tests.XmlNavTests
 {
     [TestClass]
     public class SerializeDemoPatientXml
     {
-        public IElementNavigator getXmlNav(string xml) => FhirXmlNavigator.Typed(xml, new PocoModelMetadataProvider());
+        public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) => 
+            FhirXmlNavigator.Typed(xml, new PocoModelMetadataProvider(), s);
 
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()
@@ -25,8 +27,11 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var nav = getXmlNav(tpXml);
 
             var xmlBuilder = new StringBuilder();
-            var serializer = new NavigatorXmlWriter();
-            using (var writer = XmlWriter.Create(xmlBuilder))
+
+            // Do the serialization without relying on present xml details from the source,
+            // so serialization will only be based on the supplied type information
+            var serializer = new FhirXmlWriter( new FhirXmlWriterSettings { IgnoreSourceXmlDetails = true } );
+            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true } ))
             {
                 serializer.Write(nav, writer);
             }
@@ -35,6 +40,49 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output);
         }
 
+        [TestMethod]
+        public void TestPruneEmptyNodes()
+        {
+            var tpXml = File.ReadAllText(@"TestData\test-empty-nodes.xml");
+
+            // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
+            var nav = getXmlNav(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });
+
+            var xmlBuilder = new StringBuilder();
+            var serializer = new FhirXmlWriter();
+            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true }))
+            {
+                serializer.Write(nav, writer);
+            }
+
+            var output = xmlBuilder.ToString();
+            var doc = XDocument.Parse(output).Root;
+            Assert.AreEqual(10, doc.DescendantNodesAndSelf().Count());  // only 8 nodes + 2 comments left after pruning
+        }
+
+        [TestMethod]
+        public void TestElementReordering()
+        {
+            var tpXml = File.ReadAllText(@"TestData\patient-out-of-order.xml");
+            var nav = getXmlNav(tpXml);
+
+            var xmlBuilder = new StringBuilder();
+            var serializer = new FhirXmlWriter();
+            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true }))
+            {
+                serializer.Write(nav, writer);
+            }
+
+            var output = xmlBuilder.ToString();
+            var root = XDocument.Parse(output).Root;
+
+            var orderedNames = root.Elements().Select(e => e.Name.LocalName).ToList();
+            CollectionAssert.AreEqual(new[] { "id", "text", "identifier", "identifier", "active", "name", "telecom"}, orderedNames);
+
+            var orderedNameNames = root.Element("{http://hl7.org/fhir}name")
+                                    .Elements().Select(e => e.Name.LocalName).ToList();
+            CollectionAssert.AreEqual(new[] { "use", "family", "given" }, orderedNameNames);
+        }
 
         [TestMethod]
         public void CanSerializeFromPoco()
@@ -45,7 +93,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             var nav = new PocoNavigator(pat);
             var xmlBuilder = new StringBuilder();
-            var serializer = new NavigatorXmlWriter();
+            var serializer = new FhirXmlWriter();
             using (var writer = XmlWriter.Create(xmlBuilder))
             {
                 serializer.Write(nav, writer);

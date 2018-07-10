@@ -6,6 +6,8 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 using System;
 
 namespace Hl7.Fhir.Serialization
@@ -14,7 +16,7 @@ namespace Hl7.Fhir.Serialization
     {
         private ElementSerializationInfo() { }
 
-        public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, bool isContained, bool isSimple, ITypeSerializationInfo[] type)
+        public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, bool isContained, bool isSimple, ITypeSerializationInfo[] type, int order)
         {
             ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
             MayRepeat = mayRepeat;
@@ -22,6 +24,7 @@ namespace Hl7.Fhir.Serialization
             IsContainedResource = isContained;
             IsAtomicValue = isSimple;
             Type = type ?? throw new ArgumentNullException(nameof(type));
+            Order = order;
         }
 
         public ElementSerializationInfo(IElementSerializationInfo source)
@@ -32,10 +35,11 @@ namespace Hl7.Fhir.Serialization
             IsContainedResource = source.IsContainedResource;
             IsAtomicValue = source.IsAtomicValue;
             Type = source.Type;
+            Order = source.Order;
         }
 
         public static ElementSerializationInfo ForRoot(string rootName, ITypeSerializationInfo rootType) =>
-            new ElementSerializationInfo(rootName, false, false, false, false, new[] { rootType });
+            new ElementSerializationInfo(rootName, false, false, false, false, new[] { rootType }, 0);
 
         public string ElementName { get; private set; }
 
@@ -46,8 +50,21 @@ namespace Hl7.Fhir.Serialization
 
         public bool IsAtomicValue { get; private set; }
 
+        public int Order { get; private set; }
         public ITypeSerializationInfo[] Type { get; private set; }
 
         public static readonly ElementSerializationInfo NO_SERIALIZATION_INFO = new ElementSerializationInfo();
+    }
+
+
+    public static class ElementSerializationInfoExtensions
+    {
+        public static ElementSerializationInfo GetSerializationInfo(this IElementNavigator navigator)
+        {
+            if (navigator is IAnnotated ia && ia.TryGetAnnotation<ElementSerializationInfo>(out var rt))
+                return rt;
+            else
+                return null;
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
 
         public object GetPrimitiveValue() => Value;
 
-        public string GetResourceTypeName() => _current.GetResourceTypeFromAnnotation() ??
+        public string GetResourceTypeName() => _current.GetResourceType() ??
             throw Error.Format($"Cannot retrieve type of resource for element '{Name}' from the underlying navigator.", this);
 
         private static XmlSerializationDetails getXmlDetails(IElementNavigator nav)

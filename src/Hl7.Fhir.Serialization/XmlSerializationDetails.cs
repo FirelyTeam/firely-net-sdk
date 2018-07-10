@@ -6,6 +6,7 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Xml;
 using System.Xml.Linq;
@@ -28,5 +29,17 @@ namespace Hl7.Fhir.Serialization
 
         public int LineNumber { get; internal set; }
         public int LinePosition { get; internal set; }
+    }
+
+
+    public static class XmlSerializationDetailsExtensions
+    {
+        public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNavigator navigator)
+        {
+            if (navigator is IAnnotated ia && ia.TryGetAnnotation<XmlSerializationDetails>(out var rt))
+                return rt;
+            else
+                return null;
+        }
     }
 }
