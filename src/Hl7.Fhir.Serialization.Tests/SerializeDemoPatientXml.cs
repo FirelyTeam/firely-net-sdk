@@ -24,6 +24,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public void CanSerializeThroughNavigatorAndCompare()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+
             var nav = getXmlNav(tpXml);
 
             var xmlBuilder = new StringBuilder();
@@ -37,7 +38,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             }
 
             var output = xmlBuilder.ToString();
-            XmlAssert.AreSame("fp-test-patient.xml", tpXml, output);
+            XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
         [TestMethod]
@@ -88,7 +89,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public void CanSerializeFromPoco()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var pser = new FhirXmlParser();
+            var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
             var pat = pser.Parse<Patient>(tpXml);
 
             var nav = new PocoNavigator(pat);
@@ -100,7 +101,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             }
 
             var output = xmlBuilder.ToString();
-            XmlAssert.AreSame("fp-test-patient.xml", tpXml, output);
+            XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
     }

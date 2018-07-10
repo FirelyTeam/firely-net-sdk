@@ -24,8 +24,6 @@ namespace Hl7.Fhir.ElementModel
     /// <para>Initially, the navigator will be placed on a "root" which has the same name as the type of the instance data
     /// (often the name of the resource type, e.g. 'Patient'), but if the tree is a fragment it may be the name of a data type as well). Note
     /// that contained resources will have a node called "contained" as their root.</para>
-    /// 
-    /// <para>Since for most uses, Clone() will be called often, implementations should normally be a struct, not a class</para>
     /// </remarks>
     public interface IElementNavigator
     {
@@ -33,6 +31,7 @@ namespace Hl7.Fhir.ElementModel
         /// Move to the next sibling of the current element.
         /// </summary>
         /// <returns>false when there is no next sibling, true otherwise.</returns>
+        /// <remarks>Elements with the same name will always be direct siblings.</remarks>
         bool MoveToNext(string nameFilter = null);
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Type of the node. If a FHIR type, this is just a simple string, otherwise a StructureDefinition url for a type defined as a logical model.
         /// </summary>
-        /// <remarks>This property will be null if the navigator has no type information for this element.
+        /// <remarks>Navigators without type information will throw NotSupportedException when this property is read.
         /// </remarks>
         /// 
         string Type { get; }
@@ -91,6 +90,7 @@ namespace Hl7.Fhir.ElementModel
         /// canonical, url  string
         /// markdown        string
         /// base64Binary    string (uuencoded)
+        /// xhtml           string
         /// </para>
         /// </remarks>
         object Value { get; }

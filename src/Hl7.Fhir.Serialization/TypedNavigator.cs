@@ -7,17 +7,21 @@
 */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
+    public class StructuralTypeException : Exception
+    {
+        public StructuralTypeException() { }
+        public StructuralTypeException(string message) : base(message) { }
+        public StructuralTypeException(string message, Exception inner) : base(message, inner) { }
+    }
+
+    public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
     {
         public TypedNavigator(IElementNavigator root, IModelMetadataProvider provider) : this(root, root.Name, provider)
         {
@@ -25,6 +29,8 @@ namespace Hl7.Fhir.Serialization
 
         public TypedNavigator(IElementNavigator element, string type, IModelMetadataProvider provider)
         {
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+
             var elementType = provider?.GetSerializationInfoForStructure(type);
 
             var current = NavigatorPosition.ForElement(element, elementType, element.Name);
@@ -40,23 +46,38 @@ namespace Hl7.Fhir.Serialization
             Provider = provider;
         }
 
+        private TypedNavigator() { }   // for Clone()
+
+        public IElementNavigator Clone()
+        {
+            return new TypedNavigator()
+            {
+                _current = new NavigatorPosition(this._current.Node.Clone(), this._current.SerializationInfo,
+                                        this._current.Name, this._current.InstanceType),
+                _definition = this._definition,
+                _parentPath = this._parentPath,
+                _nameIndex = this._nameIndex,
+                Sink = this.Sink,
+                Provider = this.Provider
+            };
+        }
+
         public IExceptionSink Sink { get; set; }
 
         public bool Raise(object sender, ExceptionRaisedEventArgs args) => Sink.RaiseOrThrow(sender, args);
 
-        private void raiseFormatError(string message, IElementNavigator current) =>
-            Raise(current, ExceptionRaisedEventArgs.Error(Error.Format(message, current as IPositionInfo)));
-
-        public IElementNavigator Clone()
+        private void raiseTypeError(string message, IElementNavigator current) =>
+            Raise(current, ExceptionRaisedEventArgs.Error(
+                typeException(message, current)));
+                
+        private static StructuralTypeException typeException(string message, IElementNavigator position)
         {
-            var clone = this;       // basic copy, since a struct
+            if(position != null)
+                message += $" (at {position.Location})";
 
-            // really need a NavPosition with a cloned navigator 
-            clone._current = new NavigatorPosition(this._current.Node.Clone(), this._current.SerializationInfo,
-                                        this._current.Name, this._current.InstanceType);
-
-            return clone;
+            return new StructuralTypeException(message);
         }
+
 
         private NavigatorPosition _current;
 
@@ -94,7 +115,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 catch (FormatException fe)
                 {
-                    Raise(this, ExceptionRaisedEventArgs.Error(fe));
+                    raiseTypeError($"Literal '{(string)underlyingValue}' cannot be interpreted as a {Type}: '{fe.Message}'.", _current.Node);
                     return underlyingValue;
                 }
             }
@@ -110,25 +131,24 @@ namespace Hl7.Fhir.Serialization
             if (info.IsContainedResource)
             {
                 instanceType = current.GetResourceType();
-                if (instanceType == null) raiseFormatError("Element is defined to contain a resource, but does not actually seem to contain a resource", current);
-                //TODO: check validity of resource type
+                if (instanceType == null) raiseTypeError("Element should contain a resource, but does not actually seem to contain one", current);
             }
             else if (!info.IsContainedResource && current.GetResourceType() != null)
             {
-                raiseFormatError("Element is not a contained resource, but it does contain a resource", current);
+                raiseTypeError("Element is not a contained resource, but seems to contain a resource.", current);
             }
             else if (info.IsChoiceElement)
             {
                 var suffix = current.Name.Substring(info.ElementName.Length);
 
                 if (String.IsNullOrEmpty(suffix))
-                    raiseFormatError($"Choice element '{current.Name}' is not suffixed with a type.", current);
+                    raiseTypeError($"Choice element '{current.Name}' is not suffixed with a type.", current);
                 else
                 {
                     instanceType = info.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
 
                     if (String.IsNullOrEmpty(instanceType))
-                        raiseFormatError($"Choice element is suffixed with unexpected type '{suffix}'", current);
+                        raiseTypeError($"Choice element is suffixed with unexpected type '{suffix}'", current);
                 }
             }
             else
@@ -141,15 +161,15 @@ namespace Hl7.Fhir.Serialization
 
         private bool tryMoveToElement(SerializationInfoCache dis, IElementNavigator current, string name, out NavigatorPosition match)
         {
-            var scan = current.Clone();
+            var scan = current;
 
             // no name filter: a very common case, and we should handle it immediately before trying more
             // expensive methods.
             if (name == null)
             {
-                var success = dis.TryGetBySuffixedName(scan.Name, out var info);
+                dis.TryGetBySuffixedName(scan.Name, out var info);
                 match = deriveInstanceType(scan, info);   // could be no info (null)
-                return success;
+                return true;
             }
 
             var knownProperty = dis.TryGetValue(name, out var elementInfo);
@@ -187,11 +207,17 @@ namespace Hl7.Fhir.Serialization
 
         public bool MoveToFirstChild(string nameFilter = null)
         {
-            if (!_current.Node.MoveToFirstChild()) return false;
+            var scan = _current.Node.Clone();
 
+            if (!scan.MoveToFirstChild()) return false;
             var firstChildDef = down();
 
-            if (!tryMoveToElement(firstChildDef, _current.Node, nameFilter, out var match)) return false;
+            if (!tryMoveToElement(firstChildDef, scan, nameFilter, out var match)) return false;
+
+            if(!match.IsTracking)
+            {
+                raiseTypeError($"Encountered unknown element '{match.Name}'", match.Node);
+            }
 
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
@@ -212,7 +238,17 @@ namespace Hl7.Fhir.Serialization
             if (_current.SerializationInfo.Type[0] is IComplexTypeSerializationInfo be)
                 return SerializationInfoCache.ForType(be);
             else
-                return SerializationInfoCache.ForType(Provider.GetSerializationInfoForStructure(_current.InstanceType));
+            {
+                var si = Provider.GetSerializationInfoForStructure(_current.InstanceType);
+
+                if (si == null)
+                {
+                    raiseTypeError($"Encountered unknown type '{_current.InstanceType}'", _current.Node);
+                    return SerializationInfoCache.Empty;
+                }
+                else
+                    return SerializationInfoCache.ForType(si);
+            }
         }
 
 

@@ -65,7 +65,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
         public static void RoundtripXml(Func<XmlReader, IElementNavigator> navCreator)
         {
-            var tpXml = File.ReadAllText(@"TestData\roundtrippable.xml");
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
@@ -81,7 +81,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             }
 
             var output = xmlBuilder.ToString();
-            XmlAssert.AreSame("roundtrippable.xml", tpXml, output);
+            XmlAssert.AreSame("fp-test-patient.xml", tpXml, output);
         }
 
 

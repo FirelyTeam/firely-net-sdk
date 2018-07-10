@@ -17,7 +17,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct FhirXmlNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
+    public partial class FhirXmlNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
     {
         public FhirXmlNavigator(XElement root, FhirXmlNavigatorSettings settings = null)
         {
@@ -26,18 +26,28 @@ namespace Hl7.Fhir.Serialization
             _containedResource = null;
             _names = new Dictionary<string, int>();
 
-            Sink = null;
             AllowedExternalNamespaces = settings?.AllowedExternalNamespaces ?? new XNamespace[0];
             DisallowSchemaLocation = settings?.DisallowSchemaLocation ?? false;
             PermissiveParsing = settings?.PermissiveParsing ?? false;
+            Sink = settings?.Sink;
         }
+
+        private FhirXmlNavigator() { }      // for Clone()
 
         public IElementNavigator Clone()
         {
-            var copy = this;
-            copy._names = new Dictionary<string, int>(_names);
+            return new FhirXmlNavigator()
+            {
+                _current = this._current,
+                _parentPath = this._parentPath,
+                _containedResource = this._containedResource,
+                _names = new Dictionary<string, int>(this._names),
 
-            return copy;
+                AllowedExternalNamespaces = this.AllowedExternalNamespaces,
+                DisallowSchemaLocation = this.DisallowSchemaLocation,
+                PermissiveParsing = this.PermissiveParsing,
+                Sink = this.Sink
+            };
         }
 
         private XObject _current;
@@ -99,12 +109,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (node is XAttribute xa)
             {
-                if (xa.Name == XmlNs.XSCHEMALOCATION)
-                {
-                    if (DisallowSchemaLocation)
-                        raiseFormatError($"The 'schemaLocation' attribute is disallowed.", node);
-                }
-                else if (xa.Name.NamespaceName != "" && !AllowedExternalNamespaces.Contains(xa.Name.NamespaceName))
+                if (xa.Name.NamespaceName != "" && !AllowedExternalNamespaces.Contains(xa.Name.NamespaceName))
                     raiseFormatError($"The attribute '{xa.Name.LocalName}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node);
 
                 if (String.IsNullOrWhiteSpace(xa.Value))
@@ -124,12 +129,16 @@ namespace Hl7.Fhir.Serialization
             // don't move into xhtml
             if (_current.AtXhtmlDiv()) return false;
 
-            // can't move into an attribute
-            if (_current is XAttribute) return false;
+            // can't move into anything that's not an XElement
+            if (!(_current is XElement element)) return false;
 
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
-            var parent = Contained ?? _current;
+            var parent = Contained ?? element;
+            var schemaAttr = parent.Attribute(XmlNs.XSCHEMALOCATION);
+            if (schemaAttr != null && DisallowSchemaLocation)
+                        raiseFormatError($"The 'schemaLocation' attribute is disallowed.", schemaAttr);
+
             XObject firstChild = parent.FirstChildElementOrAttribute();
 
             if (firstChild == null)
@@ -305,8 +314,20 @@ namespace Hl7.Fhir.Serialization
                         OriginalValue = _current.Value(),
                         LineNumber = this.LineNumber,
                         LinePosition = this.LinePosition,
+                        SchemaLocation = getSchemaLocation()
                     }
                 };
+
+                string getSchemaLocation()
+                {
+                    if(_current is XElement slparent)
+                    {
+                        var sl = slparent.Attribute(XmlNs.XSCHEMALOCATION);
+                        if (sl != null) return sl.Value;
+                    }
+
+                    return null;
+                }
             }
             if (type == typeof(ResourceTypeIndicator))
             {

@@ -47,19 +47,19 @@ namespace Hl7.Fhir.Serialization
         public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
         public T Parse<T>(XmlReader reader) where T : Base => (T)Parse(reader, typeof(T));
 
-        private static readonly FhirXmlNavigatorSettings DISALLOWSCHEMALOCATION = new FhirXmlNavigatorSettings { DisallowSchemaLocation = true };
-
 #pragma warning disable 612, 618
         public Base Parse(string xml, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml,   DISALLOWSCHEMALOCATION));
+            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml,
+                new FhirXmlNavigatorSettings { DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot }));
             return Parse(xmlReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader, DISALLOWSCHEMALOCATION));
+            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader, 
+                new FhirXmlNavigatorSettings { DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot }));
             return Parse(xmlReader, dataType);
         }
 #pragma warning restore 612, 618

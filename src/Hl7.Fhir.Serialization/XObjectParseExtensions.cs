@@ -61,8 +61,7 @@ namespace Hl7.Fhir.Serialization
                    (scan.NodeType == XmlNodeType.Attribute &&
                    scan is XAttribute attr && !isReservedAttribute(attr));
 
-            //bool isReservedAttribute(XAttribute a) => a.IsNamespaceDeclaration || a.Name == "value";
-            bool isReservedAttribute(XAttribute a) => a.IsNamespaceDeclaration;
+            bool isReservedAttribute(XAttribute a) => a.IsNamespaceDeclaration || a.Name == XmlNs.XSCHEMALOCATION;
         }
 
 

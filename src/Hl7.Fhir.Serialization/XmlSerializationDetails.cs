@@ -19,6 +19,7 @@ namespace Hl7.Fhir.Serialization
         public XNamespace Namespace;
 
         public bool IsNamespaceDeclaration;
+        public string SchemaLocation;
 
         /// <summary>
         /// All child XText nodes

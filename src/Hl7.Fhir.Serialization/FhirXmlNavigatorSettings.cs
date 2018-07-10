@@ -6,6 +6,7 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
+using Hl7.Fhir.Utility;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
@@ -15,5 +16,6 @@ namespace Hl7.Fhir.Serialization
         public XNamespace[] AllowedExternalNamespaces;
         public bool DisallowSchemaLocation;
         public bool PermissiveParsing;
+        public IExceptionSink Sink;
     }
 }

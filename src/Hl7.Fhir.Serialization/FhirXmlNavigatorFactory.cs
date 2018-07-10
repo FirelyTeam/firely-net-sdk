@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization
         public static IElementNavigator Create(XElement elem) => FhirXmlNavigator.Untyped(elem);
     }
 
-    public partial struct FhirXmlNavigator
+    public partial class FhirXmlNavigator
     {
         public static IElementNavigator Untyped(XmlReader reader, FhirXmlNavigatorSettings settings=null)
         {
@@ -157,10 +157,13 @@ namespace Hl7.Fhir.Serialization
                 return untypedNav;
             else
             {
-                if (type == null)
-                    return new TypedNavigator(untypedNav, provider);
-                else
-                    return new TypedNavigator(untypedNav, type, provider);
+                var typedNav = 
+                    type == null ? new TypedNavigator(untypedNav, provider) :
+                                    new TypedNavigator(untypedNav, type, provider);
+
+                untypedNav.Sink = typedNav;
+
+                return typedNav;
             }
         }
     }

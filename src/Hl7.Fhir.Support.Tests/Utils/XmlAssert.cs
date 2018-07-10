@@ -19,31 +19,33 @@ namespace Hl7.Fhir.Tests
 {
     public class XmlAssert
     {
-        public static void AreSame(string filename, XDocument expected, XDocument actual)
+        public static void AreSame(string filename, XDocument expected, XDocument actual, bool ignoreSchemaLocation=false)
         {
-            areSame(actual.Root.Name.LocalName, expected.Root, actual.Root);
+            areSame(actual.Root.Name.LocalName, expected.Root, actual.Root, ignoreSchemaLocation);
         }
 
-        public static void AreSame(string filename, string expected, string actual)
+        public static void AreSame(string filename, string expected, string actual, bool ignoreSchemaLocation=false)
         {
             XDocument exp = SerializationUtil.XDocumentFromXmlText(expected);
             XDocument act = SerializationUtil.XDocumentFromXmlText(actual);
 
-            AreSame(filename, exp, act);
+            AreSame(filename, exp, act, ignoreSchemaLocation);
         }
 
-        private static void areSame(string context, XElement expected, XElement actual)
+        private static void areSame(string context, XElement expected, XElement actual, bool ignoreSchemaLocation)
         {
             //if (expected.Name.ToString() != actual.Name.ToString())
             //    throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
             //        expected.Name.ToString(), actual.Name.ToString(), context));
+            bool mustCheckMe(XAttribute a) => a.IsNamespaceDeclaration == false && 
+                            (!ignoreSchemaLocation || a.Name != XmlNs.XSCHEMALOCATION);
 
-            if (expected.Attributes().Where(a=>a.IsNamespaceDeclaration == false).Count() != 
-                    actual.Attributes().Where(a=>a.IsNamespaceDeclaration == false).Count())
+            if (expected.Attributes().Where(mustCheckMe).Count() != 
+                    actual.Attributes().Where(mustCheckMe).Count())
                 throw new AssertFailedException(
                     String.Format("Number of attributes are not the same in element '{0}'", context));
 
-            foreach (XAttribute attr in expected.Attributes().Where(a=>a.IsNamespaceDeclaration == false))
+            foreach (XAttribute attr in expected.Attributes().Where(mustCheckMe))
             {
                 if (actual.Attribute(attr.Name) == null)
                     throw new AssertFailedException(
@@ -79,7 +81,7 @@ namespace Hl7.Fhir.Tests
                     counter = 0;
                 }
 
-                areSame(context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac);
+                areSame(context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac, ignoreSchemaLocation);
                 counter++;
             }
         }

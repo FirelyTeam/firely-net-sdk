@@ -121,6 +121,9 @@ namespace Hl7.Fhir.Serialization
 
             var me = new XElement(XName.Get(localName, ns));
 
+            if (xmlDetails?.SchemaLocation != null)
+                me.Add(new XAttribute(XmlNs.XSCHEMALOCATION, xmlDetails.SchemaLocation));
+
             // If the node has a value, add the standard FHIR value attribute
             if (value != null)
                 me.Add(new XAttribute("value", value));

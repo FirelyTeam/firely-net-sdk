@@ -1,17 +1,12 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace Hl7.FhirPath.Tests.XmlNavTests
 {
@@ -121,6 +116,28 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.Typed(reader, new PocoModelMetadataProvider()));
         }
 
+        [TestMethod,Ignore]
+        public void CatchesBasicTypeErrors()
+        {
+            var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
+            var patient = getXmlNav(tpXml);
 
+            List<ExceptionRaisedEventArgs> runTest(IElementNavigator nav)
+            {
+                var errors = new List<ExceptionRaisedEventArgs>();
+
+                using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
+                {
+                    var x = patient.DescendantsAndSelf().ToList();
+                }
+
+                return errors;
+            }
+
+            var result = runTest(patient);
+            var originalCount = result.Count;
+            Assert.AreEqual(11, result.Count);
+            Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
+        }
     }
 }
