@@ -40,6 +40,12 @@ namespace Hl7.Fhir.Serialization
                 return true;
 
             info = this.Where(kvp => name.StartsWith(kvp.Key)).Select(kvp => kvp.Value).FirstOrDefault();
+
+            // False hit -> we matched the prefix, but the property is not actually
+            // a choice element (simply misspelled).
+            if (info != null && !info.IsChoiceElement && name != info.ElementName)
+                info = null;
+
             return info != null;
         }
 

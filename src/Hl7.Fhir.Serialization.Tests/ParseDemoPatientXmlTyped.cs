@@ -116,8 +116,8 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.Typed(reader, new PocoModelMetadataProvider()));
         }
 
-        [TestMethod,Ignore]
-        public void CatchesBasicTypeErrors()
+        [TestMethod]
+        public void CatchesBasicTypeErrorsWithUnknownRoot()
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNav(tpXml);
@@ -135,9 +135,34 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             }
 
             var result = runTest(patient);
-            var originalCount = result.Count;
-            Assert.AreEqual(11, result.Count);
-            Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
+            Assert.AreEqual(12, result.Count);  // 11 syntax errors + 1 error reporting the root type is unknown
+        }
+
+        [TestMethod]
+        public void CatchesBasicTypeErrors()
+        {
+            var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
+            var patient = getXmlNav(tpXml);
+
+            List<ExceptionRaisedEventArgs> runTest(IElementNavigator nav)
+            {
+                var errors = new List<ExceptionRaisedEventArgs>();
+
+                using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
+                {
+                    patient.Visit(touchValue);
+                }
+
+                return errors;
+
+                void touchValue(IElementNavigator n)
+                {
+                    var dummy = n.Value;
+                }
+            }
+
+            var result = runTest(patient);
+            Assert.AreEqual(9, result.Count);  
         }
     }
 }

@@ -30,20 +30,30 @@ namespace Hl7.Fhir.Serialization
         public TypedNavigator(IElementNavigator element, string type, IModelMetadataProvider provider)
         {
             if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+            if (element == null) throw Error.ArgumentNull(nameof(element));
 
-            var elementType = provider?.GetSerializationInfoForStructure(type);
+            var elementType = provider.GetSerializationInfoForStructure(type);
 
-            var current = NavigatorPosition.ForElement(element, elementType, element.Name);
-            var definition = current.IsTracking ?
-                SerializationInfoCache.ForRoot(current.SerializationInfo) : SerializationInfoCache.Empty;
-
-            _current = current;
-            _definition = definition;
+            _current = NavigatorPosition.ForElement(element, elementType, element.Name);
+            _definition = _current.IsTracking ?
+                SerializationInfoCache.ForRoot(_current.SerializationInfo) : SerializationInfoCache.Empty;
             _parentPath = null;
             _nameIndex = 0;
 
             Sink = null;
             Provider = provider;
+        }
+
+        private void reportUnknownType(string typeName, IElementNavigator position)
+        {
+            raiseTypeError($"Encountered unknown type '{typeName}'", position);
+        }
+        private void verifyElementTrackingStatus(NavigatorPosition current, SerializationInfoCache definition)
+        {
+            // If we found a type, but we don't know about the specific child, complain
+            if (definition != SerializationInfoCache.Empty && !current.IsTracking)
+                raiseTypeError($"Encountered unknown element '{current.Name}'", current.Node);
         }
 
         private TypedNavigator() { }   // for Clone()
@@ -105,7 +115,7 @@ namespace Hl7.Fhir.Serialization
 
                 // If we don't have type information (no definition was found
                 // for current node), all we can do is return the underlying value
-                if (!_current.IsTracking) return underlyingValue;
+                if (!_current.IsTracking || _current.InstanceType == null) return underlyingValue;
 
                 // Finally, we have a (potentially) unparsed string + type info
                 // parse this primitive into the desired type
@@ -131,24 +141,28 @@ namespace Hl7.Fhir.Serialization
             if (info.IsContainedResource)
             {
                 instanceType = current.GetResourceType();
-                if (instanceType == null) raiseTypeError("Element should contain a resource, but does not actually seem to contain one", current);
+                if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually seem to contain one", current);
             }
             else if (!info.IsContainedResource && current.GetResourceType() != null)
             {
-                raiseTypeError("Element is not a contained resource, but seems to contain a resource.", current);
+                raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{current.GetResourceType()}'.", current);
+                instanceType = current.GetResourceType();
             }
             else if (info.IsChoiceElement)
             {
                 var suffix = current.Name.Substring(info.ElementName.Length);
 
                 if (String.IsNullOrEmpty(suffix))
+                {
                     raiseTypeError($"Choice element '{current.Name}' is not suffixed with a type.", current);
+                    instanceType = null;
+                }
                 else
                 {
                     instanceType = info.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
 
                     if (String.IsNullOrEmpty(instanceType))
-                        raiseTypeError($"Choice element is suffixed with unexpected type '{suffix}'", current);
+                        raiseTypeError($"Choice element '{current.Name}' is suffixed with unexpected type '{suffix}'", current);
                 }
             }
             else
@@ -167,7 +181,7 @@ namespace Hl7.Fhir.Serialization
             // expensive methods.
             if (name == null)
             {
-                dis.TryGetBySuffixedName(scan.Name, out var info);
+                var hit = dis.TryGetBySuffixedName(scan.Name, out var info);
                 match = deriveInstanceType(scan, info);   // could be no info (null)
                 return true;
             }
@@ -207,17 +221,22 @@ namespace Hl7.Fhir.Serialization
 
         public bool MoveToFirstChild(string nameFilter = null)
         {
+            // Since we don't want to report errors from the constructor, do this work now on
+            // the initial call (_parentPath == null)
+            if (_parentPath == null && _definition == SerializationInfoCache.Empty)
+                reportUnknownType(_current.InstanceType, _current.Node);
+
             var scan = _current.Node.Clone();
 
+            // Move down the first child - note we don't use the nameFilter, 
+            // the tryMoveToElement() which comes next will verify the filter (if any).
             if (!scan.MoveToFirstChild()) return false;
-            var firstChildDef = down();
+            var firstChildDef = down(_current);
+            if (_current.IsTracking && firstChildDef == SerializationInfoCache.Empty && _current.InstanceType != null)
+                reportUnknownType(_current.InstanceType, _current.Node);
 
             if (!tryMoveToElement(firstChildDef, scan, nameFilter, out var match)) return false;
-
-            if(!match.IsTracking)
-            {
-                raiseTypeError($"Encountered unknown element '{match.Name}'", match.Node);
-            }
+            verifyElementTrackingStatus(match, firstChildDef);
 
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
@@ -229,34 +248,33 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-
-        private SerializationInfoCache down()
+        private SerializationInfoCache down(NavigatorPosition current)
         {
-            if (!_current.IsTracking || _current.InstanceType == null) return SerializationInfoCache.Empty;
+            if (!current.IsTracking || current.InstanceType == null) return SerializationInfoCache.Empty;
 
             // If this is a backbone element, the child type is the nested complex type
-            if (_current.SerializationInfo.Type[0] is IComplexTypeSerializationInfo be)
+            if (current.SerializationInfo.Type[0] is IComplexTypeSerializationInfo be)
                 return SerializationInfoCache.ForType(be);
             else
             {
-                var si = Provider.GetSerializationInfoForStructure(_current.InstanceType);
+                var si = Provider.GetSerializationInfoForStructure(current.InstanceType);
 
                 if (si == null)
-                {
-                    raiseTypeError($"Encountered unknown type '{_current.InstanceType}'", _current.Node);
                     return SerializationInfoCache.Empty;
-                }
                 else
                     return SerializationInfoCache.ForType(si);
             }
         }
 
+        
 
         public bool MoveToNext(string nameFilter)
         {
             if (!_current.Node.MoveToNext()) return false;
 
             if (!tryMoveToElement(_definition, _current.Node, nameFilter, out var match)) return false;
+
+            verifyElementTrackingStatus(match, _definition);
 
             // store the current name before proceeding to detect repeating
             // element names and count them
