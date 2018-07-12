@@ -17,15 +17,15 @@ namespace Hl7.Fhir.Core.Tests.Introspection
         static IResourceResolver source = null;
 
         [TestMethod]
-        public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new StructureDefinitionMetadataProvider(source));
+        public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new StructureDefinitionSerializationInfoProvider(source));
 
         [TestMethod]
-        public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new StructureDefinitionMetadataProvider(source));
+        public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new StructureDefinitionSerializationInfoProvider(source));
 
         [TestMethod]
-        public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new StructureDefinitionMetadataProvider(source));
+        public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new StructureDefinitionSerializationInfoProvider(source));
 
         [TestMethod]
-        public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new StructureDefinitionMetadataProvider(source));
+        public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new StructureDefinitionSerializationInfoProvider(source));
     }
 }

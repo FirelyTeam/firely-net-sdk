@@ -88,10 +88,7 @@ namespace Hl7.Fhir.Introspection
             if (name == null) throw Error.ArgumentNull(nameof(name));
 
             var normalizedName = name.ToUpperInvariant();
-
-            PropertyMapping prop = null;
-
-            bool success = _propMappings.TryGetValue(normalizedName, out prop);
+            bool success = _propMappings.TryGetValue(normalizedName, out PropertyMapping prop);
 
             // Direct success
             if (success) return prop;
@@ -163,12 +160,8 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-        private static string getProfile(Type type)
-        {
-            var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
-         
-            return attr != null ? attr.Profile : null;
-        }
+        private static string getProfile(Type type) => 
+            type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>()?.Profile;
 
         private static string collectTypeName(Type type)
         {

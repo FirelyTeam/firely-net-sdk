@@ -19,7 +19,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification
 {
-    public class StructureDefinitionMetadataProvider : IModelMetadataProvider
+    public class StructureDefinitionSerializationInfoProvider : ISerializationInfoProvider
     {
         public delegate bool TypeNameMapper(string typeName, out string canonical);
 
@@ -34,13 +34,13 @@ namespace Hl7.Fhir.Specification
             return true;
         }
 
-        public StructureDefinitionMetadataProvider(IResourceResolver resolver, TypeNameMapper mapper = null)
+        public StructureDefinitionSerializationInfoProvider(IResourceResolver resolver, TypeNameMapper mapper = null)
         {
             _resolver = resolver;
             _typeNameMapper = mapper ?? DefaultTypeNameMapper;
         }
 
-        public IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical)
+        public IComplexTypeSerializationInfo Provide(string canonical)
         {
             var isLocalType = !canonical.Contains("/");
             string mappedCanonical = canonical;
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Specification
             _referencedType = referencedType;
         }
 
-        public string TypeName => _referencedType;
+        public string ReferredType => _referencedType;
     }
 
 
@@ -161,6 +161,16 @@ namespace Hl7.Fhir.Specification
         {
             if (nav.Current.IsBackboneElement())
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(nav) };
+            else if(nav.Current.NameReference != null)
+            {
+                var reference = nav.ShallowCopy();
+                var name = nav.Current.NameReference;
+                if (!reference.JumpToNameReference(name))
+                    throw Error.InvalidOperation($"StructureDefinition '{nav?.StructureDefinition?.Url}' " +
+                        $"has a namereference '{name}' on element '{nav.Current.Path}' that cannot be resolved.");
+
+                return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
+            }
             else
                 return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code.GetLiteral())).ToArray();
         }

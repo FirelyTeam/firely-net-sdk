@@ -23,17 +23,17 @@ namespace Hl7.Fhir.Serialization
 
     public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
     {
-        public TypedNavigator(IElementNavigator root, IModelMetadataProvider provider) : this(root, root.Name, provider)
+        public TypedNavigator(IElementNavigator root, ISerializationInfoProvider provider) : this(root, root.Name, provider)
         {
         }
 
-        public TypedNavigator(IElementNavigator element, string type, IModelMetadataProvider provider)
+        public TypedNavigator(IElementNavigator element, string type, ISerializationInfoProvider provider)
         {
             if (type == null) throw Error.ArgumentNull(nameof(type));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (element == null) throw Error.ArgumentNull(nameof(element));
 
-            var elementType = provider.GetSerializationInfoForStructure(type);
+            var elementType = provider.Provide(type);
 
             _current = NavigatorPosition.ForElement(element, elementType, element.Name);
             _definition = _current.IsTracking ?
@@ -74,10 +74,10 @@ namespace Hl7.Fhir.Serialization
 
         public IExceptionSink Sink { get; set; }
 
-        public bool Raise(object sender, ExceptionRaisedEventArgs args) => Sink.RaiseOrThrow(sender, args);
+        public void Notify(object sender, CapturedException args) => Sink.NotifyOrThrow(sender, args);
 
         private void raiseTypeError(string message, IElementNavigator current) =>
-            Raise(current, ExceptionRaisedEventArgs.Error(
+            Notify(current, CapturedException.Error(
                 typeException(message, current)));
                 
         private static StructuralTypeException typeException(string message, IElementNavigator position)
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Serialization
         private string _parentPath;
 
         private SerializationInfoCache _definition;
-        public IModelMetadataProvider Provider { get; private set; }
+        public ISerializationInfoProvider Provider { get; private set; }
 
         public string Name => _current.Name;
 
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    instanceType = info.Type.Select(t => t.TypeName).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
+                    instanceType = info.Type.OfType<ITypeReference>().Select(t => t.ReferredType).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
 
                     if (String.IsNullOrEmpty(instanceType))
                         raiseTypeError($"Choice element '{current.Name}' is suffixed with unexpected type '{suffix}'", current);
@@ -167,7 +167,19 @@ namespace Hl7.Fhir.Serialization
             }
             else
             {
-                instanceType = info.Type.Single().TypeName;
+                var tp = info.Type.Single();
+
+                switch (tp)
+                {
+                    case ITypeReference tr:
+                        instanceType = tr.ReferredType;
+                        break;
+                    case IComplexTypeSerializationInfo ct:
+                        instanceType = ct.TypeName;
+                        break;
+                    default:
+                        throw Error.NotSupported($"Don't know how to derive type information from type {tp.GetType()}");
+                }
             }
 
             return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
@@ -257,7 +269,7 @@ namespace Hl7.Fhir.Serialization
                 return SerializationInfoCache.ForType(be);
             else
             {
-                var si = Provider.GetSerializationInfoForStructure(current.InstanceType);
+                var si = Provider.Provide(current.InstanceType);
 
                 if (si == null)
                     return SerializationInfoCache.Empty;

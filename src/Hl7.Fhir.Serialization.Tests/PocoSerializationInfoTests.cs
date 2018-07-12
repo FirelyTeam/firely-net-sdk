@@ -24,15 +24,15 @@ namespace Hl7.Fhir.Core.Tests.Introspection
         //}
 
         [TestMethod]
-        public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new PocoModelMetadataProvider());
+        public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new PocoSerializationInfoProvider());
 
         [TestMethod]
-        public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new PocoModelMetadataProvider());
+        public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new PocoSerializationInfoProvider());
 
         [TestMethod]
-        public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new PocoModelMetadataProvider());
+        public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new PocoSerializationInfoProvider());
 
         [TestMethod]
-        public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new PocoModelMetadataProvider());
+        public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new PocoSerializationInfoProvider());
     }
 }

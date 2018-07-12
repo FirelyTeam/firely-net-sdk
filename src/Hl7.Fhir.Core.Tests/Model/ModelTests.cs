@@ -66,6 +66,13 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(dt.Value.EndsWith("+00:00"));
         }
 
+        [TestMethod]
+        public void TestInstantFromUtc()
+        {
+            Instant ins5 = Instant.FromDateTimeUtc(2011, 3, 4, 16, 45, 33);
+            Assert.AreEqual(new DateTimeOffset(2011, 3, 4, 16, 45, 33, TimeSpan.Zero), ins5.Value);
+        }
+
 
         [TestMethod]
         public void Uri_Canonical()

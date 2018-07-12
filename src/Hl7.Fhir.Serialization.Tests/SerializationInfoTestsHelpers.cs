@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
         //    Assert.IsFalse(ip.IsResource("Identifier"));
         //}
 
-        public static void TestCanLocateTypes(IModelMetadataProvider provider)
+        public static void TestCanLocateTypes(ISerializationInfoProvider provider)
         {
             // Try getting a resource
             tryGetType("Patient");
@@ -49,16 +49,16 @@ namespace Hl7.Fhir.Core.Tests.Introspection
 
             void tryGetType(string typename, string baseTypeName = null, bool isAbstract = false)
             {
-                var si = provider.GetSerializationInfoForStructure(typename);
+                var si = provider.Provide(typename);
                 Assert.IsNotNull(si);
                 Assert.AreEqual(baseTypeName ?? typename, si.TypeName);
                 Assert.AreEqual(isAbstract, si.IsAbstract);
             }
         }
 
-        public static void TestCanGetElements(IModelMetadataProvider provider)
+        public static void TestCanGetElements(ISerializationInfoProvider provider)
         {
-            var p = provider.GetSerializationInfoForStructure("Patient");
+            var p = provider.Provide("Patient");
 
             // Simple element (repeating)
             checkType(p, "identifier", true, "Identifier");
@@ -86,9 +86,16 @@ namespace Hl7.Fhir.Core.Tests.Introspection
             // Should not have the special "value" attribute
             Assert.IsFalse(p.GetChildren().Any(c => c.ElementName == "value"));
 
-            var b = provider.GetSerializationInfoForStructure("Bundle");
+            var b = provider.Provide("Bundle");
             checkType(b, "total", false, "unsignedInt");
             checkType(b, "type", false, "code");
+
+            // Test types using nameReference
+            var q = provider.Provide("Questionnaire");
+            var qgroup = checkBBType(q, "group", false);
+            checkType(qgroup, "linkId", false, "string");
+            var qgroupgroup = checkBBType(qgroup, "group", true);
+            checkType(qgroupgroup, "linkId", false, "string");
         }
 
         private static void checkType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat, params string[] types)
@@ -100,7 +107,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
             Assert.IsTrue(child.Type.All(t => t is ITypeReference));
             CollectionAssert.AreEqual(types, child.Type
                 .Cast<ITypeReference>()
-                .Select(t => t.TypeName).ToArray());
+                .Select(t => t.ReferredType).ToArray());
         }
 
         private static IComplexTypeSerializationInfo checkBBType(IComplexTypeSerializationInfo parent, string ename, bool mayRepeat)
@@ -117,23 +124,23 @@ namespace Hl7.Fhir.Core.Tests.Introspection
         }
 
 
-        public static void TestSpecialTypes(IModelMetadataProvider provider)
+        public static void TestSpecialTypes(ISerializationInfoProvider provider)
         {
             // Narrative.div
-            var div = provider.GetSerializationInfoForStructure("Narrative");
+            var div = provider.Provide("Narrative");
             Assert.IsNotNull(div);
             checkType(div, "div", false, "xhtml");
 
             // Element.id
             checkType(div, "id", false, "id");
 
-            var ext = provider.GetSerializationInfoForStructure("Extension");
+            var ext = provider.Provide("Extension");
 
             // Extension.url
             checkType(ext, "url", false, "uri");
         }
 
-        public static void TestProvidedOrder(IModelMetadataProvider provider)
+        public static void TestProvidedOrder(ISerializationInfoProvider provider)
         {
             hasCorrectOrder("Patient");
             hasCorrectOrder("DomainResource");
@@ -146,7 +153,7 @@ namespace Hl7.Fhir.Core.Tests.Introspection
 
             void hasCorrectOrder(string typename)
             {
-                var si = provider.GetSerializationInfoForStructure(typename);
+                var si = provider.Provide(typename);
                 var children = si.GetChildren();
                 var max = children.Aggregate(0, (a, i) =>
                     i.Order > a ? i.Order : fail($"Order of {i.ElementName} is out of order"));

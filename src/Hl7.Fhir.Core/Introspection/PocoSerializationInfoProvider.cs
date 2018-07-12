@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -18,9 +19,9 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Introspection
 {
-    public class PocoModelMetadataProvider : IModelMetadataProvider
+    public class PocoSerializationInfoProvider : ISerializationInfoProvider
     {
-        public IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical)
+        public IComplexTypeSerializationInfo Provide(string canonical)
         {
             var isLocalType = !canonical.Contains("/");
             var typeName = canonical;
@@ -78,7 +79,7 @@ namespace Hl7.Fhir.Introspection
             _referencedType = canonical;
         }
 
-        public string TypeName => _referencedType;
+        public string ReferredType => _referencedType;
     }
 
 
@@ -97,7 +98,7 @@ namespace Hl7.Fhir.Introspection
         {
             if (pm.IsBackboneElement)
             {
-                var mapping = PocoModelMetadataProvider.GetMappingForType(pm.ImplementingType);
+                var mapping = PocoSerializationInfoProvider.GetMappingForType(pm.ImplementingType);
                 return new ITypeSerializationInfo[] { new PocoComplexTypeSerializationInfo(mapping) };
             }
             else
@@ -108,7 +109,7 @@ namespace Hl7.Fhir.Introspection
 
             string getFhirTypeName(Type ft)
             {
-                var map = PocoModelMetadataProvider.GetMappingForType(ft);
+                var map = PocoSerializationInfoProvider.GetMappingForType(ft);
                 return map.IsCodeOfT ? "code" : map.Name;
             }
         }

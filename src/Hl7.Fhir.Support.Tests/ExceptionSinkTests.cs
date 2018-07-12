@@ -13,12 +13,11 @@ namespace Hl7.Fhir.Support.Tests
     {
         class TestSink : IExceptionSink
         {
-            public List<ExceptionRaisedEventArgs> Received = new List<ExceptionRaisedEventArgs>();
+            public List<CapturedException> Received = new List<CapturedException>();
 
-            public bool Raise(object sender, ExceptionRaisedEventArgs args)
+            public void Notify(object sender, CapturedException args)
             {
                 Received.Add(args);
-                return true;
             }
         }
 
@@ -28,7 +27,7 @@ namespace Hl7.Fhir.Support.Tests
 
             public void Test(string message)
             {
-                Sink.RaiseOrThrow(this, ExceptionRaisedEventArgs.Error(new FormatException(message)));
+                Sink.NotifyOrThrow(this, CapturedException.Error(new FormatException(message)));
             }
         }
 

@@ -163,11 +163,11 @@ namespace Hl7.Fhir.Serialization
 
         private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
 
-        public bool Raise(object source, ExceptionRaisedEventArgs args) => Sink.RaiseOrThrow(source, args);
+        public void Notify(object source, CapturedException args) => Sink.NotifyOrThrow(source, args);
 
         private void raiseFormatError(string message, XObject position)
         {
-            Raise(this, ExceptionRaisedEventArgs.Error(Error.Format(message, LineNumber, LinePosition)));
+            Notify(this, CapturedException.Error(Error.Format(message, LineNumber, LinePosition)));
         }
 
         private XElement Contained

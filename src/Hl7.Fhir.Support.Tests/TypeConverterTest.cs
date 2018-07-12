@@ -8,13 +8,13 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-	public class ConversionTest
+	public class TypeConverterTest
     {
         [TestMethod]
         public void TestStringToBinary()
@@ -60,22 +60,38 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("3.141592653589", PrimitiveTypeConverter.ConvertTo<string>(result));
         }
 
+
+        [FhirEnumeration("QC")]
+        public enum QC
+        {
+            [EnumLiteral("<=", "http://hl7.org/fhir/quantity-comparator")]
+            LessOrEqual,
+            [EnumLiteral(">=", "http://hl7.org/fhir/quantity-comparator")]
+            GreaterOrEqual,
+        }
+
         [TestMethod]
         public void TestEnumToString()
         {
-            var x = Quantity.QuantityComparator.LessOrEqual;
+            var x = QC.LessOrEqual;
 
             Assert.AreEqual("<=", PrimitiveTypeConverter.ConvertTo<string>(x));
+        }
+
+        public enum AG
+        {
+            [EnumLiteral("other", "http://hl7.org/fhir/administrative-gender")]
+            Other,
         }
 
         [TestMethod]
         public void TestStringToEnum()
         {
-            Assert.AreEqual(AdministrativeGender.Other, PrimitiveTypeConverter.ConvertTo<AdministrativeGender>("other"));
+            Assert.AreEqual(AG.Other, PrimitiveTypeConverter.ConvertTo<AG>("other"));
 
             try
             {
-                PrimitiveTypeConverter.ConvertTo<AdministrativeGender>("otherX");
+                PrimitiveTypeConverter.ConvertTo<AG>("otherX");
                 Assert.Fail();
             }
             catch(NotSupportedException)
@@ -103,9 +119,6 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.Fail();
             }
             catch (Exception) { }
-
-            Instant ins5 = Instant.FromDateTimeUtc(2011, 3, 4, 16, 45, 33);
-            Assert.AreEqual(new DateTimeOffset(2011,3,4,16,45,33, TimeSpan.Zero),ins5.Value);
         }
 
         [TestMethod]

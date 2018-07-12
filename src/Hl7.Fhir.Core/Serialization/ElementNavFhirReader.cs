@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static bool errorHandler(object sender, ExceptionRaisedEventArgs a)
+        private static bool errorHandler(object sender, CapturedException a)
         {
             if (a.Severity == ExceptionSeverity.Error)
                 throw a.Exception;

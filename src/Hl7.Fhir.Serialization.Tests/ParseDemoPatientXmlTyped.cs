@@ -14,7 +14,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     public class ParseDemoPatientXmlTyped
     {
         public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings settings = null) =>
-            FhirXmlNavigator.Typed(xml, new PocoModelMetadataProvider(), settings);
+            FhirXmlNavigator.Typed(xml, new PocoSerializationInfoProvider(), settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -113,7 +113,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [TestMethod]
         public void RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.Typed(reader, new PocoModelMetadataProvider()));
+            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.Typed(reader, new PocoSerializationInfoProvider()));
         }
 
         [TestMethod]
@@ -122,9 +122,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNav(tpXml);
 
-            List<ExceptionRaisedEventArgs> runTest(IElementNavigator nav)
+            List<CapturedException> runTest(IElementNavigator nav)
             {
-                var errors = new List<ExceptionRaisedEventArgs>();
+                var errors = new List<CapturedException>();
 
                 using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
                 {
@@ -144,9 +144,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
             var patient = getXmlNav(tpXml);
 
-            List<ExceptionRaisedEventArgs> runTest(IElementNavigator nav)
+            List<CapturedException> runTest(IElementNavigator nav)
             {
-                var errors = new List<ExceptionRaisedEventArgs>();
+                var errors = new List<CapturedException>();
 
                 using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
                 {

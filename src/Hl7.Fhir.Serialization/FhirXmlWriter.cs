@@ -73,13 +73,13 @@ namespace Hl7.Fhir.Serialization
                 var message = $"Element '{source.Location}' is missing type information.";
                 if (IncludeUntypedMembers)
                 {
-                    Raise(source, ExceptionRaisedEventArgs.Warning(
+                    Notify(source, CapturedException.Warning(
                         new MissingTypeInformationException(message)));
                     // fall through, to include the untyped member
                 }
                 else
                 {
-                    Raise(source, ExceptionRaisedEventArgs.Error(
+                    Notify(source, CapturedException.Error(
                         new MissingTypeInformationException(message)));
                     return;
                 }
@@ -177,6 +177,6 @@ namespace Hl7.Fhir.Serialization
 
         public IExceptionSink Sink { get; set; }
 
-        public bool Raise(object source, ExceptionRaisedEventArgs args) => Sink.RaiseOrThrow(source, args);
+        public void Notify(object source, CapturedException args) => Sink.NotifyOrThrow(source, args);
     }
 }

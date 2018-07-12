@@ -26,6 +26,7 @@
 
    <ItemGroup>
      <Compile Remove="Serialization\JsonNavFhirReader.cs" />
+     <Compile Remove="Serialization\XmlDomFhirReader.cs" />
      <Compile Remove="Serialization\XmlNavFhirReader.cs" />
    </ItemGroup>
  

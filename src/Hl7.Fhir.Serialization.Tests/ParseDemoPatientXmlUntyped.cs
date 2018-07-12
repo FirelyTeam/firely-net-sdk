@@ -234,9 +234,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNavU(tpXml);
 
-            List<ExceptionRaisedEventArgs> runTest(IElementNavigator nav)
+            List<CapturedException> runTest(IElementNavigator nav)
             {
-                var errors = new List<ExceptionRaisedEventArgs>();
+                var errors = new List<CapturedException>();
 
                 using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
                 {

@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static IElementNavigator Typed(string xml, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings =null)
+        public static IElementNavigator Typed(string xml, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings =null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static IElementNavigator Typed(string xml, string type, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNavigator Typed(string xml, string type, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IElementNavigator Typed(XmlReader reader, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNavigator Typed(XmlReader reader, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Serialization
             return createInternal(reader, null, provider, settings);
         }
 
-        public static IElementNavigator Typed(XmlReader reader, string type, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNavigator Typed(XmlReader reader, string type, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Serialization
             return createInternal(doc.Root, null, null, settings);
         }
 
-        public static IElementNavigator Typed(XDocument doc, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNavigator Typed(XDocument doc, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (doc == null) throw Error.ArgumentNull(nameof(doc));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Serialization
             return createInternal(elem, null, null, settings);
         }
 
-        public static IElementNavigator Typed(XElement elem, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNavigator Typed(XElement elem, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Serialization
             return createInternal(elem, null, provider, settings);
         }
 
-        public static IElementNavigator Typed(XElement elem, string type, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNavigator Typed(XElement elem, string type, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Serialization
             return createInternal(elem, type, provider, settings);
         }
 
-        private static IElementNavigator createInternal(XmlReader reader, string type, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings)
+        private static IElementNavigator createInternal(XmlReader reader, string type, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings)
         {
             XDocument doc = null;
 
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Serialization
             return createInternal(doc.Root, type, provider, settings);
         }
 
-        private static IElementNavigator createInternal(XElement elem, string type, IModelMetadataProvider provider, FhirXmlNavigatorSettings settings)
+        private static IElementNavigator createInternal(XElement elem, string type, ISerializationInfoProvider provider, FhirXmlNavigatorSettings settings)
         {
             var untypedNav = new FhirXmlNavigator(elem, settings);
 

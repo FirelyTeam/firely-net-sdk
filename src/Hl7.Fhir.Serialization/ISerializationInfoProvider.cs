@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public interface IElementSerializationInfo
+    public interface IElementSerializationInfo  // ElementDefinition
     {
         string ElementName { get; }
         bool MayRepeat { get; }
@@ -29,21 +29,30 @@ namespace Hl7.Fhir.Serialization
 
     public interface ITypeSerializationInfo
     {
-        string TypeName { get; }
     }
 
+    /// <summary>
+    /// A class representing a complex type, with child elements. 
+    /// </summary>
+    /// <remarks>
+    ///  In FHIR, this interface represents definitions of Resources, datatypes and BackboneElements. 
+    ///  BackboneElements will always have the TypeName set to "BackboneElement" and IsAbstract to true.
+    ///  </remarks>
     public interface IComplexTypeSerializationInfo : ITypeSerializationInfo
     {
+        string TypeName { get; }
         bool IsAbstract { get; }
+
         IEnumerable<IElementSerializationInfo> GetChildren();
     }
 
     public interface ITypeReference : ITypeSerializationInfo
     {
+        string ReferredType { get; }
     }
 
-    public interface IModelMetadataProvider
+    public interface ISerializationInfoProvider
     {
-        IComplexTypeSerializationInfo GetSerializationInfoForStructure(string canonical);
+        IComplexTypeSerializationInfo Provide(string canonical);
     }
 }
