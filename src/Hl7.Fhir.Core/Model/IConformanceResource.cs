@@ -212,4 +212,10 @@ namespace Hl7.Fhir.Model
         public partial class ContactComponent : IConformanceResourceContact
         { }
     }
+
+    public partial class TestScript : IVersionableConformanceResource
+    {
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
+    }
 }
