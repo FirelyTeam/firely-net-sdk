@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Serialization
             });
         }
 
-#if NET45
+#if (NET45 || NET471)
         // [WMR 20180409] NEW
         // https://github.com/ewoutkramer/fhir-net-api/issues/545
         public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null)
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Serialization
 
         }
 
-#if NET45
+#if (NET45 || NET471)
         // [WMR 20180409] NEW
         // https://stackoverflow.com/a/1347364
         private static XDocument xmlWriterToDocument(Action<XmlWriter> serializer)
