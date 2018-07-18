@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Hl7.Fhir.Core</id>
+    <version>0.95.0-alpha8</version>
+    <title>HL7 FHIR Core support API</title>
+    <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
+    <owners>Ewout Kramer (e.kramer@furore.com) and contributors</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/CareEvolution/fhir-net-api</projectUrl>
+    <iconUrl>https://github.com/CareEvolution/fhir-net-api/blob/master/icon-fhir-32.png?raw=true</iconUrl>
+    <summary>.NET support for working with HL7 FHIR - DEPRECATED</summary>
+    <description>DEPRECATED - Use either CareEvolution.Fhir.Core - that supports both FHIR DSTU2 and FHIR STU3 or the official Hl7.Fhir.DSTU2 / Hl7.Fhir.STU3 packages</description>
+    <releaseNotes>
+      The Hl7.Fhir.Core library has been renamed to CareEvolution.Fhir.Core.
+      This package is empty, but will install the new package.
+    </releaseNotes>
+    <copyright>Copyright 2017 Furore Health Informatics.  Contains materials (C) HL7 International</copyright>
+    <tags>HL7 FHIR REST parse serialize class model</tags>
+    <dependencies>
+      <group>
+        <dependency id="CareEvolution.Fhir.Core" version="0.95.0-alpha8" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="readme.txt" target=""/>
+  </files>
+</package>
