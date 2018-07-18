@@ -3,7 +3,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Hl7.Fhir.Core.Tests.Introspection
+namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class StructureDefinitionSerializationInfoTests

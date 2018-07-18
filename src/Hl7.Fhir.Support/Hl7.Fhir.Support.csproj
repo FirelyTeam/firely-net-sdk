@@ -18,6 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ElementModel\ElementNavigatorExtensions - with INavigator.cs" />
+    <Compile Remove="ElementModel\PathNavigator.cs" />
     <Compile Remove="Serialization\IModelMetadataProvider.cs" />
     <Compile Remove="Serialization\INavigatingParser.cs" />
     <Compile Remove="Serialization\JsonDomFhirNavigator.cs" />

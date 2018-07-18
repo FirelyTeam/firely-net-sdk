@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Source
 
             if (found == null) return null;
 
-            var resultResource = new FhirJsonParser().Parse<Resource>(JsonDomFhirNavigator.Create(found));
+            var resultResource = new FhirJsonParser().Parse<Resource>(FhirJsonNavigator.Untyped(found));
             resultResource.SetOrigin(entry.Origin);
 
             return resultResource;

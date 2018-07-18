@@ -21,51 +21,13 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators, string name = null)
-        {
-            return navigators.SelectMany(n => n.Children(name));
+        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators, string name = null) =>
+            navigators.SelectMany(n => n.Children(name));
 
-            // [20170524 EK] This is unneccessary, since this is exactly what SelectMany() does, so this just results
-            // in duplication of code inside the foreach() here.
 
-            // use a standard enumerator approach
-            // this will then only grab 1 value if
-            // that is all the caller requires.
-            //foreach (var navigator in navigators)
-            //{
-            //    var nav = navigator.Clone();
-            //    if (nav.MoveToFirstChild())
-            //    {
-            //        do
-            //        {
-            //            yield return nav.Clone();
-            //        }
-            //        while (nav.MoveToNext());
-            //    }
-            //}
-        }
+        public static bool HasChildren(this IEnumerable<IElementNavigator> navigators, string name = null) => navigators.Children(name).Any();
 
-        public static bool HasChildren(this IEnumerable<IElementNavigator> navigators, string name = null)
-        {
-            return navigators.Children(name).Any();
-
-            // [20170524 EK] This is unneccessary, since this is exactly what Any() does, so this just results
-            // in duplication of code inside the foreach() here.
-
-            // if any of the navigators have children
-            // its true! (no need to expand the children)
-            //foreach (var nav in navigators)
-            //{
-            //    if (nav.HasChildren())
-            //        return true;
-            //}
-            //return false;
-        }
-
-        public static bool HasChildren(this IElementNavigator navigator, string name = null)
-        {
-            return navigator.Children(name).Any();
-        }
+        public static bool HasChildren(this IElementNavigator navigator, string name = null) => navigator.Children(name).Any();
 
         public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator navigator)
         {

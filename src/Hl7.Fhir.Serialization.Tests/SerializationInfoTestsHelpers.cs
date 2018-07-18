@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Core.Tests.Introspection
+namespace Hl7.Fhir.Serialization.Tests
 {
     public static class SerializationInfoTestHelpers
     {

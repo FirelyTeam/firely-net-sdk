@@ -13,12 +13,12 @@ namespace Hl7.Fhir.Serialization
 {
     internal class NavigatorPosition 
     {
-        public readonly IElementNavigator Node;
+        public readonly ISourceNavigator Node;
         public readonly IElementSerializationInfo SerializationInfo;
         public readonly string Name;
         public readonly string InstanceType;
 
-        public NavigatorPosition(IElementNavigator current, IElementSerializationInfo info, string name, string type)
+        public NavigatorPosition(ISourceNavigator current, IElementSerializationInfo info, string name, string type)
         {
             SerializationInfo = info;
             Node = current ?? throw Error.ArgumentNull(nameof(current));
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization
             Name = name ?? throw Error.ArgumentNull(nameof(name));
         }
 
-        public static NavigatorPosition ForElement(IElementNavigator element, IComplexTypeSerializationInfo elementType, string elementName)
+        public static NavigatorPosition ForElement(ISourceNavigator element, IComplexTypeSerializationInfo elementType, string elementName)
         {
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
 

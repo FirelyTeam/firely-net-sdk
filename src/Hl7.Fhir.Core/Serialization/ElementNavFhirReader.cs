@@ -24,9 +24,9 @@ namespace Hl7.Fhir.Serialization
     internal struct ElementNavFhirReader : IFhirReader, IElementNavigator
 #pragma warning restore 612,618
     {
-        private IElementNavigator _current;
+        private ISourceNavigator _current;
 
-        public ElementNavFhirReader(IElementNavigator root)
+        public ElementNavFhirReader(ISourceNavigator root)
         {
             _current = root;
         }
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
 
         public int LinePosition => getDetails(_current)?.LinePosition ?? -1;
 
-        private static XmlSerializationDetails getDetails(IElementNavigator node) =>
+        private static XmlSerializationDetails getDetails(ISourceNavigator node) =>
             (node as IAnnotated)?.Annotation<XmlSerializationDetails>();
 
         public object GetPrimitiveValue() => Value;
@@ -43,42 +43,19 @@ namespace Hl7.Fhir.Serialization
         public string GetResourceTypeName() => _current.GetResourceType() ??
             throw Error.Format($"Cannot retrieve type of resource for element '{Name}' from the underlying navigator.", this);
 
-        private static XmlSerializationDetails getXmlDetails(IElementNavigator nav)
-        {
-            if (nav is IAnnotated ia)
-                return ia.Annotation<XmlSerializationDetails>();
-            else
-                return null;
-        }
-
-
-        private static bool errorHandler(object sender, CapturedException a)
-        {
-            if (a.Severity == ExceptionSeverity.Error)
-                throw a.Exception;
-
-            return false;
-        }
-
 #pragma warning disable 612, 618
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
             if (Value != null)
                 yield return Tuple.Create("value", (IFhirReader)new ElementNavFhirReader(_current));
 
-            using (var curr = _current.Catch(errorHandler))
+            foreach (var child in _current.Children())
             {
-                foreach (var child in _current.Children())
-                {
-                    yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
-                }
+                yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
             }
         }
 #pragma warning restore 612, 618
 
-      
-
-        #region IElementNavigator members
         public bool MoveToNext(string nameFilter = null) => _current.MoveToNext(nameFilter);
 
         public bool MoveToFirstChild(string nameFilter = null) => _current.MoveToFirstChild(nameFilter);
@@ -87,11 +64,10 @@ namespace Hl7.Fhir.Serialization
 
         public string Name => _current.Name;
 
-        public string Type => _current.Type;
+        public string Type => throw Error.NotImplemented();
 
-        public object Value => _current.Value;
+        public object Value => _current.Text;
 
-        public string Location => _current.Location;
-        #endregion
+        public string Location => _current.Path;
     }
 }

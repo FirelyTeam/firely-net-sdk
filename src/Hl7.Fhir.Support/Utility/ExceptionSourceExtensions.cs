@@ -3,11 +3,11 @@ using System;
 
 namespace Hl7.Fhir.Utility
 {
-    public delegate bool ExceptionNotificationHandler(object source, CapturedException args);
+    public delegate bool ExceptionNotificationHandler(object source, ExceptionNotification args);
 
     public static class ExceptionSourceExtensions
     {
-        public static void NotifyOrThrow(this IExceptionSink sink, object source, CapturedException args)
+        public static void NotifyOrThrow(this IExceptionSink sink, object source, ExceptionNotification args)
         {
             if (sink != null)
                 sink.Notify(source, args);
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Utility
                 _handler = handler;
             }
 
-            public void Notify(object source, CapturedException args)
+            public void Notify(object source, ExceptionNotification args)
             {
                 var handled = _handler(source, args);
 

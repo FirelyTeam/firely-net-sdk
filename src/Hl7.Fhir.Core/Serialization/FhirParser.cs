@@ -84,14 +84,14 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
         public Base Parse(string json, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(json, ModelInfo.GetFhirTypeNameForType(dataType)));
+            IFhirReader jsonReader = new ElementNavFhirReader(FhirJsonNavigator.Untyped(json, ModelInfo.GetFhirTypeNameForType(dataType)));
             return Parse(jsonReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(reader, ModelInfo.GetFhirTypeNameForType(dataType)));
+            IFhirReader jsonReader = new ElementNavFhirReader(FhirJsonNavigator.Untyped(reader, ModelInfo.GetFhirTypeNameForType(dataType)));
             return Parse(jsonReader, dataType);
         }
 #pragma warning restore 612, 618
@@ -146,9 +146,9 @@ namespace Hl7.Fhir.Serialization
                 return new ComplexTypeReader(reader, Settings).Deserialize(dataType);
         }
 
-        public T Parse<T>(IElementNavigator nav) where T : Base => (T)Parse(nav, typeof(T));
+        public T Parse<T>(ISourceNavigator nav) where T : Base => (T)Parse(nav, typeof(T));
 
-        public Base Parse(IElementNavigator nav, Type dataType)
+        public Base Parse(ISourceNavigator nav, Type dataType)
         {
             if (nav == null) throw Error.ArgumentNull(nameof(nav));
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));

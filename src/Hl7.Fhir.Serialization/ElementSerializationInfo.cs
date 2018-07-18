@@ -59,12 +59,13 @@ namespace Hl7.Fhir.Serialization
 
     public static class ElementSerializationInfoExtensions
     {
-        public static ElementSerializationInfo GetSerializationInfo(this IElementNavigator navigator)
-        {
-            if (navigator is IAnnotated ia && ia.TryGetAnnotation<ElementSerializationInfo>(out var rt))
-                return rt;
-            else
-                return null;
-        }
+        public static ElementSerializationInfo GetSerializationInfo(this IAnnotated ann) =>
+            ann.TryGetAnnotation<ElementSerializationInfo>(out var rt) ? rt : null;
+
+        public static ElementSerializationInfo GetSerializationInfo(this ISourceNavigator navigator) =>
+            navigator is IAnnotated ia ? ia.GetSerializationInfo() : null;
+
+        public static ElementSerializationInfo GetSerializationInfo(this IElementNavigator navigator) =>
+            navigator is IAnnotated ia ? ia.GetSerializationInfo() : null;
     }
 }

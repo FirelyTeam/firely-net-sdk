@@ -12,7 +12,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Hl7.FhirPath.Tests.XmlNavTests
+namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class SerializeDemoPatientXml

@@ -11,6 +11,7 @@ using System.Linq;
 using Hl7.FhirPath.Expressions;
 using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir
 {
@@ -164,17 +165,25 @@ namespace Hl7.Fhir
         public void CompareToOtherElementNavigator()
         {
             var json = TestDataHelper.ReadTestData("TestPatient.json");
+            var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
             var pocoP = new PocoNavigator((new FhirJsonParser()).Parse<Patient>(json));
-            var jsonP = JsonDomFhirNavigator.Create(json);
+            var jsonP = FhirJsonNavigator.Typed(json, new PocoSerializationInfoProvider());
+            var xmlP = FhirXmlNavigator.Typed(xml, new PocoSerializationInfoProvider());
 
-            var compare = pocoP.IsEqualTo(jsonP);
+            doCompare(pocoP, jsonP, "poco<->json");
+            doCompare(pocoP, xmlP, "poco<->xml");
 
-            if (compare.Success == false)
+            void doCompare(IElementNavigator one, IElementNavigator two, string what)
             {
-                Debug.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
-                Assert.Fail();
-            }           
+                var compare = one.IsEqualTo(two);
+
+                if (compare.Success == false)
+                {
+                    Debug.WriteLine($"{what}: Difference in {compare.Details} at {compare.FailureLocation}");
+                    Assert.Fail();
+                }
+            }
         }
     }
 

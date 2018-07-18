@@ -4,6 +4,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +14,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Hl7.FhirPath.Tests.XmlNavTests
+namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class ParseDemoPatient
@@ -21,11 +22,16 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public static void CloningWorks(IElementNavigator nav)
         {
             var copy = nav.Clone();
-
             Assert.IsTrue(nav.IsEqualTo(copy).Success);
         }
 
-        public static void ElementNavPerformanceXml(IElementNavigator nav)
+        public static void CloningWorks(ISourceNavigator nav)
+        {
+            var copy = nav.Clone();
+            Assert.IsTrue(nav.IsEqualTo(copy).Success);
+        }
+
+        public static void ElementNavPerformance(IElementNavigator nav)
         {
             // run extraction once to allow for caching
             extract();
@@ -34,13 +40,13 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             var sw = new Stopwatch();
             sw.Start();
-            for (var i = 0; i < 50_000; i++)
+            for (var i = 0; i < 5_000; i++)
             {
                 extract();
             }
             sw.Stop();
 
-            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 50 } micros");
+            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 5 } micros");
 
             void extract()
             {
@@ -50,6 +56,56 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 var link = nav.Children("link").Children("other").Children("reference");
             }
         }
+
+
+        public static void ProducesCorrectUntypedLocations(ISourceNavigator patient)
+        {
+            Assert.AreEqual("Patient", patient.Path);
+
+            patient.MoveToFirstChild();
+            Assert.AreEqual("Patient.id[0]", patient.Path);
+
+            patient.MoveToNext();   // text
+            patient.MoveToNext("identifier");
+            Assert.AreEqual("Patient.identifier[0]", patient.Path);
+            var idNav = patient.Clone();
+
+            Assert.IsTrue(patient.MoveToFirstChild());
+            Assert.AreEqual("Patient.identifier[0].use[0]", patient.Path);
+
+            idNav.MoveToNext(); // identifier
+            Assert.AreEqual("Patient.identifier[1]", idNav.Path);
+
+            Assert.IsTrue(idNav.MoveToFirstChild());
+            Assert.AreEqual("Patient.identifier[1].use[0]", idNav.Path);
+        }
+
+        public static void ProducedCorrectTypedLocations(IElementNavigator patient)
+        {
+            Assert.AreEqual("Patient", patient.Location);
+
+            patient.MoveToFirstChild();
+            Assert.AreEqual("Patient.id", patient.Location);
+            var patNav = patient.Clone();
+
+            patient.MoveToNext();   // text
+            patient.MoveToNext("identifier");
+            Assert.AreEqual("Patient.identifier[0]", patient.Location);
+            var idNav = patient.Clone();
+
+            Assert.IsTrue(patient.MoveToFirstChild());
+            Assert.AreEqual("Patient.identifier[0].use", patient.Location);
+
+            Assert.IsTrue(patNav.MoveToNext("deceased"));
+            Assert.AreEqual("Patient.deceased", patNav.Location);
+
+            idNav.MoveToNext(); // identifier
+            Assert.AreEqual("Patient.identifier[1]", idNav.Location);
+
+            Assert.IsTrue(idNav.MoveToFirstChild());
+            Assert.AreEqual("Patient.identifier[1].use", idNav.Location);
+        }
+
 
         public static void HasLineNumbers<T>(IElementNavigator nav) where T : class, IPositionInfo
         {
@@ -63,29 +119,57 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreNotEqual(0, posInfo.LinePosition);
         }
 
-        public static void RoundtripXml(Func<XmlReader, IElementNavigator> navCreator)
+        public static void RoundtripXml(Func<string, object> navCreator)
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tp = File.ReadAllText(@"TestData\fp-test-patient.xml");
 
-            // will allow whitespace and comments to come through
-            var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = navCreator(reader);
+            // will allow whitespace and comments to come through      
+            var nav = navCreator(tp);
 
-            var xmlBuilder = new StringBuilder();
-            bool hasTypeInfo = nav.GetSerializationInfo() != null;
+            var outputBuilder = new StringBuilder();
+            IElementSerializationInfo serInfo = null;
+            bool hasTypeInfo = serInfo != null;
 
-            var serializer = new FhirXmlWriter( new FhirXmlWriterSettings { AllowUntypedSource = !hasTypeInfo } );
-            using (var writer = XmlWriter.Create(xmlBuilder))
+            switch(nav)
             {
-                serializer.Write(nav, writer);
+                case ISourceNavigator isn: serInfo = isn.GetSerializationInfo(); return;
+                case IElementNavigator ien: serInfo = ien.GetSerializationInfo(); return;
             }
 
-            var output = xmlBuilder.ToString();
-            XmlAssert.AreSame("fp-test-patient.xml", tpXml, output);
+            var serializer = new FhirXmlWriter(new FhirXmlWriterSettings { AllowUntypedSource = !hasTypeInfo });
+            using (var writer = XmlWriter.Create(outputBuilder))
+            {
+                if (nav is ISourceNavigator isn) serializer.Write(isn, writer);
+                if(nav is IElementNavigator ien) serializer.Write(ien, writer);
+            }
+
+            var output = outputBuilder.ToString();
+            XmlAssert.AreSame("fp-test-patient.xml", tp, output);
         }
 
 
-        public static void CanReadThroughTypedNavigator(IElementNavigator nav, bool typed)
+        public static void RoundtripJson(Func<string, IElementNavigator> navCreator)
+        {
+            Assert.Fail("Write test");
+            //var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            //var nav = navCreator(tp);
+
+            //var outputBuilder = new StringBuilder();
+            //bool hasTypeInfo = nav.GetSerializationInfo() != null;
+
+            //var serializer = new FhirJsonWriter(new FhirXmlWriterSettings { AllowUntypedSource = !hasTypeInfo });
+            //using (var writer = new JsonTextWriter(new StringWriter(outputBuilder)))
+            //{
+            //    serializer.Write(nav, writer);
+            //}
+
+            //var output = outputBuilder.ToString();
+            //JsonAssert.AreSame("fp-test-patient.json", tp, output);
+        }
+
+
+
+        public static void CanReadThroughNavigator(IElementNavigator nav, bool typed)
         {
             Assert.AreEqual("Patient", nav.Name);
             Assert.AreEqual("Patient", nav.GetResourceType());

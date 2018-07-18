@@ -23,11 +23,11 @@ namespace Hl7.Fhir.Serialization
 
     public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
     {
-        public TypedNavigator(IElementNavigator root, ISerializationInfoProvider provider) : this(root, root.Name, provider)
+        public TypedNavigator(ISourceNavigator root, ISerializationInfoProvider provider) : this(root, root.Name, provider)
         {
         }
 
-        public TypedNavigator(IElementNavigator element, string type, ISerializationInfoProvider provider)
+        public TypedNavigator(ISourceNavigator element, string type, ISerializationInfoProvider provider)
         {
             if (type == null) throw Error.ArgumentNull(nameof(type));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
             Provider = provider;
         }
 
-        private void reportUnknownType(string typeName, IElementNavigator position)
+        private void reportUnknownType(string typeName, ISourceNavigator position)
         {
             raiseTypeError($"Encountered unknown type '{typeName}'", position);
         }
@@ -74,16 +74,16 @@ namespace Hl7.Fhir.Serialization
 
         public IExceptionSink Sink { get; set; }
 
-        public void Notify(object sender, CapturedException args) => Sink.NotifyOrThrow(sender, args);
+        public void Notify(object sender, ExceptionNotification args) => Sink.NotifyOrThrow(sender, args);
 
-        private void raiseTypeError(string message, IElementNavigator current) =>
-            Notify(current, CapturedException.Error(
+        private void raiseTypeError(string message, ISourceNavigator current) =>
+            Notify(current, ExceptionNotification.Error(
                 typeException(message, current)));
                 
-        private static StructuralTypeException typeException(string message, IElementNavigator position)
+        private static StructuralTypeException typeException(string message, ISourceNavigator position)
         {
             if(position != null)
-                message += $" (at {position.Location})";
+                message += $" (at {position.Path})";
 
             return new StructuralTypeException(message);
         }
@@ -105,34 +105,30 @@ namespace Hl7.Fhir.Serialization
         {
             get
             {
-                object underlyingValue = _current.Node.Value;
+                string sourceText = _current.Node.Text;
 
-                if (underlyingValue == null) return null;
-
-                // If the source already supplies parsed values, return
-                // the source value
-                if (!(underlyingValue is string)) return underlyingValue;
+                if (sourceText == null) return null;
 
                 // If we don't have type information (no definition was found
-                // for current node), all we can do is return the underlying value
-                if (!_current.IsTracking || _current.InstanceType == null) return underlyingValue;
+                // for current node), all we can do is return the underlying string value
+                if (!_current.IsTracking || _current.InstanceType == null) return sourceText;
 
                 // Finally, we have a (potentially) unparsed string + type info
                 // parse this primitive into the desired type
                 try
                 {
-                    return PrimitiveTypeConverter.FromSerializedValue((string)underlyingValue, Type);
+                    return PrimitiveTypeConverter.FromSerializedValue(sourceText, Type);
                 }
                 catch (FormatException fe)
                 {
-                    raiseTypeError($"Literal '{(string)underlyingValue}' cannot be interpreted as a {Type}: '{fe.Message}'.", _current.Node);
-                    return underlyingValue;
+                    raiseTypeError($"Literal '{sourceText}' cannot be interpreted as a {Type}: '{fe.Message}'.", _current.Node);
+                    return sourceText;
                 }
             }
         }
 
 
-        private NavigatorPosition deriveInstanceType(IElementNavigator current, IElementSerializationInfo info)
+        private NavigatorPosition deriveInstanceType(ISourceNavigator current, IElementSerializationInfo info)
         {
             if (info == null) return new NavigatorPosition(current, null, current.Name, null);
 
@@ -185,7 +181,7 @@ namespace Hl7.Fhir.Serialization
             return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
         }
 
-        private bool tryMoveToElement(SerializationInfoCache dis, IElementNavigator current, string name, out NavigatorPosition match)
+        private bool tryMoveToElement(SerializationInfoCache dis, ISourceNavigator current, string name, out NavigatorPosition match)
         {
             var scan = current;
 

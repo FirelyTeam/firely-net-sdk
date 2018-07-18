@@ -13,9 +13,9 @@ namespace Hl7.Fhir.Support.Tests
     {
         class TestSink : IExceptionSink
         {
-            public List<CapturedException> Received = new List<CapturedException>();
+            public List<ExceptionNotification> Received = new List<ExceptionNotification>();
 
-            public void Notify(object sender, CapturedException args)
+            public void Notify(object sender, ExceptionNotification args)
             {
                 Received.Add(args);
             }
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Support.Tests
 
             public void Test(string message)
             {
-                Sink.NotifyOrThrow(this, CapturedException.Error(new FormatException(message)));
+                Sink.NotifyOrThrow(this, ExceptionNotification.Error(new FormatException(message)));
             }
         }
 

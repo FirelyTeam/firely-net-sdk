@@ -1,22 +1,18 @@
-﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Tests;
-using Hl7.Fhir.Utility;
+﻿using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Hl7.FhirPath.Tests.XmlNavTests
+namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public IElementNavigator getXmlNavU(string xml, FhirXmlNavigatorSettings settings = null) =>
+        public ISourceNavigator getXmlNavU(string xml, FhirXmlNavigatorSettings settings = null) =>
             FhirXmlNavigator.Untyped(xml, settings);                    
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -25,8 +21,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.CanReadThroughTypedNavigator(nav, typed: false);
-
+            ParseDemoPatient.CanReadThroughNavigator(nav.AsElementNavigator(), typed:false);
         }
 
         [TestMethod]
@@ -43,7 +38,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.ElementNavPerformanceXml(nav);
+            ParseDemoPatient.ElementNavPerformance(nav.AsElementNavigator());
         }
 
         [TestMethod]
@@ -52,26 +47,10 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var patient = getXmlNavU(tpXml);
 
-            Assert.AreEqual("Patient", patient.Location);
-
-            patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id[0]", patient.Location);
-
-            patient.MoveToNext();   // text
-            patient.MoveToNext("identifier");
-            Assert.AreEqual("Patient.identifier[0]", patient.Location);
-            var idNav = patient.Clone();
-
-            Assert.IsTrue(patient.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[0].use[0]", patient.Location);
-
-            idNav.MoveToNext(); // identifier
-            Assert.AreEqual("Patient.identifier[1]", idNav.Location);
-
-            Assert.IsTrue(idNav.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[1].use[0]", idNav.Location);
+            ParseDemoPatient.ProducesCorrectUntypedLocations(patient);
         }
-        
+
+
         [TestMethod]
         public void ReadsAttributesAsElements()
         {
@@ -83,7 +62,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
             var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
             Assert.AreEqual(XNamespace.Get("http://example.org"), xmldetails.Namespace);
-            Assert.AreEqual("Patient.myattr[0]", nav.Location);
+            Assert.AreEqual("Patient.myattr[0]", nav.Path);
 
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("anotherattr", nav.Name);        // none-xmlns attributes will come through
@@ -97,7 +76,8 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav);
+
+            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav.AsElementNavigator());
         }
 
         [TestMethod]
@@ -118,7 +98,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("http://hl7.org/fhir", xmldetails.Namespace.NamespaceName);
             Assert.IsTrue(commentdetails.CommentsBefore.Single().Contains("structural errors"));
             Assert.IsTrue(commentdetails.DocumentEndComments.Single().Contains("standard FHIR"));
-            Assert.IsNull(nav.Value);
+            Assert.IsNull(nav.Text);
 
             // namespace attributes should not be found
 
@@ -127,15 +107,15 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             nav.MoveToNext(); assertDiv(nav.Clone());
             Assert.IsFalse(nav.MoveToNext());
 
-            void assertAnElement(IElementNavigator cn)
+            void assertAnElement(ISourceNavigator cn)
             {
                 Assert.AreEqual("anElement", cn.Name);
-                Assert.AreEqual("true", cn.Value);
+                Assert.AreEqual("true", cn.Text);
                 Assert.AreEqual(1, cn.Children().Count());
                 cn.MoveToFirstChild();
 
                 Assert.AreEqual("customAttribute", cn.Name);
-                Assert.AreEqual("primitive", cn.Value);
+                Assert.AreEqual("primitive", cn.Text);
 
                 var xd = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
                 Assert.AreEqual(XmlNodeType.Attribute, xd.NodeType);
@@ -143,10 +123,10 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 Assert.IsFalse(cn.HasChildren());
             }
 
-            void assertAnElementWithValueAndChildren(IElementNavigator cn)
+            void assertAnElementWithValueAndChildren(ISourceNavigator cn)
             {
                 Assert.AreEqual("anElementWithValueAndChildren", cn.Name);
-                Assert.AreEqual("4", cn.Value);
+                Assert.AreEqual("4", cn.Text);
 
                 var mylittledetails = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Crap, mixed content!"));
@@ -158,10 +138,10 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 cn.MoveToNext(); thirdChild(cn.Clone());
                 Assert.IsFalse(cn.MoveToNext());
 
-                void firstChild(IElementNavigator ccn)
+                void firstChild(ISourceNavigator ccn)
                 {
                     Assert.AreEqual("firstChild", ccn.Name);
-                    Assert.IsNull(ccn.Value);
+                    Assert.IsNull(ccn.Text);
                     Assert.AreEqual(1, ccn.Children().Count());
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
@@ -169,24 +149,24 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
                     ccn.MoveToFirstChild();
                     Assert.AreEqual("customAttribute", ccn.Name);
-                    Assert.AreEqual("morning", ccn.Value);
+                    Assert.AreEqual("morning", ccn.Text);
                     Assert.IsFalse(ccn.HasChildren());
                 }
 
-                void secondChild(IElementNavigator ccn)
+                void secondChild(ISourceNavigator ccn)
                 {
                     Assert.AreEqual("secondChild", ccn.Name);
-                    Assert.AreEqual("afternoon", ccn.Value);
+                    Assert.AreEqual("afternoon", ccn.Text);
                     Assert.IsFalse(ccn.HasChildren());
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     Assert.AreEqual("I have text content too", xd.NodeText);
                 }
 
-                void thirdChild(IElementNavigator ccn)
+                void thirdChild(ISourceNavigator ccn)
                 {
                     Assert.AreEqual("ThirdChild", ccn.Name);
-                    Assert.IsNull(ccn.Value);
+                    Assert.IsNull(ccn.Text);
                     Assert.IsTrue(ccn.HasChildren());
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
@@ -196,9 +176,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 }
             }
 
-            void assertDiv(IElementNavigator cnn)
+            void assertDiv(ISourceNavigator cnn)
             {
-                var val = cnn.Value as string;
+                var val = cnn.Text;
                 Assert.IsTrue(val.StartsWith("<div") && val.Contains("Some html"));
                 Assert.IsFalse(cnn.HasChildren());  // html should not be represented as children
 
@@ -215,14 +195,14 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [TestMethod]
         public void RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.Untyped(reader));
+            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNavigator.Untyped(xmlText).AsElementNavigator());
         }
 
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
             var bundleXml = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
-            var xmlNav = getXmlNavU(bundleXml);
+            var xmlNav = getXmlNavU(bundleXml).AsElementNavigator();
             var entryNav = xmlNav.Select("entry.resource").First();
             var id = entryNav.Scalar("id");
             Assert.IsNotNull(id);
@@ -234,9 +214,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNavU(tpXml);
 
-            List<CapturedException> runTest(IElementNavigator nav)
+            List<ExceptionNotification> runTest(ISourceNavigator nav)
             {
-                var errors = new List<CapturedException>();
+                var errors = new List<ExceptionNotification>();
 
                 using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
                 {

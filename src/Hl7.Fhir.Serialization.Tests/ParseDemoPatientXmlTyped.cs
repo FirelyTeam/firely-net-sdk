@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Hl7.FhirPath.Tests.XmlNavTests
+namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class ParseDemoPatientXmlTyped
@@ -22,7 +22,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNav(tpXml);
-            ParseDemoPatient.CanReadThroughTypedNavigator(nav, typed: true);
+            ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNav(tpXml);
-            ParseDemoPatient.ElementNavPerformanceXml(nav);
+            ParseDemoPatient.ElementNavPerformance(nav);
         }
 
         [TestMethod]
@@ -46,30 +46,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var patient = getXmlNav(tpXml);
-
-            Assert.AreEqual("Patient", patient.Location);
-
-            patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id", patient.Location);
-            var patNav = patient.Clone();
-
-            patient.MoveToNext();   // text
-            patient.MoveToNext("identifier");
-            Assert.AreEqual("Patient.identifier[0]", patient.Location);
-            var idNav = patient.Clone();
-
-            Assert.IsTrue(patient.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[0].use", patient.Location);
-
-            Assert.IsTrue(patNav.MoveToNext("deceased"));
-            Assert.AreEqual("Patient.deceased", patNav.Location);
-
-            idNav.MoveToNext(); // identifier
-            Assert.AreEqual("Patient.identifier[1]", idNav.Location);
-
-            Assert.IsTrue(idNav.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[1].use", idNav.Location);
-
+            ParseDemoPatient.ProducedCorrectTypedLocations(patient);
         }
 
         [TestMethod]
@@ -90,7 +67,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
             var navXml = getXmlNav(tpXml);
-            var navJson = JsonDomFhirNavigator.Create(tpJson);
+            var navJson =  FhirJsonNavigator.Typed(tpJson, new PocoSerializationInfoProvider());
 
             var compare = navXml.IsEqualTo(navJson);
 
@@ -122,9 +99,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNav(tpXml);
 
-            List<CapturedException> runTest(IElementNavigator nav)
+            List<ExceptionNotification> runTest(IElementNavigator nav)
             {
-                var errors = new List<CapturedException>();
+                var errors = new List<ExceptionNotification>();
 
                 using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
                 {
@@ -144,9 +121,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
             var patient = getXmlNav(tpXml);
 
-            List<CapturedException> runTest(IElementNavigator nav)
+            List<ExceptionNotification> runTest(IElementNavigator nav)
             {
-                var errors = new List<CapturedException>();
+                var errors = new List<ExceptionNotification>();
 
                 using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
                 {

@@ -30,19 +30,9 @@ namespace Hl7.Fhir.Utility
 
         public static ComparisonResult IsEqualTo(this IElementNavigator expected, IElementNavigator actual)
         {
-            if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
+            if (expected.Name != actual.Name) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
             if (!valuesEqual(expected.Value, actual.Value)) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
-
-            // Allow the expected navigator to have more type info than the actual navigator
-            try
-            {
-                if (expected.Type != actual.Type && actual.Type != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.Type}', expected '{expected.Type}'");
-            }
-            catch (NotSupportedException)
-            {
-                // ok, comparing an untyped nav, nothing to do.
-            }
-
+            if (expected.Type != actual.Type && actual.Type != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.Type}', expected '{expected.Type}'");
             if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"location: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)
@@ -73,8 +63,6 @@ namespace Hl7.Fhir.Utility
 
                 return eVal == aVal;
             }
-
-            bool namesEqual(string e, string a) => e == a || (a != null && e != null && (a.StartsWith(e)));
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Hl7.Fhir.Utility
 {
     public interface IExceptionSink
     {
-        void Notify(object source, CapturedException args);
+        void Notify(object source, ExceptionNotification args);
     }
 
     public interface IExceptionSource
@@ -14,15 +14,15 @@ namespace Hl7.Fhir.Utility
     }
 
 
-    public class CapturedException
+    public class ExceptionNotification
     {
-        public static CapturedException Info(string message) => new CapturedException(message, null, ExceptionSeverity.Info);
+        public static ExceptionNotification Info(string message) => new ExceptionNotification(message, null, ExceptionSeverity.Info);
 
-        public static CapturedException Warning(Exception exception) => new CapturedException(exception.Message, exception, ExceptionSeverity.Warning);
+        public static ExceptionNotification Warning(Exception exception) => new ExceptionNotification(exception.Message, exception, ExceptionSeverity.Warning);
 
-        public static CapturedException Error(Exception exception) => new CapturedException(exception.Message, exception, ExceptionSeverity.Error);
+        public static ExceptionNotification Error(Exception exception) => new ExceptionNotification(exception.Message, exception, ExceptionSeverity.Error);
 
-        private CapturedException(string message, Exception exception, ExceptionSeverity severity)
+        private ExceptionNotification(string message, Exception exception, ExceptionSeverity severity)
         {
             Message = message;
             Exception = exception;

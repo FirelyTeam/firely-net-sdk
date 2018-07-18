@@ -57,6 +57,9 @@ namespace Hl7.Fhir.Serialization
             dest.WriteTo(xw);
         }
 
+        public void Write(ISourceNavigator source, XmlWriter destination)
+             => Write(source.AsElementNavigator(), destination);
+
         private void write(IElementNavigator source, XContainer parent)
         {
             var xmlDetails = IgnoreSourceXmlDetails ? null : source.GetXmlSerializationDetails();
@@ -73,13 +76,13 @@ namespace Hl7.Fhir.Serialization
                 var message = $"Element '{source.Location}' is missing type information.";
                 if (IncludeUntypedMembers)
                 {
-                    Notify(source, CapturedException.Warning(
+                    Notify(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));
                     // fall through, to include the untyped member
                 }
                 else
                 {
-                    Notify(source, CapturedException.Error(
+                    Notify(source, ExceptionNotification.Error(
                         new MissingTypeInformationException(message)));
                     return;
                 }
@@ -131,7 +134,7 @@ namespace Hl7.Fhir.Serialization
             // If this needs to be serialized as a contained resource, do so
             var containedResourceType = serializationInfo?.IsContainedResource == true ?
                                             source.Type :
-                                            (atRoot == false ? source.GetResourceType() : null);
+                                            (atRoot == false ? ((IAnnotated)source).GetResourceType() : null);
 
             XElement containedResource = null;
             if (containedResourceType != null)
@@ -177,6 +180,6 @@ namespace Hl7.Fhir.Serialization
 
         public IExceptionSink Sink { get; set; }
 
-        public void Notify(object source, CapturedException args) => Sink.NotifyOrThrow(source, args);
+        public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);
     }
 }

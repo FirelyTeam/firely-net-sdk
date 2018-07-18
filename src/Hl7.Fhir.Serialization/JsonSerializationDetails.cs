@@ -15,8 +15,9 @@ namespace Hl7.Fhir.Serialization
     {
         public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
 
-        public object RawValue;
+        public object OriginalValue;
 
+        public bool IsArrayElement;
         public int LineNumber { get; internal set; }
         public int LinePosition { get; internal set; }
 

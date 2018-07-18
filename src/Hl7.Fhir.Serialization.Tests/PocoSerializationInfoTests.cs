@@ -1,14 +1,7 @@
-﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Core.Tests.Introspection
+namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class PocoSerializationInfoTests

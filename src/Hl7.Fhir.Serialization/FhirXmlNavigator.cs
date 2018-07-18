@@ -17,7 +17,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial class FhirXmlNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
+    public partial class FhirXmlNavigator : ISourceNavigator, IAnnotated, IExceptionSource, IExceptionSink
     {
         public FhirXmlNavigator(XElement root, FhirXmlNavigatorSettings settings = null)
         {
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Serialization
 
         private FhirXmlNavigator() { }      // for Clone()
 
-        public IElementNavigator Clone()
+        public ISourceNavigator Clone()
         {
             return new FhirXmlNavigator()
             {
@@ -61,9 +61,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Name => _current.Name()?.LocalName;
 
-        public string Type => throw Error.NotSupported("This untyped reader does not support reading the Type property.");
-
-        public object Value
+        public string Text
         {
             get
             {
@@ -153,7 +151,7 @@ namespace Hl7.Fhir.Serialization
 
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
-            _parentPath = Location;
+            _parentPath = Path;
             _current = match;
             _names = new Dictionary<string, int>() { { Name, 1 } };
             _containedResource = null;
@@ -163,11 +161,12 @@ namespace Hl7.Fhir.Serialization
 
         private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
 
-        public void Notify(object source, CapturedException args) => Sink.NotifyOrThrow(source, args);
+        public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);
 
         private void raiseFormatError(string message, XObject position)
         {
-            Notify(this, CapturedException.Error(Error.Format(message, LineNumber, LinePosition)));
+            var (lineNumber, linePosition) = getPosition(_current);
+            Notify(this, ExceptionNotification.Error(Error.Format(message,lineNumber, linePosition)));
         }
 
         private XElement Contained
@@ -251,13 +250,17 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public string Location => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_names[Name]-1}]";
+        public string Path => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_names[Name]-1}]";
 
         public override string ToString() => _current.ToString();
 
-        int LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
-
-        int LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
+        private (int lineNumber,int linePosition) getPosition(XObject node)
+        {
+            if (node is IXmlLineInfo xli)
+                return (xli.LineNumber, xli.LinePosition);
+            else
+                return (-1, -1);
+        }
 
         public IExceptionSink Sink { get; set; }
 
@@ -302,6 +305,8 @@ namespace Hl7.Fhir.Serialization
             }
             if (type == typeof(XmlSerializationDetails))
             {
+                var (lineNumber, linePosition) = getPosition(_current);
+
                 return new[]
                 {
                     new XmlSerializationDetails()
@@ -312,8 +317,8 @@ namespace Hl7.Fhir.Serialization
                         NodeText = _current.Text(),
                         IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false,
                         OriginalValue = _current.Value(),
-                        LineNumber = this.LineNumber,
-                        LinePosition = this.LinePosition,
+                        LineNumber = lineNumber,
+                        LinePosition = linePosition,
                         SchemaLocation = getSchemaLocation()
                     }
                 };
