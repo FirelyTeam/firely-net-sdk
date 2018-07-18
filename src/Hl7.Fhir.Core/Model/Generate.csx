@@ -1071,8 +1071,11 @@ public class ResourceDetails
             Versions[0].Version :
             "All";
         version = "Hl7.Fhir.Model.Version." + version;
+        var fhirTypeName = Name == "SimpleQuantity" ?
+            "Quantity" :
+            Name;
         foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
-        yield return $"[FhirType({version}, \"Quantity\")]";
+        yield return $"[FhirType({version}, \"{fhirTypeName}\")]";
         yield return $"public partial class { Name } : Quantity";
         yield return $"{{";
         yield return $"    [NotMapped]";

@@ -42,7 +42,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType(Hl7.Fhir.Model.Version.All, "Quantity")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Distance")]
     public partial class Distance : Quantity
     {
         [NotMapped]
