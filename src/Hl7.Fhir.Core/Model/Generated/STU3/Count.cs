@@ -38,33 +38,69 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v3.0.1
+// Generated for FHIR v3.0.1
 //
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model.STU3
 {
-    [FhirType(Hl7.Fhir.Model.Version.All, "Quantity")]
+    /// <summary>
+    /// A measured or measurable amount
+    /// </summary>
+    [FhirType(Hl7.Fhir.Model.Version.STU3, "Count")]
     [DataContract]
-    public partial class SimpleQuantity : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
+    public partial class Count : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "SimpleQuantity"; } }
+        public override string TypeName { get { return "Count"; } }
     
     
     
-        public static ElementDefinitionConstraint SimpleQuantity_SQTY_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint Count_CNT_3 = new ElementDefinitionConstraint
         {
-            Expression = "comparator.empty()",
-            Key = "sqty-1",
+            Expression = "(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = '1') and (value.empty() or value.toString().contains('.').not())",
+            Key = "cnt-3",
             Severity = ConstraintSeverity.Warning,
-            Human = "The comparator is not used on a SimpleQuantity",
-            Xpath = "not(exists(f:comparator))"
+            Human = "There SHALL be a code with a value of \"1\" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.",
+            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or (f:system/@value='http://unitsofmeasure.org' and f:code/@value='1')) and not(contains(f:value/@value, '.'))"
         };
     
         // TODO: Add code to enforce the above constraints
     
+        public override IDeepCopyable CopyTo(IDeepCopyable other)
+        {
+            var dest = other as Count;
+        
+            if (dest != null)
+            {
+                base.CopyTo(dest);
+                return dest;
+            }
+            else
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
+        
         public override IDeepCopyable DeepCopy()
         {
-             return CopyTo(new SimpleQuantity());
+             return CopyTo(new Count());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Count;
+            if(otherT == null) return false;
+        
+            if(!base.Matches(otherT)) return false;
+        
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Count;
+            if(otherT == null) return false;
+        
+            if(!base.IsExactly(otherT)) return false;
+        
+            return true;
         }
     
     }

@@ -120,6 +120,17 @@ namespace Hl7.Fhir.Model
         }
     
     
+        public static ElementDefinitionConstraint Period_PER_1 = new ElementDefinitionConstraint
+        {
+            Expression = "start.empty() or end.empty() or (start <= end)",
+            Key = "per-1",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If present, start SHALL have a lower value than end",
+            Xpath = "not(exists(f:start)) or not(exists(f:end)) or (f:start/@value <= f:end/@value)"
+        };
+    
+        // TODO: Add code to enforce the above constraints
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Period;

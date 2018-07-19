@@ -174,13 +174,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Amount
+            public Hl7.Fhir.Model.DSTU2.Money Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Money _Amount;
+            private Hl7.Fhir.Model.DSTU2.Money _Amount;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(Submitter != null) dest.Submitter = (Hl7.Fhir.Model.DSTU2.ResourceReference)Submitter.DeepCopy();
                     if(Payee != null) dest.Payee = (Hl7.Fhir.Model.DSTU2.ResourceReference)Payee.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Money)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DSTU2.Money)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -655,13 +655,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Money Total
+        public Hl7.Fhir.Model.DSTU2.Money Total
         {
             get { return _Total; }
             set { _Total = value; OnPropertyChanged("Total"); }
         }
         
-        private Hl7.Fhir.Model.Money _Total;
+        private Hl7.Fhir.Model.DSTU2.Money _Total;
         
         /// <summary>
         /// Note text
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.DSTU2.ResourceReference)RequestOrganization.DeepCopy();
                 if(Detail != null) dest.Detail = new List<DetailsComponent>(Detail.DeepCopy());
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.Coding)Form.DeepCopy();
-                if(Total != null) dest.Total = (Hl7.Fhir.Model.Money)Total.DeepCopy();
+                if(Total != null) dest.Total = (Hl7.Fhir.Model.DSTU2.Money)Total.DeepCopy();
                 if(Note != null) dest.Note = new List<NotesComponent>(Note.DeepCopy());
                 return dest;
             }

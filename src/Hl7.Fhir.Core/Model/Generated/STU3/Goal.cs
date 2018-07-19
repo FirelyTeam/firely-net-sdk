@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("due", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.STU3.Duration))]
             [DataMember]
             public Hl7.Fhir.Model.Element Due
             {

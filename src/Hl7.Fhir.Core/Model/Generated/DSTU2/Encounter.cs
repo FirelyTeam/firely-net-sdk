@@ -948,13 +948,13 @@ namespace Hl7.Fhir.Model.DSTU2
         /// </summary>
         [FhirElement("length", Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.Duration Length
+        public Hl7.Fhir.Model.DSTU2.Duration Length
         {
             get { return _Length; }
             set { _Length = value; OnPropertyChanged("Length"); }
         }
         
-        private Hl7.Fhir.Model.Duration _Length;
+        private Hl7.Fhir.Model.DSTU2.Duration _Length;
         
         /// <summary>
         /// Reason the encounter takes place (code)
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(Participant != null) dest.Participant = new List<ParticipantComponent>(Participant.DeepCopy());
                 if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.DSTU2.ResourceReference)Appointment.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
+                if(Length != null) dest.Length = (Hl7.Fhir.Model.DSTU2.Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Indication.DeepCopy());
                 if(Hospitalization != null) dest.Hospitalization = (HospitalizationComponent)Hospitalization.DeepCopy();

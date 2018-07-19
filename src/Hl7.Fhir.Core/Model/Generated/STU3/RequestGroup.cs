@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("timing", Order=120, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.STU3.Timing))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.STU3.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.STU3.Timing))]
             [DataMember]
             public Hl7.Fhir.Model.Element Timing
             {
@@ -925,7 +925,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.STU3.Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Offset
             {

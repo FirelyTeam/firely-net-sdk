@@ -120,6 +120,17 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
+        public static ElementDefinitionConstraint ResourceReference_REF_1 = new ElementDefinitionConstraint
+        {
+            Expression = "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
+            Key = "ref-1",
+            Severity = ConstraintSeverity.Warning,
+            Human = "SHALL have a local reference if the resource is provided inline",
+            Xpath = "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+        };
+    
+        // TODO: Add code to enforce the above constraints
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ResourceReference;

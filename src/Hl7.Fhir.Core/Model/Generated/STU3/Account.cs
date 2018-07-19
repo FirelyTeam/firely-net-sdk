@@ -469,13 +469,13 @@ namespace Hl7.Fhir.Model.STU3
         /// </summary>
         [FhirElement("balance", Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.Money Balance
+        public Hl7.Fhir.Model.STU3.Money Balance
         {
             get { return _Balance; }
             set { _Balance = value; OnPropertyChanged("Balance"); }
         }
         
-        private Hl7.Fhir.Model.Money _Balance;
+        private Hl7.Fhir.Model.STU3.Money _Balance;
         
         /// <summary>
         /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.STU3.ResourceReference)Subject.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Active != null) dest.Active = (Hl7.Fhir.Model.Period)Active.DeepCopy();
-                if(Balance != null) dest.Balance = (Hl7.Fhir.Model.Money)Balance.DeepCopy();
+                if(Balance != null) dest.Balance = (Hl7.Fhir.Model.STU3.Money)Balance.DeepCopy();
                 if(Coverage != null) dest.Coverage = new List<CoverageComponent>(Coverage.DeepCopy());
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.STU3.ResourceReference)Owner.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();

@@ -82,6 +82,17 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Quantity _Denominator;
     
     
+        public static ElementDefinitionConstraint Ratio_RAT_1 = new ElementDefinitionConstraint
+        {
+            Expression = "numerator.empty() xor denominator",
+            Key = "rat-1",
+            Severity = ConstraintSeverity.Warning,
+            Human = "Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present",
+            Xpath = "(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) > 0) or (count(f:extension) > 0))"
+        };
+    
+        // TODO: Add code to enforce the above constraints
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Ratio;

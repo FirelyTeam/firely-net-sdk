@@ -200,6 +200,17 @@ namespace Hl7.Fhir.Model.DSTU2
         private Hl7.Fhir.Model.Period _Period;
     
     
+        public static ElementDefinitionConstraint ContactPoint_CPT_2 = new ElementDefinitionConstraint
+        {
+            Expression = "value.empty() or system",
+            Key = "cpt-2",
+            Severity = ConstraintSeverity.Warning,
+            Human = "A system is required if a value is provided.",
+            Xpath = "not(exists(f:value)) or exists(f:system)"
+        };
+    
+        // TODO: Add code to enforce the above constraints
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ContactPoint;

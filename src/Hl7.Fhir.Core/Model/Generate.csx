@@ -259,6 +259,14 @@ using Hl7.Fhir.Utility;
         foreach (var line in RenderIsExactly(type, properties)) yield return line;
     }
 
+    public static IEnumerable<string> RenderDeepCopy(string type)
+    {
+        yield return $"public override IDeepCopyable DeepCopy()";
+        yield return $"{{";
+        yield return $"     return CopyTo(new { type }());";
+        yield return $"}}";
+    }
+
     private static IEnumerable<string> RenderCopyTo(string type, IEnumerable<PropertyDetails> properties)
     {
         yield return $"public override IDeepCopyable CopyTo(IDeepCopyable other)";
@@ -279,14 +287,6 @@ using Hl7.Fhir.Utility;
         yield return $"    }}";
         yield return $"    else";
         yield return $"        throw new ArgumentException(\"Can only copy to an object of the same type\", \"other\");";
-        yield return $"}}";
-    }
-
-    private static IEnumerable<string> RenderDeepCopy(string type)
-    {
-        yield return $"public override IDeepCopyable DeepCopy()";
-        yield return $"{{";
-        yield return $"     return CopyTo(new { type }());";
         yield return $"}}";
     }
 
@@ -781,14 +781,14 @@ public class ResourceDetails
     public List<ComponentDetails> Components;
 
     /// <summary>
-    /// Validation contraints of the FHIR resourc or data type - e.g. the 'contact.all(name or telecom or address or organization)' validation expression for Patient
+    /// Validation contraints of the FHIR resource or data type - e.g. the 'contact.all(name or telecom or address or organization)' validation expression for Patient
     /// </summary>
     public List<ConstraintDetails> Constraints;
 
     /// <summary>
-    /// Human-readable definition of sub-types - e.g. 'There SHALL be a code if there is a value and it SHALL be an expression of time...' for Age (detived from Quantity)
+    /// True if this is just a constraint of the base class and not a stand-alone FHIR resource or data type (e.g. SimpleQuantity is just a constraint of Quantity)
     /// </summary>
-    public string Definition;
+    public bool IsConstraint;
 
     /// <summary>
     /// True if this is a resource, false if it is a data type
@@ -811,7 +811,7 @@ public class ResourceDetails
             IsPrimitive ? " primitive" : string.Empty,
             string.IsNullOrEmpty(PrimitiveTypeName) ? string.Empty : " primitiveType: " + PrimitiveTypeName,
             string.IsNullOrEmpty(Pattern) ? string.Empty : " pattern: " + Pattern,
-            string.IsNullOrEmpty(Definition) ? string.Empty : " definition: " + Definition
+            IsConstraint ? " constraint" : string.Empty
         );
         foreach (var prop in Properties)
         {
@@ -859,6 +859,7 @@ public class ResourceDetails
             AbstractType == other.AbstractType &&
             BaseType == other.BaseType &&
             IsPrimitive == other.IsPrimitive &&
+            IsConstraint == other.IsConstraint &&
             PrimitiveTypeName == other.PrimitiveTypeName &&
             Pattern == other.Pattern &&
             Properties.Count == other.Properties.Count &&
@@ -889,6 +890,7 @@ public class ResourceDetails
             FhirName = firstResource.FhirName,
             AbstractType = firstResource.AbstractType,
             BaseType = firstResource.BaseType,
+            IsConstraint = firstResource.IsConstraint,
             IsPrimitive = firstResource.IsPrimitive,
             PrimitiveTypeName = firstResource.PrimitiveTypeName,
             Pattern = firstResource.Pattern,
@@ -914,8 +916,7 @@ public class ResourceDetails
                         resources.Select(resource => new KeyValuePair<string, ConstraintDetails>(resource.Versions.Single().Version, resource.Constraints.Single(c => c.Key == constraint.Key)))
                     )
                 )
-                .ToList(),
-            Definition = firstResource.Definition
+                .ToList()
         };
     }
 
@@ -936,27 +937,22 @@ public class ResourceDetails
 
     private IEnumerable<string> Render()
     {
-        if (BaseType.EndsWith(".Quantity"))
-        {
-            return RenderQuantity();
-        }
-        return RenderAny();
-    }
-
-    private IEnumerable<string> RenderAny()
-    {
         var version = Versions.Count == 1 ?
             Versions[0].Version :
             "All";
         version = "Hl7.Fhir.Model.Version." + version;
-        var isElement = BaseType == "Hl7.Fhir.Model.Element" || IsPrimitive;
+        var isElement = BaseType == "Hl7.Fhir.Model.Element" || BaseType == "Hl7.Fhir.Model.Quantity" || IsPrimitive;
         foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
         if (!AbstractType)
         {
             var isResource = !isElement ?
                 ", IsResource=true" :
                 string.Empty;
-            yield return $"[FhirType({version}, \"{ FhirName }\"{ isResource })]";
+            // If this is just a contraint the FHIR type name used for serialization etc. must be the base type name
+            var fhirTypeName = IsConstraint ?
+                BaseType.Split( '.' ).Last() :
+                FhirName;
+            yield return $"[FhirType({version}, \"{ fhirTypeName }\"{ isResource })]";
         }
         yield return $"[DataContract]";
 
@@ -1033,7 +1029,7 @@ public class ResourceDetails
         }
 
         yield return string.Empty;
-        if (Constraints.Count > 0)
+        if (Constraints.Any())
         {
             foreach (var constraint in Constraints)
             {
@@ -1041,56 +1037,44 @@ public class ResourceDetails
                 foreach (var line in constraint.Render(Name)) yield return "    " + line;
             }
             yield return string.Empty;
-            yield return $"    public override void AddDefaultConstraints()";
-            yield return $"    {{";
-            yield return $"        base.AddDefaultConstraints();";
-            yield return string.Empty;
-            foreach (var constraint in Constraints)
+            if (isElement)
             {
-                yield return $"        InvariantConstraints.Add({ constraint.GetName(Name) });";
+                yield return $"    // TODO: Add code to enforce the above constraints";
             }
-            yield return $"    }}";
+            else
+            {
+                yield return $"    public override void AddDefaultConstraints()";
+                yield return $"    {{";
+                yield return $"        base.AddDefaultConstraints();";
+                yield return string.Empty;
+                foreach (var constraint in Constraints)
+                {
+                    yield return $"        InvariantConstraints.Add({ constraint.GetName(Name) });";
+                }
+                yield return $"    }}";
+            }
         }
 
         if (!IsPrimitive)
         {
             yield return string.Empty;
-            foreach (var line in StringUtils.RenderCopyAndComparisonMethods(Name, AbstractType, Properties)) yield return "    " + line;
+            if (IsConstraint)
+            {
+                foreach (var line in StringUtils.RenderDeepCopy(Name)) yield return "    " + line;
+            }
+            else
+            {
+                foreach (var line in StringUtils.RenderCopyAndComparisonMethods(Name, AbstractType, Properties)) yield return "    " + line;
+            }
 
-            yield return string.Empty;
-            foreach (var line in StringUtils.RenderChildrenMethods(Properties)) yield return "    " + line;
+            if (Properties.Any())
+            {
+                yield return string.Empty;
+                foreach (var line in StringUtils.RenderChildrenMethods(Properties)) yield return "    " + line;
+            }
         }
 
         yield return string.Empty;
-        yield return $"}}";
-    }
-
-    private IEnumerable<string> RenderQuantity()
-    {
-        var version = Versions.Count == 1 ?
-            Versions[0].Version :
-            "All";
-        version = "Hl7.Fhir.Model.Version." + version;
-        var fhirTypeName = Name == "SimpleQuantity" ?
-            "Quantity" :
-            Name;
-        foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
-        yield return $"[FhirType({version}, \"{fhirTypeName}\")]";
-        yield return $"public partial class { Name } : Quantity";
-        yield return $"{{";
-        yield return $"    [NotMapped]";
-        yield return $"    public override string TypeName {{ get {{ return \"{ FhirName }\"; }} }}";
-        yield return string.Empty;
-        yield return $"    public override IDeepCopyable DeepCopy()";
-        yield return $"    {{";
-        yield return $"        return CopyTo(new { Name }());";
-        yield return $"    }}";
-        yield return string.Empty;
-        yield return $"    // TODO: Add code to enforce these constraints:";
-        if (!string.IsNullOrEmpty(Definition))
-        {
-            yield return $"    // * { Definition }";
-        }
         yield return $"}}";
     }
 
@@ -1209,6 +1193,7 @@ public class ResourceDetails
             var resourceDescriptionNode = e.SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='" + resourceName + "']/fhir:short/@value", loadedVersion.NSR);
             resource.Description = resourceDescriptionNode == null ? string.Empty : resourceDescriptionNode.Value;
 
+            resource.IsPrimitive = false;
             resource.AbstractType = (e.SelectSingleNode("fhir:abstract[@value='true']", loadedVersion.NSR) != null);
 
             resource.Properties = GetProperties( resourceName, resourceName, e, loadedVersion.NSR, enumTypesByValueSetUrl );
@@ -1239,29 +1224,9 @@ public class ResourceDetails
                 resource.Components.Add(component);
             }
 
-            resource.Constraints = new List<ConstraintDetails>();
-            foreach (var node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", loadedVersion.NSR).OfType<XmlElement>())
-            {
-                var expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value|fhir:expression/@value", loadedVersion.NSR)?.Value;
-                if (expression != null)
-                {
-                    var parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", loadedVersion.NSR).Value;
-                    if (parentPath.Contains("."))
-                    {
-                        // This expression applied to a backbone element, so need to give it scope
-                        expression = parentPath.Replace("[x]", "").Replace(resourceName + ".", "") + ".all(" + expression + ")";
-                    }
-                }
-                var constraint = new ConstraintDetails
-                {
-                    Key = node.SelectSingleNode("fhir:key/@value", loadedVersion.NSR).Value,
-                    Severity = node.SelectSingleNode("fhir:severity/@value", loadedVersion.NSR).Value,
-                    Human = node.SelectSingleNode("fhir:human/@value", loadedVersion.NSR).Value,
-                    XPath = node.SelectSingleNode("fhir:xpath/@value", loadedVersion.NSR).Value,
-                    Expression = expression
-                };
-                resource.Constraints.Add(constraint);
-            }
+            resource.Constraints = GetConstraints(resourceName, e, loadedVersion.NSR);
+
+            resource.IsConstraint = GetIsConstraintOrPrimitive(e, loadedVersion.NST) && !resource.IsPrimitive;
         }
         return result;
     }
@@ -1427,15 +1392,52 @@ public class ResourceDetails
                 }
             }
 
-            resource.Constraints = new List<ConstraintDetails>();
+            resource.Constraints = GetConstraints(resourceName, e, loadedVersion.NST);
 
-            var definitionNode = e.SelectSingleNode("fhir:differential/fhir:element/fhir:definition/@value", loadedVersion.NST);
-            if (definitionNode != null)
-            {
-                resource.Definition = definitionNode.Value;
-            }
+            resource.IsConstraint = GetIsConstraintOrPrimitive(e, loadedVersion.NST) && !resource.IsPrimitive;
         }
         return result;
+    }
+
+    private static List<ConstraintDetails> GetConstraints(string resourceName, XmlElement structureDefinitionElement, XmlNamespaceManager ns)
+    {
+        var result = new List<ConstraintDetails>();
+        foreach (var node in structureDefinitionElement.SelectNodes("fhir:differential/fhir:element/fhir:constraint", ns).OfType<XmlElement>())
+        {
+            var expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value|fhir:expression/@value", ns)?.Value;
+            if (expression != null)
+            {
+                var parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", ns).Value;
+                if (parentPath.Contains("."))
+                {
+                    // This expression applied to a backbone element, so need to give it scope
+                    expression = parentPath.Replace("[x]", "").Replace(resourceName + ".", "") + ".all(" + expression + ")";
+                }
+            }
+            var constraint = new ConstraintDetails
+            {
+                Key = node.SelectSingleNode("fhir:key/@value", ns).Value,
+                Severity = node.SelectSingleNode("fhir:severity/@value", ns).Value,
+                Human = node.SelectSingleNode("fhir:human/@value", ns).Value,
+                XPath = node.SelectSingleNode("fhir:xpath/@value", ns).Value,
+                Expression = expression
+            };
+            result.Add(constraint);
+        }
+        return result;
+    }
+
+    private static bool GetIsConstraintOrPrimitive(XmlElement structureDefinitionElement, XmlNamespaceManager ns)
+    {
+        // STU3 has an explicit 'derivation' element
+        var derivationNode = structureDefinitionElement.SelectSingleNode("fhir:derivation/@value", ns);
+        if (derivationNode != null)
+        {
+            return derivationNode.Value == "constraint";
+        }
+
+        // DSTU2 has a 'constrainedType' element - that applies also to primitive types though, hence the name of the method...
+        return structureDefinitionElement.SelectSingleNode("fhir:constrainedType", ns) != null; 
     }
 
     private static XmlNode GetBaseTypeNode(XmlElement structureDefinitionElement, XmlNamespaceManager ns)
@@ -2859,6 +2861,10 @@ valueSetsByEnumNameByVersion[string.Empty].Add(
 var resourcesByNameByVersion = ResourceDetails.LoadAll(loadedVersions, valueSetsByEnumNameByVersion);
 
 var generatedDirectory = Path.Combine(rootDirectory, "Generated");
+foreach (var loadedVersion in loadedVersions)
+{
+    Directory.CreateDirectory(Path.Combine(generatedDirectory,loadedVersion.Version));
+}
 foreach (var pair in valueSetsByEnumNameByVersion)
 {
     var version = loadedVersions.FirstOrDefault(lv => lv.Version == pair.Key);

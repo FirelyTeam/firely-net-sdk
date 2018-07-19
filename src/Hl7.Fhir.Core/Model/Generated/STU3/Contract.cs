@@ -375,13 +375,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("unitPrice", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.STU3.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.STU3.Money _UnitPrice;
             
             /// <summary>
             /// Contract Valued Item Price Scaling Factor
@@ -452,13 +452,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("net", Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.STU3.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.STU3.Money _Net;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -471,10 +471,10 @@ namespace Hl7.Fhir.Model.STU3
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                     if(EffectiveTimeElement != null) dest.EffectiveTimeElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveTimeElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.STU3.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                     if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.STU3.Money)Net.DeepCopy();
                     return dest;
                 }
                 else
@@ -1106,13 +1106,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("unitPrice", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.STU3.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.STU3.Money _UnitPrice;
             
             /// <summary>
             /// Contract Term Valued Item Price Scaling Factor
@@ -1183,13 +1183,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("net", Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.STU3.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.STU3.Money _Net;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1202,10 +1202,10 @@ namespace Hl7.Fhir.Model.STU3
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                     if(EffectiveTimeElement != null) dest.EffectiveTimeElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveTimeElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.STU3.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                     if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.STU3.Money)Net.DeepCopy();
                     return dest;
                 }
                 else

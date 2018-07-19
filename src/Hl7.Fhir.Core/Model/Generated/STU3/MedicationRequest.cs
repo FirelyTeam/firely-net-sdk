@@ -234,13 +234,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("expectedSupplyDuration", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Duration ExpectedSupplyDuration
+            public Hl7.Fhir.Model.STU3.Duration ExpectedSupplyDuration
             {
                 get { return _ExpectedSupplyDuration; }
                 set { _ExpectedSupplyDuration = value; OnPropertyChanged("ExpectedSupplyDuration"); }
             }
             
-            private Hl7.Fhir.Model.Duration _ExpectedSupplyDuration;
+            private Hl7.Fhir.Model.STU3.Duration _ExpectedSupplyDuration;
             
             /// <summary>
             /// Intended dispenser
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
                     if(NumberOfRepeatsAllowedElement != null) dest.NumberOfRepeatsAllowedElement = (Hl7.Fhir.Model.PositiveInt)NumberOfRepeatsAllowedElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(ExpectedSupplyDuration != null) dest.ExpectedSupplyDuration = (Hl7.Fhir.Model.Duration)ExpectedSupplyDuration.DeepCopy();
+                    if(ExpectedSupplyDuration != null) dest.ExpectedSupplyDuration = (Hl7.Fhir.Model.STU3.Duration)ExpectedSupplyDuration.DeepCopy();
                     if(Performer != null) dest.Performer = (Hl7.Fhir.Model.STU3.ResourceReference)Performer.DeepCopy();
                     return dest;
                 }

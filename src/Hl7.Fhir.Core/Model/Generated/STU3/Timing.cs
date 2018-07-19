@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("bounds", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.STU3.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Bounds
             {
@@ -738,6 +738,89 @@ namespace Hl7.Fhir.Model.STU3
         
         private Hl7.Fhir.Model.CodeableConcept _Code;
     
+    
+        public static ElementDefinitionConstraint Timing_TIM_9 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(offset.empty() or (when.exists() and ((when in ('C' | 'CM' | 'CD' | 'CV')).not())))",
+            Key = "tim-9",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If there's an offset, there must be a when (and not C, CM, CD, CV)",
+            Xpath = "not(exists(f:offset)) or exists(f:when)"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_5 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(period.exists() implies period >= 0)",
+            Key = "tim-5",
+            Severity = ConstraintSeverity.Warning,
+            Human = "period SHALL be a non-negative value",
+            Xpath = "f:period/@value >= 0 or not(f:period/@value)"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_6 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(periodMax.empty() or period.exists())",
+            Key = "tim-6",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If there's a periodMax, there must be a period",
+            Xpath = "not(exists(f:periodMax)) or exists(f:period)"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_7 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(durationMax.empty() or duration.exists())",
+            Key = "tim-7",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If there's a durationMax, there must be a duration",
+            Xpath = "not(exists(f:durationMax)) or exists(f:duration)"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_8 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(countMax.empty() or count.exists())",
+            Key = "tim-8",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If there's a countMax, there must be a count",
+            Xpath = "not(exists(f:countMax)) or exists(f:count)"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_1 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(duration.empty() or durationUnit.exists())",
+            Key = "tim-1",
+            Severity = ConstraintSeverity.Warning,
+            Human = "if there's a duration, there needs to be duration units",
+            Xpath = "not(exists(f:duration)) or exists(f:durationUnit)"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_10 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(timeOfDay.empty() or when.empty())",
+            Key = "tim-10",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If there's a timeOfDay, there cannot be be a when, or vice versa",
+            Xpath = "not(exists(f:timeOfDay)) or not(exists(f:when))"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_2 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(period.empty() or periodUnit.exists())",
+            Key = "tim-2",
+            Severity = ConstraintSeverity.Warning,
+            Human = "if there's a period, there needs to be period units",
+            Xpath = "not(exists(f:period)) or exists(f:periodUnit)"
+        };
+    
+        public static ElementDefinitionConstraint Timing_TIM_4 = new ElementDefinitionConstraint
+        {
+            Expression = "repeat.all(duration.exists() implies duration >= 0)",
+            Key = "tim-4",
+            Severity = ConstraintSeverity.Warning,
+            Human = "duration SHALL be a non-negative value",
+            Xpath = "f:duration/@value >= 0 or not(f:duration/@value)"
+        };
+    
+        // TODO: Add code to enforce the above constraints
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

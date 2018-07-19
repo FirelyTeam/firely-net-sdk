@@ -82,6 +82,17 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.SimpleQuantity _High;
     
     
+        public static ElementDefinitionConstraint Range_RNG_2 = new ElementDefinitionConstraint
+        {
+            Expression = "low.empty() or high.empty() or (low <= high)",
+            Key = "rng-2",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If present, low SHALL have a lower value than high",
+            Xpath = "not(exists(f:low/f:value/@value)) or not(exists(f:high/f:value/@value)) or (number(f:low/f:value/@value) <= number(f:high/f:value/@value))"
+        };
+    
+        // TODO: Add code to enforce the above constraints
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Range;

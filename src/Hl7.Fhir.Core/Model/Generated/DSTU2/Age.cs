@@ -38,23 +38,35 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v3.0.1
+// Generated for FHIR v1.0.2
 //
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model.DSTU2
 {
-    [FhirType(Hl7.Fhir.Model.Version.All, "Count")]
-    public partial class Count : Quantity
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Quantity")]
+    [DataContract]
+    public partial class Age : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "Count"; } }
+        public override string TypeName { get { return "Age"; } }
+    
+    
+    
+        public static ElementDefinitionConstraint Age_AGE_1 = new ElementDefinitionConstraint
+        {
+            Expression = "(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.toString().contains('.').not())",
+            Key = "age-1",
+            Severity = ConstraintSeverity.Warning,
+            Human = "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive.",
+            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and not(contains(f:value/@value, '-'))"
+        };
+    
+        // TODO: Add code to enforce the above constraints
     
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Count());
+             return CopyTo(new Age());
         }
     
-        // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code with a value of "1" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.
     }
 
 }

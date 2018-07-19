@@ -425,13 +425,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("expectedSupplyDuration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Duration ExpectedSupplyDuration
+            public Hl7.Fhir.Model.DSTU2.Duration ExpectedSupplyDuration
             {
                 get { return _ExpectedSupplyDuration; }
                 set { _ExpectedSupplyDuration = value; OnPropertyChanged("ExpectedSupplyDuration"); }
             }
             
-            private Hl7.Fhir.Model.Duration _ExpectedSupplyDuration;
+            private Hl7.Fhir.Model.DSTU2.Duration _ExpectedSupplyDuration;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
                     if(NumberOfRepeatsAllowedElement != null) dest.NumberOfRepeatsAllowedElement = (Hl7.Fhir.Model.PositiveInt)NumberOfRepeatsAllowedElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(ExpectedSupplyDuration != null) dest.ExpectedSupplyDuration = (Hl7.Fhir.Model.Duration)ExpectedSupplyDuration.DeepCopy();
+                    if(ExpectedSupplyDuration != null) dest.ExpectedSupplyDuration = (Hl7.Fhir.Model.DSTU2.Duration)ExpectedSupplyDuration.DeepCopy();
                     return dest;
                 }
                 else

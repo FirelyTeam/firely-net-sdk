@@ -430,13 +430,13 @@ namespace Hl7.Fhir.Model.STU3
         /// </summary>
         [FhirElement("priceOverride", Order=230)]
         [DataMember]
-        public Hl7.Fhir.Model.Money PriceOverride
+        public Hl7.Fhir.Model.STU3.Money PriceOverride
         {
             get { return _PriceOverride; }
             set { _PriceOverride = value; OnPropertyChanged("PriceOverride"); }
         }
         
-        private Hl7.Fhir.Model.Money _PriceOverride;
+        private Hl7.Fhir.Model.STU3.Money _PriceOverride;
         
         /// <summary>
         /// Reason for overriding the list price/factor
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(Bodysite != null) dest.Bodysite = new List<Hl7.Fhir.Model.CodeableConcept>(Bodysite.DeepCopy());
                 if(FactorOverrideElement != null) dest.FactorOverrideElement = (Hl7.Fhir.Model.FhirDecimal)FactorOverrideElement.DeepCopy();
-                if(PriceOverride != null) dest.PriceOverride = (Hl7.Fhir.Model.Money)PriceOverride.DeepCopy();
+                if(PriceOverride != null) dest.PriceOverride = (Hl7.Fhir.Model.STU3.Money)PriceOverride.DeepCopy();
                 if(OverrideReasonElement != null) dest.OverrideReasonElement = (Hl7.Fhir.Model.FhirString)OverrideReasonElement.DeepCopy();
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.STU3.ResourceReference)Enterer.DeepCopy();
                 if(EnteredDateElement != null) dest.EnteredDateElement = (Hl7.Fhir.Model.FhirDateTime)EnteredDateElement.DeepCopy();

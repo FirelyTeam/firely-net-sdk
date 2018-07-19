@@ -805,13 +805,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("unitPrice", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.DSTU2.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.DSTU2.Money _UnitPrice;
             
             /// <summary>
             /// Price scaling factor
@@ -885,13 +885,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("net", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.DSTU2.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.DSTU2.Money _Net;
             
             /// <summary>
             /// Unique Device Identifier
@@ -994,10 +994,10 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.Coding)Service.DeepCopy();
                     if(ServiceDateElement != null) dest.ServiceDateElement = (Hl7.Fhir.Model.Date)ServiceDateElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.DSTU2.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                     if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.DSTU2.Money)Net.DeepCopy();
                     if(Udi != null) dest.Udi = (Hl7.Fhir.Model.Coding)Udi.DeepCopy();
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Coding)BodySite.DeepCopy();
                     if(SubSite != null) dest.SubSite = new List<Hl7.Fhir.Model.Coding>(SubSite.DeepCopy());
@@ -1217,13 +1217,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("unitPrice", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.DSTU2.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.DSTU2.Money _UnitPrice;
             
             /// <summary>
             /// Price scaling factor
@@ -1297,13 +1297,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("net", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.DSTU2.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.DSTU2.Money _Net;
             
             /// <summary>
             /// Unique Device Identifier
@@ -1345,10 +1345,10 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.Coding)Service.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.DSTU2.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                     if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.DSTU2.Money)Net.DeepCopy();
                     if(Udi != null) dest.Udi = (Hl7.Fhir.Model.Coding)Udi.DeepCopy();
                     if(SubDetail != null) dest.SubDetail = new List<SubDetailComponent>(SubDetail.DeepCopy());
                     return dest;
@@ -1536,13 +1536,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("unitPrice", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.DSTU2.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.DSTU2.Money _UnitPrice;
             
             /// <summary>
             /// Price scaling factor
@@ -1616,13 +1616,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("net", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.DSTU2.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.DSTU2.Money _Net;
             
             /// <summary>
             /// Unique Device Identifier
@@ -1649,10 +1649,10 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.Coding)Service.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.DSTU2.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                     if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.DSTU2.Money)Net.DeepCopy();
                     if(Udi != null) dest.Udi = (Hl7.Fhir.Model.Coding)Udi.DeepCopy();
                     return dest;
                 }

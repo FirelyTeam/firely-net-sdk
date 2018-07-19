@@ -38,23 +38,35 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v3.0.1
+// Generated for FHIR v1.0.2
 //
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model.DSTU2
 {
-    [FhirType(Hl7.Fhir.Model.Version.All, "Money")]
-    public partial class Money : Quantity
+    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Quantity")]
+    [DataContract]
+    public partial class Duration : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "Money"; } }
+        public override string TypeName { get { return "Duration"; } }
+    
+    
+    
+        public static ElementDefinitionConstraint Duration_DRT_1 = new ElementDefinitionConstraint
+        {
+            Expression = "(code or value.empty()) and (system.empty() or system = %ucum)",
+            Key = "drt-1",
+            Severity = ConstraintSeverity.Warning,
+            Human = "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.",
+            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')"
+        };
+    
+        // TODO: Add code to enforce the above constraints
     
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Money());
+             return CopyTo(new Duration());
         }
     
-        // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = "urn:iso:std:iso:4217" - currency).
     }
 
 }

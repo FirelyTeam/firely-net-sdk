@@ -1588,13 +1588,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("unitPrice", Order=170)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.STU3.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.STU3.Money _UnitPrice;
             
             /// <summary>
             /// Price scaling factor
@@ -1633,13 +1633,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("net", Order=190)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.STU3.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.STU3.Money _Net;
             
             /// <summary>
             /// Unique Device Identifier
@@ -1781,9 +1781,9 @@ namespace Hl7.Fhir.Model.STU3
                     if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.Element)Location.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.STU3.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.STU3.Money)Net.DeepCopy();
                     if(Udi != null) dest.Udi = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Udi.DeepCopy());
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     if(SubSite != null) dest.SubSite = new List<Hl7.Fhir.Model.CodeableConcept>(SubSite.DeepCopy());
@@ -1976,13 +1976,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("amount", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Amount
+            public Hl7.Fhir.Model.STU3.Money Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Money _Amount;
+            private Hl7.Fhir.Model.STU3.Money _Amount;
             
             /// <summary>
             /// Non-monitory value
@@ -2025,7 +2025,7 @@ namespace Hl7.Fhir.Model.STU3
                     base.CopyTo(dest);
                     if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                     if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Money)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.STU3.Money)Amount.DeepCopy();
                     if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
                     return dest;
                 }
@@ -2236,13 +2236,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("unitPrice", Order=120)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.STU3.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.STU3.Money _UnitPrice;
             
             /// <summary>
             /// Price scaling factor
@@ -2281,13 +2281,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("net", Order=140)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.STU3.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.STU3.Money _Net;
             
             /// <summary>
             /// Unique Device Identifier
@@ -2381,9 +2381,9 @@ namespace Hl7.Fhir.Model.STU3
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
                     if(ProgramCode != null) dest.ProgramCode = new List<Hl7.Fhir.Model.CodeableConcept>(ProgramCode.DeepCopy());
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.STU3.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.STU3.Money)Net.DeepCopy();
                     if(Udi != null) dest.Udi = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Udi.DeepCopy());
                     if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
                     if(Adjudication != null) dest.Adjudication = new List<AdjudicationComponent>(Adjudication.DeepCopy());
@@ -2641,13 +2641,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("unitPrice", Order=120)]
             [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
+            public Hl7.Fhir.Model.STU3.Money UnitPrice
             {
                 get { return _UnitPrice; }
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
-            private Hl7.Fhir.Model.Money _UnitPrice;
+            private Hl7.Fhir.Model.STU3.Money _UnitPrice;
             
             /// <summary>
             /// Price scaling factor
@@ -2686,13 +2686,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("net", Order=140)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Net
+            public Hl7.Fhir.Model.STU3.Money Net
             {
                 get { return _Net; }
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
-            private Hl7.Fhir.Model.Money _Net;
+            private Hl7.Fhir.Model.STU3.Money _Net;
             
             /// <summary>
             /// Unique Device Identifier
@@ -2772,9 +2772,9 @@ namespace Hl7.Fhir.Model.STU3
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
                     if(ProgramCode != null) dest.ProgramCode = new List<Hl7.Fhir.Model.CodeableConcept>(ProgramCode.DeepCopy());
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.STU3.Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.STU3.Money)Net.DeepCopy();
                     if(Udi != null) dest.Udi = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Udi.DeepCopy());
                     if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
                     if(Adjudication != null) dest.Adjudication = new List<AdjudicationComponent>(Adjudication.DeepCopy());
@@ -2986,13 +2986,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("fee", Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Fee
+            public Hl7.Fhir.Model.STU3.Money Fee
             {
                 get { return _Fee; }
                 set { _Fee = value; OnPropertyChanged("Fee"); }
             }
             
-            private Hl7.Fhir.Model.Money _Fee;
+            private Hl7.Fhir.Model.STU3.Money _Fee;
             
             /// <summary>
             /// List of note numbers which apply
@@ -3067,7 +3067,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.CodeableConcept)Service.DeepCopy();
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
-                    if(Fee != null) dest.Fee = (Hl7.Fhir.Model.Money)Fee.DeepCopy();
+                    if(Fee != null) dest.Fee = (Hl7.Fhir.Model.STU3.Money)Fee.DeepCopy();
                     if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
                     if(Adjudication != null) dest.Adjudication = new List<AdjudicationComponent>(Adjudication.DeepCopy());
                     if(Detail != null) dest.Detail = new List<AddedItemsDetailComponent>(Detail.DeepCopy());
@@ -3226,13 +3226,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("fee", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Fee
+            public Hl7.Fhir.Model.STU3.Money Fee
             {
                 get { return _Fee; }
                 set { _Fee = value; OnPropertyChanged("Fee"); }
             }
             
-            private Hl7.Fhir.Model.Money _Fee;
+            private Hl7.Fhir.Model.STU3.Money _Fee;
             
             /// <summary>
             /// List of note numbers which apply
@@ -3292,7 +3292,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                     if(Service != null) dest.Service = (Hl7.Fhir.Model.CodeableConcept)Service.DeepCopy();
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
-                    if(Fee != null) dest.Fee = (Hl7.Fhir.Model.Money)Fee.DeepCopy();
+                    if(Fee != null) dest.Fee = (Hl7.Fhir.Model.STU3.Money)Fee.DeepCopy();
                     if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
                     if(Adjudication != null) dest.Adjudication = new List<AdjudicationComponent>(Adjudication.DeepCopy());
                     return dest;
@@ -3402,13 +3402,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("adjustment", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Adjustment
+            public Hl7.Fhir.Model.STU3.Money Adjustment
             {
                 get { return _Adjustment; }
                 set { _Adjustment = value; OnPropertyChanged("Adjustment"); }
             }
             
-            private Hl7.Fhir.Model.Money _Adjustment;
+            private Hl7.Fhir.Model.STU3.Money _Adjustment;
             
             /// <summary>
             /// Explanation for the non-claim adjustment
@@ -3460,13 +3460,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("amount", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Money Amount
+            public Hl7.Fhir.Model.STU3.Money Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Money _Amount;
+            private Hl7.Fhir.Model.STU3.Money _Amount;
             
             /// <summary>
             /// Identifier of the payment instrument
@@ -3489,10 +3489,10 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Adjustment != null) dest.Adjustment = (Hl7.Fhir.Model.Money)Adjustment.DeepCopy();
+                    if(Adjustment != null) dest.Adjustment = (Hl7.Fhir.Model.STU3.Money)Adjustment.DeepCopy();
                     if(AdjustmentReason != null) dest.AdjustmentReason = (Hl7.Fhir.Model.CodeableConcept)AdjustmentReason.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Money)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.STU3.Money)Amount.DeepCopy();
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                     return dest;
                 }
@@ -4065,7 +4065,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Money))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.STU3.Money))]
             [DataMember]
             public Hl7.Fhir.Model.Element Allowed
             {
@@ -4080,7 +4080,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Money))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.STU3.Money))]
             [DataMember]
             public Hl7.Fhir.Model.Element Used
             {
@@ -4695,39 +4695,39 @@ namespace Hl7.Fhir.Model.STU3
         /// </summary>
         [FhirElement("totalCost", Order=410)]
         [DataMember]
-        public Hl7.Fhir.Model.Money TotalCost
+        public Hl7.Fhir.Model.STU3.Money TotalCost
         {
             get { return _TotalCost; }
             set { _TotalCost = value; OnPropertyChanged("TotalCost"); }
         }
         
-        private Hl7.Fhir.Model.Money _TotalCost;
+        private Hl7.Fhir.Model.STU3.Money _TotalCost;
         
         /// <summary>
         /// Unallocated deductable
         /// </summary>
         [FhirElement("unallocDeductable", Order=420)]
         [DataMember]
-        public Hl7.Fhir.Model.Money UnallocDeductable
+        public Hl7.Fhir.Model.STU3.Money UnallocDeductable
         {
             get { return _UnallocDeductable; }
             set { _UnallocDeductable = value; OnPropertyChanged("UnallocDeductable"); }
         }
         
-        private Hl7.Fhir.Model.Money _UnallocDeductable;
+        private Hl7.Fhir.Model.STU3.Money _UnallocDeductable;
         
         /// <summary>
         /// Total benefit payable for the Claim
         /// </summary>
         [FhirElement("totalBenefit", Order=430)]
         [DataMember]
-        public Hl7.Fhir.Model.Money TotalBenefit
+        public Hl7.Fhir.Model.STU3.Money TotalBenefit
         {
             get { return _TotalBenefit; }
             set { _TotalBenefit = value; OnPropertyChanged("TotalBenefit"); }
         }
         
-        private Hl7.Fhir.Model.Money _TotalBenefit;
+        private Hl7.Fhir.Model.STU3.Money _TotalBenefit;
         
         /// <summary>
         /// Payment (if paid)
@@ -4823,9 +4823,9 @@ namespace Hl7.Fhir.Model.STU3
                 if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Period)Hospitalization.DeepCopy();
                 if(Item != null) dest.Item = new List<ItemComponent>(Item.DeepCopy());
                 if(AddItem != null) dest.AddItem = new List<AddedItemComponent>(AddItem.DeepCopy());
-                if(TotalCost != null) dest.TotalCost = (Hl7.Fhir.Model.Money)TotalCost.DeepCopy();
-                if(UnallocDeductable != null) dest.UnallocDeductable = (Hl7.Fhir.Model.Money)UnallocDeductable.DeepCopy();
-                if(TotalBenefit != null) dest.TotalBenefit = (Hl7.Fhir.Model.Money)TotalBenefit.DeepCopy();
+                if(TotalCost != null) dest.TotalCost = (Hl7.Fhir.Model.STU3.Money)TotalCost.DeepCopy();
+                if(UnallocDeductable != null) dest.UnallocDeductable = (Hl7.Fhir.Model.STU3.Money)UnallocDeductable.DeepCopy();
+                if(TotalBenefit != null) dest.TotalBenefit = (Hl7.Fhir.Model.STU3.Money)TotalBenefit.DeepCopy();
                 if(Payment != null) dest.Payment = (PaymentComponent)Payment.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
                 if(ProcessNote != null) dest.ProcessNote = new List<NoteComponent>(ProcessNote.DeepCopy());

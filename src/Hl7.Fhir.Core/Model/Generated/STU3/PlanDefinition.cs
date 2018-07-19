@@ -293,13 +293,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("due", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Duration Due
+            public Hl7.Fhir.Model.STU3.Duration Due
             {
                 get { return _Due; }
                 set { _Due = value; OnPropertyChanged("Due"); }
             }
             
-            private Hl7.Fhir.Model.Duration _Due;
+            private Hl7.Fhir.Model.STU3.Duration _Due;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model.STU3
                     base.CopyTo(dest);
                     if(Measure != null) dest.Measure = (Hl7.Fhir.Model.CodeableConcept)Measure.DeepCopy();
                     if(Detail != null) dest.Detail = (Hl7.Fhir.Model.Element)Detail.DeepCopy();
-                    if(Due != null) dest.Due = (Hl7.Fhir.Model.Duration)Due.DeepCopy();
+                    if(Due != null) dest.Due = (Hl7.Fhir.Model.STU3.Duration)Due.DeepCopy();
                     return dest;
                 }
                 else
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("timing", Order=170, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.STU3.Timing))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.STU3.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.STU3.Timing))]
             [DataMember]
             public Hl7.Fhir.Model.Element Timing
             {
@@ -1398,7 +1398,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.STU3.Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Offset
             {

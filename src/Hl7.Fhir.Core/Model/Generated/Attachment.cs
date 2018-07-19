@@ -318,6 +318,17 @@ namespace Hl7.Fhir.Model
         }
     
     
+        public static ElementDefinitionConstraint Attachment_ATT_1 = new ElementDefinitionConstraint
+        {
+            Expression = "data.empty() or contentType",
+            Key = "att-1",
+            Severity = ConstraintSeverity.Warning,
+            Human = "It the Attachment has data, it SHALL have a contentType",
+            Xpath = "not(exists(f:data)) or exists(f:contentType)"
+        };
+    
+        // TODO: Add code to enforce the above constraints
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Attachment;

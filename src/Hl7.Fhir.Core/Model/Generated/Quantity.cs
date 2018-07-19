@@ -219,6 +219,17 @@ namespace Hl7.Fhir.Model
         }
     
     
+        public static ElementDefinitionConstraint Quantity_QTY_3 = new ElementDefinitionConstraint
+        {
+            Expression = "code.empty() or system",
+            Key = "qty-3",
+            Severity = ConstraintSeverity.Warning,
+            Human = "If a code for the unit is present, the system SHALL also be present",
+            Xpath = "not(exists(f:code)) or exists(f:system)"
+        };
+    
+        // TODO: Add code to enforce the above constraints
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Quantity;
