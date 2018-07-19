@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Serialization
 
                 JObject validateObject(JObject o, string pName)
                 {
-                    if (!o.HasValues)
+                    if (o.Count == 0)
                     {
                         parent.raiseFormatError($"The object for property '{pName}' is empty, which is not allowed.", o);
                         return null;
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Serialization
                 // ToList() added explicitly here, we really need our own copy of the list of children
                 // Note: this will create a lookup with a grouping that groups the main + shadow property
                 // under the same name (which is the name without the _).
-                var children = JsonObject.Children<JProperty>().ToLookup(jp => isMainProperty(jp) ? jp.Name : deriveMainName(jp));
+                var children = JsonObject.Children<JProperty>().ToLookup(jp => deriveMainName(jp));
                 var processed = new HashSet<string>();
 
                 foreach (var child in children)
@@ -206,20 +206,22 @@ namespace Hl7.Fhir.Serialization
                         yield return node;
                 }
 
-                string deriveMainName(JProperty prop) => prop.Name.Substring(1);
+                string deriveMainName(JProperty prop)
+                {
+                    var name = prop.Name;
+                    return name[0] == '_' ? name.Substring(1) : name;
+                }
             }
 
             private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string, JProperty> child)
             {
                 JProperty main = child.First(), shadow = child.Skip(1).FirstOrDefault();
 
-                if (isMainProperty(main))
+                if (main.Name[0] != '_')
                     return (main, shadow);
                 else
                     return (shadow, main);
             }
-
-            private static bool isMainProperty(JProperty prop) => prop.Name[0] != '_';
 
             private IEnumerable<JsonNavigatorNode> enumerateElement(string name, JProperty main, JProperty shadow)
             {
@@ -251,7 +253,7 @@ namespace Hl7.Fhir.Serialization
                     else if (prop.Value is JArray array)
                     {
                         wasArray = true;
-                        return array.Children().ToArray();
+                        return array.ToArray();
                     }
                     else
                         return new[] { prop.Value };

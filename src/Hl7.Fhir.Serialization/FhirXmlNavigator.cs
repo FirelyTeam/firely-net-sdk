@@ -81,12 +81,11 @@ namespace Hl7.Fhir.Serialization
                 if (!PermissiveParsing) verifyXObject(scan);
 
                 var scanName = scan.Name();
-
                 if (scanName != "value")
                 {
                     bool isMatch =
                     name == null ||      // no name filter -> any match is ok
-                    scan.Name().LocalName == name;    // else, filter on the actual name
+                        scanName.LocalName == name;    // else, filter on the actual name
 
                     if (isMatch)
                     {
