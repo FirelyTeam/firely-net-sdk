@@ -65,6 +65,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void FetchConformance()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -113,6 +114,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void ReadWithFormat()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -126,6 +128,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void Read()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -166,6 +169,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void ReadRelative()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -326,6 +330,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void Paging()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -358,6 +363,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void PagingInJson()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -393,6 +399,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void CreateAndFullRepresentation()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -436,6 +443,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// </summary>
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void CreateEditDelete()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -483,6 +491,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
         {
@@ -626,6 +635,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void TestWithParam()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -634,6 +644,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void ManipulateMeta()
         {
            var client = new FhirDstu2Client(testEndpoint);
@@ -751,6 +762,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void TestSearchByPersonaCode()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -764,6 +776,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void CreateDynamic()
         {
             Resource furore = new Organization
@@ -784,6 +797,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void CallsCallbacks()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -843,6 +857,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void RequestFullResource()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -893,6 +908,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void TestRefresh()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -954,6 +970,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -1067,6 +1084,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void TestOperationEverything()
         {
             var client = new FhirDstu2Client(testEndpoint)

@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod] 
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void InvokeTestPatientGetEverything()
         {
             var client = new FhirDstu2Client(testEndpoint);
@@ -41,6 +42,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Ontoserver DSTU2 that appear to no longer exist
         public void InvokeExpandExistingValueSet()
         {
             var client = new FhirDstu2Client(FhirClientTests.TerminologyEndpoint);
@@ -52,6 +54,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Ontoserver DSTU2 that appear to no longer exist
         public void InvokeExpandParameterValueSet()
         {
             var client = new FhirDstu2Client(FhirClientTests.TerminologyEndpoint);
@@ -68,6 +71,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// </summary>
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Ontoserver DSTU2 that appear to no longer exist
         public void InvokeLookupCoding()
         {
             var client = new FhirDstu2Client(FhirClientTests.TerminologyEndpoint);
@@ -81,6 +85,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Ontoserver DSTU2 that appear to no longer exist
         public void InvokeLookupCode()
         {
             var client = new FhirDstu2Client(FhirClientTests.TerminologyEndpoint);
@@ -103,6 +108,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Ontoserver DSTU2 that appear to no longer exist
         public void InvokeValidateCodeByCanonical()
         {
             var client = new FhirDstu2Client(FhirClientTests.TerminologyEndpoint);
@@ -115,6 +121,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Ontoserver DSTU2 that appear to no longer exist
         public void InvokeValidateCodeWithVS()
         {
             var client = new FhirDstu2Client(FhirClientTests.TerminologyEndpoint);
@@ -130,6 +137,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]//returns 500: validation of slices is not done yet.
         [TestCategory("IntegrationTest")]
+        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void InvokeResourceValidation()
         {
             var client = new FhirDstu2Client(testEndpoint);

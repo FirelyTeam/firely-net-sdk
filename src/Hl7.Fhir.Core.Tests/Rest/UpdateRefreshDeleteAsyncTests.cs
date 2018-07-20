@@ -14,6 +14,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Ignore] // The hsp consortium server returns 200 OK on attempts to read deleted resources
         public async Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
             var client = new FhirDstu2Client(_endpoint)
@@ -55,8 +56,8 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             // VERIFY //
             Assert.ThrowsException<FhirOperationException<OperationOutcome>>(act, "the patient is no longer on the server");
-            
-            
+
+
             Console.WriteLine("Test Completed");
         }
         
