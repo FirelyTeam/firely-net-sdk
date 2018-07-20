@@ -35,12 +35,13 @@ namespace Hl7.Fhir.Serialization
 
     public static class XmlSerializationDetailsExtensions
     {
-        public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNavigator navigator)
-        {
-            if (navigator is IAnnotated ia && ia.TryGetAnnotation<XmlSerializationDetails>(out var rt))
-                return rt;
-            else
-                return null;
-        }
+        public static XmlSerializationDetails GetXmlSerializationDetails(this IAnnotated ann) =>
+            ann.TryGetAnnotation<XmlSerializationDetails>(out var rt) ? rt : null;
+
+        public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNavigator navigator) =>
+            navigator is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
+
+        public static XmlSerializationDetails GetXmlSerializationDetails(this ISourceNavigator navigator) =>
+            navigator is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
     }
 }

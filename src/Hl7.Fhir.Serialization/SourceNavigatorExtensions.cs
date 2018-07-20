@@ -27,9 +27,10 @@ namespace Hl7.Fhir.Serialization
             navigators.SelectMany(n => n.Children(name));
 
 
-        public static bool HasChildren(this IEnumerable<ISourceNavigator> navigators, string name = null) => navigators.Children(name).Any();
-
-        public static bool HasChildren(this ISourceNavigator navigator, string name = null) => navigator.Children(name).Any();
+        //Since moving to the first child can be very expensive on stacked navigators, we should not offer this
+        //functionality, unless by adding it to ISourceNavigator
+        //public static bool HasChildren(this IEnumerable<ISourceNavigator> navigators, string name = null) => navigators.Children(name).Any();
+        //public static bool HasChildren(this ISourceNavigator navigator, string name = null) => navigator.Children(name).Any();
 
         public static IEnumerable<ISourceNavigator> Descendants(this ISourceNavigator navigator)
         {
@@ -72,6 +73,9 @@ namespace Hl7.Fhir.Serialization
 
         public static IDisposable Catch(this ISourceNavigator source, ExceptionNotificationHandler handler) =>
             source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
+
+        public static IEnumerable<object> Annotations(this ISourceNavigator nav, Type type) =>
+            nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
 
         internal static IElementNavigator AsElementNavigator(this ISourceNavigator sourceNav, string type=null, ISerializationInfoProvider provider=null)
         {

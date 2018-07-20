@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
             var result = runTest(patient);
-            Assert.AreEqual(9, result.Count);  
+            Assert.AreEqual(10, result.Count);  
         }
     }
 }

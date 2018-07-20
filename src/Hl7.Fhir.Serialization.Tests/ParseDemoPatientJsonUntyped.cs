@@ -66,6 +66,23 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void TryInvalidUntypedSource()
+        {
+            var xmlNav = FhirXmlNavigator.Untyped("<Patient xmlns='http://hl7.org/fhir'><active value='true'/></Patient>");
+
+            try
+            {
+                var jsonWriter = new FhirJsonWriter();
+
+                var output = SerializationUtil.WriteJsonToString(writer => jsonWriter.Write(xmlNav, writer));
+                Assert.Fail();
+            }
+            catch (NotSupportedException)
+            {
+            }
+        }
+
+        [TestMethod]
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");

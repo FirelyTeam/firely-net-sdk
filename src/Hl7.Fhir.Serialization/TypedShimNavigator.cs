@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Name => _sourceNav.Name;
 
-        public string Type => null; //throw Error.NotImplemented("You cannot invoke the Type getter on an (untyped) ISourceNavigator");
+        public string Type => null; 
 
         public object Value => _sourceNav.Text;
 
@@ -33,12 +33,14 @@ namespace Hl7.Fhir.Serialization
 
         public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);
 
+        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<TypedShimNavigator>();
+
         IEnumerable<object> IAnnotated.Annotations(Type type)
         {
-            if (_sourceNav is IAnnotated ia)
-                return ia.Annotations(type);
+            if (type == typeof(PipelineComponent))
+                return (new[] { _componentLabel }).Union(_sourceNav.Annotations(typeof(PipelineComponent)));
             else
-                return Enumerable.Empty<object>();
+                return _sourceNav.Annotations(type);
         }
     }
 }

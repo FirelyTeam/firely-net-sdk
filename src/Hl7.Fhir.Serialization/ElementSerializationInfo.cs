@@ -52,8 +52,6 @@ namespace Hl7.Fhir.Serialization
 
         public int Order { get; private set; }
         public ITypeSerializationInfo[] Type { get; private set; }
-
-        public static readonly ElementSerializationInfo NO_SERIALIZATION_INFO = new ElementSerializationInfo();
     }
 
 

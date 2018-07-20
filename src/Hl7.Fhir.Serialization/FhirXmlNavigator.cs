@@ -263,9 +263,13 @@ namespace Hl7.Fhir.Serialization
 
         public IExceptionSink Sink { get; set; }
 
+        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<FhirXmlNavigator>();
+
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(SourceComments))
+            if (type == typeof(PipelineComponent))
+                return new[] { _componentLabel };
+            else if (type == typeof(SourceComments))
             {
                 return new[]
                 {

@@ -1,7 +1,9 @@
 ﻿using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -120,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 var xd = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
                 Assert.AreEqual(XmlNodeType.Attribute, xd.NodeType);
                 Assert.AreEqual(xd.Namespace + "customAttribute", XName.Get("customAttribute", "http://example.org/some-ns"));
-                Assert.IsFalse(cn.HasChildren());
+                Assert.IsFalse(cn.Children().Any());
             }
 
             void assertAnElementWithValueAndChildren(ISourceNavigator cn)
@@ -150,14 +152,14 @@ namespace Hl7.Fhir.Serialization.Tests
                     ccn.MoveToFirstChild();
                     Assert.AreEqual("customAttribute", ccn.Name);
                     Assert.AreEqual("morning", ccn.Text);
-                    Assert.IsFalse(ccn.HasChildren());
+                    Assert.IsFalse(ccn.Children().Any());
                 }
 
                 void secondChild(ISourceNavigator ccn)
                 {
                     Assert.AreEqual("secondChild", ccn.Name);
                     Assert.AreEqual("afternoon", ccn.Text);
-                    Assert.IsFalse(ccn.HasChildren());
+                    Assert.IsFalse(ccn.Children().Any());
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     Assert.AreEqual("I have text content too", xd.NodeText);
@@ -167,7 +169,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 {
                     Assert.AreEqual("ThirdChild", ccn.Name);
                     Assert.IsNull(ccn.Text);
-                    Assert.IsTrue(ccn.HasChildren());
+                    Assert.IsTrue(ccn.Children().Any());
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     var cd = (ccn as IAnnotated).Annotation<SourceComments>();
@@ -180,7 +182,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var val = cnn.Text;
                 Assert.IsTrue(val.StartsWith("<div") && val.Contains("Some html"));
-                Assert.IsFalse(cnn.HasChildren());  // html should not be represented as children
+                Assert.IsFalse(cnn.Children().Any());  // html should not be represented as children
 
                 var xd = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
                 var cd = (nav as IAnnotated).Annotation<SourceComments>();
@@ -196,6 +198,23 @@ namespace Hl7.Fhir.Serialization.Tests
         public void RoundtripXml()
         {
             ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNavigator.Untyped(xmlText).AsElementNavigator());
+        }
+
+        [TestMethod]
+        public void TryInvalidUntypedSource()
+        {
+            var jsonNav = FhirJsonNavigator.Untyped("{ 'resourceType': 'Patient', 'active':true }");
+
+            try
+            {
+                var xmlWriter = new FhirXmlWriter();
+
+                var output = SerializationUtil.WriteXmlToString(writer => xmlWriter.Write(jsonNav, writer));
+                Assert.Fail();
+            }
+            catch(NotSupportedException)
+            {
+            }
         }
 
         [TestMethod]

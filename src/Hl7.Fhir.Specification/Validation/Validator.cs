@@ -184,7 +184,8 @@ namespace Hl7.Fhir.Validation
                 return outcome;
             }
 
-            // Any node must either have a value, or children, or both (e.g. extensions on primitives)
+            // This does not work, since the children might still be empty, we need something better
+            //// Any node must either have a value, or children, or both (e.g. extensions on primitives)
             if (instance.Value == null && !instance.HasChildren())
             {
                 outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);

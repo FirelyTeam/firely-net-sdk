@@ -18,22 +18,22 @@
     </Kwestionnaire>
   </contained>
   <active value="4" />   <!-- value not parseable as a boolean (4) -->
-  <identifier>
+  <identifier value="8"> <!-- complex value with a value (5)-->
     <use value="usual"/>
     <system value="urn:oid:0.1.2.3.4.5.6.7"/>
     <value value="654321"/>
   </identifier>
   <identifier>
-    <Observation>   <!-- unexpected contained resource (5) -->
+    <Observation>   <!-- unexpected contained resource (6) -->
       <status value="final"/>
-      <unknown value="huh" />  <!-- unknown element (6) -->
+      <unknown value="huh" />  <!-- unknown element (7) -->
     </Observation>
   </identifier>
-  <inactive value ="true"/>   <!-- unknown element (7) -->
-  <deceasedCode value="false" />  <!-- choice with illegal type (8) -->
+  <inactive value ="true"/>   <!-- unknown element (8) -->
+  <deceasedCode value="false" />  <!-- choice with illegal type (9) -->
   <contact>
     <relationship>
-      <codings>   <!-- unknown element (9) -->
+      <codings>   <!-- unknown element (10) -->
         <system value="http://hl7.org/fhir/ValueSet/patient-contact-relationship"/>
         <code value="owner"/>
       </codings>

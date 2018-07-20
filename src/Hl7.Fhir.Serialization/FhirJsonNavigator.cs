@@ -138,16 +138,21 @@ namespace Hl7.Fhir.Serialization
             return Current.ToString();
         }
 
+
+        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<FhirJsonNavigator>();
+
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(JsonSerializationDetails))
+            if (type == typeof(PipelineComponent))
+                return new[] { _componentLabel };
+            else if (type == typeof(JsonSerializationDetails))
             {
                 var (lineNumber, linePosition) = getPosition(Current.PositionNode);
 
                 return new[]
                 {
                     new JsonSerializationDetails()
-                    {                        
+                    {
                         OriginalValue = Current.JsonValue?.Value,
                         LineNumber = lineNumber,
                         LinePosition = linePosition,

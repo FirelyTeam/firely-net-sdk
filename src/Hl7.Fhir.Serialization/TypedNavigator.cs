@@ -7,6 +7,7 @@
 */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -79,10 +80,10 @@ namespace Hl7.Fhir.Serialization
         private void raiseTypeError(string message, ISourceNavigator current) =>
             Notify(current, ExceptionNotification.Error(
                 typeException(message, current)));
-                
+
         private static StructuralTypeException typeException(string message, ISourceNavigator position)
         {
-            if(position != null)
+            if (position != null)
                 message += $" (at {position.Path})";
 
             return new StructuralTypeException(message);
@@ -112,6 +113,12 @@ namespace Hl7.Fhir.Serialization
                 // If we don't have type information (no definition was found
                 // for current node), all we can do is return the underlying string value
                 if (!_current.IsTracking || _current.InstanceType == null) return sourceText;
+
+                if (!Primitives.IsPrimitive(Type))
+                {
+                    raiseTypeError($"Since type {Type} is not a primitive, it cannot have a value", _current.Node);
+                    return null;
+                }
 
                 // Finally, we have a (potentially) unparsed string + type info
                 // parse this primitive into the desired type
@@ -239,6 +246,8 @@ namespace Hl7.Fhir.Serialization
             // Move down the first child - note we don't use the nameFilter, 
             // the tryMoveToElement() which comes next will verify the filter (if any).
             if (!scan.MoveToFirstChild()) return false;
+
+
             var firstChildDef = down(_current);
             if (_current.IsTracking && firstChildDef == SerializationInfoCache.Empty && _current.InstanceType != null)
                 reportUnknownType(_current.InstanceType, _current.Node);
@@ -274,7 +283,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        
+
 
         public bool MoveToNext(string nameFilter)
         {
@@ -316,22 +325,16 @@ namespace Hl7.Fhir.Serialization
 
         public override string ToString() => $"{(_current.IsTracking ? ($"[{_current.InstanceType}] ") : "")}{_current.Node.ToString()}";
 
+        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<TypedNavigator>();
+
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(ElementSerializationInfo))
-            {
-                return new[]
-                {
-                     _current.IsTracking ? new ElementSerializationInfo(_current.SerializationInfo) : ElementSerializationInfo.NO_SERIALIZATION_INFO
-                };
-            }
+            if (type == typeof(PipelineComponent))
+                return (new[] { _componentLabel }).Union(_current.Node.Annotations(typeof(PipelineComponent)));
+            else if (type == typeof(ElementSerializationInfo) && _current.IsTracking)
+                return new[] { new ElementSerializationInfo(_current.SerializationInfo) };
             else
-            {
-                if (_current.Node is IAnnotated ia)
-                    return ia.Annotations(type);
-                else
-                    return Enumerable.Empty<object>();
-            }
+                return _current.Node.Annotations(type);
         }
     }
 }

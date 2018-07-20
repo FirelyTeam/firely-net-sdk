@@ -27,12 +27,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var json = File.ReadAllText(@"TestData\fp-test-patient.json");
 
             var nav = getJsonNav(json);
-
-            // Do the serialization without relying on present xml details from the source,
-            // so serialization will only be based on the supplied type information
-            var serializer = new FhirJsonWriter( new FhirJsonWriterSettings { IgnoreSourceJsonDetails = true } );
-
-            var output = SerializationUtil.WriteJsonToString(writer => serializer.Write(nav, writer));
+            var output = nav.ToJson();
             JsonAssert.AreSame(json, output);
         }
 

@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     public class FhirXmlWriterSettings
     {
         public bool IgnoreSourceXmlDetails;
-        public bool AllowUntypedSource;
+        public bool AllowUntypedElements;
         public bool IncludeUntypedElements;
         public IExceptionSink Sink;
     }
@@ -41,18 +41,26 @@ namespace Hl7.Fhir.Serialization
     public class FhirXmlWriter : IExceptionSource, IExceptionSink
     {
         public bool IgnoreSourceXmlDetails;
-        public bool AllowUntypedSource;
-        public bool IncludeUntypedMembers;
+        public bool AllowUntypedElements;
+        public bool IncludeUntypedElements;
 
         public FhirXmlWriter(FhirXmlWriterSettings settings = null)
         {
             IgnoreSourceXmlDetails = settings?.IgnoreSourceXmlDetails ?? false;
-            AllowUntypedSource = settings?.AllowUntypedSource ?? false;
-            IncludeUntypedMembers = settings?.IncludeUntypedElements ?? false;
+            AllowUntypedElements = settings?.AllowUntypedElements ?? false;
+            IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
             Sink = settings?.Sink;
         }
 
         public void Write(IElementNavigator source, XmlWriter destination)
+        {
+            //Re-enable when the PocoNavigator is also fed through the TypedNavigator
+            //if(!source.InPipeline(typeof(TypedNavigator)))
+            //    throw Error.NotSupported($"The {nameof(FhirXmlWriter)} requires a {nameof(TypedNavigator)} to be present in the pipeline.");
+            writeInternal(source, destination);
+        }
+
+        private void writeInternal(IElementNavigator source, XmlWriter destination)
         {
             var settings = new XmlWriterSettings { NewLineHandling = NewLineHandling.Entitize };
             var xw = XmlWriter.Create(destination, settings);
@@ -74,35 +82,50 @@ namespace Hl7.Fhir.Serialization
         }
 
         public void Write(ISourceNavigator source, XmlWriter destination)
-             => Write(source.AsElementNavigator(), destination);
-
-        private void write(IElementNavigator source, XContainer parent)
         {
-            var xmlDetails = IgnoreSourceXmlDetails ? null : source.GetXmlSerializationDetails();
-            var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
-            var serializationInfo = source.GetSerializationInfo();
+            bool hasXmlSource = source.InPipeline(typeof(FhirXmlNavigator));
 
-            if (serializationInfo == null && !AllowUntypedSource)
-                throw Error.NotSupported("The FhirXmlWriter does not work correctly with an untyped IElementNavigator source. Use the 'AllowUntypedSource' setting to override this behaviour and proceed anyway.");
+            // We can only work with an untyped source if we're doing a roundtrip,
+            // so we have all serialization details available.
+            if (hasXmlSource)
+                writeInternal(source.AsElementNavigator(), destination);
+            else
+                throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
+                    $"source if the source is a {nameof(FhirXmlNavigator)}.");
+        }
 
-            var hasTypeInfo = serializationInfo != null && serializationInfo != ElementSerializationInfo.NO_SERIALIZATION_INFO;
+        internal bool MustSerializeMember(IElementNavigator source, out ElementSerializationInfo info)
+        {
+            info = source.GetSerializationInfo();
 
-            if (!AllowUntypedSource && !hasTypeInfo)
+            if (info == null && !AllowUntypedElements)
             {
                 var message = $"Element '{source.Location}' is missing type information.";
-                if (IncludeUntypedMembers)
+                if (IncludeUntypedElements)
                 {
                     Notify(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));
-                    // fall through, to include the untyped member
+                    return true;
                 }
                 else
                 {
                     Notify(source, ExceptionNotification.Error(
                         new MissingTypeInformationException(message)));
-                    return;
+                    return false;
                 }
             }
+
+            return true;
+        }
+
+
+        private void write(IElementNavigator source, XContainer parent)
+        {
+            var xmlDetails = IgnoreSourceXmlDetails ? null : source.GetXmlSerializationDetails();
+            var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
+
+            if (!MustSerializeMember(source, out var serializationInfo)) return;
+            bool hasTypeInfo = serializationInfo != null;
 
             var value = source.Value != null ?
                 PrimitiveTypeConverter.ConvertTo<string>(source.Value) : null;

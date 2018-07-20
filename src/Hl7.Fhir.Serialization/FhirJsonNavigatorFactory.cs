@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static ISourceNavigator createUntyped(JObject root, string rootName, FhirJsonNavigatorSettings settings)
+        private static ISourceNavigator createUntyped(JObject root, string rootName, FhirJsonNavigatorSettings settings)
         {
             var name = rootName ?? root.GetResourceTypeFromObject();
 

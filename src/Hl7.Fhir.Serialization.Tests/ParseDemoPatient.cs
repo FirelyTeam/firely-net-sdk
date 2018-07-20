@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             bool hasTypeInfo = serInfo != null;
 
-            var serializer = new FhirXmlWriter(new FhirXmlWriterSettings { AllowUntypedSource = !hasTypeInfo });
+            var serializer = new FhirXmlWriter(new FhirXmlWriterSettings { AllowUntypedElements = !hasTypeInfo });
             using (var writer = XmlWriter.Create(outputBuilder))
             {
                 if (nav is ISourceNavigator isn) serializer.Write(isn, writer);
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Serialization.Tests
             bool hasTypeInfo = serInfo != null;
 
 
-            var serializer = new FhirJsonWriter(new FhirJsonWriterSettings { AllowUntypedSource = !hasTypeInfo });
+            var serializer = new FhirJsonWriter(new FhirJsonWriterSettings { AllowUntypedElements = !hasTypeInfo });
             using (var writer = new JsonTextWriter(new StringWriter(outputBuilder)))
             {
                 if (nav is ISourceNavigator isn) serializer.Write(isn, writer);

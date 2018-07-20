@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Support.Model
                 case "xhtml":
                     return typeof(string);
                 default:
-                    throw Error.Argument(nameof(typeName), $"Primitive type '{typeName}' is unknown and has no C# representation.");
+                    throw Error.Argument(nameof(typeName), $"Type '{typeName}' is not a primitive and its value cannot be parsed.");
             }
         }
     }

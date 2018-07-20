@@ -23,8 +23,7 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirJsonWriterSettings
     {
-        public bool IgnoreSourceJsonDetails;
-        public bool AllowUntypedSource;
+        public bool AllowUntypedElements;
         public bool IncludeUntypedElements;
         public IExceptionSink Sink;
     }
@@ -43,19 +42,26 @@ namespace Hl7.Fhir.Serialization
 
     public class FhirJsonWriter : IExceptionSource, IExceptionSink
     {
-        public bool IgnoreSourceJsonDetails;
-        public bool AllowUntypedSource;
-        public bool IncludeUntypedMembers;
+        public bool AllowUntypedElements;
+        public bool IncludeUntypedElements;
 
         public FhirJsonWriter(FhirJsonWriterSettings settings = null)
         {
-            IgnoreSourceJsonDetails = settings?.IgnoreSourceJsonDetails ?? false;
-            AllowUntypedSource = settings?.AllowUntypedSource ?? false;
-            IncludeUntypedMembers = settings?.IncludeUntypedElements ?? false;
+            AllowUntypedElements = settings?.AllowUntypedElements ?? false;
+            IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
             Sink = settings?.Sink;
         }
 
+
         public void Write(IElementNavigator source, JsonWriter destination)
+        {
+            //Re-enable when the PocoNavigator is also fed through the TypedNavigator
+            //if(!source.InPipeline(typeof(TypedNavigator)))
+            //    throw Error.NotSupported($"The {nameof(FhirXmlWriter)} requires a {nameof(TypedNavigator)} to be present in the pipeline.");
+            writeInternal(source, destination);
+        }
+
+        private void writeInternal(IElementNavigator source, JsonWriter destination)
         {
             if (source is IExceptionSource)
             {
@@ -80,14 +86,25 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+
         public void Write(ISourceNavigator source, JsonWriter destination)
-             => Write(source.AsElementNavigator(), destination);
+        {
+            bool hasJsonSource = source.InPipeline(typeof(FhirJsonNavigator));
+
+            // We can only work with an untyped source if we're doing a roundtrip,
+            // so we have all serialization details available.
+            if (hasJsonSource)
+                Write(source.AsElementNavigator(), destination);
+            else
+                throw Error.NotSupported($"The {nameof(FhirJsonWriter)} will only work correctly on an untyped " +
+                    $"source if the source is a {nameof(FhirJsonNavigator)}.");
+        }
 
 
         private (JToken first, JObject second) buildNode(IElementNavigator node, bool isPrimitive, bool isResource, object value)
         {
             JToken first = value != null ? buildValue(value) : null;
-            JObject second = node.HasChildren() ? buildChildren(node) : null;
+            JObject second = buildChildren(node);
 
             var containedResourceType = isResource ? (node.Type ?? node.GetResourceType()) : null;
             if (containedResourceType != null && second != null)
@@ -119,6 +136,30 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+        internal bool MustSerializeMember(IElementNavigator source, out ElementSerializationInfo info)
+        {
+            info = source.GetSerializationInfo();
+
+            if (info == null && !AllowUntypedElements)
+            {
+                var message = $"Element '{source.Location}' is missing type information.";
+                if (IncludeUntypedElements)
+                {
+                    Notify(source, ExceptionNotification.Warning(
+                        new MissingTypeInformationException(message)));
+                    return true;
+                }
+                else
+                {
+                    Notify(source, ExceptionNotification.Error(
+                        new MissingTypeInformationException(message)));
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private void addChildren(IElementNavigator node, JObject parent)
         {
             foreach (var nameGroup in node.Children().GroupBy(n => n.Name))
@@ -126,18 +167,18 @@ namespace Hl7.Fhir.Serialization
                 var members = nameGroup.ToList();
 
                 JsonSerializationDetails getSerializationDetails(IElementNavigator n)
-                        => IgnoreSourceJsonDetails ? null : n.GetJsonSerializationDetails();
+                        => n.GetJsonSerializationDetails();
 
                 // serialization info should be the same for each element in an
                 // array - but do not explicitly check that
-                if (!mustSerializeMember(members[0], out var generalInfo)) break;
-                var generalJsonDetails = getSerializationDetails(members[0]);
+                if (!MustSerializeMember(members[0], out var generalInfo)) break;
                 bool hasTypeInfo = generalInfo != null;
 
                 // If we have type information, we know whather we need an array.
                 // failing that, check whether this is a roundtrip and we have the information
                 // about arrays in the serialization deails. Failing that, assume the default:
                 // for unknown properties is to use an array - safest bet.
+                var generalJsonDetails = getSerializationDetails(members[0]);
                 var needsArray = generalInfo?.MayRepeat ?? generalJsonDetails?.IsArrayElement ?? true;
                 var isResource = generalInfo?.IsContainedResource ?? members[0].GetResourceType() != null;
                 var isPrimitive = members[0].Type != null ? Primitives.IsPrimitive(members[0].Type) :
@@ -187,32 +228,6 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private bool mustSerializeMember(IElementNavigator source, out ElementSerializationInfo info)
-        {
-            info = source.GetSerializationInfo();
-
-            if (info == null && !AllowUntypedSource)
-                throw Error.NotSupported("The FhirJsonWriter does not work correctly with an untyped IElementNavigator source. Use the 'AllowUntypedSource' setting to override this behaviour and proceed anyway.");
-
-            if (!AllowUntypedSource && info==null)
-            {
-                var message = $"Element '{source.Location}' is missing type information.";
-                if (IncludeUntypedMembers)
-                {
-                    Notify(source, ExceptionNotification.Warning(
-                        new MissingTypeInformationException(message)));
-                    return true;
-                }
-                else
-                {
-                    Notify(source, ExceptionNotification.Error(
-                        new MissingTypeInformationException(message)));
-                    return false;
-                }
-            }
-
-            return true;
-        }
 
         public IExceptionSink Sink { get; set; }
 

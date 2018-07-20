@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -24,9 +25,12 @@ namespace Hl7.Fhir.ElementModel
         public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators, string name = null) =>
             navigators.SelectMany(n => n.Children(name));
 
-
+        //Since moving to the first child can be very expensive on stacked navigators, we should not offer this
+        //functionality, unless by adding it to IElementNavigator
+        [Obsolete("This method can be prohibitively expensive, and should not be used anymore.")]
         public static bool HasChildren(this IEnumerable<IElementNavigator> navigators, string name = null) => navigators.Children(name).Any();
 
+        [Obsolete("This method can be prohibitively expensive, and should not be used anymore.")]
         public static bool HasChildren(this IElementNavigator navigator, string name = null) => navigator.Children(name).Any();
 
         public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator navigator)
@@ -67,5 +71,9 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public static void Visit(this IElementNavigator navigator, Action<int, IElementNavigator> visitor) => navigator.visit(visitor, 0);
+
+        public static IEnumerable<object> Annotations(this IElementNavigator nav, Type type) =>
+                nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
+
     }
 }
