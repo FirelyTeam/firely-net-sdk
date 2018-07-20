@@ -30,6 +30,7 @@ namespace Hl7.Fhir.Serialization
 
             Sink = settings?.Sink;
             AllowJsonCommments = settings?.AllowJsonComments ?? false;
+            PermissiveParsing = settings?.PermissiveParsing ?? false;
         }
 
         internal JsonNavigatorNode Current => _siblings[_index];
@@ -45,7 +46,8 @@ namespace Hl7.Fhir.Serialization
                 _nameIndex = this._nameIndex,
                 _parentPath = this._parentPath,
                 Sink = this.Sink,
-                AllowJsonCommments = this.AllowJsonCommments
+                AllowJsonCommments = this.AllowJsonCommments,
+                PermissiveParsing = this.PermissiveParsing
             };
 
             return copy;
@@ -57,6 +59,7 @@ namespace Hl7.Fhir.Serialization
 
         public IExceptionSink Sink { get; set; }
         public bool AllowJsonCommments;
+        public bool PermissiveParsing;
 
         private void raiseFormatError(string message, JToken node)
         {
@@ -86,7 +89,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (nodes[scan].Name == "fhir_comments")
                 {
-                    if(!AllowJsonCommments) raiseFormatError("The 'fhir_comments' feature is not valid in FHIR DSTU2 and later", nodes[scan].PositionNode);
+                    if(!AllowJsonCommments && !PermissiveParsing) raiseFormatError("The 'fhir_comments' feature is not valid in FHIR DSTU2 and later", nodes[scan].PositionNode);
                     continue;      // ignore pre-DSTU2 Json comments
                 }
                 if (namefilter == null || nodes[scan].Name == namefilter || nodes[scan].Name == "_" + namefilter)

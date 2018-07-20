@@ -72,6 +72,10 @@ namespace Hl7.Fhir.Serialization
             void write()
             {
                 var (root, _) = buildNode(source, isPrimitive: false, isResource: true, null);
+
+                if (root == null)
+                    root = new JObject();
+
                 root.WriteTo(destination);
             }
         }
@@ -86,7 +90,7 @@ namespace Hl7.Fhir.Serialization
             JObject second = node.HasChildren() ? buildChildren(node) : null;
 
             var containedResourceType = isResource ? (node.Type ?? node.GetResourceType()) : null;
-            if (containedResourceType != null)
+            if (containedResourceType != null && second != null)
                 second.AddFirst(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, containedResourceType));
 
             // If this is a complex type with a value (should not occur)
@@ -107,7 +111,11 @@ namespace Hl7.Fhir.Serialization
             {
                 var objectWithChildren = new JObject();
                 addChildren(n, objectWithChildren);
-                return objectWithChildren;
+
+                if (objectWithChildren.Count == 0)
+                    return null;
+                else
+                    return objectWithChildren;
             }
         }
 
@@ -140,8 +148,11 @@ namespace Hl7.Fhir.Serialization
                     var details = getSerializationDetails(m);
                     object value = hasTypeInfo ? m.Value : getSerializationDetails(m)?.OriginalValue ?? m.Value;
                     return buildNode(m, isPrimitive, isResource, value);
-                }).ToList();
-               
+                }).Where(c => !(c.first == null && c.second == null)).ToList();
+
+                // Don't add empty nodes to the parent
+                if (!children.Any()) return;
+
                 var needsMainProperty = children.Any(c => c.first != null);
                 var needsShadowProperty = children.Any(c => c.second != null);
                 var propertyName = generalInfo?.IsChoiceElement == true ?

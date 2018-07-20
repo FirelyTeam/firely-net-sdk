@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirJsonNavigatorSettings
     {
-        //public bool PermissiveParsing;
+        public bool PermissiveParsing;
         public bool AllowJsonComments;
         public IExceptionSink Sink;
     }

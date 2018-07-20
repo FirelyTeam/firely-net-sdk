@@ -34,6 +34,7 @@
   <ItemGroup>
     <None Remove="TestData\BundleWithOneEntry.json" />
     <None Remove="TestData\patient-out-of-order.xml" />
+    <None Remove="TestData\test-empty-nodes.json" />
     <None Remove="TestData\test-empty-nodes.xml" />
     <None Remove="TestData\typeErrors.xml" />
   </ItemGroup>

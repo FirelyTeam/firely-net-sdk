@@ -52,19 +52,22 @@ namespace Hl7.Fhir.Serialization
                 JValue value = null;
                 JObject contents = null;
 
-                if(main?.Type == JTokenType.Null && shadow?.Type == JTokenType.Null)
+                if (main?.Type == JTokenType.Null && shadow?.Type == JTokenType.Null)
                 {
-                    parent.raiseFormatError($"The properties '{name}' and '_{name}' are both null, which is not allowed", main);
+                    if (!parent.PermissiveParsing)
+                        parent.raiseFormatError($"The properties '{name}' and '_{name}' are both null, which is not allowed", main);
                     return null;
                 }
                 else if (main?.Type == JTokenType.Null && shadow == null)
                 {
-                    parent.raiseFormatError($"The property '{name}' cannot have just a null value", main);
+                    if (!parent.PermissiveParsing)
+                        parent.raiseFormatError($"The property '{name}' cannot have just a null value", main);
                     return null;
                 }
                 else if (main == null && shadow?.Type == JTokenType.Null)
                 {
-                    parent.raiseFormatError($"The property '_{name}' cannot have just a null value", main);
+                    if (!parent.PermissiveParsing)
+                        parent.raiseFormatError($"The property '_{name}' cannot have just a null value", main);
                     return null;
                 }
 
@@ -79,7 +82,8 @@ namespace Hl7.Fhir.Serialization
                             contents = validateObject(obj, name);
                             break;
                         default:
-                            parent.raiseFormatError($"The value for property '{name}' must be a value or an object, not a {main.Type}", main);
+                            if (!parent.PermissiveParsing)
+                                parent.raiseFormatError($"The value for property '{name}' must be a value or an object, not a {main.Type}", main);
                             break;
                     }
                 }
@@ -92,7 +96,7 @@ namespace Hl7.Fhir.Serialization
                             validateValue(val, $"_{name}");   // just report error, has no real value to return
                             break;
                         case JObject obj:
-                            if(contents != null)
+                            if (contents != null)
                                 parent.raiseFormatError($"The '{name}' and '_{name}' properties cannot both contain complex data.", shadow);
                             else
                                 contents = validateObject(obj, $"_{name}");
@@ -102,7 +106,7 @@ namespace Hl7.Fhir.Serialization
                             break;
                     }
                 }
-             
+
                 // This can only be true, if the logic just before left both value and contents == null because of errors
                 // In that case, don't return any result from the build - which will make sure the caller skips
                 // this property completely
@@ -110,16 +114,17 @@ namespace Hl7.Fhir.Serialization
 
                 return new JsonNavigatorNode(name, value, contents, parent, isArrayElement);
 
-                JValue validateValue(JValue v, string pName)                    
+                JValue validateValue(JValue v, string pName)
                 {
                     if (v.Value is string s && String.IsNullOrWhiteSpace(s))
                     {
-                        parent.raiseFormatError($"The property '{pName}' has an empty string value, which is not allowed.", v);
+                        if (!parent.PermissiveParsing)
+                            parent.raiseFormatError($"The property '{pName}' has an empty string value, which is not allowed.", v);
                         return null;
                     }
                     if (v.Type == JTokenType.Null)
                     {
-                        if (!isArrayElement)
+                        if (!isArrayElement && !parent.PermissiveParsing)
                             parent.raiseFormatError($"The property '{pName}' has an 'null' value, which is only allowed in arrays.", v);
                         return null;
                     }
@@ -131,7 +136,8 @@ namespace Hl7.Fhir.Serialization
                 {
                     if (o.Count == 0)
                     {
-                        parent.raiseFormatError($"The object for property '{pName}' is empty, which is not allowed.", o);
+                        if (!parent.PermissiveParsing)
+                            parent.raiseFormatError($"The object for property '{pName}' is empty, which is not allowed.", o);
                         return null;
                     }
                     else
@@ -244,6 +250,8 @@ namespace Hl7.Fhir.Serialization
 
             private void validateCardinalities(JProperty main, JProperty shadow)
             {
+                if (_parent.PermissiveParsing) return;
+
                 // If main and shadow exists, check whether the number of elements match up
                 if (main != null && shadow != null)
                 {
