@@ -3,7 +3,7 @@ using System;
 
 namespace Hl7.Fhir.Utility
 {
-    public delegate bool ExceptionNotificationHandler(object source, ExceptionNotification args);
+    public delegate void ExceptionNotificationHandler(object source, ExceptionNotification args);
 
     public static class ExceptionSourceExtensions
     {
@@ -35,10 +35,8 @@ namespace Hl7.Fhir.Utility
 
             public void Notify(object source, ExceptionNotification args)
             {
-                var handled = _handler(source, args);
-
-                if(!handled && _originalSink != null)
-                    _originalSink.Notify(source, args);
+                _handler(source, args);
+                _originalSink?.Notify(source, args);
             }
 
             #region IDisposable Support

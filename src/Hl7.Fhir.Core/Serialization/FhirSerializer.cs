@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
         {
             Settings = new ParserSettings();
         }
-
+#pragma warning disable 612, 618
         // [WMR 20160421] Caller is responsible for disposing writer
         internal protected void Serialize(Base instance, IFhirWriter writer, SummaryType summary = SummaryType.False, string root = null)
         {
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
             else
                 new ComplexTypeWriter(writer, Settings).Serialize(instance, summary, root: root);
         }
-
+#pragma warning restore 612, 618
     }
 
     public class FhirXmlSerializer : BaseFhirSerializer
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Serialization
         public string SerializeToString(Base data, SummaryType summary = SummaryType.False, string root = null)
         {
             // [WMR 20160421] Explicit disposal
-            return xmlWriterToString(xw =>
+            return SerializationUtil.WriteXmlToString(xw =>
             {
                 using (var writer = new XmlFhirWriter(xw))
                 {
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Serialization
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null)
         {
             // [WMR 20160421] Explicit disposal
-            return xmlWriterToBytes(xw =>
+            return SerializationUtil.WriteXmlToBytes(xw =>
             {
                 using (var writer = new XmlFhirWriter(xw))
                 {
@@ -81,50 +81,6 @@ namespace Hl7.Fhir.Serialization
 
         // [WMR 20160421] Caller is responsible for disposing writer
         public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False) => Serialize(instance, new XmlFhirWriter(writer), summary);
-
-        private static byte[] xmlWriterToBytes(Action<XmlWriter> serializer)
-        {
-            // [WMR 20160421] Explicit disposal
-
-            //MemoryStream stream = new MemoryStream();
-            //XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false), OmitXmlDeclaration = true };
-            //XmlWriter xw = XmlWriter.Create(stream, settings);
-            //serializer(xw);
-            //xw.Flush();
-            //return stream.ToArray();
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false), OmitXmlDeclaration = true };
-                using (XmlWriter xw = XmlWriter.Create(stream, settings))
-                {
-                    // [WMR 20160421] serializer action now calls Flush before disposing
-                    serializer(xw);
-                    // xw.Flush();
-                    return stream.ToArray();
-                }
-            }
-        }
-
-        private static string xmlWriterToString(Action<XmlWriter> serializer)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            // [WMR 20160421] Explicit disposal
-            //XmlWriter xw = XmlWriter.Create(sb, new XmlWriterSettings { OmitXmlDeclaration = true });
-            //serializer(xw);
-            //xw.Flush();
-            //return sb.ToString();
-
-            using (XmlWriter xw = XmlWriter.Create(sb, new XmlWriterSettings { OmitXmlDeclaration = true }))
-            {
-                // [WMR 20160421] serializer action now calls Flush before disposing
-                serializer(xw);
-                // xw.Flush();
-                return sb.ToString();
-            }
-
-        }
     }
 
     public class FhirJsonSerializer : BaseFhirSerializer
@@ -141,7 +97,7 @@ namespace Hl7.Fhir.Serialization
         {
             // [WMR 20160421] Explicit disposal
             // return jsonWriterToString(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary, root));
-            return jsonWriterToString(jw =>
+            return SerializationUtil.WriteJsonToString(jw =>
             {
                 using (var writer = new JsonDomFhirWriter(jw))
                 {
@@ -155,7 +111,7 @@ namespace Hl7.Fhir.Serialization
         {
             // [WMR 20160421] Explicit disposal
             // return jsonWriterToBytes(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary, root));
-            return jsonWriterToBytes(jw =>
+            return SerializationUtil.WriteJsonToBytes(jw =>
             {
                 using (var writer = new JsonDomFhirWriter(jw))
                 {
@@ -167,54 +123,6 @@ namespace Hl7.Fhir.Serialization
 
         // [WMR 20160421] Caller is responsible for disposing writer
         public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False) => Serialize(instance, new JsonDomFhirWriter(writer), summary);
-
-        private static byte[] jsonWriterToBytes(Action<JsonWriter> serializer)
-        {
-            // [WMR 20160421] Explicit disposal
-
-            //MemoryStream stream = new MemoryStream();
-            //var sw = new StreamWriter(stream, new UTF8Encoding(false));
-            //JsonWriter jw = new BetterDecimalJsonTextWriter(sw);
-            //serializer(jw);
-            //jw.Flush();
-            //return stream.ToArray();
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                using (var sw = new StreamWriter(stream, new UTF8Encoding(false)))
-                using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
-                {
-                    // [WMR 20160421] serializer action now calls Flush before disposing
-                    serializer(jw);
-                    // jw.Flush();
-                    return stream.ToArray();
-                }
-            }
-        }
-
-        private static string jsonWriterToString(Action<JsonWriter> serializer)
-        {
-            StringBuilder resultBuilder = new StringBuilder();
-
-            // [WMR 20160421] Explicit disposal
-
-            //StringWriter sw = new StringWriter(resultBuilder);
-            //JsonWriter jw = new BetterDecimalJsonTextWriter(sw);
-            //serializer(jw);
-            //jw.Flush();
-            //jw.Close();
-            //return resultBuilder.ToString();
-
-            using (StringWriter sw = new StringWriter(resultBuilder))
-            using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
-            {
-                // [WMR 20160421] serializer action now calls Flush before disposing
-                serializer(jw);
-                // jw.Flush();
-                // jw.Close();
-                return resultBuilder.ToString();
-            }
-        }
     }
 
     public static class FhirSerializer

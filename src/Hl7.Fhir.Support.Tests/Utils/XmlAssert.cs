@@ -34,9 +34,10 @@ namespace Hl7.Fhir.Tests
 
         private static void areSame(string context, XElement expected, XElement actual, bool ignoreSchemaLocation)
         {
-            //if (expected.Name.ToString() != actual.Name.ToString())
-            //    throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
-            //        expected.Name.ToString(), actual.Name.ToString(), context));
+            if (expected.Name.ToString() != actual.Name.ToString())
+                throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
+                    expected.Name.ToString(), actual.Name.ToString(), context));
+
             bool mustCheckMe(XAttribute a) => a.IsNamespaceDeclaration == false && 
                             (!ignoreSchemaLocation || a.Name != XmlNs.XSCHEMALOCATION);
 

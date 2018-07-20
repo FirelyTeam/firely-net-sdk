@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -60,8 +61,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
 
-        // resurface when read through a validating navigator
-        [TestMethod, Ignore]
+        [TestMethod]
         public void CompareXmlJsonParseOutcomes()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
@@ -94,6 +94,20 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void PingpongXml()
+        {
+            var tp = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            // will allow whitespace and comments to come through      
+            var navXml = FhirXmlNavigator.Typed(tp, new PocoSerializationInfoProvider());
+            var json = navXml.ToJson();
+
+            var navJson = FhirJsonNavigator.Typed(json, new PocoSerializationInfoProvider());
+            var xml = navJson.ToXml();
+
+            XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);
+        }
+
+        [TestMethod]
         public void CatchesBasicTypeErrorsWithUnknownRoot()
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
@@ -103,7 +117,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var errors = new List<ExceptionNotification>();
 
-                using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
+                using (patient.Catch((o, arg) => errors.Add(arg) ))
                 {
                     var x = patient.DescendantsAndSelf().ToList();
                 }
@@ -125,7 +139,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var errors = new List<ExceptionNotification>();
 
-                using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
+                using (patient.Catch((o, arg) => errors.Add(arg)))
                 {
                     patient.Visit(touchValue);
                 }

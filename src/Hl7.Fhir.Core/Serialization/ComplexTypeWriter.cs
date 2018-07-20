@@ -19,6 +19,7 @@ namespace Hl7.Fhir.Serialization
 {
     internal class ComplexTypeWriter
     {
+#pragma warning disable 612, 618
         private IFhirWriter _writer;
         private ModelInspector _inspector;
  
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
         }
-
+#pragma warning restore 612, 618
 
         internal void Serialize(Base instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers, string root=null)
         {

@@ -31,7 +31,8 @@ namespace Hl7.Fhir.Utility
         public static ComparisonResult IsEqualTo(this IElementNavigator expected, IElementNavigator actual)
         {
             if (expected.Name != actual.Name) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
-            if (!valuesEqual(expected.Value, actual.Value)) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
+            if (!Object.Equals(expected.Value,actual.Value))
+                return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
             if (expected.Type != actual.Type && actual.Type != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.Type}', expected '{expected.Type}'");
             if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"location: was '{actual.Location}', expected '{expected.Location}'");
 
@@ -56,13 +57,13 @@ namespace Hl7.Fhir.Utility
 
             return ComparisonResult.OK;
 
-            bool valuesEqual(object e, object a)
-            {
-                string eVal = e != null ? PrimitiveTypeConverter.ConvertTo<string>(e) : null;
-                string aVal = a != null ? PrimitiveTypeConverter.ConvertTo<string>(a) : null;
+            //bool valuesEqual(object e, object a)
+            //{
+            //    string eVal = e != null ? PrimitiveTypeConverter.ConvertTo<string>(e) : null;
+            //    string aVal = a != null ? PrimitiveTypeConverter.ConvertTo<string>(a) : null;
 
-                return eVal == aVal;
-            }
+            //    return eVal == aVal;
+            //}
         }
     }
 }

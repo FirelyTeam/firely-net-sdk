@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var errors = new List<ExceptionNotification>();
 
-                using (patient.Catch((o, arg) => { errors.Add(arg); return true; }))
+                using (patient.Catch((o, arg) => errors.Add(arg)))
                 {
                     var x = patient.DescendantsAndSelf().ToList();
                 }

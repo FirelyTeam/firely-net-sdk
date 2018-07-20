@@ -15,7 +15,9 @@ namespace Hl7.Fhir.Serialization
 {
     internal class DispatchingWriter
     {
+#pragma warning disable 612, 618
         private readonly IFhirWriter _writer;
+
         private readonly ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
@@ -26,6 +28,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
         }
+#pragma warning restore 612, 618
 
         internal void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
         {

@@ -8,6 +8,7 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,24 +27,172 @@ namespace Hl7.Fhir.Utility
             return xml.IsMatch(data.TrimStart());
         }
 
-        public static bool ProbeIsJson(string data)
+        public static bool ProbeIsJson(string data) => data.TrimStart().StartsWith("{");
+
+
+        private static XDocument XDocumentFromReaderInternal(XmlReader reader)
         {
-            return data.TrimStart().StartsWith("{");
+            XDocument doc;
+
+            try
+            {
+                doc = XDocument.Load(reader, LoadOptions.SetLineInfo);
+            }
+            catch (XmlException xec)
+            {
+                throw new FormatException($"Cannot parse xml: {xec.Message}", xec);
+            }
+
+            return doc;
+        }
+
+        public static JObject JObjectFromReaderInternal(JsonReader reader)
+        {
+            JObject doc;
+
+            try
+            {
+                doc = JObject.Load(reader,
+                    new JsonLoadSettings
+                    {
+                        CommentHandling = CommentHandling.Ignore,
+                        LineInfoHandling = LineInfoHandling.Load
+                    });
+            }
+            catch (JsonReaderException jre)
+            {
+                throw new FormatException($"Cannot parse json: {jre.Message}", jre);
+            }
+
+            return doc;
         }
 
 
-        public static XDocument XDocumentFromXmlText(string xml)
+        public static XDocument XDocumentFromReader(XmlReader reader, bool ignoreComments = true)
+            => XDocumentFromReaderInternal(WrapXmlReader(reader, ignoreComments));
+
+        public static JObject JObjectFromReader(JsonReader reader)
         {
-            return XDocument.Parse(SerializationUtil.SanitizeXml(xml));
+            // Override settings, sorry but this is vital
+            reader.DateParseHandling = DateParseHandling.None;
+            reader.FloatParseHandling = FloatParseHandling.Decimal;
+
+            return JObjectFromReaderInternal(reader);
         }
 
 
-        // [WMR 20160421] Note: StringReader, XmlReader and JsonReader don't require explicit disposal
-        // JsonTextReader overrides Close method => explicitly dispose
+        public static XDocument XDocumentFromXmlText(string xml, bool ignoreComments = true)
+        {
+            using (var reader = XmlReaderFromXmlText(xml))
+            {
+                return XDocumentFromReaderInternal(reader);
+            }
+        }
+
+        public static JObject JObjectFromJsonText(string json)
+        {
+            using (var reader = JsonReaderFromJsonText(json))
+            {
+                return JObjectFromReader(reader);
+            }
+        }
+
 
         public static XmlReader XmlReaderFromXmlText(string xml, bool ignoreComments = true)
+            => WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))), ignoreComments);
+
+        public static JsonReader JsonReaderFromJsonText(string json) 
+            => JsonReaderFromTextReader(new StringReader(json));
+
+        public static XmlReader XmlReaderFromStream(Stream input, bool ignoreComments = true)
+            => WrapXmlReader(XmlReader.Create(input), ignoreComments);
+
+        public static JsonReader JsonReaderFromStream(Stream input)
+            => JsonReaderFromTextReader(new StreamReader(input));
+
+        private static JsonReader JsonReaderFromTextReader(TextReader input)
         {
-            return WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))), ignoreComments);
+            return new JsonTextReader(input)
+            {
+                DateParseHandling = DateParseHandling.None,
+                FloatParseHandling = FloatParseHandling.Decimal,
+            };
+        }
+
+
+        public static XmlReader WrapXmlReader(XmlReader xmlReader, bool ignoreComments = true)
+        {
+            var settings = new XmlReaderSettings
+            {
+                IgnoreComments = ignoreComments,
+                IgnoreProcessingInstructions = true,
+                IgnoreWhitespace = true,
+                DtdProcessing = DtdProcessing.Prohibit
+            };
+
+            return XmlReader.Create(xmlReader, settings);
+        }
+
+        public static byte[] WriteXmlToBytes(Action<XmlWriter> serializer)
+        {
+            // [WMR 20160421] Explicit disposal
+            using (MemoryStream stream = new MemoryStream())
+            {
+                XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false), OmitXmlDeclaration = true, NewLineHandling = NewLineHandling.Entitize };
+                using (XmlWriter xw = XmlWriter.Create(stream, settings))
+                {
+                    // [WMR 20160421] serializer action now calls Flush before disposing
+                    serializer(xw);
+                    xw.Flush();
+                    return stream.ToArray();
+                }
+            }
+        }
+
+        public static string WriteXmlToString(Action<XmlWriter> serializer)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // [WMR 20160421] Explicit disposal
+            using (XmlWriter xw = XmlWriter.Create(sb, new XmlWriterSettings { OmitXmlDeclaration = true }))
+            {
+                // [WMR 20160421] serializer action now calls Flush before disposing
+                serializer(xw);
+                return sb.ToString();
+            }
+        }
+
+
+        public static string WriteJsonToString(Action<JsonWriter> serializer)
+        {
+            StringBuilder resultBuilder = new StringBuilder();
+
+            // [WMR 20160421] Explicit disposal
+            using (StringWriter sw = new StringWriter(resultBuilder))
+            using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
+            {
+                // [WMR 20160421] serializer action now calls Flush before disposing
+                serializer(jw);
+                // jw.Flush();
+                // jw.Close();
+                return resultBuilder.ToString();
+            }
+        }
+
+        public static byte[] WriteJsonToBytes(Action<JsonWriter> serializer)
+        {
+            // [WMR 20160421] Explicit disposal
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (var sw = new StreamWriter(stream, new UTF8Encoding(false)))
+                using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
+                {
+                    // [WMR 20160421] serializer action now calls Flush before disposing
+                    serializer(jw);
+                    // jw.Flush();
+                    return stream.ToArray();
+                }
+            }
         }
 
         public static JsonWriter CreateJsonTextWriter(TextWriter writer)
@@ -71,83 +220,6 @@ namespace Hl7.Fhir.Utility
             }
         }
 
-
-        public static XmlReader XmlReaderFromStream(Stream input, bool ignoreComments = true)
-        {
-            // [EK 20170706] The caller should ensure the input stream is at the beginning (or not, maybe you are reading streams
-            // partially, and the API should stay off
-            //if (input.Position != 0)
-            //{
-            //    if (input.CanSeek)
-            //        input.Seek(0, SeekOrigin.Begin);
-            //    else
-            //        throw Error.InvalidOperation("Stream is not at beginning, and seeking is not supported by this stream");
-            //}
-
-            return WrapXmlReader(XmlReader.Create(input), ignoreComments);
-        }
-
-        public static XmlReader WrapXmlReader(XmlReader xmlReader, bool ignoreComments = true)
-        {
-            var settings = new XmlReaderSettings
-            {
-                IgnoreComments = ignoreComments,
-                IgnoreProcessingInstructions = true,
-                IgnoreWhitespace = true,
-                DtdProcessing = DtdProcessing.Prohibit
-            };
-
-            return XmlReader.Create(xmlReader, settings);
-        }
-
-
-        public static XDocument XDocumentFromReader(XmlReader reader, bool ignoreComments = true)
-        {
-            XDocument doc;
-
-            try
-            {
-                doc = XDocument.Load(WrapXmlReader(reader, ignoreComments), LoadOptions.SetLineInfo);
-            }
-            catch (XmlException xec)
-            {
-                throw Error.Format("Cannot parse xml: " + xec.Message);
-            }
-
-            return doc;
-        }
-
-        // [WMR 20160421] Caller is responsible for disposing the returned Json(Text)Reader
-        public static JsonReader JsonReaderFromJsonText(string json)
-        {
-            JsonReader reader = new JsonTextReader(new StringReader(json))
-            {
-                DateParseHandling = DateParseHandling.None,
-                FloatParseHandling = FloatParseHandling.Decimal,                
-            };
-
-            return reader;
-        }
-
-        public static JsonReader JsonReaderFromStream(Stream s)
-        {
-            JsonReader reader = new JsonTextReader(new StreamReader(s))
-            {
-                DateParseHandling = DateParseHandling.None,
-                FloatParseHandling = FloatParseHandling.Decimal
-            };
-
-            return reader;
-        }
-
-
-        public static JObject JObjectFromReader(JsonReader reader)
-        {
-            reader.DateParseHandling = DateParseHandling.None;
-            reader.FloatParseHandling = FloatParseHandling.Decimal;
-
-            return JObject.Load(reader);
-        }
 
 
         /// <summary>

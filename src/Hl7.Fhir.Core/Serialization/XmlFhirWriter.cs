@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
+    [Obsolete("Replace useage of class with the XmlFhirWriter from the Hl7.Fhir.Serialization assembly, and call a Write(), which accepts IElementNavigator")]
     internal class XmlFhirWriter : IFhirWriter
     {
         private XmlWriter xw;

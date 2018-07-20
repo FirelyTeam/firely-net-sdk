@@ -16,6 +16,7 @@ using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Serialization
 {
+    [Obsolete("Replace useage of class with the FhirJsonWriter from the Hl7.Fhir.Serialization assembly, and call a Write(), which accepts IElementNavigator")]
     public interface IFhirWriter : IDisposable
     {
         void WriteStartRootObject(string name, bool contained);

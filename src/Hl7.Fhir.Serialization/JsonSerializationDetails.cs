@@ -6,6 +6,7 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 
@@ -21,5 +22,11 @@ namespace Hl7.Fhir.Serialization
         public int LineNumber { get; internal set; }
         public int LinePosition { get; internal set; }
 
+    }
+
+    public static class JsonSerializationDetailsExtensions
+    {
+        public static JsonSerializationDetails GetJsonSerializationDetails(this IElementNavigator navigator)
+            => navigator is IAnnotated ia && ia.TryGetAnnotation<JsonSerializationDetails>(out var rt) ? rt : null;
     }
 }

@@ -36,24 +36,6 @@ namespace Hl7.Fhir.Serialization
 
             private readonly FhirJsonNavigator _parent;
 
-            public JsonNavigatorNode(string name, JObject content, FhirJsonNavigator parent, bool isArrayElement)
-            {
-                Name = name;
-                JsonValue = null;
-                JsonObject = content;
-                _parent = parent;
-                IsArrayElement = isArrayElement;
-            }
-
-            public JsonNavigatorNode(string name, JValue value, FhirJsonNavigator parent, bool isArrayElement)
-            {
-                Name = name;
-                JsonValue = value;
-                JsonObject = null;
-                _parent = parent;
-                IsArrayElement = isArrayElement;
-            }
-
             public JsonNavigatorNode(string name, JValue value, JObject content, FhirJsonNavigator parent, bool isArrayElement)
             {
                 Name = name;

@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
     {
         internal FhirJsonNavigator(JObject current, string nodeName, FhirJsonNavigatorSettings settings = null)
         {
-            _siblings = new[] { new JsonNavigatorNode(nodeName, current, this, false) };
+            _siblings = new[] { new JsonNavigatorNode(nodeName, null, current, this, false) };
             _index = 0;
             _nameIndex = 0;
             _parentPath = null;
@@ -60,9 +60,8 @@ namespace Hl7.Fhir.Serialization
 
         private void raiseFormatError(string message, JToken node)
         {
-            var position = getPosition(node);
-
-            Notify(this, ExceptionNotification.Error(Error.Format(message, position.lineNumber, position.linePosition)));
+            var (lineNumber, linePosition) = getPosition(node);
+            Notify(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
         }
 
         public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);

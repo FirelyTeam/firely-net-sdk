@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model.Primitives
             }
             catch
             {
-                value = default(PartialTime);
+                value = default;
                 return false;
             }
         }

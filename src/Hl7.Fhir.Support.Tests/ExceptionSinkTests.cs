@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Support.Tests
 
             string intercepted = null;
 
-            using (src.Catch((_,args) => { intercepted = args.Message; return true; }))
+            using (src.Catch((_,args) => intercepted = args.Message))
             {
                 src.Test("Intercepted-true");
             }
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Support.Tests
             Assert.AreEqual("Intercepted-true", intercepted);
             Assert.AreEqual(1, ts.Received.Count());   // since interceptor returned 'true'
 
-            using (src.Catch((_,args) => { intercepted = args.Message; return false; }))
+            using (src.Catch((_,args) => intercepted = args.Message))
             {
                 src.Test("Intercepted-false");
             }
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Support.Tests
 
             string intercepted = null;
 
-            using (src.Catch((_,args) => { intercepted = args.Message; return true; }))
+            using (src.Catch((_,args) => intercepted = args.Message))
             {
                 src.Test("Intercepted-true");
             }

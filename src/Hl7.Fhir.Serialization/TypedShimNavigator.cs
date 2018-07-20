@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Name => _sourceNav.Name;
 
-        public string Type => throw Error.NotImplemented("You cannot invoke the Type getter on an (untyped) ISourceNavigator");
+        public string Type => null; //throw Error.NotImplemented("You cannot invoke the Type getter on an (untyped) ISourceNavigator");
 
         public object Value => _sourceNav.Text;
 

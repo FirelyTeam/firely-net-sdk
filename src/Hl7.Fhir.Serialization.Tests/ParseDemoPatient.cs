@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
@@ -128,19 +129,20 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var outputBuilder = new StringBuilder();
             IElementSerializationInfo serInfo = null;
-            bool hasTypeInfo = serInfo != null;
 
-            switch(nav)
+            switch (nav)
             {
                 case ISourceNavigator isn: serInfo = isn.GetSerializationInfo(); return;
                 case IElementNavigator ien: serInfo = ien.GetSerializationInfo(); return;
             }
 
+            bool hasTypeInfo = serInfo != null;
+
             var serializer = new FhirXmlWriter(new FhirXmlWriterSettings { AllowUntypedSource = !hasTypeInfo });
             using (var writer = XmlWriter.Create(outputBuilder))
             {
                 if (nav is ISourceNavigator isn) serializer.Write(isn, writer);
-                if(nav is IElementNavigator ien) serializer.Write(ien, writer);
+                if (nav is IElementNavigator ien) serializer.Write(ien, writer);
             }
 
             var output = outputBuilder.ToString();
@@ -148,26 +150,41 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
 
-        public static void RoundtripJson(Func<string, IElementNavigator> navCreator)
+        public static void RoundtripJson(Func<string, object> navCreator)
         {
-            Assert.Fail("Write test");
-            //var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
-            //var nav = navCreator(tp);
+            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            compareJson(navCreator, tp);
 
-            //var outputBuilder = new StringBuilder();
-            //bool hasTypeInfo = nav.GetSerializationInfo() != null;
-
-            //var serializer = new FhirJsonWriter(new FhirXmlWriterSettings { AllowUntypedSource = !hasTypeInfo });
-            //using (var writer = new JsonTextWriter(new StringWriter(outputBuilder)))
-            //{
-            //    serializer.Write(nav, writer);
-            //}
-
-            //var output = outputBuilder.ToString();
-            //JsonAssert.AreSame("fp-test-patient.json", tp, output);
+            tp = File.ReadAllText(@"TestData\json-edge-cases.json");
+            compareJson(navCreator, tp);
         }
 
+        private static void compareJson(Func<string, object> navCreator, string tp)
+        {
+            var nav = navCreator(tp);
 
+            var outputBuilder = new StringBuilder();
+            IElementSerializationInfo serInfo = null;
+
+            switch (nav)
+            {
+                case ISourceNavigator isn: serInfo = isn.GetSerializationInfo(); return;
+                case IElementNavigator ien: serInfo = ien.GetSerializationInfo(); return;
+            }
+
+            bool hasTypeInfo = serInfo != null;
+
+
+            var serializer = new FhirJsonWriter(new FhirJsonWriterSettings { AllowUntypedSource = !hasTypeInfo });
+            using (var writer = new JsonTextWriter(new StringWriter(outputBuilder)))
+            {
+                if (nav is ISourceNavigator isn) serializer.Write(isn, writer);
+                if (nav is IElementNavigator ien) serializer.Write(ien, writer);
+            }
+
+            var output = outputBuilder.ToString();
+            JsonAssert.AreSame(tp, output);
+        }
 
         public static void CanReadThroughNavigator(IElementNavigator nav, bool typed)
         {

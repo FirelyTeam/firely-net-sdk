@@ -10,6 +10,7 @@ using System;
 using System.Xml;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Support.Model;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -17,39 +18,8 @@ namespace Hl7.Fhir.Serialization
     {
         public static object FromSerializedValue(string value, string primitiveType)
         {
-            switch (primitiveType)
-            {
-                case "boolean":
-                    return convertXmlStringToPrimitive(typeof(bool),value);
-                case "integer":
-                case "unsignedInt":
-                case "positiveInt":
-                    return convertXmlStringToPrimitive(typeof(long), value);
-                case "time":
-                    return convertXmlStringToPrimitive(typeof(PartialTime), value);
-                case "instant":
-                case "date":
-                case "dateTime":
-                    return convertXmlStringToPrimitive(typeof(PartialDateTime), value);
-                case "decimal":
-                    return convertXmlStringToPrimitive(typeof(decimal), value);
-                case "string":
-                case "code":
-                case "id":
-                case "uri":
-                case "oid":
-                case "uuid":
-                case "canonical":
-                case "url":
-                case "markdown":
-                case "base64Binary":
-                    return value;
-                case "xhtml":
-                    return value;
-                default:
-                    throw Error.NotSupported($"Primitive type '{primitiveType}' is unknown and cannot be interpreted.");
-            }
-
+            var type = Primitives.GetNativeRepresentation(primitiveType);
+            return ConvertTo(value, type);
         }
 
 
@@ -84,7 +54,6 @@ namespace Hl7.Fhir.Serialization
                 // conversion from any type implementing IConvertable
                 return System.Convert.ChangeType(value, to, null);
         }
-
 
         public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ss.FFFK";
         private const string FMT_YEAR = "{0:D4}";

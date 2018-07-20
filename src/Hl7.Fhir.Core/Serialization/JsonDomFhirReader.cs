@@ -18,7 +18,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
-    [Obsolete("Replace this class with JsonDomFhirNavigator from the Hl7.Fhir.Support assembly, and pass it to a Parse() overload which accepts IElementNavigator")]
+    [Obsolete("Replace this class with factory methods on FhirJsonNavigator from the Hl7.Fhir.Serialization assembly, which will use IElementNavigator")]
     public class JsonDomFhirReader : IFhirReader
     {
         private JToken _current;

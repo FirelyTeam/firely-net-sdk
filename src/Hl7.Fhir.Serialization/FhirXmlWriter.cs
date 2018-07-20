@@ -30,6 +30,12 @@ namespace Hl7.Fhir.Serialization
     {
         public static void WriteTo(this IElementNavigator source, XmlWriter destination, FhirXmlWriterSettings settings = null) =>
             new FhirXmlWriter(settings).Write(source, destination);
+
+        public static string ToXml(this IElementNavigator source, FhirXmlWriterSettings settings = null)
+                => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings));
+
+        public static byte[] ToXmlBytes(this IElementNavigator source, FhirXmlWriterSettings settings = null)
+                => SerializationUtil.WriteXmlToBytes(writer => source.WriteTo(writer, settings));
     }
 
     public class FhirXmlWriter : IExceptionSource, IExceptionSink
@@ -52,9 +58,19 @@ namespace Hl7.Fhir.Serialization
             var xw = XmlWriter.Create(destination, settings);
 
             var dest = new XDocument();
-            write(source, dest);
+
+            if (source is IExceptionSource)
+            {
+                using (source.Catch((o, a) => Sink.NotifyOrThrow(o, a)))
+                {
+                    write(source, dest);
+                }
+            }
+            else
+                write(source, dest);
 
             dest.WriteTo(xw);
+            xw.Flush();
         }
 
         public void Write(ISourceNavigator source, XmlWriter destination)
@@ -134,7 +150,7 @@ namespace Hl7.Fhir.Serialization
             // If this needs to be serialized as a contained resource, do so
             var containedResourceType = serializationInfo?.IsContainedResource == true ?
                                             source.Type :
-                                            (atRoot == false ? ((IAnnotated)source).GetResourceType() : null);
+                                            (atRoot == false ? source.GetResourceType() : null);
 
             XElement containedResource = null;
             if (containedResourceType != null)
@@ -154,9 +170,11 @@ namespace Hl7.Fhir.Serialization
             if (sourceComments?.ClosingComments != null)
                 writeComments(sourceComments.ClosingComments, me);
 
+            // Only really add this contained resource to me when it has contents
             if (containedResource != null && (containedResource.HasAttributes || containedResource.HasElements))
                 me.Add(containedResource);
 
+            // Only add myself to my parent if I have content
             if (me.HasAttributes || me.HasElements)
             {
                 if (sourceComments?.CommentsBefore != null)

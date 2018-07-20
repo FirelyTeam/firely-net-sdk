@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonTyped
     {
-        public IElementNavigator getJsonNav(string json) => FhirJsonNavigator.Typed(json, new PocoSerializationInfoProvider());
+        public IElementNavigator getJsonNav(string json, FhirJsonNavigatorSettings settings = null) 
+            => FhirJsonNavigator.Typed(json, new PocoSerializationInfoProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -70,7 +72,22 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void RoundtripJson()
         {
-            ParseDemoPatient.RoundtripJson(reader => FhirXmlNavigator.Typed(reader, new PocoSerializationInfoProvider()));
+            ParseDemoPatient.RoundtripJson(jsonText =>
+                getJsonNav(jsonText, new FhirJsonNavigatorSettings { AllowJsonComments = true }));
+        }
+
+        [TestMethod]
+        public void PingpongJson()
+        {
+            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            // will allow whitespace and comments to come through      
+            var navJson = FhirJsonNavigator.Typed(tp, new PocoSerializationInfoProvider());
+            var xml = navJson.ToXml();
+
+            var navXml = FhirXmlNavigator.Typed(xml, new PocoSerializationInfoProvider());
+            var json = navXml.ToJson();
+
+            JsonAssert.AreSame(tp, json);
         }
     }
 }

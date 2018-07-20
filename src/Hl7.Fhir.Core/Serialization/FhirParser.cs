@@ -21,18 +21,6 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    //[Obsolete("Please use the more adequately named FhirXmlPocoParser")]
-    //public class FhirXmlParser : FhirXmlPocoParser
-    //{
-    //    public FhirXmlParser() : base()
-    //    {
-    //    }
-
-    //    public FhirXmlParser(ParserSettings settings) : base(settings)
-    //    {
-    //    }
-    //}
-
     public class FhirXmlParser : BaseFhirParser
     {
         public FhirXmlParser() : base()
