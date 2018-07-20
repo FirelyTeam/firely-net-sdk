@@ -11,17 +11,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Native .net typed version of the string Reference property
         /// </summary>
-        Uri Url { get; }
+        Uri Url { get; set; }
  
         /// <summary>
         /// Relative, internal or absolute URL reference
         /// </summary>
-        string Reference { get; }
+        string Reference { get; set; }
 
         /// <summary>
         /// Text alternative for the resource
         /// </summary>
-        string Display { get; }
+        string Display { get; set; }
 
         /// <summary>
         /// Logical reference, when literal reference is not known
