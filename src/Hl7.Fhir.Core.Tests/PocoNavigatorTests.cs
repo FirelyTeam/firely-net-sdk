@@ -168,8 +168,8 @@ namespace Hl7.Fhir
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
             var pocoP = new PocoNavigator((new FhirJsonParser()).Parse<Patient>(json));
-            var jsonP = FhirJsonNavigator.Typed(json, new PocoSerializationInfoProvider());
-            var xmlP = FhirXmlNavigator.Typed(xml, new PocoSerializationInfoProvider());
+            var jsonP = FhirJsonNavigator.ForResource(json, new PocoSerializationInfoProvider());
+            var xmlP = FhirXmlNavigator.ForResource(xml, new PocoSerializationInfoProvider());
 
             doCompare(pocoP, jsonP, "poco<->json");
             doCompare(pocoP, xmlP, "poco<->xml");

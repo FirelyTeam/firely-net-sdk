@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
     public class ParseDemoPatientXmlTyped
     {
         public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings settings = null) =>
-            FhirXmlNavigator.Typed(xml, new PocoSerializationInfoProvider(), settings);
+            FhirXmlNavigator.ForResource(xml, new PocoSerializationInfoProvider(), settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
             var navXml = getXmlNav(tpXml);
-            var navJson =  FhirJsonNavigator.Typed(tpJson, new PocoSerializationInfoProvider());
+            var navJson =  FhirJsonNavigator.ForResource(tpJson, new PocoSerializationInfoProvider());
 
             var compare = navXml.IsEqualTo(navJson);
 
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.Typed(reader, new PocoSerializationInfoProvider()));
+            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.ForResource(reader, new PocoSerializationInfoProvider()));
         }
 
         [TestMethod]
@@ -98,10 +98,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.xml");
             // will allow whitespace and comments to come through      
-            var navXml = FhirXmlNavigator.Typed(tp, new PocoSerializationInfoProvider());
+            var navXml = FhirXmlNavigator.ForResource(tp, new PocoSerializationInfoProvider());
             var json = navXml.ToJson();
 
-            var navJson = FhirJsonNavigator.Typed(json, new PocoSerializationInfoProvider());
+            var navJson = FhirJsonNavigator.ForResource(json, new PocoSerializationInfoProvider());
             var xml = navJson.ToXml();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);

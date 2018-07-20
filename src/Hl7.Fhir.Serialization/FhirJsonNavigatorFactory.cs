@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization
             return createUntyped(root, rootName, settings);
         }
 
-        public static IElementNavigator Typed(string json, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNavigator ForResource(string json, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static IElementNavigator Typed(string json, string type, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNavigator ForElement(string json, string type, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static IElementNavigator Typed(JsonReader reader, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNavigator ForResource(JsonReader reader, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(reader, null, rootName, provider, settings);
         }
 
-        public static IElementNavigator Typed(JsonReader reader, string type, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNavigator ForElement(JsonReader reader, string type, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(reader, type, rootName, provider, settings);
         }
 
-        public static IElementNavigator Typed(JObject root, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNavigator ForResource(JObject root, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (root == null) throw Error.ArgumentNull(nameof(root));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(root, null, rootName, provider, settings);
         }
 
-        public static IElementNavigator Typed(JObject root, string type, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNavigator ForElement(JObject root, string type, ISerializationInfoProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (root == null) throw Error.ArgumentNull(nameof(root));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -110,24 +110,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(root, type, rootName, provider, settings);
         }
 
-        public static IElementNavigator Typed(ISourceNavigator untypedNav, string type, ISerializationInfoProvider provider)
-        {
-            if (untypedNav == null) throw Error.ArgumentNull(nameof(untypedNav));
-            if (type == null) throw Error.ArgumentNull(nameof(type));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            return untypedNav.AsElementNavigator(type, provider);
-        }
-
-        public static IElementNavigator Typed(ISourceNavigator untypedNav, ISerializationInfoProvider provider)
-        {
-            if (untypedNav == null) throw Error.ArgumentNull(nameof(untypedNav));
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-
-            return untypedNav.AsElementNavigator(null, provider);
-        }
-
-
+      
         private static ISourceNavigator createUntyped(JsonReader reader, string rootName, FhirJsonNavigatorSettings settings)
         {
             try

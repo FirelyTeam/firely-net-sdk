@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
     public class ParseDemoPatientJsonTyped
     {
         public IElementNavigator getJsonNav(string json, FhirJsonNavigatorSettings settings = null) 
-            => FhirJsonNavigator.Typed(json, new PocoSerializationInfoProvider(), settings: settings);
+            => FhirJsonNavigator.ForResource(json, new PocoSerializationInfoProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -81,10 +81,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             // will allow whitespace and comments to come through      
-            var navJson = FhirJsonNavigator.Typed(tp, new PocoSerializationInfoProvider());
+            var navJson = FhirJsonNavigator.ForResource(tp, new PocoSerializationInfoProvider());
             var xml = navJson.ToXml();
 
-            var navXml = FhirXmlNavigator.Typed(xml, new PocoSerializationInfoProvider());
+            var navXml = FhirXmlNavigator.ForResource(xml, new PocoSerializationInfoProvider());
             var json = navXml.ToJson();
 
             JsonAssert.AreSame(tp, json);
