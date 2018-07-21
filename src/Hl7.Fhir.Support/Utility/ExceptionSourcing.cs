@@ -3,14 +3,11 @@ using System;
 
 namespace Hl7.Fhir.Utility
 {
-    public interface IExceptionSink
-    {
-        void Notify(object source, ExceptionNotification args);
-    }
+    public delegate void ExceptionNotificationHandler(object source, ExceptionNotification args);
 
     public interface IExceptionSource
     {
-        IExceptionSink Sink { get; set; }
+        ExceptionNotificationHandler ExceptionHandler { get; set; }
     }
 
 

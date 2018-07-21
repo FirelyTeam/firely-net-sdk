@@ -23,7 +23,6 @@ namespace Hl7.Fhir.Serialization
         public bool IgnoreSourceXmlDetails;
         public bool AllowUntypedElements;
         public bool IncludeUntypedElements;
-        public IExceptionSink Sink;
     }
 
     public static class FhirXmlWriterExtensions
@@ -38,19 +37,20 @@ namespace Hl7.Fhir.Serialization
                 => SerializationUtil.WriteXmlToBytes(writer => source.WriteTo(writer, settings));
     }
 
-    public class FhirXmlWriter : IExceptionSource, IExceptionSink
+    public class FhirXmlWriter : IExceptionSource
     {
-        public bool IgnoreSourceXmlDetails;
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
-
         public FhirXmlWriter(FhirXmlWriterSettings settings = null)
         {
             IgnoreSourceXmlDetails = settings?.IgnoreSourceXmlDetails ?? false;
             AllowUntypedElements = settings?.AllowUntypedElements ?? false;
             IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
-            Sink = settings?.Sink;
         }
+
+        public bool IgnoreSourceXmlDetails;
+        public bool AllowUntypedElements;
+        public bool IncludeUntypedElements;
+
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         public void Write(IElementNavigator source, XmlWriter destination)
         {
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Serialization
 
             if (source is IExceptionSource)
             {
-                using (source.Catch((o, a) => Sink.NotifyOrThrow(o, a)))
+                using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
                 {
                     write(source, dest);
                 }
@@ -103,13 +103,13 @@ namespace Hl7.Fhir.Serialization
                 var message = $"Element '{source.Location}' is missing type information.";
                 if (IncludeUntypedElements)
                 {
-                    Notify(source, ExceptionNotification.Warning(
+                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));
                     return true;
                 }
                 else
                 {
-                    Notify(source, ExceptionNotification.Error(
+                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
                         new MissingTypeInformationException(message)));
                     return false;
                 }
@@ -218,9 +218,5 @@ namespace Hl7.Fhir.Serialization
                     parent.Add(new XComment(comment));
             }
         }
-
-        public IExceptionSink Sink { get; set; }
-
-        public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);
     }
 }

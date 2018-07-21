@@ -3,14 +3,14 @@ using System;
 
 namespace Hl7.Fhir.Utility
 {
-    public delegate void ExceptionNotificationHandler(object source, ExceptionNotification args);
+    
 
     public static class ExceptionSourceExtensions
     {
-        public static void NotifyOrThrow(this IExceptionSink sink, object source, ExceptionNotification args)
+        public static void NotifyOrThrow(this ExceptionNotificationHandler handler, object source, ExceptionNotification args)
         {
-            if (sink != null)
-                sink.Notify(source, args);
+            if (handler != null)
+                handler(source, args);
             else if (args.Severity == ExceptionSeverity.Error)
                 throw args.Exception;
         }
@@ -20,23 +20,24 @@ namespace Hl7.Fhir.Utility
 
         public static IDisposable Catch(this IExceptionSource source, ExceptionNotificationHandler handler) => new ExceptionInterceptor(source, handler);
 
-        private class ExceptionInterceptor : IDisposable, IExceptionSink
+        private class ExceptionInterceptor : IDisposable
         {
-            private readonly IExceptionSource _interceptee;
-            private readonly IExceptionSink _originalSink;
-            private readonly ExceptionNotificationHandler _handler;
-            public ExceptionInterceptor(IExceptionSource interceptee, ExceptionNotificationHandler handler)
-            {
-                _interceptee = interceptee;
-                _originalSink = interceptee.Sink;
-                _interceptee.Sink = this;
-                _handler = handler;
-            }
+            private readonly IExceptionSource _source;
+            private readonly ExceptionNotificationHandler _originalHandler;
 
-            public void Notify(object source, ExceptionNotification args)
+            public ExceptionInterceptor(IExceptionSource source, ExceptionNotificationHandler handler)
             {
-                _handler(source, args);
-                _originalSink?.Notify(source, args);
+                _source = source;
+                _originalHandler = source.ExceptionHandler;
+                source.ExceptionHandler = nestedHandler;
+
+                void nestedHandler(object s, ExceptionNotification a)
+                {
+                    handler(s, a);
+                    // we have no true/false coming back from the handler.
+                    // if the handler wants to propagate, it can do so itself, we're not doing it.
+                    //_originalHandler.NotifyOrThrow(s, a);
+                }
             }
 
             #region IDisposable Support
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.Utility
                 {
                     if (disposing)
                     {
-                        _interceptee.Sink = _originalSink;
+                        _source.ExceptionHandler = _originalHandler;
                     }
 
                     disposedValue = true;

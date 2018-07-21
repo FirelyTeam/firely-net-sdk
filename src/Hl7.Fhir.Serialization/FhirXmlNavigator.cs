@@ -17,7 +17,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial class FhirXmlNavigator : ISourceNavigator, IAnnotated, IExceptionSource, IExceptionSink
+    public partial class FhirXmlNavigator : ISourceNavigator, IAnnotated, IExceptionSource
     {
         public FhirXmlNavigator(XElement root, FhirXmlNavigatorSettings settings = null)
         {
@@ -29,7 +29,6 @@ namespace Hl7.Fhir.Serialization
             AllowedExternalNamespaces = settings?.AllowedExternalNamespaces ?? new XNamespace[0];
             DisallowSchemaLocation = settings?.DisallowSchemaLocation ?? false;
             PermissiveParsing = settings?.PermissiveParsing ?? false;
-            Sink = settings?.Sink;
         }
 
         private FhirXmlNavigator() { }      // for Clone()
@@ -46,9 +45,11 @@ namespace Hl7.Fhir.Serialization
                 AllowedExternalNamespaces = this.AllowedExternalNamespaces,
                 DisallowSchemaLocation = this.DisallowSchemaLocation,
                 PermissiveParsing = this.PermissiveParsing,
-                Sink = this.Sink
+                ExceptionHandler = this.ExceptionHandler
             };
         }
+
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         private XObject _current;
         private string _parentPath;
@@ -160,12 +161,10 @@ namespace Hl7.Fhir.Serialization
 
         private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
 
-        public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);
-
         private void raiseFormatError(string message, XObject position)
         {
             var (lineNumber, linePosition) = getPosition(_current);
-            Notify(this, ExceptionNotification.Error(Error.Format(message,lineNumber, linePosition)));
+            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message,lineNumber, linePosition)));
         }
 
         private XElement Contained
@@ -261,7 +260,6 @@ namespace Hl7.Fhir.Serialization
                 return (-1, -1);
         }
 
-        public IExceptionSink Sink { get; set; }
 
         private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<FhirXmlNavigator>();
 

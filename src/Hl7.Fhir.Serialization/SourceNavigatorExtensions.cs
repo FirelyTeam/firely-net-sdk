@@ -89,14 +89,6 @@ namespace Hl7.Fhir.Serialization
             else
                 typedNav = new TypedShimNavigator(sourceNav);
 
-            // This is normally true
-            if (sourceNav is IExceptionSource esrc && typedNav is IExceptionSink esnk && typedNav is IExceptionSource tsrc)
-            {
-                // Insert the newly created typed navigator in the IExceptionSource/Sink chain
-                tsrc.Sink = esrc.Sink;
-                esrc.Sink = esnk;
-            }
-
             return typedNav;
         }
     }

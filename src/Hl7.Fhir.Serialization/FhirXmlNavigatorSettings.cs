@@ -16,6 +16,5 @@ namespace Hl7.Fhir.Serialization
         public XNamespace[] AllowedExternalNamespaces;
         public bool DisallowSchemaLocation;
         public bool PermissiveParsing;
-        public IExceptionSink Sink;
     }
 }

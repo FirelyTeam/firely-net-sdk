@@ -25,7 +25,6 @@ namespace Hl7.Fhir.Serialization
     {
         public bool AllowUntypedElements;
         public bool IncludeUntypedElements;
-        public IExceptionSink Sink;
     }
 
     public static class FhirJsonWriterExtensions
@@ -40,17 +39,17 @@ namespace Hl7.Fhir.Serialization
                 => SerializationUtil.WriteJsonToBytes(writer => source.WriteTo(writer, settings));
     }
 
-    public class FhirJsonWriter : IExceptionSource, IExceptionSink
+    public class FhirJsonWriter : IExceptionSource
     {
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
-
         public FhirJsonWriter(FhirJsonWriterSettings settings = null)
         {
             AllowUntypedElements = settings?.AllowUntypedElements ?? false;
             IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
-            Sink = settings?.Sink;
         }
+
+        public bool AllowUntypedElements;
+        public bool IncludeUntypedElements;
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
 
         public void Write(IElementNavigator source, JsonWriter destination)
@@ -65,7 +64,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (source is IExceptionSource)
             {
-                using (source.Catch((o, a) => Sink.NotifyOrThrow(o, a)))
+                using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
                 {
                     write();
                 }
@@ -145,13 +144,13 @@ namespace Hl7.Fhir.Serialization
                 var message = $"Element '{source.Location}' is missing type information.";
                 if (IncludeUntypedElements)
                 {
-                    Notify(source, ExceptionNotification.Warning(
+                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));
                     return true;
                 }
                 else
                 {
-                    Notify(source, ExceptionNotification.Error(
+                    ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
                         new MissingTypeInformationException(message)));
                     return false;
                 }
@@ -225,12 +224,6 @@ namespace Hl7.Fhir.Serialization
                 default:
                     return new JValue(PrimitiveTypeConverter.ConvertTo<string>(value));
             }
-        }
-
-
-
-        public IExceptionSink Sink { get; set; }
-
-        public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);
+        }        
     }
 }

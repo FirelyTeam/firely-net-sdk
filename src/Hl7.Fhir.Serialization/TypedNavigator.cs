@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization
         public StructuralTypeException(string message, Exception inner) : base(message, inner) { }
     }
 
-    public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource, IExceptionSink
+    public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
         public TypedNavigator(ISourceNavigator root, ISerializationInfoProvider provider) : this(root, root.Name, provider)
         {
@@ -42,9 +42,13 @@ namespace Hl7.Fhir.Serialization
             _parentPath = null;
             _nameIndex = 0;
 
-            Sink = null;
             Provider = provider;
+
+            if (element is IExceptionSource ies && ies.ExceptionHandler == null)
+                ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
+
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         private void reportUnknownType(string typeName, ISourceNavigator position)
         {
@@ -68,17 +72,13 @@ namespace Hl7.Fhir.Serialization
                 _definition = this._definition,
                 _parentPath = this._parentPath,
                 _nameIndex = this._nameIndex,
-                Sink = this.Sink,
+                ExceptionHandler = this.ExceptionHandler,
                 Provider = this.Provider
             };
         }
 
-        public IExceptionSink Sink { get; set; }
-
-        public void Notify(object sender, ExceptionNotification args) => Sink.NotifyOrThrow(sender, args);
-
         private void raiseTypeError(string message, ISourceNavigator current) =>
-            Notify(current, ExceptionNotification.Error(
+            ExceptionHandler.NotifyOrThrow(current, ExceptionNotification.Error(
                 typeException(message, current)));
 
         private static StructuralTypeException typeException(string message, ISourceNavigator position)

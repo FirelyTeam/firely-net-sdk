@@ -112,20 +112,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNav(tpXml);
-
-            List<ExceptionNotification> runTest(IElementNavigator nav)
-            {
-                var errors = new List<ExceptionNotification>();
-
-                using (patient.Catch((o, arg) => errors.Add(arg) ))
-                {
-                    var x = patient.DescendantsAndSelf().ToList();
-                }
-
-                return errors;
-            }
-
-            var result = runTest(patient);
+            var result = ParseDemoPatient.VisitAndCatch(patient);
             Assert.AreEqual(12, result.Count);  // 11 syntax errors + 1 error reporting the root type is unknown
         }
 
@@ -134,26 +121,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
             var patient = getXmlNav(tpXml);
-
-            List<ExceptionNotification> runTest(IElementNavigator nav)
-            {
-                var errors = new List<ExceptionNotification>();
-
-                using (patient.Catch((o, arg) => errors.Add(arg)))
-                {
-                    patient.Visit(touchValue);
-                }
-
-                return errors;
-
-                void touchValue(IElementNavigator n)
-                {
-                    var dummy = n.Value;
-                }
-            }
-
-            var result = runTest(patient);
+            var result = ParseDemoPatient.VisitAndCatch(patient);
             Assert.AreEqual(10, result.Count);  
         }
+
+
     }
 }

@@ -19,7 +19,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial class FhirJsonNavigator : ISourceNavigator, IAnnotated, IExceptionSource, IExceptionSink
+    public partial class FhirJsonNavigator : ISourceNavigator, IAnnotated, IExceptionSource
     {
         internal FhirJsonNavigator(JObject current, string nodeName, FhirJsonNavigatorSettings settings = null)
         {
@@ -28,7 +28,6 @@ namespace Hl7.Fhir.Serialization
             _nameIndex = 0;
             _parentPath = null;
 
-            Sink = settings?.Sink;
             AllowJsonCommments = settings?.AllowJsonComments ?? false;
             PermissiveParsing = settings?.PermissiveParsing ?? false;
         }
@@ -45,7 +44,7 @@ namespace Hl7.Fhir.Serialization
                 _index = this._index,
                 _nameIndex = this._nameIndex,
                 _parentPath = this._parentPath,
-                Sink = this.Sink,
+                ExceptionHandler = this.ExceptionHandler,
                 AllowJsonCommments = this.AllowJsonCommments,
                 PermissiveParsing = this.PermissiveParsing
             };
@@ -57,17 +56,15 @@ namespace Hl7.Fhir.Serialization
         private int _index, _nameIndex;
         private string _parentPath;
 
-        public IExceptionSink Sink { get; set; }
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
         public bool AllowJsonCommments;
         public bool PermissiveParsing;
 
         private void raiseFormatError(string message, JToken node)
         {
             var (lineNumber, linePosition) = getPosition(node);
-            Notify(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
+            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
         }
-
-        public void Notify(object source, ExceptionNotification args) => Sink.NotifyOrThrow(source, args);
 
         public string Name => Current.Name;
 

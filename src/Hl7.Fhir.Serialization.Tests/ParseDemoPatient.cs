@@ -268,5 +268,30 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("false", pat.Value);
             }
         }
+
+        public static List<ExceptionNotification> VisitAndCatch(IElementNavigator nav)
+        {
+            var errors = new List<ExceptionNotification>();
+
+            using (nav.Catch((o, arg) => errors.Add(arg)))
+            {
+                nav.Visit(n => { var dummy = n.Value; });
+            }
+
+            return errors;
+        }
+
+        public static List<ExceptionNotification> VisitAndCatch(ISourceNavigator nav)
+        {
+            var errors = new List<ExceptionNotification>();
+
+            using (nav.Catch((o, arg) => errors.Add(arg)))
+            {
+                nav.Visit(n => { var dummy = n.Text; });
+            }
+
+            return errors;
+        }
+
     }
 }

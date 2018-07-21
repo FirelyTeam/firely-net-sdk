@@ -15,6 +15,5 @@ namespace Hl7.Fhir.Serialization
     {
         public bool PermissiveParsing;
         public bool AllowJsonComments;
-        public IExceptionSink Sink;
     }
 }
