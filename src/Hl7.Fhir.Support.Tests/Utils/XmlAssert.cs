@@ -103,6 +103,8 @@ namespace Hl7.Fhir.Tests
             expected = expected.Replace("\r", "");
             expected = expected.Trim();
             actual = actual.Trim();
+            expected = expected.Replace(" ", "");
+            actual = actual.Replace(" ", "");
 
             if (!Object.Equals(expected, actual))
             {
