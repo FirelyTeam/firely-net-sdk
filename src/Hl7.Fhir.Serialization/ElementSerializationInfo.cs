@@ -16,15 +16,18 @@ namespace Hl7.Fhir.Serialization
     {
         private ElementSerializationInfo() { }
 
-        public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, bool isContained, bool isSimple, ITypeSerializationInfo[] type, int order)
+        public ElementSerializationInfo(string elementName, bool mayRepeat, bool isChoice, 
+            bool isContained, XmlRepresentation representation, ITypeSerializationInfo[] type, 
+            int order, string nonDefaultNS)
         {
             ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
             MayRepeat = mayRepeat;
             IsChoiceElement = isChoice;
             IsContainedResource = isContained;
-            IsAtomicValue = isSimple;
+            Representation = representation;
             Type = type ?? throw new ArgumentNullException(nameof(type));
             Order = order;
+            NonDefaultNamespace = nonDefaultNS;
         }
 
         public ElementSerializationInfo(IElementSerializationInfo source)
@@ -33,13 +36,14 @@ namespace Hl7.Fhir.Serialization
             MayRepeat = source.MayRepeat;
             IsChoiceElement = source.IsChoiceElement;
             IsContainedResource = source.IsContainedResource;
-            IsAtomicValue = source.IsAtomicValue;
+            Representation = source.Representation;
             Type = source.Type;
             Order = source.Order;
+            NonDefaultNamespace = source.NonDefaultNamespace;
         }
 
         public static ElementSerializationInfo ForRoot(string rootName, ITypeSerializationInfo rootType) =>
-            new ElementSerializationInfo(rootName, false, false, false, false, new[] { rootType }, 0);
+            new ElementSerializationInfo(rootName, false, false, false, XmlRepresentation.XmlElement, new[] { rootType }, 0, null);
 
         public string ElementName { get; private set; }
 
@@ -48,10 +52,12 @@ namespace Hl7.Fhir.Serialization
         public bool IsChoiceElement { get; private set; }
         public bool IsContainedResource { get; private set; }
 
-        public bool IsAtomicValue { get; private set; }
+        public XmlRepresentation Representation { get; private set; }
 
         public int Order { get; private set; }
         public ITypeSerializationInfo[] Type { get; private set; }
+
+        public string NonDefaultNamespace { get; }
     }
 
 

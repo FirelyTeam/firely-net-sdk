@@ -20,7 +20,6 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirXmlWriterSettings
     {
-        public bool IgnoreSourceXmlDetails;
         public bool AllowUntypedElements;
         public bool IncludeUntypedElements;
     }
@@ -41,12 +40,10 @@ namespace Hl7.Fhir.Serialization
     {
         public FhirXmlWriter(FhirXmlWriterSettings settings = null)
         {
-            IgnoreSourceXmlDetails = settings?.IgnoreSourceXmlDetails ?? false;
             AllowUntypedElements = settings?.AllowUntypedElements ?? false;
             IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
         }
 
-        public bool IgnoreSourceXmlDetails;
         public bool AllowUntypedElements;
         public bool IncludeUntypedElements;
 
@@ -62,9 +59,6 @@ namespace Hl7.Fhir.Serialization
 
         private void writeInternal(IElementNavigator source, XmlWriter destination)
         {
-            var settings = new XmlWriterSettings { NewLineHandling = NewLineHandling.Entitize };
-            var xw = XmlWriter.Create(destination, settings);
-
             var dest = new XDocument();
 
             if (source is IExceptionSource)
@@ -77,8 +71,8 @@ namespace Hl7.Fhir.Serialization
             else
                 write(source, dest);
 
-            dest.WriteTo(xw);
-            xw.Flush();
+            dest.WriteTo(destination);
+            destination.Flush();
         }
 
         public void Write(ISourceNavigator source, XmlWriter destination)
@@ -118,10 +112,9 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-
         private void write(IElementNavigator source, XContainer parent)
         {
-            var xmlDetails = IgnoreSourceXmlDetails ? null : source.GetXmlSerializationDetails();
+            var xmlDetails = source.GetXmlSerializationDetails();
             var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
 
             if (!MustSerializeMember(source, out var serializationInfo)) return;
@@ -133,8 +126,9 @@ namespace Hl7.Fhir.Serialization
             // xhtml children require special treament:
             // - They don't use an xml "value" attribute to represent the value, instead their Value is inserted verbatim into the parent
             // - They cannot have child nodes - the "Value" on the node contains all children as raw xml text
-            var isXhtml = xmlDetails?.Namespace?.GetName("div") == XmlNs.XHTMLDIV ||
-                (hasTypeInfo && source.Type == "xhtml");
+            var isXhtml = source.Type == "xhtml" ||
+                serializationInfo?.Representation == XmlRepresentation.XHtml ||
+                xmlDetails?.Namespace?.GetName("div") == XmlNs.XHTMLDIV;
 
             if (isXhtml && !String.IsNullOrWhiteSpace(value))
             {
@@ -144,9 +138,11 @@ namespace Hl7.Fhir.Serialization
                 return;
             }
 
-            var usesAttribute = xmlDetails?.NodeType != null ?
-                xmlDetails.NodeType == XmlNodeType.Attribute : serializationInfo?.IsAtomicValue ?? false;
-            var ns = xmlDetails?.Namespace.NamespaceName ?? (usesAttribute ? "" : XmlNs.FHIR);
+            var usesAttribute = serializationInfo?.Representation == XmlRepresentation.XmlAttr ||
+                                (xmlDetails?.NodeType == XmlNodeType.Attribute);
+            var ns = serializationInfo?.NonDefaultNamespace ??
+                            xmlDetails?.Namespace.NamespaceName ?? 
+                            (usesAttribute ? "" : XmlNs.FHIR);
             var localName = serializationInfo?.IsChoiceElement == true ?
                             source.Name + source.Type.Capitalize() : source.Name;
 
@@ -187,8 +183,10 @@ namespace Hl7.Fhir.Serialization
             foreach (var child in orderedChildren)
                 write(child, childParent);
 
-            if (xmlDetails?.NodeText != null)
-                childParent.Add(new XText(xmlDetails.NodeText));
+            if (serializationInfo?.Representation == XmlRepresentation.XmlText || xmlDetails?.NodeText != null)
+            { 
+                childParent.Add(new XText(value ?? xmlDetails.NodeText));
+            }
 
             if (sourceComments?.ClosingComments != null)
                 writeComments(sourceComments.ClosingComments, me);
@@ -198,7 +196,7 @@ namespace Hl7.Fhir.Serialization
                 me.Add(containedResource);
 
             // Only add myself to my parent if I have content
-            if (me.HasAttributes || me.HasElements)
+            if (value != null || me.HasElements)
             {
                 if (sourceComments?.CommentsBefore != null)
                     writeComments(sourceComments.CommentsBefore, parent);

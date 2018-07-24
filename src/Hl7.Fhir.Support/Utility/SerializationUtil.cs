@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Utility
         public static XmlReader XmlReaderFromXmlText(string xml, bool ignoreComments = true)
             => WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))), ignoreComments);
 
-        public static JsonReader JsonReaderFromJsonText(string json) 
+        public static JsonReader JsonReaderFromJsonText(string json)
             => JsonReaderFromTextReader(new StringReader(json));
 
         public static XmlReader XmlReaderFromStream(Stream input, bool ignoreComments = true)
@@ -138,7 +138,13 @@ namespace Hl7.Fhir.Utility
             // [WMR 20160421] Explicit disposal
             using (MemoryStream stream = new MemoryStream())
             {
-                XmlWriterSettings settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false), OmitXmlDeclaration = true, NewLineHandling = NewLineHandling.Entitize };
+                XmlWriterSettings settings = new XmlWriterSettings
+                {
+                    Encoding = new UTF8Encoding(false),
+                    OmitXmlDeclaration = true,
+                    NewLineHandling = NewLineHandling.Entitize
+                };
+
                 using (XmlWriter xw = XmlWriter.Create(stream, settings))
                 {
                     // [WMR 20160421] serializer action now calls Flush before disposing
@@ -153,8 +159,14 @@ namespace Hl7.Fhir.Utility
         {
             StringBuilder sb = new StringBuilder();
 
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true,
+                NewLineHandling = NewLineHandling.Entitize
+            };
+
             // [WMR 20160421] Explicit disposal
-            using (XmlWriter xw = XmlWriter.Create(sb, new XmlWriterSettings { OmitXmlDeclaration = true }))
+            using (XmlWriter xw = XmlWriter.Create(sb, settings))
             {
                 // [WMR 20160421] serializer action now calls Flush before disposing
                 serializer(xw);

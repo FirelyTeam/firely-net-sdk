@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Introspection
 
         public int Order { get; private set; }
 
-        public XmlSerializationHint SerializationHint { get; private set; }
+        public XmlRepresentation SerializationHint { get; private set; }
 
         public ChoiceType Choice { get; private set; }
         public Type[] FhirType { get; private set; }        // may be multiple if this is a choice

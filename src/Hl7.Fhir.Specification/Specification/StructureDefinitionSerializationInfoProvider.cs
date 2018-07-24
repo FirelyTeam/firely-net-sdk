@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Specification
         {
             if (nav.Current.IsBackboneElement())
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(nav) };
-            else if(nav.Current.NameReference != null)
+            else if (nav.Current.NameReference != null)
             {
                 var reference = nav.ShallowCopy();
                 var name = nav.Current.NameReference;
@@ -179,7 +179,20 @@ namespace Hl7.Fhir.Specification
 
         public bool MayRepeat => _definition.IsRepeating();
 
-        public bool IsAtomicValue => _definition.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr);
+        public XmlRepresentation Representation
+        {
+            get {
+                if (!_definition.Representation.Any()) return XmlRepresentation.XmlElement;
+
+                switch (_definition.Representation.First())
+                {
+                    case ElementDefinition.PropertyRepresentation.XmlAttr:
+                        return XmlRepresentation.XmlAttr;
+                    default:
+                        return XmlRepresentation.XmlElement;
+                }
+            }
+        }
 
         public bool IsChoiceElement => _definition.IsChoice();
 
@@ -192,5 +205,9 @@ namespace Hl7.Fhir.Specification
         private static bool isContainedResource(ElementDefinition defn) => defn.Type.Count == 1 && defn.Type[0].Code == FHIRDefinedType.Resource;
 
         public ITypeSerializationInfo[] Type => _types.Value;
+
+        public string NonDefaultNamespace =>
+            _definition.GetExtensionValue<FhirUri>("http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace")?.Value;
+
     }
 }

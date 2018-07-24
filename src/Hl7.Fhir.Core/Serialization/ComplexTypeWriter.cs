@@ -68,13 +68,13 @@ namespace Hl7.Fhir.Serialization
             if (Settings.CustomSerializer != null) Settings.CustomSerializer.OnBeforeSerializeComplexType(instance, _writer);
 #pragma warning restore
             // Emit members that need xml /attributes/ first (to facilitate stream writer API)
-            foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
+            foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlRepresentation.XmlAttr))
             {
                 writeProperty(mapping, instance, summary, mode, prop);
             }
 
             // Then emit the rest
-            foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
+            foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlRepresentation.XmlAttr))
             {
                 writeProperty(mapping, instance, summary, mode, prop);
             }

@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Serialization
         void WriteStartComplexContent();
         void WriteEndComplexContent();
 
-        void WritePrimitiveContents(object value,XmlSerializationHint xmlFormatHint);
+        void WritePrimitiveContents(object value,XmlRepresentation xmlFormatHint);
 
         void WriteStartArray();
         //void WriteStartArrayElement(string name);

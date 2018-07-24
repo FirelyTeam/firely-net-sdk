@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
-
-/*
-  Copyright (c) 2011+, HL7, Inc.
+﻿/*
+  Copyright (c) 2011-2013, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -37,42 +28,27 @@ using Hl7.Fhir.Utility;
 
 */
 
-//
-// Generated for FHIR v1.0.2
-//
-namespace Hl7.Fhir.Model
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Hl7.Fhir.Serialization
 {
-    [FhirType("id")]
-    [DataContract]
-    public partial class Id : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
+    /// <summary>
+    /// Xml Serialization used for primitive values
+    /// </summary>
+
+    public enum XmlRepresentation
     {
-        [NotMapped]
-        public override string TypeName { get { return "id"; } }
-        
-        // Must conform to the pattern "[A-Za-z0-9\-\.]{1,64}"
-        public const string PATTERN = @"[A-Za-z0-9\-\.]{1,64}";
+        None,
 
-		public Id(string value)
-		{
-			Value = value;
-		}
-
-		public Id(): this((string)null) {}
-
-        /// <summary>
-        /// Primitive value of the element
-        /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-        [IdPattern]
-        [DataMember]
-        public string Value
-        {
-            get { return (string)ObjectValue; }
-            set { ObjectValue = value; OnPropertyChanged("Value"); }
-        }
-        
-
-    
+        XmlElement, // This property is represented as an Xml element
+        XmlAttr,  // In Xml, this property is represented as an attribute not an element.
+        XmlText,  // This element is represented using the Xml text attribute (primitives only)
+        TypeAttr, // The type of this element is indicated using xsi:type
+        CdaText,  // Use CDA narrative instead of XHTML
+        XHtml,    // The property is represented using XHTML
     }
-    
+
 }

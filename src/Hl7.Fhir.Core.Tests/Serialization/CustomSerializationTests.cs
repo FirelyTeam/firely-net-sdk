@@ -80,11 +80,11 @@ namespace Hl7.Fhir.Core.Tests.Serialization
             public void OnBeforeSerializeComplexType(object instance, IFhirWriter writer)
             {
                 writer.WriteStartProperty("myProp");
-                writer.WritePrimitiveContents(true, XmlSerializationHint.Attribute);
+                writer.WritePrimitiveContents(true, XmlRepresentation.XmlAttr);
                 writer.WriteEndProperty();
 
                 writer.WriteStartProperty("myProp2");
-                writer.WritePrimitiveContents("dude", XmlSerializationHint.Attribute);
+                writer.WritePrimitiveContents("dude", XmlRepresentation.XmlAttr);
                 writer.WriteEndProperty();
             }
 
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
                     writer.WriteStartProperty("active2");
                     writer.WriteStartComplexContent();
                     writer.WriteStartProperty("value");
-                    writer.WritePrimitiveContents(p.Active, XmlSerializationHint.None);
+                    writer.WritePrimitiveContents(p.Active, XmlRepresentation.None);
                     writer.WriteEndProperty();
                     writer.WriteEndComplexContent();
                     writer.WriteEndProperty();
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Core.Tests.Serialization
                     writer.WriteStartProperty("gender2");
                     writer.WriteStartComplexContent();
                     writer.WriteStartProperty("value");
-                    writer.WritePrimitiveContents(p.Gender, XmlSerializationHint.TextNode);
+                    writer.WritePrimitiveContents(p.Gender, XmlRepresentation.XmlText);
                     writer.WriteEndProperty();
                     writer.WriteEndComplexContent();
                     writer.WriteEndProperty();
@@ -167,7 +167,8 @@ namespace Hl7.Fhir.Core.Tests.Serialization
                     if (ann != null)
                     {
                         writer.WriteStartProperty("yada");
-                        writer.WritePrimitiveContents(PrimitiveTypeConverter.ConvertTo<string>(ann.Num), XmlSerializationHint.Attribute);
+                        writer.WritePrimitiveContents(PrimitiveTypeConverter.ConvertTo<string>(ann.Num), 
+                            XmlRepresentation.XmlAttr);
                         writer.WriteEndProperty();
                     }
                 }

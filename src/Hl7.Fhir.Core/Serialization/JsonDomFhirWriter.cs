@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Serialization
         }
 
       
-        public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
+        public void WritePrimitiveContents(object value, XmlRepresentation _)
         {
             JValue val;
 

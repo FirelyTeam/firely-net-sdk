@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Introspection
 
         public bool MayRepeat => _pm.IsCollection;
 
-        public bool IsAtomicValue => _pm.SerializationHint == XmlSerializationHint.Attribute;
+        public XmlRepresentation Representation => _pm.SerializationHint;
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
 
@@ -127,5 +127,7 @@ namespace Hl7.Fhir.Introspection
         public int Order => _pm.Order;
 
         public ITypeSerializationInfo[] Type => _types.Value;
+
+        public string NonDefaultNamespace => null;
     }
 }

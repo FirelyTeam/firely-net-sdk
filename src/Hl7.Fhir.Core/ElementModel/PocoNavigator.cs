@@ -202,9 +202,12 @@ namespace Hl7.Fhir.ElementModel
 
         public bool IsContainedResource => _nav.Current.IsContained;
 
-        public bool IsAtomicValue => _nav.IsAttribute;
+        public XmlRepresentation Representation => _nav.IsAttribute ? 
+            XmlRepresentation.XmlAttr : XmlRepresentation.XmlElement;
 
         ITypeSerializationInfo[] IElementSerializationInfo.Type => null;
+
+        public string NonDefaultNamespace => null;
 
         private readonly object lockObject = new object();
 

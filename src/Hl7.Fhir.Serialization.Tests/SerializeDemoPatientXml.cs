@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             // Do the serialization without relying on present xml details from the source,
             // so serialization will only be based on the supplied type information
-            var serializer = new FhirXmlWriter( new FhirXmlWriterSettings { IgnoreSourceXmlDetails = true } );
+            var serializer = new FhirXmlWriter();
             using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true } ))
             {
                 serializer.Write(nav, writer);

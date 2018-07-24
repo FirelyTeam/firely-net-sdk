@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        internal void Serialize(object value, XmlSerializationHint hint)
+        internal void Serialize(object value, XmlRepresentation hint)
         {
             if (value != null)
             {

@@ -20,12 +20,14 @@ namespace Hl7.Fhir.Serialization
         bool IsChoiceElement { get; }
         bool IsContainedResource { get; }
 
-        bool IsAtomicValue { get; }
         ITypeSerializationInfo[] Type { get; }
+
+        // Attributes for XML support
+        string NonDefaultNamespace { get; }
+        XmlRepresentation Representation { get; }
 
         int Order { get; }
     }
-
 
     public interface ITypeSerializationInfo
     {

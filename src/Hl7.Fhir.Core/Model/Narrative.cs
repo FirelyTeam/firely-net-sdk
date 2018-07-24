@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -120,7 +121,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Limited xhtml content
         /// </summary>
-        [FhirElement("div", XmlSerialization=XmlSerializationHint.XhtmlElement, InSummary=true, Order=40, TypeRedirect = typeof(XHtml))]
+        [FhirElement("div", XmlSerialization=XmlRepresentation.XHtml, InSummary=true, Order=40, TypeRedirect = typeof(XHtml))]
         [Cardinality(Min=1,Max=1)]
         [NarrativeXhtmlPattern]
         [DataMember]

@@ -78,19 +78,19 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
+        public void WritePrimitiveContents(object value, XmlRepresentation xmlFormatHint)
         {
             if (value == null) throw Error.ArgumentNull("value", "There's no support for null values in Xml Fhir serialization");
 
-            if (xmlFormatHint == XmlSerializationHint.None) xmlFormatHint = XmlSerializationHint.Attribute;
+            if (xmlFormatHint == XmlRepresentation.None) xmlFormatHint = XmlRepresentation.XmlAttr;
 
             var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
 
-            if (xmlFormatHint == XmlSerializationHint.Attribute)
+            if (xmlFormatHint == XmlRepresentation.XmlAttr)
                 xw.WriteAttributeString(_currentMemberName, valueAsString);
-            else if (xmlFormatHint == XmlSerializationHint.TextNode)
+            else if (xmlFormatHint == XmlRepresentation.XmlText)
                 xw.WriteString(valueAsString);
-            else if (xmlFormatHint == XmlSerializationHint.XhtmlElement)
+            else if (xmlFormatHint == XmlRepresentation.XHtml)
             {
                 var sanitized = SerializationUtil.SanitizeXml(valueAsString);
                 XElement xe = XElement.Parse(sanitized);
