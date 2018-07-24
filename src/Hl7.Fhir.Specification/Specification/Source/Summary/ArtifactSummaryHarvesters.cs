@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="NamingSystem"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="NamingSystem"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method through a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsNamingSystemSummary(properties))
             {
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <seealso cref="StructureDefinitionSummaryProperties"/>
         /// <seealso cref="ValueSetSummaryProperties"/>
         /// <seealso cref="ConceptMapSummaryProperties"/>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsConformanceSummary(properties))
             {
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="StructureDefinition"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="StructureDefinition"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsStructureDefinitionSummary(properties))
             {
@@ -262,11 +262,11 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         // Callback for HarvestExtensions, called for each individual extension entry
-        static void harvestExtension(IElementNavigator nav, IDictionary<string, object> properties, string url)
+        static void harvestExtension(ISourceNavigator nav, IDictionary<string, object> properties, string url)
         {
             if (StringComparer.Ordinal.Equals(FmmExtensionUrl, url) && nav.MoveToNext("valueInteger"))
             {
-                properties[MaturityLevelKey] = nav.Value;
+                properties[MaturityLevelKey] = nav.Text;
             }
         }
 
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="ValueSet"/> resource.</summary>
         /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsValueSetSummary(properties))
             {
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="ConceptMap"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="ConceptMap"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsConceptMapSummary(properties))
             {

@@ -7,10 +7,8 @@
  */
 
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using System;

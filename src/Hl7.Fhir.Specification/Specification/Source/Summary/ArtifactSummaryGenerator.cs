@@ -20,19 +20,19 @@ using System.IO;
 namespace Hl7.Fhir.Specification.Summary
 {
     /// <summary>Represents a method that tries to harvest specific summary information from an artifact.</summary>
-    /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
+    /// <param name="nav">An <see cref="ISourceNavigator"/> instance to navigate the artifact.</param>
     /// <param name="properties">A dictionary for storing the harvested summary information.</param>
     /// <returns>
     /// Returns <c>true </c> to indicate that all relevant properties have been harvested from the artifact and the summary is ready to be generated.
     /// Returns <c>false</c> to try and continue harvesting additional summary information.
     /// </returns>
     /// <remarks>
-    /// The specified <see cref="IElementNavigator"/> is positioned on the first child element level (e.g. <c>StructureDefinition.url</c>).
+    /// The specified <see cref="ISourceNavigator"/> is positioned on the first child element level (e.g. <c>StructureDefinition.url</c>).
     /// The target method can fetch summary information starting from the current position in a forward direction.
     /// When finished, the navigator should again be positioned on the first nesting level, so any remaining
     /// delegates can continue harvesting additional information from there.
     /// </remarks>
-    public delegate bool ArtifactSummaryHarvester(IElementNavigator nav, ArtifactSummaryPropertyBag properties);
+    public delegate bool ArtifactSummaryHarvester(ISourceNavigator nav, ArtifactSummaryPropertyBag properties);
 
     /// <summary>
     /// For generating artifact summary information from an <see cref="INavigatorStream"/>,
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Specification.Summary
                         // Initialize default summary information
                         // Note: not exposed by IElementNavigator, cannot use harvester
                         properties.SetPosition(navStream.Position);
-                        properties.SetTypeName(current.Type);
+                        properties.SetTypeName(current.GetResourceType());
                         properties.SetResourceUri(navStream.Position);
 
                         // Allow caller to modify/enrich harvested properties
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Specification.Summary
         // Generate summary for a single artifact
         static ArtifactSummary generate(
             ArtifactSummaryPropertyBag props,
-            IElementNavigator nav, 
+            ISourceNavigator nav, 
             ArtifactSummaryHarvester[] harvesters)
         {
             Exception error = null;

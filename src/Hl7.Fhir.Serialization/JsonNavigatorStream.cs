@@ -222,14 +222,14 @@ namespace Hl7.Fhir.Serialization
         public string Position => _current?.fullUrl;
 
         /// <summary>Returns a new <see cref="IElementNavigator"/> instance positioned on the current entry.</summary>
-        public IElementNavigator Current
+        public ISourceNavigator Current
         {
             get
             {
                 throwIfDisposed();
                 var jelem = _current?.element;
                 if (jelem != null)
-                    return JsonDomFhirNavigator.Create(jelem);
+                    return FhirJsonNavigator.Untyped(jelem);
                 else
                     return null;
             }

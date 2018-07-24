@@ -11,8 +11,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using System.Collections;
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel
 {

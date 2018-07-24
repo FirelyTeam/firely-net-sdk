@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
         {
             Item1 = 4,
 
-            [EnumLiteral("ItemTwo", "http://example.org/test-system"), Utility.Description("This is item two")]
+            [EnumLiteral("ItemTwo", "http://example.org/test-system"), Fhir.Utility.Description("This is item two")]
             Item2,
 
             [EnumLiteral("ItemThree")]

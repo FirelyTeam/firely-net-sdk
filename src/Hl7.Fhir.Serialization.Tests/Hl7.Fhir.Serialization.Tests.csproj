@@ -34,6 +34,8 @@
   <ItemGroup>
     <None Remove="TestData\BundleWithOneEntry.json" />
     <None Remove="TestData\patient-out-of-order.xml" />
+    <None Remove="TestData\profiles-types.json" />
+    <None Remove="TestData\profiles-types.xml" />
     <None Remove="TestData\test-empty-nodes.json" />
     <None Remove="TestData\test-empty-nodes.xml" />
     <None Remove="TestData\typeErrors.xml" />
@@ -42,6 +44,10 @@
   <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.IO.Compression" />
   </ItemGroup>
 
   <ItemGroup>

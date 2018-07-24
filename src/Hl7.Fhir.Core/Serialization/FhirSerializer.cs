@@ -94,6 +94,20 @@ namespace Hl7.Fhir.Serialization
                     xw.Flush();
                 }
             });
+
+            XDocument xmlWriterToDocument(Action<XmlWriter> serializer)
+            {
+                var doc = new XDocument();
+
+                using (XmlWriter xw = doc.CreateWriter())
+                {
+                    // [WMR 20160421] serializer action now calls Flush before disposing
+                    serializer(xw);
+                    // xw.Flush();
+                }
+
+                return doc;
+            }
         }
 #endif
 
@@ -151,8 +165,29 @@ namespace Hl7.Fhir.Serialization
                     jw.Flush();
                 }
             });
-        }
 
+            JObject jsonWriterToDocument(Action<JsonWriter> serializer)
+            {
+                // [WMR 20180409] Triggers runtime exception "Can not add Newtonsoft.Json.Linq.JObject to Newtonsoft.Json.Linq.JObject."
+                // JsonDomFhirWriter.WriteEndProperty() => _root.WriteTo(jw) => jw.WriteStartObject() => exception...
+                //var doc = new JObject();
+
+                // JConstructor / JArray works, extract and return first child node
+                var doc = new JArray();
+
+                using (JsonWriter jw = doc.CreateWriter())
+                {
+                    // [WMR 20160421] serializer action now calls Flush before disposing
+                    serializer(jw);
+                    // xw.Flush();
+                }
+
+                //return doc;
+                System.Diagnostics.Debug.Assert(doc.Count == 1);
+                return doc.First as JObject;
+            }
+        }
+            
         // [WMR 20160421] Caller is responsible for disposing writer
         public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False) => Serialize(instance, new JsonDomFhirWriter(writer), summary);
     }

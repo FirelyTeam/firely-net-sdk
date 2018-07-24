@@ -17,7 +17,7 @@ using System.Collections.Generic;
 namespace Hl7.Fhir.Specification.Summary
 {
     /// <summary>
-    /// Extension methods on <see cref="IElementNavigator"/> to facilitate harvesting summary information
+    /// Extension methods on <see cref="ISourceNavigator"/> to facilitate harvesting summary information
     /// from a FHIR artifact in a forward direction and storing the harvested values in a property bag.
     /// </summary>
     /// <remarks>
@@ -35,47 +35,46 @@ namespace Hl7.Fhir.Specification.Summary
         /// If the current element name matches, then maintain the current position.
         /// Otherwise, navigate to the next matching sibling element (if it exists).
         /// </summary>
-        /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
+        /// <param name="nav">An <see cref="ISourceNavigator"/> instance.</param>
         /// <param name="element">An element name.</param>
         /// <returns><c>true</c> if, upon return, the navigator is positioned on a matching element, or <c>false</c> otherwise.</returns>
-        public static bool Find(this IElementNavigator nav, string element)
+        public static bool Find(this ISourceNavigator nav, string element)
         {
             return nav.Name == element || nav.MoveToNext(element);
         }
 
         /// <summary>Harvest the value of the current element into a property bag.</summary>
-        /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
+        /// <param name="nav">An <see cref="ISourceNavigator"/> instance.</param>
         /// <param name="properties">A property bag to store harvested summary information.</param>
         /// <param name="key">A property key.</param>
-        public static bool HarvestValue(this IElementNavigator nav, IDictionary<string, object> properties, string key)
+        public static bool HarvestValue(this ISourceNavigator nav, IDictionary<string, object> properties, string key)
         {
-            var value = nav.Value;
+            var value = nav.Text;
             if (value != null)
             {
-                var s = PrimitiveTypeConverter.ConvertTo<string>(value);
-                properties[key] = s;
+                properties[key] = value;
                 return true;
             }
             return false;
         }
 
         /// <summary>Harvest the value of the (current or sibling) element with the specified name into a property bag.</summary>
-        /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
+        /// <param name="nav">An <see cref="ISourceNavigator"/> instance.</param>
         /// <param name="properties">A property bag to store harvested summary information.</param>
         /// <param name="key">A property key.</param>
         /// <param name="element">An element name.</param>
-        public static bool HarvestValue(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element)
+        public static bool HarvestValue(this ISourceNavigator nav, IDictionary<string, object> properties, string key, string element)
         {
             return nav.Find(element) && nav.HarvestValue(properties, key);
         }
 
         /// <summary>Harvest the value of a child element into a property bag.</summary>
-        /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
+        /// <param name="nav">An <see cref="ISourceNavigator"/> instance.</param>
         /// <param name="properties">A property bag to store harvested summary information.</param>
         /// <param name="key">A property key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool HarvestValue(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
+        public static bool HarvestValue(this ISourceNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {
@@ -88,13 +87,12 @@ namespace Hl7.Fhir.Specification.Summary
         /// <summary>Add the value of the current element to a list, if not missing or empty.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
         /// <param name="values">A list of values.</param>
-        public static bool HarvestValue(this IElementNavigator nav, IList<string> values)
+        public static bool HarvestValue(this ISourceNavigator nav, IList<string> values)
         {
-            var value = nav.Value;
+            var value = nav.Text;
             if (value != null)
             {
-                var s = PrimitiveTypeConverter.ConvertTo<string>(value);
-                values.Add(s);
+                values.Add(value);
                 return true;
             }
             return false;
@@ -106,7 +104,7 @@ namespace Hl7.Fhir.Specification.Summary
         /// <param name="key">A property key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool HarvestValues(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
+        public static bool HarvestValues(this ISourceNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {
@@ -132,7 +130,7 @@ namespace Hl7.Fhir.Specification.Summary
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
         /// <param name="properties">A property bag to store harvested summary information.</param>
         /// <param name="extensionValueHarvester">Callback function called for each individual extension entry.</param>
-        public static void HarvestExtensions(this IElementNavigator nav, IDictionary<string, object> properties, Action<IElementNavigator, IDictionary<string, object>, string> extensionValueHarvester)
+        public static void HarvestExtensions(this ISourceNavigator nav, IDictionary<string, object> properties, Action<ISourceNavigator, IDictionary<string, object>, string> extensionValueHarvester)
         {
             const string extension = "extension";
 
@@ -141,12 +139,11 @@ namespace Hl7.Fhir.Specification.Summary
                 do
                 {
                     var childNav = nav.Clone();
-                    if (childNav.MoveToFirstChild("url"))
-                        
+                    if (childNav.MoveToFirstChild("url"))                      
                     {
-                        if (childNav.Value is string url)
+                        if (childNav.Text != null)
                         {
-                            extensionValueHarvester(childNav, properties, url);
+                            extensionValueHarvester(childNav, properties, childNav.Text);
                         }
                     }
                 // [WMR 20171219] BUG: MoveToNext advances to extension.url (child attribute) instead of the next extension element
