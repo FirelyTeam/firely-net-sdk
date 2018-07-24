@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -62,7 +62,18 @@ namespace Hl7.Fhir.Validation
 
             var cardinality = Cardinality.FromElementDefinition(definition);
 
-            var bucket = BucketFactory.CreateRoot(match.Definition, validator);
+            IBucket bucket;
+
+            try
+            {
+                bucket = BucketFactory.CreateRoot(match.Definition, validator);
+            }
+            catch(NotImplementedException ni)
+            {
+                // Will throw if a non-supported slice type is encountered
+                validator.Trace(outcome, ni.Message, Issue.UNSUPPORTED_SLICING_NOT_SUPPORTED, parent);
+                return outcome;
+            }
 
             foreach (var element in match.InstanceElements)
             {

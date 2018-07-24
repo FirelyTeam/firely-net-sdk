@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -121,7 +121,13 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (Exception) { }
         }
 
-        [TestMethod]
+	    [TestMethod]
+	    public void TestStringToDateTime()
+	    {
+		    Assert.AreEqual(new DateTime(1976, 12, 12), PrimitiveTypeConverter.ConvertTo<DateTime>("1976-12-12"));
+	    }
+
+	    [TestMethod]
         public void TestStringToUri()
         {
             var result = PrimitiveTypeConverter.ConvertTo<Uri>("http://www.nu.nl/test");

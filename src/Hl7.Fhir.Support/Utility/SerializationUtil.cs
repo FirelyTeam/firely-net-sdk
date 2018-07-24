@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -281,6 +281,23 @@ namespace Hl7.Fhir.Utility
 
             return resultRE;
         }
+
+//#if NET_FILESYSTEM
+//        public static void JoinFiles(string[] inputFilePaths, string outputFilePath)
+//        {
+//            using (var outputStream = File.Create(outputFilePath))
+//            {
+//                foreach (var inputFilePath in inputFilePaths)
+//                {
+//                    using (var inputStream = File.OpenRead(inputFilePath))
+//                    {
+//                        // Buffer size can be passed as the second argument.
+//                        inputStream.CopyTo(outputStream);
+//                    }
+//                }
+//            }
+//        }
+//#endif
 
 #if NET_REGEX_COMPILE
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);

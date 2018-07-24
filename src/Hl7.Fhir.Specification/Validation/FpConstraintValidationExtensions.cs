@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -32,12 +32,12 @@ namespace Hl7.Fhir.Validation
             if (!definition.Constraint.Any()) return outcome;
             if (v.Settings.SkipConstraintValidation) return outcome;
 
-            var context = instance.AtResource ? instance : instance.Parent;
+            var context = instance.ResourceContext;
 
             foreach (var constraintElement in definition.Constraint)
             {
                 bool success = false;
-
+               
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);

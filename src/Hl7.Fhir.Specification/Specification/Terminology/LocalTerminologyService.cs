@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -111,13 +111,16 @@ namespace Hl7.Fhir.Specification.Terminology
         private OperationOutcome validateCodeVS(ValueSet vs, string code, string system, string display, bool? abstractAllowed)
         {
             if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-
-            // We might have a cached or pre-expanded version brought to us by the _source
-            if (!vs.HasExpansion)
+            
+            lock (vs.SyncLock)
             {
-                // This will expand te vs - since we do not deepcopy() it, it will change the instance
-                // as it was passed to us from the source
-                _expander.Expand(vs);
+                // We might have a cached or pre-expanded version brought to us by the _source
+                if (!vs.HasExpansion)
+                {
+                    // This will expand te vs - since we do not deepcopy() it, it will change the instance
+                    // as it was passed to us from the source
+                    _expander.Expand(vs);
+                }
             }
 
             var component = vs.FindInExpansion(code, system);

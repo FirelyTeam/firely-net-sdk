@@ -1,5 +1,5 @@
 ﻿/*  
-* Copyright (c) 2017, Furore (info@furore.com) and contributors 
+* Copyright (c) 2017, Firely (info@fire.ly) and contributors 
 * See the file CONTRIBUTORS for details. 
 *  
 * This file is licensed under the BSD 3-Clause license 
@@ -20,6 +20,7 @@ namespace Hl7.Fhir.Serialization
         {
             XDocument doc = null;
 
+            // [WMR 20171017] Why catch and rethrow? Original error info is lost...
             try
             {
                 doc = XDocument.Load(SerializationUtil.WrapXmlReader(reader, ignoreComments: false));

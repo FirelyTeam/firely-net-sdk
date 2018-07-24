@@ -61,11 +61,10 @@ namespace Hl7.Fhir.Model
 
             if (Issue.Any())
             {
-                textBuilder.AppendLine();
-
                 foreach (var issue in Issue)
                 {
                     textBuilder.Append(' ', issue.HierarchyLevel * 2);
+                    textBuilder.AppendLine();
                     issue.ToStringBuilder(textBuilder);
                 }
             }

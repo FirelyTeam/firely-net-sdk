@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -14,6 +14,8 @@ using Newtonsoft.Json;
 using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -79,6 +81,22 @@ namespace Hl7.Fhir.Serialization
             });
         }
 
+#if NET45
+        // [WMR 20180409] NEW
+        // https://github.com/ewoutkramer/fhir-net-api/issues/545
+        public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null)
+        {
+            return xmlWriterToDocument(xw =>
+            {
+                using (var writer = new XmlFhirWriter(xw))
+                {
+                    Serialize(instance, writer, summary, root);
+                    xw.Flush();
+                }
+            });
+        }
+#endif
+
         // [WMR 20160421] Caller is responsible for disposing writer
         public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False) => Serialize(instance, new XmlFhirWriter(writer), summary);
     }
@@ -121,10 +139,25 @@ namespace Hl7.Fhir.Serialization
             });
         }
 
+        // [WMR 20180409] NEW
+        // https://github.com/ewoutkramer/fhir-net-api/issues/545
+        public JObject SerializeToDocument(Base instance, SummaryType summary = SummaryType.False)
+        {
+            return jsonWriterToDocument(jw =>
+            {
+                using (var writer = new JsonDomFhirWriter(jw))
+                {
+                    Serialize(instance, writer, summary, null);
+                    jw.Flush();
+                }
+            });
+        }
+
         // [WMR 20160421] Caller is responsible for disposing writer
         public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False) => Serialize(instance, new JsonDomFhirWriter(writer), summary);
     }
 
+    [Obsolete("Obsolete. Instead, create a new FhirXmlSerializer or FhirJsonSerializer instance and call one of the serialization methods.")]
     public static class FhirSerializer
     {
         private static FhirXmlSerializer _xmlSerializer = new FhirXmlSerializer();

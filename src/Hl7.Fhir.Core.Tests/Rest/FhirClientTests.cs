@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -15,6 +15,11 @@ using System.Net;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
+using System.IO;
+using System.Threading.Tasks;
+using Hl7.Fhir.Utility;
+using static Hl7.Fhir.Model.Bundle;
+using System.Drawing;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -25,12 +30,16 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        public static Uri testEndpoint = new Uri("http://test.fhir.org/r2");
-        //public static Uri testEndpoint = new Uri("http://vonk.furore.com");
+        //public static Uri testEndpoint = new Uri("http://test.fhir.org/r2");
+        //public static Uri testEndpoint = new Uri("http://vonk.fire.ly");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
-        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
+        //public static Uri testEndpoint = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
+
+        //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir");
+        public static Uri _endpointSupportingSearchUsingPost = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
 
         public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/dstu2_1");
 
@@ -760,6 +769,17 @@ namespace Hl7.Fhir.Tests.Rest
             var pat = (Patient)pats.Entry.First().Resource;
         }
 
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void TestSearchUsingPostByPersonaCode()
+        {
+            var client = new FhirClient(_endpointSupportingSearchUsingPost);
+
+            var pats =
+              client.SearchUsingPost<Patient>(
+                new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") });
+            var pat = (Patient)pats.Entry.First().Resource;
+        }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -1065,6 +1085,43 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
+        /// <summary>
+        /// Test for showing issue https://github.com/ewoutkramer/fhir-net-api/issues/128
+        /// </summary>
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public void TestCreatingBinaryResource()
+        {
+            Image img = Image.FromFile(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
+            byte[] arr;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                arr = ms.ToArray();
+            }
+
+            var client = new FhirClient(testEndpoint);
+
+            var binary = new Binary() { Content = arr, ContentType = "image/png" };
+            var result = client.Create(binary);
+
+            Assert.IsNotNull(result);
+
+            void Client_OnBeforeRequest(object sender, BeforeRequestEventArgs e)
+            {
+                // Removing the Accept part of the request. The server should send the resource back in the original Content-Type (in this case image/png)
+                e.RawRequest.Accept = null;
+            }
+
+            client.OnBeforeRequest += Client_OnBeforeRequest;
+
+            var result2 = client.Get($"Binary/{result.Id}");
+            Assert.IsNotNull(result2);
+            Assert.IsInstanceOfType(result2, typeof(Binary));
+            Assert.IsNotNull(result2.Id, "Binary resource should have an Id");
+            Assert.AreEqual(result2.Id, result.Id);
+            Assert.IsNotNull(result2.Meta?.VersionId, "Binary resource should have an Version"); 
+        }
+
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestOperationEverything()
         {
@@ -1075,23 +1132,49 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             // GET operation $everything without parameters
-            var loc = client.TypeOperation<Patient>("everything", null, true);
+            var loc = client.TypeOperation<Patient>("everything", null, useGet: true);
             Assert.IsNotNull(loc);
 
             // POST operation $everything without parameters
-            loc = client.TypeOperation<Patient>("everything", null, false);
+            loc = client.TypeOperation<Patient>("everything", null, useGet: false);
             Assert.IsNotNull(loc);
 
-            // GET operation $everything with 1 parameter
-            // This doesn't work yet. When an operation is used with primitive types then those parameters must be appended to the url as query parameters.
-            // loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), true);
-            // Assert.IsNotNull(loc);
+            
+
+            // GET operation $everything with 1 primitive parameter
+             loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 11)), useGet: true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 primitive2token parameter
+            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Identifier("", "example")), useGet: true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 resource parameter
+            try
+            {
+                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Patient()), useGet: true);
+                Assert.Fail("An InvalidOperationException was expected here");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
+            }
+
+            // GET operation $everything with 1 complex parameter
+            try
+            {
+                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Annotation() { Text = "test" }), useGet: true);
+                Assert.Fail("An InvalidOperationException was expected here");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
+            }
 
             // POST operation $everything with 1 parameter
-            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), false);
+            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), useGet: false);
             Assert.IsNotNull(loc);
         }
-
     }
 
 }

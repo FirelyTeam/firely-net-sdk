@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -179,17 +179,11 @@ namespace Hl7.FhirPath.Expressions
 
         public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
         {
-            Func<Closure, IEnumerable<IElementNavigator>> boundFunc = (ctx) => invokee(ctx, arguments);
-            IEnumerable<IElementNavigator> lastResult = null;
-
             return (ctx, _) =>
             {
-                //  if (lastResult != null) return lastResult;
-
                 try
                 {
-                    lastResult = boundFunc(ctx);
-                    return lastResult;
+                    return invokee(ctx, arguments);
                 }
                 catch (Exception e)
                 {

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -30,6 +30,7 @@ namespace Hl7.Fhir.ElementModel
         public ScopedNavigator(IElementNavigator wrapped)
         {
             _wrapped = wrapped.Clone();
+            if (this.AtResource) ResourceContext = wrapped.Clone();
         }
 
         public ScopedNavigator Parent { get; private set; } = null;
@@ -53,7 +54,15 @@ namespace Hl7.Fhir.ElementModel
             ScopedNavigator me = null;
 
             if (this.AtResource)
+            {
                 me = (ScopedNavigator)this.Clone();
+
+                // Is the current position not a contained resource?
+                if (Parent?.ContainedResources().FirstOrDefault() == null)
+                {
+                    ResourceContext = _wrapped.Clone();
+                }
+            }
 
             if (!_wrapped.MoveToFirstChild(nameFilter)) return false;
 
@@ -68,6 +77,8 @@ namespace Hl7.Fhir.ElementModel
 
         public bool AtResource => Type != null ? Char.IsUpper(Type[0]) && ModelInfo.IsKnownResource(Type) : false;
         public bool AtBundle => Type != null ? Type == "Bundle" : false;
+
+        public IElementNavigator ResourceContext { get; private set; } = null;
 
         public IEnumerable<ScopedNavigator> Parents()
         {
@@ -115,11 +126,11 @@ namespace Hl7.Fhir.ElementModel
             {
                 if (AtBundle)
                     _cache.BundledResources = from e in this.Children("entry")
-                           let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
-                           let resource = e.Children("resource").FirstOrDefault() as ScopedNavigator
-                           select new BundledResource { FullUrl = fullUrl, Resource = resource };
+                                              let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
+                                              let resource = e.Children("resource").FirstOrDefault() as ScopedNavigator
+                                              select new BundledResource { FullUrl = fullUrl, Resource = resource };
                 else
-                    _cache.BundledResources= Enumerable.Empty<BundledResource>();
+                    _cache.BundledResources = Enumerable.Empty<BundledResource>();
             }
 
             return _cache.BundledResources;
@@ -136,7 +147,7 @@ namespace Hl7.Fhir.ElementModel
                         var fullUrl = parent.BundledResources()
                             .SingleOrDefault(be => this.Location.StartsWith(be.Resource.Location))
                             ?.FullUrl;
-                        if (fullUrl != null) _cache.FullUrl =  fullUrl;
+                        if (fullUrl != null) _cache.FullUrl = fullUrl;
                     }
                 }
             }
@@ -148,8 +159,9 @@ namespace Hl7.Fhir.ElementModel
         {
             return new ScopedNavigator(_wrapped)
             {
-                Parent = this.Parent
+                Parent = this.Parent,
+                ResourceContext = this.ResourceContext
             };
-        }        
+        }
     }
 }

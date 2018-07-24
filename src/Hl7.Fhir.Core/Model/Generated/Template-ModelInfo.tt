@@ -248,7 +248,10 @@ namespace Hl7.Fhir.Model
 				}
 				var exprNode = sp.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']/fhir:valueString/@value", nsR);
 				if (exprNode != null)
+                {
 					expression = exprNode.Value;
+					if(expression.EndsWith("[x]")) expression = expression.Substring(0, expression.Length-3);
+                }
 				if (!string.IsNullOrEmpty(target))
                 {
 					// target = ", Target = new ResourceType[] { " + target + "}";
