@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional Content defined by implementations
         /// </summary>
-        [FhirElement("extension", InSummary=true, Order=20)]
+        [FhirElement("extension", InSummary=false, Order=20)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Extension
