@@ -48,8 +48,10 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Remove="OldJsonAssert.cs" />
     <Compile Remove="Rest\NewSearchParamsTests.cs" />
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
+    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-others.xml" Link="TestData\profiles-others.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

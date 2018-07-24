@@ -108,15 +108,24 @@ namespace Hl7.Fhir.Serialization
             if (node is XAttribute xa)
             {
                 if (xa.Name.NamespaceName != "" && !AllowedExternalNamespaces.Contains(xa.Name.NamespaceName))
-                    raiseFormatError($"The attribute '{xa.Name.LocalName}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node);
+                    raiseFormatError($"The attribute '{xa.Name.LocalName}' in element '{xa.Parent.Name.LocalName}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node);
 
                 if (String.IsNullOrWhiteSpace(xa.Value))
-                    raiseFormatError($"The attribute '{xa.Name.LocalName}' has an empty value, which is not allowed.", node);
+                    raiseFormatError($"The attribute '{xa.Name.LocalName}' in element '{xa.Parent.Name.LocalName}' has an empty value, which is not allowed.", node);
             }
             else if (node is XElement xe)
             {
                 if (xe.Name.Namespace != XmlNs.XFHIR && xe.Name != XmlNs.XHTMLDIV && !AllowedExternalNamespaces.Contains(xe.Name.Namespace))
-                    raiseFormatError($"The element '{xe.Name.LocalName}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node);
+                {
+                    var ns = xe.Name.Namespace?.NamespaceName;
+                    if (String.IsNullOrEmpty(ns))
+                    {
+                        raiseFormatError($"The element '{xe.Name.LocalName}' has no namespace, " +
+                            $"expected the HL7 FHIR namespace (http://hl7.org/fhir)", node);
+                    }
+                    else
+                        raiseFormatError($"The element '{xe.Name.LocalName}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node);
+                }
             }
             else
                 raiseFormatError($"Xml node of type '{node.NodeType}' is unexpected at this point", node);
@@ -198,21 +207,21 @@ namespace Hl7.Fhir.Serialization
             bool errorEncountered = false;
             XElement container = contained.Parent;
 
-            if (container.HasAttributes && !PermissiveParsing)
+            if (container.HasRelevantAttributes() && !PermissiveParsing)
             {
-                raiseFormatError("An element with a contained resource should not have attributes.", container.Attributes().First());
+                raiseFormatError($"The element '{container.Name.LocalName}' has a contained resource and therefore should not have attributes.", container.Attributes().First());
                 errorEncountered = true;
             }
 
-            if (contained.HasAttributes && !PermissiveParsing)
+            if (contained.HasRelevantAttributes() && !PermissiveParsing)
             {
-                raiseFormatError("A contained resource should not have attributes.", contained.Attributes().First());
+                raiseFormatError($"The contained resource '{contained.Name.LocalName}' in container '{container.Name.LocalName}' should not have attributes.", contained.Attributes().First());
                 errorEncountered = true;
             }
 
             if (contained.NextNode != null && !PermissiveParsing)
             {
-                raiseFormatError("An element with a contained resource should only have one child.", contained.NextNode);
+                raiseFormatError($"The element '{container.Name.LocalName}' has a contained resource and therefore should only have one child.", contained.NextNode);
                 errorEncountered = true;
             }
 

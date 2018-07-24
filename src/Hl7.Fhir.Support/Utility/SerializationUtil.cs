@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Utility
             {
                 DateParseHandling = DateParseHandling.None,
                 FloatParseHandling = FloatParseHandling.Decimal,
+                CloseInput = false      // Unbelievable, the default is 'true' (and is false for the XmlReaderSettings :-()
             };
         }
 
@@ -127,7 +128,7 @@ namespace Hl7.Fhir.Utility
                 IgnoreComments = ignoreComments,
                 IgnoreProcessingInstructions = true,
                 IgnoreWhitespace = true,
-                DtdProcessing = DtdProcessing.Prohibit
+                DtdProcessing = DtdProcessing.Prohibit,
             };
 
             return XmlReader.Create(xmlReader, settings);

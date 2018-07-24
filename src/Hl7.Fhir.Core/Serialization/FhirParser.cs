@@ -37,15 +37,21 @@ namespace Hl7.Fhir.Serialization
         public Base Parse(string xml, Type dataType)
         {
             IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml,
-                new FhirXmlNavigatorSettings { DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot }));
+                new FhirXmlNavigatorSettings
+                {
+                    DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot,
+                }));
             return Parse(xmlReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader, 
-                new FhirXmlNavigatorSettings { DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot }));
+            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader,
+                new FhirXmlNavigatorSettings
+                {
+                    DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot
+                }));
             return Parse(xmlReader, dataType);
         }
 #pragma warning restore 612, 618
@@ -62,7 +68,7 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        public T Parse<T>(string json) where T:Base => (T)Parse(json, typeof(T));
+        public T Parse<T>(string json) where T : Base => (T)Parse(json, typeof(T));
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public T Parse<T>(JsonReader reader) where T : Base => (T)Parse(reader, typeof(T));
@@ -70,15 +76,24 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
         public Base Parse(string json, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(FhirJsonNavigator.Untyped(json, ModelInfo.GetFhirTypeNameForType(dataType)));
+            IFhirReader jsonReader = new ElementNavFhirReader(
+                FhirJsonNavigator.Untyped(json, ModelInfo.GetFhirTypeNameForType(dataType),
+                new FhirJsonNavigatorSettings
+                {
+                    AllowJsonComments = true       // DSTU2, should be false in STU3
+                }));
             return Parse(jsonReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(FhirJsonNavigator.Untyped(reader, ModelInfo.GetFhirTypeNameForType(dataType)));
-            return Parse(jsonReader, dataType);
+            IFhirReader jsonReader = new ElementNavFhirReader(
+                FhirJsonNavigator.Untyped(reader, ModelInfo.GetFhirTypeNameForType(dataType),
+                new FhirJsonNavigatorSettings
+                {
+                    AllowJsonComments = true       // DSTU2, should be false in STU3
+                })); return Parse(jsonReader, dataType);
         }
 #pragma warning restore 612, 618
     }
@@ -126,7 +141,7 @@ namespace Hl7.Fhir.Serialization
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
-            if(dataType.CanBeTreatedAsType(typeof(Resource)))
+            if (dataType.CanBeTreatedAsType(typeof(Resource)))
                 return new ResourceReader(reader, Settings).Deserialize();
             else
                 return new ComplexTypeReader(reader, Settings).Deserialize(dataType);

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization
         {
             while (scan != null)
             {
-                if (isRelevantNode(scan))
+                if (IsRelevantNode(scan))
                     break;
                 scan = scan.NextSibling();
             }
@@ -55,15 +55,16 @@ namespace Hl7.Fhir.Serialization
             return scan;
         }
 
-        private static bool isRelevantNode(this XObject scan)
+        public static bool IsRelevantNode(this XObject scan)
         {
             return scan.NodeType == XmlNodeType.Element ||
-                   (scan.NodeType == XmlNodeType.Attribute &&
-                   scan is XAttribute attr && !isReservedAttribute(attr));
-
-            bool isReservedAttribute(XAttribute a) => a.IsNamespaceDeclaration || a.Name == XmlNs.XSCHEMALOCATION;
+                   (scan is XAttribute attr && isRelevantAttribute(attr));            
         }
 
+        private static bool isRelevantAttribute(XAttribute a) => !a.IsNamespaceDeclaration && a.Name != XmlNs.XSCHEMALOCATION;
+
+        public static bool HasRelevantAttributes(this XElement scan) =>
+            scan.Attributes().Any(a => isRelevantAttribute(a));
 
         public static string GetValue(this XObject current)
         {

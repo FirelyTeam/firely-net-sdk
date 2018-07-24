@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (nodes[scan].Name == "fhir_comments")
                 {
-                    if(!AllowJsonCommments && !PermissiveParsing) raiseFormatError("The 'fhir_comments' feature is not valid in FHIR DSTU2 and later", nodes[scan].PositionNode);
+                    if(!AllowJsonCommments && !PermissiveParsing) raiseFormatError("The 'fhir_comments' feature is disabled.", nodes[scan].PositionNode);
                     continue;      // ignore pre-DSTU2 Json comments
                 }
                 if (namefilter == null || nodes[scan].Name == namefilter || nodes[scan].Name == "_" + namefilter)

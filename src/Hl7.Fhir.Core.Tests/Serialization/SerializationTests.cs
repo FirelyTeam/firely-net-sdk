@@ -185,7 +185,10 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...
-            var qInflate = FhirXmlParser.Parse<Questionnaire>(qText);
+            // make sure we accept the crappy output with empty groups
+            var nav = FhirXmlNavigator.Untyped(qText, new FhirXmlNavigatorSettings { PermissiveParsing = true });
+
+            var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
             Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
@@ -430,15 +433,16 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(1, p2.Contact.Count);
         }
 
-        [TestMethod]
-        public void SerializeEmptyParams()
-        {
-            var par = new Parameters();
-            var xml = FhirXmlSerializer.SerializeToString(par);
+        //An empty object is not allowed
+        //[TestMethod]
+        //public void SerializeEmptyParams()
+        //{
+        //    var par = new Parameters();
+        //    var xml = FhirXmlSerializer.SerializeToString(par);
 
-            var par2 = (new FhirXmlParser()).Parse<Parameters>(xml);
-            Assert.AreEqual(0, par2.Parameter.Count);
-        }
+        //    var par2 = (new FhirXmlParser()).Parse<Parameters>(xml);
+        //    Assert.AreEqual(0, par2.Parameter.Count);
+        //}
 
         // [WMR 20161222] Richard Kavanagh: serializing ValueSet (to XML) throws an exception...?
         // Cause: { ... "text" { ... "div" = "removed" } ... }

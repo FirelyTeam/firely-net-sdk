@@ -12,7 +12,6 @@
   <publisher value="Kela" />
   <description value="Finnish PHR base profile for Observation resource.&#xD;&#xA;Finnish PHR base profile for Observation used in Vital signs measurements made about a patient. Base profile defines profiled elements used in all vital signs observation resources." />
   <requirements value="Base profile defines common elements used for all observation resources in PHR like mandatory reference to FinnishPatient ja observation type codeset." />
-  <copyright value=" " />
   <kind value="resource" />
   <constrainedType value="Observation" />
   <abstract value="true" />

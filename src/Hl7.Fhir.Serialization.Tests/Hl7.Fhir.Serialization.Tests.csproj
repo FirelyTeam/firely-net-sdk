@@ -36,6 +36,8 @@
     <None Remove="TestData\patient-out-of-order.xml" />
     <None Remove="TestData\profiles-types.json" />
     <None Remove="TestData\profiles-types.xml" />
+    <None Remove="TestData\source-test\books.xml" />
+    <None Remove="TestData\source-test\project.assets.json" />
     <None Remove="TestData\test-empty-nodes.json" />
     <None Remove="TestData\test-empty-nodes.xml" />
     <None Remove="TestData\typeErrors.xml" />

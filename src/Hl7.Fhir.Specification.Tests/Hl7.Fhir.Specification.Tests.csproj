@@ -43,6 +43,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="TestData\profiles-types.json" />
+  </ItemGroup>
   <!--
   <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Core.Tests\TestDataHelper.cs" Link="TestDataHelper.cs" />

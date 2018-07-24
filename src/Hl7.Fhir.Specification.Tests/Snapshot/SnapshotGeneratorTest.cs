@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestFullyExpandCorePatient()
         {
             // [WMR 20180115] Iteratively expand all complex elements
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
         // Note: result is different from TestCoreOrganizationNL, contains more elements - correct!
         // Older approach was flawed, e.g. see exclusion for Organization.type
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestFullyExpandNLCoreOrganization()
         {
             // core-organization-nl references extension core-address-nl

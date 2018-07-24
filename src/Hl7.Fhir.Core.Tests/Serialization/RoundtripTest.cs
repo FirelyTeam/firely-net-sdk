@@ -137,10 +137,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
 
             List<string> errors = new List<string>();
-            compareFiles(examplePath, intermediate2Path, errors);
-            Console.WriteLine("------------------------------------------------");
-            Console.WriteLine(String.Join("\r\n", errors));
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            compareFiles(examplePath, intermediate2Path);
         }
 
 
@@ -174,7 +171,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 
-        private void compareFiles(string expectedPath, string actualPath, List<string> errors)
+        private void compareFiles(string expectedPath, string actualPath)
         {
             var files = Directory.EnumerateFiles(expectedPath);
 
@@ -197,11 +194,11 @@ namespace Hl7.Fhir.Tests.Serialization
 
                 Debug.WriteLine("Comparing " + exampleName);
 
-                compareFile(file, actualFile, errors);
+                compareFile(file, actualFile);
             }
         }
 
-        private void compareFile(string expectedFile, string actualFile, List<string> errors)
+        private void compareFile(string expectedFile, string actualFile)
         {
             if (expectedFile.EndsWith(".xml"))
                 XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
@@ -210,8 +207,8 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 if (new FileInfo(expectedFile).Name != "json-edge-cases.json")
                 {
-                    JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
-                                        File.ReadAllText(actualFile), errors);
+                    JsonAssert.AreSame(File.ReadAllText(expectedFile),
+                                        File.ReadAllText(actualFile));
                 }
             }
         }
