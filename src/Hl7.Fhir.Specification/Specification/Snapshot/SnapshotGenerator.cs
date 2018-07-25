@@ -25,6 +25,10 @@
 // [WMR 20180409] Resolve contentReference from core resource/datatype (StructureDefinition.type)
 #define FIX_CONTENTREFERENCE
 
+// [WMR 20170810] STU3 bug: SimpleQuantity root element introduces non-empty sliceName = "SliceName"
+// Detect and fix invalid non-null sliceNames on root elements
+#define FIX_SLICENAMES_ON_ROOT_ELEMENTS
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -324,6 +328,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             var fullDifferential = (new DifferentialTreeConstructor()).MakeTree(differential.Element);
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
+            var diffRoot = differential.GetRootElement();
+            fixInvalidSliceNameOnRootElement(diffRoot, structure);
+#endif
+
             merge(nav, diff);
 
             result = nav.ToListOfElements();
@@ -336,6 +345,21 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return result;
         }
+
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
+        void fixInvalidSliceNameOnRootElement(ElementDefinition elem, StructureDefinition sd)
+        {
+            if (elem != null)
+            {
+                Debug.Assert(elem.IsRootElement());
+                if (!string.IsNullOrEmpty(elem.Name))
+                {
+                    addIssueInvalidSliceNameOnRootElement(elem, sd);
+                    elem.Name = null;
+                }
+            }
+        }
+#endif
 
         /// <summary>
         /// Expand the currently active element within the specified <see cref="ElementDefinitionNavigator"/> instance.
@@ -1637,10 +1661,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // 4. We still need to expand the root element definition
             // Resolve root element definition from base profile and merge differential constraints (recursively)
-            var diffRoot = sd.Differential.Element[0];
+            var diffRoot = sd.Differential.GetRootElement();
+
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
+            // [WMR 20170810] Handle bug in STU3
+            // SimpleQuantity root element defines non-null sliceName = "SimpleQuantity" - WRONG!
+            fixInvalidSliceNameOnRootElement(diffRoot, sd);
+#endif
 
             var baseProfileUri = sd.Base;
-            if (baseProfileUri == null)
+            if (baseProfileUri == null && diffRoot != null)
             {
                 // Structure has no base, i.e. core type definition => differential introduces & defines the root element
                 // No need to rebase, nothing to merge
@@ -1663,7 +1693,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
             var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
-            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, diffRoot.ToNamedNode()); // Recursion!
+            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, diffRoot?.ToNamedNode()); // Recursion!
             if (baseRoot == null)
             {
                 addIssueSnapshotGenerationFailed(baseProfileUri);

@@ -515,7 +515,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Expecting issues about missing external extension definitions
             dumpIssues(issues);
-            Assert.AreEqual(13, issues.Count);
+            // [WMR 20180725] Now also receiving 2 more issues about invalid sliceName on SimpleQuantity root element
+            // Assert.AreEqual(13, issues.Count);
+            Assert.AreEqual(15, issues.Count);
+            Assert.AreEqual(13, issues.Count(i => i.Code == OperationOutcome.IssueType.Incomplete)); // Unresolved extension
+            Assert.AreEqual(2, issues.Count(i => i.Code == OperationOutcome.IssueType.Invalid));     // Invalid sliceName
 
             // Verify
             for (int j = 1; j < fullElems.Count; j++)
@@ -2826,7 +2830,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2882,7 +2886,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2901,7 +2905,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2967,7 +2971,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resources = new IConformanceResource[] { profile, baseProfile };
             var resolver = new InMemoryProfileResolver(resources);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -3023,7 +3027,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -3058,7 +3062,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -3082,8 +3086,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRDefinedType.Integer);
 
             Assert.IsNotNull(outcome);
-            Assert.AreEqual(1, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
+            //Assert.AreEqual(1, outcome.Issue.Count);
+            // assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            Assert.AreEqual(2, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
@@ -3114,7 +3122,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -3358,7 +3366,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(sd, out expanded);
@@ -3581,7 +3589,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
@@ -3751,7 +3759,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(baseProfile, profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
@@ -3920,7 +3928,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(baseProfile, profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
@@ -4081,7 +4089,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(baseProfile, profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
@@ -4435,7 +4443,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
 
             //StructureDefinition expanded = null;
             //generateSnapshotAndCompare(profile, out expanded);
@@ -4504,7 +4512,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
 
             // [WMR 20180115] Obsolete - full expansion via BeforeExpandElement event is flawed...
             //_generator.BeforeExpandElement += beforeExpandElementHandler;
@@ -4522,20 +4530,17 @@ namespace Hl7.Fhir.Specification.Tests
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump();
             dumpOutcome(_generator.Outcome);
 
-            // Force expansion of Observation.valueQuantity
-            //var nav = ElementDefinitionNavigator.ForDifferential(profile);
-            //Assert.IsTrue(nav.MoveToFirstChild());
-            //var result = _generator.ExpandElement(nav);
-            //dumpElements(profile.Differential.Element);
-            //dumpOutcome(_generator.Outcome);
-            //Assert.IsTrue(result);
-            Assert.IsNull(_generator.Outcome);
+            var issues = _generator.Outcome?.Issue;
+            Assert.AreEqual(1, issues.Count);
+            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
-            var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
+            issues = new List<OperationOutcome.IssueComponent>();
             var elems = expanded.Snapshot.Element;
             elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
-            Assert.AreEqual(0, issues.Count);
+            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
+            Assert.AreEqual(1, issues.Count);
+            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -4545,7 +4550,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst("Observation.valueQuantity"));
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
-            // Assert.AreEqual(FHIRDefinedType.SimpleQuantity, nav.Current.Type[0].Code);
+            Assert.AreEqual(FHIRDefinedType.SimpleQuantity, nav.Current.Type[0].Code);
             // Assert.AreEqual(FHIRDefinedType.Quantity, nav.Current.Type[0].Code);
 
             var type = nav.Current.Type.First();
@@ -5588,6 +5593,52 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+
+        [TestMethod]
+        public void TestRange()
+        {
+            // Note: resolved from TestData\snapshot-test\profiles-types.xml
+            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Range);
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            // _generator.PrepareElement += elementHandler;
+            //try
+            //{
+                generateSnapshotAndCompare(sd, out expanded);
+            //}
+            //finally
+            //{
+            //    // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+            //    _generator.PrepareElement -= elementHandler;
+            //}
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            var elems = expanded.Snapshot.Element;
+            // dumpElements(elems);
+            dumpBaseElems(elems);
+            
+            foreach (var elem in elems)
+            {
+                Assert.IsNull(elem.Name, $"Error! Unexpected slice name '{elem.Name}' on element with path '{elem.Path}'");
+            }
+
+            // Also verify the expanded snapshot of the referenced SimpleQuantity profile
+            sd = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.SimpleQuantity);
+            Assert.IsNotNull(sd);
+            Assert.IsTrue(sd.HasSnapshot);
+            Assert.IsNull(sd.Differential.Element.FirstOrDefault()?.Name);
+
+            // Note: depending on the order of unit tests execution, SimpleQuantity snapshot
+            // may not have been fully (re-)generated. The original snapshot (from core ZIP)
+            // contains the invalid sliceName. Regenerated snapshot should be corrected.
+            if (sd.Snapshot.IsCreatedBySnapshotGenerator())
+            {
+                Assert.IsNull(sd.Snapshot.Element.FirstOrDefault()?.Name);
+            }
+        }
 
     }
 

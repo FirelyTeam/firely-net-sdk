@@ -111,8 +111,8 @@ namespace Hl7.Fhir.Validation
                         try
                         {
                             var snapshotOutcome = snapshotGenerator(sd);
-
-                            if (!snapshotOutcome.Success)
+                            // [WMR 20180725] Null outcome also indicates success
+                            if (snapshotOutcome != null && !snapshotOutcome.Success)
                             {
                                 outcome.AddIssue($"Snapshot generation failed for '{sd.Url}'. Details follow below.",
                                    Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);

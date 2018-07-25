@@ -198,6 +198,12 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             return ElementDefinitionNavigator.GetParentPath(defn.Path);
         }
+
+        /// <summary>Returns the root element from the specified element list, if available, or <c>null</c>.</summary>
+        public static ElementDefinition GetRootElement(this IElementList elements)
+        {
+            return elements?.Element?.FirstOrDefault(e => e.IsRootElement());
+        }
     }
 }
     
