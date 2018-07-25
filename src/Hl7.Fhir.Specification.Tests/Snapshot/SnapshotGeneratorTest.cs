@@ -327,9 +327,15 @@ namespace Hl7.Fhir.Specification.Tests
         static bool isExpandableElement(ElementDefinition element)
         {
             var type = element.PrimaryType();
+
+            // [WMR 20180725] Don't expand choice type elements with multiple distinct type codes
+            if (type == null || element.Type.Select(t => t.Code).Distinct().Count() != 1) { return false; }
+
             var typeCode = type?.Code;
+
             return typeCode.HasValue
-                   && element.Type.Count == 1
+                   // [WMR 20180725] Instead, check for multiple *distinct* type codes (above)
+                   // && element.Type.Count == 1
                    // [WMR 20170424] WRONG! Must expand BackboneElements
                    // && typeCode != FHIRAllTypes.BackboneElement.GetLiteral()
                    // [WMR 20180111] WRONG! Must also expand resource types, e.g. Bundle.entry.resource
@@ -458,7 +464,11 @@ namespace Hl7.Fhir.Specification.Tests
             var fullElems = fullyExpand(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
-            Assert.AreEqual(304, fullElems.Count);
+            
+            // [WMR 20180725] Changed; snapshot generator now expands dataType Reference
+            // Assert.AreEqual(304, fullElems.Count);
+            Assert.AreEqual(308, fullElems.Count);
+
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -1413,11 +1423,11 @@ namespace Hl7.Fhir.Specification.Tests
                     nav.Reset();
                     Assert.IsTrue(nav.MoveTo(elem));
 
-                    if (!isExpandableElement(elem))
-                    {
-                        Assert.IsFalse(nav.MoveToFirstChild());
-                        return;
-                    }
+                    //if (!isExpandableElement(elem))
+                    //{
+                    //    Assert.IsFalse(nav.MoveToFirstChild());
+                    //    return;
+                    //}
 
                     Assert.IsTrue(nav.MoveToFirstChild());
                     var typeNav = new ElementDefinitionNavigator(typeElems);
@@ -5258,6 +5268,38 @@ namespace Hl7.Fhir.Specification.Tests
             try
             {
                 generateSnapshotAndCompare(sd, out expanded);
+
+                dumpOutcome(_generator.Outcome);
+                Assert.IsTrue(expanded.HasSnapshot);
+                dumpBaseElems(expanded.Snapshot.Element);
+
+                // Snapshot generator should NOT emit any issues
+                Assert.IsNull(_generator.Outcome);
+
+                var elems = expanded.Snapshot.Element;
+
+                // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
+                var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
+                elems = fullyExpand(elems, issues).ToList();
+                Assert.AreEqual(0, issues.Count);
+
+                // Verify that Bundle.entry.resource : List was properly expanded
+                var pos = elems.FindIndex(e => e.Path == "Bundle.entry.resource");
+                Assert.AreNotEqual(-1, pos);
+                var elem = elems[pos];
+                Assert.AreEqual(FHIRDefinedType.List, elem.Type.FirstOrDefault()?.Code);
+
+                // Verify that expanded child elements of Bundle.entry.resource contains all the elements in List snapshot
+                // [WMR 20180115] Full expansion will add additional grand children, not present in defaut List snapshot
+                var listElems = sdList.Snapshot.Element;
+                for (int i = 1; i < listElems.Count; i++)
+                {
+                    var listElem = listElems[i];
+                    var rebasedPath = ElementDefinitionNavigator.ReplacePathRoot(listElem.Path, "Bundle.entry.resource");
+                    // Verify that full Bundle expansion contains the default List snapshot element
+                    pos = elems.FindIndex(pos + 1, e => e.Path == rebasedPath);
+                    Assert.AreNotEqual(-1, pos);
+                }
             }
             finally
             {
@@ -5265,37 +5307,6 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement -= elementHandler;
             }
 
-            dumpOutcome(_generator.Outcome);
-            Assert.IsTrue(expanded.HasSnapshot);
-            dumpBaseElems(expanded.Snapshot.Element);
-
-            // Snapshot generator should NOT emit any issues
-            Assert.IsNull(_generator.Outcome);
-
-            var elems = expanded.Snapshot.Element;
-
-            // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
-            var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-            elems = fullyExpand(elems, issues).ToList();
-            Assert.AreEqual(0, issues.Count);
-
-            // Verify that Bundle.entry.resource : List was properly expanded
-            var pos = elems.FindIndex(e => e.Path == "Bundle.entry.resource");
-            Assert.AreNotEqual(-1, pos);
-            var elem = elems[pos];
-            Assert.AreEqual(FHIRDefinedType.List, elem.Type.FirstOrDefault()?.Code);
-
-            // Verify that expanded child elements of Bundle.entry.resource contains all the elements in List snapshot
-            // [WMR 20180115] Full expansion will add additional grand children, not present in defaut List snapshot
-            var listElems = sdList.Snapshot.Element;
-            for (int i = 1; i < listElems.Count; i++)
-            {
-                var listElem = listElems[i];
-                var rebasedPath = ElementDefinitionNavigator.ReplacePathRoot(listElem.Path, "Bundle.entry.resource");
-                // Verify that full Bundle expansion contains the default List snapshot element
-                pos = elems.FindIndex(pos + 1, e => e.Path == rebasedPath);
-                Assert.AreNotEqual(-1, pos);
-            }
         }
 
         [TestMethod]
@@ -5697,6 +5708,101 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(2, elem.Code.Count);
             Assert.AreEqual("foo", elem.Code[0].Display);
             Assert.AreEqual("bar", elem.Code[1].Display);
+        }
+
+        [TestMethod]
+        public void TestReferenceTargetProfile()
+        {
+            // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
+            var ReferenceProfile = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Reference,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Reference),
+                Name = "MyCustomReference",
+                Url = "http://example.org/fhir/StructureDefinition/MyCustomReference",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Reference")
+                        {
+                            Comments = "CustomReference"
+                        },
+                        new ElementDefinition("Reference.reference")
+                        {
+                            Min = 1
+                        },
+                    }
+                }
+            };
+
+            var ReportProfile = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.DiagnosticReport,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.DiagnosticReport),
+                Name = "MyDiagnosticReport",
+                Url = "http://example.org/fhir/StructureDefinition/MyDiagnosticReport",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("DiagnosticReport.imagingStudy")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRDefinedType.Reference,
+                                    Profile = new string[] { ReferenceProfile.Url }
+                                    // targetProfile was introduced in STU3, not supported yet in DSTU2
+                                    // TargetProfile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.ImagingStudy)
+                                }
+                            }
+                        },
+                        // Add child element constraint to force expansion
+                        //new ElementDefinition("DiagnosticReport.imagingStudy.identifier")
+                        //{
+                        //    Max = "0"
+                        //}
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(ReportProfile, ReferenceProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(ReportProfile, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // Expecting single issue about invalid slice name on SimpleQuantity root element
+            var outcome = generator.Outcome;
+            Assert.IsNull(outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("DiagnosticReport.imagingStudy"));
+            Assert.IsNotNull(nav.Current);
+            // Verify that snapshot generator merges constraints from external ReferenceProfile
+            Assert.AreEqual("CustomReference", nav.Current.Comments);
+            Assert.IsNotNull(nav.Current.Type);
+            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.AreEqual(FHIRDefinedType.Reference, nav.Current.Type[0].Code);
+            Assert.AreEqual(ReferenceProfile.Url, nav.Current.Type[0].Profile.FirstOrDefault());
+            // By default, snapshot generator does not expand children of element DiagnosticReport.imagingStudy
+            Assert.IsFalse(nav.HasChildren);
+
+            // Explicitly expand children of element DiagnosticReport.imagingStudy
+            Assert.IsTrue(generator.ExpandElement(nav));
+            Assert.IsTrue(nav.HasChildren);
+            Assert.IsTrue(nav.MoveToChild("reference"));
+            Assert.IsNotNull(nav.Current);
+            // Verify profile inherits constraint from external targetProfile on Reference
+            Assert.AreEqual(1, nav.Current.Min);
         }
 
     }
