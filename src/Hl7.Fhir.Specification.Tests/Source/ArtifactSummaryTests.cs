@@ -131,6 +131,11 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsTrue(
                     summary.GetStructureDefinitionDerivation() != StructureDefinition.TypeDerivationRule.Specialization.GetLiteral()
                     || summary.GetStructureDefinitionBaseDefinition() != null);
+
+
+                // [WMR 20180725] Also harvest root element definition text
+                var rootDefinition = summary.GetStructureDefinitionRootDefinition();
+                Assert.IsNotNull(rootDefinition);
             }
         }
 
@@ -198,6 +203,10 @@ namespace Hl7.Fhir.Specification.Tests
                         Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
                         Assert.IsNotNull(summary.GetStructureDefinitionWorkingGroup());
                     }
+
+                    // [WMR 20180725] Also harvest root element definition text
+                    var rootDefinition = summary.GetStructureDefinitionRootDefinition();
+                    Assert.IsNotNull(rootDefinition);
                 }
 
             }
