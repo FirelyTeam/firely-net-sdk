@@ -7,14 +7,10 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using Newtonsoft.Json.Linq;
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Serialization
 {

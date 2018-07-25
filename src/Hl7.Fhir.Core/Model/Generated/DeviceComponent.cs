@@ -260,9 +260,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SpecType != null) yield return new ElementValue("specType", false, false, false, SpecType);
-                    if (ComponentId != null) yield return new ElementValue("componentId", false, false, false, ComponentId);
-                    if (ProductionSpecElement != null) yield return new ElementValue("productionSpec", false, false, false, ProductionSpecElement);
+                    if (SpecType != null) yield return new ElementValue("specType", SpecType);
+                    if (ComponentId != null) yield return new ElementValue("componentId", ComponentId);
+                    if (ProductionSpecElement != null) yield return new ElementValue("productionSpec", ProductionSpecElement);
                 }
             }
 
@@ -547,16 +547,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Type != null) yield return new ElementValue("type", false, false, false, Type);
-                if (Identifier != null) yield return new ElementValue("identifier", false, false, false, Identifier);
-                if (LastSystemChangeElement != null) yield return new ElementValue("lastSystemChange", false, false, false, LastSystemChangeElement);
-                if (Source != null) yield return new ElementValue("source", false, false, false, Source);
-                if (Parent != null) yield return new ElementValue("parent", false, false, false, Parent);
-                foreach (var elem in OperationalStatus) { if (elem != null) yield return new ElementValue("operationalStatus", true, false, false, elem); }
-                if (ParameterGroup != null) yield return new ElementValue("parameterGroup", false, false, false, ParameterGroup);
-                if (MeasurementPrincipleElement != null) yield return new ElementValue("measurementPrinciple", false, false, false, MeasurementPrincipleElement);
-                foreach (var elem in ProductionSpecification) { if (elem != null) yield return new ElementValue("productionSpecification", true, false, false, elem); }
-                if (LanguageCode != null) yield return new ElementValue("languageCode", false, false, false, LanguageCode);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (LastSystemChangeElement != null) yield return new ElementValue("lastSystemChange", LastSystemChangeElement);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (Parent != null) yield return new ElementValue("parent", Parent);
+                foreach (var elem in OperationalStatus) { if (elem != null) yield return new ElementValue("operationalStatus", elem); }
+                if (ParameterGroup != null) yield return new ElementValue("parameterGroup", ParameterGroup);
+                if (MeasurementPrincipleElement != null) yield return new ElementValue("measurementPrinciple", MeasurementPrincipleElement);
+                foreach (var elem in ProductionSpecification) { if (elem != null) yield return new ElementValue("productionSpecification", elem); }
+                if (LanguageCode != null) yield return new ElementValue("languageCode", LanguageCode);
             }
         }
 

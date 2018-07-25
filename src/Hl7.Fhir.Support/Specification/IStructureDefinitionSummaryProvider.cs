@@ -10,12 +10,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Specification
 {
-    public interface IElementSerializationInfo  // ElementDefinition
+    public interface IElementDefinitionSummary  // ElementDefinition
     {
         string ElementName { get; }
-        bool MayRepeat { get; }
+        bool IsCollection { get; }
+        bool IsRequired { get; }
+
+        bool InSummary { get; }
 
         bool IsChoiceElement { get; }
         bool IsContainedResource { get; }
@@ -40,21 +43,21 @@ namespace Hl7.Fhir.Serialization
     ///  In FHIR, this interface represents definitions of Resources, datatypes and BackboneElements. 
     ///  BackboneElements will always have the TypeName set to "BackboneElement" and IsAbstract to true.
     ///  </remarks>
-    public interface IComplexTypeSerializationInfo : ITypeSerializationInfo
+    public interface IStructureDefinitionSummary : ITypeSerializationInfo
     {
         string TypeName { get; }
         bool IsAbstract { get; }
 
-        IEnumerable<IElementSerializationInfo> GetChildren();
+        IEnumerable<IElementDefinitionSummary> GetElements();
     }
 
-    public interface ITypeReference : ITypeSerializationInfo
+    public interface IStructureDefinitionReference : ITypeSerializationInfo
     {
         string ReferredType { get; }
     }
 
-    public interface ISerializationInfoProvider
+    public interface IStructureDefinitionSummaryProvider
     {
-        IComplexTypeSerializationInfo Provide(string canonical);
+        IStructureDefinitionSummary Provide(string canonical);
     }
 }

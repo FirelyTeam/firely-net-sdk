@@ -11,14 +11,14 @@ using System;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Hl7.Fhir.Serialization;
 using System.Linq;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
-    public class PocoNavigator : IElementNavigator, IElementSerializationInfo, IAnnotated
+    public class PocoNavigator : IElementNavigator, IElementDefinitionSummary, IAnnotated
     {
         public PocoNavigator(Base model)
         {
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public string Name => _nav.Name;
 
-        public int Order => _nav.Order;
+        public int Order => _nav.DefinitionSummary.Order;
 
         public string Location
         {
@@ -88,19 +88,18 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                var cur = _nav;
                 if (String.IsNullOrEmpty(_parentShortPath))
                 {
-                    return cur.Name;
+                    return Name;
                 }
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (cur.AtCollection)
+                    if (IsCollection)
                     {
-                        return $"{_parentShortPath}.{cur.Name}[{cur.ArrayIndex}]";
+                        return $"{_parentShortPath}.{Name}[{_nav.ArrayIndex}]";
                     }
-                    return $"{_parentShortPath}.{cur.Name}";
+                    return $"{_parentShortPath}.{Name}";
                 }
             }
         }
@@ -128,7 +127,7 @@ namespace Hl7.Fhir.ElementModel
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (cur.AtCollection)
+                    if (IsCollection)
                     {
                         Base fhirValue = cur.FhirValue;
                         if (fhirValue is Identifier ident)
@@ -196,16 +195,19 @@ namespace Hl7.Fhir.ElementModel
 
         public string ElementName => Name;
 
-        public bool MayRepeat => _nav.AtCollection;
+        public bool IsCollection => _nav.DefinitionSummary.IsCollection;
 
-        public bool IsChoiceElement => _nav.Current.IsChoice;
+        public bool IsChoiceElement => _nav.DefinitionSummary.IsChoiceElement;
 
-        public bool IsContainedResource => _nav.Current.IsContained;
+        public bool IsRequired => _nav.DefinitionSummary.IsRequired;
 
-        public XmlRepresentation Representation => _nav.IsAttribute ? 
-            XmlRepresentation.XmlAttr : XmlRepresentation.XmlElement;
+        public bool IsContainedResource => _nav.DefinitionSummary.IsContainedResource;
 
-        ITypeSerializationInfo[] IElementSerializationInfo.Type => null;
+        public XmlRepresentation Representation => _nav.DefinitionSummary.Representation;
+
+        public bool InSummary => _nav.DefinitionSummary.InSummary;
+
+        ITypeSerializationInfo[] IElementDefinitionSummary.Type => null;
 
         public string NonDefaultNamespace => null;
 
@@ -266,11 +268,11 @@ namespace Hl7.Fhir.ElementModel
 
         private IEnumerable<object> generatePocoNavAnnotations(Type type)
         {
-            if (type == typeof(ElementSerializationInfo))
+            if (type == typeof(ElementDefinitionSummary))
             {
                 return new[]
                 {
-                    new ElementSerializationInfo(this)
+                    new ElementDefinitionSummary(this)
                 };
             }
             else

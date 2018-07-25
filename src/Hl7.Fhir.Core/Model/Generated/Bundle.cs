@@ -312,8 +312,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RelationElement != null) yield return new ElementValue("relation", false, false, false, RelationElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, false, false, UrlElement);
+                    if (RelationElement != null) yield return new ElementValue("relation", RelationElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 }
             }
 
@@ -506,12 +506,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, false, false, elem); }
-                    if (FullUrlElement != null) yield return new ElementValue("fullUrl", false, false, false, FullUrlElement);
-                    if (Resource != null) yield return new ElementValue("resource", false, false, true, Resource);
-                    if (Search != null) yield return new ElementValue("search", false, false, false, Search);
-                    if (Request != null) yield return new ElementValue("request", false, false, false, Request);
-                    if (Response != null) yield return new ElementValue("response", false, false, false, Response);
+                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
+                    if (FullUrlElement != null) yield return new ElementValue("fullUrl", FullUrlElement);
+                    if (Resource != null) yield return new ElementValue("resource", Resource);
+                    if (Search != null) yield return new ElementValue("search", Search);
+                    if (Request != null) yield return new ElementValue("request", Request);
+                    if (Response != null) yield return new ElementValue("response", Response);
                 }
             }
 
@@ -652,8 +652,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ModeElement != null) yield return new ElementValue("mode", false, false, false, ModeElement);
-                    if (ScoreElement != null) yield return new ElementValue("score", false, false, false, ScoreElement);
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                    if (ScoreElement != null) yield return new ElementValue("score", ScoreElement);
                 }
             }
 
@@ -940,12 +940,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MethodElement != null) yield return new ElementValue("method", false, false, false, MethodElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, false, false, UrlElement);
-                    if (IfNoneMatchElement != null) yield return new ElementValue("ifNoneMatch", false, false, false, IfNoneMatchElement);
-                    if (IfModifiedSinceElement != null) yield return new ElementValue("ifModifiedSince", false, false, false, IfModifiedSinceElement);
-                    if (IfMatchElement != null) yield return new ElementValue("ifMatch", false, false, false, IfMatchElement);
-                    if (IfNoneExistElement != null) yield return new ElementValue("ifNoneExist", false, false, false, IfNoneExistElement);
+                    if (MethodElement != null) yield return new ElementValue("method", MethodElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                    if (IfNoneMatchElement != null) yield return new ElementValue("ifNoneMatch", IfNoneMatchElement);
+                    if (IfModifiedSinceElement != null) yield return new ElementValue("ifModifiedSince", IfModifiedSinceElement);
+                    if (IfMatchElement != null) yield return new ElementValue("ifMatch", IfMatchElement);
+                    if (IfNoneExistElement != null) yield return new ElementValue("ifNoneExist", IfNoneExistElement);
                 }
             }
 
@@ -1159,10 +1159,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                    if (LocationElement != null) yield return new ElementValue("location", false, false, false, LocationElement);
-                    if (EtagElement != null) yield return new ElementValue("etag", false, false, false, EtagElement);
-                    if (LastModifiedElement != null) yield return new ElementValue("lastModified", false, false, false, LastModifiedElement);
+                    if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                    if (LocationElement != null) yield return new ElementValue("location", LocationElement);
+                    if (EtagElement != null) yield return new ElementValue("etag", EtagElement);
+                    if (LastModifiedElement != null) yield return new ElementValue("lastModified", LastModifiedElement);
                 }
             }
 
@@ -1426,11 +1426,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (TypeElement != null) yield return new ElementValue("type", false, false, false, TypeElement);
-                if (TotalElement != null) yield return new ElementValue("total", false, false, false, TotalElement);
-                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, false, false, elem); }
-                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, false, false, elem); }
-                if (Signature != null) yield return new ElementValue("signature", false, false, false, Signature);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (TotalElement != null) yield return new ElementValue("total", TotalElement);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
+                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
+                if (Signature != null) yield return new ElementValue("signature", Signature);
             }
         }
 

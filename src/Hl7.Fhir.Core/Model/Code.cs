@@ -36,6 +36,7 @@ using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Model
 {

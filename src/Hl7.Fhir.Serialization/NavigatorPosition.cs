@@ -6,7 +6,7 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
-using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
@@ -14,11 +14,11 @@ namespace Hl7.Fhir.Serialization
     internal class NavigatorPosition 
     {
         public readonly ISourceNavigator Node;
-        public readonly IElementSerializationInfo SerializationInfo;
+        public readonly IElementDefinitionSummary SerializationInfo;
         public readonly string Name;
         public readonly string InstanceType;
 
-        public NavigatorPosition(ISourceNavigator current, IElementSerializationInfo info, string name, string type)
+        public NavigatorPosition(ISourceNavigator current, IElementDefinitionSummary info, string name, string type)
         {
             SerializationInfo = info;
             Node = current ?? throw Error.ArgumentNull(nameof(current));
@@ -26,11 +26,11 @@ namespace Hl7.Fhir.Serialization
             Name = name ?? throw Error.ArgumentNull(nameof(name));
         }
 
-        public static NavigatorPosition ForElement(ISourceNavigator element, IComplexTypeSerializationInfo elementType, string elementName)
+        public static NavigatorPosition ForElement(ISourceNavigator element, IStructureDefinitionSummary elementType, string elementName)
         {
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
 
-            var rootElement = elementType != null ? ElementSerializationInfo.ForRoot(elementName, elementType) : null;
+            var rootElement = elementType != null ? ElementDefinitionSummary.ForRoot(elementName, elementType) : null;
             return new NavigatorPosition(element, rootElement, elementName, elementName);
         }
 

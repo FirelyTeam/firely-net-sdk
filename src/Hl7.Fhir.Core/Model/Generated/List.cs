@@ -251,10 +251,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Flag != null) yield return new ElementValue("flag", false, false, false, Flag);
-                    if (DeletedElement != null) yield return new ElementValue("deleted", false, false, false, DeletedElement);
-                    if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
-                    if (Item != null) yield return new ElementValue("item", false, false, false, Item);
+                    if (Flag != null) yield return new ElementValue("flag", Flag);
+                    if (DeletedElement != null) yield return new ElementValue("deleted", DeletedElement);
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (Item != null) yield return new ElementValue("item", Item);
                 }
             }
 
@@ -668,19 +668,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (TitleElement != null) yield return new ElementValue("title", false, false, false, TitleElement);
-                if (Code != null) yield return new ElementValue("code", false, false, false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
-                if (Source != null) yield return new ElementValue("source", false, false, false, Source);
-                if (Encounter != null) yield return new ElementValue("encounter", false, false, false, Encounter);
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
-                if (OrderedBy != null) yield return new ElementValue("orderedBy", false, false, false, OrderedBy);
-                if (ModeElement != null) yield return new ElementValue("mode", false, false, false, ModeElement);
-                if (NoteElement != null) yield return new ElementValue("note", false, false, false, NoteElement);
-                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, false, false, elem); }
-                if (EmptyReason != null) yield return new ElementValue("emptyReason", false, false, false, EmptyReason);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (OrderedBy != null) yield return new ElementValue("orderedBy", OrderedBy);
+                if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                if (NoteElement != null) yield return new ElementValue("note", NoteElement);
+                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
+                if (EmptyReason != null) yield return new ElementValue("emptyReason", EmptyReason);
             }
         }
 

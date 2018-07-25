@@ -8,16 +8,13 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -135,9 +132,9 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal bool MustSerializeMember(IElementNavigator source, out ElementSerializationInfo info)
+        internal bool MustSerializeMember(IElementNavigator source, out ElementDefinitionSummary info)
         {
-            info = source.GetSerializationInfo();
+            info = source.GetElementDefinitionSummary();
 
             if (info == null && !AllowUntypedElements)
             {
@@ -178,7 +175,7 @@ namespace Hl7.Fhir.Serialization
                 // about arrays in the serialization deails. Failing that, assume the default:
                 // for unknown properties is to use an array - safest bet.
                 var generalJsonDetails = getSerializationDetails(members[0]);
-                var needsArray = generalInfo?.MayRepeat ?? generalJsonDetails?.IsArrayElement ?? true;
+                var needsArray = generalInfo?.IsCollection ?? generalJsonDetails?.IsArrayElement ?? true;
                 var isResource = generalInfo?.IsContainedResource ?? members[0].GetResourceType() != null;
                 var isPrimitive = members[0].Type != null ? Primitives.IsPrimitive(members[0].Type) :
                         members.Any(m => m.Value != null);

@@ -7,17 +7,9 @@
  */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml;
 
 
 namespace Hl7.Fhir.Serialization

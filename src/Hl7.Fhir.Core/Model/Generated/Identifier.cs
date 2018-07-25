@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -300,12 +301,12 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (UseElement != null) yield return new ElementValue("use", false, false, false, UseElement);
-                if (Type != null) yield return new ElementValue("type", false, false, false, Type);
-                if (SystemElement != null) yield return new ElementValue("system", false, false, false, SystemElement);
-                if (ValueElement != null) yield return new ElementValue("value", false, false, false, ValueElement);
-                if (Period != null) yield return new ElementValue("period", false, false, false, Period);
-                if (Assigner != null) yield return new ElementValue("assigner", false, false, false, Assigner);
+                if (UseElement != null) yield return new ElementValue("use", UseElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+                if (ValueElement != null) yield return new ElementValue("value", ValueElement);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Assigner != null) yield return new ElementValue("assigner", Assigner);
  
             } 
         } 

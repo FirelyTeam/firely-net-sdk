@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -30,7 +32,10 @@ namespace Hl7.Fhir.ElementModel
             _parent = null;
             _index = 0;
             _arrayIndex = null;
-            _children = new List<ElementValue>() { new ElementValue(parent.TypeName, false, false,false, parent) };
+            _children = new List<ElementValue>() { new ElementValue(parent.TypeName, parent) };
+
+            var typeInfo = (new PocoSerializationInfoProvider()).Provide(parent.TypeName);
+            DefinitionSummary = Specification.ElementDefinitionSummary.ForRoot(parent.TypeName, typeInfo);
         }
 
         private PocoElementNavigator()
@@ -44,18 +49,21 @@ namespace Hl7.Fhir.ElementModel
                 _parent = this._parent,
                 _arrayIndex = this._arrayIndex,
                 _index = this._index,
-                _children = this._children
+                _children = this._children,
+                ParentClassMapping = this.ParentClassMapping,
+                DefinitionSummary = this.DefinitionSummary
             };
 
 
-        private bool enter(Base target)
+        private bool enter(Base parent)
         {
-            var children = target.NamedChildren.ToList();
+            var children = parent.NamedChildren.ToList();
             if (!children.Any()) return false;
 
-            _parent = target;
+            _parent = parent;
             _children = children;
-
+            ParentClassMapping = PocoSerializationInfoProvider.GetMappingForType(parent.GetType());
+            
             // Reset everything, next() will initialize the values for the first "child"
             _index = -1;
             _arrayIndex = null;
@@ -84,7 +92,10 @@ namespace Hl7.Fhir.ElementModel
                 {
                     _index = scan;
 
-                    if (!scanProp.IsCollectionMember)
+                    var propMapping = ParentClassMapping.FindMappedElementByName(Name);
+                    DefinitionSummary = new PocoElementSerializationInfo(propMapping);
+
+                    if (!DefinitionSummary.IsCollection)
                         _arrayIndex = null;
                     else
                         _arrayIndex = _arrayIndex == null ? 0 : _arrayIndex + 1;
@@ -100,11 +111,10 @@ namespace Hl7.Fhir.ElementModel
 
         public string Name => Current.ElementName;
 
-        public bool AtCollection => Current.IsCollectionMember;
+        public int ArrayIndex => DefinitionSummary.IsCollection ? _arrayIndex.Value : 0;
 
-        public int ArrayIndex => AtCollection ? _arrayIndex.Value : 0;
-
-        public int Order => _index;
+        internal ClassMapping ParentClassMapping { get; private set; }
+        internal IElementDefinitionSummary DefinitionSummary { get; private set; }
 
         /// <summary>
         /// This is only needed for search data extraction (and debugging)
@@ -209,8 +219,5 @@ namespace Hl7.Fhir.ElementModel
             else
                 return Enumerable.Empty<object>();
         }
-
-        public bool IsAttribute => Current.Value is string &&
-                (Name == "url" || Name == "id" || Name == "div");
     }
 }

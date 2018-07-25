@@ -168,8 +168,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, false, false, Type);
-                    if (TextElement != null) yield return new ElementValue("text", false, false, false, TextElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
                 }
             }
 
@@ -507,19 +507,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Request != null) yield return new ElementValue("request", false, false, false, Request);
-                if (Outcome != null) yield return new ElementValue("outcome", false, false, false, Outcome);
-                if (DispositionElement != null) yield return new ElementValue("disposition", false, false, false, DispositionElement);
-                if (Ruleset != null) yield return new ElementValue("ruleset", false, false, false, Ruleset);
-                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, false, false, OriginalRuleset);
-                if (CreatedElement != null) yield return new ElementValue("created", false, false, false, CreatedElement);
-                if (Organization != null) yield return new ElementValue("organization", false, false, false, Organization);
-                if (RequestProvider != null) yield return new ElementValue("requestProvider", false, false, false, RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, false, false, RequestOrganization);
-                if (Form != null) yield return new ElementValue("form", false, false, false, Form);
-                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", true, false, false, elem); }
-                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, false, false, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
+                if (Ruleset != null) yield return new ElementValue("ruleset", Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (RequestProvider != null) yield return new ElementValue("requestProvider", RequestProvider);
+                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", RequestOrganization);
+                if (Form != null) yield return new ElementValue("form", Form);
+                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", elem); }
+                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", elem); }
             }
         }
 

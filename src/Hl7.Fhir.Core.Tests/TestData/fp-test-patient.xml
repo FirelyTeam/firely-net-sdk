@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- First comment -->
-<Patient xmlns="http://hl7.org/fhir">
+<Patient xmlns="http://hl7.org/fhir" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://contoso.com/People http://contoso.com/schemas/people.xsd">
   <!-- Comments here -->
   <id value="pat1"/>   <!-- where's this comment? -->
   <text>
@@ -15,7 +17,7 @@
       <id value="1"/>     
       <identifier>
         <system value="http://hl7.org/fhir/sid/us-ssn" />
-        <value value="444222222"/>
+        <value value=" 444222222 "/>  <!-- has spaces around it to test trimming -->
       </identifier>
       <active value ="true"/>
       <name id="firstname">

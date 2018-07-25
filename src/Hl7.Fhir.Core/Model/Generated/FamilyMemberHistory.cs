@@ -219,10 +219,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, false, false, Code);
-                    if (Outcome != null) yield return new ElementValue("outcome", false, false, false, Outcome);
-                    if (Onset != null) yield return new ElementValue("onset", false, true, false, Onset);
-                    if (Note != null) yield return new ElementValue("note", false, false, false, Note);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                    if (Onset != null) yield return new ElementValue("onset", Onset);
+                    if (Note != null) yield return new ElementValue("note", Note);
                 }
             }
 
@@ -593,18 +593,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                if (NameElement != null) yield return new ElementValue("name", false, false, false, NameElement);
-                if (Relationship != null) yield return new ElementValue("relationship", false, false, false, Relationship);
-                if (GenderElement != null) yield return new ElementValue("gender", false, false, false, GenderElement);
-                if (Born != null) yield return new ElementValue("born", false, true, false, Born);
-                if (Age != null) yield return new ElementValue("age", false, true, false, Age);
-                if (Deceased != null) yield return new ElementValue("deceased", false, true, false, Deceased);
-                if (Note != null) yield return new ElementValue("note", false, false, false, Note);
-                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, false, false, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                if (Born != null) yield return new ElementValue("born", Born);
+                if (Age != null) yield return new ElementValue("age", Age);
+                if (Deceased != null) yield return new ElementValue("deceased", Deceased);
+                if (Note != null) yield return new ElementValue("note", Note);
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
             }
         }
 

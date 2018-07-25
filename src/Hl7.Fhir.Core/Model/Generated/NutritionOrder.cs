@@ -298,12 +298,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, false, false, elem); }
-                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", true, false, false, elem); }
-                    foreach (var elem in Nutrient) { if (elem != null) yield return new ElementValue("nutrient", true, false, false, elem); }
-                    foreach (var elem in Texture) { if (elem != null) yield return new ElementValue("texture", true, false, false, elem); }
-                    foreach (var elem in FluidConsistencyType) { if (elem != null) yield return new ElementValue("fluidConsistencyType", true, false, false, elem); }
-                    if (InstructionElement != null) yield return new ElementValue("instruction", false, false, false, InstructionElement);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", elem); }
+                    foreach (var elem in Nutrient) { if (elem != null) yield return new ElementValue("nutrient", elem); }
+                    foreach (var elem in Texture) { if (elem != null) yield return new ElementValue("texture", elem); }
+                    foreach (var elem in FluidConsistencyType) { if (elem != null) yield return new ElementValue("fluidConsistencyType", elem); }
+                    if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
                 }
             }
 
@@ -406,8 +406,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Modifier != null) yield return new ElementValue("modifier", false, false, false, Modifier);
-                    if (Amount != null) yield return new ElementValue("amount", false, false, false, Amount);
+                    if (Modifier != null) yield return new ElementValue("modifier", Modifier);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -510,8 +510,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Modifier != null) yield return new ElementValue("modifier", false, false, false, Modifier);
-                    if (FoodType != null) yield return new ElementValue("foodType", false, false, false, FoodType);
+                    if (Modifier != null) yield return new ElementValue("modifier", Modifier);
+                    if (FoodType != null) yield return new ElementValue("foodType", FoodType);
                 }
             }
 
@@ -704,11 +704,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, false, false, Type);
-                    if (ProductNameElement != null) yield return new ElementValue("productName", false, false, false, ProductNameElement);
-                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", true, false, false, elem); }
-                    if (Quantity != null) yield return new ElementValue("quantity", false, false, false, Quantity);
-                    if (InstructionElement != null) yield return new ElementValue("instruction", false, false, false, InstructionElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (ProductNameElement != null) yield return new ElementValue("productName", ProductNameElement);
+                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", elem); }
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
                 }
             }
 
@@ -988,15 +988,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (BaseFormulaType != null) yield return new ElementValue("baseFormulaType", false, false, false, BaseFormulaType);
-                    if (BaseFormulaProductNameElement != null) yield return new ElementValue("baseFormulaProductName", false, false, false, BaseFormulaProductNameElement);
-                    if (AdditiveType != null) yield return new ElementValue("additiveType", false, false, false, AdditiveType);
-                    if (AdditiveProductNameElement != null) yield return new ElementValue("additiveProductName", false, false, false, AdditiveProductNameElement);
-                    if (CaloricDensity != null) yield return new ElementValue("caloricDensity", false, false, false, CaloricDensity);
-                    if (RouteofAdministration != null) yield return new ElementValue("routeofAdministration", false, false, false, RouteofAdministration);
-                    foreach (var elem in Administration) { if (elem != null) yield return new ElementValue("administration", true, false, false, elem); }
-                    if (MaxVolumeToDeliver != null) yield return new ElementValue("maxVolumeToDeliver", false, false, false, MaxVolumeToDeliver);
-                    if (AdministrationInstructionElement != null) yield return new ElementValue("administrationInstruction", false, false, false, AdministrationInstructionElement);
+                    if (BaseFormulaType != null) yield return new ElementValue("baseFormulaType", BaseFormulaType);
+                    if (BaseFormulaProductNameElement != null) yield return new ElementValue("baseFormulaProductName", BaseFormulaProductNameElement);
+                    if (AdditiveType != null) yield return new ElementValue("additiveType", AdditiveType);
+                    if (AdditiveProductNameElement != null) yield return new ElementValue("additiveProductName", AdditiveProductNameElement);
+                    if (CaloricDensity != null) yield return new ElementValue("caloricDensity", CaloricDensity);
+                    if (RouteofAdministration != null) yield return new ElementValue("routeofAdministration", RouteofAdministration);
+                    foreach (var elem in Administration) { if (elem != null) yield return new ElementValue("administration", elem); }
+                    if (MaxVolumeToDeliver != null) yield return new ElementValue("maxVolumeToDeliver", MaxVolumeToDeliver);
+                    if (AdministrationInstructionElement != null) yield return new ElementValue("administrationInstruction", AdministrationInstructionElement);
                 }
             }
 
@@ -1118,9 +1118,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Schedule != null) yield return new ElementValue("schedule", false, false, false, Schedule);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, false, false, Quantity);
-                    if (Rate != null) yield return new ElementValue("rate", false, true, false, Rate);
+                    if (Schedule != null) yield return new ElementValue("schedule", Schedule);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Rate != null) yield return new ElementValue("rate", Rate);
                 }
             }
 
@@ -1455,18 +1455,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
-                if (Orderer != null) yield return new ElementValue("orderer", false, false, false, Orderer);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Encounter != null) yield return new ElementValue("encounter", false, false, false, Encounter);
-                if (DateTimeElement != null) yield return new ElementValue("dateTime", false, false, false, DateTimeElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", true, false, false, elem); }
-                foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return new ElementValue("foodPreferenceModifier", true, false, false, elem); }
-                foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return new ElementValue("excludeFoodModifier", true, false, false, elem); }
-                if (OralDiet != null) yield return new ElementValue("oralDiet", false, false, false, OralDiet);
-                foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", true, false, false, elem); }
-                if (EnteralFormula != null) yield return new ElementValue("enteralFormula", false, false, false, EnteralFormula);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Orderer != null) yield return new ElementValue("orderer", Orderer);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", elem); }
+                foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return new ElementValue("foodPreferenceModifier", elem); }
+                foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return new ElementValue("excludeFoodModifier", elem); }
+                if (OralDiet != null) yield return new ElementValue("oralDiet", OralDiet);
+                foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", elem); }
+                if (EnteralFormula != null) yield return new ElementValue("enteralFormula", EnteralFormula);
             }
         }
 

@@ -208,8 +208,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, false, false, NameElement);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, false, false, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
                 }
             }
 
@@ -816,21 +816,21 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, false, false, UrlElement);
-                if (NameElement != null) yield return new ElementValue("name", false, false, false, NameElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, false, false, ExperimentalElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, false, false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, false, false, elem); }
-                if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
-                if (RequirementsElement != null) yield return new ElementValue("requirements", false, false, false, RequirementsElement);
-                if (CodeElement != null) yield return new ElementValue("code", false, false, false, CodeElement);
-                if (BaseElement != null) yield return new ElementValue("base", false, false, false, BaseElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, false, false, TypeElement);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
-                if (XpathElement != null) yield return new ElementValue("xpath", false, false, false, XpathElement);
-                if (XpathUsageElement != null) yield return new ElementValue("xpathUsage", false, false, false, XpathUsageElement);
-                foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", true, false, false, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (RequirementsElement != null) yield return new ElementValue("requirements", RequirementsElement);
+                if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                if (BaseElement != null) yield return new ElementValue("base", BaseElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (XpathElement != null) yield return new ElementValue("xpath", XpathElement);
+                if (XpathUsageElement != null) yield return new ElementValue("xpathUsage", XpathUsageElement);
+                foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", elem); }
             }
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -140,8 +141,8 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Numerator != null) yield return new ElementValue("numerator", false, false, false, Numerator);
-                if (Denominator != null) yield return new ElementValue("denominator", false, false, false, Denominator);
+                if (Numerator != null) yield return new ElementValue("numerator", Numerator);
+                if (Denominator != null) yield return new ElementValue("denominator", Denominator);
  
             } 
         } 

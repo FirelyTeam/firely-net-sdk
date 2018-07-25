@@ -284,13 +284,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", true, false, false, elem); }
-                    if (Name != null) yield return new ElementValue("name", false, false, false, Name);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, false, false, elem); }
-                    if (Address != null) yield return new ElementValue("address", false, false, false, Address);
-                    if (GenderElement != null) yield return new ElementValue("gender", false, false, false, GenderElement);
-                    if (Organization != null) yield return new ElementValue("organization", false, false, false, Organization);
-                    if (Period != null) yield return new ElementValue("period", false, false, false, Period);
+                    foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", elem); }
+                    if (Name != null) yield return new ElementValue("name", Name);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                    if (Address != null) yield return new ElementValue("address", Address);
+                    if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                    if (Organization != null) yield return new ElementValue("organization", Organization);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -411,9 +411,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Species != null) yield return new ElementValue("species", false, false, false, Species);
-                    if (Breed != null) yield return new ElementValue("breed", false, false, false, Breed);
-                    if (GenderStatus != null) yield return new ElementValue("genderStatus", false, false, false, GenderStatus);
+                    if (Species != null) yield return new ElementValue("species", Species);
+                    if (Breed != null) yield return new ElementValue("breed", Breed);
+                    if (GenderStatus != null) yield return new ElementValue("genderStatus", GenderStatus);
                 }
             }
 
@@ -536,8 +536,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Language != null) yield return new ElementValue("language", false, false, false, Language);
-                    if (PreferredElement != null) yield return new ElementValue("preferred", false, false, false, PreferredElement);
+                    if (Language != null) yield return new ElementValue("language", Language);
+                    if (PreferredElement != null) yield return new ElementValue("preferred", PreferredElement);
                 }
             }
 
@@ -663,8 +663,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Other != null) yield return new ElementValue("other", false, false, false, Other);
-                    if (TypeElement != null) yield return new ElementValue("type", false, false, false, TypeElement);
+                    if (Other != null) yield return new ElementValue("other", Other);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 }
             }
 
@@ -1105,23 +1105,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, false, false, ActiveElement);
-                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, false, false, elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, false, false, elem); }
-                if (GenderElement != null) yield return new ElementValue("gender", false, false, false, GenderElement);
-                if (BirthDateElement != null) yield return new ElementValue("birthDate", false, false, false, BirthDateElement);
-                if (Deceased != null) yield return new ElementValue("deceased", false, true, false, Deceased);
-                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, false, false, elem); }
-                if (MaritalStatus != null) yield return new ElementValue("maritalStatus", false, false, false, MaritalStatus);
-                if (MultipleBirth != null) yield return new ElementValue("multipleBirth", false, true, false, MultipleBirth);
-                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, false, false, elem); }
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, false, false, elem); }
-                if (Animal != null) yield return new ElementValue("animal", false, false, false, Animal);
-                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", true, false, false, elem); }
-                foreach (var elem in CareProvider) { if (elem != null) yield return new ElementValue("careProvider", true, false, false, elem); }
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, false, false, ManagingOrganization);
-                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, false, false, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", BirthDateElement);
+                if (Deceased != null) yield return new ElementValue("deceased", Deceased);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
+                if (MaritalStatus != null) yield return new ElementValue("maritalStatus", MaritalStatus);
+                if (MultipleBirth != null) yield return new ElementValue("multipleBirth", MultipleBirth);
+                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Animal != null) yield return new ElementValue("animal", Animal);
+                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", elem); }
+                foreach (var elem in CareProvider) { if (elem != null) yield return new ElementValue("careProvider", elem); }
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
             }
         }
 

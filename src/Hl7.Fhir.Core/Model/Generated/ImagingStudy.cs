@@ -472,17 +472,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NumberElement != null) yield return new ElementValue("number", false, false, false, NumberElement);
-                    if (Modality != null) yield return new ElementValue("modality", false, false, false, Modality);
-                    if (UidElement != null) yield return new ElementValue("uid", false, false, false, UidElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
-                    if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", false, false, false, NumberOfInstancesElement);
-                    if (AvailabilityElement != null) yield return new ElementValue("availability", false, false, false, AvailabilityElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, false, false, UrlElement);
-                    if (BodySite != null) yield return new ElementValue("bodySite", false, false, false, BodySite);
-                    if (Laterality != null) yield return new ElementValue("laterality", false, false, false, Laterality);
-                    if (StartedElement != null) yield return new ElementValue("started", false, false, false, StartedElement);
-                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, false, false, elem); }
+                    if (NumberElement != null) yield return new ElementValue("number", NumberElement);
+                    if (Modality != null) yield return new ElementValue("modality", Modality);
+                    if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", NumberOfInstancesElement);
+                    if (AvailabilityElement != null) yield return new ElementValue("availability", AvailabilityElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                    if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                    if (Laterality != null) yield return new ElementValue("laterality", Laterality);
+                    if (StartedElement != null) yield return new ElementValue("started", StartedElement);
+                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
                 }
             }
 
@@ -751,12 +751,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NumberElement != null) yield return new ElementValue("number", false, false, false, NumberElement);
-                    if (UidElement != null) yield return new ElementValue("uid", false, false, false, UidElement);
-                    if (SopClassElement != null) yield return new ElementValue("sopClass", false, false, false, SopClassElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, false, false, TypeElement);
-                    if (TitleElement != null) yield return new ElementValue("title", false, false, false, TitleElement);
-                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, false, false, elem); }
+                    if (NumberElement != null) yield return new ElementValue("number", NumberElement);
+                    if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                    if (SopClassElement != null) yield return new ElementValue("sopClass", SopClassElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", elem); }
                 }
             }
 
@@ -1248,22 +1248,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (StartedElement != null) yield return new ElementValue("started", false, false, false, StartedElement);
-                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
-                if (UidElement != null) yield return new ElementValue("uid", false, false, false, UidElement);
-                if (Accession != null) yield return new ElementValue("accession", false, false, false, Accession);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                foreach (var elem in Order) { if (elem != null) yield return new ElementValue("order", true, false, false, elem); }
-                foreach (var elem in ModalityList) { if (elem != null) yield return new ElementValue("modalityList", true, false, false, elem); }
-                if (Referrer != null) yield return new ElementValue("referrer", false, false, false, Referrer);
-                if (AvailabilityElement != null) yield return new ElementValue("availability", false, false, false, AvailabilityElement);
-                if (UrlElement != null) yield return new ElementValue("url", false, false, false, UrlElement);
-                if (NumberOfSeriesElement != null) yield return new ElementValue("numberOfSeries", false, false, false, NumberOfSeriesElement);
-                if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", false, false, false, NumberOfInstancesElement);
-                foreach (var elem in Procedure) { if (elem != null) yield return new ElementValue("procedure", true, false, false, elem); }
-                if (Interpreter != null) yield return new ElementValue("interpreter", false, false, false, Interpreter);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
-                foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", true, false, false, elem); }
+                if (StartedElement != null) yield return new ElementValue("started", StartedElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                if (Accession != null) yield return new ElementValue("accession", Accession);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Order) { if (elem != null) yield return new ElementValue("order", elem); }
+                foreach (var elem in ModalityList) { if (elem != null) yield return new ElementValue("modalityList", elem); }
+                if (Referrer != null) yield return new ElementValue("referrer", Referrer);
+                if (AvailabilityElement != null) yield return new ElementValue("availability", AvailabilityElement);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (NumberOfSeriesElement != null) yield return new ElementValue("numberOfSeries", NumberOfSeriesElement);
+                if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", NumberOfInstancesElement);
+                foreach (var elem in Procedure) { if (elem != null) yield return new ElementValue("procedure", elem); }
+                if (Interpreter != null) yield return new ElementValue("interpreter", Interpreter);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", elem); }
             }
         }
 

@@ -315,16 +315,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Ruleset != null) yield return new ElementValue("ruleset", false, false, false, Ruleset);
-                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, false, false, OriginalRuleset);
-                if (CreatedElement != null) yield return new ElementValue("created", false, false, false, CreatedElement);
-                if (Target != null) yield return new ElementValue("target", false, false, false, Target);
-                if (Provider != null) yield return new ElementValue("provider", false, false, false, Provider);
-                if (Organization != null) yield return new ElementValue("organization", false, false, false, Organization);
-                if (Request != null) yield return new ElementValue("request", false, false, false, Request);
-                if (Response != null) yield return new ElementValue("response", false, false, false, Response);
-                if (PaymentStatus != null) yield return new ElementValue("paymentStatus", false, false, false, PaymentStatus);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Ruleset != null) yield return new ElementValue("ruleset", Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Target != null) yield return new ElementValue("target", Target);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Response != null) yield return new ElementValue("response", Response);
+                if (PaymentStatus != null) yield return new ElementValue("paymentStatus", PaymentStatus);
             }
         }
 

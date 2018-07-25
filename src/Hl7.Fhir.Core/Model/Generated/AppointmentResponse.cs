@@ -389,14 +389,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Appointment != null) yield return new ElementValue("appointment", false, false, false, Appointment);
-                if (StartElement != null) yield return new ElementValue("start", false, false, false, StartElement);
-                if (EndElement != null) yield return new ElementValue("end", false, false, false, EndElement);
-                foreach (var elem in ParticipantType) { if (elem != null) yield return new ElementValue("participantType", true, false, false, elem); }
-                if (Actor != null) yield return new ElementValue("actor", false, false, false, Actor);
-                if (ParticipantStatus_Element != null) yield return new ElementValue("participantStatus", false, false, false, ParticipantStatus_Element);
-                if (CommentElement != null) yield return new ElementValue("comment", false, false, false, CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Appointment != null) yield return new ElementValue("appointment", Appointment);
+                if (StartElement != null) yield return new ElementValue("start", StartElement);
+                if (EndElement != null) yield return new ElementValue("end", EndElement);
+                foreach (var elem in ParticipantType) { if (elem != null) yield return new ElementValue("participantType", elem); }
+                if (Actor != null) yield return new ElementValue("actor", Actor);
+                if (ParticipantStatus_Element != null) yield return new ElementValue("participantStatus", ParticipantStatus_Element);
+                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
             }
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -394,14 +395,14 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (ContentTypeElement != null) yield return new ElementValue("contentType", false, false, false, ContentTypeElement);
-                if (LanguageElement != null) yield return new ElementValue("language", false, false, false, LanguageElement);
-                if (DataElement != null) yield return new ElementValue("data", false, false, false, DataElement);
-                if (UrlElement != null) yield return new ElementValue("url", false, false, false, UrlElement);
-                if (SizeElement != null) yield return new ElementValue("size", false, false, false, SizeElement);
-                if (HashElement != null) yield return new ElementValue("hash", false, false, false, HashElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, false, false, TitleElement);
-                if (CreationElement != null) yield return new ElementValue("creation", false, false, false, CreationElement);
+                if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+                if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
+                if (DataElement != null) yield return new ElementValue("data", DataElement);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (SizeElement != null) yield return new ElementValue("size", SizeElement);
+                if (HashElement != null) yield return new ElementValue("hash", HashElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (CreationElement != null) yield return new ElementValue("creation", CreationElement);
  
             } 
         } 

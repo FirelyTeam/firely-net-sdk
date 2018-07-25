@@ -149,8 +149,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, false, false, Code);
-                    if (Schedule != null) yield return new ElementValue("schedule", false, false, false, Schedule);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Schedule != null) yield return new ElementValue("schedule", Schedule);
                 }
             }
 
@@ -395,14 +395,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
-                if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
-                if (Source != null) yield return new ElementValue("source", false, false, false, Source);
-                if (Target != null) yield return new ElementValue("target", false, false, false, Target);
-                if (Reason != null) yield return new ElementValue("reason", false, true, false, Reason);
-                if (When != null) yield return new ElementValue("when", false, false, false, When);
-                foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", true, false, false, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (Target != null) yield return new ElementValue("target", Target);
+                if (Reason != null) yield return new ElementValue("reason", Reason);
+                if (When != null) yield return new ElementValue("when", When);
+                foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
             }
         }
 

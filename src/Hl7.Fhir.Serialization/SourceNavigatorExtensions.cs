@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Serialization
         public static IEnumerable<object> Annotations(this ISourceNavigator nav, Type type) =>
             nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
 
-        internal static IElementNavigator AsElementNavigator(this ISourceNavigator sourceNav, string type=null, ISerializationInfoProvider provider=null)
+        internal static IElementNavigator AsElementNavigator(this ISourceNavigator sourceNav, string type=null, IStructureDefinitionSummaryProvider provider=null)
         {
             IElementNavigator typedNav;
 

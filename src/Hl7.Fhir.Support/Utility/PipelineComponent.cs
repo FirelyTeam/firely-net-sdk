@@ -11,7 +11,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Utility
 {
     public class PipelineComponent
     {
@@ -25,9 +25,6 @@ namespace Hl7.Fhir.Serialization
     {
         public static bool InPipeline(this IAnnotated ann, Type componentType) =>
             ann.Annotations<PipelineComponent>().Any(component => component.ComponentType == componentType);
-
-        public static bool InPipeline(this ISourceNavigator navigator, Type componentType) =>
-            navigator is IAnnotated ia ? ia.InPipeline(componentType) : false;
 
         public static bool InPipeline(this IElementNavigator navigator, Type componentType) =>
             navigator is IAnnotated ia ? ia.InPipeline(componentType) : false;

@@ -11,6 +11,7 @@ using System.Xml;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Support.Model;
+using System.Numerics;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -100,8 +101,10 @@ namespace Hl7.Fhir.Serialization
                 return pdt.ToString();
             if (value is PartialTime pt)
                 return pt.ToString();
-            if (value is Enum)
-                return ((Enum)value).GetLiteral();
+            if (value is Enum en)
+                return en.GetLiteral();
+            if (value is BigInteger bi)
+                return bi.ToString();
 
             throw Error.NotSupported($"Cannot convert '{value.GetType().Name}' value '{value}' to string");
         }

@@ -273,9 +273,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LongitudeElement != null) yield return new ElementValue("longitude", false, false, false, LongitudeElement);
-                    if (LatitudeElement != null) yield return new ElementValue("latitude", false, false, false, LatitudeElement);
-                    if (AltitudeElement != null) yield return new ElementValue("altitude", false, false, false, AltitudeElement);
+                    if (LongitudeElement != null) yield return new ElementValue("longitude", LongitudeElement);
+                    if (LatitudeElement != null) yield return new ElementValue("latitude", LatitudeElement);
+                    if (AltitudeElement != null) yield return new ElementValue("altitude", AltitudeElement);
                 }
             }
 
@@ -629,18 +629,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                if (NameElement != null) yield return new ElementValue("name", false, false, false, NameElement);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
-                if (ModeElement != null) yield return new ElementValue("mode", false, false, false, ModeElement);
-                if (Type != null) yield return new ElementValue("type", false, false, false, Type);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, false, false, elem); }
-                if (Address != null) yield return new ElementValue("address", false, false, false, Address);
-                if (PhysicalType != null) yield return new ElementValue("physicalType", false, false, false, PhysicalType);
-                if (Position != null) yield return new ElementValue("position", false, false, false, Position);
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, false, false, ManagingOrganization);
-                if (PartOf != null) yield return new ElementValue("partOf", false, false, false, PartOf);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                if (Address != null) yield return new ElementValue("address", Address);
+                if (PhysicalType != null) yield return new ElementValue("physicalType", PhysicalType);
+                if (Position != null) yield return new ElementValue("position", Position);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
+                if (PartOf != null) yield return new ElementValue("partOf", PartOf);
             }
         }
 

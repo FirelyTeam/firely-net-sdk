@@ -185,9 +185,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, false, false, Identifier);
-                    if (ExpiryElement != null) yield return new ElementValue("expiry", false, false, false, ExpiryElement);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, false, false, Quantity);
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (ExpiryElement != null) yield return new ElementValue("expiry", ExpiryElement);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
                 }
             }
 
@@ -293,8 +293,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Quantity != null) yield return new ElementValue("quantity", false, false, false, Quantity);
-                    if (Substance != null) yield return new ElementValue("substance", false, false, false, Substance);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Substance != null) yield return new ElementValue("substance", Substance);
                 }
             }
 
@@ -488,12 +488,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, false, false, elem); }
-                if (Code != null) yield return new ElementValue("code", false, false, false, Code);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
-                foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, false, false, elem); }
-                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, false, false, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
+                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
             }
         }
 

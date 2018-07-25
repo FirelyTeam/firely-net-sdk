@@ -506,18 +506,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (TypeElement != null) yield return new ElementValue("type", false, false, false, TypeElement);
-                if (Subtype != null) yield return new ElementValue("subtype", false, false, false, Subtype);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
-                if (Operator != null) yield return new ElementValue("operator", false, false, false, Operator);
-                if (View != null) yield return new ElementValue("view", false, false, false, View);
-                if (DeviceNameElement != null) yield return new ElementValue("deviceName", false, false, false, DeviceNameElement);
-                if (HeightElement != null) yield return new ElementValue("height", false, false, false, HeightElement);
-                if (WidthElement != null) yield return new ElementValue("width", false, false, false, WidthElement);
-                if (FramesElement != null) yield return new ElementValue("frames", false, false, false, FramesElement);
-                if (DurationElement != null) yield return new ElementValue("duration", false, false, false, DurationElement);
-                if (Content != null) yield return new ElementValue("content", false, false, false, Content);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (Subtype != null) yield return new ElementValue("subtype", Subtype);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Operator != null) yield return new ElementValue("operator", Operator);
+                if (View != null) yield return new ElementValue("view", View);
+                if (DeviceNameElement != null) yield return new ElementValue("deviceName", DeviceNameElement);
+                if (HeightElement != null) yield return new ElementValue("height", HeightElement);
+                if (WidthElement != null) yield return new ElementValue("width", WidthElement);
+                if (FramesElement != null) yield return new ElementValue("frames", FramesElement);
+                if (DurationElement != null) yield return new ElementValue("duration", DurationElement);
+                if (Content != null) yield return new ElementValue("content", Content);
             }
         }
 

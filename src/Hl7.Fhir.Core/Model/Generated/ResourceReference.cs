@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -178,8 +179,8 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (ReferenceElement != null) yield return new ElementValue("reference", false, false, false, ReferenceElement);
-                if (DisplayElement != null) yield return new ElementValue("display", false, false, false, DisplayElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+                if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
  
             } 
         } 

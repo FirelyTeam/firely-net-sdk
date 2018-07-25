@@ -19,7 +19,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification
 {
-    public class StructureDefinitionSerializationInfoProvider : ISerializationInfoProvider
+    public class StructureDefinitionSerializationInfoProvider : IStructureDefinitionSummaryProvider
     {
         public delegate bool TypeNameMapper(string typeName, out string canonical);
 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification
             _typeNameMapper = mapper ?? DefaultTypeNameMapper;
         }
 
-        public IComplexTypeSerializationInfo Provide(string canonical)
+        public IStructureDefinitionSummary Provide(string canonical)
         {
             var isLocalType = !canonical.Contains("/");
             string mappedCanonical = canonical;
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Specification
         }
     }
 
-    internal struct BackboneElementComplexTypeSerializationInfo : IComplexTypeSerializationInfo
+    internal struct BackboneElementComplexTypeSerializationInfo : IStructureDefinitionSummary
     {
         private readonly ElementDefinitionNavigator _nav;
 
@@ -71,10 +71,10 @@ namespace Hl7.Fhir.Specification
 
         public bool IsAbstract => true;
 
-        public IEnumerable<IElementSerializationInfo> GetChildren() => StructureDefinitionComplexTypeSerializationInfo.getChildren(_nav);
+        public IEnumerable<IElementDefinitionSummary> GetElements() => StructureDefinitionComplexTypeSerializationInfo.getElements(_nav);
     }
 
-    internal struct StructureDefinitionComplexTypeSerializationInfo : IComplexTypeSerializationInfo
+    internal struct StructureDefinitionComplexTypeSerializationInfo : IStructureDefinitionSummary
     {
         private readonly ElementDefinitionNavigator _nav;
 
@@ -87,15 +87,15 @@ namespace Hl7.Fhir.Specification
 
         public bool IsAbstract => _nav.StructureDefinition.Abstract ?? false;
 
-        public IEnumerable<IElementSerializationInfo> GetChildren()
+        public IEnumerable<IElementDefinitionSummary> GetElements()
         {
             if (_nav.Current == null && !_nav.MoveToFirstChild())
-                return Enumerable.Empty<IElementSerializationInfo>();
+                return Enumerable.Empty<IElementDefinitionSummary>();
 
-            return getChildren(_nav);
+            return getElements(_nav);
         }
 
-        internal static IEnumerable<IElementSerializationInfo> getChildren(ElementDefinitionNavigator nav)
+        internal static IEnumerable<IElementDefinitionSummary> getElements(ElementDefinitionNavigator nav)
         {
             string lastName = "";
 
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification
         }
     }
 
-    internal struct TypeReferenceInfo : ITypeReference
+    internal struct TypeReferenceInfo : IStructureDefinitionReference
     {
         private readonly string _referencedType;
 
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Specification
     }
 
 
-    internal struct ElementDefinitionSerializationInfo : IElementSerializationInfo
+    internal struct ElementDefinitionSerializationInfo : IElementDefinitionSummary
     {
         private readonly Lazy<ITypeSerializationInfo[]> _types;
         private readonly ElementDefinition _definition;
@@ -177,7 +177,11 @@ namespace Hl7.Fhir.Specification
 
         public string ElementName { get; private set; }
 
-        public bool MayRepeat => _definition.IsRepeating();
+        public bool IsCollection => _definition.IsRepeating();
+
+        public bool InSummary => _definition.IsSummary ?? false;
+
+        public bool IsRequired => (_definition.Min ?? 0) > 1;
 
         public XmlRepresentation Representation
         {

@@ -29,6 +29,7 @@
 */
 
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections;

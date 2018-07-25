@@ -2,6 +2,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -104,5 +105,35 @@ namespace Hl7.Fhir.Serialization.Tests
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
+        [TestMethod]
+        public void MaskSummary()
+        {
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var typeinfo = new PocoSerializationInfoProvider().Provide("Patient");
+            var inSummary = typeinfo.GetElements().Where(e => e.InSummary).ToList();
+
+            var nav = getXmlNav(tpXml);
+            var masker = MaskingNavigator.ForSummary(nav);
+            var output = masker.ToXml();
+
+            var maskedChildren = masker.Children().ToList();
+            Assert.IsTrue(maskedChildren.Count < inSummary.Count);
+            Assert.IsTrue(maskedChildren.Select(c => c.Name).All(c => inSummary.Any(s => s.ElementName == c)));
+        }
+
+        [TestMethod]
+        public void MaskText()
+        {
+            var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
+            var typeinfo = new PocoSerializationInfoProvider().Provide("ValueSet");
+            var isRequired = typeinfo.GetElements().Where(e => e.IsRequired).ToList();
+
+            var nav = getXmlNav(tpXml);
+            var masker = MaskingNavigator.ForText(nav);
+            var output = masker.ToXml();
+
+            var maskedChildren = masker.Children().ToList();
+            Assert.AreEqual(maskedChildren.Count, isRequired.Count + 3);
+        }
     }
 }

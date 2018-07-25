@@ -6,22 +6,18 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Specification
 {
-    public class PocoSerializationInfoProvider : ISerializationInfoProvider
+    public class PocoSerializationInfoProvider : IStructureDefinitionSummaryProvider
     {
-        public IComplexTypeSerializationInfo Provide(string canonical)
+        public IStructureDefinitionSummary Provide(string canonical)
         {
             var isLocalType = !canonical.Contains("/");
             var typeName = canonical;
@@ -52,7 +48,7 @@ namespace Hl7.Fhir.Introspection
     }
 
 
-    internal struct PocoComplexTypeSerializationInfo : IComplexTypeSerializationInfo
+    internal struct PocoComplexTypeSerializationInfo : IStructureDefinitionSummary
     {
         private readonly ClassMapping _classMapping;
 
@@ -65,12 +61,12 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsAbstract => _classMapping.IsAbstract;
 
-        public IEnumerable<IElementSerializationInfo> GetChildren() =>
+        public IEnumerable<IElementDefinitionSummary> GetElements() =>
             _classMapping.PropertyMappings.Select(pm =>
-            (IElementSerializationInfo)new PocoElementSerializationInfo(pm));
+            (IElementDefinitionSummary)new PocoElementSerializationInfo(pm));
     }
 
-    internal struct PocoTypeReferenceInfo : ITypeReference
+    internal struct PocoTypeReferenceInfo : IStructureDefinitionReference
     {
         private readonly string _referencedType;
 
@@ -83,7 +79,7 @@ namespace Hl7.Fhir.Introspection
     }
 
 
-    internal struct PocoElementSerializationInfo : IElementSerializationInfo
+    internal struct PocoElementSerializationInfo : IElementDefinitionSummary
     {
         private readonly PropertyMapping _pm;
         private readonly Lazy<ITypeSerializationInfo[]> _types;
@@ -116,13 +112,17 @@ namespace Hl7.Fhir.Introspection
 
         public string ElementName => _pm.Name;
 
-        public bool MayRepeat => _pm.IsCollection;
+        public bool IsCollection => _pm.IsCollection;
+
+        public bool InSummary => _pm.InSummary;
 
         public XmlRepresentation Representation => _pm.SerializationHint;
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
 
         public bool IsContainedResource => _pm.Choice == ChoiceType.ResourceChoice;
+
+        public bool IsRequired => _pm.IsMandatoryElement;
 
         public int Order => _pm.Order;
 

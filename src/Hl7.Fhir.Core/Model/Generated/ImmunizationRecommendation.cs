@@ -299,14 +299,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
-                    if (VaccineCode != null) yield return new ElementValue("vaccineCode", false, false, false, VaccineCode);
-                    if (DoseNumberElement != null) yield return new ElementValue("doseNumber", false, false, false, DoseNumberElement);
-                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", false, false, false, ForecastStatus);
-                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", true, false, false, elem); }
-                    if (Protocol != null) yield return new ElementValue("protocol", false, false, false, Protocol);
-                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", true, false, false, elem); }
-                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", true, false, false, elem); }
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (VaccineCode != null) yield return new ElementValue("vaccineCode", VaccineCode);
+                    if (DoseNumberElement != null) yield return new ElementValue("doseNumber", DoseNumberElement);
+                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", ForecastStatus);
+                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", elem); }
+                    if (Protocol != null) yield return new ElementValue("protocol", Protocol);
+                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", elem); }
+                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", elem); }
                 }
             }
 
@@ -430,8 +430,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, false, false, Code);
-                    if (ValueElement != null) yield return new ElementValue("value", false, false, false, ValueElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
 
@@ -627,10 +627,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", false, false, false, DoseSequenceElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, false, false, DescriptionElement);
-                    if (Authority != null) yield return new ElementValue("authority", false, false, false, Authority);
-                    if (SeriesElement != null) yield return new ElementValue("series", false, false, false, SeriesElement);
+                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", DoseSequenceElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Authority != null) yield return new ElementValue("authority", Authority);
+                    if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
                 }
             }
 
@@ -754,9 +754,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
-                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", true, false, false, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", elem); }
             }
         }
 

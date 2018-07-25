@@ -38,6 +38,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model

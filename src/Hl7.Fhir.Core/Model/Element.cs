@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -133,8 +134,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ElementId != null)  yield return new ElementValue("id", false, false, false, ElementId);
-                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",true, false, false, p); }
+                if (ElementId != null)  yield return new ElementValue("id", ElementId);
+                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",p); }
             }
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -255,11 +256,11 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, false, false, elem); }
-                if (WhenElement != null) yield return new ElementValue("when", false, false, false, WhenElement);
-                if (Who != null) yield return new ElementValue("who", false, true, false, Who);
-                if (ContentTypeElement != null) yield return new ElementValue("contentType", false, false, false, ContentTypeElement);
-                if (BlobElement != null) yield return new ElementValue("blob", false, false, false, BlobElement);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                if (WhenElement != null) yield return new ElementValue("when", WhenElement);
+                if (Who != null) yield return new ElementValue("who", Who);
+                if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+                if (BlobElement != null) yield return new ElementValue("blob", BlobElement);
  
             } 
         } 

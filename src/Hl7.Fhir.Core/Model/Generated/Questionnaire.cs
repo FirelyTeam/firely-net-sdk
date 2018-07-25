@@ -475,14 +475,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, false, false, LinkIdElement);
-                    if (TitleElement != null) yield return new ElementValue("title", false, false, false, TitleElement);
-                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", true, false, false, elem); }
-                    if (TextElement != null) yield return new ElementValue("text", false, false, false, TextElement);
-                    if (RequiredElement != null) yield return new ElementValue("required", false, false, false, RequiredElement);
-                    if (RepeatsElement != null) yield return new ElementValue("repeats", false, false, false, RepeatsElement);
-                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, false, false, elem); }
-                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", true, false, false, elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", LinkIdElement);
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", elem); }
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    if (RequiredElement != null) yield return new ElementValue("required", RequiredElement);
+                    if (RepeatsElement != null) yield return new ElementValue("repeats", RepeatsElement);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
+                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", elem); }
                 }
             }
 
@@ -804,15 +804,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, false, false, LinkIdElement);
-                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", true, false, false, elem); }
-                    if (TextElement != null) yield return new ElementValue("text", false, false, false, TextElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, false, false, TypeElement);
-                    if (RequiredElement != null) yield return new ElementValue("required", false, false, false, RequiredElement);
-                    if (RepeatsElement != null) yield return new ElementValue("repeats", false, false, false, RepeatsElement);
-                    if (Options != null) yield return new ElementValue("options", false, false, false, Options);
-                    foreach (var elem in Option) { if (elem != null) yield return new ElementValue("option", true, false, false, elem); }
-                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, false, false, elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", LinkIdElement);
+                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", elem); }
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (RequiredElement != null) yield return new ElementValue("required", RequiredElement);
+                    if (RepeatsElement != null) yield return new ElementValue("repeats", RepeatsElement);
+                    if (Options != null) yield return new ElementValue("options", Options);
+                    foreach (var elem in Option) { if (elem != null) yield return new ElementValue("option", elem); }
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
                 }
             }
 
@@ -1156,14 +1156,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, false, false, VersionElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                if (DateElement != null) yield return new ElementValue("date", false, false, false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, false, false, PublisherElement);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, false, false, elem); }
-                foreach (var elem in SubjectTypeElement) { if (elem != null) yield return new ElementValue("subjectType", true, false, false, elem); }
-                if (Group != null) yield return new ElementValue("group", false, false, false, Group);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                foreach (var elem in SubjectTypeElement) { if (elem != null) yield return new ElementValue("subjectType", elem); }
+                if (Group != null) yield return new ElementValue("group", Group);
             }
         }
 

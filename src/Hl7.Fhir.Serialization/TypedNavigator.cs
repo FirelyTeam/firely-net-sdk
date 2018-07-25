@@ -7,6 +7,7 @@
 */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
@@ -24,11 +25,11 @@ namespace Hl7.Fhir.Serialization
 
     public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
-        public TypedNavigator(ISourceNavigator root, ISerializationInfoProvider provider) : this(root, root.Name, provider)
+        public TypedNavigator(ISourceNavigator root, IStructureDefinitionSummaryProvider provider) : this(root, root.Name, provider)
         {
         }
 
-        public TypedNavigator(ISourceNavigator element, string type, ISerializationInfoProvider provider)
+        public TypedNavigator(ISourceNavigator element, string type, IStructureDefinitionSummaryProvider provider)
         {
             if (type == null) throw Error.ArgumentNull(nameof(type));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.Serialization
 
             _current = NavigatorPosition.ForElement(element, elementType, element.Name);
             _definition = _current.IsTracking ?
-                SerializationInfoCache.ForRoot(_current.SerializationInfo) : SerializationInfoCache.Empty;
+                ElementDefinitionSummaryCache.ForRoot(_current.SerializationInfo) : ElementDefinitionSummaryCache.Empty;
             _parentPath = null;
             _nameIndex = 0;
 
@@ -54,10 +55,10 @@ namespace Hl7.Fhir.Serialization
         {
             raiseTypeError($"Encountered unknown type '{typeName}'", position);
         }
-        private void verifyElementTrackingStatus(NavigatorPosition current, SerializationInfoCache definition)
+        private void verifyElementTrackingStatus(NavigatorPosition current, ElementDefinitionSummaryCache definition)
         {
             // If we found a type, but we don't know about the specific child, complain
-            if (definition != SerializationInfoCache.Empty && !current.IsTracking)
+            if (definition != ElementDefinitionSummaryCache.Empty && !current.IsTracking)
                 raiseTypeError($"Encountered unknown element '{current.Name}'", current.Node);
         }
 
@@ -95,8 +96,8 @@ namespace Hl7.Fhir.Serialization
         private int _nameIndex;
         private string _parentPath;
 
-        private SerializationInfoCache _definition;
-        public ISerializationInfoProvider Provider { get; private set; }
+        private ElementDefinitionSummaryCache _definition;
+        public IStructureDefinitionSummaryProvider Provider { get; private set; }
 
         public string Name => _current.Name;
 
@@ -135,7 +136,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private NavigatorPosition deriveInstanceType(ISourceNavigator current, IElementSerializationInfo info)
+        private NavigatorPosition deriveInstanceType(ISourceNavigator current, IElementDefinitionSummary info)
         {
             if (info == null) return new NavigatorPosition(current, null, current.Name, null);
 
@@ -162,7 +163,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    instanceType = info.Type.OfType<ITypeReference>().Select(t => t.ReferredType).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
+                    instanceType = info.Type.OfType<IStructureDefinitionReference>().Select(t => t.ReferredType).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
 
                     if (String.IsNullOrEmpty(instanceType))
                         raiseTypeError($"Choice element '{current.Name}' is suffixed with unexpected type '{suffix}'", current);
@@ -174,10 +175,10 @@ namespace Hl7.Fhir.Serialization
 
                 switch (tp)
                 {
-                    case ITypeReference tr:
+                    case IStructureDefinitionReference tr:
                         instanceType = tr.ReferredType;
                         break;
-                    case IComplexTypeSerializationInfo ct:
+                    case IStructureDefinitionSummary ct:
                         instanceType = ct.TypeName;
                         break;
                     default:
@@ -188,7 +189,7 @@ namespace Hl7.Fhir.Serialization
             return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
         }
 
-        private bool tryMoveToElement(SerializationInfoCache dis, ISourceNavigator current, string name, out NavigatorPosition match)
+        private bool tryMoveToElement(ElementDefinitionSummaryCache dis, ISourceNavigator current, string name, out NavigatorPosition match)
         {
             var scan = current;
 
@@ -238,7 +239,7 @@ namespace Hl7.Fhir.Serialization
         {
             // Since we don't want to report errors from the constructor, do this work now on
             // the initial call (_parentPath == null)
-            if (_parentPath == null && _definition == SerializationInfoCache.Empty)
+            if (_parentPath == null && _definition == ElementDefinitionSummaryCache.Empty)
                 reportUnknownType(_current.InstanceType, _current.Node);
 
             var scan = _current.Node.Clone();
@@ -249,7 +250,7 @@ namespace Hl7.Fhir.Serialization
 
 
             var firstChildDef = down(_current);
-            if (_current.IsTracking && firstChildDef == SerializationInfoCache.Empty && _current.InstanceType != null)
+            if (_current.IsTracking && firstChildDef == ElementDefinitionSummaryCache.Empty && _current.InstanceType != null)
                 reportUnknownType(_current.InstanceType, _current.Node);
 
             if (!tryMoveToElement(firstChildDef, scan, nameFilter, out var match)) return false;
@@ -265,21 +266,21 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private SerializationInfoCache down(NavigatorPosition current)
+        private ElementDefinitionSummaryCache down(NavigatorPosition current)
         {
-            if (!current.IsTracking || current.InstanceType == null) return SerializationInfoCache.Empty;
+            if (!current.IsTracking || current.InstanceType == null) return ElementDefinitionSummaryCache.Empty;
 
             // If this is a backbone element, the child type is the nested complex type
-            if (current.SerializationInfo.Type[0] is IComplexTypeSerializationInfo be)
-                return SerializationInfoCache.ForType(be);
+            if (current.SerializationInfo.Type[0] is IStructureDefinitionSummary be)
+                return ElementDefinitionSummaryCache.ForType(be);
             else
             {
                 var si = Provider.Provide(current.InstanceType);
 
                 if (si == null)
-                    return SerializationInfoCache.Empty;
+                    return ElementDefinitionSummaryCache.Empty;
                 else
-                    return SerializationInfoCache.ForType(si);
+                    return ElementDefinitionSummaryCache.ForType(si);
             }
         }
 
@@ -315,7 +316,7 @@ namespace Hl7.Fhir.Serialization
                     return Name;
                 else
                 {
-                    if (_current.IsTracking && _current.SerializationInfo.MayRepeat == false)
+                    if (_current.IsTracking && _current.SerializationInfo.IsCollection == false)
                         return $"{_parentPath}.{Name}";
                     else
                         return $"{_parentPath}.{Name}[{_nameIndex}]";
@@ -331,8 +332,8 @@ namespace Hl7.Fhir.Serialization
         {
             if (type == typeof(PipelineComponent))
                 return (new[] { _componentLabel }).Union(_current.Node.Annotations(typeof(PipelineComponent)));
-            else if (type == typeof(ElementSerializationInfo) && _current.IsTracking)
-                return new[] { new ElementSerializationInfo(_current.SerializationInfo) };
+            else if (type == typeof(ElementDefinitionSummary) && _current.IsTracking)
+                return new[] { new ElementDefinitionSummary(_current.SerializationInfo) };
             else
                 return _current.Node.Annotations(type);
         }

@@ -8,6 +8,7 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -71,7 +72,8 @@ namespace Hl7.Fhir.Serialization
             else
                 write(source, dest);
 
-            dest.WriteTo(destination);
+            if(dest.Nodes().Any())
+                dest.WriteTo(destination);
             destination.Flush();
         }
 
@@ -88,9 +90,9 @@ namespace Hl7.Fhir.Serialization
                     $"source if the source is a {nameof(FhirXmlNavigator)}.");
         }
 
-        internal bool MustSerializeMember(IElementNavigator source, out ElementSerializationInfo info)
+        internal bool MustSerializeMember(IElementNavigator source, out ElementDefinitionSummary info)
         {
-            info = source.GetSerializationInfo();
+            info = source.GetElementDefinitionSummary();
 
             if (info == null && !AllowUntypedElements)
             {
@@ -179,7 +181,7 @@ namespace Hl7.Fhir.Serialization
 
             // Now, do the same for the children
             // xml requires a certain order, so let's make sure we serialize in the right order
-            var orderedChildren = source.Children().OrderBy(c => c.GetSerializationInfo()?.Order ?? 0);            
+            var orderedChildren = source.Children().OrderBy(c => c.GetElementDefinitionSummary()?.Order ?? 0);            
             foreach (var child in orderedChildren)
                 write(child, childParent);
 
@@ -204,7 +206,7 @@ namespace Hl7.Fhir.Serialization
                 parent.Add(me);
             }
 
-            if (atRoot && sourceComments?.DocumentEndComments != null)
+            if (atRoot && parent.Elements().Any() && sourceComments?.DocumentEndComments != null)
                 writeComments(sourceComments.DocumentEndComments, parent);
         }
 

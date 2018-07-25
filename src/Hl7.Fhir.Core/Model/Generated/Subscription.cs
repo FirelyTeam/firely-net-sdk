@@ -333,10 +333,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, false, false, TypeElement);
-                    if (EndpointElement != null) yield return new ElementValue("endpoint", false, false, false, EndpointElement);
-                    if (PayloadElement != null) yield return new ElementValue("payload", false, false, false, PayloadElement);
-                    if (HeaderElement != null) yield return new ElementValue("header", false, false, false, HeaderElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
+                    if (PayloadElement != null) yield return new ElementValue("payload", PayloadElement);
+                    if (HeaderElement != null) yield return new ElementValue("header", HeaderElement);
                 }
             }
 
@@ -641,14 +641,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (CriteriaElement != null) yield return new ElementValue("criteria", false, false, false, CriteriaElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, false, false, elem); }
-                if (ReasonElement != null) yield return new ElementValue("reason", false, false, false, ReasonElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                if (ErrorElement != null) yield return new ElementValue("error", false, false, false, ErrorElement);
-                if (Channel != null) yield return new ElementValue("channel", false, false, false, Channel);
-                if (EndElement != null) yield return new ElementValue("end", false, false, false, EndElement);
-                foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", true, false, false, elem); }
+                if (CriteriaElement != null) yield return new ElementValue("criteria", CriteriaElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (ReasonElement != null) yield return new ElementValue("reason", ReasonElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ErrorElement != null) yield return new ElementValue("error", ErrorElement);
+                if (Channel != null) yield return new ElementValue("channel", Channel);
+                if (EndElement != null) yield return new ElementValue("end", EndElement);
+                foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", elem); }
             }
         }
 

@@ -10,13 +10,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Core.Tests.Serialization
 {

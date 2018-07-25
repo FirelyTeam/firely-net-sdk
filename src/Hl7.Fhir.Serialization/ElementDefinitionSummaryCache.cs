@@ -7,6 +7,7 @@
 */
 
 
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,22 @@ namespace Hl7.Fhir.Serialization
     /// Internal class to optimize access to a list of children, basically a dictionary of
     /// (element name, IElementSerializationInfo) pairs, optimized for quick access.
     /// </summary>
-    internal class SerializationInfoCache : Dictionary<string, IElementSerializationInfo>
+    internal class ElementDefinitionSummaryCache : Dictionary<string, IElementDefinitionSummary>
     {
-        public static SerializationInfoCache ForType(IComplexTypeSerializationInfo type)
-            => new SerializationInfoCache(type.GetChildren().ToDictionary(c => c.ElementName));
+        public static ElementDefinitionSummaryCache ForType(IStructureDefinitionSummary type)
+            => new ElementDefinitionSummaryCache(type.GetElements().ToDictionary(c => c.ElementName));
 
-        public static SerializationInfoCache Empty = new SerializationInfoCache();
+        public static ElementDefinitionSummaryCache Empty = new ElementDefinitionSummaryCache();
 
-        public static SerializationInfoCache ForRoot(IElementSerializationInfo rootInfo)
+        public static ElementDefinitionSummaryCache ForRoot(IElementDefinitionSummary rootInfo)
         {
             if (rootInfo == null) throw new ArgumentNullException(nameof(rootInfo));
 
-            return new SerializationInfoCache(new Dictionary<string, IElementSerializationInfo>
+            return new ElementDefinitionSummaryCache(new Dictionary<string, IElementDefinitionSummary>
                 { { rootInfo.ElementName, rootInfo } });
         }
 
-        public bool TryGetBySuffixedName(string name, out IElementSerializationInfo info)
+        public bool TryGetBySuffixedName(string name, out IElementDefinitionSummary info)
         {
             // Simplest case, one on one match between name and element name
             if (TryGetValue(name, out info))
@@ -49,11 +50,11 @@ namespace Hl7.Fhir.Serialization
             return info != null;
         }
 
-        private SerializationInfoCache() : base(new Dictionary<string, IElementSerializationInfo>())
+        private ElementDefinitionSummaryCache() : base(new Dictionary<string, IElementDefinitionSummary>())
         {
         }
 
-        private SerializationInfoCache(IDictionary<string, IElementSerializationInfo> elements) : base(elements)
+        private ElementDefinitionSummaryCache(IDictionary<string, IElementDefinitionSummary> elements) : base(elements)
         {
         }
     }

@@ -224,11 +224,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, false, false, elem); }
-                if (Code != null) yield return new ElementValue("code", false, false, false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, false, false, Subject);
-                if (Author != null) yield return new ElementValue("author", false, false, false, Author);
-                if (CreatedElement != null) yield return new ElementValue("created", false, false, false, CreatedElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Author != null) yield return new ElementValue("author", Author);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
             }
         }
 

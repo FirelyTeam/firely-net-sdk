@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -96,4 +97,14 @@ namespace Hl7.Fhir.Serialization
         string Path { get; }
     }
 
+
+    public static class ISourceNavigatorExtensions
+    {
+        public static bool InPipeline(this ISourceNavigator navigator, Type componentType) =>
+                    navigator is IAnnotated ia ? ia.InPipeline(componentType) : false;
+
+        public static ElementDefinitionSummary GetElementDefinitionSummary(this ISourceNavigator navigator) =>
+                navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
+
+    }
 }

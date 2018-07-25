@@ -168,9 +168,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Form != null) yield return new ElementValue("form", false, false, false, Form);
-                    foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, false, false, elem); }
-                    foreach (var elem in Batch) { if (elem != null) yield return new ElementValue("batch", true, false, false, elem); }
+                    if (Form != null) yield return new ElementValue("form", Form);
+                    foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                    foreach (var elem in Batch) { if (elem != null) yield return new ElementValue("batch", elem); }
                 }
             }
 
@@ -276,8 +276,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, false, false, Item);
-                    if (Amount != null) yield return new ElementValue("amount", false, false, false, Amount);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -418,8 +418,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, false, false, LotNumberElement);
-                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, false, false, ExpirationDateElement);
+                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
                 }
             }
 
@@ -523,8 +523,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Container != null) yield return new ElementValue("container", false, false, false, Container);
-                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, false, false, elem); }
+                    if (Container != null) yield return new ElementValue("container", Container);
+                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", elem); }
                 }
             }
 
@@ -630,8 +630,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, false, false, Item);
-                    if (Amount != null) yield return new ElementValue("amount", false, false, false, Amount);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -805,11 +805,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Code != null) yield return new ElementValue("code", false, false, false, Code);
-                if (IsBrandElement != null) yield return new ElementValue("isBrand", false, false, false, IsBrandElement);
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, false, false, Manufacturer);
-                if (Product != null) yield return new ElementValue("product", false, false, false, Product);
-                if (Package != null) yield return new ElementValue("package", false, false, false, Package);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (IsBrandElement != null) yield return new ElementValue("isBrand", IsBrandElement);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                if (Product != null) yield return new ElementValue("product", Product);
+                if (Package != null) yield return new ElementValue("package", Package);
             }
         }
 

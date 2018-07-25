@@ -1,7 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -128,12 +128,12 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = navCreator(tp);
 
             var outputBuilder = new StringBuilder();
-            IElementSerializationInfo serInfo = null;
+            IElementDefinitionSummary serInfo = null;
 
             switch (nav)
             {
-                case ISourceNavigator isn: serInfo = isn.GetSerializationInfo(); return;
-                case IElementNavigator ien: serInfo = ien.GetSerializationInfo(); return;
+                case ISourceNavigator isn: serInfo = isn.GetElementDefinitionSummary(); return;
+                case IElementNavigator ien: serInfo = ien.GetElementDefinitionSummary(); return;
             }
 
             bool hasTypeInfo = serInfo != null;
@@ -164,12 +164,12 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = navCreator(tp);
 
             var outputBuilder = new StringBuilder();
-            IElementSerializationInfo serInfo = null;
+            IElementDefinitionSummary serInfo = null;
 
             switch (nav)
             {
-                case ISourceNavigator isn: serInfo = isn.GetSerializationInfo(); return;
-                case IElementNavigator ien: serInfo = ien.GetSerializationInfo(); return;
+                case ISourceNavigator isn: serInfo = isn.GetElementDefinitionSummary(); return;
+                case IElementNavigator ien: serInfo = ien.GetElementDefinitionSummary(); return;
             }
 
             bool hasTypeInfo = serInfo != null;

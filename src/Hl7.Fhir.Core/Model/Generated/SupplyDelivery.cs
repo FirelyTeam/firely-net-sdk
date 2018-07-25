@@ -377,17 +377,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, false, false, Identifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, false, false, StatusElement);
-                if (Patient != null) yield return new ElementValue("patient", false, false, false, Patient);
-                if (Type != null) yield return new ElementValue("type", false, false, false, Type);
-                if (Quantity != null) yield return new ElementValue("quantity", false, false, false, Quantity);
-                if (SuppliedItem != null) yield return new ElementValue("suppliedItem", false, false, false, SuppliedItem);
-                if (Supplier != null) yield return new ElementValue("supplier", false, false, false, Supplier);
-                if (WhenPrepared != null) yield return new ElementValue("whenPrepared", false, false, false, WhenPrepared);
-                if (TimeElement != null) yield return new ElementValue("time", false, false, false, TimeElement);
-                if (Destination != null) yield return new ElementValue("destination", false, false, false, Destination);
-                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, false, false, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                if (SuppliedItem != null) yield return new ElementValue("suppliedItem", SuppliedItem);
+                if (Supplier != null) yield return new ElementValue("supplier", Supplier);
+                if (WhenPrepared != null) yield return new ElementValue("whenPrepared", WhenPrepared);
+                if (TimeElement != null) yield return new ElementValue("time", TimeElement);
+                if (Destination != null) yield return new ElementValue("destination", Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", elem); }
             }
         }
 
