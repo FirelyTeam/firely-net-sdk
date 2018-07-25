@@ -629,6 +629,23 @@ namespace Hl7.Fhir.Tests.Serialization
 
         }
 
-    }
+        /// <summary>
+        /// This test proves issue 583: https://github.com/ewoutkramer/fhir-net-api/issues/583
+        /// </summary>
+        [TestMethod]
+        public void SummarizeSerializingTest()
+        {
+            var patient = new Patient();
+            var telecom = new ContactPoint(ContactPoint.ContactPointSystem.Phone, ContactPoint.ContactPointUse.Work, "0471 144 099");
+            telecom.AddExtension("http://healthconnex.com.au/hcxd/Phone/IsMain", new FhirBoolean(true));
+            patient.Telecom.Add(telecom);
 
+            var doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.True);
+
+            Assert.IsFalse(doc.Contains("<extension"), "In the summary there must be no extension section.");
+
+            doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.False);
+            Assert.IsTrue(doc.Contains("<extension"), "Extension exists when Summary = false");
+        }
+    }
 }

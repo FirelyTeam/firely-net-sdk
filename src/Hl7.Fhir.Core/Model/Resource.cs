@@ -161,6 +161,14 @@ namespace Hl7.Fhir.Model
             return ResourceIdentity(baseUrl.OriginalString);
         }
 
+        /// <summary>
+        /// This object is internally used for locking the resource in a multithreaded environment.
+        /// </summary>
+        /// <remarks>
+        /// As a consumer of this API, please do not use this object.
+        /// </remarks>
+        [NotMapped]
+        public readonly object SyncLock = new object();
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
