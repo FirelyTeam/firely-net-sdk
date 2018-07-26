@@ -5,7 +5,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Specification;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.ElementModel
 {
 
     public static class SourceNavigatorExtensions
@@ -77,20 +77,5 @@ namespace Hl7.Fhir.Serialization
 
         public static IEnumerable<object> Annotations(this ISourceNavigator nav, Type type) =>
             nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
-
-        internal static IElementNavigator AsElementNavigator(this ISourceNavigator sourceNav, string type=null, IStructureDefinitionSummaryProvider provider=null)
-        {
-            IElementNavigator typedNav;
-
-            if (provider != null)
-            {
-                typedNav = type == null ? new TypedNavigator(sourceNav, provider) :
-                                new TypedNavigator(sourceNav, type, provider);
-            }
-            else
-                typedNav = new TypedShimNavigator(sourceNav);
-
-            return typedNav;
-        }
     }
 }

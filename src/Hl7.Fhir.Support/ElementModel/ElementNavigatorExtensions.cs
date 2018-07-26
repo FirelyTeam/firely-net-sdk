@@ -75,5 +75,10 @@ namespace Hl7.Fhir.ElementModel
         public static IEnumerable<object> Annotations(this IElementNavigator nav, Type type) =>
                 nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
 
+        public static bool InPipeline(this IElementNavigator navigator, Type componentType) =>
+            navigator is IAnnotated ia ? ia.Annotation(componentType) != null : false;
+        public static bool InPipeline<T>(this IElementNavigator navigator) =>
+            navigator.InPipeline(navigator.GetType());
+
     }
 }

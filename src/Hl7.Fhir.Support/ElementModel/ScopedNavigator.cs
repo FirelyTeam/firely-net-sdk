@@ -7,33 +7,61 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNavigator : IElementNavigator
+    public class ScopedNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
         private class Cache
         {
+            public readonly object _lock = new object();
+
             public string Id;
             public IEnumerable<ScopedNavigator> ContainedResources;
             public IEnumerable<BundledResource> BundledResources;
             public string FullUrl;
         }
+
         private Cache _cache = new Cache();
 
         private IElementNavigator _wrapped = null;
 
         public ScopedNavigator(IElementNavigator wrapped)
         {
-            _wrapped = wrapped.Clone();
-            if (this.AtResource) ResourceContext = wrapped.Clone();
+            //if (wrapped.GetElementDefinitionSummary() == null)
+            //    throw Error.Argument("ScopedNavigator can only be used on a navigator chain that supplies type information (e.g. TypedNavigator, PocoNavigator)", nameof(wrapped));
+
+            _wrapped = wrapped;
+
+            if (_wrapped is IExceptionSource ies && ies.ExceptionHandler == null)
+                ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        public ScopedNavigator Parent { get; private set; } = null;
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
+
+        private ScopedNavigator() { }       // for Clone
+
+
+        public IElementNavigator Clone()
+        {
+            return new ScopedNavigator()
+            {
+                _wrapped = this._wrapped.Clone(),
+                Parent = this.Parent,
+                ExceptionHandler = this.ExceptionHandler,
+            };
+        }
+
+        public ScopedNavigator Parent { get; private set; }
+
+        public string LocalLocation => Parent == null ? Location :
+                        $"{Parent.Type}.{Location.Substring(Parent.Location.Length+1)}";
 
         public string Name => _wrapped.Name;
 
@@ -56,12 +84,6 @@ namespace Hl7.Fhir.ElementModel
             if (this.AtResource)
             {
                 me = (ScopedNavigator)this.Clone();
-
-                // Is the current position not a contained resource?
-                if (Parent?.ContainedResources().FirstOrDefault() == null)
-                {
-                    ResourceContext = _wrapped.Clone();
-                }
             }
 
             if (!_wrapped.MoveToFirstChild(nameFilter)) return false;
@@ -72,13 +94,38 @@ namespace Hl7.Fhir.ElementModel
 
             _cache = new Cache();
 
+            var def = _wrapped.GetElementDefinitionSummary();
+
             return true;
         }
 
-        public bool AtResource => Type != null ? Char.IsUpper(Type[0]) && ModelInfo.IsKnownResource(Type) : false;
+        public bool AtResource => _wrapped.GetElementDefinitionSummary()?.IsResource ?? false;
         public bool AtBundle => Type != null ? Type == "Bundle" : false;
 
-        public IElementNavigator ResourceContext { get; private set; } = null;
+        public string NearestResourceType { get; private set; }
+
+        /// <summary>
+        /// The %resource context, as defined by FHIRPath
+        /// </summary>
+        /// <remarks>
+        /// This is the original resource the current context is part of. When evaluating a datatype, 
+        /// this would be the resource the element is part of. Do not go past a root resource into a bundle, 
+        /// if it is contained in a bundle.
+        /// </remarks>
+        public IElementNavigator ResourceContext
+        {
+            get
+            {
+                var scan = this;
+
+                while (scan.Parent != null && scan.Parent.Type != "Bundle")
+                {
+                    scan = scan.Parent;
+                }
+
+                return scan;
+            }
+        }
 
         public IEnumerable<ScopedNavigator> Parents()
         {
@@ -155,13 +202,13 @@ namespace Hl7.Fhir.ElementModel
             return _cache.FullUrl;
         }
 
-        public IElementNavigator Clone()
+        public IEnumerable<object> Annotations(Type type)
         {
-            return new ScopedNavigator(_wrapped)
-            {
-                Parent = this.Parent,
-                ResourceContext = this.ResourceContext
-            };
+            if (type == typeof(ScopedNavigator))
+                return new[] { this };
+            else
+                return _wrapped.Annotations(type);
         }
+
     }
 }

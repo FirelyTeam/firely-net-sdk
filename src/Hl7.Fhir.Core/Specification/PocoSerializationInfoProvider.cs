@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2018, Furore (info@furore.com) and contributors
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Introspection;
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
 
-        public bool IsContainedResource => _pm.Choice == ChoiceType.ResourceChoice;
+        public bool IsResource => _pm.Choice == ChoiceType.ResourceChoice;
 
         public bool IsRequired => _pm.IsMandatoryElement;
 

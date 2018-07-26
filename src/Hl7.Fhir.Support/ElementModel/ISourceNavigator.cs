@@ -1,18 +1,16 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Specification;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
     /// A navigator across a tree representing FHIR data, independent of serialization format or FHIR version.
@@ -101,7 +99,10 @@ namespace Hl7.Fhir.Serialization
     public static class ISourceNavigatorExtensions
     {
         public static bool InPipeline(this ISourceNavigator navigator, Type componentType) =>
-                    navigator is IAnnotated ia ? ia.InPipeline(componentType) : false;
+                    navigator is IAnnotated ia ? ia.Annotation(componentType) != null : false;
+
+        public static bool InPipeline<T>(this ISourceNavigator navigator) =>
+                    navigator.InPipeline(navigator.GetType());
 
         public static ElementDefinitionSummary GetElementDefinitionSummary(this ISourceNavigator navigator) =>
                 navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;

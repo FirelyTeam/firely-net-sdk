@@ -19,9 +19,9 @@ namespace Hl7.Fhir.Validation
         private string Path { get; set; }
         public string Name { get; private set; }
         public Cardinality Cardinality { get; private set; }
-        public IList<ScopedNavigator> Members { get; private set; } = new List<ScopedNavigator>();
+        public IList<IElementNavigator> Members { get; private set; } = new List<IElementNavigator>();
 
-        public abstract bool Add(ScopedNavigator instance);
+        public abstract bool Add(IElementNavigator instance);
   
         public virtual OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
         {

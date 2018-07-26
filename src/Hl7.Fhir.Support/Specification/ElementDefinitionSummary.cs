@@ -1,10 +1,10 @@
-﻿/*  
-* Copyright (c) 2018, Furore (info@furore.com) and contributors 
-* See the file CONTRIBUTORS for details. 
-*  
-* This file is licensed under the BSD 3-Clause license 
-* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
-*/
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
@@ -17,13 +17,13 @@ namespace Hl7.Fhir.Specification
         private ElementDefinitionSummary() { }
 
         public ElementDefinitionSummary(string elementName, bool isCollection, bool isChoice, 
-            bool isContained, XmlRepresentation representation, ITypeSerializationInfo[] type, 
+            bool isResource, XmlRepresentation representation, ITypeSerializationInfo[] type, 
             int order, string nonDefaultNS, bool inSummary, bool isRequired)
         {
             ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
             IsCollection = isCollection;
             IsChoiceElement = isChoice;
-            IsContainedResource = isContained;
+            IsResource = isResource;
             Representation = representation;
             Type = type ?? throw new ArgumentNullException(nameof(type));
             Order = order;
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification
             ElementName = source.ElementName;
             IsCollection = source.IsCollection;
             IsChoiceElement = source.IsChoiceElement;
-            IsContainedResource = source.IsContainedResource;
+            IsResource = source.IsResource;
             Representation = source.Representation;
             Type = source.Type;
             Order = source.Order;
@@ -47,15 +47,16 @@ namespace Hl7.Fhir.Specification
         }
 
         public static ElementDefinitionSummary ForRoot(string rootName, ITypeSerializationInfo rootType) =>
-            new ElementDefinitionSummary(rootName, false, false, false, XmlRepresentation.XmlElement, 
-                new[] { rootType }, 0, null, true, false);
+            new ElementDefinitionSummary(rootName, isCollection: false, isChoice: false, isResource: true, 
+                representation: XmlRepresentation.XmlElement, 
+                type: new[] { rootType }, order: 0, nonDefaultNS: null, inSummary: true, isRequired: false);
 
         public string ElementName { get; private set; }
 
         public bool IsCollection { get; private set; }
 
         public bool IsChoiceElement { get; private set; }
-        public bool IsContainedResource { get; private set; }
+        public bool IsResource { get; private set; }
 
         public bool IsRequired { get; private set; }
 

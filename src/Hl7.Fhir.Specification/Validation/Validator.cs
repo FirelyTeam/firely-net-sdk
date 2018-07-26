@@ -113,14 +113,12 @@ namespace Hl7.Fhir.Validation
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(IElementNavigator instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
         {
-            if (!(instance is ScopedNavigator)) instance = new ScopedNavigator(instance);
-
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
             if (outcome.Success)
-                outcome.Add(Validate((ScopedNavigator)instance, processor.Result));
+                outcome.Add(Validate(instance, processor.Result));
 
             return outcome;
 
@@ -133,7 +131,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal OperationOutcome Validate(ScopedNavigator instance, ElementDefinitionNavigator definition)
+        internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
         {
             return Validate(instance, new[] { definition });
         }
@@ -141,9 +139,11 @@ namespace Hl7.Fhir.Validation
 
         // This is the one and only main internal entry point for all validations, which in its term
         // will call step 1 in the validator, the function validateElement
-        internal OperationOutcome Validate(ScopedNavigator instance, IEnumerable<ElementDefinitionNavigator> definitions)
+        internal OperationOutcome Validate(IElementNavigator elementNav, IEnumerable<ElementDefinitionNavigator> definitions)
         {
             var outcome = new OperationOutcome();
+
+            ScopedNavigator instance = elementNav as ScopedNavigator ?? new ScopedNavigator(elementNav);
 
             try
             {

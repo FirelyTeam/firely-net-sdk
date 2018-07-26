@@ -1,12 +1,13 @@
-﻿/*  
-* Copyright (c) 2018, Furore (info@furore.com) and contributors 
-* See the file CONTRIBUTORS for details. 
-*  
-* This file is licensed under the BSD 3-Clause license 
-* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
-*/
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
@@ -14,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.ElementModel
 {
     public class StructuralTypeException : Exception
     {
@@ -135,19 +136,18 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-
         private NavigatorPosition deriveInstanceType(ISourceNavigator current, IElementDefinitionSummary info)
         {
             if (info == null) return new NavigatorPosition(current, null, current.Name, null);
 
             string instanceType = null;
 
-            if (info.IsContainedResource)
+            if (info.IsResource)
             {
                 instanceType = current.GetResourceType();
                 if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually seem to contain one", current);
             }
-            else if (!info.IsContainedResource && current.GetResourceType() != null)
+            else if (!info.IsResource && current.GetResourceType() != null)
             {
                 raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{current.GetResourceType()}'.", current);
                 instanceType = current.GetResourceType();
@@ -326,12 +326,10 @@ namespace Hl7.Fhir.Serialization
 
         public override string ToString() => $"{(_current.IsTracking ? ($"[{_current.InstanceType}] ") : "")}{_current.Node.ToString()}";
 
-        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<TypedNavigator>();
-
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(PipelineComponent))
-                return (new[] { _componentLabel }).Union(_current.Node.Annotations(typeof(PipelineComponent)));
+            if (type == typeof(TypedNavigator))
+                return new[] { this };
             else if (type == typeof(ElementDefinitionSummary) && _current.IsTracking)
                 return new[] { new ElementDefinitionSummary(_current.SerializationInfo) };
             else

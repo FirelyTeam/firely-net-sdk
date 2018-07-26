@@ -201,7 +201,7 @@ namespace Hl7.Fhir.ElementModel
 
         public bool IsRequired => _nav.DefinitionSummary.IsRequired;
 
-        public bool IsContainedResource => _nav.DefinitionSummary.IsContainedResource;
+        public bool IsResource => _nav.DefinitionSummary.IsResource;
 
         public XmlRepresentation Representation => _nav.DefinitionSummary.Representation;
 

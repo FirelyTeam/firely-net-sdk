@@ -1,10 +1,10 @@
-﻿/*  
-* Copyright (c) 2018, Furore (info@furore.com) and contributors 
-* See the file CONTRIBUTORS for details. 
-*  
-* This file is licensed under the BSD 3-Clause license 
-* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
-*/
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
 
 
 using Hl7.Fhir.ElementModel;
@@ -135,13 +135,10 @@ namespace Hl7.Fhir.Serialization
             return Current.ToString();
         }
 
-
-        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<FhirJsonNavigator>();
-
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(PipelineComponent))
-                return new[] { _componentLabel };
+            if (type == typeof(FhirJsonNavigator))
+                return new[] { this };
             else if (type == typeof(JsonSerializationDetails))
             {
                 var (lineNumber, linePosition) = getPosition(Current.PositionNode);

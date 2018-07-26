@@ -34,18 +34,22 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             Assert.IsTrue(nav.MoveToFirstChild("entry"));
             Assert.AreEqual("Bundle.entry[0]", nav.Location);
+            Assert.AreEqual("Bundle.entry[0]", nav.LocalLocation);
             Assert.AreEqual("Bundle", nav.Parent.Location);
+            Assert.AreEqual("Bundle", nav.Parent.LocalLocation);
             Assert.IsFalse(nav.AtBundle);
             Assert.IsFalse(nav.AtResource);
 
             Assert.IsTrue(nav.MoveToFirstChild("resource"));
             Assert.AreEqual("Bundle.entry[0].resource[0]", nav.Location);
+            Assert.AreEqual("Bundle.entry[0].resource[0]", nav.LocalLocation);
             Assert.AreEqual("Bundle", nav.Parent.Location);
             Assert.IsFalse(nav.AtBundle);
             Assert.IsTrue(nav.AtResource);
 
             Assert.IsTrue(nav.MoveToFirstChild("active"));
             Assert.AreEqual("Bundle.entry[0].resource[0].active[0]", nav.Location);
+            Assert.AreEqual("Organization.active[0]", nav.LocalLocation);
             Assert.AreEqual("Bundle.entry[0].resource[0]", nav.Parent.Location);
             Assert.AreEqual("Bundle", nav.Parent.Parent.Location);
             Assert.IsFalse(nav.AtBundle);

@@ -1,11 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
+    internal static class TypedShimNavigatorExtensions
+    {
+        public static IElementNavigator AsElementNavigator(this ISourceNavigator sourceNav, string type = null, IStructureDefinitionSummaryProvider provider = null)
+        {
+            IElementNavigator typedNav;
+
+            if (provider != null)
+            {
+                typedNav = type == null ? new TypedNavigator(sourceNav, provider) :
+                                new TypedNavigator(sourceNav, type, provider);
+            }
+            else
+                typedNav = new TypedShimNavigator(sourceNav);
+
+            return typedNav;
+        }
+    }
+
     internal class TypedShimNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
         private ISourceNavigator _sourceNav;
@@ -38,12 +56,10 @@ namespace Hl7.Fhir.Serialization
 
         public bool MoveToNext(string nameFilter = null) => _sourceNav.MoveToNext(nameFilter);
 
-        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<TypedShimNavigator>();
-
         IEnumerable<object> IAnnotated.Annotations(Type type)
         {
-            if (type == typeof(PipelineComponent))
-                return (new[] { _componentLabel }).Union(_sourceNav.Annotations(typeof(PipelineComponent)));
+            if (type == typeof(TypedShimNavigator))
+                return new[] { this };
             else
                 return _sourceNav.Annotations(type);
         }

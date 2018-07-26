@@ -1,10 +1,10 @@
-﻿/*  
-* Copyright (c) 2018, Furore (info@furore.com) and contributors 
-* See the file CONTRIBUTORS for details. 
-*  
-* This file is licensed under the BSD 3-Clause license 
-* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
-*/
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
 
 
 using Hl7.Fhir.ElementModel;
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Serialization
                 // for unknown properties is to use an array - safest bet.
                 var generalJsonDetails = getSerializationDetails(members[0]);
                 var needsArray = generalInfo?.IsCollection ?? generalJsonDetails?.IsArrayElement ?? true;
-                var isResource = generalInfo?.IsContainedResource ?? members[0].GetResourceType() != null;
+                var isResource = generalInfo?.IsResource ?? members[0].GetResourceType() != null;
                 var isPrimitive = members[0].Type != null ? Primitives.IsPrimitive(members[0].Type) :
                         members.Any(m => m.Value != null);
 

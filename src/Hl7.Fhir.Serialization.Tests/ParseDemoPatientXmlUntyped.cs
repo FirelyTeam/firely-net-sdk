@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Utility;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

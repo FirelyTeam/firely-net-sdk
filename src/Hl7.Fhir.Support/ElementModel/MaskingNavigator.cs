@@ -1,35 +1,92 @@
-﻿/*  
-* Copyright (c) 2018, Furore (info@furore.com) and contributors 
-* See the file CONTRIBUTORS for details. 
-*  
-* This file is licensed under the BSD 3-Clause license 
-* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
-*/
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.ElementModel
 {
+
+
     public class MaskingNavigatorSettings
     {
+        public enum PreserveBundleMode
+        {
+            /// <summary>
+            /// All Bundles (including nested) are masked like any other resource 
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// The Bundle at the root is preserved, nested bundles are masked
+            /// </summary>
+            Root,
+
+            /// <summary>
+            /// All Bundles (including nested) are exempt from masking
+            /// </summary>
+            All
+        }
+
+        public PreserveBundleMode PreserveBundle;
+
+        /// <summary>
+        /// Include top-level mandatory elements, including all their children
+        /// </summary>
         public bool IncludeMandatory;
+
+        /// <summary>
+        /// Include all elements marked "in summary" in the definition of the element
+        /// </summary>
         public bool IncludeInSummary;
 
-        public bool IncludeAll;
-        public string[] IncludeElements;
-        public string[] ExcludeElements;
+        /// <summary>
+        /// Include all elements marked "is modifier" in the definition of the element
+        /// </summary>
+        public bool IncludeIsModifier;
 
+        /// <summary>
+        /// Exclude all elements of type "Narrative"
+        /// </summary>
+        public bool ExcludeNarrative;
+
+        /// <summary>
+        /// Exclude all elements of type "Markdown"
+        /// </summary>
+        public bool ExcludeMarkdown;
+
+        /// <summary>
+        /// Start by including all elements
+        /// </summary>
+        public bool IncludeAll;
+
+        /// <summary>
+        /// List of names op top-level elements to include, including their children
+        /// </summary>
+        public string[] IncludeElements;
+
+        /// <summary>
+        /// List of top-level elements to exclude
+        /// </summary>
+        public string[] ExcludeElements;
+       
         internal MaskingNavigatorSettings Clone() =>
             new MaskingNavigatorSettings
             {
                 IncludeMandatory = this.IncludeMandatory,
                 IncludeInSummary = this.IncludeInSummary,
+                IncludeIsModifier = this.IncludeIsModifier,
+                ExcludeMarkdown = this.ExcludeMarkdown,
+                ExcludeNarrative = this.ExcludeNarrative,
                 IncludeAll = this.IncludeAll,
                 IncludeElements = this.IncludeElements.ToArray(),
                 ExcludeElements = this.ExcludeElements.ToArray()
@@ -40,28 +97,45 @@ namespace Hl7.Fhir.Serialization
     public class MaskingNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
         public static MaskingNavigator ForSummary(IElementNavigator nav) =>
-            new MaskingNavigator(nav, new MaskingNavigatorSettings { IncludeInSummary = true });
+            new MaskingNavigator(nav, new MaskingNavigatorSettings
+            {
+                IncludeInSummary = true,
+                PreserveBundle = MaskingNavigatorSettings.PreserveBundleMode.Root
+            });
 
         public static MaskingNavigator ForText(IElementNavigator nav) =>
             new MaskingNavigator(nav, new MaskingNavigatorSettings
-            { IncludeElements = new[] { "text", "id", "meta" }, IncludeMandatory = true });
+            {
+                IncludeElements = new[] { "text", "id", "meta" },
+                IncludeMandatory = true, IncludeIsModifier = true,
+                PreserveBundle = MaskingNavigatorSettings.PreserveBundleMode.All
+            });
 
         public static MaskingNavigator ForData(IElementNavigator nav) =>
             new MaskingNavigator(nav, new MaskingNavigatorSettings
-            { IncludeAll = true, ExcludeElements = new[] { "text" } });
+            {
+                IncludeAll = true,
+                ExcludeNarrative = true
+            });
 
         public MaskingNavigator(IElementNavigator source, MaskingNavigatorSettings settings = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
+            if (!source.InPipeline(typeof(ScopedNavigator)))
+                throw Error.Argument("ScopedNavigator can only be used on a navigator chain that contains a ScopedNavigator", nameof(source));
 
             Source = source;
-            _settings = settings ?? new MaskingNavigatorSettings();
+            _settings = settings?.Clone() ?? new MaskingNavigatorSettings();
         }
 
-        private bool atTopLevel(string location) =>
-            // check whether there is a single path separator -> path looks like 'Resource.xxxxx'
-            location.IndexOf('.') == location.LastIndexOf('.');
+        private ScopedNavigator getScope() => this.Annotation<ScopedNavigator>();
 
+        private bool atRootBundle(IElementNavigator node) =>
+            getScope().Parent == null && node.Location.StartsWith("Bundle.");
+
+        private bool atTopLevel(IElementNavigator node) =>
+            // check whether there is a single path separator -> path looks like 'Resource.xxxxx'
+            node.Location.IndexOf('.') == node.Location.LastIndexOf('.');
 
         private MaskingNavigatorSettings _settings;
 
@@ -84,7 +158,7 @@ namespace Hl7.Fhir.Serialization
             return new MaskingNavigator()
             {
                 Source = this.Source.Clone(),
-                _settings = this._settings
+                _settings = this._settings,
             };
         }
 
@@ -93,13 +167,13 @@ namespace Hl7.Fhir.Serialization
             var included = _settings.IncludeAll;
 
             var ed = node.GetElementDefinitionSummary();
-            if(ed != null)
+            if (ed != null)
             {
                 included |= _settings.IncludeMandatory && ed.IsRequired;
                 included |= _settings.IncludeInSummary && ed.InSummary;
             }
 
-            if (atTopLevel(node.Location))
+            if (atTopLevel(node))
             {
                 var location = node.Location.Split('.')[1].TrimEnd('[');
                 included |= _settings.IncludeElements?.Any(incl => location == incl) ?? false;
@@ -112,12 +186,10 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static readonly PipelineComponent _componentLabel = PipelineComponent.Create<MaskingNavigator>();
-
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(PipelineComponent))
-                return (new[] { _componentLabel }).Union(Source.Annotations(typeof(PipelineComponent)));
+            if (type == typeof(MaskingNavigator))
+                return new[] { this };
             else
                 return Source.Annotations(type);
         }
@@ -147,7 +219,7 @@ namespace Hl7.Fhir.Serialization
 
             success = findNext(scan, nameFilter);
 
-            if(success)
+            if (success)
                 Source = scan;
 
             return success;
@@ -165,7 +237,10 @@ namespace Hl7.Fhir.Serialization
 
             // When unsuccessful, restore to where we were before
             if (success)
+            {
                 Source = scan;
+                var def = Source.GetElementDefinitionSummary();
+            }
 
             return success;
         }

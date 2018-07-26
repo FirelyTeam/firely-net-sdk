@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2018, Furore (info@furore.com) and contributors
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Introspection;
@@ -202,11 +202,12 @@ namespace Hl7.Fhir.Specification
 
         public int Order => _order;
 
-        public bool IsContainedResource => isContainedResource(_definition);
+        public bool IsResource => isResource(_definition);
 
         // TODO: This is actually not complete: the Type might be any subclass of Resource (including DomainResource), but this will
         // do for all current situations. I will regret doing this at some point in the future.
-        private static bool isContainedResource(ElementDefinition defn) => defn.Type.Count == 1 && defn.Type[0].Code == FHIRDefinedType.Resource;
+        private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 && 
+            (defn.Type[0].Code == FHIRDefinedType.Resource || defn.Type[0].Code == FHIRDefinedType.DomainResource);
 
         public ITypeSerializationInfo[] Type => _types.Value;
 
