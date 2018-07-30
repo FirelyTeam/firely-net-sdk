@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -49,10 +50,10 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public bool IncludeInSummary;
 
-        /// <summary>
-        /// Include all elements marked "is modifier" in the definition of the element
-        /// </summary>
-        public bool IncludeIsModifier;
+        ///// <summary>
+        ///// Include all elements marked "is modifier" in the definition of the element
+        ///// </summary>
+        //public bool IncludeIsModifier;
 
         /// <summary>
         /// Exclude all elements of type "Narrative"
@@ -78,18 +79,18 @@ namespace Hl7.Fhir.ElementModel
         /// List of top-level elements to exclude
         /// </summary>
         public string[] ExcludeElements;
-       
+
         internal MaskingNavigatorSettings Clone() =>
             new MaskingNavigatorSettings
             {
                 IncludeMandatory = this.IncludeMandatory,
                 IncludeInSummary = this.IncludeInSummary,
-                IncludeIsModifier = this.IncludeIsModifier,
+                //   IncludeIsModifier = this.IncludeIsModifier,
                 ExcludeMarkdown = this.ExcludeMarkdown,
                 ExcludeNarrative = this.ExcludeNarrative,
                 IncludeAll = this.IncludeAll,
-                IncludeElements = this.IncludeElements.ToArray(),
-                ExcludeElements = this.ExcludeElements.ToArray()
+                IncludeElements = this.IncludeElements?.ToArray(),
+                ExcludeElements = this.ExcludeElements?.ToArray()
             };
 
     }
@@ -107,7 +108,7 @@ namespace Hl7.Fhir.ElementModel
             new MaskingNavigator(nav, new MaskingNavigatorSettings
             {
                 IncludeElements = new[] { "text", "id", "meta" },
-                IncludeMandatory = true, IncludeIsModifier = true,
+                IncludeMandatory = true, //IncludeIsModifier = true,
                 PreserveBundle = MaskingNavigatorSettings.PreserveBundleMode.All
             });
 
@@ -128,14 +129,8 @@ namespace Hl7.Fhir.ElementModel
             _settings = settings?.Clone() ?? new MaskingNavigatorSettings();
         }
 
-        private ScopedNavigator getScope() => this.Annotation<ScopedNavigator>();
-
-        private bool atRootBundle(IElementNavigator node) =>
-            getScope().Parent == null && node.Location.StartsWith("Bundle.");
-
-        private bool atTopLevel(IElementNavigator node) =>
-            // check whether there is a single path separator -> path looks like 'Resource.xxxxx'
-            node.Location.IndexOf('.') == node.Location.LastIndexOf('.');
+        private ScopedNavigator getScope(IElementNavigator node) =>
+            node.Annotation<ScopedNavigator>();
 
         private MaskingNavigatorSettings _settings;
 
@@ -162,25 +157,53 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public bool Included(IElementNavigator node)
+        private bool included(IElementNavigator nav)
         {
+            // Trivially, we will include the root
+            if (!nav.Location.Contains(".")) return true;
+
+            var node = getScope(nav);
+
+            //bool atTopLevel() =>
+            //    // check whether there is a single path separator -> path looks like 'Resource.xxxxx'
+            //    node.LocalLocation.IndexOf('.') == node.LocalLocation.LastIndexOf('.');
+
+            bool atRootBundle() => atBundle() && node.Parent == null;
+            bool atBundle() => node.NearestResourceType == "Bundle";
+
+            switch (_settings.PreserveBundle)
+            {
+                case MaskingNavigatorSettings.PreserveBundleMode.All when atBundle():
+                case MaskingNavigatorSettings.PreserveBundleMode.Root when atRootBundle():
+                    return true;
+                    // else fall through
+            }
+
             var included = _settings.IncludeAll;
 
-            var ed = node.GetElementDefinitionSummary();
+            var ed = ((IElementNavigator)node).GetElementDefinitionSummary();
             if (ed != null)
             {
                 included |= _settings.IncludeMandatory && ed.IsRequired;
                 included |= _settings.IncludeInSummary && ed.InSummary;
             }
 
-            if (atTopLevel(node))
-            {
-                var location = node.Location.Split('.')[1].TrimEnd('[');
-                included |= _settings.IncludeElements?.Any(incl => location == incl) ?? false;
+            var loc = node.LocalLocation;
+            var nearest = node.NearestResourceType;
+            included |= _settings.IncludeElements?.Any(matches) ?? false;
 
-                if (_settings.ExcludeElements?.Any(excl => location == excl) == true)
-                    included = false;
+            if (_settings.ExcludeElements?.Any(matches) == true)
+                return false;
+
+            bool matches(string filter)
+            {
+                var f = nearest + "." + filter;
+                return loc == f || loc.StartsWith(f + ".");    // include matches + children
             }
+            
+
+            if (_settings.ExcludeMarkdown && node.Type == "markdown") return false;
+            if (_settings.ExcludeNarrative & node.Type == "Narrative") return false;
 
             return included;
         }
@@ -197,12 +220,12 @@ namespace Hl7.Fhir.ElementModel
         private bool findNext(IElementNavigator scan, string nameFilter)
         {
             if (nameFilter != null)
-                return !Included(scan);
+                return !included(scan);
             else
             {
                 do
                 {
-                    if (Included(scan)) return true;
+                    if (included(scan)) return true;
                 }
                 while (scan.MoveToNext());
                 return false;

@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientXml
     {
-        public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) => 
+        public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoSerializationInfoProvider(), s);
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Serialization.Tests
             // Do the serialization without relying on present xml details from the source,
             // so serialization will only be based on the supplied type information
             var serializer = new FhirXmlWriter();
-            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true } ))
+            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true }))
             {
                 serializer.Write(nav, writer);
             }
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var root = XDocument.Parse(output).Root;
 
             var orderedNames = root.Elements().Select(e => e.Name.LocalName).ToList();
-            CollectionAssert.AreEqual(new[] { "id", "text", "identifier", "identifier", "active", "name", "telecom"}, orderedNames);
+            CollectionAssert.AreEqual(new[] { "id", "text", "identifier", "identifier", "active", "name", "telecom" }, orderedNames);
 
             var orderedNameNames = root.Element("{http://hl7.org/fhir}name")
                                     .Elements().Select(e => e.Name.LocalName).ToList();
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CanSerializeFromPoco()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
+            var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false });
             var pat = pser.Parse<Patient>(tpXml);
 
             var nav = new PocoNavigator(pat);
@@ -103,37 +103,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var output = xmlBuilder.ToString();
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
-        }
-
-        [TestMethod,Ignore]
-        public void MaskSummary()
-        {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var typeinfo = new PocoSerializationInfoProvider().Provide("Patient");
-            var inSummary = typeinfo.GetElements().Where(e => e.InSummary).ToList();
-
-            var nav = getXmlNav(tpXml);
-            var masker = MaskingNavigator.ForSummary(nav);
-            var output = masker.ToXml();
-
-            var maskedChildren = masker.Children().ToList();
-            Assert.IsTrue(maskedChildren.Count < inSummary.Count);
-            Assert.IsTrue(maskedChildren.Select(c => c.Name).All(c => inSummary.Any(s => s.ElementName == c)));
-        }
-
-        [TestMethod,Ignore]
-        public void MaskText()
-        {
-            var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
-            var typeinfo = new PocoSerializationInfoProvider().Provide("ValueSet");
-            var isRequired = typeinfo.GetElements().Where(e => e.IsRequired).ToList();
-
-            var nav = getXmlNav(tpXml);
-            var masker = MaskingNavigator.ForText(nav);
-            var output = masker.ToXml();
-
-            var maskedChildren = masker.Children().ToList();
-            Assert.AreEqual(maskedChildren.Count, isRequired.Count + 3);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.ElementModel
         public ScopedNavigator Parent { get; private set; }
 
         public string LocalLocation => Parent == null ? Location :
-                        $"{Parent.Type}.{Location.Substring(Parent.Location.Length+1)}";
+                        $"{Parent.Type}.{Location.Substring(Parent.Location.Length + 1)}";
 
         public string Name => _wrapped.Name;
 
@@ -100,9 +100,15 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public bool AtResource => _wrapped.GetElementDefinitionSummary()?.IsResource ?? false;
-        public bool AtBundle => Type != null ? Type == "Bundle" : false;
 
-        public string NearestResourceType { get; private set; }
+        public string NearestResourceType
+        {
+            get
+            {
+                var ix = LocalLocation.IndexOf('.');
+                return (ix == -1) ? LocalLocation : LocalLocation.Substring(0, ix);
+            }
+        }
 
         /// <summary>
         /// The %resource context, as defined by FHIRPath
@@ -171,7 +177,7 @@ namespace Hl7.Fhir.ElementModel
         {
             if (_cache.BundledResources == null)
             {
-                if (AtBundle)
+                if (Type == "Bundle")
                     _cache.BundledResources = from e in this.Children("entry")
                                               let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
                                               let resource = e.Children("resource").FirstOrDefault() as ScopedNavigator
@@ -189,7 +195,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 foreach (var parent in Parents())
                 {
-                    if (parent.AtBundle)
+                    if (parent.Type == "Bundle")
                     {
                         var fullUrl = parent.BundledResources()
                             .SingleOrDefault(be => this.Location.StartsWith(be.Resource.Location))

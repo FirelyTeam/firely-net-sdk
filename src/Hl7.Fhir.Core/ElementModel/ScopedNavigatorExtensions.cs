@@ -58,8 +58,7 @@ namespace Hl7.Fhir.ElementModel
         {
             // Then, resolve the url within the instance data first - this is only
             // possibly if we have a ScopedNavigator at hand
-            var scopedNav = nav as ScopedNavigator;
-            if (scopedNav != null)
+            if (nav is ScopedNavigator scopedNav)
             {
                 var identity = scopedNav.MakeAbsolute(new ResourceIdentity(reference));
 
@@ -82,7 +81,7 @@ namespace Hl7.Fhir.ElementModel
 
                 foreach (var parent in scopedNav.Parents())
                 {
-                    if (parent.AtBundle)
+                    if (parent.Type == "Bundle")
                     {
                         var result = parent.BundledResources().FirstOrDefault(br => br.FullUrl == url)?.Resource;
                         if (result != null) return result;
@@ -116,7 +115,7 @@ namespace Hl7.Fhir.ElementModel
             else if (nav.Type == FHIRDefinedType.Reference.GetLiteral())
                 url = nav.ParseResourceReference()?.Reference;
 
-            if (url == null) return default(T);   // nothing found to resolve
+            if (url == null) return default;   // nothing found to resolve
 
             return Resolve(nav, url, externalResolver);
         }

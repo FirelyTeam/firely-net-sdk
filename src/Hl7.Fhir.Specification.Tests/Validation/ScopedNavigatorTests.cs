@@ -27,32 +27,35 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         [TestMethod]
         public void KeepScopes()
         {
+         
             var nav = NewNav();
 
             Assert.IsNull(nav.Parent);
-            Assert.IsTrue(nav.AtBundle);
+            Assert.AreEqual("Bundle",nav.Type);
+            Assert.AreEqual("Bundle", nav.NearestResourceType);
 
             Assert.IsTrue(nav.MoveToFirstChild("entry"));
             Assert.AreEqual("Bundle.entry[0]", nav.Location);
             Assert.AreEqual("Bundle.entry[0]", nav.LocalLocation);
             Assert.AreEqual("Bundle", nav.Parent.Location);
             Assert.AreEqual("Bundle", nav.Parent.LocalLocation);
-            Assert.IsFalse(nav.AtBundle);
+            Assert.AreNotEqual("Bundle",nav.Type);
             Assert.IsFalse(nav.AtResource);
 
             Assert.IsTrue(nav.MoveToFirstChild("resource"));
             Assert.AreEqual("Bundle.entry[0].resource[0]", nav.Location);
             Assert.AreEqual("Bundle.entry[0].resource[0]", nav.LocalLocation);
             Assert.AreEqual("Bundle", nav.Parent.Location);
-            Assert.IsFalse(nav.AtBundle);
+            Assert.AreNotEqual("Bundle", nav.Type);
             Assert.IsTrue(nav.AtResource);
 
             Assert.IsTrue(nav.MoveToFirstChild("active"));
             Assert.AreEqual("Bundle.entry[0].resource[0].active[0]", nav.Location);
+            Assert.AreEqual("Organization", nav.NearestResourceType);
             Assert.AreEqual("Organization.active[0]", nav.LocalLocation);
             Assert.AreEqual("Bundle.entry[0].resource[0]", nav.Parent.Location);
             Assert.AreEqual("Bundle", nav.Parent.Parent.Location);
-            Assert.IsFalse(nav.AtBundle);
+            Assert.AreNotEqual("Bundle", nav.Type);
             Assert.IsFalse(nav.AtResource);
         }
 
@@ -66,14 +69,16 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             Assert.IsTrue(entry.MoveToFirstChild("resource"));
             Assert.IsTrue(entry.MoveToFirstChild("contained"));
-            Assert.IsFalse(entry.AtBundle);
+            Assert.AreNotEqual("Bundle", entry.Type);
+
             Assert.IsTrue(entry.AtResource);
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", entry.Location);
             Assert.AreEqual("Bundle.entry[6].resource[0]", entry.Parent.Location);
             Assert.AreEqual("Bundle", entry.Parent.Parent.Location);
 
             Assert.IsTrue(entry.MoveToFirstChild("id"));
-            Assert.IsFalse(entry.AtBundle);
+            Assert.AreNotEqual("Bundle", entry.Type);
+
             Assert.IsFalse(entry.AtResource);
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0].id[0]", entry.Location);
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", entry.Parent.Location);
