@@ -51,8 +51,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "oid"; } }
         
-        // Must conform to the pattern "urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*"
-        public const string PATTERN = @"urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*";
+        // Must conform to the pattern "urn:oid:[0-2](\.(0|[1-9]\d*))+"
+        public const string PATTERN = @"urn:oid:[0-2](\.(0|[1-9]\d*))+";
 
 		public Oid(string value)
 		{
