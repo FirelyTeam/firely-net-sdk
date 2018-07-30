@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Status = Observation.ObservationStatus.Preliminary,
                 Code = new CodeableConcept("system", "P"),
-                Subject = new ResourceReference("Patient/12345")
+                Subject = new ResourceReference("Patient?identifier=system|12345")
             };
 
             var patient = new Patient();
