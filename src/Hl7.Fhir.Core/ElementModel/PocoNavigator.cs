@@ -20,6 +20,7 @@ namespace Hl7.Fhir.ElementModel
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
     public class PocoNavigator : IElementNavigator, IElementDefinitionSummary, IAnnotated
     {
+        [Obsolete("Do not use the constructor directly, instead call ToElementNavigator() on any resource or datatype")]
         public PocoNavigator(Base model)
         {
             if (model == null) throw Error.ArgumentNull(nameof(model));
@@ -278,5 +279,12 @@ namespace Hl7.Fhir.ElementModel
             else
                 return Enumerable.Empty<object>();
         }
+    }
+
+
+    public static class PocoNavigatorExtensions
+    {
+        public static IElementNavigator ToElementNavigator(this Base @base) => new PocoNavigator(@base);
+
     }
 }

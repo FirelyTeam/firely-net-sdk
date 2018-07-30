@@ -63,6 +63,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var maskedChildren = masker.Descendants().Count();
             Assert.AreEqual(nav.Descendants().Count()-3 , maskedChildren);
-        }
+        }       
     }
 }

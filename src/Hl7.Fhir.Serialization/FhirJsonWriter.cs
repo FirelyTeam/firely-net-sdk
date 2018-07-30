@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Serialization
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.
             if (hasJsonSource)
-                Write(source.AsElementNavigator(), destination);
+                Write(source.ToElementNavigator(), destination);
             else
                 throw Error.NotSupported($"The {nameof(FhirJsonWriter)} will only work correctly on an untyped " +
                     $"source if the source is a {nameof(FhirJsonNavigator)}.");

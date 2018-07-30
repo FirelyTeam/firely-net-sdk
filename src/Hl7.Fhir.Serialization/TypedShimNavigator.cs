@@ -8,7 +8,7 @@ namespace Hl7.Fhir.Serialization
 {
     internal static class TypedShimNavigatorExtensions
     {
-        public static IElementNavigator AsElementNavigator(this ISourceNavigator sourceNav, string type = null, IStructureDefinitionSummaryProvider provider = null)
+        public static IElementNavigator ToElementNavigator(this ISourceNavigator sourceNav, string type = null, IStructureDefinitionSummaryProvider provider = null)
         {
             IElementNavigator typedNav;
 

@@ -78,11 +78,11 @@ namespace Hl7.Fhir.Serialization
 
             foreach (var memberData in members)
             {
-                if (Settings.CustomDeserializer != null && memberData.Item2 is IElementNavigator nav)
-                {
-                    var done = Settings.CustomDeserializer.OnBeforeDeserializeProperty(memberData.Item1, existing, nav);
-                    if (done) continue;
-                }
+                //if (Settings.CustomDeserializer != null && memberData.Item2 is IElementNavigator nav)
+                //{
+                //    var done = Settings.CustomDeserializer.OnBeforeDeserializeProperty(memberData.Item1, existing, nav);
+                //    if (done) continue;
+                //}
 
                 //hasMember = true;
                 var memberName = memberData.Item1;  // tuple: first is name of member

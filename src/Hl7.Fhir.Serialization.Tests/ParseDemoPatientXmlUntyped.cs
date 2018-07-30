@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.CanReadThroughNavigator(nav.AsElementNavigator(), typed:false);
+            ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNavigator(), typed:false);
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.ElementNavPerformance(nav.AsElementNavigator());
+            ParseDemoPatient.ElementNavPerformance(nav.ToElementNavigator());
         }
 
         [TestMethod]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNavU(tpXml);
 
-            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav.AsElementNavigator());
+            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav.ToElementNavigator());
         }
 
         [TestMethod]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNavigator.Untyped(xmlText).AsElementNavigator());
+            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNavigator.Untyped(xmlText).ToElementNavigator());
         }
 
         [TestMethod]
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundleXml = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
-            var xmlNav = getXmlNavU(bundleXml).AsElementNavigator();
+            var xmlNav = getXmlNavU(bundleXml).ToElementNavigator();
             var entryNav = xmlNav.Select("entry.resource").First();
             var id = entryNav.Scalar("id");
             Assert.IsNotNull(id);

@@ -148,7 +148,6 @@ namespace Hl7.Fhir.Utility
 
                 using (XmlWriter xw = XmlWriter.Create(stream, settings))
                 {
-                    // [WMR 20160421] serializer action now calls Flush before disposing
                     serializer(xw);
                     xw.Flush();
                     return stream.ToArray();
@@ -169,12 +168,24 @@ namespace Hl7.Fhir.Utility
             // [WMR 20160421] Explicit disposal
             using (XmlWriter xw = XmlWriter.Create(sb, settings))
             {
-                // [WMR 20160421] serializer action now calls Flush before disposing
                 serializer(xw);
+                xw.Flush();
                 return sb.ToString();
             }
         }
 
+        public static XDocument WriteXmlToDocument(Action<XmlWriter> serializer)
+        {
+            var doc = new XDocument();
+
+            using (XmlWriter xw = doc.CreateWriter())
+            {
+                serializer(xw);
+                xw.Flush();
+            }
+
+            return doc;
+        }
 
         public static string WriteJsonToString(Action<JsonWriter> serializer)
         {
@@ -184,10 +195,8 @@ namespace Hl7.Fhir.Utility
             using (StringWriter sw = new StringWriter(resultBuilder))
             using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
             {
-                // [WMR 20160421] serializer action now calls Flush before disposing
                 serializer(jw);
-                // jw.Flush();
-                // jw.Close();
+                jw.Flush();
                 return resultBuilder.ToString();
             }
         }
@@ -200,12 +209,32 @@ namespace Hl7.Fhir.Utility
                 using (var sw = new StreamWriter(stream, new UTF8Encoding(false)))
                 using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
                 {
-                    // [WMR 20160421] serializer action now calls Flush before disposing
                     serializer(jw);
-                    // jw.Flush();
+                    jw.Flush();
+                    sw.Flush();
                     return stream.ToArray();
                 }
             }
+        }
+
+        public static JObject WriteJsonToDocument(Action<JsonWriter> serializer)
+        {
+            // [WMR 20180409] Triggers runtime exception "Can not add Newtonsoft.Json.Linq.JObject to Newtonsoft.Json.Linq.JObject."
+            // JsonDomFhirWriter.WriteEndProperty() => _root.WriteTo(jw) => jw.WriteStartObject() => exception...
+            //var doc = new JObject();
+
+            // JConstructor / JArray works, extract and return first child node
+            var doc = new JArray();
+
+            using (JsonWriter jw = doc.CreateWriter())
+            {
+                serializer(jw);
+                jw.Flush();
+            }
+
+            //return doc;
+            System.Diagnostics.Debug.Assert(doc.Count == 1);
+            return doc.First as JObject;
         }
 
         public static JsonWriter CreateJsonTextWriter(TextWriter writer)
@@ -283,22 +312,22 @@ namespace Hl7.Fhir.Utility
             return resultRE;
         }
 
-//#if NET_FILESYSTEM
-//        public static void JoinFiles(string[] inputFilePaths, string outputFilePath)
-//        {
-//            using (var outputStream = File.Create(outputFilePath))
-//            {
-//                foreach (var inputFilePath in inputFilePaths)
-//                {
-//                    using (var inputStream = File.OpenRead(inputFilePath))
-//                    {
-//                        // Buffer size can be passed as the second argument.
-//                        inputStream.CopyTo(outputStream);
-//                    }
-//                }
-//            }
-//        }
-//#endif
+        //#if NET_FILESYSTEM
+        //        public static void JoinFiles(string[] inputFilePaths, string outputFilePath)
+        //        {
+        //            using (var outputStream = File.Create(outputFilePath))
+        //            {
+        //                foreach (var inputFilePath in inputFilePaths)
+        //                {
+        //                    using (var inputStream = File.OpenRead(inputFilePath))
+        //                    {
+        //                        // Buffer size can be passed as the second argument.
+        //                        inputStream.CopyTo(outputStream);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //#endif
 
 #if NET_REGEX_COMPILE
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);

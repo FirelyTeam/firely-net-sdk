@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             var nav = getJsonNavU(tp);
-            ParseDemoPatient.CanReadThroughNavigator(nav.AsElementNavigator(), typed: false);
+            ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNavigator(), typed: false);
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             var nav = getJsonNavU(tp);
-            ParseDemoPatient.ElementNavPerformance(nav.AsElementNavigator());
+            ParseDemoPatient.ElementNavPerformance(nav.ToElementNavigator());
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             var nav = getJsonNavU(tp);
 
-            ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav.AsElementNavigator());
+            ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav.ToElementNavigator());
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
-            var nav = getJsonNavU(bundle).AsElementNavigator();
+            var nav = getJsonNavU(bundle).ToElementNavigator();
             var entryNav = nav.Select("entry.resource").First();
             var id = entryNav.Scalar("id");
             Assert.IsNotNull(id);

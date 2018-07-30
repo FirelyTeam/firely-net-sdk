@@ -17,7 +17,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class PocoElementNavigator : IAnnotated
+    internal class PocoElementNavigator : IAnnotated
     {
         private Base _parent;
 

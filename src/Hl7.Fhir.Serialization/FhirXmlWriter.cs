@@ -27,14 +27,14 @@ namespace Hl7.Fhir.Serialization
 
     public static class FhirXmlWriterExtensions
     {
-        public static void WriteTo(this IElementNavigator source, XmlWriter destination, FhirXmlWriterSettings settings = null) =>
-            new FhirXmlWriter(settings).Write(source, destination);
+        public static void WriteTo(this IElementNavigator source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
+            new FhirXmlWriter(settings).Write(source, destination, rootName);
 
-        public static string ToXml(this IElementNavigator source, FhirXmlWriterSettings settings = null)
-                => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings));
+        public static string ToXml(this IElementNavigator source, FhirXmlWriterSettings settings = null, string rootName = null)
+                => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings, rootName));
 
-        public static byte[] ToXmlBytes(this IElementNavigator source, FhirXmlWriterSettings settings = null)
-                => SerializationUtil.WriteXmlToBytes(writer => source.WriteTo(writer, settings));
+        public static byte[] ToXmlBytes(this IElementNavigator source, FhirXmlWriterSettings settings = null, string rootName = null)
+                => SerializationUtil.WriteXmlToBytes(writer => source.WriteTo(writer, settings, rootName));
     }
 
     public class FhirXmlWriter : IExceptionSource
@@ -50,15 +50,15 @@ namespace Hl7.Fhir.Serialization
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public void Write(IElementNavigator source, XmlWriter destination)
+        public void Write(IElementNavigator source, XmlWriter destination, string rootName = null)
         {
             //Re-enable when the PocoNavigator is also fed through the TypedNavigator
             //if(!source.InPipeline(typeof(TypedNavigator)))
             //    throw Error.NotSupported($"The {nameof(FhirXmlWriter)} requires a {nameof(TypedNavigator)} to be present in the pipeline.");
-            writeInternal(source, destination);
+            writeInternal(source, destination, rootName);
         }
 
-        private void writeInternal(IElementNavigator source, XmlWriter destination)
+        private void writeInternal(IElementNavigator source, XmlWriter destination, string rootName = null)
         {
             var dest = new XDocument();
 
@@ -66,25 +66,32 @@ namespace Hl7.Fhir.Serialization
             {
                 using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
                 {
-                    write(source, dest);
+                    write(source, dest, rootName);
                 }
             }
             else
-                write(source, dest);
+                write(source, dest, rootName);
 
-            if(dest.Nodes().Any())
+            if (dest.Root != null)
+            {
+                // The name of the root node can be overidden - if so, change the name of the root element
+                if (rootName != null)
+                    dest.Root.Name = XName.Get(rootName, dest.Root.Name.Namespace.NamespaceName);
+
                 dest.WriteTo(destination);
+            }
+
             destination.Flush();
         }
 
-        public void Write(ISourceNavigator source, XmlWriter destination)
+        public void Write(ISourceNavigator source, XmlWriter destination, string rootName = null)
         {
             bool hasXmlSource = source.InPipeline(typeof(FhirXmlNavigator));
 
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.
             if (hasXmlSource)
-                writeInternal(source.AsElementNavigator(), destination);
+                writeInternal(source.ToElementNavigator(), destination, rootName);
             else
                 throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
                     $"source if the source is a {nameof(FhirXmlNavigator)}.");
@@ -114,7 +121,7 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private void write(IElementNavigator source, XContainer parent)
+        private void write(IElementNavigator source, XContainer parent, string rootName = null)
         {
             var xmlDetails = source.GetXmlSerializationDetails();
             var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
@@ -134,9 +141,22 @@ namespace Hl7.Fhir.Serialization
 
             if (isXhtml && !String.IsNullOrWhiteSpace(value))
             {
-                using (var divWriter = parent.CreateWriter())
-                using (var nodeReader = SerializationUtil.XmlReaderFromXmlText(value))
-                    divWriter.WriteNode(nodeReader, false);
+                // The value *should* be valid xhtml - however if people just provide a plain
+                // string, lets add a <div> around it.
+                if (!value.TrimStart().StartsWith("<div"))
+                    value = $"<div xmlns='http://www.w3.org/1999/xhtml'>{value}</div>";
+
+                var sanitized = SerializationUtil.SanitizeXml(value);
+                XElement xe = XElement.Parse(sanitized);
+
+                // The div should be in the XHTMLNS namespace, correct if it 
+                // is not the case.
+                xe.Name = XmlNs.XHTMLNS + xe.Name.LocalName;
+                parent.Add(xe);
+
+                //using (var divWriter = parent.CreateWriter())
+                //using (var nodeReader = SerializationUtil.XmlReaderFromXmlText(value))
+                //    divWriter.WriteNode(nodeReader, false);
                 return;
             }
 
@@ -145,10 +165,9 @@ namespace Hl7.Fhir.Serialization
             var ns = serializationInfo?.NonDefaultNamespace ??
                             xmlDetails?.Namespace.NamespaceName ?? 
                             (usesAttribute ? "" : XmlNs.FHIR);
+            bool atRoot = parent is XDocument;
             var localName = serializationInfo?.IsChoiceElement == true ?
                             source.Name + source.Type.Capitalize() : source.Name;
-
-            bool atRoot = parent is XDocument;
 
             // If the node is represented by an attribute (e.g. an "id" child), write
             // an attribute with the child's name + the child's Value into the parent
@@ -197,8 +216,8 @@ namespace Hl7.Fhir.Serialization
             if (containedResource != null && (containedResource.HasAttributes || containedResource.HasElements))
                 me.Add(containedResource);
 
-            // Only add myself to my parent if I have content
-            if (value != null || me.HasElements)
+            // Only add myself to my parent if I have content, or I am the root
+            if (value != null || me.HasElements || atRoot)
             {
                 if (sourceComments?.CommentsBefore != null)
                     writeComments(sourceComments.CommentsBefore, parent);

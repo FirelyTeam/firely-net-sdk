@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Serialization
         private static IElementNavigator createTyped(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings)
         {
             var untypedNav = createUntyped(elem, settings);
-            return untypedNav.AsElementNavigator(type, provider);
+            return untypedNav.ToElementNavigator(type, provider);
         }
 
         private static IElementNavigator createTyped(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings)
         {
             var untypedNav = createUntyped(reader, settings);
-            return untypedNav.AsElementNavigator(type, provider);
+            return untypedNav.ToElementNavigator(type, provider);
         }
     }
 }

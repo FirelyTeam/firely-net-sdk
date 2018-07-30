@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void AvoidBOMUse()
         {
-            Bundle b = new Bundle();
+            Bundle b = new Bundle() { Total = 1000 };
 
             var data = FhirJsonSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Tests.Serialization
             data = FhirXmlSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            Patient p = new Patient();
+            Patient p = new Patient() { Active = true };
 
             data = FhirJsonSerializer.SerializeToBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
@@ -221,6 +222,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var b = new Bundle();
             b.AddResourceEntry(p, "http://nu.nl/fhir/Patient/1");
             b.Total = 1;
+            b.Type = Bundle.BundleType.Searchset;
 
             var full = FhirXmlSerializer.SerializeToString(b);
             Assert.IsTrue(full.Contains("<entry"));
@@ -239,6 +241,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsTrue(summ.Contains("<total"));
+            Assert.IsTrue(summ.Contains("<type"));
         }
 
 
@@ -418,7 +421,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Contact = new List<Patient.ContactComponent>
                 {
                     null,
-                    new Patient.ContactComponent { Name = HumanName.ForFamily("Kramer") }, 
+                    new Patient.ContactComponent { Name = HumanName.ForFamily("Kramer") },
                 }
             };
 
@@ -446,8 +449,7 @@ namespace Hl7.Fhir.Tests.Serialization
         // However: http://www.hl7.org/implement/standards/fhir/narrative.html#Narrative
         // => div SHOULD accept plain text!
         [TestMethod]
-        [Ignore]
-        public void SerializeValueSet()
+        public void SerializeJsonWithPlainDiv()
         {
             // var res = new ValueSet() { Url = "http://example.org/fhir/ValueSet/MyValueSetExample" };
 
@@ -486,7 +488,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(json);
         }
 
-// #if NET45
+        // #if NET45
         // [WMR 20180409] NEW: Serialize to XmlDocument
         [TestMethod]
         public void TestSerializeToXmlDocument()
@@ -498,7 +500,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
 
-                Name = new List<HumanName> { new HumanName { Family = new [] { "Clapton" }, Use = HumanName.NameUse.Official } },
+                Name = new List<HumanName> { new HumanName { Family = new[] { "Clapton" }, Use = HumanName.NameUse.Official } },
 
                 Active = true,
                 BirthDate = "2015-07-09",
@@ -513,7 +515,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(root.HasElements);
             Assert.AreEqual(7, root.Elements().Count());
         }
-// #endif
+        // #endif
 
         // [WMR 20180409] NEW: Serialize to JObject
         [TestMethod]
@@ -523,21 +525,20 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var patientOne = new Patient
             {
-
                 Id = "patient-one",
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
                 Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
                 Active = true,
-                Name = new List<HumanName> { new HumanName { Use = HumanName.NameUse.Official, Family = new[] { "Clapton" }  } },
+                Name = new List<HumanName> { new HumanName { Use = HumanName.NameUse.Official, Family = new[] { "Clapton" } } },
                 Gender = AdministrativeGender.Male,
                 BirthDate = "2015-07-09",
             };
 
-            var doc = FhirJsonSerializer.SerializeToDocument(patientOne);
-            Assert.IsNotNull(doc);
+            var serializer = new FhirJsonSerializer();
+            var jsonText = serializer.SerializeToString(patientOne);
+            Assert.IsNotNull(jsonText);
 
-            System.Diagnostics.Debug.Print(doc.ToString());
-
+            var doc = JObject.Parse(jsonText);
             Assert.AreEqual(8, doc.Count); // Including resourceType
 
             JToken assertProperty(JToken t, string expectedName)

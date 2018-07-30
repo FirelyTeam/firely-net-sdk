@@ -22,25 +22,25 @@ namespace Hl7.Fhir.Serialization
 
         public bool AllowUnrecognizedEnums { get; set; }
 
-        public ISerializerCustomization CustomSerializer { get; set; }
+        //public ISerializerCustomization CustomSerializer { get; set; }
 
-        public IDeserializerCustomization CustomDeserializer { get; set; }
+        //public IDeserializerCustomization CustomDeserializer { get; set; }
     }
 
-    public interface ISerializerCustomization
-    {
-        [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
-        void OnBeforeSerializeComplexType(object instance, IFhirWriter writer);
+    //public interface ISerializerCustomization
+    //{
+    //    [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
+    //    void OnBeforeSerializeComplexType(object instance, IFhirWriter writer);
 
-        [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
-        bool OnBeforeSerializeProperty(string name, object value, IFhirWriter writer);
+    //    [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
+    //    bool OnBeforeSerializeProperty(string name, object value, IFhirWriter writer);
 
-        [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
-        void OnAfterSerializeComplexType(object instance, IFhirWriter writer);
-    }
+    //    [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
+    //    void OnAfterSerializeComplexType(object instance, IFhirWriter writer);
+    //}
 
-    public interface IDeserializerCustomization
-    {
-        bool OnBeforeDeserializeProperty(string name, Base parent, IElementNavigator current);
-    }
+    //public interface IDeserializerCustomization
+    //{
+    //    bool OnBeforeDeserializeProperty(string name, Base parent, IElementNavigator current);
+    //}
 }

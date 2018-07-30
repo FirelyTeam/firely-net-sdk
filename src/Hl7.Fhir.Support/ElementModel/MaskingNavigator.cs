@@ -119,11 +119,18 @@ namespace Hl7.Fhir.ElementModel
                 ExcludeNarrative = true
             });
 
+        public static MaskingNavigator ForCount(IElementNavigator nav) =>
+          new MaskingNavigator(nav, new MaskingNavigatorSettings
+          {
+              IncludeMandatory = true,
+              IncludeElements = new[] { "id", "total" },
+          });
+
         public MaskingNavigator(IElementNavigator source, MaskingNavigatorSettings settings = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
             if (!source.InPipeline(typeof(ScopedNavigator)))
-                throw Error.Argument("ScopedNavigator can only be used on a navigator chain that contains a ScopedNavigator", nameof(source));
+                throw Error.Argument("MaskingNavigator can only be used on a navigator chain that contains a ScopedNavigator", nameof(source));
 
             Source = source;
             _settings = settings?.Clone() ?? new MaskingNavigatorSettings();
@@ -198,7 +205,7 @@ namespace Hl7.Fhir.ElementModel
             bool matches(string filter)
             {
                 var f = nearest + "." + filter;
-                return loc == f || loc.StartsWith(f + ".");    // include matches + children
+                return loc == f || loc.StartsWith(f + ".") || loc.StartsWith(f + "[");    // include matches + children
             }
             
 
