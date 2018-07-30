@@ -129,6 +129,27 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
+        /// <summary>
+        /// This unit test proves issue 552: https://github.com/ewoutkramer/fhir-net-api/issues/552
+        /// </summary>
+        [Fact]
+        public void ValidateOidType()
+        {
+            var def = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
+
+            var instance = new Oid("urn:oid:213.2.840.113674.514.212.200");
+            var report = _validator.Validate(instance, def);
+            Assert.False(report.Success);
+            Assert.Equal(1, report.Errors);
+            Assert.Equal(0, report.Warnings);
+
+            instance = new Oid("urn:oid:2.2.840.113674.514.212.200");
+            report = _validator.Validate(instance, def);
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Errors);
+            Assert.Equal(0, report.Warnings);
+        }
+
 
         [Fact]
         public void ValidateCardinality()
