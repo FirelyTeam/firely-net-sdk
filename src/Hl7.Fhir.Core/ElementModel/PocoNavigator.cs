@@ -21,7 +21,7 @@ namespace Hl7.Fhir.ElementModel
     public class PocoNavigator : IElementNavigator, IElementDefinitionSummary, IAnnotated
     {
         [Obsolete("Do not use the constructor directly, instead call ToElementNavigator() on any resource or datatype")]
-        public PocoNavigator(Base model)
+        public PocoNavigator(Base model, string rootName = null)
         {
             if (model == null) throw Error.ArgumentNull(nameof(model));
 
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.ElementModel
             _parentShortPath = "";
             _parentCommonPath = "";
 
-            _nav = new PocoElementNavigator(model);
+            _nav = new PocoElementNavigator(model, rootName ?? model.TypeName);
         }
 
         private PocoNavigator()     // for clone
@@ -285,8 +285,8 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoNavigatorExtensions
     {
 #pragma warning disable 612, 618
-        public static IElementNavigator ToElementNavigator(this Base @base) => new PocoNavigator(@base);
-#pragma warning restore 612, 618
+        public static IElementNavigator ToElementNavigator(this Base @base, string rootName=null) => new PocoNavigator(@base, rootName);
 
+#pragma warning restore 612, 618
     }
 }

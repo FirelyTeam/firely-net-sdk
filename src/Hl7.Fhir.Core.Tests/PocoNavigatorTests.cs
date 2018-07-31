@@ -20,7 +20,7 @@ namespace Hl7.Fhir
     [TestClass]
     public class PocoNavigatorTests
     {
-
+#pragma warning disable 612,618
         [TestMethod]
         public void TestPocoPath()
         {
@@ -119,6 +119,7 @@ namespace Hl7.Fhir
             Assert.AreEqual("Patient.telecom[0].system", 
                 (v4.Select("Patient.telecom[0].system").First() as PocoNavigator).ShortPath);
         }
+#pragma warning restore 612,618
 
         [TestMethod]
         public void PocoExtensionTest()
@@ -195,7 +196,7 @@ namespace Hl7.Fhir
         {
             var xml = File.ReadAllText(@"TestData\issue-444-testdata.xml");
             var cs = (new FhirXmlParser()).Parse<Conformance>(xml);
-            var nav = new PocoNavigator(cs);
+            var nav = cs.ToElementNavigator();
 
             nav.MoveToFirstChild();
 
@@ -212,7 +213,7 @@ namespace Hl7.Fhir
         {
             var xml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var cs = (new FhirXmlParser()).Parse<Patient>(xml);
-            var nav = new PocoNavigator(cs);
+            var nav = cs.ToElementNavigator();
 
             ElementNavPerformance(nav);
         }

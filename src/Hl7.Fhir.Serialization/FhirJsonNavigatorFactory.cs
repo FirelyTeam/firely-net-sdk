@@ -139,13 +139,13 @@ namespace Hl7.Fhir.Serialization
 
         private static IElementNavigator createTyped(JObject root, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings)
         {
-            var untypedNav = createUntyped(root, rootName, settings);
+            var untypedNav = createUntyped(root, rootName ?? type?.ToLower(), settings);
             return untypedNav.ToElementNavigator(type, provider);
         }
 
         private static IElementNavigator createTyped(JsonReader reader, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings)
         {
-            var untypedNav = createUntyped(reader, rootName, settings);
+            var untypedNav = createUntyped(reader, rootName ?? type?.ToLower(), settings);
             return untypedNav.ToElementNavigator(type, provider);
         }
     }

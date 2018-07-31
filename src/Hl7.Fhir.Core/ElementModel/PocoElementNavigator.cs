@@ -26,16 +26,18 @@ namespace Hl7.Fhir.ElementModel
         private IList<ElementValue> _children;
 
         // For Normal element properties representing a FHIR type
-        internal PocoElementNavigator(Base parent)
+        internal PocoElementNavigator(Base parent, string rootName)
         {
             // The root is the special case, we start with a "collection" of children where the parent is the only element
             _parent = null;
             _index = 0;
             _arrayIndex = null;
-            _children = new List<ElementValue>() { new ElementValue(parent.TypeName, parent) };
+            _children = new List<ElementValue>() { new ElementValue(rootName, parent) };
 
-            var typeInfo = (new PocoStructureDefinitionSummaryProvider()).Provide(parent.TypeName);
-            DefinitionSummary = Specification.ElementDefinitionSummary.ForRoot(parent.TypeName, typeInfo);
+            var provider = new PocoStructureDefinitionSummaryProvider();
+            var typeInfo = provider.Provide(parent.GetType());
+
+            DefinitionSummary = Specification.ElementDefinitionSummary.ForRoot(_children[0].ElementName, typeInfo);
         }
 
         private PocoElementNavigator()

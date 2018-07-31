@@ -18,6 +18,14 @@ namespace Hl7.Fhir.Specification
 {
     public class PocoStructureDefinitionSummaryProvider : IStructureDefinitionSummaryProvider
     {
+        public IStructureDefinitionSummary Provide(Type type)
+        {
+            var classMapping = GetMappingForType(type);
+            if (classMapping == null) return null;
+
+            return new PocoComplexTypeSerializationInfo(classMapping);
+        }
+
         public IStructureDefinitionSummary Provide(string canonical)
         {
             var isLocalType = !canonical.Contains("/");
@@ -35,10 +43,7 @@ namespace Hl7.Fhir.Specification
             Type csType = ModelInfo.GetTypeForFhirType(typeName);
             if (csType == null) return null;
 
-            var classMapping = GetMappingForType(csType);
-            if (classMapping == null) return null;
-
-            return new PocoComplexTypeSerializationInfo(classMapping);
+            return Provide(csType);
         }
 
         internal static ClassMapping GetMappingForType(Type elementType)

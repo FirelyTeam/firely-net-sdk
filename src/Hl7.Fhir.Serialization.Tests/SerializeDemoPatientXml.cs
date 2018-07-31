@@ -6,6 +6,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,9 @@ namespace Hl7.Fhir.Serialization.Tests
     {
         public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
+        public IElementNavigator getJsonNav(string json, FhirJsonNavigatorSettings s = null) =>
+            FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+
 
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()
@@ -93,7 +97,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false });
             var pat = pser.Parse<Patient>(tpXml);
 
-            var nav = new PocoNavigator(pat);
+            var nav = pat.ToElementNavigator();
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();
             using (var writer = XmlWriter.Create(xmlBuilder))
@@ -103,6 +107,40 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var output = xmlBuilder.ToString();
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
+        }
+
+        [TestMethod]
+        public void CanSerializeSubtree()
+        {
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
+
+            var navXml = getXmlNav(tpXml);
+            var navJson = getJsonNav(tpJson);
+            var navPoco = pat.ToElementNavigator();
+            assertAreAllEqual(navXml, navJson, navPoco);
+
+            // A subtree that's a normal datatype
+            var subnavXml = navXml.Children("photo").First();
+            var subnavJson = navJson.Children("photo").First();
+            var subnavPoco = navPoco.Children("photo").First();
+            assertAreAllEqual(subnavXml, subnavJson, subnavPoco);
+
+            //var navRtXml = FhirJsonNavigator.ForElement(subnavXml.ToJson(), subnavXml.Type,
+            //    new PocoStructureDefinitionSummaryProvider(), subnavXml.Name );
+            //var navRtJson = (new FhirJsonParser()).Parse(subnavJson, 
+            //    ModelInfo.GetTypeForFhirType(subnavJson.Type)).ToElementNavigator();
+            //var navRtPoco = FhirXmlNavigator.ForElement(subnavPoco.ToXml(), subnavPoco.Type,
+            //    new PocoStructureDefinitionSummaryProvider());
+            //assertAreAllEqual(navRtXml, navRtJson, navRtPoco);
+        }
+
+        private void assertAreAllEqual(IElementNavigator subnavXml, IElementNavigator subnavJson, IElementNavigator subnavPoco)
+        {
+            Assert.IsTrue(subnavXml.IsEqualTo(subnavJson).Success);
+            Assert.IsTrue(subnavJson.IsEqualTo(subnavPoco).Success);
+            Assert.IsTrue(subnavPoco.IsEqualTo(subnavXml).Success);
         }
     }
 }

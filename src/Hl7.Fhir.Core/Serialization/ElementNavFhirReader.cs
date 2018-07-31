@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     /// with the POCO-parsers.
     /// </summary>
 #pragma warning disable 612, 618
-    internal struct ElementNavFhirReader : IFhirReader, IElementNavigator
+    internal struct ElementNavFhirReader : IFhirReader
 #pragma warning restore 612,618
     {
         private ISourceNavigator _current;
@@ -56,18 +56,18 @@ namespace Hl7.Fhir.Serialization
         }
 #pragma warning restore 612, 618
 
-        public bool MoveToNext(string nameFilter = null) => _current.MoveToNext(nameFilter);
+        //public bool MoveToNext(string nameFilter = null) => _current.MoveToNext(nameFilter);
 
-        public bool MoveToFirstChild(string nameFilter = null) => _current.MoveToFirstChild(nameFilter);
+        //public bool MoveToFirstChild(string nameFilter = null) => _current.MoveToFirstChild(nameFilter);
 
-        public IElementNavigator Clone() => new ElementNavFhirReader(_current.Clone());
+        //public IElementNavigator Clone() => new ElementNavFhirReader(_current.Clone());
 
         public string Name => _current.Name;
 
-        public string Type => throw Error.NotImplemented();
+        //public string Type => throw Error.NotImplemented();
 
         public object Value => _current.Text;
 
-        public string Location => _current.Path;
+        //public string Location => _current.Path;
     }
 }

@@ -18,11 +18,11 @@ namespace Hl7.Fhir.ElementModel
         public readonly string Name;
         public readonly string InstanceType;
 
-        public NavigatorPosition(ISourceNavigator current, IElementDefinitionSummary info, string name, string type)
+        public NavigatorPosition(ISourceNavigator current, IElementDefinitionSummary info, string name, string instanceType)
         {
             SerializationInfo = info;
             Node = current ?? throw Error.ArgumentNull(nameof(current));
-            InstanceType = type;
+            InstanceType = instanceType;
             Name = name ?? throw Error.ArgumentNull(nameof(name));
         }
 
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
 
             var rootElement = elementType != null ? ElementDefinitionSummary.ForRoot(elementName, elementType) : null;
-            return new NavigatorPosition(element, rootElement, elementName, elementName);
+            return new NavigatorPosition(element, rootElement, elementName, elementType?.TypeName);
         }
 
         public bool IsTracking => SerializationInfo != null;       

@@ -73,11 +73,8 @@ namespace Hl7.Fhir.Serialization
 
             void write()
             {
-                var (root, _) = buildNode(source);
-
-                if (root == null)
-                    root = new JObject();
-
+                var root = new JObject();
+                addChildren(source, root);
                 root.WriteTo(destination);
             }
         }
@@ -105,13 +102,6 @@ namespace Hl7.Fhir.Serialization
 
             JToken first = value != null ? buildValue(value) : null;
             JObject second = buildChildren(node);
-
-            var edSummary = node.GetElementDefinitionSummary();
-
-            var isResource = edSummary?.IsResource ?? node.GetResourceType() != null;
-            var containedResourceType = isResource ? (node.Type ?? node.GetResourceType()) : null;
-            if (containedResourceType != null && second != null)
-                second.AddFirst(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, containedResourceType));
 
             // If this is a complex type with a value (should not occur)
             // serialize it like a primitive, otherwise, the first member
@@ -165,6 +155,13 @@ namespace Hl7.Fhir.Serialization
 
         private void addChildren(IElementNavigator node, JObject parent)
         {
+            var nodeSummary = node.GetElementDefinitionSummary();
+
+            var isResource = nodeSummary?.IsResource ?? node.GetResourceType() != null;
+            var containedResourceType = isResource ? (node.Type ?? node.GetResourceType()) : null;
+            if (containedResourceType != null)
+                parent.AddFirst(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, containedResourceType));
+
             foreach (var nameGroup in node.Children().GroupBy(n => n.Name))
             {
                 var members = nameGroup.ToList();
