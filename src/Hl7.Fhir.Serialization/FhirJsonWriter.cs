@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Serialization
 
             void write()
             {
-                var (root, _) = buildNode(source, isPrimitive: false, isResource: true, null);
+                var (root, _) = buildNode(source);
 
                 if (root == null)
                     root = new JObject();
@@ -97,11 +97,18 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private (JToken first, JObject second) buildNode(IElementNavigator node, bool isPrimitive, bool isResource, object value)
+        private (JToken first, JObject second) buildNode(IElementNavigator node)
         {
+            var details = node.GetJsonSerializationDetails();
+            object value = details != null ? node.Value : details?.OriginalValue ?? node.Value;
+            var isPrimitive = node.Type != null ? Primitives.IsPrimitive(node.Type) : value != null;
+
             JToken first = value != null ? buildValue(value) : null;
             JObject second = buildChildren(node);
 
+            var edSummary = node.GetElementDefinitionSummary();
+
+            var isResource = edSummary?.IsResource ?? node.GetResourceType() != null;
             var containedResourceType = isResource ? (node.Type ?? node.GetResourceType()) : null;
             if (containedResourceType != null && second != null)
                 second.AddFirst(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, containedResourceType));
@@ -162,9 +169,6 @@ namespace Hl7.Fhir.Serialization
             {
                 var members = nameGroup.ToList();
 
-                JsonSerializationDetails getSerializationDetails(IElementNavigator n)
-                        => n.GetJsonSerializationDetails();
-
                 // serialization info should be the same for each element in an
                 // array - but do not explicitly check that
                 if (!MustSerializeMember(members[0], out var generalInfo)) break;
@@ -174,18 +178,11 @@ namespace Hl7.Fhir.Serialization
                 // failing that, check whether this is a roundtrip and we have the information
                 // about arrays in the serialization deails. Failing that, assume the default:
                 // for unknown properties is to use an array - safest bet.
-                var generalJsonDetails = getSerializationDetails(members[0]);
+                var generalJsonDetails = members[0].GetJsonSerializationDetails();
                 var needsArray = generalInfo?.IsCollection ?? generalJsonDetails?.IsArrayElement ?? true;
-                var isResource = generalInfo?.IsResource ?? members[0].GetResourceType() != null;
-                var isPrimitive = members[0].Type != null ? Primitives.IsPrimitive(members[0].Type) :
-                        members.Any(m => m.Value != null);
 
-                var children = members.Select(m =>
-                {
-                    var details = getSerializationDetails(m);
-                    object value = hasTypeInfo ? m.Value : getSerializationDetails(m)?.OriginalValue ?? m.Value;
-                    return buildNode(m, isPrimitive, isResource, value);
-                }).Where(c => !(c.first == null && c.second == null)).ToList();
+                var children = members.Select(m => buildNode(m))
+                            .Where(c => !(c.first == null && c.second == null)).ToList();
 
                 // Don't add empty nodes to the parent
                 if (!children.Any()) return;

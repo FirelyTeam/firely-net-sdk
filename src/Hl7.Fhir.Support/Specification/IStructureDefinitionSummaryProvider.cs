@@ -41,12 +41,14 @@ namespace Hl7.Fhir.Specification
     /// </summary>
     /// <remarks>
     ///  In FHIR, this interface represents definitions of Resources, datatypes and BackboneElements. 
-    ///  BackboneElements will always have the TypeName set to "BackboneElement" and IsAbstract to true.
+    ///  BackboneElements will have the TypeName set to "BackboneElement" (in resources) or "Element" (in datatypes)
+    ///  and IsAbstract set to true.
     ///  </remarks>
     public interface IStructureDefinitionSummary : ITypeSerializationInfo
     {
         string TypeName { get; }
         bool IsAbstract { get; }
+        bool IsResource { get; }
 
         IEnumerable<IElementDefinitionSummary> GetElements();
     }

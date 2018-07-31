@@ -50,6 +50,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples.zip" Link="TestData\examples.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System.IO.Compression" />
   </ItemGroup>
 

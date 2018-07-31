@@ -26,10 +26,6 @@ namespace Hl7.Fhir.ElementModel
 
     public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
-        public TypedNavigator(ISourceNavigator root, IStructureDefinitionSummaryProvider provider) : this(root, root.Name, provider)
-        {
-        }
-
         public TypedNavigator(ISourceNavigator element, string type, IStructureDefinitionSummaryProvider provider)
         {
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -38,7 +34,7 @@ namespace Hl7.Fhir.ElementModel
 
             var elementType = provider.Provide(type);
 
-            _current = NavigatorPosition.ForElement(element, elementType, element.Name);
+            _current = NavigatorPosition.ForRoot(element, elementType, element.Name);
             _definition = _current.IsTracking ?
                 ElementDefinitionSummaryCache.ForRoot(_current.SerializationInfo) : ElementDefinitionSummaryCache.Empty;
             _parentPath = null;
@@ -247,7 +243,6 @@ namespace Hl7.Fhir.ElementModel
             // Move down the first child - note we don't use the nameFilter, 
             // the tryMoveToElement() which comes next will verify the filter (if any).
             if (!scan.MoveToFirstChild()) return false;
-
 
             var firstChildDef = down(_current);
             if (_current.IsTracking && firstChildDef == ElementDefinitionSummaryCache.Empty && _current.InstanceType != null)

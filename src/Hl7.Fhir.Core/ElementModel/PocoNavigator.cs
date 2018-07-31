@@ -55,7 +55,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Return the FHIR TypeName
         /// </summary>
-        public string Type => FhirValue is BackboneElement ? "BackboneElement" : _nav.TypeName;
+        public string Type => _nav.TypeName;
 
         /// <summary>
         /// The FHIR TypeName is also returned for the name of the root element
@@ -284,7 +284,9 @@ namespace Hl7.Fhir.ElementModel
 
     public static class PocoNavigatorExtensions
     {
+#pragma warning disable 612, 618
         public static IElementNavigator ToElementNavigator(this Base @base) => new PocoNavigator(@base);
+#pragma warning restore 612, 618
 
     }
 }

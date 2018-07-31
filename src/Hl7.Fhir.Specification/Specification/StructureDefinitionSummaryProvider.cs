@@ -19,7 +19,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification
 {
-    public class StructureDefinitionSerializationInfoProvider : IStructureDefinitionSummaryProvider
+    public class StructureDefinitionSummaryProvider : IStructureDefinitionSummaryProvider
     {
         public delegate bool TypeNameMapper(string typeName, out string canonical);
 
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification
             return true;
         }
 
-        public StructureDefinitionSerializationInfoProvider(IResourceResolver resolver, TypeNameMapper mapper = null)
+        public StructureDefinitionSummaryProvider(IResourceResolver resolver, TypeNameMapper mapper = null)
         {
             _resolver = resolver;
             _typeNameMapper = mapper ?? DefaultTypeNameMapper;
@@ -67,9 +67,11 @@ namespace Hl7.Fhir.Specification
             this._nav = nav;
         }
 
-        public string TypeName => "BackboneElement";
+        public string TypeName => _nav.Current.Type[0].Code.GetLiteral();
 
         public bool IsAbstract => true;
+
+        public bool IsResource => false;
 
         public IEnumerable<IElementDefinitionSummary> GetElements() => StructureDefinitionComplexTypeSerializationInfo.getElements(_nav);
     }
@@ -86,6 +88,8 @@ namespace Hl7.Fhir.Specification
         public string TypeName => _nav.StructureDefinition.Name;
 
         public bool IsAbstract => _nav.StructureDefinition.Abstract ?? false;
+
+        public bool IsResource => _nav.StructureDefinition.Kind == StructureDefinition.StructureDefinitionKind.Resource;
 
         public IEnumerable<IElementDefinitionSummary> GetElements()
         {
@@ -172,7 +176,7 @@ namespace Hl7.Fhir.Specification
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
             }
             else
-                return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code.GetLiteral())).ToArray();
+                return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code.GetLiteral())).Distinct().ToArray();
         }
 
         public string ElementName { get; private set; }

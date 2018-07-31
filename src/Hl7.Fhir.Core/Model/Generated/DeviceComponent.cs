@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ProductionSpecificationComponent")]
         [DataContract]
-        public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProductionSpecificationComponent"; } }

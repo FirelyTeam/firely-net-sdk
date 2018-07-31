@@ -14,8 +14,12 @@ namespace Hl7.Fhir.Serialization
 
             if (provider != null)
             {
-                typedNav = type == null ? new TypedNavigator(sourceNav, provider) :
-                                new TypedNavigator(sourceNav, type, provider);
+                // If no type is given, assume we are on a resource and try to get the
+                // resoure name from the underlying source. If that fails, take the name of
+                // the node as a last resort;
+                var sourceType = type ?? sourceNav.GetResourceType() ??
+                    throw Error.Argument(nameof(sourceNav), "Underlying navigator is not located on a resource, please supply a type argument");
+                typedNav = new TypedNavigator(sourceNav, sourceType, provider);
             }
             else
                 typedNav = new TypedShimNavigator(sourceNav);

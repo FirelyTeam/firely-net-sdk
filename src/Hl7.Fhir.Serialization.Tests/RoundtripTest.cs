@@ -6,81 +6,91 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Xml;
-using System.Xml.Linq;
-using Newtonsoft.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using System.IO.Compression;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Tests;
+using Hl7.Fhir.Specification.Source;
 
-namespace Hl7.Fhir.Tests.Serialization
+namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class RoundtripTest
     { 
-        [TestMethod]   
-        public void RoundTripOneExample()
-        {
-            roundTripOneExample("testscript-example(example).xml");
-            roundTripOneExample("TestPatient.xml");
-        }
-
-        private void roundTripOneExample(string filename)
-        {
-            string testFileName = filename;
-            var original = TestDataHelper.ReadTestData(testFileName);
-
-            var t = new FhirXmlParser().Parse<Resource>(original);
-
-            var outputXml = new FhirXmlSerializer().SerializeToString(t);
-            XmlAssert.AreSame(testFileName, original, outputXml);
-
-            var outputJson = new FhirJsonSerializer().SerializeToString(t);
-            var t2 = new FhirJsonParser().Parse<Resource>(outputJson);
-            Assert.IsTrue(t.IsExactly(t2));
-
-            var outputXml2 = new FhirXmlSerializer().SerializeToString(t2);
-            XmlAssert.AreSame(testFileName, original, outputXml2);            
-        }
-
-
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXml()
+        public void FullRoundtripOfAllExamplesXmlPoco()
         {
-            ZipArchive examples = TestDataHelper.ReadTestZip("examples.zip");
-            
-            // Create an empty temporary directory for us to dump the roundtripped intermediary files in
-            string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTestXml");
-            createEmptyDir(baseTestPath);
-
-            Debug.WriteLine("Roundtripping xml->json->xml");
-            createEmptyDir(baseTestPath);
-            doRoundTrip(examples, baseTestPath);
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml", 
+                "Roundtripping xml->json->xml", usingPoco: true, provider:null);
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJson()
+        public void FullRoundtripOfAllExamplesJsonPoco()
         {
-            ZipArchive examples = TestDataHelper.ReadTestZip("examples-json.zip");
+            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: true, provider: null);
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesXmlNavPocoProvider()
+        {
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesJsonNavPocoProvider()
+        {
+            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesXmlNavSdProvider()
+        {
+            var source = new CachedResolver(ZipSource.CreateValidationSource());
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesJsonNavSdProvider()
+        {
+            var source = new CachedResolver(ZipSource.CreateValidationSource());
+            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
+        }
+
+        private static string GetFullPathForExample(string filename) => Path.Combine("TestData", filename);
+
+        private static ZipArchive ReadTestZip(string filename)
+        {
+            string file = GetFullPathForExample(filename);
+            return ZipFile.OpenRead(file);
+        }
+
+        public static void FullRoundtripOfAllExamples(string zipname, string dirname, string label, bool usingPoco, IStructureDefinitionSummaryProvider provider)
+        {
+            ZipArchive examples = ReadTestZip(zipname);
 
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
-            string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTestJson");
+            string baseTestPath = Path.Combine(Path.GetTempPath(), dirname);
             createEmptyDir(baseTestPath);
 
-            Debug.WriteLine("Roundtripping json->xml->json");
+            Debug.WriteLine(label);
             createEmptyDir(baseTestPath);
-            doRoundTrip(examples, baseTestPath);
+            doRoundTrip(examples, baseTestPath, usingPoco, provider);
         }
+
 
 
         //[TestMethod]
@@ -108,7 +118,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Directory.CreateDirectory(baseTestPath);
         }
 
-        private void doRoundTrip(ZipArchive examplesZip, string baseTestPath)
+        private static void doRoundTrip(ZipArchive examplesZip, string baseTestPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
             var examplePath = Path.Combine(baseTestPath, "input");
             Directory.CreateDirectory(examplePath);
@@ -121,7 +131,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             var sw = new Stopwatch();
             sw.Start();
-            convertFiles(examplePath, intermediate1Path);
+            convertFiles(examplePath, intermediate1Path, usingPoco, provider);
             sw.Stop();
             Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
             sw.Reset();
@@ -129,19 +139,17 @@ namespace Hl7.Fhir.Tests.Serialization
             var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
             sw.Start();
-            convertFiles(intermediate1Path, intermediate2Path);
+            convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider);
             sw.Stop();
             Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
             sw.Reset();
 
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
-
-            List<string> errors = new List<string>();
             compareFiles(examplePath, intermediate2Path);
         }
 
 
-        private void convertFiles(string inputPath, string outputPath)
+        private static void convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
             var files = Directory.EnumerateFiles(inputPath);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
@@ -161,17 +169,19 @@ namespace Hl7.Fhir.Tests.Serialization
 
                 if (file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets."))
                     continue;
-                if (!isFeed(file))
-                    convertResource(file, outputFile);
+
+                if (usingPoco)
+                    convertResourcePoco(file, outputFile);
                 else
-                    convertFeed(file, outputFile);
+                    convertResourceNav(file, outputFile, provider);
+
             }
 
             Debug.WriteLine("Done!");
         }
 
 
-        private void compareFiles(string expectedPath, string actualPath)
+        private static void compareFiles(string expectedPath, string actualPath)
         {
             var files = Directory.EnumerateFiles(expectedPath);
 
@@ -198,7 +208,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
         }
 
-        private void compareFile(string expectedFile, string actualFile)
+        private static void compareFile(string expectedFile, string actualFile)
         {
             if (expectedFile.EndsWith(".xml"))
                 XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
@@ -213,25 +223,8 @@ namespace Hl7.Fhir.Tests.Serialization
             }
         }
 
-        private bool isFeed(string filename)
-        {
-            var buffer = new char[250];
 
-
-            using (var reader = new StreamReader(new FileStream(filename, FileMode.Open)))
-            {
-                reader.Read(buffer, 0, buffer.Length);
-                var data = new String(buffer);
-
-                if (data.Contains("<feed")) return true;
-                if (data.Contains("resourceType") && data.Contains("Bundle") && !data.Contains("NewBundle")) return true;
-
-                return false;
-            }
-        }
-
-
-        private void convertResource(string inputFile, string outputFile)
+        private static void convertResourcePoco(string inputFile, string outputFile)
         {
             //TODO: call validation after reading
             if (inputFile.Contains("expansions.") || inputFile.Contains("profiles-resources") || inputFile.Contains("profiles-others") || inputFile.Contains("valuesets."))
@@ -259,25 +252,27 @@ namespace Hl7.Fhir.Tests.Serialization
             }
         }
 
-        private void convertFeed(string inputFile, string outputFile)
+        private static void convertResourceNav(string inputFile, string outputFile, IStructureDefinitionSummaryProvider provider)
         {
             //TODO: call validation after reading
-
+            if (inputFile.Contains("expansions.") || inputFile.Contains("profiles-resources") || inputFile.Contains("profiles-others") || inputFile.Contains("valuesets."))
+                return;
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = new FhirXmlParser().Parse<Resource>(xml);
-
-                var json = new FhirJsonSerializer().SerializeToString(resource);
+                var nav = FhirXmlNavigator.ForResource(xml, provider);
+                var json = nav.ToJson();
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = new FhirJsonParser().Parse<Resource>(json);
-                var xml = new FhirXmlSerializer().SerializeToString(resource);
+                var nav = FhirJsonNavigator.ForResource(json, provider, 
+                    settings: new FhirJsonNavigatorSettings { AllowJsonComments = true } );
+                var xml = nav.ToXml();
                 File.WriteAllText(outputFile, xml);
             }
         }
+
     }
 }

@@ -25,8 +25,17 @@
    </ItemGroup>
 
    <ItemGroup>
+     <Compile Remove="Serialization\ComplexTypeWriter.cs" />
+     <Compile Remove="Serialization\DispatchingWriter.cs" />
+     <Compile Remove="Serialization\JsonDomFhirReader.cs" />
+     <Compile Remove="Serialization\JsonDomFhirWriter.cs" />
      <Compile Remove="Serialization\JsonNavFhirReader.cs" />
+     <Compile Remove="Serialization\JsonTreeRewriter.cs" />
+     <Compile Remove="Serialization\PrimitiveValueWriter.cs" />
+     <Compile Remove="Serialization\RepeatingElementWriter.cs" />
+     <Compile Remove="Serialization\ResourceWriter.cs" />
      <Compile Remove="Serialization\XmlDomFhirReader.cs" />
+     <Compile Remove="Serialization\XmlFhirWriter.cs" />
      <Compile Remove="Serialization\XmlNavFhirReader.cs" />
    </ItemGroup>
  

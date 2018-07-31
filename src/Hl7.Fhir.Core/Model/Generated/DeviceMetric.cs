@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CalibrationComponent")]
         [DataContract]
-        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CalibrationComponent"; } }

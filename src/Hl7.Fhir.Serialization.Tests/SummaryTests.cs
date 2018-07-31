@@ -19,13 +19,13 @@ namespace Hl7.Fhir.Serialization.Tests
     public class SummaryTests
     {
         public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) => 
-            FhirXmlNavigator.ForResource(xml, new PocoSerializationInfoProvider(), s);
+            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
 
         [TestMethod]
         public void Summary()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var typeinfo = new PocoSerializationInfoProvider().Provide("Patient");
+            var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("Patient");
             var inSummary = typeinfo.GetElements().Where(e => e.InSummary).ToList();
 
             var nav = new ScopedNavigator(getXmlNav(tpXml));
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void SummaryText()
         {
             var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
-            var typeinfo = new PocoSerializationInfoProvider().Provide("ValueSet");
+            var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
             var nav = new ScopedNavigator(getXmlNav(tpXml));
             var masker = MaskingNavigator.ForText(nav);
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void SummaryData()
         {
             var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
-            var typeinfo = new PocoSerializationInfoProvider().Provide("ValueSet");
+            var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
             var nav = new ScopedNavigator(getXmlNav(tpXml));
             var masker = MaskingNavigator.ForData(nav);

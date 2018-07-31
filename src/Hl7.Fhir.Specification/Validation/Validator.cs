@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Validation
                 {
                     var poco = Settings.ResourceResolver.ResolveByUri(reference);
                     if (poco != null)
-                        return new PocoNavigator(poco);
+                        return poco.ToElementNavigator();
                 }
                 catch (Exception e)
                 {

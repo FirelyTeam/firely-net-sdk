@@ -39,12 +39,11 @@ namespace Hl7.Fhir.ElementModel
             if (TryGetValue(name, out info))
                 return true;
 
-            info = this.Where(kvp => name.StartsWith(kvp.Key)).Select(kvp => kvp.Value).FirstOrDefault();
-
-            // False hit -> we matched the prefix, but the property is not actually
-            // a choice element (simply misspelled).
-            if (info != null && !info.IsChoiceElement && name != info.ElementName)
-                info = null;
+            // Now, check the choice elements for a match
+            // (this should actually be the longest match, but that's kind of expensive,
+            // so as long as we don't add stupid ambiguous choices to a single type, this will work.
+            info = this.Where(kvp => name.StartsWith(kvp.Key) && kvp.Value.IsChoiceElement)
+                .Select(kvp => kvp.Value).FirstOrDefault();
 
             return info != null;
         }

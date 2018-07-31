@@ -23,7 +23,7 @@ namespace Hl7.FhirPath.Tests
     {
         ElementNode patient;
 
-        public IElementNavigator getXmlNav(string xml) => FhirXmlNavigator.ForResource(xml, new PocoSerializationInfoProvider());
+        public IElementNavigator getXmlNav(string xml) => FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
 
         public ElementNodeTests()
         {

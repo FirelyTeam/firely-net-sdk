@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization.Tests
     public class SerializeDemoPatientXml
     {
         public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) =>
-            FhirXmlNavigator.ForResource(xml, new PocoSerializationInfoProvider(), s);
+            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
 
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()

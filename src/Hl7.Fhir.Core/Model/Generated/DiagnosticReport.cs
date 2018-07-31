@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ImageComponent")]
         [DataContract]
-        public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ImageComponent"; } }

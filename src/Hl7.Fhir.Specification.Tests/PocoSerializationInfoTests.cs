@@ -18,15 +18,15 @@ namespace Hl7.Fhir.Serialization.Tests
         //}
 
         [TestMethod]
-        public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new PocoSerializationInfoProvider());
+        public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new PocoStructureDefinitionSummaryProvider());
 
         [TestMethod]
-        public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new PocoSerializationInfoProvider());
+        public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new PocoStructureDefinitionSummaryProvider());
 
         [TestMethod]
-        public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new PocoSerializationInfoProvider());
+        public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new PocoStructureDefinitionSummaryProvider());
 
         [TestMethod]
-        public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new PocoSerializationInfoProvider());
+        public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new PocoStructureDefinitionSummaryProvider());
     }
 }

@@ -34,7 +34,7 @@ namespace Hl7.Fhir.ElementModel
             _arrayIndex = null;
             _children = new List<ElementValue>() { new ElementValue(parent.TypeName, parent) };
 
-            var typeInfo = (new PocoSerializationInfoProvider()).Provide(parent.TypeName);
+            var typeInfo = (new PocoStructureDefinitionSummaryProvider()).Provide(parent.TypeName);
             DefinitionSummary = Specification.ElementDefinitionSummary.ForRoot(parent.TypeName, typeInfo);
         }
 
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.ElementModel
 
             _parent = parent;
             _children = children;
-            ParentClassMapping = PocoSerializationInfoProvider.GetMappingForType(parent.GetType());
+            ParentClassMapping = PocoStructureDefinitionSummaryProvider.GetMappingForType(parent.GetType());
             
             // Reset everything, next() will initialize the values for the first "child"
             _index = -1;
@@ -178,6 +178,10 @@ namespace Hl7.Fhir.ElementModel
                         return "xhtml";
                     else
                         throw new NotSupportedException($"Don't know about primitive with name '{Name}'");
+                }
+                else if(Current.Value is IBackboneElement)
+                {
+                    return Current.Value is BackboneElement ? "BackboneElement" : "Element";
                 }
                 else
                 {

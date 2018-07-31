@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("OutcomeComponent")]
         [DataContract]
-        public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OutcomeComponent"; } }

@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ChannelComponent")]
         [DataContract]
-        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ChannelComponent"; } }

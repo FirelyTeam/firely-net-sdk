@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("InvestigationsComponent")]
         [DataContract]
-        public partial class InvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InvestigationsComponent"; } }
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FindingComponent")]
         [DataContract]
-        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FindingComponent"; } }
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RuledOutComponent")]
         [DataContract]
-        public partial class RuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RuledOutComponent"; } }

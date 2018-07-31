@@ -46,8 +46,9 @@ namespace Hl7.Fhir.Specification
             IsRequired = source.IsRequired;
         }
 
-        public static ElementDefinitionSummary ForRoot(string rootName, ITypeSerializationInfo rootType) =>
-            new ElementDefinitionSummary(rootName, isCollection: false, isChoice: false, isResource: true, 
+        public static ElementDefinitionSummary ForRoot(string rootName, IStructureDefinitionSummary rootType) =>
+            new ElementDefinitionSummary(rootName, isCollection: false, isChoice: false, 
+                isResource: rootType.IsResource, 
                 representation: XmlRepresentation.XmlElement, 
                 type: new[] { rootType }, order: 0, nonDefaultNS: null, inSummary: true, isRequired: false);
 

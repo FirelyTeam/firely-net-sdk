@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CharacteristicComponent")]
         [DataContract]
-        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CharacteristicComponent"; } }
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MemberComponent")]
         [DataContract]
-        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MemberComponent"; } }

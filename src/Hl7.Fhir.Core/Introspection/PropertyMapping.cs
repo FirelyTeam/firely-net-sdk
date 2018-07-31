@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Introspection
             if (ReflectionHelper.IsNullableType(result.ImplementingType)) result.ImplementingType = ReflectionHelper.GetNullableArgument(result.ImplementingType);
             result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ImplementingType);
 
-            result.IsBackboneElement = result.ImplementingType.CanBeTreatedAsType(typeof(BackboneElement));
+            result.IsBackboneElement = result.ImplementingType.CanBeTreatedAsType(typeof(IBackboneElement));
             foundTypes.Add(result.ImplementingType);
 
             // Derive the C# type that represents which types are allowed for this element.

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.ElementModel
             Name = name ?? throw Error.ArgumentNull(nameof(name));
         }
 
-        public static NavigatorPosition ForElement(ISourceNavigator element, IStructureDefinitionSummary elementType, string elementName)
+        public static NavigatorPosition ForRoot(ISourceNavigator element, IStructureDefinitionSummary elementType, string elementName)
         {
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
 

@@ -9,13 +9,14 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification
 {
-    public class PocoSerializationInfoProvider : IStructureDefinitionSummaryProvider
+    public class PocoStructureDefinitionSummaryProvider : IStructureDefinitionSummaryProvider
     {
         public IStructureDefinitionSummary Provide(string canonical)
         {
@@ -57,9 +58,12 @@ namespace Hl7.Fhir.Specification
             _classMapping = classMapping;
         }
 
-        public string TypeName => !_classMapping.IsBackbone ? _classMapping.Name : "BackboneElement";
+        public string TypeName => !_classMapping.IsBackbone ? _classMapping.Name :
+            (_classMapping.NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
+            "BackboneElement" : "Element");
 
         public bool IsAbstract => _classMapping.IsAbstract;
+        public bool IsResource => _classMapping.IsResource;
 
         public IEnumerable<IElementDefinitionSummary> GetElements() =>
             _classMapping.PropertyMappings.Select(pm =>
@@ -94,7 +98,7 @@ namespace Hl7.Fhir.Specification
         {
             if (pm.IsBackboneElement)
             {
-                var mapping = PocoSerializationInfoProvider.GetMappingForType(pm.ImplementingType);
+                var mapping = PocoStructureDefinitionSummaryProvider.GetMappingForType(pm.ImplementingType);
                 return new ITypeSerializationInfo[] { new PocoComplexTypeSerializationInfo(mapping) };
             }
             else
@@ -105,7 +109,7 @@ namespace Hl7.Fhir.Specification
 
             string getFhirTypeName(Type ft)
             {
-                var map = PocoSerializationInfoProvider.GetMappingForType(ft);
+                var map = PocoStructureDefinitionSummaryProvider.GetMappingForType(ft);
                 return map.IsCodeOfT ? "code" : map.Name;
             }
         }

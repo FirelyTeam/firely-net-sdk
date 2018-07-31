@@ -60,9 +60,11 @@ namespace Hl7.Fhir.Serialization.Tests
             // Simple element
             checkType(p, "active", false, "boolean");
 
+            // Element with multiple reference types
+            checkType(p, "careProvider", true, "Reference");
 
             // Backbone element (repeating)
-            var bbe = checkBBType(p, "contact", true);
+            var bbe = checkBBType(p, "contact", "BackboneElement", true);
 
             // Navigate into the backbone element
             checkType(bbe, "relationship", true, "CodeableConcept");
@@ -86,10 +88,14 @@ namespace Hl7.Fhir.Serialization.Tests
 
             // Test types using nameReference
             var q = provider.Provide("Questionnaire");
-            var qgroup = checkBBType(q, "group", false);
+            var qgroup = checkBBType(q, "group", "BackboneElement", false);
             checkType(qgroup, "linkId", false, "string");
-            var qgroupgroup = checkBBType(qgroup, "group", true);
+            var qgroupgroup = checkBBType(qgroup, "group", "BackboneElement", true);
             checkType(qgroupgroup, "linkId", false, "string");
+
+            // Backbone elements within datatypes
+            var tm = provider.Provide("Timing");
+            checkBBType(tm, "repeat", "Element", false);
         }
 
         private static void checkType(IStructureDefinitionSummary parent, string ename, bool mayRepeat, params string[] types)
@@ -104,14 +110,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 .Select(t => t.ReferredType).ToArray());
         }
 
-        private static IStructureDefinitionSummary checkBBType(IStructureDefinitionSummary parent, string ename, bool mayRepeat)
+        private static IStructureDefinitionSummary checkBBType(IStructureDefinitionSummary parent, string ename, string bbType, bool mayRepeat)
         {
             var child = parent.GetElements().SingleOrDefault(c => c.ElementName == ename);
 
             Assert.IsNotNull(child);
             Assert.AreEqual(mayRepeat, child.IsCollection);
             var result = child.Type.Single() as IStructureDefinitionSummary;
-            Assert.AreEqual("BackboneElement", result.TypeName);
+            Assert.AreEqual(bbType, result.TypeName);
             Assert.IsNotNull(result);
 
             return result;

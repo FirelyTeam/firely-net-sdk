@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RecommendationComponent")]
         [DataContract]
-        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RecommendationComponent"; } }
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DateCriterionComponent")]
         [DataContract]
-        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DateCriterionComponent"; } }
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProtocolComponent")]
         [DataContract]
-        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProtocolComponent"; } }

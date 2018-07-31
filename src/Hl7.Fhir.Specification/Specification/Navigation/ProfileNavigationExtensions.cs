@@ -171,7 +171,11 @@ namespace Hl7.Fhir.Specification.Navigation
         /// </summary>
         /// <param name="defn"></param>
         /// <returns></returns>
-        public static bool IsBackboneElement(this ElementDefinition defn) => defn.Type.Count == 1 && defn.Type[0].Code == FHIRDefinedType.BackboneElement;
+        /// <remarks>Backbone elements are nested groups of elements, that appear within resources (of type BackboneElement) or as
+        /// within datatypes (of type Element).
+        ///</remarks>
+        public static bool IsBackboneElement(this ElementDefinition defn) => defn.Path.Contains('.') && defn.Type.Count == 1 && 
+            (defn.Type[0].Code == FHIRDefinedType.BackboneElement || defn.Type[0].Code == FHIRDefinedType.Element);
 
 
         /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>
