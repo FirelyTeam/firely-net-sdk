@@ -6,6 +6,10 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// [WMR 20170810] STU3 bug: SimpleQuantity root element introduces non-empty sliceName = "SliceName"
+// Detect and fix invalid non-null sliceNames on root elements
+#define FIX_SLICENAMES_ON_ROOT_ELEMENTS
+
 using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
@@ -13,6 +17,7 @@ using System.Linq;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Diagnostics;
 
 #pragma warning disable 1591 // suppress XML summary warnings
 
@@ -294,6 +299,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                 )
             );
         }
+
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
+        // [WMR 20170810] NEW - found a non-empty sliceName on root element
+        // STU3 bug: SimpleQuantity root element definition has non-empty sliceName = "SimpleQuantity"
+
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT = Issue.Create(10010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+
+        internal OperationOutcome.IssueComponent addIssueInvalidSliceNameOnRootElement(ElementDefinition elementDef, StructureDefinition profile)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(elementDef.Name));
+            Debug.Assert(elementDef.IsRootElement());
+            var location = elementDef.ToNamedNode();
+            return addIssue(
+                PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT.ToIssueComponent(
+                    $"Element {location} has an invalid non-empty sliceName '{elementDef.Name}'. Root element definitions cannot introduce slice names.",
+                    location
+                ),
+                profile.Url
+            );
+        }
+#endif
 
     }
 
