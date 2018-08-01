@@ -1,13 +1,8 @@
 ﻿#if USE_CODE_GEN
 
-/*
- * This code is based on the article by Mariano Omar Rodiguez found here: 
- * http://weblogs.asp.net/marianor/archive/2009/04/10/using-expression-trees-to-get-property-getter-and-setters.aspx
- */
-
 using System;
-using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace Hl7.Fhir.Introspection
 {
@@ -15,60 +10,71 @@ namespace Hl7.Fhir.Introspection
     {
         public static Func<T, object> GetValueGetter<T>(this PropertyInfo propertyInfo)
         {
-            if (typeof(T) != propertyInfo.DeclaringType)
-                throw new ArgumentException("Generic param T must agree with the declaring type of the property.", nameof(propertyInfo));
+            MethodInfo getMethod = propertyInfo.GetMethod;
 
-            return (Func<T, object>)buildGetter(propertyInfo, typeof(T));
+            if (getMethod == null)
+                throw new InvalidOperationException("Property has no get method.");
+
+            if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
+                throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
+
+            DynamicMethod getter = new DynamicMethod($"{propertyInfo.Name}_get", typeof(object), new Type[] { typeof(object) }, propertyInfo.DeclaringType);
+
+            ILGenerator il = getter.GetILGenerator();
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Castclass, propertyInfo.DeclaringType);
+            il.EmitCall(OpCodes.Callvirt, getMethod, null);
+
+            if (propertyInfo.PropertyType.GetTypeInfo().IsValueType)
+                il.Emit(OpCodes.Box, propertyInfo.PropertyType);
+
+            il.Emit(OpCodes.Ret);
+
+            return (Func<T, object>)getter.CreateDelegate(typeof(Func<T, object>));
         }
-
 
         public static Func<object, object> GetValueGetter(this PropertyInfo propertyInfo)
         {
-            return (Func<object, object>)buildGetter(propertyInfo, typeof(object));
-        }
-
-        private static Delegate buildGetter(PropertyInfo propertyInfo, Type instanceType)
-        {
-            var instance = Expression.Parameter(instanceType, "i");    // get(instanceType i) =>
-
-            Expression convertedInstance = instanceType == typeof(object) ?
-                    (Expression)Expression.Convert(instance, propertyInfo.DeclaringType) :    // var p = (declaringType)i
-                    (Expression)instance;
-
-            var property = Expression.Property(convertedInstance, propertyInfo);   // var q = p.<property>
-            var convertOut = Expression.TypeAs(property, typeof(object)); // var result = q as object
-
-            return Expression.Lambda(convertOut, instance).Compile();
+            return GetValueGetter<object>(propertyInfo);
         }
 
         public static Action<T, object> GetValueSetter<T>(this PropertyInfo propertyInfo)
         {
-            if (typeof(T) != propertyInfo.DeclaringType)
-                throw new ArgumentException("Generic param T must agree with the declaring type of the property.", nameof(propertyInfo));
+            MethodInfo setMethod = propertyInfo.SetMethod;
 
-            return (Action<T, object>)buildSetter(propertyInfo, typeof(T));
-        }
+            if (setMethod == null)
+                throw new InvalidOperationException("Property has no set method.");
 
-        private static Delegate buildSetter(this PropertyInfo propertyInfo, Type instanceType)
-        {
-            var instance = Expression.Parameter(instanceType, "i");    // set(object i, object a) =>
-            var argument = Expression.Parameter(typeof(object), "a");
+            if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
+                throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
 
-            Expression convertedInstance = instanceType == typeof(object) ?
-                (Expression)Expression.Convert(instance, propertyInfo.DeclaringType) :    // var p = (declaringType)i
-                (Expression)instance;
+            Type[] arguments = new Type[] { typeof(object), typeof(object) };
+            DynamicMethod setter = new DynamicMethod($"{propertyInfo.Name}_set", typeof(object), arguments, propertyInfo.DeclaringType, true);
+            ILGenerator il = setter.GetILGenerator();
 
-            var setterCall = Expression.Call(     // i.<propertyInfo> = (propertyType)a;
-                    convertedInstance,
-                    propertyInfo.SetMethod,
-                    Expression.Convert(argument, propertyInfo.PropertyType));
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Castclass, propertyInfo.DeclaringType);
+            il.Emit(OpCodes.Ldarg_1);
 
-            return Expression.Lambda(setterCall, instance, argument).Compile();
+            if (propertyInfo.PropertyType.GetTypeInfo().IsClass)
+                il.Emit(OpCodes.Castclass, propertyInfo.PropertyType);
+            else
+                il.Emit(OpCodes.Unbox_Any, propertyInfo.PropertyType);
+
+            il.EmitCall(OpCodes.Callvirt, setMethod, null);
+            il.Emit(OpCodes.Ldarg_0);
+
+            il.Emit(OpCodes.Ret);
+
+            var del = (Func<T, object, object>)setter.CreateDelegate(typeof(Func<T, object, object>));
+            Action<T, object> actionDelegate = (obj, val) => del(obj, val);
+
+            return actionDelegate;
         }
 
         public static Action<object, object> GetValueSetter(this PropertyInfo propertyInfo)
         {
-            return (Action<object, object>)buildSetter(propertyInfo, typeof(object));
+            return GetValueSetter<object>(propertyInfo);
         }
     }
 }
