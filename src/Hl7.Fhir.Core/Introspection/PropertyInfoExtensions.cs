@@ -16,53 +16,59 @@ namespace Hl7.Fhir.Introspection
         public static Func<T, object> GetValueGetter<T>(this PropertyInfo propertyInfo)
         {
             if (typeof(T) != propertyInfo.DeclaringType)
-            {
-                throw new ArgumentException();
-            }
+                throw new ArgumentException("Generic param T must agree with the declaring type of the property.", nameof(propertyInfo));
 
-            var instance = Expression.Parameter(propertyInfo.DeclaringType, "i");
-            var property = Expression.Property(instance, propertyInfo);
-            var convert = Expression.TypeAs(property, typeof(object));
-            return (Func<T, object>)Expression.Lambda(convert, instance).Compile();
+            return (Func<T, object>)buildGetter(propertyInfo, typeof(T));
         }
+
 
         public static Func<object, object> GetValueGetter(this PropertyInfo propertyInfo)
         {
-            var instance = Expression.Parameter(typeof(object), "i");
-            var convertIn = Expression.Convert(instance, propertyInfo.DeclaringType);
-            var property = Expression.Property(convertIn, propertyInfo);
-            var convertOut = Expression.TypeAs(property, typeof(object));
-
-            return (Func<object, object>)Expression.Lambda(convertOut, instance).Compile();
+            return (Func<object, object>)buildGetter(propertyInfo, typeof(object));
         }
 
+        private static Delegate buildGetter(PropertyInfo propertyInfo, Type instanceType)
+        {
+            var instance = Expression.Parameter(instanceType, "i");    // get(instanceType i) =>
+
+            Expression convertedInstance = instanceType == typeof(object) ?
+                    (Expression)Expression.Convert(instance, propertyInfo.DeclaringType) :    // var p = (declaringType)i
+                    (Expression)instance;
+
+            var property = Expression.Property(convertedInstance, propertyInfo);   // var q = p.<property>
+            var convertOut = Expression.TypeAs(property, typeof(object)); // var result = q as object
+
+            return Expression.Lambda(convertOut, instance).Compile();
+        }
 
         public static Action<T, object> GetValueSetter<T>(this PropertyInfo propertyInfo)
         {
             if (typeof(T) != propertyInfo.DeclaringType)
-            {
-                throw new ArgumentException();
-            }
+                throw new ArgumentException("Generic param T must agree with the declaring type of the property.", nameof(propertyInfo));
 
-            var instance = Expression.Parameter(propertyInfo.DeclaringType, "i");
+            return (Action<T, object>)buildSetter(propertyInfo, typeof(T));
+        }
+
+        private static Delegate buildSetter(this PropertyInfo propertyInfo, Type instanceType)
+        {
+            var instance = Expression.Parameter(instanceType, "i");    // set(object i, object a) =>
             var argument = Expression.Parameter(typeof(object), "a");
-            var setterCall = Expression.Call(
-                instance,
-                propertyInfo.SetMethod,
-                Expression.Convert(argument, propertyInfo.PropertyType));
-            return (Action<T, object>)Expression.Lambda(setterCall, instance, argument).Compile();
+
+            Expression convertedInstance = instanceType == typeof(object) ?
+                (Expression)Expression.Convert(instance, propertyInfo.DeclaringType) :    // var p = (declaringType)i
+                (Expression)instance;
+
+            var setterCall = Expression.Call(     // i.<propertyInfo> = (propertyType)a;
+                    convertedInstance,
+                    propertyInfo.SetMethod,
+                    Expression.Convert(argument, propertyInfo.PropertyType));
+
+            return Expression.Lambda(setterCall, instance, argument).Compile();
         }
 
         public static Action<object, object> GetValueSetter(this PropertyInfo propertyInfo)
         {
-            var instance = Expression.Parameter(typeof(object), "i");
-            var convertIn = Expression.Convert(instance, propertyInfo.DeclaringType);
-            var argument = Expression.Parameter(typeof(object), "a");
-            var setterCall = Expression.Call(
-                convertIn,
-                propertyInfo.SetMethod,
-                Expression.Convert(argument, propertyInfo.PropertyType));
-            return (Action<object, object>)Expression.Lambda(setterCall, instance, argument).Compile();
+            return (Action<object, object>)buildSetter(propertyInfo, typeof(object));
         }
     }
 }
