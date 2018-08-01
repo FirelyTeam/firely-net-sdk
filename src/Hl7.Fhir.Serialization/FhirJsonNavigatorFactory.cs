@@ -111,19 +111,11 @@ namespace Hl7.Fhir.Serialization
             return createTyped(root, type, rootName, provider, settings);
         }
 
-      
+
         private static ISourceNavigator createUntyped(JsonReader reader, string rootName, FhirJsonNavigatorSettings settings)
         {
-            try
-            {
-                JObject doc = null;
-                doc = SerializationUtil.JObjectFromReader(reader);
-                return createUntyped(doc, rootName, settings);
-            }
-            catch (JsonException jec)
-            {
-                throw Error.Format("Cannot parse json: " + jec.Message, jec);
-            }
+            var doc = SerializationUtil.JObjectFromReader(reader);
+            return createUntyped(doc, rootName, settings);
         }
 
         private static ISourceNavigator createUntyped(JObject root, string rootName, FhirJsonNavigatorSettings settings)

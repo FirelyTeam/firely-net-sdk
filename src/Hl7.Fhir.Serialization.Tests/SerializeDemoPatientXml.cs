@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void TestElementReordering()
         {
             var tpXml = File.ReadAllText(@"TestData\patient-out-of-order.xml");
-            var nav = getXmlNav(tpXml);
+            var nav = getXmlNav(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });  // since the order is incorrect
 
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();

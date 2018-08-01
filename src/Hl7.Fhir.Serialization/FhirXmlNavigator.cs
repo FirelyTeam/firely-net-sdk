@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
@@ -273,6 +274,10 @@ namespace Hl7.Fhir.Serialization
         {
             if (type == typeof(FhirXmlNavigator))
                 return new[] { this };
+#pragma warning disable 612, 618
+            else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)
+                return additionalTypeRules();
+#pragma warning restore 612, 618
             else if (type == typeof(SourceComments))
             {
                 return new[]
@@ -326,7 +331,8 @@ namespace Hl7.Fhir.Serialization
                         OriginalValue = _current.Value(),
                         LineNumber = lineNumber,
                         LinePosition = linePosition,
-                        SchemaLocation = getSchemaLocation()
+                        SchemaLocation = getSchemaLocation(),
+                        IsXhtml = _current.AtXhtmlDiv()
                     }
                 };
 
@@ -357,5 +363,68 @@ namespace Hl7.Fhir.Serialization
             else
                 return Enumerable.Empty<object>();
         }
+
+#pragma warning disable 612, 618
+        private IEnumerable<AdditionalStructuralRule> additionalTypeRules()
+        {
+            yield return checkRepresentation;
+            yield return checkOrder;
+
+            void checkOrder(TypedNavigator nav, IExceptionSource ies)
+            {
+                var sdSummary = ((IElementNavigator)nav).GetElementDefinitionSummary();
+                if (sdSummary == null || nav.LastOrder == null) return;
+
+                var (lastName, lastOrder) = nav.LastOrder.Value;
+
+                if (sdSummary.Order < lastOrder)
+                    ies.ExceptionHandler(nav, buildException($"Element '{nav.Name}' is not in the correct order and should come before element '{lastName}'."));
+            }
+
+            void checkRepresentation(IElementNavigator nav, IExceptionSource ies)
+            {
+                var sdSummary = nav.GetElementDefinitionSummary();
+                var serializationDetails = nav.GetXmlSerializationDetails();
+                if (sdSummary == null || serializationDetails == null) return;
+
+                var representation = sdSummary.Representation;
+                if (representation == XmlRepresentation.None) representation = XmlRepresentation.XmlElement;
+
+                switch(representation)
+                {
+                    case XmlRepresentation.XHtml when !serializationDetails.IsXhtml:
+                        ies.ExceptionHandler(nav, buildException(
+                            buildMessage(nav.Name, serializationDetails.NodeType, "should use an XHtml element.")));
+                        break;
+                    case XmlRepresentation.XmlAttr when serializationDetails.NodeType != XmlNodeType.Attribute:
+                        ies.ExceptionHandler(nav, buildException(
+                            buildMessage(nav.Name, serializationDetails.NodeType, "should be an XML attribute.")));
+                        break;
+                    case XmlRepresentation.XmlElement when serializationDetails.NodeType != XmlNodeType.Element:
+                        ies.ExceptionHandler(nav, buildException(
+                            buildMessage(nav.Name, serializationDetails.NodeType, "should be an XML element.")));
+                        break;
+                    case XmlRepresentation.XmlText when serializationDetails.NodeType != XmlNodeType.Text:
+                        ies.ExceptionHandler(nav, buildException(
+                            buildMessage(nav.Name, serializationDetails.NodeType, "should use XML node text.")));
+                        break;
+                    case XmlRepresentation.CdaText when !serializationDetails.IsCDAText:
+                        ies.ExceptionHandler(nav, buildException(
+                            buildMessage(nav.Name, serializationDetails.NodeType, "should use CDA text.")));
+                        break;
+                    case XmlRepresentation.TypeAttr when !serializationDetails.IsXsiType:
+                        ies.ExceptionHandler(nav, buildException(
+                            buildMessage(nav.Name, serializationDetails.NodeType, "should use an xsi:type attribute.")));
+                        break;
+                }
+                string buildMessage(string name, XmlNodeType actualType, string message) =>
+                    $"{actualType} '{name}' {message}";
+            }
+        }
+
+        private ExceptionNotification buildException(string message) => ExceptionNotification.Error(
+                new StructuralTypeException(message));
+#pragma warning restore 612, 618
+
     }
 }

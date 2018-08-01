@@ -8,14 +8,13 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -139,6 +138,10 @@ namespace Hl7.Fhir.Serialization
         {
             if (type == typeof(FhirJsonNavigator))
                 return new[] { this };
+#pragma warning disable 612, 618
+            else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)
+                return additionalTypeRules();
+#pragma warning restore 612, 618
             else if (type == typeof(JsonSerializationDetails))
             {
                 var (lineNumber, linePosition) = getPosition(Current.PositionNode);
@@ -150,7 +153,7 @@ namespace Hl7.Fhir.Serialization
                         OriginalValue = Current.JsonValue?.Value,
                         LineNumber = lineNumber,
                         LinePosition = linePosition,
-                        IsArrayElement = Current.IsArrayElement
+                        ArrayIndex = Current.IsArrayElement ? _nameIndex : (int?)null
                     }
                 };
             }
@@ -167,9 +170,38 @@ namespace Hl7.Fhir.Serialization
             else
                 return Enumerable.Empty<object>();
         }
+
+#pragma warning disable 612, 618
+        private IEnumerable<AdditionalStructuralRule> additionalTypeRules()
+        {
+            yield return checkArrayUse;
+
+            
+            void checkArrayUse(IElementNavigator nav, IExceptionSource ies)
+            {
+                var sdSummary = nav.GetElementDefinitionSummary();
+                var serializationDetails = nav.GetJsonSerializationDetails();
+                if (sdSummary == null || serializationDetails == null) return;
+
+                if (sdSummary.IsCollection && serializationDetails.ArrayIndex == null)
+                    ies.ExceptionHandler(nav, ExceptionNotification.Error(
+                        new StructuralTypeException($"Since element '{nav.Name}' repeats, an array must be used here.")));
+
+                if (!sdSummary.IsCollection && serializationDetails.ArrayIndex != null)
+                {
+                    // only report this once on the first of the group
+                    if (serializationDetails.ArrayIndex == 0)
+                    {
+                        ies.ExceptionHandler(nav, ExceptionNotification.Error(
+                            new StructuralTypeException($"Element '{nav.Name}' does not repeat, so an array must not be used here.")));
+                    }
+                }
+            }
+        }
+#pragma warning restore 612, 618
     }
 
-    
+
     internal static class JTokenExtensions
     {
         public static string GetResourceTypeFromObject(this JObject o)

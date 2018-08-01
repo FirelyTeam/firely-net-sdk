@@ -17,18 +17,19 @@
       <subjectType value="Patient"/>
     </Kwestionnaire>
   </contained>
-  <active value="4" />   <!-- value not parseable as a boolean (4) -->
-  <identifier value="8"> <!-- complex value with a value (5)-->
+  <identifier value="8"> <!-- complex value with a value (4)-->
     <use value="usual"/>
     <system value="urn:oid:0.1.2.3.4.5.6.7"/>
     <value value="654321"/>
   </identifier>
   <identifier>
-    <Observation>   <!-- unexpected contained resource (6) -->
+    <Observation>   <!-- unexpected contained resource (5) -->
       <status value="final"/>
-      <unknown value="huh" />  <!-- unknown element (7) -->
+      <unknown value="huh" />  <!-- unknown element (6) -->
     </Observation>
   </identifier>
+  <active value="4" />
+  <!-- value not parseable as a boolean (7) -->
   <inactive value ="true"/>   <!-- unknown element (8) -->
   <deceasedCode value="false" />  <!-- choice with illegal type (9) -->
   <contact>

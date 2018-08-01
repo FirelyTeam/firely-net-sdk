@@ -30,43 +30,18 @@ namespace Hl7.Fhir.Utility
         public static bool ProbeIsJson(string data) => data.TrimStart().StartsWith("{");
 
 
-        private static XDocument XDocumentFromReaderInternal(XmlReader reader)
+        private static XDocument XDocumentFromReaderInternal(XmlReader reader, bool ignoreComments = false)
         {
-            XDocument doc;
-
             try
             {
-                doc = XDocument.Load(reader, LoadOptions.SetLineInfo);
+                return XDocument.Load(SerializationUtil.WrapXmlReader(reader, ignoreComments: false),
+                            LoadOptions.SetLineInfo);
             }
             catch (XmlException xec)
             {
-                throw new FormatException($"Cannot parse xml: {xec.Message}", xec);
+                throw Error.Format("Invalid Xml encountered. Details: " + xec.Message, xec);
             }
-
-            return doc;
         }
-
-        public static JObject JObjectFromReaderInternal(JsonReader reader)
-        {
-            JObject doc;
-
-            try
-            {
-                doc = JObject.Load(reader,
-                    new JsonLoadSettings
-                    {
-                        CommentHandling = CommentHandling.Ignore,
-                        LineInfoHandling = LineInfoHandling.Load
-                    });
-            }
-            catch (JsonReaderException jre)
-            {
-                throw new FormatException($"Cannot parse json: {jre.Message}", jre);
-            }
-
-            return doc;
-        }
-
 
         public static XDocument XDocumentFromReader(XmlReader reader, bool ignoreComments = true)
             => XDocumentFromReaderInternal(WrapXmlReader(reader, ignoreComments));
@@ -77,7 +52,19 @@ namespace Hl7.Fhir.Utility
             reader.DateParseHandling = DateParseHandling.None;
             reader.FloatParseHandling = FloatParseHandling.Decimal;
 
-            return JObjectFromReaderInternal(reader);
+            try
+            {
+                return JObject.Load(reader,
+                    new JsonLoadSettings
+                    {
+                        CommentHandling = CommentHandling.Ignore,
+                        LineInfoHandling = LineInfoHandling.Load
+                    });
+            }
+            catch (JsonReaderException jre)
+            {
+                throw new FormatException($"Invalid Json encountered. Details: " + jre.Message, jre);
+            }
         }
 
 

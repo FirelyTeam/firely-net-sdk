@@ -19,7 +19,12 @@ namespace Hl7.Fhir.Serialization
         public XNamespace Namespace;
 
         public bool IsNamespaceDeclaration;
+        public bool IsXhtml;
+
         public string SchemaLocation;
+
+        public bool IsCDAText;
+        public bool IsXsiType;
 
         /// <summary>
         /// All child XText nodes

@@ -26,5 +26,4 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public string[] DocumentEndComments;
     }
-
 }

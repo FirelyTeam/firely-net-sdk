@@ -18,7 +18,8 @@ namespace Hl7.Fhir.Serialization
 
         public object OriginalValue;
 
-        public bool IsArrayElement;
+        public int? ArrayIndex;
+
         public int LineNumber { get; internal set; }
         public int LinePosition { get; internal set; }
 

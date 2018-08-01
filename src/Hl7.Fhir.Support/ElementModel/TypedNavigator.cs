@@ -6,7 +6,6 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support.Model;
@@ -71,7 +70,8 @@ namespace Hl7.Fhir.ElementModel
                 _parentPath = this._parentPath,
                 _nameIndex = this._nameIndex,
                 ExceptionHandler = this.ExceptionHandler,
-                Provider = this.Provider
+                Provider = this.Provider,
+                LastOrder = this.LastOrder
             };
         }
 
@@ -99,6 +99,8 @@ namespace Hl7.Fhir.ElementModel
         public string Name => _current.Name;
 
         public string Type => _current.InstanceType;
+
+        public (string name,int order)? LastOrder { get; private set; }
 
         public object Value
         {
@@ -141,7 +143,7 @@ namespace Hl7.Fhir.ElementModel
             if (info.IsResource)
             {
                 instanceType = current.GetResourceType();
-                if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually seem to contain one", current);
+                if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually contain one", current);
             }
             else if (!info.IsResource && current.GetResourceType() != null)
             {
@@ -253,10 +255,13 @@ namespace Hl7.Fhir.ElementModel
 
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
+            LastOrder = null;
             _parentPath = Location;
             _nameIndex = 0;
             _current = match;
             _definition = firstChildDef;
+
+            runAdditionalRules();
 
             return true;
         }
@@ -292,6 +297,7 @@ namespace Hl7.Fhir.ElementModel
             // store the current name before proceeding to detect repeating
             // element names and count them
             var currentName = Name;
+            if (_current.IsTracking) LastOrder = (Name, _current.SerializationInfo.Order);
 
             _current = match;
 
@@ -300,7 +306,23 @@ namespace Hl7.Fhir.ElementModel
             else
                 _nameIndex = 0;
 
+            runAdditionalRules();
+
             return true;
+        }
+
+        private void runAdditionalRules()
+        {            
+            if(Type == "xhtml")
+
+
+#pragma warning disable 612,618
+            var additionalRules = _current.Node.Annotations(typeof(AdditionalStructuralRule));
+
+            foreach (var rule in additionalRules.Cast<AdditionalStructuralRule>())
+                rule(this, this);
+
+#pragma warning restore 612,618
         }
 
         public string Location
@@ -331,4 +353,8 @@ namespace Hl7.Fhir.ElementModel
                 return _current.Node.Annotations(type);
         }
     }
+
+    [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
+    public delegate void AdditionalStructuralRule(TypedNavigator node, IExceptionSource ies);
+    
 }

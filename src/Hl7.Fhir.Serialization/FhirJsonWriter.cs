@@ -176,7 +176,8 @@ namespace Hl7.Fhir.Serialization
                 // about arrays in the serialization deails. Failing that, assume the default:
                 // for unknown properties is to use an array - safest bet.
                 var generalJsonDetails = members[0].GetJsonSerializationDetails();
-                var needsArray = generalInfo?.IsCollection ?? generalJsonDetails?.IsArrayElement ?? true;
+                var hasIndex = generalJsonDetails?.ArrayIndex != null;
+                var needsArray = generalInfo?.IsCollection ?? (hasIndex ? true : (bool?)null) ?? true;
 
                 var children = members.Select(m => buildNode(m))
                             .Where(c => !(c.first == null && c.second == null)).ToList();

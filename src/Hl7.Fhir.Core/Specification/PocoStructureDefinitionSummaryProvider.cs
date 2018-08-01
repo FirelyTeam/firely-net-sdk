@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification
         public bool IsResource => _classMapping.IsResource;
 
         public IEnumerable<IElementDefinitionSummary> GetElements() =>
-            _classMapping.PropertyMappings.Select(pm =>
+            _classMapping.PropertyMappings.Where(pm => !pm.RepresentsValueElement).Select(pm =>
             (IElementDefinitionSummary)new PocoElementSerializationInfo(pm));
     }
 

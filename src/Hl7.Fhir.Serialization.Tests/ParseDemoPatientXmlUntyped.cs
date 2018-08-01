@@ -191,7 +191,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(2, cd.CommentsBefore.Length);
                 Assert.AreEqual(" next line intentionally left empty ", cd.CommentsBefore.First());
                 Assert.AreEqual(" Div is really special, since the value includes the node itself ", cd.CommentsBefore.Last());
-
             }
         }
 

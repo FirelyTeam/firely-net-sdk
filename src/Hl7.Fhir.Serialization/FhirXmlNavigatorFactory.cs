@@ -133,18 +133,8 @@ namespace Hl7.Fhir.Serialization
 
         private static ISourceNavigator createUntyped(XmlReader reader, FhirXmlNavigatorSettings settings)
         {
-            XDocument doc = null;
-
-            try
-            {
-                doc = XDocument.Load(SerializationUtil.WrapXmlReader(reader, ignoreComments: false),
-                    LoadOptions.SetLineInfo);
-                return createUntyped(doc.Root, settings);
-            }
-            catch (XmlException xec)
-            {
-                throw Error.Format("Cannot parse xml: " + xec.Message, xec);
-            }
+            var doc = SerializationUtil.XDocumentFromReader(reader, ignoreComments: false);
+            return createUntyped(doc.Root, settings);
         }
 
         private static ISourceNavigator createUntyped(XElement element, FhirXmlNavigatorSettings settings) => new FhirXmlNavigator(element, settings);

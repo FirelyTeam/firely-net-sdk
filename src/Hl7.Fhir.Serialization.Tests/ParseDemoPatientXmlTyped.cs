@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
             var navXml = getXmlNav(tpXml);
-            var navJson =  FhirJsonNavigator.ForResource(tpJson, new PocoStructureDefinitionSummaryProvider());
+            var navJson = FhirJsonNavigator.ForResource(tpJson, new PocoStructureDefinitionSummaryProvider());
 
             var compare = navXml.IsEqualTo(navJson);
 
@@ -123,9 +123,39 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
             var patient = getXmlNav(tpXml);
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(10, result.Count);  
+            Assert.AreEqual(10, result.Count);
         }
 
+        [TestMethod]
+        public void CatchesAttributeElementMismatch()
+        {
+            // First, use a simple value where a complex type was expected
+            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><contact gender='male' /></Patient>");
+            var errors = nav.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("should be an XML element."));
 
+            // Use xhtml when required
+            nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><text><status value= 'generated' />" +
+                "<div>hi!</div></text></Patient>");
+            errors = nav.VisitAndCatch();
+            Assert.IsTrue(errors.First().Message.Contains("should use an XHtml element."));
+            Assert.AreEqual(2, errors.Count);
+
+            // Use an element where an attribute was expected
+            nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'>" +
+                "<extension>" +
+                "<url value='http://example.org/fhir/StructureDefinition/recordStatus' />" +
+                "<valueCode value='archived' /></extension></Patient>");
+            errors = nav.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("should be an XML attribute."));
+        }
+
+        [TestMethod]
+        public void CatchesElementOutOfOrder()
+        {
+            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><gender value='male'/><active value='true' /></Patient>");
+            var errors = nav.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("not in the correct order"));
+        }
     }
 }
