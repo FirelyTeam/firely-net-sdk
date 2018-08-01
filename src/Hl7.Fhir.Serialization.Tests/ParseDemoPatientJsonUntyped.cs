@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.FhirPath;
+using Newtonsoft.Json;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -266,6 +267,20 @@ namespace Hl7.Fhir.Serialization.Tests
 
             nav = FhirJsonNavigator.Untyped("{ 'a': [null], '_a': [null] }", "test");
             Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
+        }
+
+        [TestMethod]
+        public void PreservesParsingExceptionDetails()
+        {
+            try
+            {
+                var nav = FhirJsonNavigator.Untyped("<bla", "test");
+                Assert.Fail();
+            }
+            catch(FormatException fe)
+            {
+                Assert.IsInstanceOfType(fe.InnerException, typeof(JsonException));
+            }                        
         }
     }
 }

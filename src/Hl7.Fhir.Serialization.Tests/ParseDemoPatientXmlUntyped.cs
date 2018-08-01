@@ -247,5 +247,19 @@ namespace Hl7.Fhir.Serialization.Tests
             result = patient.VisitAndCatch();
             Assert.AreEqual(0, result.Count);
         }
+
+        [TestMethod]
+        public void PreservesParsingExceptionDetails()
+        {
+            try
+            {
+                var nav = FhirXmlNavigator.Untyped("{");
+                Assert.Fail();
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsInstanceOfType(fe.InnerException, typeof(XmlException));
+            }
+        }
     }
 }

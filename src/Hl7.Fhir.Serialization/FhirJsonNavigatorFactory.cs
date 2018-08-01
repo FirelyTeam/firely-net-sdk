@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (JsonException jec)
             {
-                throw Error.Format("Cannot parse json: " + jec.Message);
+                throw Error.Format("Cannot parse json: " + jec.Message, jec);
             }
         }
 

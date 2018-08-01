@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (XmlException xec)
             {
-                throw Error.Format("Cannot parse xml: " + xec.Message);
+                throw Error.Format("Cannot parse xml: " + xec.Message, xec);
             }
         }
 
