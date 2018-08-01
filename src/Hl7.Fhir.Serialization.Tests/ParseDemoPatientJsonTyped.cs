@@ -90,5 +90,37 @@ namespace Hl7.Fhir.Serialization.Tests
 
             JsonAssert.AreSame(tp, json);
         }
+
+        [TestMethod]
+        public void CatchesComplexPrimitiveMismatch()
+        {
+            // First, use a simple value where a complex type was expected
+            var tp = "{ 'resourceType' : 'Patient', 'maritalStatus' : 'UNK' }";
+            var navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            var errors = navJson.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
+
+            // then, use a simple value where an array (of a complex type) was expected
+            tp = "{ 'resourceType' : 'Patient', 'name' : 'Ewout' }";
+            navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            errors = navJson.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
+        }
+
+        [TestMethod]
+        public void CatchesSingleValueForArray()
+        {
+            // Use a single element where an array was expected
+            var tp = "{ 'resourceType' : 'Patient', 'identifier' :  { 'value': 'AB60001' }}";
+            var navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            var errors = navJson.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
+
+            // Use an array where a single value was expected
+            tp = "{ 'resourceType' : 'Patient', 'active' : [true,false] }";
+            navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            errors = navJson.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
+        }
     }
 }

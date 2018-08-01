@@ -26,13 +26,13 @@ namespace Hl7.Fhir.ElementModel
 
     public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
-        public TypedNavigator(ISourceNavigator element, string type, IStructureDefinitionSummaryProvider provider)
+        public TypedNavigator(ISourceNavigator element, string rootType, IStructureDefinitionSummaryProvider provider)
         {
-            if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (rootType == null) throw Error.ArgumentNull(nameof(rootType));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (element == null) throw Error.ArgumentNull(nameof(element));
 
-            var elementType = provider.Provide(type);
+            var elementType = provider.Provide(rootType);
 
             _current = NavigatorPosition.ForRoot(element, elementType, element.Name);
             _definition = _current.IsTracking ?

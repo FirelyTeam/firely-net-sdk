@@ -83,5 +83,17 @@ namespace Hl7.Fhir.ElementModel
         public static bool InPipeline<T>(this IElementNavigator navigator) =>
             navigator.InPipeline(navigator.GetType());
 
+        public static List<ExceptionNotification> VisitAndCatch(this IElementNavigator nav)
+        {
+            var errors = new List<ExceptionNotification>();
+
+            using (nav.Catch((o, arg) => errors.Add(arg)))
+            {
+                nav.Visit(n => { var dummy = n.Value; });
+            }
+
+            return errors;
+        }
+
     }
 }

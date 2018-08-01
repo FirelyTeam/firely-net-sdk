@@ -77,5 +77,27 @@ namespace Hl7.Fhir.ElementModel
 
         public static IEnumerable<object> Annotations(this ISourceNavigator nav, Type type) =>
             nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
+
+        public static bool InPipeline(this ISourceNavigator navigator, Type componentType) =>
+                    navigator is IAnnotated ia ? ia.Annotation(componentType) != null : false;
+
+        public static bool InPipeline<T>(this ISourceNavigator navigator) =>
+                    navigator.InPipeline(navigator.GetType());
+
+        public static ElementDefinitionSummary GetElementDefinitionSummary(this ISourceNavigator navigator) =>
+                navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
+
+        public static List<ExceptionNotification> VisitAndCatch(this ISourceNavigator nav)
+        {
+            var errors = new List<ExceptionNotification>();
+
+            using (nav.Catch((o, arg) => errors.Add(arg)))
+            {
+                nav.Visit(n => { var dummy = n.Text; });
+            }
+
+            return errors;
+        }
+
     }
 }

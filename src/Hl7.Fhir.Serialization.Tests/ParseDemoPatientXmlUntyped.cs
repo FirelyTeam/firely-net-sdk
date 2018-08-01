@@ -233,18 +233,18 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNavU(tpXml);
-            var result = ParseDemoPatient.VisitAndCatch(patient);
+            var result = patient.VisitAndCatch();
             var originalCount = result.Count;
             Assert.AreEqual(11,result.Count);
             Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
 
             patient = getXmlNavU(tpXml, new FhirXmlNavigatorSettings() { DisallowSchemaLocation = true });
-            result = ParseDemoPatient.VisitAndCatch(patient);
+            result = patient.VisitAndCatch();
             Assert.IsTrue(result.Count == originalCount+1);    // one extra error about schemaLocation being present
             Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
 
             patient = getXmlNavU(tpXml, new FhirXmlNavigatorSettings() { PermissiveParsing = true });
-            result = ParseDemoPatient.VisitAndCatch(patient);
+            result = patient.VisitAndCatch();
             Assert.AreEqual(0, result.Count);
         }
     }

@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
             var patient = getXmlNav(tpXml);
-            var result = ParseDemoPatient.VisitAndCatch(patient);
+            var result = patient.VisitAndCatch();
             Assert.AreEqual(12, result.Count);  // 11 syntax errors + 1 error reporting the root type is unknown
         }
 
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
             var patient = getXmlNav(tpXml);
-            var result = ParseDemoPatient.VisitAndCatch(patient);
+            var result = patient.VisitAndCatch();
             Assert.AreEqual(10, result.Count);  
         }
 

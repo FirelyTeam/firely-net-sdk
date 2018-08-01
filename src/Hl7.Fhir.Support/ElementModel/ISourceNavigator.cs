@@ -96,16 +96,5 @@ namespace Hl7.Fhir.ElementModel
     }
 
 
-    public static class ISourceNavigatorExtensions
-    {
-        public static bool InPipeline(this ISourceNavigator navigator, Type componentType) =>
-                    navigator is IAnnotated ia ? ia.Annotation(componentType) != null : false;
 
-        public static bool InPipeline<T>(this ISourceNavigator navigator) =>
-                    navigator.InPipeline(navigator.GetType());
-
-        public static ElementDefinitionSummary GetElementDefinitionSummary(this ISourceNavigator navigator) =>
-                navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
-
-    }
 }
