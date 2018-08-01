@@ -1,22 +1,21 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.Diagnostics;
-using System.IO;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using ssac = System.Security.AccessControl;
-using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -81,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
             File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
         }
 
-        private string prepareExampleDirectory(out int numFiles)
+        private (string path, int numFiles) prepareExampleDirectory()
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             var zip = new ZipCacher(zipFile);
@@ -103,18 +102,19 @@ namespace Hl7.Fhir.Specification.Tests
             copy(@"TestData", "TestPatient.json", subPath);
 
             // If you add or remove files, please correct the numFiles here below
-            numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
+            var numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
 
-            return testPath;
+            return (testPath, numFiles);
         }
 
 
         private string _testPath;
+        private int _numFiles;
 
         [TestInitialize]
         public void SetupExampleDir()
         {
-            _testPath = prepareExampleDirectory(out int numFiles);
+            (_testPath, _numFiles) = prepareExampleDirectory();
         }
 
         [TestMethod]
@@ -168,16 +168,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(names.Contains("TestPatient.xml"));
             Assert.IsTrue(names.Contains("nonfhir.xml"));
             Assert.IsTrue(names.Contains("invalid.xml"));
-            Assert.AreEqual(0, fa.Errors.Length);
+            //[WMR 20171020] TODO: Use ArtifactSummary.Error
+            //Assert.AreEqual(0, fa.Errors.Length);
 
             // Call a method on the IConformanceSource interface to trigger prepareResources
             var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-discoveryDateTime");
             Assert.IsNotNull(sd);
 
-            Assert.AreEqual(1, fa.Errors.Length);
-            var error = fa.Errors[0];
-            Debug.Print($"{error.FileName} : {error.Error.Message}");
-            Assert.AreEqual("invalid.xml", Path.GetFileName(error.FileName));
+            var errors = fa.ListSummaryErrors().ToList();
+            Assert.AreEqual(1, errors.Count);
+            var error = errors[0];
+            Debug.Print($"Error in file '{error.Origin}': {error.Error.Message}");
+            Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));
         }
 
         [TestMethod]
@@ -191,8 +193,9 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ReadsSubdirectories()
         {
-            var testPath = prepareExampleDirectory(out int numFiles);
-            var fa = new DirectorySource(testPath, includeSubdirectories: true);
+            // var (testPath, numFiles) = prepareExampleDirectory();
+            var (testPath, numFiles) = (_testPath, _numFiles);
+            var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
@@ -271,7 +274,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void TestAccessPermissions()
         {
-            var testPath = prepareExampleDirectory(out int numFiles);
+            // var (testPath, numFiles) = prepareExampleDirectory();
+            var (testPath, numFiles) = (_testPath, _numFiles);
 
             // Additional temporary folder without read permissions
             var subPath2 = Path.Combine(testPath, "sub2");
@@ -336,7 +340,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         // Note: we still have write permissions...
 
-                        var dirSource = new DirectorySource(testPath, includeSubdirectories: true);
+                        var dirSource = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
 
                         // [WMR 20170823] Test ListArtifactNames => prepareFiles()
                         var names = dirSource.ListArtifactNames();

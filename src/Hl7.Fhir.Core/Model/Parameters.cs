@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
 
 
         /// <summary>
-        /// Add a parameter with a given nanme and tuple value.
+        /// Add a parameter with a given name and tuple value.
         /// </summary>
         /// <param name="name">The name of the parameter</param>
         /// <param name="tuples">The value of the parameter as a list of tuples of (name,FHIR datatype or Resource)</param>

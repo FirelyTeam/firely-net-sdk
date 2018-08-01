@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -858,7 +858,9 @@ namespace Hl7.Fhir.Rest
             //        I would imagine that a null parameters object is different to an empty one?
             // EK: What else could we do?  POST an empty body?  We cannot use GET unless the caller indicates this is an
             // idempotent call....
-            if (parameters == null) parameters = new Parameters();
+            // MV: (related to issue #419): we only provide an empty parameter when we are not performing a GET operation. In r4 it will be allowed 
+            //     to provide an empty body in POST operations. In that case the line of code can be deleted.
+            if (parameters == null && !useGet) parameters = new Parameters();
 
             Bundle tx;
 

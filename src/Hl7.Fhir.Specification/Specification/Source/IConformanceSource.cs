@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -7,21 +7,20 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
 {
-
+    /// <summary>Interface for browsing and resolving FHIR conformance resources.</summary>
     public interface IConformanceSource : IResourceResolver
     {
-        /// <summary>
-        /// List all resource uris for the resources managed by the source, optionally filtered by type.
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
+        // [WMR 20171204] We could convert the following members to extension methods (ConformanceSourceExtensions)
+        // Breaking change, but decreases interface implementer burden
+
+        /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type.</summary>
+        /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
 
         /// <summary>

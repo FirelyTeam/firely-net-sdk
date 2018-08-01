@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -10,6 +10,7 @@ using System;
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using Hl7.Fhir.Utility;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -25,6 +26,7 @@ namespace Hl7.Fhir.Specification.Source
     }
 
     /// <summary>Reads and caches FHIR artifacts (Profiles, ValueSets, ...) from an internal <see cref="IResourceResolver"/> instance.</summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class CachedResolver : IResourceResolver
     {
         /// <summary>Default expiration time for cached entries.</summary>
@@ -38,7 +40,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="cacheDuration">Default expiration time of a cache entry, in seconds.</param>
         public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION)
         {
-            Source = source;
+            Source = source ?? throw Error.ArgumentNull(nameof(source));
             CacheDuration = cacheDuration;
 
             _resourcesByUri = new Cache<Resource>(id => InternalResolveByUri(id), CacheDuration);
@@ -164,6 +166,13 @@ namespace Hl7.Fhir.Specification.Source
             OnLoad(url, resource);
             return resource;
         }
+
+        // Allow derived classes to override
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        internal protected virtual string DebuggerDisplay
+            => $"{GetType().Name} for {Source.DebuggerDisplayString()}";
+
 
         private class Cache<T>
         {

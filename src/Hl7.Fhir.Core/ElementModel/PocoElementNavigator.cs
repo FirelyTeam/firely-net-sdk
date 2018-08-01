@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -10,9 +10,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
-using System.Collections;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -20,7 +18,7 @@ namespace Hl7.Fhir.ElementModel
     {
         private Base _parent;
 
-        private int _arrayIndex; // this is only for the ShortPath implementation eg Patient.Name[1].Family (its the 1 here)
+        private int? _arrayIndex; // this is only for the ShortPath implementation eg Patient.Name[1].Family (its the 1 here)
         private int _index;
         private IList<ElementValue> _children;
 
@@ -30,7 +28,7 @@ namespace Hl7.Fhir.ElementModel
             // The root is the special case, we start with a "collection" of children where the parent is the only element
             _parent = null;
             _index = 0;
-            _arrayIndex = -1;
+            _arrayIndex = null;
             _children = new List<ElementValue>() { new ElementValue(parent.TypeName, false, parent) };
         }
 
@@ -62,7 +60,7 @@ namespace Hl7.Fhir.ElementModel
 
             // Reset everything, next() will initialize the values for the first "child"
             _index = -1;
-            _arrayIndex = -1;
+            _arrayIndex = null;
 
             return true;
         }
@@ -76,17 +74,22 @@ namespace Hl7.Fhir.ElementModel
 
             while (scan + 1 < _children.Count)
             {
+                var oldElementName = scan >= 0 ? _children[scan].ElementName : null;
+
                 scan += 1;
                 var scanProp = _children[scan];
+
+                if (oldElementName != scanProp.ElementName)
+                    _arrayIndex = null;
 
                 if (name == null || scanProp.ElementName == name)
                 {
                     _index = scan;
 
                     if (!scanProp.IsCollectionMember)
-                        _arrayIndex = -1;
+                        _arrayIndex = null;
                     else
-                        _arrayIndex += 1;
+                        _arrayIndex = _arrayIndex == null ? 0 : _arrayIndex + 1;
 
                     return true;
                 }
@@ -101,7 +104,7 @@ namespace Hl7.Fhir.ElementModel
 
         public bool AtCollection => Current.IsCollectionMember;
 
-        public int ArrayIndex => AtCollection ? _arrayIndex : 0;
+        public int ArrayIndex => AtCollection ? _arrayIndex.Value : 0;
 
         /// <summary>
         /// This is only needed for search data extraction (and debugging)

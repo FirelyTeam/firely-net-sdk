@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -109,6 +109,7 @@ namespace Hl7.Fhir.Validation
         public List<ScopedNavigator> UnmatchedInstanceElements;
     }
 
+    [System.Diagnostics.DebuggerDisplay(@"\{{Definition.DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     internal class Match
     {
         public ElementDefinitionNavigator Definition;

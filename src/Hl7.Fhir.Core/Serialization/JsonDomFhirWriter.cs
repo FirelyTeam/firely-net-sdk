@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -88,8 +88,10 @@ namespace Hl7.Fhir.Serialization
 
                 _current = parent;
             }
-            else if(_current == _createdRootObject)
+            else if (_current == _createdRootObject)
+            {
                 _root.WriteTo(jw);
+            }
         }
 
         public void WriteStartComplexContent()

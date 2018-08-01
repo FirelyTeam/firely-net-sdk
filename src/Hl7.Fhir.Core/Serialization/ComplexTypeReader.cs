@@ -1,11 +1,12 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
@@ -77,6 +78,12 @@ namespace Hl7.Fhir.Serialization
 
             foreach (var memberData in members)
             {
+                if (Settings.CustomDeserializer != null && memberData.Item2 is IElementNavigator nav)
+                {
+                    var done = Settings.CustomDeserializer.OnBeforeDeserializeProperty(memberData.Item1, existing, nav);
+                    if (done) continue;
+                }
+
                 //hasMember = true;
                 var memberName = memberData.Item1;  // tuple: first is name of member
              
