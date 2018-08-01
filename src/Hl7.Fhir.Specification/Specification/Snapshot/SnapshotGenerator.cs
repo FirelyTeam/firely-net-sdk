@@ -1611,8 +1611,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             var typeProfile = typeRef.Profile;
 
             // [WMR 20161004] Remove configuration setting; always merge type profiles
-            if (!string.IsNullOrEmpty(typeProfile) && !typeRef.IsReference()) // && _settings.MergeTypeProfiles
-            {
+            // [WMR 20180723] Also expand custom profile on Reference
+            if (!string.IsNullOrEmpty(typeProfile)) // && !typeRef.IsReference()) // && _settings.MergeTypeProfiles
+                {
                 // Try to resolve the custom element type profile reference
                 baseStructure = _resolver.FindStructureDefinition(typeProfile);
                 isValidProfile = ensureSnapshot

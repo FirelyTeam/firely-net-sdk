@@ -72,7 +72,8 @@ namespace Hl7.Fhir.Rest
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+
+            var request = interaction.ToHttpRequest(BaseUrl, this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
 #if DOTNETFW
             request.Timeout = Timeout;

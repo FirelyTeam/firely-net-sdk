@@ -31,9 +31,9 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         // public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
-        //public static Uri testEndpoint = new Uri("http://vonk.fire.ly");
+        public static Uri testEndpoint = new Uri("http://vonk.fire.ly");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
-        public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
+        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
 
@@ -79,7 +79,6 @@ namespace Hl7.Fhir.Tests.Rest
 
             var entry = client.CapabilityStatement();
 
-            Assert.IsNotNull(entry.Text);
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
