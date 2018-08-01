@@ -249,6 +249,20 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void CatchesEmptyContainedResources()
+        {
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><contained><OperationOutcome /></contained></Patient>";
+            var pat = getXmlNavU(xml);
+            var errors = pat.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("must have child elements"));
+
+            xml = "<Patient xmlns='http://hl7.org/fhir'><contained /></Patient>";
+            pat = getXmlNavU(xml);
+            errors = pat.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("must have child elements"));
+        }
+
+        [TestMethod]
         public void PreservesParsingExceptionDetails()
         {
             try
