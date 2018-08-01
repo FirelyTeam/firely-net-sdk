@@ -833,6 +833,36 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(nrOfParrallelTasks, successes);
         }
 
+        /// <summary>
+        /// This test proves issue https://github.com/ewoutkramer/fhir-net-api/issues/617
+        /// </summary>
+        [Fact]
+        public void ValidateConditionalResourceInBundle()
+        {
+            TransactionBuilder tb = new TransactionBuilder("http://example.fhir.org");
+
+            var obs = new Observation()
+            {
+                Status = Observation.ObservationStatus.Preliminary,
+                Code = new CodeableConcept("system", "P"),
+                Subject = new ResourceReference("Patient?identifier=system|12345")
+            };
+
+            var patient = new Patient();
+            patient.Identifier.Add(new Identifier("system", "12345"));
+
+            tb.Create(patient);
+            tb.Create(obs);
+            var bundle = tb.ToBundle();
+            // fill in the FullUrl to make the DSTU2 validation happy
+            bundle.Entry[0].FullUrl = "http://example.fhir.org/Observation";
+            bundle.Entry[1].FullUrl = "http://example.fhir.org/Patient";
+
+            var result = _validator.Validate(bundle);
+
+            Assert.True(result.Success);
+        }
+
         // Verify aggregated element constraints
         static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
