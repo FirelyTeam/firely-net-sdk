@@ -859,7 +859,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var obs = new Observation()
             {
-                Status = Observation.ObservationStatus.Preliminary,
+                Status = ObservationStatus.Preliminary,
                 Code = new CodeableConcept("system", "P"),
                 Subject = new ResourceReference("Patient?identifier=system|12345")
             };
