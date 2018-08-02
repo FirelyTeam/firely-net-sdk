@@ -33,13 +33,13 @@ namespace Hl7.Fhir.Specification.Source
     /// </remarks>
     public static class ArtifactSummaryProperties
     {
-        public const string OriginKey = "Origin";
-        public const string FileSizeKey = "Size";
-        public const string LastModifiedKey = "LastModified";
-        public const string SerializationFormatKey = "Format";
-        public const string PositionKey = "Position";
-        public const string TypeNameKey = "TypeName";
-        public const string ResourceUriKey = "Uri";
+        public static readonly string OriginKey = "Origin";
+        public static readonly string FileSizeKey = "Size";
+        public static readonly string LastModifiedKey = "LastModified";
+        public static readonly string SerializationFormatKey = "Format";
+        public static readonly string PositionKey = "Position";
+        public static readonly string TypeNameKey = "TypeName";
+        public static readonly string ResourceUriKey = "Uri";
 
         /// <summary>Try to retrieve the property value for the specified key.</summary>
         /// <param name="properties">An artifact summary property bag.</param>
@@ -233,6 +233,8 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string FmmExtensionUrl = @"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm";
         public static readonly string MaturityLevelKey = "StructureDefinition.maturityLevel";
 
+        public static readonly string RootDefinitionKey = "StructureDefinition.rootDefinition";
+
         /// <summary>Determines if the specified instance represents summary information about a <see cref="StructureDefinition"/> resource.</summary>
         public static bool IsStructureDefinitionSummary(this IArtifactSummaryPropertyBag properties)
             => properties.GetTypeName() == StructureDefinitionTypeName;
@@ -255,6 +257,21 @@ namespace Hl7.Fhir.Specification.Source
                     nav.HarvestValue(properties, ConstrainedTypeKey, "constrainedType");
                     nav.HarvestValue(properties, ContextTypeKey, "contextType");
                     nav.HarvestValue(properties, BaseKey, "base");
+
+                    // [WMR 20180725] Also harvest definition property from (first) root element in snapshot/differential
+                    // HL7 FHIR website displays this text as introduction on top of each resource/datatype page
+                    if ((nav.Find("snapshot") || nav.Find("differential")))
+                    {
+                        if (nav.MoveToFirstChild("element") && Navigation.ElementDefinitionNavigator.IsRootPath(nav.Name))
+                        {
+                            var childNav = nav.Clone();
+                            if (childNav.MoveToFirstChild())
+                            {
+                                childNav.HarvestValue(properties, RootDefinitionKey, "definition");
+                            }
+                        }
+                    }
+
                 }
                 return true;
             }
@@ -302,6 +319,14 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         public static string GetStructureDefinitionMaturityLevel(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(MaturityLevelKey);
+        /// <summary>Get the value of the root element definition from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>
+        /// Returns the definition text of the root element.
+        /// Only applies to summaries of <see cref="StructureDefinition"/> resources.
+        /// </remarks>
+        public static string GetStructureDefinitionRootDefinition(this IArtifactSummaryPropertyBag properties)
+           => properties.GetValueOrDefault<string>(RootDefinitionKey);
+
     }
 
     /// <summary>For harvesting specific summary information from a <see cref="ValueSet"/> resource.</summary>

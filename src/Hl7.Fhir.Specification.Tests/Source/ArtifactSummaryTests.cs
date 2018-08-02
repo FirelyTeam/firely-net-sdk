@@ -121,6 +121,11 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.GetStructureDefinitionKind());
                 // If this is a constraining StructDef, then Base should also be specified
                 Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
+
+                // [WMR 20180725] Also harvest root element definition text
+                // [WMR 20180801] Disabled; included version of profiles-types.json does NOT contain definitions...
+                // var rootDefinition = summary.GetStructureDefinitionRootDefinition();
+                // Assert.IsNotNull(rootDefinition);
             }
         }
 
@@ -166,6 +171,10 @@ namespace Hl7.Fhir.Specification.Tests
 
                     // [WMR 20171218] Maturity Level extension
                     Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
+
+                    // [WMR 20180725] Also harvest root element definition text
+                    var rootDefinition = summary.GetStructureDefinitionRootDefinition();
+                    Assert.IsNotNull(rootDefinition);
                 }
 
             }
