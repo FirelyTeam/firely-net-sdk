@@ -65,9 +65,7 @@ namespace Hl7.Fhir.Introspection
                 result.SerializationHint = elementAttr.XmlSerialization;
                 result.Order = elementAttr.Order;
             }
-
-            
-
+          
             result.IsCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
 
             // Get to the actual (native) type representing this element

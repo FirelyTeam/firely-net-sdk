@@ -125,7 +125,8 @@ namespace Hl7.Fhir.Specification
 
         public bool InSummary => _pm.InSummary;
 
-        public XmlRepresentation Representation => _pm.SerializationHint;
+        public XmlRepresentation Representation => _pm.SerializationHint != XmlRepresentation.None ?
+            _pm.SerializationHint : XmlRepresentation.XmlElement;
 
         public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
 

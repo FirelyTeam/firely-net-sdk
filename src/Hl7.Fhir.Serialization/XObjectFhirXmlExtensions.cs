@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal static class XObjectParseExtensions
+    internal static class XObjectFhirXmlExtensions
     {         
         public static bool IsResourceName(this XName elementName) =>
             Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;

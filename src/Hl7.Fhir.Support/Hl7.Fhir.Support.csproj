@@ -18,23 +18,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ElementModel\ElementNavigatorExtensions - with INavigator.cs" />
-    <Compile Remove="ElementModel\PathNavigator.cs" />
-    <Compile Remove="Serialization\IModelMetadataProvider.cs" />
-    <Compile Remove="Serialization\INavigatingParser.cs" />
-    <Compile Remove="Serialization\JsonDomFhirNavigator.cs" />
-    <Compile Remove="Serialization\JsonDomFhirNavigatorFactory.cs" />
-    <Compile Remove="Serialization\JsonDomFhirNavigatorNode.cs" />
-    <Compile Remove="Serialization\JsonSerializationDetails.cs" />
-    <Compile Remove="Serialization\NavigatorXmlWriter.cs" />
-    <Compile Remove="Serialization\SerializationInfoCache.cs" />
-    <Compile Remove="Serialization\SourceComments.cs" />
-    <Compile Remove="Serialization\XmlDomFhirNavigator - Archive.cs" />
-    <Compile Remove="Serialization\XmlDomFhirNavigator.cs" />
-    <Compile Remove="Serialization\XmlDomFhirNavigatorFactory.cs" />
-    <Compile Remove="Serialization\XmlDomFhirParser.cs" />
-    <Compile Remove="Serialization\XmlSerializationDetails.cs" />
     <Compile Remove="Utility\PipelineComponent.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+    <Compile Remove="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <Compile Remove="Properties\Resources.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,5 +43,20 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

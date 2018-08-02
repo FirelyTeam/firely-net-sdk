@@ -11,10 +11,15 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
+
+#if NET_XSD_SCHEMA
+using System.Xml.Schema;
+#endif
 
 namespace Hl7.Fhir.Utility
 {
@@ -315,6 +320,51 @@ namespace Hl7.Fhir.Utility
         //            }
         //        }
         //#endif
+
+#if NET_XSD_SCHEMA
+        public static string[] RunFhirXhtmlSchemaValidation(string xmlText)
+        {
+            try
+            {
+                var doc = SerializationUtil.XDocumentFromXmlText(xmlText);
+                return RunFhirXhtmlSchemaValidation(doc);
+            }
+            catch (FormatException fe)
+            {
+                return new[] { fe.Message };
+            }
+        }
+
+        public static string[] RunFhirXhtmlSchemaValidation(XDocument doc)
+        {
+            var result = new List<string>();
+
+            if (!doc.Root.AtXhtmlDiv())
+                return new[] { $"Root element of XHTML is not a <div> from the XHTML namespace ({XmlNs.XHTML})." };
+
+            doc.Validate(_xhtmlSchemaSet.Value, (s, a) => result.Add(a.Message));
+            return result.ToArray();
+        }
+
+        private static Lazy<XmlSchemaSet> _xhtmlSchemaSet = new Lazy<XmlSchemaSet>(compileXhtmlSchema, true);
+
+        private static XmlSchemaSet compileXhtmlSchema()
+        {
+            XmlSchemaSet schemas = new XmlSchemaSet();
+
+            var schema = new StringReader(Support.Properties.Resources.xml);
+            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+
+            schema = new StringReader(Support.Properties.Resources.fhir_xhtml);
+            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+
+            schemas.Compile();
+
+            return schemas;
+        }
+#endif
+
+
 
 #if NET_REGEX_COMPILE
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);

@@ -16,5 +16,21 @@ namespace Hl7.Fhir.Serialization
         public XNamespace[] AllowedExternalNamespaces;
         public bool DisallowSchemaLocation;
         public bool PermissiveParsing;
+
+#if NET_XSD_SCHEMA
+        public bool ValidateFhirXhtml;
+#endif
+
+        public FhirXmlNavigatorSettings Clone() =>
+            new FhirXmlNavigatorSettings
+            {
+                AllowedExternalNamespaces = (XNamespace[])AllowedExternalNamespaces?.Clone(),
+                DisallowSchemaLocation = DisallowSchemaLocation,
+                PermissiveParsing = PermissiveParsing,
+
+#if NET_XSD_SCHEMA
+                ValidateFhirXhtml = ValidateFhirXhtml
+#endif
+            };
     }
 }

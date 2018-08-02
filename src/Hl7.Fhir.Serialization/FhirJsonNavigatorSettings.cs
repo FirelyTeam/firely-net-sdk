@@ -15,5 +15,21 @@ namespace Hl7.Fhir.Serialization
     {
         public bool PermissiveParsing;
         public bool AllowJsonComments;
+
+#if NET_XSD_SCHEMA
+        public bool ValidateFhirXhtml;
+#endif
+
+        public FhirJsonNavigatorSettings Clone() =>
+            new FhirJsonNavigatorSettings
+            {
+                PermissiveParsing = PermissiveParsing,
+                AllowJsonComments = AllowJsonComments,
+#if NET_XSD_SCHEMA
+                ValidateFhirXhtml = ValidateFhirXhtml
+#endif
+            };
+
+
     }
 }

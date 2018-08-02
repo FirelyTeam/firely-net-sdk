@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Support.Utility;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -26,10 +25,7 @@ namespace Hl7.Fhir.Serialization
             _parentPath = null;
             _containedResource = null;
             _names = new Dictionary<string, int>();
-
-            AllowedExternalNamespaces = settings?.AllowedExternalNamespaces ?? new XNamespace[0];
-            DisallowSchemaLocation = settings?.DisallowSchemaLocation ?? false;
-            PermissiveParsing = settings?.PermissiveParsing ?? false;
+            _settings = settings?.Clone();
         }
 
         private FhirXmlNavigator() { }      // for Clone()
@@ -42,24 +38,26 @@ namespace Hl7.Fhir.Serialization
                 _parentPath = this._parentPath,
                 _containedResource = this._containedResource,
                 _names = new Dictionary<string, int>(this._names),
-
-                AllowedExternalNamespaces = this.AllowedExternalNamespaces,
-                DisallowSchemaLocation = this.DisallowSchemaLocation,
-                PermissiveParsing = this.PermissiveParsing,
-                ExceptionHandler = this.ExceptionHandler
+                _settings = _settings,
+                ExceptionHandler = this.ExceptionHandler,
             };
         }
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
+        private FhirXmlNavigatorSettings _settings;
         private XObject _current;
         private string _parentPath;
         private XElement _containedResource;
         private Dictionary<string,int> _names;
 
-        public XNamespace[] AllowedExternalNamespaces;
-        public bool DisallowSchemaLocation;
-        public bool PermissiveParsing;
+        public XNamespace[] AllowedExternalNamespaces => _settings?.AllowedExternalNamespaces;
+        public bool DisallowSchemaLocation => _settings?.DisallowSchemaLocation ?? false;
+        public bool PermissiveParsing => _settings?.PermissiveParsing ?? false;
+
+#if NET_XSD_SCHEMA
+        public bool ValidateFhirXhtml => _settings?.ValidateFhirXhtml ?? false;
+#endif
 
         public string Name => _current.Name()?.LocalName;
 
@@ -106,9 +104,11 @@ namespace Hl7.Fhir.Serialization
 
         private void verifyXObject(XObject node)
         {
+            var allowedNs = AllowedExternalNamespaces ?? new XNamespace[0];
+                 
             if (node is XAttribute xa)
             {
-                if (xa.Name.NamespaceName != "" && !AllowedExternalNamespaces.Contains(xa.Name.NamespaceName))
+                if (xa.Name.NamespaceName != "" && !allowedNs.Contains(xa.Name.NamespaceName))
                     raiseFormatError($"The attribute '{xa.Name.LocalName}' in element '{xa.Parent.Name.LocalName}' uses the namespace '{xa.Name.NamespaceName}', which is not allowed.", node);
 
                 if (String.IsNullOrWhiteSpace(xa.Value))
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Serialization
             }
             else if (node is XElement xe)
             {
-                if (xe.Name.Namespace != XmlNs.XFHIR && xe.Name != XmlNs.XHTMLDIV && !AllowedExternalNamespaces.Contains(xe.Name.Namespace))
+                if (xe.Name.Namespace != XmlNs.XFHIR && xe.Name != XmlNs.XHTMLDIV && !allowedNs.Contains(xe.Name.Namespace))
                 {
                     var ns = xe.Name.Namespace?.NamespaceName;
                     if (String.IsNullOrEmpty(ns))
@@ -135,7 +135,14 @@ namespace Hl7.Fhir.Serialization
         public bool MoveToFirstChild(string name = null)
         {
             // don't move into xhtml
-            if (_current.AtXhtmlDiv()) return false;
+            if (_current.AtXhtmlDiv())
+            {
+#if NET_XSD_SCHEMA
+                if (!PermissiveParsing && ValidateFhirXhtml)
+                    ValidateXhtml(new XDocument(_current), this, this);
+#endif
+                return false;
+            }
 
             // can't move into anything that's not an XElement
             if (!(_current is XElement element)) return false;
@@ -168,6 +175,32 @@ namespace Hl7.Fhir.Serialization
 
             return true;
         }
+
+#if NET_XSD_SCHEMA
+        public static void ValidateXhtml(string xmlText, IExceptionSource ies, object source)
+        {
+            reportOnValidation(() =>
+               SerializationUtil.RunFhirXhtmlSchemaValidation(xmlText), ies, source);
+        }
+
+        public static void ValidateXhtml(XDocument doc, IExceptionSource ies, object source)
+        {
+            reportOnValidation(() =>
+                   SerializationUtil.RunFhirXhtmlSchemaValidation(doc), ies, source);
+        }
+
+
+        private static void reportOnValidation(Func<string[]> validator, IExceptionSource ies, object source)
+        {
+            var messages = validator();
+            if(messages.Any())
+            {
+                var problems = String.Join(", ", messages);
+                ies.ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
+                    Error.Format("The XHTML for the narrative is not valid. XSD validation reported: " + problems)));
+            }
+        }
+#endif
 
         private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
 
@@ -388,13 +421,12 @@ namespace Hl7.Fhir.Serialization
                 if (sdSummary == null || serializationDetails == null) return;
 
                 var representation = sdSummary.Representation;
-                if (representation == XmlRepresentation.None) representation = XmlRepresentation.XmlElement;
 
                 switch(representation)
                 {
                     case XmlRepresentation.XHtml when !serializationDetails.IsXhtml:
                         ies.ExceptionHandler(nav, buildException(
-                            buildMessage(nav.Name, serializationDetails.NodeType, "should use an XHtml element.")));
+                            buildMessage(nav.Name, serializationDetails.NodeType, "should use an XHTML element.")));
                         break;
                     case XmlRepresentation.XmlAttr when serializationDetails.NodeType != XmlNodeType.Attribute:
                         ies.ExceptionHandler(nav, buildException(

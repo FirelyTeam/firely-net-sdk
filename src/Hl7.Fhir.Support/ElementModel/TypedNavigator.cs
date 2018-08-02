@@ -297,7 +297,8 @@ namespace Hl7.Fhir.ElementModel
             // store the current name before proceeding to detect repeating
             // element names and count them
             var currentName = Name;
-            if (_current.IsTracking) LastOrder = (Name, _current.SerializationInfo.Order);
+            if (_current.IsTracking && _current.SerializationInfo.Representation == XmlRepresentation.XmlElement)
+                LastOrder = (Name, _current.SerializationInfo.Order);
 
             _current = match;
 
@@ -312,16 +313,12 @@ namespace Hl7.Fhir.ElementModel
         }
 
         private void runAdditionalRules()
-        {            
-            if(Type == "xhtml")
-
-
+        {
 #pragma warning disable 612,618
             var additionalRules = _current.Node.Annotations(typeof(AdditionalStructuralRule));
 
             foreach (var rule in additionalRules.Cast<AdditionalStructuralRule>())
                 rule(this, this);
-
 #pragma warning restore 612,618
         }
 

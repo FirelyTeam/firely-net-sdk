@@ -7,10 +7,8 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Serialization;
-using System;
 using System.Linq;
-using static Hl7.Fhir.Utility.ElementNavigatorComparator;
+using static Hl7.Fhir.ElementModel.ElementNavigatorComparator;
 
 namespace Hl7.Fhir.Utility
 {

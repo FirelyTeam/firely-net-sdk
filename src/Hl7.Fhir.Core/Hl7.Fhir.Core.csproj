@@ -60,8 +60,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Validation\xhtml\fhir-xhtml.xsd" />
-    <None Include="Validation\xhtml\xml.xsd" />
     <None Include="Model\Source\expansions.xml" />
     <None Include="Model\Source\profiles-resources.xml" />
     <None Include="Model\Source\profiles-types.xml" />

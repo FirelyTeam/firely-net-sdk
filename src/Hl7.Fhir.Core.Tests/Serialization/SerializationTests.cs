@@ -443,11 +443,6 @@ namespace Hl7.Fhir.Tests.Serialization
         //    Assert.AreEqual(0, par2.Parameter.Count);
         //}
 
-        // [WMR 20161222] Richard Kavanagh: serializing ValueSet (to XML) throws an exception...?
-        // Cause: { ... "text" { ... "div" = "removed" } ... }
-        // => "removed" is not valid Xhtml contents (no root)! Should be e.g. "<p>removed</p>"
-        // However: http://www.hl7.org/implement/standards/fhir/narrative.html#Narrative
-        // => div SHOULD accept plain text!
         [TestMethod]
         public void SerializeJsonWithPlainDiv()
         {

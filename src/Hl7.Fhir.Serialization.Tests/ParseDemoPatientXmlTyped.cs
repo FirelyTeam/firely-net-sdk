@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Serialization.Tests
             nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><text><status value= 'generated' />" +
                 "<div>hi!</div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.First().Message.Contains("should use an XHtml element."));
+            Assert.IsTrue(errors.First().Message.Contains("should use an XHTML element."));
             Assert.AreEqual(2, errors.Count);
 
             // Use an element where an attribute was expected
@@ -157,5 +157,35 @@ namespace Hl7.Fhir.Serialization.Tests
             var errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("not in the correct order"));
         }
+
+        [TestMethod]
+        public void CatchesIncorrectNarrativeXhtml()
+        {
+            // passes unless we activate xhtml validation
+            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
+             "<status value='generated' />" +
+             "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div></text></Patient>");
+            var errors = nav.VisitAndCatch();
+            Assert.AreEqual(0, errors.Count);
+
+            // No xhtml namespace
+            nav = getValidatingXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
+             "<status value='generated' />" +
+             "<div><p>Donald</p></div></text></Patient>");
+            errors = nav.VisitAndCatch();
+            Assert.AreEqual(3, errors.Count);
+            Assert.IsTrue(errors.Any(e => e.Message.Contains("should use an XHTML element")));
+
+            // Active content
+            nav = getValidatingXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
+             "<status value='generated' />" +
+             "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div></text></Patient>");
+            errors = nav.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
+
+            IElementNavigator getValidatingXmlNav(string jsonText) =>
+                getXmlNav(jsonText, new FhirXmlNavigatorSettings { ValidateFhirXhtml = true });
+        }
+
     }
 }

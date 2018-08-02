@@ -11,7 +11,7 @@ using Hl7.Fhir.Serialization;
 using System;
 using System.Linq;
 
-namespace Hl7.Fhir.Utility
+namespace Hl7.Fhir.ElementModel
 {
     public static class ElementNavigatorComparator
     {

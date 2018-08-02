@@ -26,9 +26,7 @@ namespace Hl7.Fhir.Serialization
             _index = 0;
             _nameIndex = 0;
             _parentPath = null;
-
-            AllowJsonCommments = settings?.AllowJsonComments ?? false;
-            PermissiveParsing = settings?.PermissiveParsing ?? false;
+            _settings = settings?.Clone();
         }
 
         internal JsonNavigatorNode Current => _siblings[_index];
@@ -43,9 +41,8 @@ namespace Hl7.Fhir.Serialization
                 _index = this._index,
                 _nameIndex = this._nameIndex,
                 _parentPath = this._parentPath,
+                _settings = _settings,
                 ExceptionHandler = this.ExceptionHandler,
-                AllowJsonCommments = this.AllowJsonCommments,
-                PermissiveParsing = this.PermissiveParsing
             };
 
             return copy;
@@ -54,10 +51,14 @@ namespace Hl7.Fhir.Serialization
         private JsonNavigatorNode[] _siblings;
         private int _index, _nameIndex;
         private string _parentPath;
+        private FhirJsonNavigatorSettings _settings;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
-        public bool AllowJsonCommments;
-        public bool PermissiveParsing;
+        public bool AllowJsonComments => _settings?.AllowJsonComments ?? false;
+        public bool PermissiveParsing => _settings?.PermissiveParsing ?? false;
+#if NET_XSD_SCHEMA
+        public bool ValidateFhirXhtml => _settings?.ValidateFhirXhtml ?? false;
+#endif
 
         private void raiseFormatError(string message, JToken node)
         {
@@ -85,7 +86,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (nodes[scan].Name == "fhir_comments")
                 {
-                    if(!AllowJsonCommments && !PermissiveParsing) raiseFormatError("The 'fhir_comments' feature is disabled.", nodes[scan].PositionNode);
+                    if(!AllowJsonComments && !PermissiveParsing) raiseFormatError("The 'fhir_comments' feature is disabled.", nodes[scan].PositionNode);
                     continue;      // ignore pre-DSTU2 Json comments
                 }
                 if (namefilter == null || nodes[scan].Name == namefilter || nodes[scan].Name == "_" + namefilter)
@@ -176,7 +177,18 @@ namespace Hl7.Fhir.Serialization
         {
             yield return checkArrayUse;
 
-            
+#if NET_XSD_SCHEMA
+            yield return checkXhtml;
+
+            void checkXhtml(IElementNavigator nav, IExceptionSource ies)
+            {
+                if (nav.Type != "xhtml") return;
+
+                if (ValidateFhirXhtml)
+                    FhirXmlNavigator.ValidateXhtml((string)nav.Value, ies, nav);
+            }
+#endif
+
             void checkArrayUse(IElementNavigator nav, IExceptionSource ies)
             {
                 var sdSummary = nav.GetElementDefinitionSummary();
