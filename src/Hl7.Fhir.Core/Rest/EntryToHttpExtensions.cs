@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, 
+        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, Uri baseUrl,
             SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
@@ -30,7 +30,13 @@ namespace Hl7.Fhir.Rest
             if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
 
-            var location = new RestUrl(interaction.Url);
+            // Create an absolute uri when the interaction.Url is relative.
+            var uri = new Uri(interaction.Url, UriKind.RelativeOrAbsolute);
+            if (!uri.IsAbsoluteUri)
+            {
+                uri = HttpUtil.MakeAbsoluteToBase(uri, baseUrl);
+            }
+            var location = new RestUrl(uri);
 
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));

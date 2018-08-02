@@ -5854,9 +5854,17 @@ namespace Hl7.Fhir.Specification.Tests
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+
+            // [WMR 20180723] Changed: SnapshotGenerator.getStructureForTypeRef
+            // Snapshot generator now also expands type.profile for resource references,
+            // even if incorrect, such as in this unit test (referenced profile is on Patient, not on Reference)
+
             // Verify expansion of child element valueReference.reference
             // Expect expansion of core type profile for ResourceReference
-            Assert.IsTrue(nav.MoveToChild("reference"));
+            // Assert.IsTrue(nav.MoveToChild("reference"));
+
+            // Expect expansion of (incorrect!) core type profile for Patient
+            Assert.IsTrue(nav.MoveToChild("photo"));
         }
 
         // If an element constraint introduces multiple type profiles,
@@ -6612,5 +6620,98 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("bar", elem.Code[1].Display);
         }
 
+        [TestMethod]
+        public void TestReferenceTargetProfile()
+        {
+            // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
+            var ReferenceProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Reference.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Reference),
+                Name = "MyCustomReference",
+                Url = "http://example.org/fhir/StructureDefinition/MyCustomReference",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Reference")
+                        {
+                            Comment = "CustomReference"
+                        },
+                        new ElementDefinition("Reference.reference")
+                        {
+                            Min = 1
+                        },
+                    }
+                }
+            };
+
+            var ReportProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.DiagnosticReport.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DiagnosticReport),
+                Name = "MyDiagnosticReport",
+                Url = "http://example.org/fhir/StructureDefinition/MyDiagnosticReport",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("DiagnosticReport.imagingStudy")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    Profile = ReferenceProfile.Url,
+                                    TargetProfile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.ImagingStudy)
+                                }
+                            }
+                        },
+                        // Add child element constraint to force expansion
+                        //new ElementDefinition("DiagnosticReport.imagingStudy.identifier")
+                        //{
+                        //    Max = "0"
+                        //}
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(ReportProfile, ReferenceProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(ReportProfile, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // Expecting single issue about invalid slice name on SimpleQuantity root element
+            var outcome = generator.Outcome;
+            Assert.IsNull(outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("DiagnosticReport.imagingStudy"));
+            Assert.IsNotNull(nav.Current);
+            // Verify that snapshot generator merges constraints from external ReferenceProfile
+            Assert.AreEqual("CustomReference", nav.Current.Comment);
+            Assert.IsNotNull(nav.Current.Type);
+            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.Reference.GetLiteral(), nav.Current.Type[0].Code);
+            Assert.AreEqual(ReferenceProfile.Url, nav.Current.Type[0].Profile);
+            // By default, snapshot generator does not expand children of element DiagnosticReport.imagingStudy
+            Assert.IsFalse(nav.HasChildren);
+
+            // Explicitly expand children of element DiagnosticReport.imagingStudy
+            Assert.IsTrue(generator.ExpandElement(nav));
+            Assert.IsTrue(nav.HasChildren);
+            Assert.IsTrue(nav.MoveToChild("reference"));
+            Assert.IsNotNull(nav.Current);
+            // Verify profile inherits constraint from external targetProfile on Reference
+            Assert.AreEqual(1, nav.Current.Min);
+        }
     }
 }

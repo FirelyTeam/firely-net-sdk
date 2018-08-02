@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Validation
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
 
+            
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             var referencedResource = validator.resolveReference(instance, reference,
                 out ElementDefinition.AggregationMode? encounteredKind, outcome);
@@ -186,7 +187,7 @@ namespace Hl7.Fhir.Validation
 
             if (identity.Form == ResourceIdentityForm.Undetermined)
             {
-                if (!Uri.IsWellFormedUriString(reference, UriKind.RelativeOrAbsolute))
+                if (!Uri.IsWellFormedUriString(Uri.EscapeDataString(reference), UriKind.RelativeOrAbsolute))
                 {
                     validator.Trace(outcome, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
                     referenceKind = null;
