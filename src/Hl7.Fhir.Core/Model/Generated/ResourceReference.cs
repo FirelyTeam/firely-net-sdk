@@ -4,9 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -39,7 +37,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,7 +52,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Reference"; } }
         
         /// <summary>
-        /// Relative, internal or absolute URL reference
+        /// Literal reference, Relative, internal or absolute URL
         /// </summary>
         [FhirElement("reference", InSummary=true, Order=30)]
         [DataMember]
@@ -67,7 +65,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _ReferenceElement;
         
         /// <summary>
-        /// Relative, internal or absolute URL reference
+        /// Literal reference, Relative, internal or absolute URL
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -86,9 +84,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Logical reference, when literal reference is not known
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=40)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// Text alternative for the resource
         /// </summary>
-        [FhirElement("display", InSummary=true, Order=40)]
+        [FhirElement("display", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {
@@ -126,6 +137,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)ReferenceElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                 return dest;
             }
@@ -145,6 +157,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
             
             return true;
@@ -157,6 +170,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
             
             return true;
@@ -169,6 +183,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
                 if (ReferenceElement != null) yield return ReferenceElement;
+                if (Identifier != null) yield return Identifier;
                 if (DisplayElement != null) yield return DisplayElement;
             }
         }
@@ -179,8 +194,9 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
-                if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
  
             } 
         } 

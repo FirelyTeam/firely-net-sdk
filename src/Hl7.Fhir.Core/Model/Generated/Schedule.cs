@@ -35,15 +35,16 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A container for slot(s) of time that may be available for booking appointments
+    /// A container for slots of time that may be available for booking appointments
     /// </summary>
     [FhirType("Schedule", IsResource=true)]
     [DataContract]
@@ -69,39 +70,98 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// The schedule type can be used for the categorization of healthcare services or other appointment types
+        /// Whether this schedule is in active use
         /// </summary>
-        [FhirElement("type", Order=100)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("active", InSummary=true, Order=100)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Type
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
         {
-            get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
         
         /// <summary>
-        /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
+        /// Whether this schedule is in active use
         /// </summary>
-        [FhirElement("actor", InSummary=true, Order=110)]
-        [CLSCompliant(false)]
-		[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Actor
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
         {
-            get { return _Actor; }
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
+        
+        /// <summary>
+        /// A broad categorisation of the service that is to be performed during this appointment
+        /// </summary>
+        [FhirElement("serviceCategory", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept ServiceCategory
+        {
+            get { return _ServiceCategory; }
+            set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
+        
+        /// <summary>
+        /// The specific service that is to be performed during this appointment
+        /// </summary>
+        [FhirElement("serviceType", InSummary=true, Order=120)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
+        {
+            get { if(_ServiceType==null) _ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceType; }
+            set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ServiceType;
+        
+        /// <summary>
+        /// The specialty of a practitioner that would be required to perform the service requested in this appointment
+        /// </summary>
+        [FhirElement("specialty", InSummary=true, Order=130)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Specialty
+        {
+            get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+            set { _Specialty = value; OnPropertyChanged("Specialty"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+        
+        /// <summary>
+        /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, PractitionerRole, Device, Patient or RelatedPerson
+        /// </summary>
+        [FhirElement("actor", InSummary=true, Order=140)]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
+        [Cardinality(Min=1,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Actor
+        {
+            get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Actor; }
             set { _Actor = value; OnPropertyChanged("Actor"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Actor;
+        private List<Hl7.Fhir.Model.ResourceReference> _Actor;
         
         /// <summary>
         /// The period of time that the slots that are attached to this Schedule resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates
         /// </summary>
-        [FhirElement("planningHorizon", InSummary=true, Order=120)]
+        [FhirElement("planningHorizon", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Period PlanningHorizon
         {
@@ -112,9 +172,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _PlanningHorizon;
         
         /// <summary>
-        /// Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated
+        /// Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated
         /// </summary>
-        [FhirElement("comment", Order=130)]
+        [FhirElement("comment", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -125,7 +185,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
-        /// Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated
+        /// Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -158,8 +218,11 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
+                if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
+                if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopy());
+                if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
+                if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(Actor.DeepCopy());
                 if(PlanningHorizon != null) dest.PlanningHorizon = (Hl7.Fhir.Model.Period)PlanningHorizon.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 return dest;
@@ -180,7 +243,10 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
+            if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
+            if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
+            if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
             if( !DeepComparable.Matches(PlanningHorizon, otherT.PlanningHorizon)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
@@ -195,7 +261,10 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
+            if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
+            if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;
+            if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
             if( !DeepComparable.IsExactly(PlanningHorizon, otherT.PlanningHorizon)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
@@ -210,8 +279,11 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				foreach (var elem in Type) { if (elem != null) yield return elem; }
-				if (Actor != null) yield return Actor;
+				if (ActiveElement != null) yield return ActiveElement;
+				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+				foreach (var elem in Actor) { if (elem != null) yield return elem; }
 				if (PlanningHorizon != null) yield return PlanningHorizon;
 				if (CommentElement != null) yield return CommentElement;
             }
@@ -223,11 +295,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-                if (Actor != null) yield return new ElementValue("actor", Actor);
-                if (PlanningHorizon != null) yield return new ElementValue("planningHorizon", PlanningHorizon);
-                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                if (ServiceCategory != null) yield return new ElementValue("serviceCategory", false, ServiceCategory);
+                foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", true, elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
+                foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", true, elem); }
+                if (PlanningHorizon != null) yield return new ElementValue("planningHorizon", false, PlanningHorizon);
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
             }
         }
 

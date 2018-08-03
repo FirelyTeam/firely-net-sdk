@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,48 +55,9 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Communication"; } }
         
-        /// <summary>
-        /// The status of the communication.
-        /// (url: http://hl7.org/fhir/ValueSet/communication-status)
-        /// </summary>
-        [FhirEnumeration("CommunicationStatus")]
-        public enum CommunicationStatus
-        {
-            /// <summary>
-            /// The communication transmission is ongoing.
-            /// (system: http://hl7.org/fhir/communication-status)
-            /// </summary>
-            [EnumLiteral("in-progress", "http://hl7.org/fhir/communication-status"), Description("In Progress")]
-            InProgress,
-            /// <summary>
-            /// The message transmission is complete, i.e., delivered to the recipient's destination.
-            /// (system: http://hl7.org/fhir/communication-status)
-            /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/communication-status"), Description("Completed")]
-            Completed,
-            /// <summary>
-            /// The communication transmission has been held by originating system/user request.
-            /// (system: http://hl7.org/fhir/communication-status)
-            /// </summary>
-            [EnumLiteral("suspended", "http://hl7.org/fhir/communication-status"), Description("Suspended")]
-            Suspended,
-            /// <summary>
-            /// The receiving system has declined to accept the message.
-            /// (system: http://hl7.org/fhir/communication-status)
-            /// </summary>
-            [EnumLiteral("rejected", "http://hl7.org/fhir/communication-status"), Description("Rejected")]
-            Rejected,
-            /// <summary>
-            /// There was a failure in transmitting the message out.
-            /// (system: http://hl7.org/fhir/communication-status)
-            /// </summary>
-            [EnumLiteral("failed", "http://hl7.org/fhir/communication-status"), Description("Failed")]
-            Failed,
-        }
-
         [FhirType("PayloadComponent")]
         [DataContract]
-        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "PayloadComponent"; } }
@@ -103,7 +65,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Message part content
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -174,7 +136,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", Content);
+                    if (Content != null) yield return new ElementValue("content", false, Content);
                 }
             }
 
@@ -197,37 +159,178 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Instantiates protocol or definition
+        /// </summary>
+        [FhirElement("definition", InSummary=true, Order=100)]
+        [CLSCompliant(false)]
+		[References("PlanDefinition","ActivityDefinition")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Definition
+        {
+            get { if(_Definition==null) _Definition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Definition; }
+            set { _Definition = value; OnPropertyChanged("Definition"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Definition;
+        
+        /// <summary>
+        /// Request fulfilled by this communication
+        /// </summary>
+        [FhirElement("basedOn", InSummary=true, Order=110)]
+        [CLSCompliant(false)]
+		[References()]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> BasedOn
+        {
+            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+            set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+        
+        /// <summary>
+        /// Part of this action
+        /// </summary>
+        [FhirElement("partOf", InSummary=true, Order=120)]
+        [CLSCompliant(false)]
+		[References()]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> PartOf
+        {
+            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
+            set { _PartOf = value; OnPropertyChanged("PartOf"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
+        
+        /// <summary>
+        /// preparation | in-progress | suspended | aborted | completed | entered-in-error
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=130)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.EventStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.EventStatus> _StatusElement;
+        
+        /// <summary>
+        /// preparation | in-progress | suspended | aborted | completed | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.EventStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.EventStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
+        /// Communication did not occur
+        /// </summary>
+        [FhirElement("notDone", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean NotDoneElement
+        {
+            get { return _NotDoneElement; }
+            set { _NotDoneElement = value; OnPropertyChanged("NotDoneElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _NotDoneElement;
+        
+        /// <summary>
+        /// Communication did not occur
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? NotDone
+        {
+            get { return NotDoneElement != null ? NotDoneElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  NotDoneElement = null; 
+                else
+                  NotDoneElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("NotDone");
+            }
+        }
+        
+        /// <summary>
+        /// Why communication did not occur
+        /// </summary>
+        [FhirElement("notDoneReason", InSummary=true, Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept NotDoneReason
+        {
+            get { return _NotDoneReason; }
+            set { _NotDoneReason = value; OnPropertyChanged("NotDoneReason"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _NotDoneReason;
+        
+        /// <summary>
         /// Message category
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=100)]
+        [FhirElement("category", Order=160)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
         {
-            get { return _Category; }
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Category;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
-        /// Message sender
+        /// A channel of communication
         /// </summary>
-        [FhirElement("sender", InSummary=true, Order=110)]
-        [CLSCompliant(false)]
-		[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [FhirElement("medium", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Sender
+        public List<Hl7.Fhir.Model.CodeableConcept> Medium
         {
-            get { return _Sender; }
-            set { _Sender = value; OnPropertyChanged("Sender"); }
+            get { if(_Medium==null) _Medium = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Medium; }
+            set { _Medium = value; OnPropertyChanged("Medium"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Sender;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
+        
+        /// <summary>
+        /// Focus of message
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=180)]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Message recipient
         /// </summary>
-        [FhirElement("recipient", InSummary=true, Order=120)]
+        [FhirElement("recipient", Order=190)]
         [CLSCompliant(false)]
 		[References("Device","Organization","Patient","Practitioner","RelatedPerson","Group")]
         [Cardinality(Min=0,Max=-1)]
@@ -241,84 +344,40 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
-        /// Message payload
+        /// Focal resources
         /// </summary>
-        [FhirElement("payload", InSummary=true, Order=130)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Communication.PayloadComponent> Payload
-        {
-            get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.Communication.PayloadComponent>(); return _Payload; }
-            set { _Payload = value; OnPropertyChanged("Payload"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Communication.PayloadComponent> _Payload;
-        
-        /// <summary>
-        /// A channel of communication
-        /// </summary>
-        [FhirElement("medium", InSummary=true, Order=140)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Medium
-        {
-            get { if(_Medium==null) _Medium = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Medium; }
-            set { _Medium = value; OnPropertyChanged("Medium"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
-        
-        /// <summary>
-        /// in-progress | completed | suspended | rejected | failed
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=150)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.Communication.CommunicationStatus> StatusElement
-        {
-            get { return _StatusElement; }
-            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.Communication.CommunicationStatus> _StatusElement;
-        
-        /// <summary>
-        /// in-progress | completed | suspended | rejected | failed
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Communication.CommunicationStatus? Status
-        {
-            get { return StatusElement != null ? StatusElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  StatusElement = null; 
-                else
-                  StatusElement = new Code<Hl7.Fhir.Model.Communication.CommunicationStatus>(value);
-                OnPropertyChanged("Status");
-            }
-        }
-        
-        /// <summary>
-        /// Encounter leading to message
-        /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=160)]
+        [FhirElement("topic", Order=200)]
         [CLSCompliant(false)]
-		[References("Encounter")]
+		[References()]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
+        public List<Hl7.Fhir.Model.ResourceReference> Topic
         {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+            get { if(_Topic==null) _Topic = new List<Hl7.Fhir.Model.ResourceReference>(); return _Topic; }
+            set { _Topic = value; OnPropertyChanged("Topic"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        private List<Hl7.Fhir.Model.ResourceReference> _Topic;
+        
+        /// <summary>
+        /// Encounter or episode leading to message
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=210)]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
         /// When sent
         /// </summary>
-        [FhirElement("sent", InSummary=true, Order=170)]
+        [FhirElement("sent", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime SentElement
         {
@@ -350,7 +409,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When received
         /// </summary>
-        [FhirElement("received", InSummary=true, Order=180)]
+        [FhirElement("received", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ReceivedElement
         {
@@ -380,54 +439,93 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Message sender
+        /// </summary>
+        [FhirElement("sender", Order=240)]
+        [CLSCompliant(false)]
+		[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Sender
+        {
+            get { return _Sender; }
+            set { _Sender = value; OnPropertyChanged("Sender"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Sender;
+        
+        /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=190)]
+        [FhirElement("reasonCode", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Reason
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
         {
-            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
-            set { _Reason = value; OnPropertyChanged("Reason"); }
+            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
         
         /// <summary>
-        /// Focus of message
+        /// Why was communication done?
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=200)]
+        [FhirElement("reasonReference", InSummary=true, Order=260)]
         [CLSCompliant(false)]
-		[References("Patient")]
+		[References("Condition","Observation")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
         {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
         
         /// <summary>
-        /// CommunicationRequest producing this message
+        /// Message payload
         /// </summary>
-        [FhirElement("requestDetail", InSummary=true, Order=210)]
-        [CLSCompliant(false)]
-		[References("CommunicationRequest")]
+        [FhirElement("payload", Order=270)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestDetail
+        public List<Hl7.Fhir.Model.Communication.PayloadComponent> Payload
         {
-            get { return _RequestDetail; }
-            set { _RequestDetail = value; OnPropertyChanged("RequestDetail"); }
+            get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.Communication.PayloadComponent>(); return _Payload; }
+            set { _Payload = value; OnPropertyChanged("Payload"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _RequestDetail;
+        private List<Hl7.Fhir.Model.Communication.PayloadComponent> _Payload;
         
+        /// <summary>
+        /// Comments made about the communication
+        /// </summary>
+        [FhirElement("note", Order=280)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
+        
+
+        public static ElementDefinition.ConstraintComponent Communication_COM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "notDone or notDoneReason.exists().not()",
+            Key = "com-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Not Done Reason can only be specified if NotDone is \"true\"",
+            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
+        };
 
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(Communication_COM_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -438,18 +536,25 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
-                if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
-                if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.Communication.PayloadComponent>(Payload.DeepCopy());
+                if(Definition != null) dest.Definition = new List<Hl7.Fhir.Model.ResourceReference>(Definition.DeepCopy());
+                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EventStatus>)StatusElement.DeepCopy();
+                if(NotDoneElement != null) dest.NotDoneElement = (Hl7.Fhir.Model.FhirBoolean)NotDoneElement.DeepCopy();
+                if(NotDoneReason != null) dest.NotDoneReason = (Hl7.Fhir.Model.CodeableConcept)NotDoneReason.DeepCopy();
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Medium != null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Communication.CommunicationStatus>)StatusElement.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
+                if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.ResourceReference>(Topic.DeepCopy());
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(SentElement != null) dest.SentElement = (Hl7.Fhir.Model.FhirDateTime)SentElement.DeepCopy();
                 if(ReceivedElement != null) dest.ReceivedElement = (Hl7.Fhir.Model.FhirDateTime)ReceivedElement.DeepCopy();
-                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(RequestDetail != null) dest.RequestDetail = (Hl7.Fhir.Model.ResourceReference)RequestDetail.DeepCopy();
+                if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
+                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.Communication.PayloadComponent>(Payload.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -468,18 +573,25 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-            if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
-            if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
-            if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
+            if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
+            if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(NotDoneElement, otherT.NotDoneElement)) return false;
+            if( !DeepComparable.Matches(NotDoneReason, otherT.NotDoneReason)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
+            if( !DeepComparable.Matches(Topic, otherT.Topic)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(SentElement, otherT.SentElement)) return false;
             if( !DeepComparable.Matches(ReceivedElement, otherT.ReceivedElement)) return false;
-            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(RequestDetail, otherT.RequestDetail)) return false;
+            if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
+            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -491,18 +603,25 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-            if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
-            if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
-            if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
-            if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
+            if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
+            if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.IsExactly(NotDoneElement, otherT.NotDoneElement)) return false;
+            if( !DeepComparable.IsExactly(NotDoneReason, otherT.NotDoneReason)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
+            if( !DeepComparable.IsExactly(Topic, otherT.Topic)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(SentElement, otherT.SentElement)) return false;
             if( !DeepComparable.IsExactly(ReceivedElement, otherT.ReceivedElement)) return false;
-            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(RequestDetail, otherT.RequestDetail)) return false;
+            if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
+            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -514,18 +633,25 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (Category != null) yield return Category;
-				if (Sender != null) yield return Sender;
-				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
-				foreach (var elem in Payload) { if (elem != null) yield return elem; }
-				foreach (var elem in Medium) { if (elem != null) yield return elem; }
+				foreach (var elem in Definition) { if (elem != null) yield return elem; }
+				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
+				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
-				if (Encounter != null) yield return Encounter;
+				if (NotDoneElement != null) yield return NotDoneElement;
+				if (NotDoneReason != null) yield return NotDoneReason;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				foreach (var elem in Medium) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				foreach (var elem in Topic) { if (elem != null) yield return elem; }
+				if (Context != null) yield return Context;
 				if (SentElement != null) yield return SentElement;
 				if (ReceivedElement != null) yield return ReceivedElement;
-				foreach (var elem in Reason) { if (elem != null) yield return elem; }
-				if (Subject != null) yield return Subject;
-				if (RequestDetail != null) yield return RequestDetail;
+				if (Sender != null) yield return Sender;
+				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Payload) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
 
@@ -535,19 +661,26 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (Category != null) yield return new ElementValue("category", Category);
-                if (Sender != null) yield return new ElementValue("sender", Sender);
-                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
-                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", elem); }
-                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", elem); }
-                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-                if (SentElement != null) yield return new ElementValue("sent", SentElement);
-                if (ReceivedElement != null) yield return new ElementValue("received", ReceivedElement);
-                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
-                if (Subject != null) yield return new ElementValue("subject", Subject);
-                if (RequestDetail != null) yield return new ElementValue("requestDetail", RequestDetail);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", true, elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (NotDoneElement != null) yield return new ElementValue("notDone", false, NotDoneElement);
+                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", false, NotDoneReason);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
+                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (SentElement != null) yield return new ElementValue("sent", false, SentElement);
+                if (ReceivedElement != null) yield return new ElementValue("received", false, ReceivedElement);
+                if (Sender != null) yield return new ElementValue("sender", false, Sender);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
+                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
             }
         }
 

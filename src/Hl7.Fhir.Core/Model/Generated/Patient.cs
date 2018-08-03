@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,19 +63,25 @@ namespace Hl7.Fhir.Model
         public enum LinkType
         {
             /// <summary>
-            /// The patient resource containing this link must no longer be used. The link points forward to another patient resource that must be used in lieu of the patient resource that contains this link.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
-            [EnumLiteral("replace", "http://hl7.org/fhir/link-type"), Description("Replace")]
-            Replace,
+            [EnumLiteral("replaced-by", "http://hl7.org/fhir/link-type"), Description("Replaced-by")]
+            ReplacedBy,
             /// <summary>
-            /// The patient resource containing this link is in use and valid but not considered the main source of information about a patient. The link points forward to another patient resource that should be consulted to retrieve additional patient information.
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/link-type)
+            /// </summary>
+            [EnumLiteral("replaces", "http://hl7.org/fhir/link-type"), Description("Replaces")]
+            Replaces,
+            /// <summary>
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
             [EnumLiteral("refer", "http://hl7.org/fhir/link-type"), Description("Refer")]
             Refer,
             /// <summary>
-            /// The patient resource containing this link is in use and valid, but points to another patient resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other patient resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
             [EnumLiteral("seealso", "http://hl7.org/fhir/link-type"), Description("See also")]
@@ -83,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -284,13 +291,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", elem); }
-                    if (Name != null) yield return new ElementValue("name", Name);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
-                    if (Address != null) yield return new ElementValue("address", Address);
-                    if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
-                    if (Organization != null) yield return new ElementValue("organization", Organization);
-                    if (Period != null) yield return new ElementValue("period", Period);
+                    foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", true, elem); }
+                    if (Name != null) yield return new ElementValue("name", false, Name);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                    if (Address != null) yield return new ElementValue("address", false, Address);
+                    if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
+                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
                 }
             }
 
@@ -300,7 +307,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnimalComponent")]
         [DataContract]
-        public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "AnimalComponent"; } }
@@ -411,9 +418,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Species != null) yield return new ElementValue("species", Species);
-                    if (Breed != null) yield return new ElementValue("breed", Breed);
-                    if (GenderStatus != null) yield return new ElementValue("genderStatus", GenderStatus);
+                    if (Species != null) yield return new ElementValue("species", false, Species);
+                    if (Breed != null) yield return new ElementValue("breed", false, Breed);
+                    if (GenderStatus != null) yield return new ElementValue("genderStatus", false, GenderStatus);
                 }
             }
 
@@ -423,7 +430,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CommunicationComponent")]
         [DataContract]
-        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "CommunicationComponent"; } }
@@ -536,8 +543,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Language != null) yield return new ElementValue("language", Language);
-                    if (PreferredElement != null) yield return new ElementValue("preferred", PreferredElement);
+                    if (Language != null) yield return new ElementValue("language", false, Language);
+                    if (PreferredElement != null) yield return new ElementValue("preferred", false, PreferredElement);
                 }
             }
 
@@ -547,17 +554,17 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
-            /// The other patient resource that the link refers to
+            /// The other patient or related person resource that the link refers to
             /// </summary>
-            [FhirElement("other", Order=40)]
+            [FhirElement("other", InSummary=true, Order=40)]
             [CLSCompliant(false)]
-			[References("Patient")]
+			[References("Patient","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Other
@@ -569,9 +576,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Other;
             
             /// <summary>
-            /// replace | refer | seealso - type of link
+            /// replaced-by | replaces | refer | seealso - type of link
             /// </summary>
-            [FhirElement("type", Order=50)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -583,7 +590,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Patient.LinkType> _TypeElement;
             
             /// <summary>
-            /// replace | refer | seealso - type of link
+            /// replaced-by | replaces | refer | seealso - type of link
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -663,8 +670,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Other != null) yield return new ElementValue("other", Other);
-                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Other != null) yield return new ElementValue("other", false, Other);
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                 }
             }
 
@@ -925,18 +932,18 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient's nominated primary care provider
         /// </summary>
-        [FhirElement("careProvider", Order=230)]
+        [FhirElement("generalPractitioner", Order=230)]
         [CLSCompliant(false)]
 		[References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> CareProvider
+        public List<Hl7.Fhir.Model.ResourceReference> GeneralPractitioner
         {
-            get { if(_CareProvider==null) _CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(); return _CareProvider; }
-            set { _CareProvider = value; OnPropertyChanged("CareProvider"); }
+            get { if(_GeneralPractitioner==null) _GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(); return _GeneralPractitioner; }
+            set { _GeneralPractitioner = value; OnPropertyChanged("GeneralPractitioner"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _CareProvider;
+        private List<Hl7.Fhir.Model.ResourceReference> _GeneralPractitioner;
         
         /// <summary>
         /// Organization that is the custodian of the patient record
@@ -956,7 +963,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
         /// </summary>
-        [FhirElement("link", Order=250)]
+        [FhirElement("link", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.LinkComponent> Link
@@ -970,11 +977,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Patient_PAT_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contact.all(name or telecom or address or organization)"))},
+            Expression = "contact.all(name.exists() or telecom.exists() or address.exists() or organization.exists())",
             Key = "pat-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL at least contain a contact's details or a reference to an organization",
-            Xpath = "f:name or f:telecom or f:address or f:organization"
+            Xpath = "exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"
         };
 
         public override void AddDefaultConstraints()
@@ -1005,7 +1012,7 @@ namespace Hl7.Fhir.Model
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (Hl7.Fhir.Model.Patient.AnimalComponent)Animal.DeepCopy();
                 if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(Communication.DeepCopy());
-                if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(CareProvider.DeepCopy());
+                if(GeneralPractitioner != null) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(GeneralPractitioner.DeepCopy());
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(Link.DeepCopy());
                 return dest;
@@ -1039,7 +1046,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(Animal, otherT.Animal)) return false;
             if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
-            if( !DeepComparable.Matches(CareProvider, otherT.CareProvider)) return false;
+            if( !DeepComparable.Matches(GeneralPractitioner, otherT.GeneralPractitioner)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.Matches(Link, otherT.Link)) return false;
             
@@ -1066,7 +1073,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(Animal, otherT.Animal)) return false;
             if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
-            if( !DeepComparable.IsExactly(CareProvider, otherT.CareProvider)) return false;
+            if( !DeepComparable.IsExactly(GeneralPractitioner, otherT.GeneralPractitioner)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
             
@@ -1093,7 +1100,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				if (Animal != null) yield return Animal;
 				foreach (var elem in Communication) { if (elem != null) yield return elem; }
-				foreach (var elem in CareProvider) { if (elem != null) yield return elem; }
+				foreach (var elem in GeneralPractitioner) { if (elem != null) yield return elem; }
 				if (ManagingOrganization != null) yield return ManagingOrganization;
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
             }
@@ -1105,23 +1112,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
-                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
-                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
-                if (BirthDateElement != null) yield return new ElementValue("birthDate", BirthDateElement);
-                if (Deceased != null) yield return new ElementValue("deceased", Deceased);
-                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
-                if (MaritalStatus != null) yield return new ElementValue("maritalStatus", MaritalStatus);
-                if (MultipleBirth != null) yield return new ElementValue("multipleBirth", MultipleBirth);
-                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", elem); }
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-                if (Animal != null) yield return new ElementValue("animal", Animal);
-                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", elem); }
-                foreach (var elem in CareProvider) { if (elem != null) yield return new ElementValue("careProvider", elem); }
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
-                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", false, BirthDateElement);
+                if (Deceased != null) yield return new ElementValue("deceased", false, Deceased);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
+                if (MaritalStatus != null) yield return new ElementValue("maritalStatus", false, MaritalStatus);
+                if (MultipleBirth != null) yield return new ElementValue("multipleBirth", false, MultipleBirth);
+                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Animal != null) yield return new ElementValue("animal", false, Animal);
+                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", true, elem); }
+                foreach (var elem in GeneralPractitioner) { if (elem != null) yield return new ElementValue("generalPractitioner", true, elem); }
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
             }
         }
 

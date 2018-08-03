@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,19 +63,19 @@ namespace Hl7.Fhir.Model
         public enum DetectedIssueSeverity
         {
             /// <summary>
-            /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
             [EnumLiteral("high", "http://hl7.org/fhir/detectedissue-severity"), Description("High")]
             High,
             /// <summary>
-            /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
             [EnumLiteral("moderate", "http://hl7.org/fhir/detectedissue-severity"), Description("Moderate")]
             Moderate,
             /// <summary>
-            /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
             [EnumLiteral("low", "http://hl7.org/fhir/detectedissue-severity"), Description("Low")]
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MitigationComponent")]
         [DataContract]
-        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "MitigationComponent"; } }
@@ -215,9 +216,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Action != null) yield return new ElementValue("action", Action);
-                    if (DateElement != null) yield return new ElementValue("date", DateElement);
-                    if (Author != null) yield return new ElementValue("author", Author);
+                    if (Action != null) yield return new ElementValue("action", false, Action);
+                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                    if (Author != null) yield return new ElementValue("author", false, Author);
                 }
             }
 
@@ -226,24 +227,55 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Associated patient
+        /// Unique id for the detected issue
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=90)]
-        [CLSCompliant(false)]
-		[References("Patient")]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.Identifier Identifier
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
+        /// registered | preliminary | final | amended +
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.ObservationStatus> _StatusElement;
+        
+        /// <summary>
+        /// registered | preliminary | final | amended +
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.ObservationStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.ObservationStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
         
         /// <summary>
         /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=100)]
+        [FhirElement("category", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
         {
@@ -256,7 +288,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// high | moderate | low
         /// </summary>
-        [FhirElement("severity", InSummary=true, Order=110)]
+        [FhirElement("severity", InSummary=true, Order=120)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> SeverityElement
         {
@@ -286,52 +318,19 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Problem resource
+        /// Associated patient
         /// </summary>
-        [FhirElement("implicated", InSummary=true, Order=120)]
+        [FhirElement("patient", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References()]
-        [Cardinality(Min=0,Max=-1)]
+		[References("Patient")]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Implicated
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
-            get { if(_Implicated==null) _Implicated = new List<Hl7.Fhir.Model.ResourceReference>(); return _Implicated; }
-            set { _Implicated = value; OnPropertyChanged("Implicated"); }
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Implicated;
-        
-        /// <summary>
-        /// Description and context
-        /// </summary>
-        [FhirElement("detail", Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString DetailElement
-        {
-            get { return _DetailElement; }
-            set { _DetailElement = value; OnPropertyChanged("DetailElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _DetailElement;
-        
-        /// <summary>
-        /// Description and context
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Detail
-        {
-            get { return DetailElement != null ? DetailElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DetailElement = null; 
-                else
-                  DetailElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Detail");
-            }
-        }
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// When identified
@@ -381,22 +380,57 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
-        /// Unique id for the detected issue
+        /// Problem resource
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=160)]
+        [FhirElement("implicated", InSummary=true, Order=160)]
+        [CLSCompliant(false)]
+		[References()]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.ResourceReference> Implicated
         {
-            get { return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            get { if(_Implicated==null) _Implicated = new List<Hl7.Fhir.Model.ResourceReference>(); return _Implicated; }
+            set { _Implicated = value; OnPropertyChanged("Implicated"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.ResourceReference> _Implicated;
+        
+        /// <summary>
+        /// Description and context
+        /// </summary>
+        [FhirElement("detail", Order=170)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString DetailElement
+        {
+            get { return _DetailElement; }
+            set { _DetailElement = value; OnPropertyChanged("DetailElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _DetailElement;
+        
+        /// <summary>
+        /// Description and context
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Detail
+        {
+            get { return DetailElement != null ? DetailElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DetailElement = null; 
+                else
+                  DetailElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Detail");
+            }
+        }
         
         /// <summary>
         /// Authority for issue
         /// </summary>
-        [FhirElement("reference", Order=170)]
+        [FhirElement("reference", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ReferenceElement
         {
@@ -428,7 +462,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Step taken to address
         /// </summary>
-        [FhirElement("mitigation", Order=180)]
+        [FhirElement("mitigation", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation
@@ -453,14 +487,15 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>)SeverityElement.DeepCopy();
-                if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.ResourceReference>(Implicated.DeepCopy());
-                if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.ResourceReference>(Implicated.DeepCopy());
+                if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
                 if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>(Mitigation.DeepCopy());
                 return dest;
@@ -480,14 +515,15 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
-            if( !DeepComparable.Matches(Implicated, otherT.Implicated)) return false;
-            if( !DeepComparable.Matches(DetailElement, otherT.DetailElement)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
-            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Implicated, otherT.Implicated)) return false;
+            if( !DeepComparable.Matches(DetailElement, otherT.DetailElement)) return false;
             if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
             if( !DeepComparable.Matches(Mitigation, otherT.Mitigation)) return false;
             
@@ -500,14 +536,15 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
-            if( !DeepComparable.IsExactly(Implicated, otherT.Implicated)) return false;
-            if( !DeepComparable.IsExactly(DetailElement, otherT.DetailElement)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
-            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Implicated, otherT.Implicated)) return false;
+            if( !DeepComparable.IsExactly(DetailElement, otherT.DetailElement)) return false;
             if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
             if( !DeepComparable.IsExactly(Mitigation, otherT.Mitigation)) return false;
             
@@ -520,14 +557,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Patient != null) yield return Patient;
+				if (Identifier != null) yield return Identifier;
+				if (StatusElement != null) yield return StatusElement;
 				if (Category != null) yield return Category;
 				if (SeverityElement != null) yield return SeverityElement;
-				foreach (var elem in Implicated) { if (elem != null) yield return elem; }
-				if (DetailElement != null) yield return DetailElement;
+				if (Patient != null) yield return Patient;
 				if (DateElement != null) yield return DateElement;
 				if (Author != null) yield return Author;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Implicated) { if (elem != null) yield return elem; }
+				if (DetailElement != null) yield return DetailElement;
 				if (ReferenceElement != null) yield return ReferenceElement;
 				foreach (var elem in Mitigation) { if (elem != null) yield return elem; }
             }
@@ -539,16 +577,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Patient != null) yield return new ElementValue("patient", Patient);
-                if (Category != null) yield return new ElementValue("category", Category);
-                if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
-                foreach (var elem in Implicated) { if (elem != null) yield return new ElementValue("implicated", elem); }
-                if (DetailElement != null) yield return new ElementValue("detail", DetailElement);
-                if (DateElement != null) yield return new ElementValue("date", DateElement);
-                if (Author != null) yield return new ElementValue("author", Author);
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-                if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
-                foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                foreach (var elem in Implicated) { if (elem != null) yield return new ElementValue("implicated", true, elem); }
+                if (DetailElement != null) yield return new ElementValue("detail", false, DetailElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
+                foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", true, elem); }
             }
         }
 

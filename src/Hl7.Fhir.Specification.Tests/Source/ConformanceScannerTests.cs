@@ -36,8 +36,14 @@ namespace Hl7.Fhir.Specification.Tests
                     new Bundle.EntryComponent
                     {
                         FullUrl = "http://test.org/ValueSet/vs",
-                        Resource = new ValueSet { Url = "http://test.org/ValueSet/vs",
-                                CodeSystem = new ValueSet.CodeSystemComponent { System = "http://test.org/vs/testsystem"} }
+                        Resource = new ValueSet { Url = "http://test.org/ValueSet/vs" }
+                    },
+
+                    new Bundle.EntryComponent
+                    {
+                        FullUrl = "http://test.org/CodeSystem/cs",
+                        Resource = new CodeSystem { Url = "http://test.org/CodeSystem/cs",
+                                ValueSet = "http://test.org/ValueSet/vs" }
                     },
 
                     new Bundle.EntryComponent
@@ -81,7 +87,7 @@ namespace Hl7.Fhir.Specification.Tests
         private void assertBundle(IConformanceScanner scanner, string origin)
         {
             var list = scanner.List();
-            Assert.AreEqual(4, list.Count);
+            Assert.AreEqual(5, list.Count);
 
             Assert.AreEqual(ResourceType.StructureDefinition, list[0].ResourceType);
             Assert.AreEqual("http://test.org/StructureDefinition/sd", list[0].ResourceUri);
@@ -91,21 +97,26 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(ResourceType.ValueSet, list[1].ResourceType);
             Assert.AreEqual("http://test.org/ValueSet/vs", list[1].ResourceUri);
             Assert.AreEqual("http://test.org/ValueSet/vs", list[1].Canonical);
-            Assert.AreEqual("http://test.org/vs/testsystem", list[1].ValueSetSystem);
             Assert.AreEqual(origin, list[1].Origin);
 
-            Assert.AreEqual(ResourceType.NamingSystem, list[2].ResourceType);
-            Assert.AreEqual("http://test.org/NamingSystem/ns", list[2].ResourceUri);
-            Assert.AreEqual("http://test.org/ns/testname1", list[2].UniqueIds.First());
-            Assert.AreEqual("http://test.org/ns/testname2", list[2].UniqueIds.Skip(1).First());
+            Assert.AreEqual(ResourceType.CodeSystem, list[2].ResourceType);
+            Assert.AreEqual("http://test.org/CodeSystem/cs", list[2].ResourceUri);
+            Assert.AreEqual("http://test.org/CodeSystem/cs", list[2].Canonical);
+            Assert.AreEqual("http://test.org/ValueSet/vs", list[2].CodeSystemValueSet);
             Assert.AreEqual(origin, list[2].Origin);
 
-            Assert.AreEqual(ResourceType.ConceptMap, list[3].ResourceType);
-            Assert.AreEqual("http://test.org/ConceptMap/cm", list[3].ResourceUri);
-            Assert.AreEqual("http://test.org/ConceptMap/cm", list[3].Canonical);
-            Assert.AreEqual("http://test.org/source", list[3].ConceptMapSource);
-            Assert.AreEqual("http://test.org/target", list[3].ConceptMapTarget);
+            Assert.AreEqual(ResourceType.NamingSystem, list[3].ResourceType);
+            Assert.AreEqual("http://test.org/NamingSystem/ns", list[3].ResourceUri);
+            Assert.AreEqual("http://test.org/ns/testname1", list[3].UniqueIds.First());
+            Assert.AreEqual("http://test.org/ns/testname2", list[3].UniqueIds.Skip(1).First());
             Assert.AreEqual(origin, list[3].Origin);
+
+            Assert.AreEqual(ResourceType.ConceptMap, list[4].ResourceType);
+            Assert.AreEqual("http://test.org/ConceptMap/cm", list[4].ResourceUri);
+            Assert.AreEqual("http://test.org/ConceptMap/cm", list[4].Canonical);
+            Assert.AreEqual("http://test.org/source", list[4].ConceptMapSource);
+            Assert.AreEqual("http://test.org/target", list[4].ConceptMapTarget);
+            Assert.AreEqual(origin, list[4].Origin);
         }
 
         internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();

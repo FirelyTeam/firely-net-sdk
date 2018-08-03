@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -184,10 +185,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Purpose != null) yield return new ElementValue("purpose", Purpose);
-                    if (Name != null) yield return new ElementValue("name", Name);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
-                    if (Address != null) yield return new ElementValue("address", Address);
+                    if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
+                    if (Name != null) yield return new ElementValue("name", false, Name);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                    if (Address != null) yield return new ElementValue("address", false, Address);
                 }
             }
 
@@ -245,14 +246,15 @@ namespace Hl7.Fhir.Model
         /// Kind of organization
         /// </summary>
         [FhirElement("type", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public List<Hl7.Fhir.Model.CodeableConcept> Type
         {
-            get { return _Type; }
+            get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
         /// Name used for the organization
@@ -287,9 +289,42 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// A list of alternate names that the organization is known as, or was known as in the past
+        /// </summary>
+        [FhirElement("alias", Order=130)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.FhirString> AliasElement
+        {
+            get { if(_AliasElement==null) _AliasElement = new List<Hl7.Fhir.Model.FhirString>(); return _AliasElement; }
+            set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.FhirString> _AliasElement;
+        
+        /// <summary>
+        /// A list of alternate names that the organization is known as, or was known as in the past
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Alias
+        {
+            get { return AliasElement != null ? AliasElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  AliasElement = null; 
+                else
+                  AliasElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                OnPropertyChanged("Alias");
+            }
+        }
+        
+        /// <summary>
         /// A contact detail for the organization
         /// </summary>
-        [FhirElement("telecom", Order=130)]
+        [FhirElement("telecom", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -303,7 +338,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An address for the organization
         /// </summary>
-        [FhirElement("address", Order=140)]
+        [FhirElement("address", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -317,7 +352,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization of which this organization forms a part
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=150)]
+        [FhirElement("partOf", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -332,7 +367,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact for the organization for a certain purpose
         /// </summary>
-        [FhirElement("contact", Order=160)]
+        [FhirElement("contact", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Organization.ContactComponent> Contact
@@ -343,10 +378,26 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Organization.ContactComponent> _Contact;
         
+        /// <summary>
+        /// Technical endpoints providing access to services operated for the organization
+        /// </summary>
+        [FhirElement("endpoint", Order=180)]
+        [CLSCompliant(false)]
+		[References("Endpoint")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
+        {
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+            set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+        
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("identifier or name"))},
+            Expression = "(identifier.count() + name.count()) > 0",
             Key = "org-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The organization SHALL at least have a name or an id, and possibly more than one",
@@ -355,7 +406,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("telecom.all($this.where(use = 'home').empty())"))},
+            Expression = "telecom.all(where(use = 'home').empty())",
             Key = "org-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The telecom of an organization can never be of use 'home'",
@@ -364,7 +415,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("address.all($this.where(use = 'home').empty())"))},
+            Expression = "address.all(where(use = 'home').empty())",
             Key = "org-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "An address of an organization can never be of use 'home'",
@@ -389,12 +440,14 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.ContactComponent>(Contact.DeepCopy());
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
             else
@@ -416,10 +469,12 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }
@@ -434,10 +489,12 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }
@@ -450,12 +507,14 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
-				if (Type != null) yield return Type;
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
 				if (NameElement != null) yield return NameElement;
+				foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
 				foreach (var elem in Address) { if (elem != null) yield return elem; }
 				if (PartOf != null) yield return PartOf;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
             }
         }
 
@@ -465,14 +524,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
-                if (Type != null) yield return new ElementValue("type", Type);
-                if (NameElement != null) yield return new ElementValue("name", NameElement);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
-                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
-                if (PartOf != null) yield return new ElementValue("partOf", PartOf);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
+                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
             }
         }
 

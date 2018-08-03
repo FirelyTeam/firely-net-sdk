@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -69,9 +70,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Whether this related person's record is in active use
+        /// </summary>
+        [FhirElement("active", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
+        {
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+        
+        /// <summary>
+        /// Whether this related person's record is in active use
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
+        {
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
+        
+        /// <summary>
         /// The patient this person is related to
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=100)]
+        [FhirElement("patient", InSummary=true, Order=110)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -87,7 +120,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The nature of the relationship
         /// </summary>
-        [FhirElement("relationship", InSummary=true, Order=110)]
+        [FhirElement("relationship", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Relationship
         {
@@ -100,20 +133,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=120)]
+        [FhirElement("name", InSummary=true, Order=130)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.HumanName Name
+        public List<Hl7.Fhir.Model.HumanName> Name
         {
-            get { return _Name; }
+            get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.HumanName>(); return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
         
-        private Hl7.Fhir.Model.HumanName _Name;
+        private List<Hl7.Fhir.Model.HumanName> _Name;
         
         /// <summary>
         /// A contact detail for the person
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=130)]
+        [FhirElement("telecom", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -127,7 +161,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=140)]
+        [FhirElement("gender", InSummary=true, Order=150)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
         {
@@ -159,7 +193,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date on which the related person was born
         /// </summary>
-        [FhirElement("birthDate", InSummary=true, Order=150)]
+        [FhirElement("birthDate", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Date BirthDateElement
         {
@@ -191,7 +225,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Address where the related person can be contacted or visited
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=160)]
+        [FhirElement("address", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -205,7 +239,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Image of the person
         /// </summary>
-        [FhirElement("photo", Order=170)]
+        [FhirElement("photo", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Attachment> Photo
@@ -219,7 +253,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Period of time that this relationship is considered valid
         /// </summary>
-        [FhirElement("period", Order=180)]
+        [FhirElement("period", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -244,9 +278,10 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
-                if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
+                if(Name != null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
@@ -271,6 +306,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.Matches(Name, otherT.Name)) return false;
@@ -291,6 +327,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.IsExactly(Name, otherT.Name)) return false;
@@ -311,9 +348,10 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
 				if (Patient != null) yield return Patient;
 				if (Relationship != null) yield return Relationship;
-				if (Name != null) yield return Name;
+				foreach (var elem in Name) { if (elem != null) yield return elem; }
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
 				if (GenderElement != null) yield return GenderElement;
 				if (BirthDateElement != null) yield return BirthDateElement;
@@ -329,16 +367,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (Patient != null) yield return new ElementValue("patient", Patient);
-                if (Relationship != null) yield return new ElementValue("relationship", Relationship);
-                if (Name != null) yield return new ElementValue("name", Name);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
-                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
-                if (BirthDateElement != null) yield return new ElementValue("birthDate", BirthDateElement);
-                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
-                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", elem); }
-                if (Period != null) yield return new ElementValue("period", Period);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", false, BirthDateElement);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
+                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, elem); }
+                if (Period != null) yield return new ElementValue("period", false, Period);
             }
         }
 

@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,117 +56,44 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Composition"; } }
         
         /// <summary>
-        /// The workflow/clinical status of the composition.
-        /// (url: http://hl7.org/fhir/ValueSet/composition-status)
+        ///  Set of codes used to value Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
+        /// (url: http://hl7.org/fhir/ValueSet/v3-ConfidentialityClassification)
         /// </summary>
-        [FhirEnumeration("CompositionStatus")]
-        public enum CompositionStatus
+        [FhirEnumeration("ConfidentialityClassification")]
+        public enum ConfidentialityClassification
         {
             /// <summary>
-            /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
-            /// (system: http://hl7.org/fhir/composition-status)
-            /// </summary>
-            [EnumLiteral("preliminary", "http://hl7.org/fhir/composition-status"), Description("Preliminary")]
-            Preliminary,
-            /// <summary>
-            /// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
-            /// (system: http://hl7.org/fhir/composition-status)
-            /// </summary>
-            [EnumLiteral("final", "http://hl7.org/fhir/composition-status"), Description("Final")]
-            Final,
-            /// <summary>
-            /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
-            /// (system: http://hl7.org/fhir/composition-status)
-            /// </summary>
-            [EnumLiteral("amended", "http://hl7.org/fhir/composition-status"), Description("Amended")]
-            Amended,
-            /// <summary>
-            /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
-            /// (system: http://hl7.org/fhir/composition-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/composition-status"), Description("Entered in Error")]
-            EnteredInError,
-        }
-
-        /// <summary>
-        ///  A set of codes specifying the security classification of acts and roles in accordance with the definition for concept domain "Confidentiality".
-        /// (url: http://hl7.org/fhir/ValueSet/v3-Confidentiality)
-        /// </summary>
-        [FhirEnumeration("v3CodeSystemConfidentiality")]
-        public enum v3CodeSystemConfidentiality
-        {
-            /// <summary>
-            /// A specializable code and its leaf codes used in Confidentiality value sets to value the Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
-            /// (system: http://hl7.org/fhir/v3/Confidentiality)
-            /// </summary>
-            [EnumLiteral("_Confidentiality", "http://hl7.org/fhir/v3/Confidentiality"), Description("Confidentiality")]
-            Confidentiality,
-            /// <summary>
-            /// Definition: Privacy metadata indicating that the information has been de-identified, and there are mitigating circumstances that prevent re-identification, which minimize risk of harm from unauthorized disclosure.  The information requires protection to maintain low sensitivity.
-        ///                         
-        ///                            Examples: Includes anonymized, pseudonymized, or non-personally identifiable information such as HIPAA limited data sets.
-        ///                         
-        ///                            Map: No clear map to ISO 13606-4 Sensitivity Level (1) Care Management:   RECORD_COMPONENTs that might need to be accessed by a wide range of administrative staff to manage the subject of care's access to health services.
-        ///                         
-        ///                            Usage Note: This metadata indicates the receiver may have an obligation to comply with a data use agreement.
-            /// (system: http://hl7.org/fhir/v3/Confidentiality)
-            /// </summary>
-            [EnumLiteral("L", "http://hl7.org/fhir/v3/Confidentiality"), Description("low")]
-            L,
-            /// <summary>
-            /// Definition: Privacy metadata indicating moderately sensitive information, which presents moderate risk of harm if disclosed without authorization.
-        ///                         
-        ///                            Examples: Includes allergies of non-sensitive nature used inform food service; health information a patient authorizes to be used for marketing, released to a bank for a health credit card or savings account; or information in personal health record systems that are not governed under health privacy laws.
-        ///                         
-        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (2) Clinical Management:  Less sensitive RECORD_COMPONENTs that might need to be accessed by a wider range of personnel not all of whom are actively caring for the patient (e.g. radiology staff).
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with the receiver's terms of use or privacy policies.
-            /// (system: http://hl7.org/fhir/v3/Confidentiality)
-            /// </summary>
-            [EnumLiteral("M", "http://hl7.org/fhir/v3/Confidentiality"), Description("moderate")]
-            M,
-            /// <summary>
-            /// Definition: Privacy metadata indicating that the information is typical, non-stigmatizing health information, which presents typical risk of harm if disclosed without authorization.
-        ///                         
-        ///                            Examples: In the US, this includes what HIPAA identifies as the minimum necessary protected health information (PHI) given a covered purpose of use (treatment, payment, or operations).  Includes typical, non-stigmatizing health information disclosed in an application for health, workers compensation, disability, or life insurance.
-        ///                         
-        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (3) Clinical Care:   Default for normal clinical care access (i.e. most clinical staff directly caring for the patient should be able to access nearly all of the EHR).   Maps to normal confidentiality for treatment information but not to ancillary care, payment and operations.
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable jurisdictional privacy law or disclosure authorization.
-            /// (system: http://hl7.org/fhir/v3/Confidentiality)
-            /// </summary>
-            [EnumLiteral("N", "http://hl7.org/fhir/v3/Confidentiality"), Description("normal")]
-            N,
-            /// <summary>
-            /// Privacy metadata indicating highly sensitive, potentially stigmatizing information, which presents a high risk to the information subject if disclosed without authorization. May be pre-empted by jurisdictional law, e.g. for public health reporting or emergency treatment.
-        ///                         
-        ///                            Examples: Includes information that is additionally protected such as sensitive conditions mental health, HIV, substance abuse, domestic violence, child abuse, genetic disease, and reproductive health; or sensitive demographic information such as a patient's standing as an employee or a celebrity. May be used to indicate proprietary or classified information that is not related to an individual, e.g. secret ingredients in a therapeutic substance; or the name of a manufacturer.
-        ///                         
-        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (3) Clinical Care: Default for normal clinical care access (i.e. most clinical staff directly caring for the patient should be able to access nearly all of the EHR). Maps to normal confidentiality for treatment information but not to ancillary care, payment and operations..
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable, prevailing (default) jurisdictional privacy law or disclosure authorization..
-            /// (system: http://hl7.org/fhir/v3/Confidentiality)
-            /// </summary>
-            [EnumLiteral("R", "http://hl7.org/fhir/v3/Confidentiality"), Description("restricted")]
-            R,
-            /// <summary>
-            /// Definition: Privacy metadata indicating that the information is not classified as sensitive.
-        ///                         
-        ///                            Examples: Includes publicly available information, e.g. business name, phone, email or physical address.
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver has no obligation to consider additional policies when making access control decisions.   Note that in some jurisdictions, personally identifiable information must be protected as confidential, so it would not be appropriate to assign a confidentiality code of "unrestricted"  to that information even if it is publicly available.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("U", "http://hl7.org/fhir/v3/Confidentiality"), Description("unrestricted")]
             U,
             /// <summary>
-            /// . Privacy metadata indicating that the information is extremely sensitive and likely stigmatizing health information that presents a very high risk if disclosed without authorization.  This information must be kept in the highest confidence.  
-        ///                         
-        ///                            Examples:  Includes information about a victim of abuse, patient requested information sensitivity, and taboo subjects relating to health status that must be discussed with the patient by an attending provider before sharing with the patient.  May also include information held under â€œlegal lockâ€? or attorney-client privilege
-        ///                         
-        ///                            Map:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
-        ///                         
-        ///                            Usage Note:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("L", "http://hl7.org/fhir/v3/Confidentiality"), Description("low")]
+            L,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("M", "http://hl7.org/fhir/v3/Confidentiality"), Description("moderate")]
+            M,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("N", "http://hl7.org/fhir/v3/Confidentiality"), Description("normal")]
+            N,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("R", "http://hl7.org/fhir/v3/Confidentiality"), Description("restricted")]
+            R,
+            /// <summary>
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("V", "http://hl7.org/fhir/v3/Confidentiality"), Description("very restricted")]
@@ -180,25 +108,25 @@ namespace Hl7.Fhir.Model
         public enum CompositionAttestationMode
         {
             /// <summary>
-            /// The person authenticated the content in their personal capacity.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("personal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Personal")]
             Personal,
             /// <summary>
-            /// The person authenticated the content in their professional capacity.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("professional", "http://hl7.org/fhir/composition-attestation-mode"), Description("Professional")]
             Professional,
             /// <summary>
-            /// The person authenticated the content and accepted legal responsibility for its content.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("legal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Legal")]
             Legal,
             /// <summary>
-            /// The organization authenticated the content as consistent with their policies and procedures.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("official", "http://hl7.org/fhir/composition-attestation-mode"), Description("Official")]
@@ -207,7 +135,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("AttesterComponent")]
         [DataContract]
-        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "AttesterComponent"; } }
@@ -246,7 +174,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// When composition attested
+            /// When the composition was attested
             /// </summary>
             [FhirElement("time", InSummary=true, Order=50)]
             [DataMember]
@@ -259,7 +187,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDateTime _TimeElement;
             
             /// <summary>
-            /// When composition attested
+            /// When the composition was attested
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -358,9 +286,136 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in ModeElement) { if (elem != null) yield return new ElementValue("mode", elem); }
-                    if (TimeElement != null) yield return new ElementValue("time", TimeElement);
-                    if (Party != null) yield return new ElementValue("party", Party);
+                    foreach (var elem in ModeElement) { if (elem != null) yield return new ElementValue("mode", true, elem); }
+                    if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
+                    if (Party != null) yield return new ElementValue("party", false, Party);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("RelatesToComponent")]
+        [DataContract]
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "RelatesToComponent"; } }
+            
+            /// <summary>
+            /// replaces | transforms | signs | appends
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.DocumentRelationshipType> _CodeElement;
+            
+            /// <summary>
+            /// replaces | transforms | signs | appends
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.DocumentRelationshipType? Code
+            {
+                get { return CodeElement != null ? CodeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        CodeElement = null; 
+                    else
+                        CodeElement = new Code<Hl7.Fhir.Model.DocumentRelationshipType>(value);
+                    OnPropertyChanged("Code");
+                }
+            }
+            
+            /// <summary>
+            /// Target of the relationship
+            /// </summary>
+            [FhirElement("target", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Target
+            {
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Target;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as RelatesToComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.DocumentRelationshipType>)CodeElement.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new RelatesToComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as RelatesToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as RelatesToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (CodeElement != null) yield return CodeElement;
+                    if (Target != null) yield return Target;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (Target != null) yield return new ElementValue("target", false, Target);
                 }
             }
 
@@ -370,7 +425,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EventComponent")]
         [DataContract]
-        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "EventComponent"; } }
@@ -484,9 +539,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
-                    if (Period != null) yield return new ElementValue("period", Period);
-                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", true, elem); }
                 }
             }
 
@@ -496,7 +551,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SectionComponent")]
         [DataContract]
-        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "SectionComponent"; } }
@@ -733,14 +788,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
-                    if (Code != null) yield return new ElementValue("code", Code);
-                    if (Text != null) yield return new ElementValue("text", Text);
-                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
-                    if (OrderedBy != null) yield return new ElementValue("orderedBy", OrderedBy);
-                    foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
-                    if (EmptyReason != null) yield return new ElementValue("emptyReason", EmptyReason);
-                    foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", elem); }
+                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (Text != null) yield return new ElementValue("text", false, Text);
+                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
+                    if (OrderedBy != null) yield return new ElementValue("orderedBy", false, OrderedBy);
+                    foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }
+                    if (EmptyReason != null) yield return new ElementValue("emptyReason", false, EmptyReason);
+                    foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", true, elem); }
                 }
             }
 
@@ -762,35 +817,35 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// Composition editing time
+        /// preliminary | final | amended | entered-in-error
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement
+        public Code<Hl7.Fhir.Model.CompositionStatus> StatusElement
         {
-            get { return _DateElement; }
-            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        private Code<Hl7.Fhir.Model.CompositionStatus> _StatusElement;
         
         /// <summary>
-        /// Composition editing time
+        /// preliminary | final | amended | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Date
+        public Hl7.Fhir.Model.CompositionStatus? Status
         {
-            get { return DateElement != null ? DateElement.Value : null; }
+            get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if (value == null)
-                  DateElement = null; 
+                if (!value.HasValue)
+                  StatusElement = null; 
                 else
-                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Date");
+                  StatusElement = new Code<Hl7.Fhir.Model.CompositionStatus>(value);
+                OnPropertyChanged("Status");
             }
         }
         
@@ -822,9 +877,89 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Class;
         
         /// <summary>
+        /// Who and/or what the composition is about
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=130)]
+        [CLSCompliant(false)]
+		[References()]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// Context of the Composition
+        /// </summary>
+        [FhirElement("encounter", InSummary=true, Order=140)]
+        [CLSCompliant(false)]
+		[References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        
+        /// <summary>
+        /// Composition editing time
+        /// </summary>
+        [FhirElement("date", InSummary=true, Order=150)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// Composition editing time
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
+        /// Who and/or what authored the composition
+        /// </summary>
+        [FhirElement("author", InSummary=true, Order=160)]
+        [CLSCompliant(false)]
+		[References("Practitioner","Device","Patient","RelatedPerson")]
+        [Cardinality(Min=1,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Author
+        {
+            get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Author;
+        
+        /// <summary>
         /// Human Readable name/title
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=130)]
+        [FhirElement("title", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -855,50 +990,17 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// preliminary | final | amended | entered-in-error
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.Composition.CompositionStatus> StatusElement
-        {
-            get { return _StatusElement; }
-            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.Composition.CompositionStatus> _StatusElement;
-        
-        /// <summary>
-        /// preliminary | final | amended | entered-in-error
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Composition.CompositionStatus? Status
-        {
-            get { return StatusElement != null ? StatusElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  StatusElement = null; 
-                else
-                  StatusElement = new Code<Hl7.Fhir.Model.Composition.CompositionStatus>(value);
-                OnPropertyChanged("Status");
-            }
-        }
-        
-        /// <summary>
         /// As defined by affinity domain
         /// </summary>
-        [FhirElement("confidentiality", InSummary=true, Order=150)]
+        [FhirElement("confidentiality", InSummary=true, Order=180)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality> ConfidentialityElement
+        public Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification> ConfidentialityElement
         {
             get { return _ConfidentialityElement; }
             set { _ConfidentialityElement = value; OnPropertyChanged("ConfidentialityElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality> _ConfidentialityElement;
+        private Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification> _ConfidentialityElement;
         
         /// <summary>
         /// As defined by affinity domain
@@ -906,7 +1008,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality? Confidentiality
+        public Hl7.Fhir.Model.Composition.ConfidentialityClassification? Confidentiality
         {
             get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
             set
@@ -914,47 +1016,15 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   ConfidentialityElement = null; 
                 else
-                  ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality>(value);
+                  ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification>(value);
                 OnPropertyChanged("Confidentiality");
             }
         }
         
         /// <summary>
-        /// Who and/or what the composition is about
-        /// </summary>
-        [FhirElement("subject", InSummary=true, Order=160)]
-        [CLSCompliant(false)]
-		[References()]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
-        {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Subject;
-        
-        /// <summary>
-        /// Who and/or what authored the composition
-        /// </summary>
-        [FhirElement("author", InSummary=true, Order=170)]
-        [CLSCompliant(false)]
-		[References("Practitioner","Device","Patient","RelatedPerson")]
-        [Cardinality(Min=1,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Author
-        {
-            get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Author;
-        
-        /// <summary>
         /// Attests to accuracy of composition
         /// </summary>
-        [FhirElement("attester", InSummary=true, Order=180)]
+        [FhirElement("attester", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Composition.AttesterComponent> Attester
@@ -968,7 +1038,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization which maintains the composition
         /// </summary>
-        [FhirElement("custodian", InSummary=true, Order=190)]
+        [FhirElement("custodian", InSummary=true, Order=200)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -981,9 +1051,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Custodian;
         
         /// <summary>
+        /// Relationships to other compositions/documents
+        /// </summary>
+        [FhirElement("relatesTo", InSummary=true, Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Composition.RelatesToComponent> RelatesTo
+        {
+            get { if(_RelatesTo==null) _RelatesTo = new List<Hl7.Fhir.Model.Composition.RelatesToComponent>(); return _RelatesTo; }
+            set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Composition.RelatesToComponent> _RelatesTo;
+        
+        /// <summary>
         /// The clinical service(s) being documented
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=200)]
+        [FhirElement("event", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Composition.EventComponent> Event
@@ -995,24 +1079,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Composition.EventComponent> _Event;
         
         /// <summary>
-        /// Context of the Composition
-        /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=210)]
-        [CLSCompliant(false)]
-		[References("Encounter")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
-        {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
-        
-        /// <summary>
         /// Composition is broken into sections
         /// </summary>
-        [FhirElement("section", Order=220)]
+        [FhirElement("section", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -1024,30 +1093,30 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
         
 
-        public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("section.all(emptyReason.empty() or entry.empty())"))},
-            Key = "cmp-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A section can only have an emptyReason if it is empty",
-            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
-        };
-
         public static ElementDefinition.ConstraintComponent Composition_CMP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("section.all(text or entry or section)"))},
+            Expression = "section.all(text.exists() or entry.exists() or section.exists())",
             Key = "cmp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A section must at least one of text, entries, or sub-sections",
             Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
         };
 
+        public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "section.all(emptyReason.empty() or entry.empty())",
+            Key = "cmp-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A section can only have an emptyReason if it is empty",
+            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(Composition_CMP_2);
             InvariantConstraints.Add(Composition_CMP_1);
+            InvariantConstraints.Add(Composition_CMP_2);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1058,18 +1127,19 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CompositionStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
-                if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Composition.CompositionStatus>)StatusElement.DeepCopy();
-                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality>)ConfidentialityElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
+                if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
+                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification>)ConfidentialityElement.DeepCopy();
                 if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(Attester.DeepCopy());
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
+                if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.Composition.RelatesToComponent>(RelatesTo.DeepCopy());
                 if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Composition.EventComponent>(Event.DeepCopy());
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                 return dest;
             }
@@ -1089,18 +1159,19 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Class, otherT.Class)) return false;
-            if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+            if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
+            if( !DeepComparable.Matches(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.Matches(Attester, otherT.Attester)) return false;
             if( !DeepComparable.Matches(Custodian, otherT.Custodian)) return false;
+            if( !DeepComparable.Matches(RelatesTo, otherT.RelatesTo)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Section, otherT.Section)) return false;
             
             return true;
@@ -1113,18 +1184,19 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
-            if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
+            if( !DeepComparable.IsExactly(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.IsExactly(Attester, otherT.Attester)) return false;
             if( !DeepComparable.IsExactly(Custodian, otherT.Custodian)) return false;
+            if( !DeepComparable.IsExactly(RelatesTo, otherT.RelatesTo)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
             
             return true;
@@ -1137,18 +1209,19 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
-				if (DateElement != null) yield return DateElement;
+				if (StatusElement != null) yield return StatusElement;
 				if (Type != null) yield return Type;
 				if (Class != null) yield return Class;
-				if (TitleElement != null) yield return TitleElement;
-				if (StatusElement != null) yield return StatusElement;
-				if (ConfidentialityElement != null) yield return ConfidentialityElement;
 				if (Subject != null) yield return Subject;
+				if (Encounter != null) yield return Encounter;
+				if (DateElement != null) yield return DateElement;
 				foreach (var elem in Author) { if (elem != null) yield return elem; }
+				if (TitleElement != null) yield return TitleElement;
+				if (ConfidentialityElement != null) yield return ConfidentialityElement;
 				foreach (var elem in Attester) { if (elem != null) yield return elem; }
 				if (Custodian != null) yield return Custodian;
+				foreach (var elem in RelatesTo) { if (elem != null) yield return elem; }
 				foreach (var elem in Event) { if (elem != null) yield return elem; }
-				if (Encounter != null) yield return Encounter;
 				foreach (var elem in Section) { if (elem != null) yield return elem; }
             }
         }
@@ -1159,20 +1232,21 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-                if (DateElement != null) yield return new ElementValue("date", DateElement);
-                if (Type != null) yield return new ElementValue("type", Type);
-                if (Class != null) yield return new ElementValue("class", Class);
-                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (ConfidentialityElement != null) yield return new ElementValue("confidentiality", ConfidentialityElement);
-                if (Subject != null) yield return new ElementValue("subject", Subject);
-                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
-                foreach (var elem in Attester) { if (elem != null) yield return new ElementValue("attester", elem); }
-                if (Custodian != null) yield return new ElementValue("custodian", Custodian);
-                foreach (var elem in Event) { if (elem != null) yield return new ElementValue("event", elem); }
-                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-                foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Class != null) yield return new ElementValue("class", false, Class);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                if (ConfidentialityElement != null) yield return new ElementValue("confidentiality", false, ConfidentialityElement);
+                foreach (var elem in Attester) { if (elem != null) yield return new ElementValue("attester", true, elem); }
+                if (Custodian != null) yield return new ElementValue("custodian", false, Custodian);
+                foreach (var elem in RelatesTo) { if (elem != null) yield return new ElementValue("relatesTo", true, elem); }
+                foreach (var elem in Event) { if (elem != null) yield return new ElementValue("event", true, elem); }
+                foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", true, elem); }
             }
         }
 

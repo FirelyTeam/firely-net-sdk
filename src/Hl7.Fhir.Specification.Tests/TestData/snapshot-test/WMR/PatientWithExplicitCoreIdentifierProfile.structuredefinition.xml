@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-02-07T18:07:19.599+01:00" />
@@ -9,9 +9,10 @@
   <date value="2017-02-07T18:05:54.4377451+01:00" />
   <description value="StructureDefinition for Patient Resource with custom identifier profile" />
   <kind value="resource" />
-  <constrainedType value="Patient" />
+  <type value="Patient" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Patient" />

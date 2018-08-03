@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,55 +63,55 @@ namespace Hl7.Fhir.Model
         public enum BundleType
         {
             /// <summary>
-            /// The bundle is a document. The first resource is a Composition.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("document", "http://hl7.org/fhir/bundle-type"), Description("Document")]
             Document,
             /// <summary>
-            /// The bundle is a message. The first resource is a MessageHeader.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("message", "http://hl7.org/fhir/bundle-type"), Description("Message")]
             Message,
             /// <summary>
-            /// The bundle is a transaction - intended to be processed by a server as an atomic commit.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("transaction", "http://hl7.org/fhir/bundle-type"), Description("Transaction")]
             Transaction,
             /// <summary>
-            /// The bundle is a transaction response. Because the response is a transaction response, the transactionhas succeeded, and all responses are error free.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("transaction-response", "http://hl7.org/fhir/bundle-type"), Description("Transaction Response")]
             TransactionResponse,
             /// <summary>
-            /// The bundle is a transaction - intended to be processed by a server as a group of actions.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("batch", "http://hl7.org/fhir/bundle-type"), Description("Batch")]
             Batch,
             /// <summary>
-            /// The bundle is a batch response. Note that as a batch, some responses may indicate failure and others success.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("batch-response", "http://hl7.org/fhir/bundle-type"), Description("Batch Response")]
             BatchResponse,
             /// <summary>
-            /// The bundle is a list of resources from a history interaction on a server.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("history", "http://hl7.org/fhir/bundle-type"), Description("History List")]
             History,
             /// <summary>
-            /// The bundle is a list of resources returned as a result of a search/query interaction, operation, or message.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("searchset", "http://hl7.org/fhir/bundle-type"), Description("Search Results")]
             Searchset,
             /// <summary>
-            /// The bundle is a set of resources collected into a single document for ease of distribution.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("collection", "http://hl7.org/fhir/bundle-type"), Description("Collection")]
@@ -125,19 +126,19 @@ namespace Hl7.Fhir.Model
         public enum SearchEntryMode
         {
             /// <summary>
-            /// This resource matched the search specification.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
             [EnumLiteral("match", "http://hl7.org/fhir/search-entry-mode"), Description("Match")]
             Match,
             /// <summary>
-            /// This resource is returned because it is referred to from another resource in the search set.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
             [EnumLiteral("include", "http://hl7.org/fhir/search-entry-mode"), Description("Include")]
             Include,
             /// <summary>
-            /// An OperationOutcome that provides additional information about the processing of a search.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
             [EnumLiteral("outcome", "http://hl7.org/fhir/search-entry-mode"), Description("Outcome")]
@@ -152,25 +153,25 @@ namespace Hl7.Fhir.Model
         public enum HTTPVerb
         {
             /// <summary>
-            /// HTTP GET
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("GET", "http://hl7.org/fhir/http-verb"), Description("GET")]
             GET,
             /// <summary>
-            /// HTTP POST
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("POST", "http://hl7.org/fhir/http-verb"), Description("POST")]
             POST,
             /// <summary>
-            /// HTTP PUT
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("PUT", "http://hl7.org/fhir/http-verb"), Description("PUT")]
             PUT,
             /// <summary>
-            /// HTTP DELETE
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("DELETE", "http://hl7.org/fhir/http-verb"), Description("DELETE")]
@@ -179,13 +180,13 @@ namespace Hl7.Fhir.Model
 
         [FhirType("LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
-            /// http://www.iana.org/assignments/link-relations/link-relations.xhtml
+            /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
             /// </summary>
             [FhirElement("relation", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -199,7 +200,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _RelationElement;
             
             /// <summary>
-            /// http://www.iana.org/assignments/link-relations/link-relations.xhtml
+            /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -312,8 +313,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RelationElement != null) yield return new ElementValue("relation", RelationElement);
-                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                    if (RelationElement != null) yield return new ElementValue("relation", false, RelationElement);
+                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
                 }
             }
 
@@ -323,7 +324,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EntryComponent")]
         [DataContract]
-        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "EntryComponent"; } }
@@ -506,12 +507,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
-                    if (FullUrlElement != null) yield return new ElementValue("fullUrl", FullUrlElement);
-                    if (Resource != null) yield return new ElementValue("resource", Resource);
-                    if (Search != null) yield return new ElementValue("search", Search);
-                    if (Request != null) yield return new ElementValue("request", Request);
-                    if (Response != null) yield return new ElementValue("response", Response);
+                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
+                    if (FullUrlElement != null) yield return new ElementValue("fullUrl", false, FullUrlElement);
+                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
+                    if (Search != null) yield return new ElementValue("search", false, Search);
+                    if (Request != null) yield return new ElementValue("request", false, Request);
+                    if (Response != null) yield return new ElementValue("response", false, Response);
                 }
             }
 
@@ -521,7 +522,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SearchComponent")]
         [DataContract]
-        public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "SearchComponent"; } }
@@ -652,8 +653,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
-                    if (ScoreElement != null) yield return new ElementValue("score", ScoreElement);
+                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
+                    if (ScoreElement != null) yield return new ElementValue("score", false, ScoreElement);
                 }
             }
 
@@ -663,7 +664,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RequestComponent")]
         [DataContract]
-        public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "RequestComponent"; } }
@@ -940,12 +941,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MethodElement != null) yield return new ElementValue("method", MethodElement);
-                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-                    if (IfNoneMatchElement != null) yield return new ElementValue("ifNoneMatch", IfNoneMatchElement);
-                    if (IfModifiedSinceElement != null) yield return new ElementValue("ifModifiedSince", IfModifiedSinceElement);
-                    if (IfMatchElement != null) yield return new ElementValue("ifMatch", IfMatchElement);
-                    if (IfNoneExistElement != null) yield return new ElementValue("ifNoneExist", IfNoneExistElement);
+                    if (MethodElement != null) yield return new ElementValue("method", false, MethodElement);
+                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                    if (IfNoneMatchElement != null) yield return new ElementValue("ifNoneMatch", false, IfNoneMatchElement);
+                    if (IfModifiedSinceElement != null) yield return new ElementValue("ifModifiedSince", false, IfModifiedSinceElement);
+                    if (IfMatchElement != null) yield return new ElementValue("ifMatch", false, IfMatchElement);
+                    if (IfNoneExistElement != null) yield return new ElementValue("ifNoneExist", false, IfNoneExistElement);
                 }
             }
 
@@ -955,13 +956,13 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ResponseComponent")]
         [DataContract]
-        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "ResponseComponent"; } }
             
             /// <summary>
-            /// Status return code for entry
+            /// Status response code (text optional)
             /// </summary>
             [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -975,7 +976,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _StatusElement;
             
             /// <summary>
-            /// Status return code for entry
+            /// Status response code (text optional)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1089,6 +1090,21 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// OperationOutcome with hints and warnings (for batch/transaction)
+            /// </summary>
+            [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+            [DataMember]
+            public Hl7.Fhir.Model.Resource Outcome
+            {
+                get { return _Outcome; }
+                set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            }
+            
+            private Hl7.Fhir.Model.Resource _Outcome;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ResponseComponent;
@@ -1100,6 +1116,7 @@ namespace Hl7.Fhir.Model
                     if(LocationElement != null) dest.LocationElement = (Hl7.Fhir.Model.FhirUri)LocationElement.DeepCopy();
                     if(EtagElement != null) dest.EtagElement = (Hl7.Fhir.Model.FhirString)EtagElement.DeepCopy();
                     if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.Instant)LastModifiedElement.DeepCopy();
+                    if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.Resource)Outcome.DeepCopy();
                     return dest;
                 }
                 else
@@ -1121,6 +1138,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
                 if( !DeepComparable.Matches(EtagElement, otherT.EtagElement)) return false;
                 if( !DeepComparable.Matches(LastModifiedElement, otherT.LastModifiedElement)) return false;
+                if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
                 
                 return true;
             }
@@ -1135,6 +1153,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
                 if( !DeepComparable.IsExactly(EtagElement, otherT.EtagElement)) return false;
                 if( !DeepComparable.IsExactly(LastModifiedElement, otherT.LastModifiedElement)) return false;
+                if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
                 
                 return true;
             }
@@ -1150,6 +1169,7 @@ namespace Hl7.Fhir.Model
                     if (LocationElement != null) yield return LocationElement;
                     if (EtagElement != null) yield return EtagElement;
                     if (LastModifiedElement != null) yield return LastModifiedElement;
+                    if (Outcome != null) yield return Outcome;
                 }
             }
 
@@ -1159,10 +1179,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                    if (LocationElement != null) yield return new ElementValue("location", LocationElement);
-                    if (EtagElement != null) yield return new ElementValue("etag", EtagElement);
-                    if (LastModifiedElement != null) yield return new ElementValue("lastModified", LastModifiedElement);
+                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                    if (LocationElement != null) yield return new ElementValue("location", false, LocationElement);
+                    if (EtagElement != null) yield return new ElementValue("etag", false, EtagElement);
+                    if (LastModifiedElement != null) yield return new ElementValue("lastModified", false, LastModifiedElement);
+                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
                 }
             }
 
@@ -1171,9 +1192,22 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Persistent identifier for the bundle
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=50)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=50)]
+        [FhirElement("type", InSummary=true, Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Bundle.BundleType> TypeElement
@@ -1206,7 +1240,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If search, the total number of matches
         /// </summary>
-        [FhirElement("total", InSummary=true, Order=60)]
+        [FhirElement("total", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt TotalElement
         {
@@ -1238,7 +1272,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Links related to this Bundle
         /// </summary>
-        [FhirElement("link", InSummary=true, Order=70)]
+        [FhirElement("link", InSummary=true, Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
@@ -1252,7 +1286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entry in the bundle - will have a resource, or information
         /// </summary>
-        [FhirElement("entry", InSummary=true, Order=80)]
+        [FhirElement("entry", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
@@ -1266,7 +1300,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Digital Signature
         /// </summary>
-        [FhirElement("signature", InSummary=true, Order=90)]
+        [FhirElement("signature", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Signature Signature
         {
@@ -1277,36 +1311,27 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Signature _Signature;
         
 
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.search.empty() or (type = 'searchset')"))},
-            Key = "bdl-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "entry.search only when a search",
-            Xpath = "not(f:entry/f:search) or (f:type/@value = 'searchset')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("total.empty() or (type = 'searchset') or (type = 'history')"))},
-            Key = "bdl-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "total only when a search or history",
-            Xpath = "not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"
-        };
-
         public static ElementDefinition.ConstraintComponent Bundle_BDL_7 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.where(fullUrl).select(fullUrl|resource.meta.versionId).isDistinct()"))},
+            Expression = "entry.where(fullUrl).select(fullUrl&resource.meta.versionId).isDistinct()",
             Key = "bdl-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
             Xpath = "count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0"
         };
 
+        public static ElementDefinition.ConstraintComponent Bundle_BDL_9 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "type = 'document' implies (identifier.system.exists() and identifier.value.exists())",
+            Key = "bdl-9",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A document must have an identifier with a system and a value",
+            Xpath = "not(f:type/@value = 'document') or exists(f:identifier/f:system) or exists(f:identifier/f:value)"
+        };
+
         public static ElementDefinition.ConstraintComponent Bundle_BDL_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.request.empty() or type = 'batch' or type = 'transaction' or type = 'history'"))},
+            Expression = "entry.request.empty() or type = 'batch' or type = 'transaction' or type = 'history'",
             Key = "bdl-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "entry.request only for some types of bundles",
@@ -1315,42 +1340,61 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_4 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.response.empty() or type = 'batch-response' or type = 'transaction-response'"))},
+            Expression = "entry.response.empty() or type = 'batch-response' or type = 'transaction-response'",
             Key = "bdl-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "entry.response only for some types of bundles",
             Xpath = "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response')"
         };
 
+        public static ElementDefinition.ConstraintComponent Bundle_BDL_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "total.empty() or (type = 'searchset') or (type = 'history')",
+            Key = "bdl-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "total only when a search or history",
+            Xpath = "not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"
+        };
+
+        public static ElementDefinition.ConstraintComponent Bundle_BDL_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "entry.search.empty() or (type = 'searchset')",
+            Key = "bdl-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "entry.search only when a search",
+            Xpath = "not(f:entry/f:search) or (f:type/@value = 'searchset')"
+        };
+
+        public static ElementDefinition.ConstraintComponent Bundle_BDL_8 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "entry.all(fullUrl.contains('/_history/').not())",
+            Key = "bdl-8",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "fullUrl cannot be a version specific reference",
+            Xpath = "not(exists(f:fullUrl[contains(string(@value), '/_history/')]))"
+        };
+
         public static ElementDefinition.ConstraintComponent Bundle_BDL_5 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.all(resource or request or response)"))},
+            Expression = "entry.all(resource.exists() or request.exists() or response.exists())",
             Key = "bdl-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "must be a resource unless there's a request or response",
-            Xpath = "f:resource or f:request or f:response"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_6 = new ElementDefinition.ConstraintComponent()
-        {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.all(fullUrl.empty() xor resource)"))},
-            Key = "bdl-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The fullUrl element must be present when a resource is present, and not present otherwise",
-            Xpath = "(not(exists(f:fullUrl)) and not(exists(f:resource))) or (exists(f:fullUrl) and exists(f:resource))"
+            Xpath = "exists(f:resource) or exists(f:request) or exists(f:response)"
         };
 
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(Bundle_BDL_2);
-            InvariantConstraints.Add(Bundle_BDL_1);
             InvariantConstraints.Add(Bundle_BDL_7);
+            InvariantConstraints.Add(Bundle_BDL_9);
             InvariantConstraints.Add(Bundle_BDL_3);
             InvariantConstraints.Add(Bundle_BDL_4);
+            InvariantConstraints.Add(Bundle_BDL_1);
+            InvariantConstraints.Add(Bundle_BDL_2);
+            InvariantConstraints.Add(Bundle_BDL_8);
             InvariantConstraints.Add(Bundle_BDL_5);
-            InvariantConstraints.Add(Bundle_BDL_6);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1360,6 +1404,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
                 if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopy());
@@ -1382,6 +1427,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.Matches(Link, otherT.Link)) return false;
@@ -1397,6 +1443,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
@@ -1412,6 +1459,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+				if (Identifier != null) yield return Identifier;
 				if (TypeElement != null) yield return TypeElement;
 				if (TotalElement != null) yield return TotalElement;
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
@@ -1426,11 +1474,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-                if (TotalElement != null) yield return new ElementValue("total", TotalElement);
-                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
-                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
-                if (Signature != null) yield return new ElementValue("signature", Signature);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (TotalElement != null) yield return new ElementValue("total", false, TotalElement);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
+                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }
+                if (Signature != null) yield return new ElementValue("signature", false, Signature);
             }
         }
 

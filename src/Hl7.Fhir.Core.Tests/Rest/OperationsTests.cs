@@ -61,11 +61,23 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
 
-  
+        // [WMR 20170927] Chris Munro
+        // https://chat.fhir.org/#narrow/stream/implementers/subject/How.20to.20expand.20ValueSets.20with.20the.20C.23.20FHIR.20API.3F
+        //[TestMethod]
+        //[TestCategory("IntegrationTest")]
+        //[Ignore]
+        //public void TestExpandValueSet()
+        //{
+        //    const string endpoint = @"https://stu3.simplifier.net/open/";
+        //    var location = new FhirUri("https://stu3.simplifier.net/open/ValueSet/043d233c-4ecf-4802-a4ac-75d82b4291c2");
+        //    var client = new FhirClient(endpoint);
+        //    var expandedValueSet = client.ExpandValueSet(location, null);
+        //}
+
         /// <summary>
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
-        [TestMethod]
+        [TestMethod]  // Server returns internal server error
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
@@ -78,7 +90,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);               
         }
 
-        [TestMethod]
+        [TestMethod] // Server returns internal server error
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCode()
         {
@@ -91,12 +103,12 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async void InvokeValidateCodeById()
+        public void InvokeValidateCodeById()
         {
             var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var result = await client.ValidateCodeAsync("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
+            var result = client.ValidateCode("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
             Assert.IsTrue(result.Result?.Value == true);
         }
 
@@ -107,7 +119,7 @@ namespace Hl7.Fhir.Tests.Rest
             var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var result = client.ValidateCode(identifier: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"), 
+            var result = client.ValidateCode(url: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"), 
                   coding: coding, @abstract: new FhirBoolean(false));
             Assert.IsTrue(result.Result?.Value == true);
         }
@@ -128,7 +140,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]//returns 500: validation of slices is not done yet.
-        [TestCategory("IntegrationTest")]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeResourceValidation()
         {
             var client = new FhirClient(testEndpoint);
@@ -150,7 +162,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Task InvokeTestPatientGetEverythingAsync()
+        public async System.Threading.Tasks.Task InvokeTestPatientGetEverythingAsync()
         {
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
 
@@ -162,7 +174,7 @@ namespace Hl7.Fhir.Tests.Rest
             var bundleTask = client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), "everything", par);
             var bundle2Task = client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), start, end);
 
-            await Task.WhenAll(bundleTask, bundle2Task);
+            await System.Threading.Tasks.Task.WhenAll(bundleTask, bundle2Task);
 
             var bundle = (Bundle)bundleTask.Result;
             Assert.IsTrue(bundle.Entry.Any());

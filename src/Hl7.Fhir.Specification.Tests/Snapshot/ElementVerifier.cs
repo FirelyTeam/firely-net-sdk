@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (name != null)
                     {
-                        Assert.AreEqual(name, element.Name, $"Invalid element name. Expected = '{name}', actual = '{element.Name}'.");
+                        Assert.AreEqual(name, element.SliceName, $"Invalid element name. Expected = '{name}', actual = '{element.SliceName}'.");
                     }
                     if (_settings.GenerateElementIds && elementId != null)
                     {
@@ -70,15 +70,53 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Fail($"No matching element found for path '{path}'");
         }
 
-        public void AssertSlicing(IEnumerable<string> discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
+        [DebuggerStepThrough]
+        public void AssertSlicing(string discriminatorPath, ElementDefinition.SlicingRules? rules, bool? ordered)
         {
-            var slicing = Current.Slicing;
+            AssertSlicing(ElementDefinition.DiscriminatorType.Value, discriminatorPath, rules, ordered);
+        }
+
+        [DebuggerStepThrough]
+        public void AssertSlicing(ElementDefinition.DiscriminatorType discriminatorType, string discriminatorPath, ElementDefinition.SlicingRules? rules, bool? ordered)
+        {
+            AssertSlicing(new ElementDefinition.DiscriminatorComponent() { Path = discriminatorPath, Type = discriminatorType }, rules, ordered);
+        }
+
+        [DebuggerStepThrough]
+        public void AssertSlicing(ElementDefinition.DiscriminatorComponent discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
+        {
+            AssertSlicing(new ElementDefinition.DiscriminatorComponent[] { discriminator }, rules, ordered);
+        }
+
+        public void AssertSlicing(IEnumerable<ElementDefinition.DiscriminatorComponent> discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
+        {
+            var slicing = CurrentElement.Slicing;
             Assert.IsNotNull(slicing);
-            Assert.IsTrue(discriminator.SequenceEqual(slicing.Discriminator), $"Invalid discriminator for element with path '{Current.Path}' - Expected: '{string.Join(",", discriminator)}' Actual: '{string.Join(",", slicing.Discriminator)}' ");
+
+            // Assert.Fail("TODO: Fix the below assertion");
+            Assert.IsTrue(
+                discriminator.SequenceEqual(slicing.Discriminator, DiscriminatorComparer.Default),
+                $"Invalid discriminator for element with path '{CurrentElement.Path}' - Expected: '{string.Join(" | ", discriminator.Select(d => d.Type + " : " + d.Path))}' Actual: '{string.Join(" | ", slicing.Discriminator.Select(d => d.Type + " : " + d.Path))}' ");
+
             Assert.AreEqual(slicing.Rules, rules);
             Assert.AreEqual(slicing.Ordered, ordered);
         }
+    }
 
-        public ElementDefinition Current => _current;
+    class DiscriminatorComparer : IEqualityComparer<ElementDefinition.DiscriminatorComponent>
+    {
+        public static readonly DiscriminatorComparer Default = new DiscriminatorComparer();
+
+        public bool Equals(ElementDefinition.DiscriminatorComponent x, ElementDefinition.DiscriminatorComponent y)
+        {
+            if (x == null) { return y == null; }
+            if (y == null) { return x == null; }
+            return x.IsExactly(y);
+        }
+
+        public int GetHashCode(ElementDefinition.DiscriminatorComponent obj)
+        {
+            return 0; // Delegate to Equals
+        }
     }
 }

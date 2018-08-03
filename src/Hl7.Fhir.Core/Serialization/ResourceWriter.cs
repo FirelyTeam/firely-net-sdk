@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization
             var complexSerializer = new ComplexTypeWriter(_writer, Settings);
             Coding subsettedTag = null;
             bool createdMetaElement = false;
-            if (summary != Rest.SummaryType.False && instance is Resource)
+            if (summary != Rest.SummaryType.False && instance is Resource && !(instance is Bundle))
             {
                 var resource = instance as Resource;
 
@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Serialization
                     resource.Meta.Tag.Add(subsettedTag);
                 }
             }
+
             complexSerializer.Serialize(mapping, instance, summary);
 
             Resource r = (instance as Resource);

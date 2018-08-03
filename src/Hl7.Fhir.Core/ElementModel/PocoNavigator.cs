@@ -155,29 +155,17 @@ namespace Hl7.Fhir.ElementModel
                             if (addr.Use.HasValue)
                                 return $"{_parentCommonPath}.{cur.Name}.where(use='{addr.Use.Value.GetLiteral()}')";
                         }
-                        else if (fhirValue is Questionnaire.GroupComponent gc)
+                        else if (fhirValue is Questionnaire.ItemComponent ic)
                         {
                             // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(gc.LinkId))
-                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{gc.LinkId}')";
+                            if (!string.IsNullOrEmpty(ic.LinkId))
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ic.LinkId}')";
                         }
-                        else if (fhirValue is Questionnaire.QuestionComponent qc)
+                        else if (fhirValue is QuestionnaireResponse.ItemComponent ric)
                         {
                             // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(qc.LinkId))
-                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{qc.LinkId}')";
-                        }
-                        else if (fhirValue is QuestionnaireResponse.GroupComponent rgc)
-                        {
-                            // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(rgc.LinkId))
-                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{rgc.LinkId}')";
-                        }
-                        else if (fhirValue is QuestionnaireResponse.QuestionComponent rqc)
-                        {
-                            // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(rqc.LinkId))
-                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{rqc.LinkId}')";
+                            if (!string.IsNullOrEmpty(ric.LinkId))
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ric.LinkId}')";
                         }
                         else if (fhirValue is Extension ext)
                         {

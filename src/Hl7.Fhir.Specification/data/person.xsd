@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -64,7 +64,7 @@
               <xs:documentation xml:lang="en">A contact detail for the person, e.g. a telephone number or an email address.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="AdministrativeGender">
             <xs:annotation>
               <xs:documentation xml:lang="en">Administrative Gender.</xs:documentation>
            </xs:annotation>
@@ -125,25 +125,25 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="IdentityAssuranceLevel-list">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="code-primitive">
       <xs:enumeration value="level1">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Little or no confidence in the asserted identity's accuracy.</xs:documentation>
+          <xs:documentation xml:lang="en">Level 1</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="level2">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Some confidence in the asserted identity's accuracy.</xs:documentation>
+          <xs:documentation xml:lang="en">Level 2</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="level3">
         <xs:annotation>
-          <xs:documentation xml:lang="en">High confidence in the asserted identity's accuracy.</xs:documentation>
+          <xs:documentation xml:lang="en">Level 3</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="level4">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Very high confidence in the asserted identity's accuracy.</xs:documentation>
+          <xs:documentation xml:lang="en">Level 4</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

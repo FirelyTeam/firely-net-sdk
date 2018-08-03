@@ -42,7 +42,8 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns>A sequence of type profile resource references.</returns>
         public static IEnumerable<string> EnumerateTypeProfiles(this IList<ElementDefinition> elements)
         {
-            return elements.SelectMany(e => e.Type).SelectMany(t => t.Profile);
+            var profiles = elements.SelectMany(e => e.Type).Select(t => t.Profile);
+            return profiles.OrderBy(p => p).Distinct();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Validation
 
             // Check if this is a choice: there are multiple distinct Codes to choose from
             var typeRefs = definition.Type.Where(tr => tr.Code != null);
-            var choices = typeRefs.Select(tr => tr.Code.Value).Distinct();
+            var choices = typeRefs.Select(tr => tr.Code).Distinct();
 
             if (choices.Count() > 1)
             {
@@ -45,7 +45,9 @@ namespace Hl7.Fhir.Validation
                         // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
                         // against *all* choices, what we do here is pre-filtering for sensible choices, and report if there isn't
                         // any.
-                        var applicableChoices = typeRefs.Where(tr => ModelInfo.IsInstanceTypeFor(tr.Code.Value, instanceType.Value));
+                        var applicableChoices = typeRefs.Where(tr=> !tr.Code.StartsWith("http:"))
+                                        .Where(tr => ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(tr.Code).Value, 
+                                            instanceType.Value));
 
                         // Instance typename must be one of the applicable types in the choice
                         if (applicableChoices.Any())
@@ -54,7 +56,7 @@ namespace Hl7.Fhir.Validation
                         }
                         else
                         {
-                            var choiceList = String.Join(",", choices.Select(t => "'" + t.GetLiteral() + "'"));
+                            var choiceList = String.Join(",", choices.Select(t => "'" + t + "'"));
                             validator.Trace(outcome, $"Type specified in the instance ('{instance.Type}') is not one of the allowed choices ({choiceList})",
                                      Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
                         }
@@ -92,12 +94,19 @@ namespace Hl7.Fhir.Validation
 
         private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent tr)
         {
-            // In STU3, we need to do BOTH
-            // First, call Validate() against the profile (which is then a profile on Reference) THEN validate the referenced resource
-            if (tr.Code == FHIRDefinedType.Reference)
-                return () => validator.ValidateResourceReference(instance, tr);
-            else
-                return () => validator.Validate(instance,tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null);
+            return validate;
+
+            OperationOutcome validate()
+            {
+                // First, call Validate() for the current element (the reference itself) against the profile
+                var result = validator.Validate(instance, tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null);
+
+                // If this is a reference, also validate the reference against the targetProfile
+                if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
+                    result.Add( validator.ValidateResourceReference(instance, tr) );
+
+                return result;
+            }
         }
 
         internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent typeRef)
@@ -139,7 +148,7 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
-            // If the reference was resolved (either internally or externally, validate it
+            // If the reference was resolved (either internally or externally), validate it
             if (referencedResource != null)
             {
                 validator.Trace(outcome, $"Starting validation of referenced resource {reference} ({encounteredKind})", Issue.PROCESSING_START_NESTED_VALIDATION, instance);
@@ -151,12 +160,12 @@ namespace Hl7.Fhir.Validation
 
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    childResult = validator.Validate(referencedResource, typeRef.GetDeclaredProfiles(), statedProfiles: null, statedCanonicals: null);
+                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
                 }
                 else
                 {
                     var newValidator = validator.NewInstance();
-                    childResult = newValidator.Validate(referencedResource, typeRef.GetDeclaredProfiles(), statedProfiles: null, statedCanonicals: null);
+                    childResult = newValidator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
                 }
 
                 // Prefix each path with the referring resource's path to keep the locations

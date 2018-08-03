@@ -68,10 +68,10 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 StringBuilder sb = new StringBuilder(128);
                 sb.Append(elemDef.Path);
-                if (elemDef.Name != null)
+                if (elemDef.SliceName != null)
                 {
                     sb.Append(":");
-                    sb.Append(elemDef.Name);
+                    sb.Append(elemDef.SliceName);
                 }
                 return sb.ToString();
             }

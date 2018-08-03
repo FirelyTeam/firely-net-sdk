@@ -1,19 +1,14 @@
 {
-  "resourceType": "Patient",
-  "identifier": [
-    {
-      "period": { "start": "2001-05-06" },
-      "assigner": { "display": "Acme\u202fHealthcare" },
-      "use": "usual",
-      "system": "urn:oid:1.2.36.146.595.217.0.1",
-      "value": "12345",
-      "_value": { "fhir_comments": [ "     seems like a likely choice     " ] }
-    }
-  ],
-  "managingOrganization": { "reference": "Organization/1" },
-  "_active": {
-    "extension": [
-      {
+    "resourceType": "Patient",
+    "identifier": [{
+        "period": {"start": "2001-05-06"},
+        "assigner": {"display": "Acme\u202fHealthcare"},
+        "use": "usual",
+        "system": "urn:oid:1.2.36.146.595.217.0.1",
+        "value": "12345"
+    }],
+    "managingOrganization": {"reference": "Organization/1"},
+    "_active": {"extension": [{
         "url": "http://example.org/fhir/StructureDefinition/recordStatus",
         "valueCode": "archived"
       }
@@ -45,36 +40,15 @@
       "url": "http://example.org/fhir/StructureDefinition/complexExtensionExample",
       "extension": [
         {
-          "url": "nestedA",
-          "valueCoding": {
-            "system": "http://demo.org/id/4",
-            "code": "AB45",
-            "extension": [
-              {
-                "url": "http://example.org/fhir/StructureDefinition/extraforcodingWithExt",
-                "extension": [
-                  {
-                    "url": "extra1",
-                    "valueString": "extra info"
-                  }
-                ]
-              },
-              {
-                "url": "http://example.org/fhir/StructureDefinition/extraforcodingWithValue",
-                "valueInteger": 45
-              }
-            ]
-          }
-        },
-        {
-          "url": "nestedB",
-          "id": "q4",
-          "extension": [
-            {
-              "url": "nestedB1",
-              "valueString": "hello"
-            }
-          ]
+            "given": [
+                "Peter",
+                "James"
+            ],
+            "use": "official",
+            "family": "Chalmers"
+        }, {
+            "given": ["Jim"],
+            "use": "usual"
         }
       ]
     }
@@ -103,7 +77,68 @@
   ],
   "maritalStatus": {
     "extension": [
-      {
+        {
+            "url": "http://example.org/fhir/StructureDefinition/patientAvatar",
+            "valueReference": {
+                "reference": "#pic1",
+                "display": "Duck image"
+            }
+        },
+        {
+            "url": "http://example.org/fhir/StructureDefinition/complexExtensionExample",
+            "extension": [
+                {
+                    "url": "nestedA",
+                    "valueCoding": {
+                        "system": "http://demo.org/id/4",
+                        "code": "AB45",
+                        "extension": [
+                            {
+                                "url": "http://example.org/fhir/StructureDefinition/extraforcodingWithExt",
+                                "extension": [{
+                                    "url": "extra1",
+                                    "valueString": "extra info"
+                                }]
+                            },
+                            {
+                                "url": "http://example.org/fhir/StructureDefinition/extraforcodingWithValue",
+                                "valueInteger": 45
+                            }
+			]
+                    }
+                },
+                {
+                    "url": "nestedB",
+                    "id": "q4",
+                    "extension": [{
+                        "url": "nestedB1",
+                        "valueString": "hello"
+                    }]
+                }
+            ]
+        }
+    ],
+    "modifierExtension": [
+        {
+            "url": "http://example.org/fhir/StructureDefinition/pi",
+            "valueDecimal": 3.141592653589793
+        },
+        {
+            "url": "http://example.org/fhir/StructureDefinition/max-decimal-precision",
+            "valueDecimal": 1.00065022141624642
+        }
+    ],
+    "gender": "male",
+    "birthDate": "1974-12",
+    "deceasedBoolean": true,
+    "address": [{
+        "use": "home",
+        "line": ["534 Erewhon St"],
+        "city": "PleasantVille",
+        "state": "Vic",
+        "postalCode": "3999"
+    }],
+    "maritalStatus": {"extension": [{
         "url": "http://example.org/fhir/StructureDefinition/nullFlavor",
         "valueCode": "ASKU"
       }
@@ -133,76 +168,49 @@
           "system": "urn:ietf:rfc:3986",
           "value": "2.16.840.1.113883.19.5"
         }
-      ],
-      "name": "Good Health Clinic"
-    }
-  ],
-  "contact": [
-    {
-      "name": {
-        "family": [
-          null,
-          "du",
-          null,
-          "Marché",
-          null
-        ],
-        "_family": [
-          {
-            "extension": [
-              {
-                "url": "http://example.org/fhir/StructureDefinition/nullFlavor",
-                "valueCode": "ASKU"
-              }
+    ],
+    "contact": [{
+        "name": {
+            "family" : "du Marché",
+            "_family": {
+              "extension": [{
+                  "url": "http://example.org/fhir/StructureDefinition/qualifier",
+                  "valueString": "VV"
+                }, {
+                  "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
+                  "valueCode": "ASKU"
+                }
+              ]
+            },
+            "_given": [
+                null,
+                {
+                    "id": "a3",
+                    "extension": [{
+                        "url": "http://hl7.org/fhir/StructureDefinition/qualifier",
+                        "valueCode": "MID"
+                    }]
+                },
+                null
+            ],
+            "given": [
+                "Bénédicte",
+                "Denise",
+                "Marie"
             ]
-          },
-          {
-            "id": "a2",
-            "extension": [
-              {
-                "url": "http://example.org/fhir/StructureDefinition/qualifier",
-                "valueCode": "VV"
-              }
-            ]
-          },
-          {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
-                "valueCode": "ASKU"
-              }
-            ]
-          },
-          null,
-          {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/nullFlavor",
-                "valueCode": "ASKU"
-              }
-            ]
-          }
-        ],
-        "_given": [
-          null,
-          {
-            "id": "a3",
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/qualifier",
-                "valueCode": "MID"
-              }
-            ]
-          },
-          null
-        ],
-        "given": [
-          "Bénédicte",
-          "Denise",
-          "Marie"
-        ]
-      },
-      "relationship": [
+        },
+        "relationship": [{"coding": [{
+            "system": "http://hl7.org/fhir/patient-contact-relationship",
+            "code": "partner"
+        }]}],
+        "telecom": [{
+            "system": "phone",
+            "value": "+33 (237) 998327"
+        }]
+    }],
+    "generalPractitioner": [{"reference": "#org3141"}],
+    "telecom": [
+        {"use": "home"},
         {
           "coding": [
             {

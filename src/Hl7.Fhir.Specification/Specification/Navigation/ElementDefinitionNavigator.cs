@@ -20,9 +20,7 @@ namespace Hl7.Fhir.Specification.Navigation
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public partial class ElementDefinitionNavigator
     {
-        internal ElementDefinitionNavigator()
-        {
-        }
+        internal ElementDefinitionNavigator() { }
 
         public ElementDefinitionNavigator(IList<ElementDefinition> elements, StructureDefinition definition)
         {
@@ -64,11 +62,13 @@ namespace Hl7.Fhir.Specification.Navigation
             return result;
         }
 
+        /// <summary>Create a new <see cref="ElementDefinitionNavigator"/> instance to navigate the specified element list.</summary>
+        public ElementDefinitionNavigator(IList<ElementDefinition> elements) : this(elements, null) { }
 
-        public ElementDefinitionNavigator(IList<ElementDefinition> elements) : this(elements, null)
-        {
-        }
-
+        /// <summary>
+        /// Create a new <see cref="ElementDefinitionNavigator"/> instance to navigate the elements
+        /// in the <see cref="StructureDefinition.Snapshot"/> component of the specified structure definition.
+        /// </summary>
         public static ElementDefinitionNavigator ForSnapshot(StructureDefinition sd)
         {
             if (sd == null) throw Error.ArgumentNull(nameof(sd));
@@ -77,6 +77,10 @@ namespace Hl7.Fhir.Specification.Navigation
             return new ElementDefinitionNavigator(sd.Snapshot.Element, sd);
         }
 
+        /// <summary>
+        /// Create a new <see cref="ElementDefinitionNavigator"/> instance to navigate the elements
+        /// in the <see cref="StructureDefinition.Differential"/> component of the specified structure definition.
+        /// </summary>
         public static ElementDefinitionNavigator ForDifferential(StructureDefinition sd)
         {
             if (sd == null) throw Error.ArgumentNull(nameof(sd));
@@ -85,55 +89,34 @@ namespace Hl7.Fhir.Specification.Navigation
             return new ElementDefinitionNavigator(sd.Differential.Element, sd);
         }
 
+        /// <summary>Returns a reference to the <see cref="StructureDefinition"/> instance containing the navigated elements.</summary>
         public StructureDefinition StructureDefinition { get; private set; }
 
+        /// <summary>Indicates if the navigator has not yet been positioned on a node.</summary>
+        /// <returns><c>true</c> if <see cref="Current"/> equals <c>null</c>, or <c>false</c> otherwise.</returns>
+        public bool AtRoot => OrdinalPosition == null;
 
-        public bool AtRoot { get { return OrdinalPosition == null; } }
+        /// <summary>Get the name of the current node, based on the last part of the part.</summary>
+        /// <returns>The node name, or <see cref="String.Empty"/> if the navigator is not located on a node</returns>
+        public string PathName => Current?.GetNameFromPath() ?? String.Empty;
 
-        /// <summary>
-        /// Get the name of the current node, based on the last part of the part
-        /// </summary>
-        /// <returns>The name or String.Empty if the navigator is not located on a node</returns>
-        public string PathName
-        {
-            get { return Current != null ? Current.GetNameFromPath() : String.Empty; }
-        }
+        /// <summary>Get the parent path of the current node.</summary>
+        /// <returns>The parent path, or <see cref="string.Empty"/> if the navigator is not located on a node.</returns>
+        public string ParentPath => Current?.GetParentNameFromPath() ?? String.Empty;
 
-        /// <summary>
-        /// Get the parent path of the current node
-        /// </summary>
-        /// <returns>The name or String.Empty if the navigator is not located on a node</returns>
-        public string ParentPath
-        {
-            get { return Current != null ? Current.GetParentNameFromPath() : String.Empty; }
-        }
-
-
-        /// <summary>
-        /// Get the full path of the current node
-        /// </summary>
+        /// <summary>Get the full path of the current node.</summary>
         /// <returns>The path or String.Empty if the navigator is not located on a node</returns>
-        public string Path
-        {
-            get { return Current != null ? Current.Path : String.Empty; }
-        }
-
+        public string Path => Current?.Path ?? String.Empty;
 
         internal int? OrdinalPosition { get; private set; }
 
         public IList<ElementDefinition> Elements { get; private set; }
 
-        public ElementDefinition Current
-        {
-            get { return OrdinalPosition != null ? Elements[OrdinalPosition.Value] : null; }
-        }
+        /// <summary>Returns a reference to the current node, or <c>null</c>.</summary>
+        public ElementDefinition Current => OrdinalPosition != null ? Elements[OrdinalPosition.Value] : null;
 
-        public int Count
-        {
-            get { return Elements.Count; }
-        }
-
-
+        /// <summary>Returns the total number of nodes.</summary>
+        public int Count => Elements.Count;
 
 
         //IElementNavigator INavigator<IElementNavigator>.Clone()
@@ -301,7 +284,15 @@ namespace Hl7.Fhir.Specification.Navigation
 
             for (int pos = 0; pos < Count; pos++)
             {
-                if (Elements[pos].Name == nameReference)
+                if (nameReference.StartsWith("#"))
+                {
+                    if (Elements[pos].ElementId == nameReference.TrimStart('#'))
+                    {
+                        OrdinalPosition = pos;
+                        return true;
+                    }
+                }
+                else if (Elements[pos].ContentReference == nameReference)
                 {
                     OrdinalPosition = pos;
                     return true;
@@ -553,8 +544,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 var output = new StringBuilder();
                 output.Append(elem.Path);
-                if (elem.Name != null) { output.Append(" : '" + elem.Name + "'"); }
-                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(" | ", elem.Slicing.Discriminator)); }
+                if (elem.SliceName != null) { output.Append(" : '" + elem.SliceName + "'"); }
+                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(", ", elem.Slicing?.Discriminator?.Select(d => $"{d.Type}:{d.Path}"))); }
                 return output.ToString();
             }
         }

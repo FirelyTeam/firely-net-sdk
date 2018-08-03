@@ -3,8 +3,9 @@
 	<name value="organization-team" />
 	<status value="draft" />
 	<description value="An organization of type &quot;team&quot;." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="v2" />
 		<uri value="http://hl7.org/v2" />
 		<name value="HL7 v2" />
@@ -25,9 +26,10 @@
 		<name value="W5 Mapping" />
 	</mapping>
 	<kind value="resource" />
-	<constrainedType value="Organization" />
+	<type value="Organization" />
 	<abstract value="false" />
-	<base value="http://hl7.org/fhir/StructureDefinition/Organization" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
+  <derivation value="constraint" />
 	<snapshot>
 		<element>
 			<path value="Organization" />
@@ -71,7 +73,7 @@
 				<key value="dom-3" />
 				<severity value="error" />
 				<human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource" />
-				<xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))" />
+				<xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))" />
 			</constraint>
 			<mapping>
 				<identity value="v2" />
@@ -102,7 +104,7 @@
 			<path value="Organization.id" />
 			<short value="Logical id of this artifact" />
 			<definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." />
-			<comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
+			<comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -157,7 +159,7 @@
 			<path value="Organization.implicitRules" />
 			<short value="A set of rules under which this content was created" />
 			<definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." />
-			<comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
+			<comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -186,7 +188,7 @@
 			<path value="Organization.language" />
 			<short value="Language of the resource content" />
 			<definition value="The base language in which the resource is written." />
-			<comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
+			<comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -218,7 +220,7 @@
 			<path value="Organization.text" />
 			<short value="Text summary of the resource, for human interpretation" />
 			<definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety." />
-			<comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative." />
+			<comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative." />
 			<alias value="narrative" />
 			<alias value="html" />
 			<alias value="xhtml" />
@@ -258,7 +260,7 @@
 			<path value="Organization.contained" />
 			<short value="Contained, inline Resources" />
 			<definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope." />
-			<comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." />
+			<comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." />
 			<alias value="inline resources" />
 			<alias value="anonymous resources" />
 			<alias value="contained resources" />
@@ -285,7 +287,7 @@
 			<path value="Organization.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -322,7 +324,7 @@
 			<path value="Organization.modifierExtension" />
 			<short value="Extensions that cannot be ignored" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -415,9 +417,9 @@
 		</element>
 		<element>
 			<path value="Organization.active" />
-			<short value="Whether the organization&#39;s record is still in active use" />
-			<definition value="Whether the organization&#39;s record is still in active use." />
-			<comments value="Default is true." />
+			<short value="Whether the organization's record is still in active use" />
+			<definition value="Whether the organization's record is still in active use." />
+			<comment value="Default is true." />
 			<requirements value="Need a flag to indicate a record is no longer to be used and should generally be hidden for the user in the UI." />
 			<min value="0" />
 			<max value="1" />
@@ -464,7 +466,7 @@
 			<path value="Organization.type" />
 			<short value="Kind of organization" />
 			<definition value="The kind of organization that this is." />
-			<comments value="Organizations can be corporations, wards, sections, clinical teams, government departments, etc. Note that code is generally a classifier of the type of organization; in many applications, codes are used to identity a particular organization (say, ward) as opposed to another of the same type - these are identifiers, not codes." />
+			<comment value="Organizations can be corporations, wards, sections, clinical teams, government departments, etc. Note that code is generally a classifier of the type of organization; in many applications, codes are used to identity a particular organization (say, ward) as opposed to another of the same type - these are identifiers, not codes." />
 			<requirements value="Need to be able to track the kind of organization that this is - different organization types have different uses." />
 			<min value="1" />
 			<max value="1" />
@@ -526,7 +528,7 @@
 			<path value="Organization.name" />
 			<short value="Name used for the organization" />
 			<definition value="A name associated with the organization." />
-			<comments value="Note that FHIR strings may not exceed 1MB in size" />
+			<comment value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to use the name as the label of the organization." />
 			<min value="0" />
 			<max value="1" />
@@ -568,7 +570,7 @@
 			<path value="Organization.telecom" />
 			<short value="A contact detail for the organization" />
 			<definition value="A contact detail for the organization." />
-			<comments value="The use code home is not to be used. Note that these contacts are not the contact details of people who are employed by or represent the organization, but official contacts for the organization itself." />
+			<comment value="The use code home is not to be used. Note that these contacts are not the contact details of people who are employed by or represent the organization, but official contacts for the organization itself." />
 			<requirements value="Human contact for the organization." />
 			<min value="0" />
 			<max value="*" />
@@ -585,8 +587,8 @@
 			<constraint>
 				<key value="org-3" />
 				<severity value="error" />
-				<human value="The telecom of an organization can never be of use &#39;home&#39;" />
-				<xpath value="count(f:use[@value=&#39;home&#39;]) = 0" />
+				<human value="The telecom of an organization can never be of use 'home'" />
+				<xpath value="count(f:use[@value='home']) = 0" />
 			</constraint>
 			<constraint>
 				<key value="cpt-2" />
@@ -634,8 +636,8 @@
 			<path value="Organization.address" />
 			<short value="An address for the organization" />
 			<definition value="An address for the organization." />
-			<comments value="Organization may have multiple addresses with different uses or applicable periods. The use code home is not to be used." />
-			<requirements value="May need to keep track of the organization&#39;s addresses for contacting, billing or reporting requirements." />
+			<comment value="Organization may have multiple addresses with different uses or applicable periods. The use code home is not to be used." />
+			<requirements value="May need to keep track of the organization's addresses for contacting, billing or reporting requirements." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -651,8 +653,8 @@
 			<constraint>
 				<key value="org-2" />
 				<severity value="error" />
-				<human value="An address of an organization can never be of use &#39;home&#39;" />
-				<xpath value="count(f:use[@value=&#39;home&#39;]) = 0" />
+				<human value="An address of an organization can never be of use 'home'" />
+				<xpath value="count(f:use[@value='home']) = 0" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -711,7 +713,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
+				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -745,7 +747,7 @@
 			<path value="Organization.contact" />
 			<short value="Contact for the organization for a certain purpose" />
 			<definition value="Contact for the organization for a certain purpose." />
-			<comments value="Where multiple contacts for the same purpose are provided there is a standard extension that can be used to determine which one is the preferred contact to use." />
+			<comment value="Where multiple contacts for the same purpose are provided there is a standard extension that can be used to determine which one is the preferred contact to use." />
 			<requirements value="Need to keep track of assigned contact points within bigger organization." />
 			<min value="0" />
 			<max value="*" />
@@ -782,7 +784,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comments value="RFC 4122" />
+			<comment value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -813,7 +815,7 @@
 			<path value="Organization.contact.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -850,7 +852,7 @@
 			<path value="Organization.contact.modifierExtension" />
 			<short value="Extensions that cannot be ignored" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<alias value="modifiers" />
@@ -889,7 +891,7 @@
 			<path value="Organization.contact.purpose" />
 			<short value="The type of contact" />
 			<definition value="Indicates a purpose for which the contact can be reached." />
-			<comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
+			<comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
 			<requirements value="Need to distinguish between multiple contact persons." />
 			<min value="0" />
 			<max value="1" />
@@ -939,7 +941,7 @@
 			<path value="Organization.contact.name" />
 			<short value="A name associated with the contact" />
 			<definition value="A name associated with the contact." />
-			<comments value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely." />
+			<comment value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely." />
 			<requirements value="Need to be able to track the person by name." />
 			<min value="0" />
 			<max value="1" />
@@ -1042,8 +1044,8 @@
 			<path value="Organization.contact.address" />
 			<short value="Visiting or postal addresses for the contact" />
 			<definition value="Visiting or postal addresses for the contact." />
-			<comments value="Note: address is for postal addresses, not physical locations." />
-			<requirements value="May need to keep track of a contact party&#39;s address for contacting, billing or reporting requirements." />
+			<comment value="Note: address is for postal addresses, not physical locations." />
+			<requirements value="May need to keep track of a contact party's address for contacting, billing or reporting requirements." />
 			<min value="0" />
 			<max value="1" />
 			<base>

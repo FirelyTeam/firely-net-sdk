@@ -52,11 +52,6 @@ namespace Hl7.Fhir.Tests.Serialization
                         //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
                         //    continue;
 
-                        // vsd-9
-                        if (entry.Name.EndsWith("valueset-example-expansion(example-expansion).xml"))
-                            continue;
-
-
                         var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
                         var resource = parser.Parse<Resource>(reader);
 
@@ -91,16 +86,16 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             }
 
-            Debug.WriteLine(String.Format("\r\n------------------\r\nValidation failed in {0} of {1} examples", errorCount, testFileCount));
+            Console.WriteLine(String.Format("\r\n------------------\r\nValidation failed in {0} of {1} examples", errorCount, testFileCount));
             if (failedInvariantCodes.Count > 0)
             {
-                Debug.Write("Issues with Invariant: ");
+                Console.Write("Issues with Invariant: ");
                 bool b = false;
                 foreach (var item in failedInvariantCodes)
                 {
                     if (b)
-                        Debug.Write(", ");
-                    Debug.Write(String.Format("{0} ({1})", item.Key, item.Value));
+                        Console.Write(", ");
+                    Console.Write(String.Format("{0} ({1})", item.Key, item.Value));
                     b = true;
                 }
             }
@@ -128,14 +123,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 foreach (StructureDefinition resource in otherSDs.Entry.Select(e => e.Resource).Where(r => r != null && r is StructureDefinition))
                 {
                     List<ElementDefinition.ConstraintComponent> cacheForResource;
-                    if (invariantCache.ContainsKey(resource.ConstrainedType.ToString()))
+                    if (invariantCache.ContainsKey(resource.Type.ToString()))
                     {
-                        cacheForResource = invariantCache[resource.ConstrainedType.ToString()];
+                        cacheForResource = invariantCache[resource.Type.ToString()];
                     }
                     else
                     {
                         cacheForResource = new List<ElementDefinition.ConstraintComponent>();
-                        invariantCache.Add(resource.ConstrainedType.ToString(), cacheForResource);
+                        invariantCache.Add(resource.Type.ToString(), cacheForResource);
                     }
 
                     // read the invariants for elements in the differential
@@ -143,16 +138,16 @@ namespace Hl7.Fhir.Tests.Serialization
                     {
                         foreach (var constraint in ed.Constraint)
                         {
-                            var ext = constraint.GetExtensionValue<FhirString>("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+                            var ext = constraint.Expression;
                             if (ext == null)
                                 continue;
-                            string expression = ext.Value;
+                            string expression = ext;
                             string parentPath = ed.Path;
                             if (parentPath.Contains("."))
                             {
                                 // This expression applied to a backbone element, so need to give it scope
-                                expression = parentPath.Replace(resource.ConstrainedType.ToString() + ".", "") + ".all(" + expression + ")";
-                                ext.Value = expression;
+                                expression = parentPath.Replace(resource.Type.ToString() + ".", "").Replace("[x]", "") + ".all(" + expression + ")";
+                                constraint.Expression = expression;
                             }
                             string key = constraint.Key;
                             if (!string.IsNullOrEmpty(expression))
@@ -174,14 +169,14 @@ namespace Hl7.Fhir.Tests.Serialization
                     {
                         // Verified examples that fail validations
                         // dom-3
-                        if (entry.Name.EndsWith("list-example-familyhistory-genetics-profile-annie(prognosis).xml"))
-                            continue;
-                        if (entry.Name.EndsWith("questionnaire-sdc-profile-example-loinc(questionnaire-sdc-profile-example-loinc).xml"))
-                            continue;
-                        if (entry.Name.EndsWith("questionnaireresponse-example(3141).xml"))
-                            continue;
-                        if (entry.Name.EndsWith("dataelement-example(gender).xml"))
-                            continue;
+                        //if (entry.Name.EndsWith("list-example-familyhistory-genetics-profile-annie(prognosis).xml"))
+                        //    continue;
+                        //if (entry.Name.EndsWith("questionnaire-sdc-profile-example-loinc(questionnaire-sdc-profile-example-loinc).xml"))
+                        //    continue;
+                        //if (entry.Name.EndsWith("questionnaireresponse-example(3141).xml"))
+                        //    continue;
+                        //if (entry.Name.EndsWith("dataelement-example(gender).xml"))
+                        //    continue;
 
 
                         // vsd-3, vsd-8
@@ -206,7 +201,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             if (checkedCode.Contains(item.Key))
                                 continue;
                             checkedCode.Add(item.Key);
-                            string expression = item.GetExtensionValue<FhirString>("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression").Value;
+                            string expression = item.Expression;
                             if (expression.Contains("[x]"))
                                 Debug.WriteLine(String.Format("Expression {0} had an [x] in it '{1}'", item.Key, expression));
                             if (expression.Contains("\"%\""))
@@ -227,6 +222,8 @@ namespace Hl7.Fhir.Tests.Serialization
                         if (outcome.Issue.Where(i => (i.Diagnostics != "address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))")).Count() > 0)
                         {
                             Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
+                            if (resource.Meta != null)
+                                Debug.WriteLine(String.Format("Reported Profiles: {0}", String.Join(",", resource.Meta.Profile)));
                             foreach (var item in outcome.Issue)
                             {
                                 if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
@@ -236,7 +233,6 @@ namespace Hl7.Fhir.Tests.Serialization
 
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
-
                             }
                           //  Trace.WriteLine("-------------------------");
                           //  Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
@@ -260,111 +256,10 @@ namespace Hl7.Fhir.Tests.Serialization
                     Debug.Write(String.Format("{0} ({1})", item.Key, item.Value));
                     b = true;
                 }
+                Debug.WriteLine("");
             }
-            Assert.AreEqual(22, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
-
-            /*
-            Validating dataelement-labtestmaster-example(prothrombin).xml failed:
-                inv-2: One and only one DataElement.code must have is-data-element-concept set to "true"
-                code.extension(%"ext-11179-de-is-data-element-concept").count() = 1
-            Validating dataelement-sdc-profile-example(dataelement-sdc-profile-example).xml failed:
-                inv-2: One and only one DataElement.code must have is-data-element-concept set to "true"
-                code.extension(%"ext-11179-de-is-data-element-concept").count() = 1
-            Validating dataelement-sdc-profile-example-de(dataelement-sdc-profile-example-de).xml failed:
-                inv-2: One and only one DataElement.code must have is-data-element-concept set to "true"
-                code.extension(%"ext-11179-de-is-data-element-concept").count() = 1
-            Validating organization-example-f001-burgers(f001).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating organization-example-f201-aumc(f201).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating organization-example-f203-bumc(f203).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating patient-example(example).xml failed:
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating patient-example-f001-pieter(f001).xml failed:
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating patient-example-f201-roel(f201).xml failed:
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating patient-example-us-extensions(us01).xml failed:
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f001-evdb(f001).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f002-pv(f002).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f003-mv(f003).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f004-rb(f004).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f005-al(f005).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f006-rvdb(f006).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f007-sh(f007).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f201-ab(f201).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f202-lm(f202).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f203-jvg(f203).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating practitioner-example-f204-ce(f204).xml failed:
-                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
-                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
-            Validating valueset-example-expansion(example-expansion).xml failed:
-	            vsd-9: Must have a code if not abstract
-	            expansion.contains.all(code.exists() or (abstract = 'true'))
-
-            ------------------
-            Validation failed in 22 of 725 examples
-            Issues with Invariant: inv-2 (23), inv-1 (12), vsd-9 (1)
-
-                */
-
+            // There are 7 example observation resources that don't pass the vital signs profile (and rightly shouldn't)
+            Assert.AreEqual(7, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
         }
     }
 }

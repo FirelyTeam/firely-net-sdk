@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Validation
     {
         internal protected BaseBucket(ElementDefinition definition)
         {
-            Name = definition.Path + (definition.Name != null ? $":{definition.Name}" : null);
+            Name = definition.Path + (definition.SliceName != null ? $":{definition.SliceName}" : null);
             Cardinality = Cardinality.FromElementDefinition(definition);
             Path = definition.Path;
         }

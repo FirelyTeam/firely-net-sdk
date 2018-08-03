@@ -37,8 +37,10 @@ using Hl7.Fhir.Utility;
 */
 #pragma warning disable 1591 // suppress XML summary warnings
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -112,27 +114,9 @@ namespace Hl7.Fhir.Model
         private List<Extension> _ModifierExtension;
         
 
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"))},
-            Key = "dom-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
-            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contained.where(('#'+id in %resource.descendants().reference).not()).empty()"))},
-            Key = "dom-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
-            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
-        };
-
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contained.contained.empty()"))},
+            Expression = "contained.contained.empty()",
             Key = "dom-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
@@ -141,21 +125,39 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contained.text.empty()"))},
+            Expression = "contained.text.empty()",
             Key = "dom-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
             Xpath = "not(parent::f:contained and f:text)"
         };
 
+        public static ElementDefinition.ConstraintComponent DomainResource_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(DomainResource_DOM_4);
-            InvariantConstraints.Add(DomainResource_DOM_3);
             InvariantConstraints.Add(DomainResource_DOM_2);
             InvariantConstraints.Add(DomainResource_DOM_1);
+            InvariantConstraints.Add(DomainResource_DOM_4);
+            InvariantConstraints.Add(DomainResource_DOM_3);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

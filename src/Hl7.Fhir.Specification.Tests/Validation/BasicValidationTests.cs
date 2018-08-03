@@ -7,11 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Xunit;
+using Hl7.Fhir.Specification.Terminology;
 using System;
 using Hl7.Fhir.Validation;
 using System.Collections.Concurrent;
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestEmptyElement()
         {
-            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
             var data = ElementNode.Node("active").ToNavigator();
 
             var result = _validator.Validate(data, boolSd);
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void NameMatching()
         {
-            var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
+            var data = ElementNode.Valued("active", true, FHIRAllTypes.Boolean.GetLiteral()).ToNavigator();
 
             Assert.True(ChildNameMatcher.NameMatches("active", data));
             Assert.True(ChildNameMatcher.NameMatches("activeBoolean", data));
@@ -87,11 +87,11 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void PrimitiveChildMatching()
         {
-            var boolean = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolean = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
             var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
-            var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
+            var data = ElementNode.Valued("active", true, FHIRAllTypes.Boolean.GetLiteral(),
                     ElementNode.Node("extension",
                         ElementNode.Valued("value", 4, "integer")),
                     ElementNode.Node("nonExistant")
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidatePrimitiveValue()
         {
-            var def = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
+            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Oid);
 
             var instance = new Oid("urn:oid:1.2.3.4.q");
             var report = _validator.Validate(instance, def);
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateOidType()
         {
-            var def = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
+            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Oid);
 
             var instance = new Oid("urn:oid:213.2.840.113674.514.212.200");
             var report = _validator.Validate(instance, def);
@@ -150,27 +150,27 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
-
         [Fact]
         public void ValidateCardinality()
         {
-            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
-            var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
+            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+            var data = ElementNode.Valued("active", true, FHIRAllTypes.Boolean.GetLiteral(),
                         ElementNode.Valued("id", "myId1"),
                         ElementNode.Valued("id", "myId2"),
                         ElementNode.Node("extension",
-                            ElementNode.Valued("value", 4, "integer")),
+                            ElementNode.Valued("value", 4L, "integer")),
                         ElementNode.Node("extension",
                             ElementNode.Valued("value", "world!", "string"))).ToNavigator();
 
             var report = _validator.Validate(data, boolSd);
-            Assert.Equal(3, report.ListErrors().Count());
+            Assert.Equal(3, report.Errors);
+            Assert.Equal(0, report.Warnings);
         }
 
         [Fact]
         public void ValidateChoiceElement()
         {
-            var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
+            var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension).DeepCopy();
 
             var extensionInstance = new Extension("http://some.org/testExtension", new Oid("urn:oid:1.2.3.4.5"));
 
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now remove the choice available for OID
             var extValueDef = extensionSd.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
-            extValueDef.Type.RemoveAll(t => t.Code == FHIRDefinedType.Oid);
+            extValueDef.Type.RemoveAll(t => ModelInfo.FhirTypeNameToFhirType(t.Code) == FHIRAllTypes.Oid);
 
             report = _validator.Validate(extensionInstance, extensionSd);
 
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void AutoGeneratesDifferential()
         {
-            var identifierBsn = _source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
+            var identifierBsn = (StructureDefinition)_source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN").DeepCopy();
             Assert.NotNull(identifierBsn);
             identifierBsn.Snapshot = null;
 
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidatesFixedValue()
         {
-            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient).DeepCopy();
+            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
 
             var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
             instance1.Text = "This is fixed too";
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170727] Fixed
             // Do NOT modify common core Patient definition, as this would affect all subsequent tests.
             // Instead, clone the core def and modify the clone
-            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient).DeepCopy();
+            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
 
             var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
 
@@ -394,16 +394,16 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateOverNameRef()
         {
-            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
+            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-with-incorrect-fixed-type.xml");
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.NotNull(questionnaire);
 
             // the questionnaire instance references the profile to be validated:
             //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
-            var report = _validator.Validate(questionnaire);
+            var report = _validator.Validate(questionnaire, "http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType");
             Assert.False(report.Success);
-            Assert.Equal(35, report.Errors);
+            Assert.Equal(2, report.Errors);
             Assert.Equal(0, report.Warnings);           // 20 warnings about valueset too complex
         }
 
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var obs = new Observation()
             {
-                Status = Observation.ObservationStatus.Final,
+                Status = ObservationStatus.Final,
                 Code = new CodeableConcept("http://somesystem.org/codes", "AABB"),
                 Meta = new Meta { Profile = new[] { "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation" } }
             };
@@ -454,8 +454,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
-            var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
-
+            var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);            // 3x invariant
@@ -582,8 +581,9 @@ namespace Hl7.Fhir.Specification.Tests
             p.MaritalStatus.Coding[0].Code = "XX";
 
             report = _validator.Validate(p);
-            Assert.False(report.Success);
+            Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);
+            //Assert.True(report.ToString().Contains("not valid for non-required binding"));
         }
 
         [Fact]
@@ -714,6 +714,22 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.DoesNotContain("Encountered unknown child elements 'timestamp'", report.ToString());
         }
 
+
+        [Fact]
+        public void TriggerEscapingValidationError()
+        {
+            // This unit-test is here to trigger because of an escaping mistake in the FHIR spec 3.0.1.
+            // The cause is the escaped \\_ character in eld-16. I have manually corrected profiles-types.xml
+            // in the /data directory for this invariant, so this unit-test will normally pass.
+            // If it does not, the profiles-types.xml will have been updated/overwritten with a version that
+            // still contains this mistake.
+            var sd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
+            sd.Snapshot.Element[0].SliceName = "dummy";
+
+            var result = _validator.Validate(sd);
+            Assert.True(result.Success);
+        }
+
         // [WMR 20161220] Example by Christiaan Knaap
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
@@ -774,7 +790,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // To check for ele-1 constraints on expanded Patient snapshot:
             // source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient).Snapshot.Element.Select(e=>e.Path + " : " + e.Constraint.FirstOrDefault()?.Key ?? "").ToArray()
-            var patientStructDef = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+            var patientStructDef = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
             Assert.NotNull(patientStructDef);
             Assert.True(patientStructDef.HasSnapshot);
             assertElementConstraints(patientStructDef.Snapshot.Element);
@@ -801,7 +817,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// Test for issue 556 (https://github.com/ewoutkramer/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
-        public async Task RunValueSetExpanderMultiThreaded()
+        public async System.Threading.Tasks.Task RunValueSetExpanderMultiThreaded()
         {
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<OperationOutcome>();
@@ -843,7 +859,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var obs = new Observation()
             {
-                Status = Observation.ObservationStatus.Preliminary,
+                Status = ObservationStatus.Preliminary,
                 Code = new CodeableConcept("system", "P"),
                 Subject = new ResourceReference("Patient?identifier=system|12345")
             };

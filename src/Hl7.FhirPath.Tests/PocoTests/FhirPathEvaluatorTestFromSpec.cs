@@ -27,11 +27,6 @@ namespace Hl7.FhirPath.Tests
 {
     static class ConverterExtensions
     {
-        public static Model.ResourceReference getSubject(this Model.Order me)
-        {
-            return me.Subject;
-        }
-
         public static void setValue(this Model.Quantity me, double? value)
         {
             if (value.HasValue)
@@ -51,11 +46,11 @@ namespace Hl7.FhirPath.Tests
         {
             me.System = value;
         }
-        public static void setValueSet(this Model.ElementDefinition.BindingComponent me, Model.Element value)
+        public static void setValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me, Model.Element value)
         {
             me.ValueSet = value;
         }
-        public static Model.Element getValueSet(this Model.ElementDefinition.BindingComponent me)
+        public static Model.Element getValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me)
         {
             return me.ValueSet;
         }
@@ -284,7 +279,7 @@ namespace Hl7.FhirPath.Tests
         public void testTyping()
         {
             Model.ElementDefinition ed = new Model.ElementDefinition();
-            ed.Binding = new Model.ElementDefinition.BindingComponent();
+            ed.Binding = new Model.ElementDefinition.ElementDefinitionBindingComponent();
             ed.Binding.setValueSet(new UriType("http://test.org"));
             testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
         }

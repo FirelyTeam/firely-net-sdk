@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Rest
     internal static class EntryToHttpExtensions
     {
         public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, Uri baseUrl,
-            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
+            SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
@@ -57,11 +57,13 @@ namespace Hl7.Fhir.Rest
 #endif
             if (interaction.IfNoneExist != null) request.Headers["If-None-Exist"] = interaction.IfNoneExist;
 
-            if (interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT)
-            {
-                request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
-            }
-            
+            var interactionType = entry.Annotation<TransactionBuilder.InteractionType>();
+
+            if (interactionType == TransactionBuilder.InteractionType.Create && returnPreference != null)
+                request.Headers["Prefer"] = "return=" + PrimitiveTypeConverter.ConvertTo<string>(returnPreference);
+            else if(interactionType == TransactionBuilder.InteractionType.Search && handlingPreference != null)
+                request.Headers["Prefer"] = "handling=" + PrimitiveTypeConverter.ConvertTo<string>(handlingPreference);
+
             if (entry.Resource != null)
             {
                 bool searchUsingPost =
@@ -69,9 +71,9 @@ namespace Hl7.Fhir.Rest
                     && (entry.HasAnnotation<TransactionBuilder.InteractionType>()
                     && entry.Annotation<TransactionBuilder.InteractionType>() == TransactionBuilder.InteractionType.Search)
                     && entry.Resource is Parameters;
-
                 setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, searchUsingPost, out body);
             }
+
             // PCL doesn't support setting the length (and in this case will be empty anyway)
 #if DOTNETFW
             else
@@ -79,7 +81,6 @@ namespace Hl7.Fhir.Rest
 #endif
             return request;
         }
-
 
         /// <summary>
         /// Flag to control the setting of the User Agent string (different platforms have different abilities)

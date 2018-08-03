@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Serialization
                 var memberName = member.Name;
 
                 //When enumerating properties for a complex object, make sure not to let resourceType get through
-                if(memberName != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME)
+                if(memberName != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME || Current.Path == "payee")
                 {
                     IFhirReader nestedReader = new JsonDomFhirReader(member.Value);
 
