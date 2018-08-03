@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Text => Current.Text;
 
-        public string Path => _parentPath == null ? Name : $"{_parentPath}.{Current.Name}[{_nameIndex}]";
+        public string Location => _parentPath == null ? Name : $"{_parentPath}.{Current.Name}[{_nameIndex}]";
 
         private (int lineNumber, int linePosition) getPosition(JToken node)
         {
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Serialization
             var found = nextMatch(children, nameFilter);
             if (found == -1) return false;
 
-            _parentPath = Path;
+            _parentPath = Location;
             _siblings = children;
             _index = found;
             _nameIndex = 0;

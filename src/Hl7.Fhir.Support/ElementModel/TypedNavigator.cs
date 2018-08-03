@@ -36,7 +36,7 @@ namespace Hl7.Fhir.ElementModel
             _current = NavigatorPosition.ForRoot(element, elementType, element.Name);
             _definition = _current.IsTracking ?
                 ElementDefinitionSummaryCache.ForRoot(_current.SerializationInfo) : ElementDefinitionSummaryCache.Empty;
-            _parentPath = null;
+            _parentPrettyPath = null;
             _nameIndex = 0;
 
             Provider = provider;
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.ElementModel
                 _current = new NavigatorPosition(this._current.Node.Clone(), this._current.SerializationInfo,
                                         this._current.Name, this._current.InstanceType),
                 _definition = this._definition,
-                _parentPath = this._parentPath,
+                _parentPrettyPath = this._parentPrettyPath,
                 _nameIndex = this._nameIndex,
                 ExceptionHandler = this.ExceptionHandler,
                 Provider = this.Provider,
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.ElementModel
         private static StructuralTypeException typeException(string message, ISourceNavigator position)
         {
             if (position != null)
-                message += $" (at {position.Path})";
+                message += $" (at {position.Location})";
 
             return new StructuralTypeException(message);
         }
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.ElementModel
         private NavigatorPosition _current;
 
         private int _nameIndex;
-        private string _parentPath;
+        private string _parentPrettyPath;
 
         private ElementDefinitionSummaryCache _definition;
         public IStructureDefinitionSummaryProvider Provider { get; private set; }
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.ElementModel
 
         public string Type => _current.InstanceType;
 
-        public (string name,int order)? LastOrder { get; private set; }
+        public (string name, int order)? LastOrder { get; private set; }
 
         public object Value
         {
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.ElementModel
         {
             // Since we don't want to report errors from the constructor, do this work now on
             // the initial call (_parentPath == null)
-            if (_parentPath == null && _definition == ElementDefinitionSummaryCache.Empty)
+            if (_parentPrettyPath == null && _definition == ElementDefinitionSummaryCache.Empty)
                 reportUnknownType(_current.InstanceType, _current.Node);
 
             var scan = _current.Node.Clone();
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.ElementModel
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
             LastOrder = null;
-            _parentPath = Location;
+            _parentPrettyPath = PrettyPath;
             _nameIndex = 0;
             _current = match;
             _definition = firstChildDef;
@@ -322,18 +322,20 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore 612,618
         }
 
-        public string Location
+        public string Location => _current.Node.Location;
+
+        public string PrettyPath
         {
             get
             {
-                if (_parentPath == null)
+                if (_parentPrettyPath == null)
                     return Name;
                 else
                 {
                     if (_current.IsTracking && _current.SerializationInfo.IsCollection == false)
-                        return $"{_parentPath}.{Name}";
+                        return $"{_parentPrettyPath}.{Name}";
                     else
-                        return $"{_parentPath}.{Name}[{_nameIndex}]";
+                        return $"{_parentPrettyPath}.{Name}[{_nameIndex}]";
                 }
             }
         }
@@ -344,14 +346,26 @@ namespace Hl7.Fhir.ElementModel
         {
             if (type == typeof(TypedNavigator))
                 return new[] { this };
+            else if (type == typeof(PrettyPath))
+                return new[] { new PrettyPath { Path = PrettyPath } };
             else if (type == typeof(ElementDefinitionSummary) && _current.IsTracking)
                 return new[] { new ElementDefinitionSummary(_current.SerializationInfo) };
             else
                 return _current.Node.Annotations(type);
+
         }
     }
 
     [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
     public delegate void AdditionalStructuralRule(TypedNavigator node, IExceptionSource ies);
-    
+
+
+    /// <summary>
+    /// Represents a dotted path into an instance, where indices on members are only included
+    /// when the elements repeats.
+    /// </summary>
+    public class PrettyPath
+    {
+        public string Path;
+    }
 }

@@ -16,9 +16,9 @@ namespace Hl7.Fhir.Utility
     {
         public static ComparisonResult IsEqualTo(this ISourceNavigator expected, ISourceNavigator actual)
         {
-            if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Path, $"name: was '{actual.Name}', expected '{expected.Name}'");
-            if (expected.Text != actual.Text) return ComparisonResult.Fail(actual.Path, $"value: was '{actual.Text}', expected '{expected.Text}'");
-            if (expected.Path != actual.Path) ComparisonResult.Fail(actual.Path, $"Path: was '{actual.Path}', expected '{expected.Path}'");
+            if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
+            if (expected.Text != actual.Text) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Text}', expected '{expected.Text}'");
+            if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)
             var childrenExp = expected.Children().OrderBy(e => e.Name);
@@ -30,14 +30,14 @@ namespace Hl7.Fhir.Utility
             foreach (var exp in childrenExp)
             {
                 if (!childrenActual.MoveNext())
-                    ComparisonResult.Fail(actual.Path, $"number of children was different");
+                    ComparisonResult.Fail(actual.Location, $"number of children was different");
 
                 var result = exp.IsEqualTo(childrenActual.Current);
                 if (!result.Success)
                     return result;
             }
             if (childrenActual.MoveNext())
-                ComparisonResult.Fail(actual.Path, $"number of children was different");
+                ComparisonResult.Fail(actual.Location, $"number of children was different");
 
             return ComparisonResult.OK;
 

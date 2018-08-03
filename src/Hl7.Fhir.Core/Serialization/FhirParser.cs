@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Serialization
         public string Text => _sourceNav.Value == null ? null :
             PrimitiveTypeConverter.ConvertTo<string>(_sourceNav.Value);
 
-        public string Path => _sourceNav.Location;
+        public string Location => _sourceNav.Location;
 
         public ISourceNavigator Clone() =>
             new SourceNavigatorOnElementNavigator(_sourceNav.Clone())

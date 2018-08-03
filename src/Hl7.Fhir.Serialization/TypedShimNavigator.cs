@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization
 
         public object Value => _sourceNav.Text;
 
-        public string Location => _sourceNav.Path;
+        public string Location => _sourceNav.Location;
 
         public IElementNavigator Clone() =>
             new TypedShimNavigator(_sourceNav.Clone())

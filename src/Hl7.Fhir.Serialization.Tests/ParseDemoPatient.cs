@@ -61,33 +61,10 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void ProducesCorrectUntypedLocations(ISourceNavigator patient)
         {
-            Assert.AreEqual("Patient", patient.Path);
-
-            patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id[0]", patient.Path);
-
-            patient.MoveToNext();   // text
-            patient.MoveToNext("identifier");
-            Assert.AreEqual("Patient.identifier[0]", patient.Path);
-            var idNav = patient.Clone();
-
-            Assert.IsTrue(patient.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[0].use[0]", patient.Path);
-
-            idNav.MoveToNext(); // identifier
-            Assert.AreEqual("Patient.identifier[1]", idNav.Path);
-
-            Assert.IsTrue(idNav.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[1].use[0]", idNav.Path);
-        }
-
-        public static void ProducedCorrectTypedLocations(IElementNavigator patient)
-        {
             Assert.AreEqual("Patient", patient.Location);
 
             patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id", patient.Location);
-            var patNav = patient.Clone();
+            Assert.AreEqual("Patient.id[0]", patient.Location);
 
             patient.MoveToNext();   // text
             patient.MoveToNext("identifier");
@@ -95,16 +72,41 @@ namespace Hl7.Fhir.Serialization.Tests
             var idNav = patient.Clone();
 
             Assert.IsTrue(patient.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[0].use", patient.Location);
-
-            Assert.IsTrue(patNav.MoveToNext("deceased"));
-            Assert.AreEqual("Patient.deceased", patNav.Location);
+            Assert.AreEqual("Patient.identifier[0].use[0]", patient.Location);
 
             idNav.MoveToNext(); // identifier
             Assert.AreEqual("Patient.identifier[1]", idNav.Location);
 
             Assert.IsTrue(idNav.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[1].use", idNav.Location);
+            Assert.AreEqual("Patient.identifier[1].use[0]", idNav.Location);
+        }
+
+        public static void ProducedCorrectTypedLocations(IElementNavigator patient)
+        {
+            var typedNav = (TypedNavigator)patient;
+
+            Assert.AreEqual("Patient", patient.Location);
+
+            patient.MoveToFirstChild();
+            Assert.AreEqual("Patient.id", typedNav.PrettyPath);
+            var patNav = patient.Clone();
+
+            patient.MoveToNext();   // text
+            patient.MoveToNext("identifier");
+            Assert.AreEqual("Patient.identifier[0]", typedNav.PrettyPath);
+            var idNav = patient.Clone();
+
+            Assert.IsTrue(patient.MoveToFirstChild());
+            Assert.AreEqual("Patient.identifier[0].use", typedNav.PrettyPath);
+
+            Assert.IsTrue(patNav.MoveToNext("deceased"));
+            Assert.AreEqual("Patient.deceased", patNav.Annotation<PrettyPath>().Path);
+
+            idNav.MoveToNext(); // identifier
+            Assert.AreEqual("Patient.identifier[1]", idNav.Annotation<PrettyPath>().Path);
+
+            Assert.IsTrue(idNav.MoveToFirstChild());
+            Assert.AreEqual("Patient.identifier[1].use", idNav.Annotation<PrettyPath>().Path);
         }
 
 

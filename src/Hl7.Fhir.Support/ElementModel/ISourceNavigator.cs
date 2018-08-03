@@ -89,10 +89,10 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// An indication of the location of this node within the data represented by the navigator.
         /// </summary>
-        /// <remarks>The format of the location is dependent on the source represented by this interface, e.g. this might be an FhirPath-type location,
-        /// a line/position indication, or the dotted name of a property in a POCO. It needs to be sufficiently precise to aid the user in
-        /// locating issues in the data.</remarks>
-        string Path { get; }
+        /// <remarks>The format of the location is the dotted name of the property, including indices to make
+        /// sure repeated occurences of an element can be distinguished. It needs to be sufficiently precise to aid 
+        /// the user in locating issues in the data.</remarks>
+        string Location { get; }
     }
 
 

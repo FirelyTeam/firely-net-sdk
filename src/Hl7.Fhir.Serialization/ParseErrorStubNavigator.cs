@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public string Path => "(UNPARSEABLE SOURCE)";
+        public string Location => "(UNPARSEABLE SOURCE)";
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 

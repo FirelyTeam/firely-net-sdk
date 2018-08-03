@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Serialization
 
             // Found a match, so we can alter the current position of the navigator.
             // Modify _parentPath to be the current path before we do that
-            _parentPath = Path;
+            _parentPath = Location;
             _current = match;
             _names = new Dictionary<string, int>() { { Name, 1 } };
             _containedResource = null;
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public string Path => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_names[Name] - 1}]";
+        public string Location => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_names[Name] - 1}]";
 
         public override string ToString() => _current.ToString();
 

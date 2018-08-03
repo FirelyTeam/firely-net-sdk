@@ -265,9 +265,7 @@ namespace Hl7.Fhir.ElementModel
             return result;
         }
 
-        public IEnumerable<object> Annotations(Type type) => _nav.Annotations(type).Union(generatePocoNavAnnotations(type));
-
-        private IEnumerable<object> generatePocoNavAnnotations(Type type)
+        public IEnumerable<object> Annotations(Type type)
         {
             if (type == typeof(ElementDefinitionSummary))
             {
@@ -276,8 +274,10 @@ namespace Hl7.Fhir.ElementModel
                     new ElementDefinitionSummary(this)
                 };
             }
+            else if (type == typeof(PrettyPath))
+                return new[] { new PrettyPath { Path = ShortPath } };
             else
-                return Enumerable.Empty<object>();
+                return _nav.Annotations(type);
         }
     }
 

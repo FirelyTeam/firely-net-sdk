@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
             var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
             Assert.AreEqual(XNamespace.Get("http://example.org"), xmldetails.Namespace);
-            Assert.AreEqual("Patient.myattr[0]", nav.Path);
+            Assert.AreEqual("Patient.myattr[0]", nav.Location);
 
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("anotherattr", nav.Name);        // none-xmlns attributes will come through
