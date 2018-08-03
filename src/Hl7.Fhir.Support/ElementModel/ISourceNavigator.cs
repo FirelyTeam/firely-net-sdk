@@ -16,13 +16,10 @@ namespace Hl7.Fhir.ElementModel
     /// A navigator across a tree representing FHIR data, independent of serialization format or FHIR version.
     /// </summary>
     /// <remarks>
-    /// An implementation of this interface may be either type-aware or not, depending on whether it has access to FHIR type
-    /// information. This influences the way the properties Name, Type and Value need to be interpreted. See each property for
-    /// more details. 
-    /// 
-    /// <para>Initially, the navigator will be placed on a "root" which has the same name as the type of the instance data
-    /// (often the name of the resource type, e.g. 'Patient'), but if the tree is a fragment it may be the name of a data type as well). Note
-    /// that contained resources will have a node called "contained" as their root.</para>
+    /// This interface is typically implemented by a parser for one of the low-level serialization formats for FHIR, i.e.
+    /// FHIR xml/json/rdf of v3 XML.  This interface assumes there is no type information available (in contrast to
+    /// IElementNavigator), so the names of the nodes still may have their type suffixes (for choice types) and all 
+    /// primitives values are represented as strings, instead of native objects.
     /// </remarks>
     public interface ISourceNavigator
     {
@@ -50,40 +47,16 @@ namespace Hl7.Fhir.ElementModel
         ISourceNavigator Clone();
 
         /// <summary>
-        /// Name of the node, e.g. "active", "value".
+        /// Name of the node, e.g. "active", "valueQuantity".
         /// </summary>
-        /// <remarks>Depending on whether the navigator has type information for this element, choice elements may be represented as their 
-        /// "raw" name on the wire or not. e.g. it may be 'value' (with Type == "CodeableConcept") or 'valueCodeableConcept' (and Type == null).
+        /// <remarks>Since the navigator has no type information, choice elements are represented as their 
+        /// "raw" name on the wire.
         /// </remarks>
         string Name { get; }
 
         /// <summary>
-        /// The value of the node (if it represents a primitive FHIR value)
+        /// The raw text of the primitive value of the node (if it represents a primitive FHIR value)
         /// </summary>
-        /// <remarks>If The underlying source has type information for this element, this property will have typed data (string, integer, etc),
-        /// else this is a raw string from the FHIR wire representation.
-        /// 
-        /// <para>
-        /// If the data is typed, FHIR primitives are mapped to underlying C# types as follows:
-        ///
-        /// instant         Hl7.Fhir.Model.Primitive.PartialDateTime
-        /// time            Hl7.Fhir.Model.Primitive.PartialTime
-        /// date, dateTime  Hl7.Fhir.Model.Primitive.PartialDateTime
-        /// decimal         decimal
-        /// boolean         bool
-        /// integer         long
-        /// unsignedInt     long
-        /// positiveInt     long
-        /// string          string
-        /// code            string
-        /// id              string
-        /// uri, oid, uuid, 
-        /// canonical, url  string
-        /// markdown        string
-        /// base64Binary    string (uuencoded)
-        /// xhtml           string
-        /// </para>
-        /// </remarks>
         string Text { get; }
 
         /// <summary>
@@ -94,7 +67,4 @@ namespace Hl7.Fhir.ElementModel
         /// the user in locating issues in the data.</remarks>
         string Location { get; }
     }
-
-
-
 }

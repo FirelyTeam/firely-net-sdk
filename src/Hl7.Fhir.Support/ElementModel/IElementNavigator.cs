@@ -14,16 +14,11 @@ using Hl7.Fhir.Utility;
 namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
-    /// A navigator across a tree representing FHIR data, independent of serialization format or FHIR version.
+    /// A type-aware navigator across a tree representing FHIR data, independent of serialization format or FHIR version.
     /// </summary>
     /// <remarks>
-    /// An implementation of this interface may be either type-aware or not, depending on whether it has access to FHIR type
-    /// information. This influences the way the properties Name, Type and Value need to be interpreted. See each property for
-    /// more details. 
-    /// 
-    /// <para>Initially, the navigator will be placed on a "root" which has the same name as the type of the instance data
-    /// (often the name of the resource type, e.g. 'Patient'), but if the tree is a fragment it may be the name of a data type as well). Note
-    /// that contained resources will have a node called "contained" as their root.</para>
+    /// Since this navigator associates type information with each (known) element, the element names are represented using
+    /// their defined name (without type suffix) and the underlying raw value is parsed into a native .NET representation
     /// </remarks>
     public interface IElementNavigator
     {
@@ -53,27 +48,18 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Name of the node, e.g. "active", "value".
         /// </summary>
-        /// <remarks>Depending on whether the navigator has type information for this element, choice elements may be represented as their 
-        /// "raw" name on the wire or not. e.g. it may be 'value' (with Type == "CodeableConcept") or 'valueCodeableConcept' (and Type == null).
-        /// </remarks>
         string Name { get; }
 
         /// <summary>
         /// Type of the node. If a FHIR type, this is just a simple string, otherwise a StructureDefinition url for a type defined as a logical model.
         /// </summary>
-        /// <remarks>Navigators without type information will throw NotSupportedException when this property is read.
-        /// </remarks>
-        /// 
         string Type { get; }
 
         /// <summary>
         /// The value of the node (if it represents a primitive FHIR value)
         /// </summary>
-        /// <remarks>If The underlying source has type information for this element, this property will have typed data (string, integer, etc),
-        /// else this is a raw string from the FHIR wire representation.
-        /// 
-        /// <para>
-        /// If the data is typed, FHIR primitives are mapped to underlying C# types as follows:
+        /// <remarks>
+        /// FHIR primitives are mapped to underlying C# types as follows:
         ///
         /// instant         Hl7.Fhir.Model.Primitive.PartialDateTime
         /// time            Hl7.Fhir.Model.Primitive.PartialTime
@@ -91,16 +77,15 @@ namespace Hl7.Fhir.ElementModel
         /// markdown        string
         /// base64Binary    string (uuencoded)
         /// xhtml           string
-        /// </para>
         /// </remarks>
         object Value { get; }
 
         /// <summary>
         /// An indication of the location of this node within the data represented by the navigator.
         /// </summary>
-        /// <remarks>The format of the location is dependent on the source represented by this interface, e.g. this might be an FhirPath-type location,
-        /// a line/position indication, or the dotted name of a property in a POCO. It needs to be sufficiently precise to aid the user in
-        /// locating issues in the data.</remarks>
+        /// <remarks>The format of the location is the dotted name of the property, including indices to make
+        /// sure repeated occurences of an element can be distinguished. It needs to be sufficiently precise to aid 
+        /// the user in locating issues in the data.</remarks>
         string Location { get; }
     }
 
