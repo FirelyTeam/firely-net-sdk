@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("SeriesComponent")]
         [DataContract]
-        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SeriesComponent"; } }
@@ -476,18 +476,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
-                    if (NumberElement != null) yield return new ElementValue("number", false, NumberElement);
-                    if (Modality != null) yield return new ElementValue("modality", false, Modality);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", false, NumberOfInstancesElement);
-                    if (AvailabilityElement != null) yield return new ElementValue("availability", false, AvailabilityElement);
-                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
-                    if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
-                    if (Laterality != null) yield return new ElementValue("laterality", false, Laterality);
-                    if (StartedElement != null) yield return new ElementValue("started", false, StartedElement);
-                    foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
-                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, elem); }
+                    if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                    if (NumberElement != null) yield return new ElementValue("number", NumberElement);
+                    if (Modality != null) yield return new ElementValue("modality", Modality);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", NumberOfInstancesElement);
+                    if (AvailabilityElement != null) yield return new ElementValue("availability", AvailabilityElement);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
+                    if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                    if (Laterality != null) yield return new ElementValue("laterality", Laterality);
+                    if (StartedElement != null) yield return new ElementValue("started", StartedElement);
+                    foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
+                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
                 }
             }
 
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InstanceComponent")]
         [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }
@@ -702,10 +702,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
-                    if (NumberElement != null) yield return new ElementValue("number", false, NumberElement);
-                    if (SopClassElement != null) yield return new ElementValue("sopClass", false, SopClassElement);
-                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                    if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                    if (NumberElement != null) yield return new ElementValue("number", NumberElement);
+                    if (SopClassElement != null) yield return new ElementValue("sopClass", SopClassElement);
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
                 }
             }
 
@@ -1234,25 +1234,25 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
-                if (Accession != null) yield return new ElementValue("accession", false, Accession);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (AvailabilityElement != null) yield return new ElementValue("availability", false, AvailabilityElement);
-                foreach (var elem in ModalityList) { if (elem != null) yield return new ElementValue("modalityList", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (StartedElement != null) yield return new ElementValue("started", false, StartedElement);
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                if (Referrer != null) yield return new ElementValue("referrer", false, Referrer);
-                foreach (var elem in Interpreter) { if (elem != null) yield return new ElementValue("interpreter", true, elem); }
-                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
-                if (NumberOfSeriesElement != null) yield return new ElementValue("numberOfSeries", false, NumberOfSeriesElement);
-                if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", false, NumberOfInstancesElement);
-                foreach (var elem in ProcedureReference) { if (elem != null) yield return new ElementValue("procedureReference", true, elem); }
-                foreach (var elem in ProcedureCode) { if (elem != null) yield return new ElementValue("procedureCode", true, elem); }
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", true, elem); }
+                if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                if (Accession != null) yield return new ElementValue("accession", Accession);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (AvailabilityElement != null) yield return new ElementValue("availability", AvailabilityElement);
+                foreach (var elem in ModalityList) { if (elem != null) yield return new ElementValue("modalityList", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (StartedElement != null) yield return new ElementValue("started", StartedElement);
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                if (Referrer != null) yield return new ElementValue("referrer", Referrer);
+                foreach (var elem in Interpreter) { if (elem != null) yield return new ElementValue("interpreter", elem); }
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
+                if (NumberOfSeriesElement != null) yield return new ElementValue("numberOfSeries", NumberOfSeriesElement);
+                if (NumberOfInstancesElement != null) yield return new ElementValue("numberOfInstances", NumberOfInstancesElement);
+                foreach (var elem in ProcedureReference) { if (elem != null) yield return new ElementValue("procedureReference", elem); }
+                foreach (var elem in ProcedureCode) { if (elem != null) yield return new ElementValue("procedureCode", elem); }
+                if (Reason != null) yield return new ElementValue("reason", Reason);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", elem); }
             }
         }
 

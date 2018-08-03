@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// within datatypes (of type Element).
         ///</remarks>
         public static bool IsBackboneElement(this ElementDefinition defn) => defn.Path.Contains('.') && defn.Type.Count == 1 && 
-            (defn.Type[0].Code == FHIRDefinedType.BackboneElement || defn.Type[0].Code == FHIRDefinedType.Element);
+            (defn.Type[0].Code == "BackboneElement" || defn.Type[0].Code == "Element");
 
 
         /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>

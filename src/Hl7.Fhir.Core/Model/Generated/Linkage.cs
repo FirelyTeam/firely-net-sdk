@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemComponent")]
         [DataContract]
-        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ItemComponent"; } }
@@ -198,8 +198,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Resource != null) yield return new ElementValue("resource", Resource);
                 }
             }
 
@@ -350,9 +350,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Author != null) yield return new ElementValue("author", Author);
+                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
             }
         }
 

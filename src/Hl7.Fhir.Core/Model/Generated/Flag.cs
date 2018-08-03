@@ -307,14 +307,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Author != null) yield return new ElementValue("author", false, Author);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Author != null) yield return new ElementValue("author", Author);
             }
         }
 

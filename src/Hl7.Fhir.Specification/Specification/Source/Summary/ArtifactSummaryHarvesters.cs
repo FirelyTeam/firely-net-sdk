@@ -289,14 +289,14 @@ namespace Hl7.Fhir.Specification.Source
             {
                 if (nav.MoveToNext("valueInteger"))
                 {
-                    properties[MaturityLevelKey] = nav.Value;
+                    properties[MaturityLevelKey] = nav.Text;
                 }
             }
             else if (StringComparer.Ordinal.Equals(WgExtensionUrl, url))
             {
                 if (nav.MoveToNext("valueCode"))
                 {
-                    properties[WorkingGroupKey] = nav.Value;
+                    properties[WorkingGroupKey] = nav.Text;
                 }
             }
         }
