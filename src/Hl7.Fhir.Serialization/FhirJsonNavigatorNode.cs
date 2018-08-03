@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Serialization
 
                 foreach (var child in children)
                 {
-                    if (child.Key == JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME) continue;
+                    if (isResourceTypeIndicator(child)) continue;                    
                     if (processed.Contains(child.Key)) continue;
 
                     (JProperty main, JProperty shadow) = getNextElementPair(child);
@@ -199,6 +199,13 @@ namespace Hl7.Fhir.Serialization
                     var name = prop.Name;
                     return name[0] == '_' ? name.Substring(1) : name;
                 }
+            }
+
+            private bool isResourceTypeIndicator(IGrouping<string, JProperty> child)
+            {
+                if (child.Key != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME) return false;
+
+                return child.First().Value.Type == JTokenType.String;
             }
 
             private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string, JProperty> child)

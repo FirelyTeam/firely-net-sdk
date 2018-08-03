@@ -380,13 +380,7 @@ namespace Hl7.Fhir.Model
 
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
-            return
-                type == FHIRAllTypes.Age ||
-                type == FHIRAllTypes.Distance ||
-                type == FHIRAllTypes.SimpleQuantity ||
-                type == FHIRAllTypes.Duration ||
-                type == FHIRAllTypes.Count ||
-                type == FHIRAllTypes.Money;
+            return type == FHIRAllTypes.SimpleQuantity;
         }
         
         public static bool IsProfiledQuantity(string type)

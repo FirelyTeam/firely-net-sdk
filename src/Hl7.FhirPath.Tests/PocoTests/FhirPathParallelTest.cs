@@ -60,7 +60,7 @@ namespace Vonk.Core.Tests.Support
         /// <returns></returns>
         [Theory]
         [MemberData(nameof(GetSelectMethods))]
-        [Trait("TestCategory", "LongRunner")]
+        [Trait("TestCategory")]
         public async T.Task MassiveParallelSelectsShouldBeCorrect(string testDescriptor, Func<IElementNavigator, string, EvaluationContext, IEnumerable<IElementNavigator>> selector)
         {
             var actual = new ConcurrentBag<(string canonical, DataElement resource)>();

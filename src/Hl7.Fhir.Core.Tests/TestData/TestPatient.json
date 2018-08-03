@@ -19,7 +19,7 @@
       "name": [
         {
           "use": "official",
-          "family": [ "Everywoman" ],
+          "family": "Everywoman",
           "given": [ "Eve" ]
         }
       ],
@@ -52,17 +52,8 @@
   "name": [
     {
       "use": "official",
-      "family": "Chalmers",
-      "given": [
-        "Peter",
-        "James"
-      ]
-    },
-    {
-      "use": "usual",
-      "given": [
-        "Jim"
-      ]
+      "family": "Donald",
+      "given": [ "Duck" ]
     }
   ],
   "gender": "male",
@@ -84,38 +75,9 @@
           ]
         }
       ],
-      "name": {
-        "family": "du Marché",
-        "_family": 
-          {
-            "extension": [
-              {
-                "fhir_comments": [
-                  "   the \"du\" part is a family name prefix (VV in iso 21090)   "
-                ],
-                "url": "http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier",
-                "valueCode": "VV"
-              }
-            ]
-          },
-        "given": [
-          "Bénédicte"
-        ]
-      },
-      "telecom": [
-        {
-          "system": "phone",
-          "value": "+33 (237) 998327"
-        }
-      ],
-      "gender": "female",
-      "period": {
-        "start": "2012",
-        "_start": {
-          "fhir_comments": [
-            "   The contact relationship started in 2012   "
-          ]
-        }
+      "organization": {
+        "reference": "Organization/1",
+        "display": "Walt Disney Corporation"
       }
     }
   ],
