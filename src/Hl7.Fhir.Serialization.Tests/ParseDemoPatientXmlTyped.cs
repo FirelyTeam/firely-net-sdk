@@ -187,5 +187,17 @@ namespace Hl7.Fhir.Serialization.Tests
                 getXmlNav(jsonText, new FhirXmlNavigatorSettings { ValidateFhirXhtml = true });
         }
 
+        [TestMethod]
+        public void DelayedParseErrors()
+        {
+            var tpXml = "<Patient>";
+            var patient = getXmlNav(tpXml);
+
+            var errors = patient.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));
+        }
+
+
+
     }
 }

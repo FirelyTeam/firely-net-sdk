@@ -133,8 +133,16 @@ namespace Hl7.Fhir.Serialization
 
         private static ISourceNavigator createUntyped(XmlReader reader, FhirXmlNavigatorSettings settings)
         {
-            var doc = SerializationUtil.XDocumentFromReader(reader, ignoreComments: false);
-            return createUntyped(doc.Root, settings);
+            try
+            {
+                var doc = SerializationUtil.XDocumentFromReader(reader, ignoreComments: false);
+
+                return createUntyped(doc.Root, settings);
+            }
+            catch (FormatException fe)
+            {
+                return new ParseErrorStubNavigator(fe);
+            }
         }
 
         private static ISourceNavigator createUntyped(XElement element, FhirXmlNavigatorSettings settings) => new FhirXmlNavigator(element, settings);

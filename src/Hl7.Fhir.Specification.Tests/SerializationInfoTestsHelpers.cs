@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
+
 namespace Hl7.Fhir.Serialization.Tests
 {
     public static class SerializationInfoTestHelpers
@@ -48,6 +49,13 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(baseTypeName ?? typename, si.TypeName);
                 Assert.AreEqual(isAbstract, si.IsAbstract);
             }
+        }
+
+        public static void TestValueIsNotAChild(IStructureDefinitionSummaryProvider provider)
+        {
+            var p = provider.Provide("string");
+            var children = p.GetElements();
+            Assert.IsFalse(children.Any(c => c.ElementName == "value"));
         }
 
         public static void TestCanGetElements(IStructureDefinitionSummaryProvider provider)

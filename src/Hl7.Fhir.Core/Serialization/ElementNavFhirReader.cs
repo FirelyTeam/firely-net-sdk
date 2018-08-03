@@ -29,6 +29,8 @@ namespace Hl7.Fhir.Serialization
         public ElementNavFhirReader(ISourceNavigator root)
         {
             _current = root;
+
+            var dummy = root.Text;   // trigger format exceptions before we continue
         }
 
         public int LineNumber => getDetails(_current)?.LineNumber ?? -1;
@@ -56,18 +58,8 @@ namespace Hl7.Fhir.Serialization
         }
 #pragma warning restore 612, 618
 
-        //public bool MoveToNext(string nameFilter = null) => _current.MoveToNext(nameFilter);
-
-        //public bool MoveToFirstChild(string nameFilter = null) => _current.MoveToFirstChild(nameFilter);
-
-        //public IElementNavigator Clone() => new ElementNavFhirReader(_current.Clone());
-
         public string Name => _current.Name;
 
-        //public string Type => throw Error.NotImplemented();
-
         public object Value => _current.Text;
-
-        //public string Location => _current.Path;
     }
 }

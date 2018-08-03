@@ -158,5 +158,15 @@ namespace Hl7.Fhir.Serialization.Tests
                 getJsonNav(jsonText, new FhirJsonNavigatorSettings { ValidateFhirXhtml = true });
         }
 
+        [TestMethod]
+        public void DelayedParseErrors()
+        {
+            var text = "{";
+            var patient = getJsonNav(text);
+
+            var errors = patient.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("Invalid Json encountered"));
+        }
+
     }
 }

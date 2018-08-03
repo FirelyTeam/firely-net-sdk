@@ -27,5 +27,9 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new StructureDefinitionSummaryProvider(source));
+
+        [TestMethod]
+        public void TestValueIsNotAChild() => SerializationInfoTestHelpers.TestValueIsNotAChild(new StructureDefinitionSummaryProvider(source));
+
     }
 }

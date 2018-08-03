@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Serialization
         private void verifyXObject(XObject node)
         {
             var allowedNs = AllowedExternalNamespaces ?? new XNamespace[0];
-                 
+
             if (node is XAttribute xa)
             {
                 if (xa.Name.NamespaceName != "" && !allowedNs.Contains(xa.Name.NamespaceName))
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Serialization
             var parent = Contained ?? element;
             var schemaAttr = parent.Attribute(XmlNs.XSCHEMALOCATION);
             if (schemaAttr != null && DisallowSchemaLocation)
-                        raiseFormatError($"The 'schemaLocation' attribute is disallowed.", schemaAttr);
+                raiseFormatError($"The 'schemaLocation' attribute is disallowed.", schemaAttr);
 
             XObject firstChild = parent.FirstChildElementOrAttribute();
 
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Serialization
         private static void reportOnValidation(Func<string[]> validator, IExceptionSource ies, object source)
         {
             var messages = validator();
-            if(messages.Any())
+            if (messages.Any())
             {
                 var problems = String.Join(", ", messages);
                 ies.ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Serialization
         private void raiseFormatError(string message, XObject position)
         {
             var (lineNumber, linePosition) = getPosition(_current);
-            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message,lineNumber, linePosition)));
+            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
         }
 
         private XElement Contained
@@ -291,11 +291,11 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public string Path => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_names[Name]-1}]";
+        public string Path => _parentPath == null ? Name : $"{_parentPath}.{Name}[{_names[Name] - 1}]";
 
         public override string ToString() => _current.ToString();
 
-        private (int lineNumber,int linePosition) getPosition(XObject node)
+        private (int lineNumber, int linePosition) getPosition(XObject node)
         {
             if (node is IXmlLineInfo xli)
                 return (xli.LineNumber, xli.LinePosition);
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Serialization
 
                 string getSchemaLocation()
                 {
-                    if(_current is XElement slparent)
+                    if (_current is XElement slparent)
                     {
                         var sl = slparent.Attribute(XmlNs.XSCHEMALOCATION);
                         if (sl != null) return sl.Value;
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Serialization
 
                 var representation = sdSummary.Representation;
 
-                switch(representation)
+                switch (representation)
                 {
                     case XmlRepresentation.XHtml when !serializationDetails.IsXhtml:
                         ies.ExceptionHandler(nav, buildException(

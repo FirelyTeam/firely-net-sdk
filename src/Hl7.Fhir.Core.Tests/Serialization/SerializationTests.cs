@@ -381,9 +381,10 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 FhirXmlParser.Parse<Resource>(input);
+
                 Assert.Fail();
             }
-            catch (Exception e)
+            catch (FormatException e)
             {
                 Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
             }

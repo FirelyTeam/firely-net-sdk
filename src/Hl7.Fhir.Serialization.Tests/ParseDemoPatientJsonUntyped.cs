@@ -275,12 +275,23 @@ namespace Hl7.Fhir.Serialization.Tests
             try
             {
                 var nav = FhirJsonNavigator.Untyped("<bla", "test");
+                var dummy = nav.Text;
                 Assert.Fail();
             }
             catch(FormatException fe)
             {
                 Assert.IsInstanceOfType(fe.InnerException, typeof(JsonException));
             }                        
+        }
+
+        [TestMethod]
+        public void DelayedParseErrors()
+        {
+            var text = "{";
+            var patient = getJsonNavU(text);
+
+            var errors = patient.VisitAndCatch();
+            Assert.IsTrue(errors.Single().Message.Contains("Invalid Json encountered"));
         }
     }
 }

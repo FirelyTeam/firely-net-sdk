@@ -28,5 +28,8 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         public void TestProvidedOrder() => SerializationInfoTestHelpers.TestProvidedOrder(new PocoStructureDefinitionSummaryProvider());
+
+        [TestMethod]
+        public void TestValueIsNotAChild() => SerializationInfoTestHelpers.TestValueIsNotAChild(new PocoStructureDefinitionSummaryProvider());
     }
 }

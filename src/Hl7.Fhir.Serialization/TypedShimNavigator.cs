@@ -11,8 +11,14 @@ namespace Hl7.Fhir.Serialization
         public static IElementNavigator ToElementNavigator(this ISourceNavigator sourceNav, string type = null, IStructureDefinitionSummaryProvider provider = null)
         {
             IElementNavigator typedNav;
+            bool hasError = false;
 
-            if (provider != null)
+            using (sourceNav.Catch((o, a) => hasError = a.Exception is FormatException))
+            {
+                var dummy = sourceNav.Text;
+            }
+
+            if (provider != null && !hasError)
             {
                 // If no type is given, assume we are on a resource and try to get the
                 // resoure name from the underlying source. If that fails, take the name of
