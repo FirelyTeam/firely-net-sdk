@@ -281,15 +281,15 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var textBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Text);
-            var dataBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Data);
-            var countBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Count);
             var trueBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.True);
+            var dataBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Data);
+            var textBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Text);
+            var countBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Count);
             var falseBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.False);
 
             var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.json");
-            var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.json");
             var shouldBeSummaryData = TestDataHelper.ReadTestData("summary\\bundle-summary-data.json");
+            var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.json");
             var shouldBeSummaryCount = TestDataHelper.ReadTestData("summary\\bundle-summary-count.json");
             var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.json");
 
@@ -348,11 +348,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.xml");
             var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.xml");
 
-            Assert.AreEqual(falseBundle, shouldBeSummaryFalse);
-            Assert.AreEqual(trueBundle, shouldBeSummaryTrue);
-            Assert.AreEqual(dataBundle, shouldBeSummaryData);
-            Assert.AreEqual(countBundle, shouldBeSummaryCount);
-            Assert.AreEqual(textBundle, shouldBeSummaryText);
+            Assert.AreEqual(shouldBeSummaryFalse, falseBundle);
+            Assert.AreEqual(shouldBeSummaryTrue, trueBundle);
+            Assert.AreEqual(shouldBeSummaryData, dataBundle);
+            Assert.AreEqual(shouldBeSummaryCount, countBundle);
+            Assert.AreEqual(shouldBeSummaryText, textBundle);
 
         }
 

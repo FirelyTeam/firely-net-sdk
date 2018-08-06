@@ -175,7 +175,7 @@ namespace Hl7.Fhir.ElementModel
                     if (Name == "url")
                         return "uri";
                     else if (Name == "id")
-                        return "id";
+                        return "string";
                     else if (Name == "div")
                         return "xhtml";
                     else
