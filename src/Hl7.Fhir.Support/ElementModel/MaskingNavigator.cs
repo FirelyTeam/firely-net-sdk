@@ -83,6 +83,7 @@ namespace Hl7.Fhir.ElementModel
         internal MaskingNavigatorSettings Clone() =>
             new MaskingNavigatorSettings
             {
+                PreserveBundle = this.PreserveBundle,
                 IncludeMandatory = this.IncludeMandatory,
                 IncludeInSummary = this.IncludeInSummary,
                 //   IncludeIsModifier = this.IncludeIsModifier,
@@ -134,6 +135,9 @@ namespace Hl7.Fhir.ElementModel
 
             Source = source;
             _settings = settings?.Clone() ?? new MaskingNavigatorSettings();
+
+            if (Source is IExceptionSource ies && ies.ExceptionHandler == null)
+                ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
         private ScopedNavigator getScope(IElementNavigator node) =>

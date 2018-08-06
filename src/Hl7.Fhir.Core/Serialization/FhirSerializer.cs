@@ -39,7 +39,11 @@ namespace Hl7.Fhir.Serialization
         {
             if (summary == SummaryType.False) return instance.ToElementNavigator();
 
-            var baseNav = new ScopedNavigator(instance.ToElementNavigator());
+            var patchedInstance = (Base)instance.DeepCopy();
+
+            MetaSubsettedAdder.AddSubsetted(patchedInstance, atRoot: true);
+
+            var baseNav = new ScopedNavigator(patchedInstance.ToElementNavigator());
 
             switch (summary)
             {
@@ -67,35 +71,23 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null)
-        {
-            using (new MetaSubsettedAdder(instance, summary != SummaryType.False))
-                return makeNav(instance, summary).ToXml(rootName: root);
-        }
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null) => makeNav(instance, summary).ToXml(rootName: root);
 
 
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null)
-        {
-            using (new MetaSubsettedAdder(instance, summary != SummaryType.False))
-                return makeNav(instance, summary).ToXmlBytes(rootName: root);
-        }
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => makeNav(instance, summary).ToXmlBytes(rootName: root);
 
 #if NET45
         // [WMR 20180409] NEW
         // https://github.com/ewoutkramer/fhir-net-api/issues/545
         public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null)
         {
-            using (new MetaSubsettedAdder(instance, summary != SummaryType.False))
+            var nav = makeNav(instance, summary);
+
+            return SerializationUtil.WriteXmlToDocument(w =>
             {
-                var nav = makeNav(instance, summary);
-
-
-                return SerializationUtil.WriteXmlToDocument(w =>
-                {
-                    var fhirWriter = new FhirXmlWriter();
-                    fhirWriter.Write(nav, w, root);
-                });
-            }
+                var fhirWriter = new FhirXmlWriter();
+                fhirWriter.Write(nav, w, root);
+            });
         }
 #endif
 
@@ -113,17 +105,9 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False)
-        {
-            using (new MetaSubsettedAdder(instance, summary != SummaryType.False))
-                return makeNav(instance, summary).ToJson();
-        }
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False) => makeNav(instance, summary).ToJson();
 
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False)
-        {
-            using (new MetaSubsettedAdder(instance, summary != SummaryType.False))
-                return makeNav(instance, summary).ToJsonBytes();
-        }
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False) => makeNav(instance, summary).ToJsonBytes();
     }
 
     //[Obsolete("Obsolete. Instead, create a new FhirXmlSerializer or FhirJsonSerializer instance and call one of the serialization methods.")]
@@ -168,65 +152,28 @@ namespace Hl7.Fhir.Serialization
     // instance, even if the current IElementNavigator based serializer won't let you have that.
     // I am not convinced it's the responsibility of the serializer (it's an outside policy), so
     // it's just here to not break existing logic of the POCO serializers.
-    internal class MetaSubsettedAdder : IDisposable
+    internal class MetaSubsettedAdder
     {
-        private readonly Coding subsettedTag = null;
-        private readonly bool createdMetaElement = false;
-        private readonly Base instance = null;
-        private readonly bool addSubsetted = false;
-
-        public MetaSubsettedAdder(Base i, bool addSubsetted)
+        public static void AddSubsetted(Base instance, bool atRoot)
         {
-            instance = i;
-            this.addSubsetted = addSubsetted;
+            var isBundleAtRoot = instance is Bundle && atRoot;
 
-            if (instance is Resource resource && !(instance is Bundle) && addSubsetted)
+            if (instance is Resource resource && !isBundleAtRoot)
             {
                 if (resource.Meta == null)
                 {
                     resource.Meta = new Meta();
-                    createdMetaElement = true;
                 }
 
                 if (!resource.Meta.Tag.Any(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"))
                 {
-                    subsettedTag = new Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED");
+                    var subsettedTag = new Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED");
                     resource.Meta.Tag.Add(subsettedTag);
                 }
             }
+
+            foreach (var child in instance.Children)
+                AddSubsetted(child, atRoot: false);
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing && instance is Resource resource)
-                {
-                    if (subsettedTag != null)
-                        resource.Meta.Tag.Remove(subsettedTag);
-
-                    if (createdMetaElement)
-                        resource.Meta = null; // remove the meta element again.
-                }
-
-                disposedValue = true;
-            }
-        }
-
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
-        }
-        #endregion
-
     }
-
 }
