@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Serialization
                 var (lastName, lastOrder) = nav.LastOrder.Value;
 
                 if (sdSummary.Order < lastOrder)
-                    ies.ExceptionHandler(nav, buildException($"Element '{nav.Name}' is not in the correct order and should come before element '{lastName}'."));
+                    ies.ExceptionHandler.NotifyOrThrow(nav, buildException($"Element '{nav.Name}' is not in the correct order and should come before element '{lastName}'."));
             }
 
             void checkRepresentation(IElementNavigator nav, IExceptionSource ies)
@@ -425,27 +425,27 @@ namespace Hl7.Fhir.Serialization
                 switch (representation)
                 {
                     case XmlRepresentation.XHtml when !serializationDetails.IsXhtml:
-                        ies.ExceptionHandler(nav, buildException(
+                        ies.ExceptionHandler.NotifyOrThrow(nav, buildException(
                             buildMessage(nav.Name, serializationDetails.NodeType, "should use an XHTML element.")));
                         break;
                     case XmlRepresentation.XmlAttr when serializationDetails.NodeType != XmlNodeType.Attribute:
-                        ies.ExceptionHandler(nav, buildException(
+                        ies.ExceptionHandler.NotifyOrThrow(nav, buildException(
                             buildMessage(nav.Name, serializationDetails.NodeType, "should be an XML attribute.")));
                         break;
                     case XmlRepresentation.XmlElement when serializationDetails.NodeType != XmlNodeType.Element:
-                        ies.ExceptionHandler(nav, buildException(
+                        ies.ExceptionHandler.NotifyOrThrow(nav, buildException(
                             buildMessage(nav.Name, serializationDetails.NodeType, "should be an XML element.")));
                         break;
                     case XmlRepresentation.XmlText when serializationDetails.NodeType != XmlNodeType.Text:
-                        ies.ExceptionHandler(nav, buildException(
+                        ies.ExceptionHandler.NotifyOrThrow(nav, buildException(
                             buildMessage(nav.Name, serializationDetails.NodeType, "should use XML node text.")));
                         break;
                     case XmlRepresentation.CdaText when !serializationDetails.IsCDAText:
-                        ies.ExceptionHandler(nav, buildException(
+                        ies.ExceptionHandler.NotifyOrThrow(nav, buildException(
                             buildMessage(nav.Name, serializationDetails.NodeType, "should use CDA text.")));
                         break;
                     case XmlRepresentation.TypeAttr when !serializationDetails.IsXsiType:
-                        ies.ExceptionHandler(nav, buildException(
+                        ies.ExceptionHandler.NotifyOrThrow(nav, buildException(
                             buildMessage(nav.Name, serializationDetails.NodeType, "should use an xsi:type attribute.")));
                         break;
                 }

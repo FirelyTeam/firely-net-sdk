@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Serialization
                 if (sdSummary == null || serializationDetails == null) return;
 
                 if (sdSummary.IsCollection && serializationDetails.ArrayIndex == null)
-                    ies.ExceptionHandler(nav, ExceptionNotification.Error(
+                    ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
                         new StructuralTypeException($"Since element '{nav.Name}' repeats, an array must be used here.")));
 
                 if (!sdSummary.IsCollection && serializationDetails.ArrayIndex != null)
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Serialization
                     // only report this once on the first of the group
                     if (serializationDetails.ArrayIndex == 0)
                     {
-                        ies.ExceptionHandler(nav, ExceptionNotification.Error(
+                        ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
                             new StructuralTypeException($"Element '{nav.Name}' does not repeat, so an array must not be used here.")));
                     }
                 }
