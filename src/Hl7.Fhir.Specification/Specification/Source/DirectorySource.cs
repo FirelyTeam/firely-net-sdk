@@ -98,6 +98,18 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// using the specified <see cref="DirectorySourceSettings"/>.
+        /// </summary>
+        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
+        public DirectorySource(DirectorySourceSettings settings) : this(SpecificationDirectory, settings)
+        {
+            //
+        }
+
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
         /// from the specified content directory and optionally also from subdirectories.
         /// </summary>
         /// <param name="includeSubdirectories">

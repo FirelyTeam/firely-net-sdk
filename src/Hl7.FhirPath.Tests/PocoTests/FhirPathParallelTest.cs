@@ -67,9 +67,9 @@ namespace Vonk.Core.Tests.Support
             var buffer = new BufferBlock<DataElement>();
             var processor = new ActionBlock<DataElement>(r =>
                 {
-                    var pocoNav = new PocoNavigator(r);
-                    var evalContext = new EvaluationContext(new PocoNavigator(r));
-                    var canonical = selector(new PocoNavigator(r), "url", evalContext).Single().Value.ToString();
+                    var pocoNav = r.ToElementNavigator();
+                    var evalContext = new EvaluationContext(r.ToElementNavigator());
+                    var canonical = selector(r.ToElementNavigator(), "url", evalContext).Single().Value.ToString();
                     actual.Add((canonical, r));
                 }
                 ,

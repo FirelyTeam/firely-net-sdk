@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var bundleXml = File.ReadAllText("TestData\\bundle-contained-references.xml");
 
             _parsed = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
-            _bundleNav = new ScopedNavigator(new PocoNavigator(_parsed));
+            _bundleNav = new ScopedNavigator(_parsed.ToElementNavigator());
         }
 
 

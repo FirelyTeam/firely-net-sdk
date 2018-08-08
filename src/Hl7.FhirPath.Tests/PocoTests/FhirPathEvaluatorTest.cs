@@ -40,15 +40,15 @@ namespace Hl7.FhirPath.Tests
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
             var patient = parser.Parse<Patient>(tpXml);
-            TestInput = new PocoNavigator(patient);
+            TestInput = patient.ToElementNavigator();
 
             tpXml = TestData.ReadTextFile("questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
-            Questionnaire = new PocoNavigator(quest);
+            Questionnaire = quest.ToElementNavigator();
 
             tpXml = TestData.ReadTextFile("uuid.profile.xml");
             var uuid = parser.Parse<StructureDefinition>(tpXml);
-            UuidProfile = new PocoNavigator(uuid);
+            UuidProfile = uuid.ToElementNavigator();
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
@@ -173,7 +173,7 @@ namespace Hl7.FhirPath.Tests
             }
             catch (InvalidOperationException io)
             {
-                Assert.True(io.Message.Contains("contains more than one element"));
+                Assert.Contains("contains more than one element", io.Message);
             }
         }
 
@@ -385,21 +385,21 @@ namespace Hl7.FhirPath.Tests
             return result;
         }
 
-        public static void Render(IElementNavigator navigator, int nest = 0)
-        {
-            do
-            {
-                string indent = new string(' ', nest * 4);
-                Debug.WriteLine($"{indent}" + ToString(navigator));
+        //public static void Render(IElementNavigator navigator, int nest = 0)
+        //{
+        //    do
+        //    {
+        //        string indent = new string(' ', nest * 4);
+        //        Debug.WriteLine($"{indent}" + ToString(navigator));
 
-                var child = navigator.Clone();
-                if (child.MoveToFirstChild())
-                {
-                    Render(child, nest + 1);
-                }
-            }
-            while (navigator.MoveToNext());
-        }
+        //        var child = navigator.Clone();
+        //        if (child.MoveToFirstChild())
+        //        {
+        //            Render(child, nest + 1);
+        //        }
+        //    }
+        //    while (navigator.MoveToNext());
+        //}
 
 
         [Fact]

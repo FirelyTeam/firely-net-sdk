@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Validation
 
             if (definition.Fixed != null)
             {
-                IElementNavigator fixedValueNav = new PocoNavigator(definition.Fixed);
+                IElementNavigator fixedValueNav = definition.Fixed.ToElementNavigator();
 
                 if (!instance.IsExactlyEqualTo(fixedValueNav))
                 {
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Validation
 
             if (definition.Pattern != null)
             {
-                IElementNavigator patternValueNav = new PocoNavigator(definition.Pattern);
+                IElementNavigator patternValueNav = definition.Pattern.ToElementNavigator();
 
                 if (!instance.Matches(patternValueNav))
                 {

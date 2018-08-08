@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 var bd = this.Annotation<ResourceBaseData>();
-                return bd != null ? bd.Base : null;
+                return bd?.Base;
             }
 
             set
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new PocoNavigator(this);
+                var tree = this.ToElementNavigator();
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(context,invariantRule, tree, result);

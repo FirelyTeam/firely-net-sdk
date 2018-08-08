@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
-            _bundleNav = new PocoNavigator(bundle);
+            _bundleNav = bundle.ToElementNavigator();
         }
 
         private ScopedNavigator NewNav() => (ScopedNavigator)new ScopedNavigator(_bundleNav);

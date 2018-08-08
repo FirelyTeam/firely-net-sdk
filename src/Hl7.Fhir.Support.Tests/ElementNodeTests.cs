@@ -45,7 +45,9 @@ namespace Hl7.FhirPath.Tests
         {
             var data = patient[0];
             Assert.Equal("active", data.Name);
+#pragma warning disable xUnit2004 // Do not use equality check to test for boolean conditions
             Assert.Equal(true, data.Value);
+#pragma warning restore xUnit2004 // Do not use equality check to test for boolean conditions
             Assert.Equal("boolean", data.Type);
             Assert.Equal(4, data.Children.Count());
         }
@@ -101,7 +103,9 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal("boolean", nav.Type);
             Assert.False(nav.MoveToNext());
 
+#pragma warning disable xUnit2004 // Do not use equality check to test for boolean conditions
             Assert.Equal(true, nav.Value);
+#pragma warning restore xUnit2004 // Do not use equality check to test for boolean conditions
             Assert.True(nav.MoveToFirstChild("id"));
             Assert.Equal("id", nav.Name);
             Assert.False(nav.MoveToFirstChild());
