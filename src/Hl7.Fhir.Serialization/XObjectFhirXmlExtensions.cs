@@ -61,7 +61,8 @@ namespace Hl7.Fhir.Serialization
                    (scan is XAttribute attr && isRelevantAttribute(attr));            
         }
 
-        private static bool isRelevantAttribute(XAttribute a) => !a.IsNamespaceDeclaration && a.Name != XmlNs.XSCHEMALOCATION;
+        private static bool isRelevantAttribute(XAttribute a) =>
+            !a.IsNamespaceDeclaration && a.Name != XmlNs.XSCHEMALOCATION;
 
         public static bool HasRelevantAttributes(this XElement scan) =>
             scan.Attributes().Any(a => isRelevantAttribute(a));

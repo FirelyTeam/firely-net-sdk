@@ -32,8 +32,5 @@ namespace Hl7.Fhir.Serialization
 
         public static JsonSerializationDetails GetJsonSerializationDetails(this IElementNavigator navigator) =>
             navigator is IAnnotated ia ? ia.GetJsonSerializationDetails() : null;
-
-        public static JsonSerializationDetails GetJsonSerializationDetails(this ISourceNavigator navigator) =>
-            navigator is IAnnotated ia ? ia.GetJsonSerializationDetails() : null;
     }
 }

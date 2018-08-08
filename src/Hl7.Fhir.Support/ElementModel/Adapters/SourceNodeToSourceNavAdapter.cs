@@ -5,7 +5,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
-    internal class SourceNodeToElementNavAdapter : IElementNavigator, IAnnotated, IExceptionSource
+    internal class SourceNodeToSourceNavAdapter : ISourceNavigator, IAnnotated, IExceptionSource
     {
         private IList<ISourceNode> _siblings;
         private int _index;
@@ -15,7 +15,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
             get { return _siblings[_index]; }
         }
 
-        public SourceNodeToElementNavAdapter(ISourceNode sourceNode)
+        public SourceNodeToSourceNavAdapter(ISourceNode sourceNode)
         {
             _siblings = new List<ISourceNode> { sourceNode };
             _index = 0;
@@ -24,20 +24,18 @@ namespace Hl7.Fhir.ElementModel.Adapters
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        public SourceNodeToElementNavAdapter() { }  // for clone
+        public SourceNodeToSourceNavAdapter() { }  // for clone
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         public string Name => Current.Name;
 
-        public string Type => Current.GetResourceType();
-
-        public object Value => Current.Text;
+        public string Text => Current.Text;
 
         public string Location => Current.Location;
 
-        public IElementNavigator Clone() =>
-            new SourceNodeToElementNavAdapter()
+        public ISourceNavigator Clone() =>
+            new SourceNodeToSourceNavAdapter()
             {
                 _siblings = this._siblings,
                 _index = this._index,
@@ -83,7 +81,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(SourceNavToElementNavAdapter))
+            if (type == typeof(SourceNodeToSourceNavAdapter))
                 return new[] { this };
             else if (Current is IAnnotated annotated)
                 return annotated.Annotations(type);

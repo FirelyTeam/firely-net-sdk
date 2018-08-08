@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Serialization
             JValue
                 JRaw
      */
-    internal class FhirJsonNode : ISourceNode, IExceptionSource
+    internal class FhirJsonNode : ISourceNode, IAnnotated, IExceptionSource
     {
         public FhirJsonNode(JObject current, string nodeName, FhirJsonNavigatorSettings settings = null)
         {
@@ -50,6 +50,7 @@ namespace Hl7.Fhir.Serialization
             Location = location;
 
             _settings = parent._settings;
+            ExceptionHandler = parent.ExceptionHandler;
         }
 
         private readonly FhirJsonNavigatorSettings _settings;

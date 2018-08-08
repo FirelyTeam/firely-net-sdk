@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Serialization
             if (name == null)
                 throw Error.InvalidOperation("Root object has no type indication (resourceType) and therefore cannot be used to construct the navigator. Alternatively, specify a rootName using the parameter.");
 
-            return new FhirJsonNavigator(root, name, settings);
+            return new FhirJsonNode(root, name, settings).ToSourceNavigator();
 
         }
 

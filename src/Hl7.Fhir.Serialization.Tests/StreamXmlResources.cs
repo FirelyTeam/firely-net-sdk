@@ -136,7 +136,6 @@ namespace Hl7.Fhir.Support.Tests.Serialization
                             //Debug.WriteLine($"{navStream.Position} : {navStream.ResourceType} {(navStream.IsBundle ? "(Bundle)" : "")}");
                             Assert.IsTrue(navStream.IsBundle);
                             Assert.AreEqual(ResourceType.Bundle.GetLiteral(), navStream.ResourceType);
-                            Assert.IsInstanceOfType(navStream.Current, typeof(FhirXmlNavigator));
                         };
                     }
                 }

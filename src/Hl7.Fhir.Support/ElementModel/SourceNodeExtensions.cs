@@ -97,5 +97,9 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this ISourceNode sourceNav, string type = null) =>
             new SourceNodeToElementNavAdapter(sourceNav);
 
+        [Obsolete("Only here to refactor")]
+        public static ISourceNavigator ToSourceNavigator(this ISourceNode sourceNav, string type = null) =>
+            new SourceNodeToSourceNavAdapter(sourceNav);
+
     }
 }

@@ -45,8 +45,5 @@ namespace Hl7.Fhir.Serialization
 
         public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNavigator navigator) =>
             navigator is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
-
-        public static XmlSerializationDetails GetXmlSerializationDetails(this ISourceNavigator navigator) =>
-            navigator is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
     }
 }

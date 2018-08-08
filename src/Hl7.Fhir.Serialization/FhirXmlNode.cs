@@ -23,6 +23,7 @@ namespace Hl7.Fhir.Serialization
             Current = node;
             Location = location ?? Name;
             _settings = parent._settings;
+            ExceptionHandler = parent.ExceptionHandler;
         }
 
         public readonly XObject Current;
@@ -161,10 +162,11 @@ namespace Hl7.Fhir.Serialization
             do
             {
                 if (!PermissiveParsing) verifyXObject(scan, AllowedExternalNamespaces, this, this);
-
-                var scanName = scan.Name().LocalName;
-                if (scanName != "value")
+                
+                if (scan.Name() != "value")
                 {
+                    var scanName = scan.Name().LocalName;
+
                     bool isMatch =
                     name == null ||      // no name filter -> any match is ok
                         scanName == name ||    // try filter on the actual name

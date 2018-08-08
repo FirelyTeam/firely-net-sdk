@@ -58,6 +58,18 @@ namespace Hl7.Fhir.Serialization.Tests
             }
         }
 
+        //public static void ProducesCorrectUntypedLocations(ISourceNode patient)
+        //{
+        //    Assert.AreEqual("Patient", patient.Location);
+
+        //    Assert.AreEqual("Patient.id[0]", patient.Children().First().Location);
+
+        //    var identifiers = patient.Children("identifier").ToList();
+        //    Assert.AreEqual("Patient.identifier[0]", identifiers[0].Location);
+        //    Assert.AreEqual("Patient.identifier[0].use[0]", identifiers[0].Children().First().Location);
+        //    Assert.AreEqual("Patient.identifier[1]", identifiers[1].Location);
+        //    Assert.AreEqual("Patient.identifier[1].use[0]", identifiers[1].Children().First().Location);
+        //}
 
         public static void ProducesCorrectUntypedLocations(ISourceNavigator patient)
         {

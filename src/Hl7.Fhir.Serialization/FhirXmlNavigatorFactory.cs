@@ -145,7 +145,8 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private static ISourceNavigator createUntyped(XElement element, FhirXmlNavigatorSettings settings) => new FhirXmlNavigator(element, settings);
+        private static ISourceNavigator createUntyped(XElement element, FhirXmlNavigatorSettings settings) => 
+            new FhirXmlNode(element, settings).ToSourceNavigator();
 
         private static IElementNavigator createTyped(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings)
         {

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.ElementModel
             if (found == -1) return false;
 
             _siblings = children;
-            _index = 0;
+            _index = found;
             return true;
         }
 

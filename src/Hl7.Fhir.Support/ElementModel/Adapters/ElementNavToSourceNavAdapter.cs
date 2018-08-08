@@ -36,6 +36,9 @@ namespace Hl7.Fhir.ElementModel.Adapters
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
+        private ElementNavToSourceNavAdapter()
+        { }   // for clone
+
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         public string Name
@@ -55,8 +58,9 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public string Location => _sourceNav.Location;
 
         public ISourceNavigator Clone() =>
-            new ElementNavToSourceNavAdapter(_sourceNav.Clone())
+            new ElementNavToSourceNavAdapter()
             {
+                _sourceNav = this._sourceNav.Clone(),
                 ExceptionHandler = this.ExceptionHandler
             };
 
