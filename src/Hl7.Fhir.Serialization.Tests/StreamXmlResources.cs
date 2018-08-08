@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
                 var nav = stream.Current;
                 Assert.IsTrue(nav.MoveToFirstChild("name"));
-                Assert.AreEqual("dateTime", nav.Text);
+                Assert.AreEqual("dateTime", nav.Value);
 
                 var current = stream.Position;
 
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
                 var nav = stream.Current;
                 Assert.IsTrue(nav.MoveToFirstChild("gender"));
-                Assert.AreEqual("male", nav.Text);
+                Assert.AreEqual("male", nav.Value);
 
                 stream.Reset();
                 stream.Seek(current);

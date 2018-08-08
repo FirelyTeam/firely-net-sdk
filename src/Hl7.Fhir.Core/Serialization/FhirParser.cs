@@ -8,6 +8,7 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.ElementModel.Adapters;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
@@ -39,7 +40,7 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612, 618
         public Base Parse(string xml, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(xml,
+            IFhirReader xmlReader = new SourceNavToFhirReaderAdapter(FhirXmlNavigator.Untyped(xml,
                 new FhirXmlNavigatorSettings
                 {
                     DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot,
@@ -50,7 +51,7 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new ElementNavFhirReader(FhirXmlNavigator.Untyped(reader,
+            IFhirReader xmlReader = new SourceNavToFhirReaderAdapter(FhirXmlNavigator.Untyped(reader,
                 new FhirXmlNavigatorSettings
                 {
                     DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot
@@ -80,7 +81,7 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
         public Base Parse(string json, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(
+            IFhirReader jsonReader = new SourceNavToFhirReaderAdapter(
                 FhirJsonNavigator.Untyped(json, ModelInfo.GetFhirTypeNameForType(dataType),
                 new FhirJsonNavigatorSettings
                 {
@@ -92,7 +93,7 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(
+            IFhirReader jsonReader = new SourceNavToFhirReaderAdapter(
                 FhirJsonNavigator.Untyped(reader, ModelInfo.GetFhirTypeNameForType(dataType),
                 new FhirJsonNavigatorSettings
                 {
@@ -152,10 +153,10 @@ namespace Hl7.Fhir.Serialization
         }
 
         public T Parse<T>(IElementNavigator nav) where T : Base =>
-            (T)Parse(new SourceNavigatorOnElementNavigator(nav), typeof(T));
+            (T)Parse(new ElementNavToSourceNavAdapter(nav), typeof(T));
 
         public Base Parse(IElementNavigator nav, Type dataType) =>
-            Parse(new SourceNavigatorOnElementNavigator(nav), dataType);
+            Parse(new ElementNavToSourceNavAdapter(nav), dataType);
 
 
         public T Parse<T>(ISourceNavigator nav) where T : Base => (T)Parse(nav, typeof(T));
@@ -165,73 +166,12 @@ namespace Hl7.Fhir.Serialization
             if (nav == null) throw Error.ArgumentNull(nameof(nav));
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
-            var reader = new ElementNavFhirReader(nav);
+            var reader = new SourceNavToFhirReaderAdapter(nav);
 
             if (dataType.CanBeTreatedAsType(typeof(Resource)))
                 return new ResourceReader(reader, Settings).Deserialize();
             else
                 return new ComplexTypeReader(reader, Settings).Deserialize(dataType);
-        }
-    }
-
-    /// <summary>
-    /// This class sole reason for existence is that the BaseFhirParser accepts untyped navigators (ISourceNavigator)
-    /// only. This class below simulates a ISourceNavigator on top of an IElementNavigator, basically by throwing
-    /// away the type information. The parser then will re-associate this information while it parses the source
-    /// into the POCO.  Not the most efficient way of doing things, but until I simplify the poco parser to work
-    /// on typed navigators, this stop-gap needs to stay in place.
-    /// </summary>
-    internal class SourceNavigatorOnElementNavigator : ISourceNavigator, IAnnotated, IExceptionSource
-    {
-        private IElementNavigator _sourceNav;
-
-        public SourceNavigatorOnElementNavigator(IElementNavigator sourceNav)
-        {
-            this._sourceNav = sourceNav;
-
-            if (sourceNav is IExceptionSource ies && ies.ExceptionHandler == null)
-                ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
-        }
-
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                var typeInfo = _sourceNav.GetElementDefinitionSummary();
-
-                return typeInfo?.IsChoiceElement == true ?
-                    _sourceNav.Name + _sourceNav.Type.Capitalize() : _sourceNav.Name;
-            }
-        }
-
-        public string Text => _sourceNav.Value == null ? null :
-            PrimitiveTypeConverter.ConvertTo<string>(_sourceNav.Value);
-
-        public string Location => _sourceNav.Location;
-
-        public ISourceNavigator Clone() =>
-            new SourceNavigatorOnElementNavigator(_sourceNav.Clone())
-            {
-                ExceptionHandler = this.ExceptionHandler
-            };
-
-        public bool MoveToFirstChild(string nameFilter = null) =>
-            nameFilter == null ? _sourceNav.MoveToFirstChild() :
-            throw Error.NotImplemented($"This {nameof(SourceNavigatorOnElementNavigator)} shim should not be called with a name filter.");
-
-        public bool MoveToNext(string nameFilter = null) =>
-            nameFilter == null ? _sourceNav.MoveToNext() :
-            throw Error.NotImplemented($"This {nameof(SourceNavigatorOnElementNavigator)} shim should not be called with a name filter.");
-
-
-        IEnumerable<object> IAnnotated.Annotations(Type type)
-        {
-            if (type == typeof(SourceNavigatorOnElementNavigator))
-                return new[] { this };
-            else
-                return _sourceNav.Annotations(type);
         }
     }
 

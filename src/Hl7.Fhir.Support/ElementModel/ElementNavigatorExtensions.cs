@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -82,6 +83,9 @@ namespace Hl7.Fhir.ElementModel
             navigator is IAnnotated ia ? ia.Annotation(componentType) != null : false;
         public static bool InPipeline<T>(this IElementNavigator navigator) =>
             navigator.InPipeline(navigator.GetType());
+
+        public static string GetResourceType(this IElementNavigator navigator) => 
+            navigator is IAnnotated ia ? ia.GetResourceType() : null;
 
         public static List<ExceptionNotification> VisitAndCatch(this IElementNavigator nav)
         {

@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Serialization
         public ISourceNavigator Clone() =>
             new ParseErrorStubNavigator(_formatException) { ExceptionHandler = ExceptionHandler };
 
-        private FormatException _formatException = null;
+        private readonly FormatException _formatException = null;
 
         public bool MoveToFirstChild(string nameFilter = null) => false;
         public bool MoveToNext(string nameFilter = null) => false;

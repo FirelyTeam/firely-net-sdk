@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Custom artifact summary harvester implementation to extract family name(s) from Patient resources
         const string PatientFamilyNameKey = "Patient.name.family";
-        static bool HarvestPatientSummary(ISourceNavigator nav, ArtifactSummaryPropertyBag properties)
+        static bool HarvestPatientSummary(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (properties.GetTypeName() == ResourceType.Patient.GetLiteral())
             {

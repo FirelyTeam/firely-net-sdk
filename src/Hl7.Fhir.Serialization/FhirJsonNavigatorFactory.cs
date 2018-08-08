@@ -19,13 +19,16 @@ namespace Hl7.Fhir.Serialization
     public struct JsonDomFhirNavigator
     {
         [Obsolete("Use FhirJsonNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(JObject root, string rootName = null) => FhirJsonNavigator.Untyped(root, rootName);
+        public static IElementNavigator Create(JObject root, string rootName = null) => 
+            FhirJsonNavigator.Untyped(root, rootName).ToElementNavigator();
 
         [Obsolete("Use FhirJsonNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(JsonReader reader, string rootName = null) => FhirJsonNavigator.Untyped(reader, rootName);
+        public static IElementNavigator Create(JsonReader reader, string rootName = null) => 
+            FhirJsonNavigator.Untyped(reader, rootName).ToElementNavigator();
 
         [Obsolete("Use FhirJsonNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(string json, string rootName = null) => FhirJsonNavigator.Untyped(json, rootName);
+        public static IElementNavigator Create(string json, string rootName = null) =>
+            FhirJsonNavigator.Untyped(json, rootName).ToElementNavigator();
     }
 
     public partial class FhirJsonNavigator
@@ -139,13 +142,13 @@ namespace Hl7.Fhir.Serialization
         private static IElementNavigator createTyped(JObject root, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings)
         {
             var untypedNav = createUntyped(root, rootName ?? type?.ToLower(), settings);
-            return untypedNav.ToElementNavigator(type, provider);
+            return untypedNav.ToElementNavigator(provider, type);
         }
 
         private static IElementNavigator createTyped(JsonReader reader, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings)
         {
             var untypedNav = createUntyped(reader, rootName ?? type?.ToLower(), settings);
-            return untypedNav.ToElementNavigator(type, provider);
+            return untypedNav.ToElementNavigator(provider, type);
         }
     }
 }

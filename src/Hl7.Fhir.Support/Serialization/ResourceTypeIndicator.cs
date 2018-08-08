@@ -19,9 +19,5 @@ namespace Hl7.Fhir.Serialization
     public static class SerializationNavigatorExtensions
     {
         public static string GetResourceType(this IAnnotated ia) => ia.TryGetAnnotation<ResourceTypeIndicator>(out var rt) ? rt.ResourceType : null;
-
-        public static string GetResourceType(this ISourceNavigator navigator) => navigator is IAnnotated ia ? ia.GetResourceType() : null;
-
-        public static string GetResourceType(this IElementNavigator navigator) => navigator is IAnnotated ia ? ia.GetResourceType() : null;
     }
 }

@@ -4,6 +4,8 @@ using System;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.ElementModel.Adapters;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -99,5 +101,19 @@ namespace Hl7.Fhir.ElementModel
             return errors;
         }
 
+        public static string GetResourceType(this ISourceNavigator navigator) => 
+            navigator is IAnnotated ia ? ia.GetResourceType() : null;
+
+        public static IElementNavigator ToElementNavigator(this ISourceNavigator sourceNav, IStructureDefinitionSummaryProvider provider, string type = null)
+        {
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+            return new TypedNavigator(sourceNav, type, provider);
+        }
+
+        [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNavigator into a typed ElementNavigator without providing" +
+            "type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
+            "missing type information. Please don't use this overload unless you know what you are doing.")]
+        public static IElementNavigator ToElementNavigator(this ISourceNavigator sourceNav, string type = null) =>
+            new SourceNavToElementNavAdapter(sourceNav);
     }
 }

@@ -25,23 +25,35 @@ namespace Hl7.Fhir.ElementModel
 
     public class TypedNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
-        public TypedNavigator(ISourceNavigator element, string rootType, IStructureDefinitionSummaryProvider provider)
+        public TypedNavigator(ISourceNavigator element, IStructureDefinitionSummaryProvider provider)
+            : this(element, null, provider)
         {
-            if (rootType == null) throw Error.ArgumentNull(nameof(rootType));
+            //
+        }
+
+        public TypedNavigator(ISourceNavigator sourceNav, string type, IStructureDefinitionSummaryProvider provider)
+        {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
-            if (element == null) throw Error.ArgumentNull(nameof(element));
+            if (sourceNav == null) throw Error.ArgumentNull(nameof(sourceNav));
+            
+            //using (sourceNav.Catch((o, a) => hasError = a.Exception is FormatException))
+            //{
+            var dummy = sourceNav.Text;         // trigger format exception for now.
+            //}
+
+            var rootType = type ?? sourceNav.GetResourceType() ??
+                    throw Error.Argument(nameof(sourceNav), "Underlying navigator is not located on a resource, please supply a type argument");
 
             var elementType = provider.Provide(rootType);
-
-            _current = NavigatorPosition.ForRoot(element, elementType, element.Name);
+            _current = NavigatorPosition.ForRoot(sourceNav, elementType, sourceNav.Name);
             _definition = _current.IsTracking ?
                 ElementDefinitionSummaryCache.ForRoot(_current.SerializationInfo) : ElementDefinitionSummaryCache.Empty;
+
             _parentPrettyPath = null;
             _nameIndex = 0;
-
             Provider = provider;
 
-            if (element is IExceptionSource ies && ies.ExceptionHandler == null)
+            if (sourceNav is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
