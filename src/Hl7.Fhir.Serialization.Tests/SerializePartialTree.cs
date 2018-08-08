@@ -54,14 +54,12 @@ namespace Hl7.Fhir.Serialization.Tests
             subnavJson = navJson.Children("contained").First().Children("name").First();
             subnavPoco = navPoco.Children("contained").First().Children("name").First();
             testSubtree(subnavXml, subnavJson, subnavPoco);
-
         }
 
         private void testSubtree(IElementNavigator navXml, IElementNavigator navJson, IElementNavigator navPoco)
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
-            var j = navXml.ToJson();
             var navRtXml = FhirJsonNavigator.ForElement(navXml.ToJson(), navXml.Type,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
             var navRtJson = navJson.ToPoco(ModelInfo.GetTypeForFhirType(navJson.Type))

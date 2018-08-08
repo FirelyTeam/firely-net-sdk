@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public ISourceNavigator getXmlNavU(string xml, FhirXmlNavigatorSettings settings = null) =>
+        public ISourceNode getXmlNavU(string xml, FhirXmlNavigatorSettings settings = null) =>
             FhirXmlNavigator.Untyped(xml, settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -27,16 +27,7 @@ namespace Hl7.Fhir.Serialization.Tests
             ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNavigator(), typed: false);
         }
 
-        [TestMethod]
-        public void CloningWorks()
-        {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.CloningWorks(nav);
-        }
-
-
-        [TestMethod]
+           [TestMethod]
         public void ElementNavPerformanceUntypedXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
@@ -61,15 +52,16 @@ namespace Hl7.Fhir.Serialization.Tests
                 "anotherattr='nons' />",
                 new FhirXmlNavigatorSettings { AllowedExternalNamespaces = new[] { XNamespace.Get("http://example.org") } });
 
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
-            var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
-            Assert.AreEqual(XNamespace.Get("http://example.org"), xmldetails.Namespace);
-            Assert.AreEqual("Patient.myattr[0]", nav.Location);
+            var navc = nav.Children().ToList();
+            Assert.AreEqual(2, navc.Count);
 
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("anotherattr", nav.Name);        // none-xmlns attributes will come through
-            xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
+            Assert.AreEqual("myattr", navc[0].Name);        // none-xmlns attributes will come through
+            var xmldetails = (navc[0] as IAnnotated).Annotation<XmlSerializationDetails>();
+            Assert.AreEqual(XNamespace.Get("http://example.org"), xmldetails.Namespace);
+            Assert.AreEqual("Patient.myattr[0]", navc[0].Location);
+
+            Assert.AreEqual("anotherattr", navc[1].Name);        // none-xmlns attributes will come through
+            xmldetails = (navc[1] as IAnnotated).Annotation<XmlSerializationDetails>();
             Assert.AreEqual(XNamespace.None, xmldetails.Namespace);
         }
 
@@ -104,18 +96,18 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsNull(nav.Text);
 
             // namespace attributes should not be found
-
-            nav.MoveToFirstChild(); assertAnElement(nav.Clone());
-            nav.MoveToNext(); assertAnElementWithValueAndChildren(nav.Clone());
-            nav.MoveToNext(); assertDiv(nav.Clone());
-            Assert.IsFalse(nav.MoveToNext());
-
-            void assertAnElement(ISourceNavigator cn)
+            var children = nav.Children().ToList();
+            Assert.AreEqual(3, children.Count);
+            assertAnElement(children[0]);
+            assertAnElementWithValueAndChildren(children[1]);
+            assertDiv(children[2]);
+   
+            void assertAnElement(ISourceNode cn)
             {
                 Assert.AreEqual("anElement", cn.Name);
                 Assert.AreEqual("true", cn.Text);
                 Assert.AreEqual(1, cn.Children().Count());
-                cn.MoveToFirstChild();
+                cn = cn.Children().First();
 
                 Assert.AreEqual("customAttribute", cn.Name);
                 Assert.AreEqual("primitive", cn.Text);
@@ -126,7 +118,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsFalse(cn.Children().Any());
             }
 
-            void assertAnElementWithValueAndChildren(ISourceNavigator cn)
+            void assertAnElementWithValueAndChildren(ISourceNode cn)
             {
                 Assert.AreEqual("anElementWithValueAndChildren", cn.Name);
                 Assert.AreEqual("4", cn.Text);
@@ -135,28 +127,27 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Crap, mixed content!"));
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Is Merged"));
 
-                Assert.IsTrue(cn.MoveToFirstChild());
-                firstChild(cn.Clone());
-                cn.MoveToNext(); secondChild(cn.Clone());
-                cn.MoveToNext(); thirdChild(cn.Clone());
-                Assert.IsFalse(cn.MoveToNext());
+                var cnc = cn.Children().ToList();
+                Assert.AreEqual(3,cnc.Count);
+                firstChild(cnc[0]);
+                secondChild(cnc[1]);
+                thirdChild(cnc[2]);
 
-                void firstChild(ISourceNavigator ccn)
+                void firstChild(ISourceNode ccn)
                 {
                     Assert.AreEqual("firstChild", ccn.Name);
                     Assert.IsNull(ccn.Text);
-                    Assert.AreEqual(1, ccn.Children().Count());
+                    var ccnc = ccn.Children().ToList();
+                    Assert.AreEqual(1, ccnc.Count);
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     Assert.AreEqual("I have text content", xd.NodeText);
 
-                    ccn.MoveToFirstChild();
-                    Assert.AreEqual("customAttribute", ccn.Name);
-                    Assert.AreEqual("morning", ccn.Text);
-                    Assert.IsFalse(ccn.Children().Any());
+                    Assert.AreEqual("customAttribute", ccnc[0].Name);
+                    Assert.AreEqual("morning", ccnc[0].Text);
                 }
 
-                void secondChild(ISourceNavigator ccn)
+                void secondChild(ISourceNode ccn)
                 {
                     Assert.AreEqual("secondChild", ccn.Name);
                     Assert.AreEqual("afternoon", ccn.Text);
@@ -166,7 +157,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     Assert.AreEqual("I have text content too", xd.NodeText);
                 }
 
-                void thirdChild(ISourceNavigator ccn)
+                void thirdChild(ISourceNode ccn)
                 {
                     Assert.AreEqual("ThirdChild", ccn.Name);
                     Assert.IsNull(ccn.Text);
@@ -179,14 +170,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
             }
 
-            void assertDiv(ISourceNavigator cnn)
+            void assertDiv(ISourceNode cnn)
             {
                 var val = cnn.Text;
                 Assert.IsTrue(val.StartsWith("<div") && val.Contains("Some html"));
                 Assert.IsFalse(cnn.Children().Any());  // html should not be represented as children
 
-                var xd = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
-                var cd = (nav as IAnnotated).Annotation<SourceComments>();
+                var xd = (cnn as IAnnotated).Annotation<XmlSerializationDetails>();
+                var cd = (cnn as IAnnotated).Annotation<SourceComments>();
                 Assert.AreEqual(XmlNs.XHTMLNS, xd.Namespace);
                 Assert.AreEqual(2, cd.CommentsBefore.Length);
                 Assert.AreEqual(" next line intentionally left empty ", cd.CommentsBefore.First());
@@ -197,7 +188,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNavigator.Untyped(xmlText).ToElementNavigator());
+            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNavigator.Untyped(xmlText));
         }
 
         [TestMethod]

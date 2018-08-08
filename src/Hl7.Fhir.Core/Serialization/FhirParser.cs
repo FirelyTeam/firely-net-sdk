@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612, 618
         public Base Parse(string xml, Type dataType)
         {
-            IFhirReader xmlReader = new SourceNavToFhirReaderAdapter(FhirXmlNavigator.Untyped(xml,
+            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNavigator.Untyped(xml,
                 new FhirXmlNavigatorSettings
                 {
                     DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot,
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new SourceNavToFhirReaderAdapter(FhirXmlNavigator.Untyped(reader,
+            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNavigator.Untyped(reader,
                 new FhirXmlNavigatorSettings
                 {
                     DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
         public Base Parse(string json, Type dataType)
         {
-            IFhirReader jsonReader = new SourceNavToFhirReaderAdapter(
+            IFhirReader jsonReader = new SourceNodeToFhirReaderAdapter(
                 FhirJsonNavigator.Untyped(json, ModelInfo.GetFhirTypeNameForType(dataType),
                 new FhirJsonNavigatorSettings
                 {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            IFhirReader jsonReader = new SourceNavToFhirReaderAdapter(
+            IFhirReader jsonReader = new SourceNodeToFhirReaderAdapter(
                 FhirJsonNavigator.Untyped(reader, ModelInfo.GetFhirTypeNameForType(dataType),
                 new FhirJsonNavigatorSettings
                 {
@@ -153,20 +153,20 @@ namespace Hl7.Fhir.Serialization
         }
 
         public T Parse<T>(IElementNavigator nav) where T : Base =>
-            (T)Parse(new ElementNavToSourceNavAdapter(nav), typeof(T));
+            (T)Parse(new ElementNavToFhirReaderAdapter(nav), typeof(T));
 
         public Base Parse(IElementNavigator nav, Type dataType) =>
-            Parse(new ElementNavToSourceNavAdapter(nav), dataType);
+            Parse(new ElementNavToFhirReaderAdapter(nav), dataType);
 
 
-        public T Parse<T>(ISourceNavigator nav) where T : Base => (T)Parse(nav, typeof(T));
+        public T Parse<T>(ISourceNode nav) where T : Base => (T)Parse(nav, typeof(T));
 
-        public Base Parse(ISourceNavigator nav, Type dataType)
+        public Base Parse(ISourceNode nav, Type dataType)
         {
             if (nav == null) throw Error.ArgumentNull(nameof(nav));
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
-            var reader = new SourceNavToFhirReaderAdapter(nav);
+            var reader = new SourceNodeToFhirReaderAdapter(nav);
 
             if (dataType.CanBeTreatedAsType(typeof(Resource)))
                 return new ResourceReader(reader, Settings).Deserialize();

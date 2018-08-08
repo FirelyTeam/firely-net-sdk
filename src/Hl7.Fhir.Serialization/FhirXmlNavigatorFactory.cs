@@ -19,28 +19,28 @@ namespace Hl7.Fhir.Serialization
     public struct XmlDomFhirNavigator
     {
         [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(string xml) => FhirXmlNavigator.Untyped(xml);
+        public static IElementNavigator Create(string xml) => FhirXmlNavigator.Untyped(xml).ToElementNavigator();
 
         [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(XmlReader reader) => FhirXmlNavigator.Untyped(reader);
+        public static IElementNavigator Create(XmlReader reader) => FhirXmlNavigator.Untyped(reader).ToElementNavigator();
 
         [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(XDocument doc) => FhirXmlNavigator.Untyped(doc);
+        public static IElementNavigator Create(XDocument doc) => FhirXmlNavigator.Untyped(doc).ToElementNavigator();
 
         [Obsolete("Use FhirXmlNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(XElement elem) => FhirXmlNavigator.Untyped(elem);
+        public static IElementNavigator Create(XElement elem) => FhirXmlNavigator.Untyped(elem).ToElementNavigator();
     }
 
     public partial class FhirXmlNavigator
     {
-        public static ISourceNavigator Untyped(XmlReader reader, FhirXmlNavigatorSettings settings = null)
+        public static ISourceNode Untyped(XmlReader reader, FhirXmlNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
 
             return createUntyped(reader, settings);
         }
 
-        public static ISourceNavigator Untyped(string xml, FhirXmlNavigatorSettings settings = null)
+        public static ISourceNode Untyped(string xml, FhirXmlNavigatorSettings settings = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
 
@@ -50,14 +50,14 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static ISourceNavigator Untyped(XElement elem, FhirXmlNavigatorSettings settings = null)
+        public static ISourceNode Untyped(XElement elem, FhirXmlNavigatorSettings settings = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
 
             return createUntyped(elem, settings);
         }
 
-        public static ISourceNavigator Untyped(XDocument doc, FhirXmlNavigatorSettings settings = null)
+        public static ISourceNode Untyped(XDocument doc, FhirXmlNavigatorSettings settings = null)
         {
             if (doc == null) throw Error.ArgumentNull(nameof(doc));
 
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(elem, type, provider, settings);
         }
 
-        private static ISourceNavigator createUntyped(XmlReader reader, FhirXmlNavigatorSettings settings)
+        private static ISourceNode createUntyped(XmlReader reader, FhirXmlNavigatorSettings settings)
         {
             try
             {
@@ -141,22 +141,22 @@ namespace Hl7.Fhir.Serialization
             }
             catch (FormatException fe)
             {
-                return new ParseErrorStubNavigator(fe);
+                return new ParseErrorStubNode(fe);
             }
         }
 
-        private static ISourceNavigator createUntyped(XElement element, FhirXmlNavigatorSettings settings) => 
-            new FhirXmlNode(element, settings).ToSourceNavigator();
+        private static ISourceNode createUntyped(XElement element, FhirXmlNavigatorSettings settings) => 
+            new FhirXmlNode(element, settings);
 
         private static IElementNavigator createTyped(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings)
         {
-            var untypedNav = createUntyped(elem, settings);
+            var untypedNav = createUntyped(elem, settings).ToSourceNavigator();
             return untypedNav.ToElementNavigator(provider, type);
         }
 
         private static IElementNavigator createTyped(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings)
         {
-            var untypedNav = createUntyped(reader, settings);
+            var untypedNav = createUntyped(reader, settings).ToSourceNavigator();
             return untypedNav.ToElementNavigator(provider, type);
         }
     }

@@ -14,9 +14,9 @@ using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class ParseErrorStubNavigator : ISourceNavigator, IAnnotated, IExceptionSource
+    internal class ParseErrorStubNode : ISourceNode, IAnnotated, IExceptionSource
     {
-        public ParseErrorStubNavigator(FormatException fe)
+        public ParseErrorStubNode(FormatException fe)
         {
             _formatException = fe;
         }
@@ -36,13 +36,9 @@ namespace Hl7.Fhir.Serialization
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public ISourceNavigator Clone() =>
-            new ParseErrorStubNavigator(_formatException) { ExceptionHandler = ExceptionHandler };
-
         private readonly FormatException _formatException = null;
 
-        public bool MoveToFirstChild(string nameFilter = null) => false;
-        public bool MoveToNext(string nameFilter = null) => false;
+        public IEnumerable<ISourceNode> Children(string name = null) => Enumerable.Empty<ISourceNode>();
 
         IEnumerable<object> IAnnotated.Annotations(Type type) => Enumerable.Empty<object>();
     }

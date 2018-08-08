@@ -83,7 +83,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(SourceNavToElementNavAdapter))
+            if (type == typeof(SourceNodeToElementNavAdapter))
                 return new[] { this };
             else if (Current is IAnnotated annotated)
                 return annotated.Annotations(type);

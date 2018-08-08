@@ -2395,6 +2395,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        [TestCategory("LongRunner")]
         public void TestExpandAllCoreResources()
         {
             // Generate snapshots for all core resources, in the original order as they are defined

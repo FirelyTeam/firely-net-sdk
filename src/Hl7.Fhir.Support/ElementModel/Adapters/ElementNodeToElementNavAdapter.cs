@@ -5,7 +5,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal struct ElementNodeNavigator : IElementNavigator, IAnnotated
+    internal class ElementNodeToElementNavAdapter : IElementNavigator, IAnnotated, IExceptionSource
     {
         private IList<IElementNode> _siblings;
         private int _index;
@@ -15,11 +15,18 @@ namespace Hl7.Fhir.ElementModel
             get { return _siblings[_index]; }
         }
 
-        public ElementNodeNavigator(IElementNode wrapped)
+        public ElementNodeToElementNavAdapter(IElementNode sourceNode)
         {
-            _siblings = new List<IElementNode> { wrapped };
+            _siblings = new List<IElementNode> { sourceNode };
             _index = 0;
+
+            if (sourceNode is IExceptionSource ies && ies.ExceptionHandler == null)
+                ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
+
+        public ElementNodeToElementNavAdapter() { }  // for clone
+
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         public string Name => Current.Name;
 
@@ -29,16 +36,19 @@ namespace Hl7.Fhir.ElementModel
 
         public object Value => Current.Value;
 
-        public IElementNavigator Clone() => new ElementNodeNavigator
-        {
-            _siblings = this._siblings,
-            _index = this._index
-        };
+        public IElementNavigator Clone() =>
+            new ElementNodeToElementNavAdapter
+            {
+                _siblings = this._siblings,
+                _index = this._index,
+
+                ExceptionHandler = this.ExceptionHandler
+            };
 
 
-        private int nextMatch(IList<IElementNode> nodes, string namefilter=null, int startAfter=-1)
+        private int nextMatch(IList<IElementNode> nodes, string namefilter = null, int startAfter = -1)
         {
-            for(int scan=startAfter+1; scan < nodes.Count; scan++)
+            for (int scan = startAfter + 1; scan < nodes.Count; scan++)
             {
                 if (namefilter == null || nodes[scan].Name == namefilter)
                     return scan;
@@ -85,7 +95,7 @@ namespace Hl7.Fhir.ElementModel
     public static class ElementNodeNavigatorFactory
     {
         [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
-        public static IElementNavigator ToElementNavigator(this IElementNode node) => new ElementNodeNavigator(node);
+        public static IElementNavigator ToElementNavigator(this IElementNode node) => new ElementNodeToElementNavAdapter(node);
 
     }
 

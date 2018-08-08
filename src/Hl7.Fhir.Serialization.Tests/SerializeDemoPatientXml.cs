@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void CanSerializeSubtree()
+        public void CompareSubtrees()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
@@ -126,14 +126,6 @@ namespace Hl7.Fhir.Serialization.Tests
             var subnavJson = navJson.Children("photo").First();
             var subnavPoco = navPoco.Children("photo").First();
             assertAreAllEqual(subnavXml, subnavJson, subnavPoco);
-
-            //var navRtXml = FhirJsonNavigator.ForElement(subnavXml.ToJson(), subnavXml.Type,
-            //    new PocoStructureDefinitionSummaryProvider(), subnavXml.Name );
-            //var navRtJson = (new FhirJsonParser()).Parse(subnavJson, 
-            //    ModelInfo.GetTypeForFhirType(subnavJson.Type)).ToElementNavigator();
-            //var navRtPoco = FhirXmlNavigator.ForElement(subnavPoco.ToXml(), subnavPoco.Type,
-            //    new PocoStructureDefinitionSummaryProvider());
-            //assertAreAllEqual(navRtXml, navRtJson, navRtPoco);
         }
 
         private void assertAreAllEqual(IElementNavigator subnavXml, IElementNavigator subnavJson, IElementNavigator subnavPoco)

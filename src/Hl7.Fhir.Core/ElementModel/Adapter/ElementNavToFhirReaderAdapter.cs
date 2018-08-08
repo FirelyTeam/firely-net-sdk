@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
@@ -19,23 +21,23 @@ namespace Hl7.Fhir.ElementModel.Adapters
     /// with the POCO-parsers.
     /// </summary>
 #pragma warning disable 612, 618
-    internal struct SourceNodeToFhirReaderAdapter : IFhirReader
+    internal struct ElementNavToFhirReaderAdapter : IFhirReader, IAnnotated
 #pragma warning restore 612,618
     {
-        private ISourceNode _current;
+        private IElementNavigator _current;
 
-        public SourceNodeToFhirReaderAdapter(ISourceNode root)
+        public ElementNavToFhirReaderAdapter(IElementNavigator root)
         {
             _current = root;
 
-            var dummy = root.Text;   // trigger format exceptions before we continue
+            var dummy = root.Value;   // trigger format exceptions before we continue
         }
 
         public int LineNumber => getPositionInfo(_current)?.LineNumber ?? -1;
 
         public int LinePosition => getPositionInfo(_current)?.LinePosition ?? -1;
 
-        private static IPositionInfo getPositionInfo(ISourceNode node) =>
+        private static IPositionInfo getPositionInfo(IElementNavigator node) =>
             node is IAnnotated ia ?
                 (IPositionInfo)ia.Annotation<XmlSerializationDetails>() ??
                     (IPositionInfo)ia.Annotation<JsonSerializationDetails>() : null;
@@ -49,17 +51,36 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
             if (Value != null)
-                yield return Tuple.Create("value", (IFhirReader)new SourceNodeToFhirReaderAdapter(_current));
+                yield return Tuple.Create("value", (IFhirReader)new ElementNavToFhirReaderAdapter(_current));
 
             foreach (var child in _current.Children())
             {
-                yield return Tuple.Create(child.Name, (IFhirReader)new SourceNodeToFhirReaderAdapter(child));
+                var newChild = new ElementNavToFhirReaderAdapter(child);
+                yield return Tuple.Create(newChild.Name, (IFhirReader)newChild);
             }
         }
 #pragma warning restore 612, 618
 
-        public string Name => _current.Name;
+        public string Name
+        {
+            get
+            {
+                var typeInfo = _current.GetElementDefinitionSummary();
 
-        public object Value => _current.Text;
+                return typeInfo?.IsChoiceElement == true ?
+                    _current.Name + _current.Type.Capitalize() : _current.Name;
+            }
+        }
+
+        public object Value => _current.Value == null ? null :
+            PrimitiveTypeConverter.ConvertTo<string>(_current.Value);
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            if (_current is IAnnotated annotated)
+                return annotated.Annotations(type);
+            else
+                return Enumerable.Empty<object>();
+        }
     }
 }

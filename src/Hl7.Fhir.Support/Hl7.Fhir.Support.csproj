@@ -18,6 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ElementModel\Adapters\ElementNavToSourceNavAdapter.cs" />
+    <Compile Remove="ElementModel\Adapters\SourceNavToElementNavAdapter.cs" />
     <Compile Remove="Utility\PipelineComponent.cs" />
   </ItemGroup>
 

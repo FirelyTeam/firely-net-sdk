@@ -27,6 +27,7 @@
    <ItemGroup>
      <Compile Remove="Serialization\ComplexTypeWriter.cs" />
      <Compile Remove="Serialization\DispatchingWriter.cs" />
+     <Compile Remove="Serialization\ElementNavFhirReader.cs" />
      <Compile Remove="Serialization\JsonDomFhirReader.cs" />
      <Compile Remove="Serialization\JsonDomFhirWriter.cs" />
      <Compile Remove="Serialization\JsonNavFhirReader.cs" />

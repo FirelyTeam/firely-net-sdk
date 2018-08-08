@@ -12,9 +12,9 @@ using static Hl7.Fhir.ElementModel.ElementNavigatorComparator;
 
 namespace Hl7.Fhir.Utility
 {
-    public static class SourceNavigatorComparator
+    public static class SourceNodeComparator
     {
-        public static ComparisonResult IsEqualTo(this ISourceNavigator expected, ISourceNavigator actual)
+        public static ComparisonResult IsEqualTo(this ISourceNode expected, ISourceNode actual)
         {
             if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
             if (expected.Text != actual.Text) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Text}', expected '{expected.Text}'");

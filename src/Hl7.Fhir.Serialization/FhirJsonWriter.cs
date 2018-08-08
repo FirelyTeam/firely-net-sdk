@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public void Write(ISourceNavigator source, JsonWriter destination)
+        public void Write(ISourceNode source, JsonWriter destination)
         {
             bool hasJsonSource = source.InPipeline(typeof(FhirJsonNavigator));
 

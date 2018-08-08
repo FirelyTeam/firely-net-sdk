@@ -202,7 +202,13 @@ namespace Hl7.Fhir.Serialization
             var children = JsonObject.Children<JProperty>().ToLookup(jp => deriveMainName(jp));
             var processed = new HashSet<string>();
 
-            foreach (var child in children)
+            var prefixMatch = name?.EndsWith("*") ?? false;
+
+            var scanChildren = name == null ? children :
+                children.Where(n => n.Key == name ||
+                        (prefixMatch && n.Key.StartsWith(name)));     // prefix scan (choice types)
+
+            foreach (var child in scanChildren)
             {
                 if (isResourceTypeIndicator(child)) continue;
                 if (processed.Contains(child.Key)) continue;
@@ -374,7 +380,7 @@ namespace Hl7.Fhir.Serialization
                 if (nav.Type != "xhtml") return;
 
                 if (ValidateFhirXhtml)
-                    FhirXmlNavigator.ValidateXhtml((string)nav.Value, ies, nav);
+                    FhirXmlNode.ValidateXhtml((string)nav.Value, ies, nav);
             }
 #endif
 

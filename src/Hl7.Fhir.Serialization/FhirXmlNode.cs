@@ -16,6 +16,7 @@ namespace Hl7.Fhir.Serialization
             Current = node;
             Location = Name;
             _settings = settings?.Clone() ?? new FhirXmlNavigatorSettings();
+            _atRoot = true;
         }
 
         private FhirXmlNode(FhirXmlNode parent, XObject node, string location)
@@ -24,10 +25,12 @@ namespace Hl7.Fhir.Serialization
             Location = location ?? Name;
             _settings = parent._settings;
             ExceptionHandler = parent.ExceptionHandler;
+            _atRoot = false;
         }
 
         public readonly XObject Current;
         private readonly FhirXmlNavigatorSettings _settings;
+        private bool _atRoot = false;
 
         public XNamespace[] AllowedExternalNamespaces => _settings.AllowedExternalNamespaces;
         public bool DisallowSchemaLocation => _settings.DisallowSchemaLocation;
@@ -295,7 +298,7 @@ namespace Hl7.Fhir.Serialization
                     {
                         // If we're on the root, the root is the resource type,
                         // otherwise we should have looked at a nested node.
-                        ResourceType = Current.Parent != null ?
+                        ResourceType = !_atRoot ?
                             Contained?.Name()?.LocalName : Current.Name().LocalName
                     }
                 };

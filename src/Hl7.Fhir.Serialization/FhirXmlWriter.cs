@@ -84,9 +84,9 @@ namespace Hl7.Fhir.Serialization
             destination.Flush();
         }
 
-        public void Write(ISourceNavigator source, XmlWriter destination, string rootName = null)
+        public void Write(ISourceNode source, XmlWriter destination, string rootName = null)
         {
-            bool hasXmlSource = source.InPipeline(typeof(FhirXmlNavigator));
+            bool hasXmlSource = source.InPipeline(typeof(FhirXmlNode));
 
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.

@@ -79,11 +79,14 @@ namespace Hl7.Fhir.ElementModel
 
             using (nav.Catch((o, arg) => errors.Add(arg)))
             {
-                nav.Visit(n => { var dummy = n.Text; });
+                nav.VisitAll();
             }
 
             return errors;
         }
+
+
+        public static void VisitAll(this ISourceNode nav) => nav.Visit(n => { var dummy = n.Text; });
 
         //public static IElementNavigator ToElementNavigator(this ISourceNode sourceNav, IStructureDefinitionSummaryProvider provider, string type = null)
         //{

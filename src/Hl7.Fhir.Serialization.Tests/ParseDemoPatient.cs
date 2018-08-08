@@ -26,12 +26,6 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(nav.IsEqualTo(copy).Success);
         }
 
-        public static void CloningWorks(ISourceNavigator nav)
-        {
-            var copy = nav.Clone();
-            Assert.IsTrue(nav.IsEqualTo(copy).Success);
-        }
-
         public static void ElementNavPerformance(IElementNavigator nav)
         {
             // run extraction once to allow for caching
@@ -58,40 +52,18 @@ namespace Hl7.Fhir.Serialization.Tests
             }
         }
 
-        //public static void ProducesCorrectUntypedLocations(ISourceNode patient)
-        //{
-        //    Assert.AreEqual("Patient", patient.Location);
-
-        //    Assert.AreEqual("Patient.id[0]", patient.Children().First().Location);
-
-        //    var identifiers = patient.Children("identifier").ToList();
-        //    Assert.AreEqual("Patient.identifier[0]", identifiers[0].Location);
-        //    Assert.AreEqual("Patient.identifier[0].use[0]", identifiers[0].Children().First().Location);
-        //    Assert.AreEqual("Patient.identifier[1]", identifiers[1].Location);
-        //    Assert.AreEqual("Patient.identifier[1].use[0]", identifiers[1].Children().First().Location);
-        //}
-
-        public static void ProducesCorrectUntypedLocations(ISourceNavigator patient)
+        public static void ProducesCorrectUntypedLocations(ISourceNode patient)
         {
             Assert.AreEqual("Patient", patient.Location);
 
-            patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id[0]", patient.Location);
+            Assert.AreEqual("Patient.id[0]", patient.Children().First().Location);
 
-            patient.MoveToNext();   // text
-            patient.MoveToNext("identifier");
-            Assert.AreEqual("Patient.identifier[0]", patient.Location);
-            var idNav = patient.Clone();
-
-            Assert.IsTrue(patient.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[0].use[0]", patient.Location);
-
-            idNav.MoveToNext(); // identifier
-            Assert.AreEqual("Patient.identifier[1]", idNav.Location);
-
-            Assert.IsTrue(idNav.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[1].use[0]", idNav.Location);
-        }
+            var identifiers = patient.Children("identifier").ToList();
+            Assert.AreEqual("Patient.identifier[0]", identifiers[0].Location);
+            Assert.AreEqual("Patient.identifier[0].use[0]", identifiers[0].Children().First().Location);
+            Assert.AreEqual("Patient.identifier[1]", identifiers[1].Location);
+            Assert.AreEqual("Patient.identifier[1].use[0]", identifiers[1].Children().First().Location);
+        }  
 
         public static void ProducedCorrectTypedLocations(IElementNavigator patient)
         {
@@ -146,7 +118,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             switch (nav)
             {
-                case ISourceNavigator isn: serInfo = isn.GetElementDefinitionSummary(); return;
+                case ISourceNode isn: serInfo = isn.GetElementDefinitionSummary(); return;
                 case IElementNavigator ien: serInfo = ien.GetElementDefinitionSummary(); return;
             }
 
@@ -155,7 +127,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var serializer = new FhirXmlWriter(new FhirXmlWriterSettings { AllowUntypedElements = !hasTypeInfo });
             using (var writer = XmlWriter.Create(outputBuilder))
             {
-                if (nav is ISourceNavigator isn) serializer.Write(isn, writer);
+                if (nav is ISourceNode isn) serializer.Write(isn, writer);
                 if (nav is IElementNavigator ien) serializer.Write(ien, writer);
             }
 
@@ -182,7 +154,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             switch (nav)
             {
-                case ISourceNavigator isn: serInfo = isn.GetElementDefinitionSummary(); return;
+                case ISourceNode isn: serInfo = isn.GetElementDefinitionSummary(); return;
                 case IElementNavigator ien: serInfo = ien.GetElementDefinitionSummary(); return;
             }
 
@@ -192,7 +164,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var serializer = new FhirJsonWriter(new FhirJsonWriterSettings { AllowUntypedElements = !hasTypeInfo });
             using (var writer = new JsonTextWriter(new StringWriter(outputBuilder)))
             {
-                if (nav is ISourceNavigator isn) serializer.Write(isn, writer);
+                if (nav is ISourceNode isn) serializer.Write(isn, writer);
                 if (nav is IElementNavigator ien) serializer.Write(ien, writer);
             }
 
