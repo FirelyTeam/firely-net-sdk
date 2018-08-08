@@ -15,7 +15,16 @@ namespace Hl7.Fhir.Utility
                 throw args.Exception;
         }
 
-        public static IDisposable Catch(this IElementNavigator source, ExceptionNotificationHandler handler) =>
+        public static void NotifyOrThrow(this IExceptionSource ies, object source, ExceptionNotification args)
+        {
+            if (ies?.ExceptionHandler != null)
+                ies.ExceptionHandler(source, args);
+            else if (args.Severity == ExceptionSeverity.Error)
+                throw args.Exception;
+        }
+
+
+    public static IDisposable Catch(this IElementNavigator source, ExceptionNotificationHandler handler) =>
             source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
 
         public static IDisposable Catch(this IExceptionSource source, ExceptionNotificationHandler handler) => new ExceptionInterceptor(source, handler);

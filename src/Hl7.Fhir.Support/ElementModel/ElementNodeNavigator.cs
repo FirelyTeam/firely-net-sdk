@@ -5,7 +5,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public struct ElementNodeNavigator : IElementNavigator, IAnnotated
+    internal struct ElementNodeNavigator : IElementNavigator, IAnnotated
     {
         private IList<IElementNode> _siblings;
         private int _index;
@@ -21,50 +21,21 @@ namespace Hl7.Fhir.ElementModel
             _index = 0;
         }
 
-        public string Name
+        public string Name => Current.Name;
+
+        public string Type => Current.Type;
+
+        public string Location => Current.Location;
+
+        public object Value => Current.Value;
+
+        public IElementNavigator Clone() => new ElementNodeNavigator
         {
-            get
-            {
-                return Current.Name;
-            }
-        }
-
-        public string Type
-        {
-            get
-            {
-                return Current.Type;
-            }
-        }
-
-        public string Location
-        {
-            get
-            {
-                return Current.Location;
-            }
-        }
+            _siblings = this._siblings,
+            _index = this._index
+        };
 
 
-        public object Value
-        {
-            get
-            {
-                return Current.Value;
-            }
-        }
-
-        public IElementNavigator Clone()
-        {
-            var r = new ElementNodeNavigator();
-
-            r._siblings = this._siblings;
-            r._index = this._index;
-
-            return r;
-        }
-
-        
         private int nextMatch(IList<IElementNode> nodes, string namefilter=null, int startAfter=-1)
         {
             for(int scan=startAfter+1; scan < nodes.Count; scan++)
@@ -78,7 +49,7 @@ namespace Hl7.Fhir.ElementModel
 
         public bool MoveToFirstChild(string nameFilter = null)
         {
-            var children = Current.Children;
+            var children = Current.Children().ToList();
 
             if (!children.Any()) return false;
 
@@ -113,10 +84,8 @@ namespace Hl7.Fhir.ElementModel
 
     public static class ElementNodeNavigatorFactory
     {
-        public static IElementNavigator ToNavigator(this IElementNode node)
-        {
-            return new ElementNodeNavigator(node);
-        }
+        [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
+        public static IElementNavigator ToElementNavigator(this IElementNode node) => new ElementNodeNavigator(node);
 
     }
 

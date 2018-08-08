@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestEmptyElement()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
-            var data = ElementNode.Node("active").ToNavigator();
+            var data = ElementNode.Node("active").ToElementNavigator();
 
             var result = _validator.Validate(data, boolSd);
             Assert.False(result.Success);
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void NameMatching()
         {
-            var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
+            var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral()).ToElementNavigator();
 
             Assert.True(ChildNameMatcher.NameMatches("active", data));
             Assert.True(ChildNameMatcher.NameMatches("activeBoolean", data));
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Specification.Tests
                     ElementNode.Node("extension",
                         ElementNode.Valued("value", 4, "integer")),
                     ElementNode.Node("nonExistant")
-                        ).ToNavigator();
+                        ).ToElementNavigator();
 
             var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNavigator(data));
             Assert.Single(matches.UnmatchedInstanceElements);
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Specification.Tests
                         ElementNode.Node("extension",
                             ElementNode.Valued("value", 4, "integer")),
                         ElementNode.Node("extension",
-                            ElementNode.Valued("value", "world!", "string"))).ToNavigator();
+                            ElementNode.Valued("value", "world!", "string"))).ToElementNavigator();
 
             var report = _validator.Validate(data, boolSd);
             Assert.Equal(3, report.ListErrors().Count());

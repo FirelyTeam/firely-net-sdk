@@ -20,7 +20,8 @@ namespace Hl7.Fhir.ElementModel
 
         private List<ElementNode> _children = new List<ElementNode>();
 
-        public IList<IElementNode> Children => _children.ToList<IElementNode>();
+        public IEnumerable<IElementNode> Children(string name = null) =>
+            name == null ? _children : _children.Where(c => c.Name == name);
 
         public string Name { get; set; }
 
@@ -37,7 +38,7 @@ namespace Hl7.Fhir.ElementModel
                     //TODO: Slow - but since we'll change the use of this property to informational 
                     //(i.e. for error messages), it may not be necessary to improve it.
                     var basePath = Parent.Location;
-                    int myIndex = Parent.Children.Where(c => c.Name == Name).ToList().IndexOf(this);
+                    int myIndex = Parent.Children(Name).ToList().IndexOf(this);
                     return $"{basePath}.{Name}[{myIndex}]";
                 }
                 else

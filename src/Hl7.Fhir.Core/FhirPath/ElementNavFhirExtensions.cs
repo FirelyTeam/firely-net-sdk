@@ -26,7 +26,7 @@ namespace Hl7.Fhir.FhirPath
         {
         }
 
-        public FhirEvaluationContext(Resource context) : base(context?.ToNavigator())
+        public FhirEvaluationContext(Resource context) : base(context?.ToElementNavigator())
         {
         }
 
@@ -160,16 +160,9 @@ namespace Hl7.Fhir.FhirPath
             });
         }
 
-
-        //private static ScopedNavigator createNav(Base input) => new ScopedNavigator(new PocoNavigator(input));
-        private static IElementNavigator createNav(Base input) => input.ToElementNavigator();
-
-        public static IElementNavigator ToNavigator(this Base input) => input.ToElementNavigator();
-
-
         public static IEnumerable<Base> Select(this Base input, string expression, FhirEvaluationContext ctx = null)
         {
-            var inputNav = input.ToNavigator();
+            var inputNav = input.ToElementNavigator();
             var result = inputNav.Select(expression, ctx ?? FhirEvaluationContext.Default);
             return result.ToFhirValues();            
         }
@@ -182,7 +175,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static object Scalar(this Base input, string expression, FhirEvaluationContext ctx = null)
         {
-            var inputNav = input.ToNavigator();
+            var inputNav = input.ToElementNavigator();
             return inputNav.Scalar(expression, ctx ?? FhirEvaluationContext.Default);
         }
 
@@ -194,7 +187,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static bool Predicate(this Base input, string expression, FhirEvaluationContext ctx = null)
         {
-            var inputNav = input.ToNavigator();
+            var inputNav = input.ToElementNavigator();
             return inputNav.Predicate(expression, ctx ?? FhirEvaluationContext.Default);
         }
 
@@ -206,7 +199,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static bool IsBoolean(this Base input, string expression, bool value, FhirEvaluationContext ctx = null)
         {
-            var inputNav = createNav(input);
+            var inputNav = input.ToElementNavigator();
             return inputNav.IsBoolean(expression, value, ctx ?? FhirEvaluationContext.Default);
         }
 

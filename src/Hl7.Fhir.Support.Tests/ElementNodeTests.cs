@@ -49,7 +49,7 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(true, data.Value);
 #pragma warning restore xUnit2004 // Do not use equality check to test for boolean conditions
             Assert.Equal("boolean", data.Type);
-            Assert.Equal(4, data.Children.Count());
+            Assert.Equal(4, data.Children().Count());
         }
 
 
@@ -95,7 +95,7 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void CanNavigateOverNode()
         {
-            var nav = patient.ToNavigator();
+            var nav = patient.ToElementNavigator();
 
             Assert.Equal("Patient", nav.Name);
             Assert.True(nav.MoveToFirstChild());
@@ -123,7 +123,7 @@ namespace Hl7.FhirPath.Tests
             var firstIdNode = patient[0][0];
             Assert.Equal("a string annotation", (firstIdNode as IAnnotated).Annotation<string>());
 
-            var nav = patient.ToNavigator();
+            var nav = patient.ToElementNavigator();
             nav.MoveToFirstChild(); // active
             nav.MoveToFirstChild(); // id
             Assert.Equal("a string annotation", (nav as IAnnotated).Annotation<string>());
@@ -137,7 +137,7 @@ namespace Hl7.FhirPath.Tests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNav(tpXml);
             var nodes = ElementNode.FromNavigator(nav);
-            var nav2 = nodes.ToNavigator();
+            var nav2 = nodes.ToElementNavigator();
 
             Assert.True(nav.IsEqualTo(nav2).Success);
         }
