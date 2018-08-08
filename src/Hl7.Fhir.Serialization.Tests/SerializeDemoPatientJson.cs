@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirJsonParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
             var pat = pser.Parse<Patient>(tp);
 
-            var nav = new PocoNavigator(pat);
+            var nav = pat.ToElementNavigator();
             var output = nav.ToJson();
             JsonAssert.AreSame(tp, output);
         }

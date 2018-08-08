@@ -24,22 +24,22 @@ namespace Hl7.Fhir.Validation
     {
         public static OperationOutcome Validate(this Validator me, Base instance)
         {
-            return me.Validate(new PocoNavigator(instance));
+            return me.Validate(instance.ToElementNavigator());
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, params string[] definitionUri)
         {
-            return me.Validate(new PocoNavigator(instance), definitionUri);
+            return me.Validate(instance.ToElementNavigator(), definitionUri);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, StructureDefinition structureDefinition)
         {
-            return me.Validate(new PocoNavigator(instance), structureDefinition);
+            return me.Validate(instance.ToElementNavigator(), structureDefinition);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return me.Validate(new PocoNavigator(instance), structureDefinitions);
+            return me.Validate(instance.ToElementNavigator(), structureDefinitions);
         }
     }
 }

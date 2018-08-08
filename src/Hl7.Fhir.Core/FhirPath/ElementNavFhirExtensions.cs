@@ -56,9 +56,7 @@ namespace Hl7.Fhir.FhirPath
             IElementNavigator navResolver(string url)
             {
                 var resource = resolver(url);
-                if (resource == null) return null;
-
-                return new PocoNavigator(resource);
+                return resource?.ToElementNavigator();
             }
         }
 
@@ -150,9 +148,8 @@ namespace Hl7.Fhir.FhirPath
                 {
                     return new FhirString((string)result);
                 }
-                if (result is Model.Primitives.PartialDateTime)
+                if (result is Model.Primitives.PartialDateTime dt)
                 {
-                    var dt = (Model.Primitives.PartialDateTime)result;
                     return new FhirDateTime(dt.ToUniversalTime());
                 }
                 else
@@ -165,9 +162,9 @@ namespace Hl7.Fhir.FhirPath
 
 
         //private static ScopedNavigator createNav(Base input) => new ScopedNavigator(new PocoNavigator(input));
-        private static PocoNavigator createNav(Base input) => new PocoNavigator(input);
+        private static IElementNavigator createNav(Base input) => input.ToElementNavigator();
 
-        public static IElementNavigator ToNavigator(this Base input) => new PocoNavigator(input);
+        public static IElementNavigator ToNavigator(this Base input) => input.ToElementNavigator();
 
 
         public static IEnumerable<Base> Select(this Base input, string expression, FhirEvaluationContext ctx = null)

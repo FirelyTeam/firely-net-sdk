@@ -101,7 +101,7 @@ namespace Hl7.FhirPath.Tests
         {
             var patient = new Hl7.Fhir.Model.Patient() { Active = false };
             patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
-            var nav = new PocoNavigator(patient);
+            var nav = patient.ToElementNavigator();
 
             var result = nav.Select("Resource.meta.lastUpdated");
             Assert.IsNotNull(result.FirstOrDefault());

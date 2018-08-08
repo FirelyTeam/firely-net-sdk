@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseQuantity()
         {
             var i = new Model.Quantity(3.14m, "kg", "http://mysystsem.org");
-            var nav = new PocoNavigator(i);
+            var nav = i.ToElementNavigator();
             var p = nav.ParseQuantity();
             Assert.True(p.IsExactly(i));
         }
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseCoding()
         {
             var i = new Model.Coding("http://example.org/fhir/system1", "code1", "Code1 in System1");
-            var nav = new PocoNavigator(i);
+            var nav = i.ToElementNavigator();
             var p = nav.ParseCoding();
             Assert.True(p.IsExactly(i));
         }
@@ -36,14 +36,16 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseCodeableConcept()
         {
-            var i = new CodeableConcept();
-            i.Text = "Entered text";
+            var i = new CodeableConcept
+            {
+                Text = "Entered text"
+            };
             i.Coding.Add(
                 new Model.Coding("http://example.org/fhir/system1", "code1", "Code1 in System1"));
             i.Coding.Add(
                 new Model.Coding("http://example.org/fhir/system2", "code2", "Code2 in System2"));
 
-            var nav = new PocoNavigator(i);
+            var nav = i.ToElementNavigator();
             var p = nav.ParseCodeableConcept();
             Assert.True(p.IsExactly(i));
         }
@@ -52,7 +54,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseResourceReference()
         {
             var i = new Model.ResourceReference("http://example.org/fhir/Patient/1", "a patient");
-            var nav = new PocoNavigator(i);
+            var nav = i.ToElementNavigator();
             var p = nav.ParseResourceReference();
             Assert.True(p.IsExactly(i));
         }
@@ -61,7 +63,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseBindableCode()
         {
             var ic = new Code("code");
-            var nav = new PocoNavigator(ic);
+            var nav = ic.ToElementNavigator();
             var c = nav.ParseBindable() as Code;
             Assert.NotNull(c);
             Assert.True(ic.IsExactly(c));
@@ -71,7 +73,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseBindableCoding()
         {
             var ic = new Coding("system", "code");
-            var nav = new PocoNavigator(ic);
+            var nav = ic.ToElementNavigator();
             var c = nav.ParseBindable() as Coding;
             Assert.NotNull(c);
             Assert.True(ic.IsExactly(c));
@@ -81,7 +83,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseBindableQuantity()
         {
             var iq = new Model.Quantity(4.0m, "kg", system: null);
-            var nav = new PocoNavigator(iq);
+            var nav = iq.ToElementNavigator();
             var c = nav.ParseBindable() as Coding;
             Assert.NotNull(c);
             Assert.Equal(iq.Code, c.Code);
@@ -92,7 +94,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseBindableString()
         {
             var ist = new Model.FhirString("Ewout");
-            var nav = new PocoNavigator(ist);
+            var nav = ist.ToElementNavigator();
             var c = nav.ParseBindable() as Code;
             Assert.NotNull(c);
             Assert.Equal(ist.Value, c.Value);
@@ -102,7 +104,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseBindableUri()
         {
             var iu = new Model.FhirUri("http://somewhere.org");
-            var nav = new PocoNavigator(iu);
+            var nav = iu.ToElementNavigator();
             var c = nav.ParseBindable() as Code;
             Assert.NotNull(c);
             Assert.Equal(iu.Value, c.Value);
@@ -113,18 +115,18 @@ namespace Hl7.Fhir.Validation
         {
             var ic = new Coding("system", "code");
             var ext = new Extension { Value = ic };
-            var nav = new PocoNavigator(ext);
+            var nav = ext.ToElementNavigator();
             var c = nav.ParseBindable() as Coding;
             Assert.NotNull(c);
             Assert.True(ic.IsExactly(c));
 
             ext.Value = new HumanName();
-            nav = new PocoNavigator(ext);
+            nav = ext.ToElementNavigator();
             c = nav.ParseBindable() as Coding;
             Assert.Null(c);  // HumanName is not bindable
 
             ext.Value = null;
-            nav = new PocoNavigator(ext);
+            nav = ext.ToElementNavigator();
             c = nav.ParseBindable() as Coding;
             Assert.Null(c);  // nothing to bind to
         }
@@ -134,7 +136,7 @@ namespace Hl7.Fhir.Validation
         { 
             // Now, something non-bindable
             var x = new HumanName().WithGiven("Ewout");
-            var nav = new PocoNavigator(x);
+            var nav = x.ToElementNavigator();
             var xe = nav.ParseBindable();
             Assert.Null(xe);
         }

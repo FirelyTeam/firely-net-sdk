@@ -20,17 +20,17 @@ namespace Hl7.FhirPath.Tests
 {
     public class CastTests
     {
-        static IElementNavigator complex = new ComplexValue();
-        static IEnumerable<IElementNavigator> collection = new IElementNavigator[] { new ConstantValue(4), new ConstantValue(5), complex };
-        static IEnumerable<IElementNavigator> singleV = new IElementNavigator[] { new ConstantValue(4) };
-        static IEnumerable<IElementNavigator> singleC = new IElementNavigator[] { complex };
-        static IEnumerable<IElementNavigator> emptyColl = new IElementNavigator[] { };
+        static readonly IElementNavigator complex = new ComplexValue();
+        static readonly IEnumerable<IElementNavigator> collection = new IElementNavigator[] { new ConstantValue(4), new ConstantValue(5), complex };
+        static readonly IEnumerable<IElementNavigator> singleV = new IElementNavigator[] { new ConstantValue(4) };
+        static readonly IEnumerable<IElementNavigator> singleC = new IElementNavigator[] { complex };
+        static readonly IEnumerable<IElementNavigator> emptyColl = new IElementNavigator[] { };
 
         [Fact]
         public void TestUnbox()
         {
 
-            Assert.Equal(null, Typecasts.Unbox(emptyColl, typeof(string)));
+            Assert.Null(Typecasts.Unbox(emptyColl, typeof(string)));
             Assert.Equal(collection,Typecasts.Unbox(collection, typeof(IEnumerable<IElementNavigator>)));
             Assert.Equal(complex, Typecasts.Unbox(singleC, typeof(IElementNavigator)));
 
@@ -38,7 +38,7 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(4L, Typecasts.Unbox(new ConstantValue(4), typeof(long)));
 
             Assert.Equal(complex, Typecasts.Unbox(complex, typeof(IElementNavigator)));
-            Assert.Equal(null, Typecasts.Unbox(null, typeof(string)));
+            Assert.Null(Typecasts.Unbox(null, typeof(string)));
             Assert.Equal(4L, Typecasts.Unbox(4L, typeof(long)));
             Assert.Equal("hi!", Typecasts.Unbox("hi!", typeof(string)));
         }
