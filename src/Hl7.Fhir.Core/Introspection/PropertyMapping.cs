@@ -98,12 +98,12 @@ namespace Hl7.Fhir.Introspection
             // See http://weblogs.asp.net/marianor/archive/2009/04/10/using-expression-trees-to-get-property-getter-and-setters.aspx
 
 #if USE_CODE_GEN
-            result._getter = prop.GetValueGetter();
-            result._setter = prop.GetValueSetter();
+            result._getter = new Lazy<Func<object, object>>(() => prop.GetValueGetter());
+            result._setter = new Lazy<Action<object,object>>(() => prop.GetValueSetter());
 #else
             result._getter = instance => prop.GetValue(instance, null);
-            result._setter = (instance,value) => prop.SetValue(instance, value, null);
-#endif       
+            result._setter = (instance, value) => prop.SetValue(instance, value, null);
+#endif
             return result;
         }
 
@@ -199,18 +199,16 @@ namespace Hl7.Fhir.Introspection
                     PrimitiveTypeConverter.CanConvert(type);
         }
 
-
+#if USE_CODE_GEN
+        private Lazy<Func<object, object>> _getter;
+        private Lazy<Action<object, object>> _setter;
+        public object GetValue(object instance) => _getter.Value.Invoke(instance);
+        public void SetValue(object instance, object value) => _setter.Value.Invoke(instance, value);
+#else
         private Func<object, object> _getter;
         private Action<object, object> _setter;
-
-        public object GetValue(object instance)
-        {
-            return _getter(instance);
-        }
-
-        public void SetValue(object instance, object value)
-        {
-            _setter(instance, value);
-        }
+        public object GetValue(object instance) => _getter(instance);
+        public void SetValue(object instance, object value) => _setter(instance, value);
+#endif
     }
 }
