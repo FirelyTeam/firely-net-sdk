@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSourceTests
     {
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         public void FileSourceSkipsExecutables()
         {
             var fa = new DirectorySource(_testPath);
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         public void TestZipSourceMask()
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");

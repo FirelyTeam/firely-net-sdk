@@ -96,7 +96,7 @@ namespace Hl7.FhirPath.Tests
             Assert.IsTrue(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         public void TestFhirPathPolymporphism()
         {
             var patient = new Hl7.Fhir.Model.Patient() { Active = false };

@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Specification.Tests
             elements.InsertRange(idx, inserts);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         // [Ignore]
         public void GeneratePatientWithExtensionsSnapshot()
         {
@@ -2394,7 +2394,7 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandResources(coreTypeUrls.ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         public void TestExpandAllCoreResources()
         {
             // Generate snapshots for all core resources, in the original order as they are defined
@@ -3177,7 +3177,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestObservationProfileWithExtensions() => testObservationProfileWithExtensions(false);
 
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         public void TestObservationProfileWithExtensions_ExpandAll() => testObservationProfileWithExtensions(true);
 
         void testObservationProfileWithExtensions(bool expandAll)

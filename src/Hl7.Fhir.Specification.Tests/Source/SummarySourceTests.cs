@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
         static ISummarySource source = null;
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("LongRunner")]
         public void GetSomeArtifactsBySummary()
         {
             var fa = source;
