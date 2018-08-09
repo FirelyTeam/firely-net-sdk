@@ -23,7 +23,8 @@ namespace Hl7.FhirPath.Tests
     {
         ElementNode patient;
 
-        public IElementNavigator getXmlNav(string xml) => FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
+        public IElementNode getXmlNode(string xml) => 
+            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
 
         public ElementNodeTests()
         {
@@ -120,13 +121,13 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KeepsAnnotations()
         {
-            var firstIdNode = patient[0][0];
-            Assert.Equal("a string annotation", (firstIdNode as IAnnotated).Annotation<string>());
+            IElementNode firstIdNode = patient[0][0];
+            Assert.Equal("a string annotation", firstIdNode.Annotation<string>());
 
             var nav = patient.ToElementNavigator();
             nav.MoveToFirstChild(); // active
             nav.MoveToFirstChild(); // id
-            Assert.Equal("a string annotation", (nav as IAnnotated).Annotation<string>());
+            Assert.Equal("a string annotation", nav.Annotation<string>());
         }
 
         // Test clone()
@@ -135,11 +136,9 @@ namespace Hl7.FhirPath.Tests
         public void ReadsFromNav()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNav(tpXml);
-            var nodes = ElementNode.FromNavigator(nav);
-            var nav2 = nodes.ToElementNavigator();
-
-            Assert.True(nav.IsEqualTo(nav2).Success);
+            var nav = getXmlNode(tpXml);
+            var nodes = ElementNode.FromNode(nav);
+            Assert.True(nav.IsEqualTo(nodes).Success);
         }
 
     }

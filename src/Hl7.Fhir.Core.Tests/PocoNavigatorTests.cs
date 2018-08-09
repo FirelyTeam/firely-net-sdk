@@ -170,7 +170,7 @@ namespace Hl7.Fhir
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var pocoP = (new FhirJsonParser()).Parse<Patient>(json).ToElementNavigator();
+            var pocoP = (new FhirJsonParser()).Parse<Patient>(json).ToElementNode();
             var jsonP = FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(),
                 settings: new FhirJsonNavigatorSettings {  AllowJsonComments = true }
                 );
@@ -179,7 +179,7 @@ namespace Hl7.Fhir
             doCompare(pocoP, jsonP, "poco<->json");
             doCompare(pocoP, xmlP, "poco<->xml");
 
-            void doCompare(IElementNavigator one, IElementNavigator two, string what)
+            void doCompare(IElementNode one, IElementNode two, string what)
             {
                 var compare = one.IsEqualTo(two);
 

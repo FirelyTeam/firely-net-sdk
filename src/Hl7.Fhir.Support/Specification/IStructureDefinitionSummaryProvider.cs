@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -61,5 +62,22 @@ namespace Hl7.Fhir.Specification
     public interface IStructureDefinitionSummaryProvider
     {
         IStructureDefinitionSummary Provide(string canonical);
+    }
+
+    public static class TypeSerializationInfoExtensions
+    {
+        public static string GetTypeName(this ITypeSerializationInfo info)
+        {
+            switch (info)
+            {
+                case IStructureDefinitionReference tr:
+                    return tr.ReferredType;
+                case IStructureDefinitionSummary ct:
+                    return ct.TypeName;
+                default:
+                    throw Error.NotSupported($"Don't know how to derive type information from type {info.GetType()}");
+            }
+        }
+
     }
 }

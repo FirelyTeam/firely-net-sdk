@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings settings = null) =>
+        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings settings = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -23,42 +23,34 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CanReadThroughTypedNavigator()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNav(tpXml);
+            var nav = getXmlNode(tpXml);
             ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
-        }
-
-        [TestMethod]
-        public void CloningWorks()
-        {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNav(tpXml);
-            ParseDemoPatient.CloningWorks(nav);
         }
 
         [TestMethod]
         public void ElementNavPerformanceTypedXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNav(tpXml);
-            ParseDemoPatient.ElementNavPerformance(nav);
+            var nav = getXmlNode(tpXml);
+            ParseDemoPatient.ElementNavPerformance(nav.ToSourceNode());
         }
 
         [TestMethod]
         public void ProducesCorrectTypedLocations()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var patient = getXmlNav(tpXml);
+            var patient = getXmlNode(tpXml);
             ParseDemoPatient.ProducedCorrectTypedLocations(patient);
         }
 
         [TestMethod]
         public void ForwardsLowLevelDetails()
         {
-            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><active value='true'/></Patient>");
+            var nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><active value='true'/></Patient>");
 
-            Assert.IsTrue(nav.MoveToFirstChild());
+            var active = nav.Children().Single();
             Assert.AreEqual("active", nav.Name);        // none-xmlns attributes will come through
-            Assert.IsNotNull((nav as IAnnotated).Annotation<XmlSerializationDetails>());
+            Assert.IsNotNull(nav.GetJsonSerializationDetails());
         }
 
 
@@ -67,7 +59,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
-            var navXml = getXmlNav(tpXml);
+            var navXml = getXmlNode(tpXml);
             var navJson = FhirJsonNavigator.ForResource(tpJson, new PocoStructureDefinitionSummaryProvider());
 
             var compare = navXml.IsEqualTo(navJson);
@@ -84,9 +76,18 @@ namespace Hl7.Fhir.Serialization.Tests
         public void HasLineNumbersTypedXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNav(tpXml);
-            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav);
+            var nav = getXmlNode(tpXml);
+            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav.ToSourceNode());
         }
+
+        [TestMethod]
+        public void CheckBundleEntryNavigation()
+        {
+            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
+            var nav = getXmlNode(bundle).ToElementNavigator();
+            ParseDemoPatient.CheckBundleEntryNavigation(nav);
+        }
+
 
         [TestMethod]
         public void RoundtripXml()
@@ -112,7 +113,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesBasicTypeErrorsWithUnknownRoot()
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
-            var patient = getXmlNav(tpXml);
+            var patient = getXmlNode(tpXml);
             var result = patient.VisitAndCatch();
             Assert.AreEqual(12, result.Count);  // 11 syntax errors + 1 error reporting the root type is unknown
         }
@@ -121,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesBasicTypeErrors()
         {
             var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
-            var patient = getXmlNav(tpXml);
+            var patient = getXmlNode(tpXml);
             var result = patient.VisitAndCatch();
             Assert.AreEqual(10, result.Count);
         }
@@ -130,19 +131,19 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesAttributeElementMismatch()
         {
             // First, use a simple value where a complex type was expected
-            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><contact gender='male' /></Patient>");
+            var nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><contact gender='male' /></Patient>");
             var errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("should be an XML element."));
 
             // Use xhtml when required
-            nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><text><status value= 'generated' />" +
+            nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><text><status value= 'generated' />" +
                 "<div>hi!</div></text></Patient>");
             errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.First().Message.Contains("should use an XHTML element."));
             Assert.AreEqual(2, errors.Count);
 
             // Use an element where an attribute was expected
-            nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'>" +
+            nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'>" +
                 "<extension>" +
                 "<url value='http://example.org/fhir/StructureDefinition/recordStatus' />" +
                 "<valueCode value='archived' /></extension></Patient>");
@@ -153,7 +154,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CatchesElementOutOfOrder()
         {
-            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><gender value='male'/><active value='true' /></Patient>");
+            var nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><gender value='male'/><active value='true' /></Patient>");
             var errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("not in the correct order"));
         }
@@ -162,7 +163,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesIncorrectNarrativeXhtml()
         {
             // passes unless we activate xhtml validation
-            var nav = getXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
+            var nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><text>" +
              "<status value='generated' />" +
              "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div></text></Patient>");
             var errors = nav.VisitAndCatch();
@@ -183,15 +184,15 @@ namespace Hl7.Fhir.Serialization.Tests
             errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
-            IElementNavigator getValidatingXmlNav(string jsonText) =>
-                getXmlNav(jsonText, new FhirXmlNavigatorSettings { ValidateFhirXhtml = true });
+            IElementNode getValidatingXmlNav(string jsonText) =>
+                getXmlNode(jsonText, new FhirXmlNavigatorSettings { ValidateFhirXhtml = true });
         }
 
         [TestMethod]
         public void DelayedParseErrors()
         {
             var tpXml = "<Patient>";
-            var patient = getXmlNav(tpXml);
+            var patient = getXmlNode(tpXml);
 
             var errors = patient.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));

@@ -9,11 +9,7 @@ namespace Hl7.Fhir.ElementModel
     {
         private IList<IElementNode> _siblings;
         private int _index;
-
-        public IElementNode Current
-        {
-            get { return _siblings[_index]; }
-        }
+        public IElementNode Current =>  _siblings[_index]; 
 
         public ElementNodeToElementNavAdapter(IElementNode sourceNode)
         {
@@ -24,7 +20,7 @@ namespace Hl7.Fhir.ElementModel
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        public ElementNodeToElementNavAdapter() { }  // for clone
+        private ElementNodeToElementNavAdapter() { }  // for clone
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -82,21 +78,15 @@ namespace Hl7.Fhir.ElementModel
             return true;
         }
 
-        public IEnumerable<object> Annotations(Type type)
+        IEnumerable<object> IAnnotated.Annotations(Type type)
         {
-            if (Current is IAnnotated annotated)
-                return annotated.Annotations(type);
+            if (type == typeof(ElementNodeToElementNavAdapter))
+                return new[] { this };
             else
-                return Enumerable.Empty<object>();
+                return Current.Annotations(type);
         }
     }
 
 
-    public static class ElementNodeNavigatorFactory
-    {
-        [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
-        public static IElementNavigator ToElementNavigator(this IElementNode node) => new ElementNodeToElementNavAdapter(node);
-
-    }
 
 }

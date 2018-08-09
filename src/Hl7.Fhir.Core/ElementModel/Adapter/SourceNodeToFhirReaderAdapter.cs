@@ -19,21 +19,21 @@ namespace Hl7.Fhir.ElementModel.Adapters
     /// with the POCO-parsers.
     /// </summary>
 #pragma warning disable 612, 618
-    internal struct SourceNodeToFhirReaderAdapter : IFhirReader
+    internal class SourceNodeToFhirReaderAdapter : IFhirReader, IAnnotated
 #pragma warning restore 612,618
     {
-        private ISourceNode _current;
+        public readonly ISourceNode Current;
 
         public SourceNodeToFhirReaderAdapter(ISourceNode root)
         {
-            _current = root;
+            Current = root;
 
             var dummy = root.Text;   // trigger format exceptions before we continue
         }
 
-        public int LineNumber => getPositionInfo(_current)?.LineNumber ?? -1;
+        public int LineNumber => getPositionInfo(Current)?.LineNumber ?? -1;
 
-        public int LinePosition => getPositionInfo(_current)?.LinePosition ?? -1;
+        public int LinePosition => getPositionInfo(Current)?.LinePosition ?? -1;
 
         private static IPositionInfo getPositionInfo(ISourceNode node) =>
             node is IAnnotated ia ?
@@ -42,24 +42,33 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public object GetPrimitiveValue() => Value;
 
-        public string GetResourceTypeName() => _current.GetResourceType() ??
+        public string GetResourceTypeName() => Current.GetResourceType() ??
             throw Error.Format($"Cannot retrieve type of resource for element '{Name}' from the underlying navigator.", this);
 
 #pragma warning disable 612, 618
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
             if (Value != null)
-                yield return Tuple.Create("value", (IFhirReader)new SourceNodeToFhirReaderAdapter(_current));
+                yield return Tuple.Create("value", (IFhirReader)new SourceNodeToFhirReaderAdapter(Current));
 
-            foreach (var child in _current.Children())
+            foreach (var child in Current.Children())
             {
                 yield return Tuple.Create(child.Name, (IFhirReader)new SourceNodeToFhirReaderAdapter(child));
             }
         }
 #pragma warning restore 612, 618
 
-        public string Name => _current.Name;
+        public string Name => Current.Name;
 
-        public object Value => _current.Text;
+        public object Value => Current.Text;
+
+        IEnumerable<object> IAnnotated.Annotations(Type type)
+        {
+            if (type == typeof(SourceNodeToFhirReaderAdapter))
+                return new[] { this };
+            else
+                return Current.Annotations(type);
+        }
+
     }
 }

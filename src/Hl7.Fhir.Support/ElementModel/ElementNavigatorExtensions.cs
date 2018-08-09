@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -99,5 +100,10 @@ namespace Hl7.Fhir.ElementModel
             return errors;
         }
 
+        public static ElementDefinitionSummary GetElementDefinitionSummary(this IElementNavigator navigator) =>
+            navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
+
+        public static IElementNode ToElementNode(this IElementNavigator nav) => 
+            new ElementNavToElementNodeAdapter(nav);
     }
 }

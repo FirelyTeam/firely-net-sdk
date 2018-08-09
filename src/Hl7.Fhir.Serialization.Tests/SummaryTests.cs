@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization.Tests
     public class SummaryTests
     {
         public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) => 
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
+            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s).ToElementNavigator();
 
         [TestMethod]
         public void Summary()

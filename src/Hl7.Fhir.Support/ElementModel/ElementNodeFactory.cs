@@ -21,6 +21,11 @@ namespace Hl7.Fhir.ElementModel
             return buildNode(navigator);
         }
 
+        public static ElementNode FromNode(IElementNode node)
+        {
+            return buildNode(node);
+        }
+
         private static ElementNode buildNode(IElementNavigator navigator)
         {
             var me = new ElementNode(navigator.Name, navigator.Value, navigator.Type);
@@ -37,5 +42,13 @@ namespace Hl7.Fhir.ElementModel
 
             return me;
         }
+
+        private static ElementNode buildNode(IElementNode node)
+        {
+            var me = new ElementNode(node.Name, node.Value, node.Type);
+            me.AddRange(node.Children().Select(c => buildNode(c)));              
+            return me;
+        }
+
     }
 }

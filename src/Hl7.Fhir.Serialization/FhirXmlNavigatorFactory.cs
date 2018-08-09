@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Serialization
             return createUntyped(doc.Root, settings);
         }
 
-        public static IElementNavigator ForResource(string xml, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForResource(string xml, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static IElementNavigator ForElement(string xml, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForElement(string xml, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IElementNavigator ForResource(XmlReader reader, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForResource(XmlReader reader, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(reader, null, provider, settings);
         }
 
-        public static IElementNavigator ForElement(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForElement(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IElementNavigator ForResource(XDocument doc, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForResource(XDocument doc, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (doc == null) throw Error.ArgumentNull(nameof(doc));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(doc.Root, null, provider, settings);
         }
 
-        public static IElementNavigator ForResource(XElement elem, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForResource(XElement elem, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(elem, null, provider, settings);
         }
 
-        public static IElementNavigator ForElement(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForElement(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
         {
             if (elem == null) throw Error.ArgumentNull(nameof(elem));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -148,16 +148,10 @@ namespace Hl7.Fhir.Serialization
         private static ISourceNode createUntyped(XElement element, FhirXmlNavigatorSettings settings) => 
             new FhirXmlNode(element, settings);
 
-        private static IElementNavigator createTyped(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings)
-        {
-            var untypedNav = createUntyped(elem, settings).ToSourceNavigator();
-            return untypedNav.ToElementNavigator(provider, type);
-        }
+        private static IElementNode createTyped(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings) =>
+            createUntyped(elem, settings).ToElementNode(provider, type);
 
-        private static IElementNavigator createTyped(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings)
-        {
-            var untypedNav = createUntyped(reader, settings).ToSourceNavigator();
-            return untypedNav.ToElementNavigator(provider, type);
-        }
+        private static IElementNode createTyped(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings) => 
+            createUntyped(reader, settings).ToElementNode(provider, type);
     }
 }

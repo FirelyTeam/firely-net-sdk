@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using System;
 using System.Linq;
 using static Hl7.Fhir.ElementModel.ElementNavigatorComparator;
 
@@ -16,7 +17,8 @@ namespace Hl7.Fhir.Utility
     {
         public static ComparisonResult IsEqualTo(this ISourceNode expected, ISourceNode actual)
         {
-            if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
+            if (expected.Name != actual.Name)
+                return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
             if (expected.Text != actual.Text) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Text}', expected '{expected.Text}'");
             if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
 
@@ -40,8 +42,6 @@ namespace Hl7.Fhir.Utility
                 ComparisonResult.Fail(actual.Location, $"number of children was different");
 
             return ComparisonResult.OK;
-
-            bool namesEqual(string e, string a) => e == a || (a != null && e != null && (a.StartsWith(e)));
         }
     }
 }

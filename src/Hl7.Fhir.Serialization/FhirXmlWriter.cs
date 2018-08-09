@@ -27,13 +27,19 @@ namespace Hl7.Fhir.Serialization
 
     public static class FhirXmlWriterExtensions
     {
-        public static void WriteTo(this IElementNavigator source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
+        public static void WriteTo(this IElementNode source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
             new FhirXmlWriter(settings).Write(source, destination, rootName);
 
-        public static string ToXml(this IElementNavigator source, FhirXmlWriterSettings settings = null, string rootName = null)
+        public static void WriteTo(this IElementNavigator source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
+            new FhirXmlWriter(settings).Write(source.ToElementNode(), destination, rootName);
+
+        public static string ToXml(this IElementNode source, FhirXmlWriterSettings settings = null, string rootName = null)
                 => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings, rootName));
 
-        public static byte[] ToXmlBytes(this IElementNavigator source, FhirXmlWriterSettings settings = null, string rootName = null)
+        public static string ToXml(this IElementNavigator source, FhirXmlWriterSettings settings = null, string rootName = null)
+        => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings, rootName));
+
+        public static byte[] ToXmlBytes(this IElementNode source, FhirXmlWriterSettings settings = null, string rootName = null)
                 => SerializationUtil.WriteXmlToBytes(writer => source.WriteTo(writer, settings, rootName));
     }
 
@@ -47,10 +53,10 @@ namespace Hl7.Fhir.Serialization
 
         public bool AllowUntypedElements;
         public bool IncludeUntypedElements;
-
+        
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public void Write(IElementNavigator source, XmlWriter destination, string rootName = null)
+        public void Write(IElementNode source, XmlWriter destination, string rootName = null)
         {
             //Re-enable when the PocoNavigator is also fed through the TypedNavigator
             //if(!source.InPipeline(typeof(TypedNavigator)))
@@ -58,7 +64,7 @@ namespace Hl7.Fhir.Serialization
             writeInternal(source, destination, rootName);
         }
 
-        private void writeInternal(IElementNavigator source, XmlWriter destination, string rootName = null)
+        private void writeInternal(IElementNode source, XmlWriter destination, string rootName = null)
         {
             var dest = new XDocument();
 
@@ -91,13 +97,13 @@ namespace Hl7.Fhir.Serialization
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.
             if (hasXmlSource)
-                writeInternal(source.ToElementNavigator(), destination, rootName);
+                writeInternal(source.ToElementNode(), destination, rootName);
             else
                 throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
                     $"source if the source is a {nameof(FhirXmlNavigator)}.");
         }
 
-        internal bool MustSerializeMember(IElementNavigator source, out ElementDefinitionSummary info)
+        internal bool MustSerializeMember(IElementNode source, out ElementDefinitionSummary info)
         {
             info = source.GetElementDefinitionSummary();
 
@@ -121,7 +127,7 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private void write(IElementNavigator source, XContainer parent, string rootName = null)
+        private void write(IElementNode source, XContainer parent, string rootName = null)
         {
             var xmlDetails = source.GetXmlSerializationDetails();
             var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
@@ -163,7 +169,7 @@ namespace Hl7.Fhir.Serialization
             var usesAttribute = serializationInfo?.Representation == XmlRepresentation.XmlAttr ||
                                 (xmlDetails?.NodeType == XmlNodeType.Attribute);
             var ns = serializationInfo?.NonDefaultNamespace ??
-                            xmlDetails?.Namespace.NamespaceName ?? 
+                            xmlDetails?.Namespace.NamespaceName ??
                             (usesAttribute ? "" : XmlNs.FHIR);
             bool atRoot = parent is XDocument;
             var localName = serializationInfo?.IsChoiceElement == true ?
@@ -200,12 +206,13 @@ namespace Hl7.Fhir.Serialization
 
             // Now, do the same for the children
             // xml requires a certain order, so let's make sure we serialize in the right order
-            var orderedChildren = source.Children().OrderBy(c => c.GetElementDefinitionSummary()?.Order ?? 0);            
+            var orderedChildren = source.Children().OrderBy(c => c.GetElementDefinitionSummary()?.Order ?? 0);
+
             foreach (var child in orderedChildren)
                 write(child, childParent);
 
             if (serializationInfo?.Representation == XmlRepresentation.XmlText || xmlDetails?.NodeText != null)
-            { 
+            {
                 childParent.Add(new XText(value ?? xmlDetails.NodeText));
             }
 

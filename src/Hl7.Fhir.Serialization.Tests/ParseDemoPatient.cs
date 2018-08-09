@@ -4,29 +4,22 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class ParseDemoPatient
     {
-        public static void CloningWorks(IElementNavigator nav)
-        {
-            var copy = nav.Clone();
-            Assert.IsTrue(nav.IsEqualTo(copy).Success);
-        }
-
-        public static void ElementNavPerformance(IElementNavigator nav)
+        public static void ElementNavPerformance(ISourceNode nav)
         {
             // run extraction once to allow for caching
             extract();
@@ -45,10 +38,14 @@ namespace Hl7.Fhir.Serialization.Tests
 
             void extract()
             {
-                var usual = nav.Children("identifier").First().Children("use").First().Value;
-                var phone = nav.Children("telecom").First().Children("system").First().Value;
-                var prefs = nav.Children("communication").Where(c => c.Children("preferred").Any(pr => pr.Value is string s && s == "true")).Count();
+                var usual = nav.Children("identifier").First().Children("use").First().Text;
+                Assert.IsNotNull(usual);
+                var phone = nav.Children("telecom").First().Children("system").First().Text;
+                Assert.IsNotNull(usual);
+                var prefs = nav.Children("communication").Where(c => c.Children("preferred").Any(pr => pr.Text == "true")).Count();
+                Assert.AreNotEqual(0, prefs);
                 var link = nav.Children("link").Children("other").Children("reference");
+                Assert.IsNotNull(link);
             }
         }
 
@@ -57,46 +54,39 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual("Patient", patient.Location);
 
             Assert.AreEqual("Patient.id[0]", patient.Children().First().Location);
-
             var identifiers = patient.Children("identifier").ToList();
             Assert.AreEqual("Patient.identifier[0]", identifiers[0].Location);
             Assert.AreEqual("Patient.identifier[0].use[0]", identifiers[0].Children().First().Location);
             Assert.AreEqual("Patient.identifier[1]", identifiers[1].Location);
             Assert.AreEqual("Patient.identifier[1].use[0]", identifiers[1].Children().First().Location);
-        }  
+            Assert.AreEqual("Patient.deceasedBoolean", patient.Children("deceasedBoolean").Single());
+            Assert.AreEqual("Patient.contained[0].name[1].use[0]",
+                patient.Children("contained").First().Children("name").Skip(1).First().Children("use").Single().Location);
+        }
 
-        public static void ProducedCorrectTypedLocations(IElementNavigator patient)
+        public static void ProducedCorrectTypedLocations(IElementNode patient)
         {
-            var typedNav = (TypedNavigator)patient;
+            string getPretty(IElementNode n) => n.Annotation<PrettyPath>()?.Path;
 
-            Assert.AreEqual("Patient", patient.Location);
+            Assert.AreEqual("Patient", getPretty(patient));
 
-            patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.id", typedNav.PrettyPath);
-            var patNav = patient.Clone();
-
-            patient.MoveToNext();   // text
-            patient.MoveToNext("identifier");
-            Assert.AreEqual("Patient.identifier[0]", typedNav.PrettyPath);
-            var idNav = patient.Clone();
-
-            Assert.IsTrue(patient.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[0].use", typedNav.PrettyPath);
-
-            Assert.IsTrue(patNav.MoveToNext("deceased"));
-            Assert.AreEqual("Patient.deceased", patNav.Annotation<PrettyPath>().Path);
-
-            idNav.MoveToNext(); // identifier
-            Assert.AreEqual("Patient.identifier[1]", idNav.Annotation<PrettyPath>().Path);
-
-            Assert.IsTrue(idNav.MoveToFirstChild());
-            Assert.AreEqual("Patient.identifier[1].use", idNav.Annotation<PrettyPath>().Path);
+            var patientC = patient.Children().ToList();
+            Assert.AreEqual("Patient.id", getPretty(patient.Children("id").First()));
+            var ids = patient.Children("identifier").ToList();
+            Assert.AreEqual("Patient.identifier[0]", getPretty(ids[0]));
+            Assert.AreEqual("Patient.identifier[0].use", getPretty(ids[0].Children("use").Single()));
+            Assert.AreEqual("Patient.identifier[1]", getPretty(ids[1]));
+            Assert.AreEqual("Patient.identifier[1].use", getPretty(ids[1].Children("use").Single()));
+            Assert.AreEqual("Patient.deceased", getPretty(patient.Children("deceased").Single()));
+            Assert.AreEqual("Patient.contained[0].name[1].use",
+                patient.Children("contained").First().Children("name").Skip(1).First().Children("use").Single().Location);
         }
 
 
-        public static void HasLineNumbers<T>(IElementNavigator nav) where T : class, IPositionInfo
+        public static void HasLineNumbers<T>(ISourceNode nav) where T : class, IPositionInfo
         {
-            Assert.IsTrue(nav.MoveToFirstChild());
+            nav = nav.Children().FirstOrDefault();
+            Assert.IsNotNull(nav);
 
             var posInfo = (nav as IAnnotated)?.Annotation<T>();
             Assert.IsNotNull(posInfo);
@@ -104,6 +94,14 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreNotEqual(-1, posInfo.LinePosition);
             Assert.AreNotEqual(0, posInfo.LineNumber);
             Assert.AreNotEqual(0, posInfo.LinePosition);
+        }
+
+        [TestMethod]
+        public static void CheckBundleEntryNavigation(IElementNavigator nav)
+        {
+            var entryNav = nav.Select("entry.resource").First();
+            var id = entryNav.Scalar("id");
+            Assert.IsNotNull(id);
         }
 
         public static void RoundtripXml(Func<string, object> navCreator)
@@ -118,8 +116,14 @@ namespace Hl7.Fhir.Serialization.Tests
 
             switch (nav)
             {
-                case ISourceNode isn: serInfo = isn.GetElementDefinitionSummary(); return;
-                case IElementNavigator ien: serInfo = ien.GetElementDefinitionSummary(); return;
+                case ISourceNode isn:
+                    serInfo = isn.GetElementDefinitionSummary();
+                    break;
+                case IElementNode ien:
+                    serInfo = ien.GetElementDefinitionSummary();
+                    break;
+                default:
+                    throw Error.InvalidOperation("Fix unit test");
             }
 
             bool hasTypeInfo = serInfo != null;
@@ -128,7 +132,9 @@ namespace Hl7.Fhir.Serialization.Tests
             using (var writer = XmlWriter.Create(outputBuilder))
             {
                 if (nav is ISourceNode isn) serializer.Write(isn, writer);
-                if (nav is IElementNavigator ien) serializer.Write(ien, writer);
+                else if (nav is IElementNode ien) serializer.Write(ien, writer);
+                else
+                    throw Error.InvalidOperation("Fix unit test");
             }
 
             var output = outputBuilder.ToString();
@@ -154,104 +160,117 @@ namespace Hl7.Fhir.Serialization.Tests
 
             switch (nav)
             {
-                case ISourceNode isn: serInfo = isn.GetElementDefinitionSummary(); return;
-                case IElementNavigator ien: serInfo = ien.GetElementDefinitionSummary(); return;
+                case ISourceNode isn:
+                    serInfo = isn.GetElementDefinitionSummary();
+                    break;
+                case IElementNode ien:
+                    serInfo =
+ ien.GetElementDefinitionSummary();
+                    break;
+                default:
+                    throw Error.InvalidOperation("Fix unit test");
             }
 
             bool hasTypeInfo = serInfo != null;
-
 
             var serializer = new FhirJsonWriter(new FhirJsonWriterSettings { AllowUntypedElements = !hasTypeInfo });
             using (var writer = new JsonTextWriter(new StringWriter(outputBuilder)))
             {
                 if (nav is ISourceNode isn) serializer.Write(isn, writer);
-                if (nav is IElementNavigator ien) serializer.Write(ien, writer);
+                else if (nav is IElementNode ien) serializer.Write(ien, writer);
+                else
+                    throw Error.InvalidOperation("Fix unit test");
             }
 
             var output = outputBuilder.ToString();
             JsonAssert.AreSame(tp, output);
         }
 
-        public static void CanReadThroughNavigator(IElementNavigator nav, bool typed)
+        public static void CanReadThroughNavigator(IElementNode n, bool typed)
         {
-            Assert.AreEqual("Patient", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceType());
-            if (typed) Assert.AreEqual("Patient", nav.Type);
+            Assert.AreEqual("Patient", n.Name);
+            Assert.AreEqual("Patient", n.GetResourceType());
+            if (typed) Assert.AreEqual("Patient", n.Type);
 
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual("id", nav.Name);
-            Assert.AreEqual("pat1", nav.Value);
-            if (typed) Assert.AreEqual("id", nav.Type);
+            var nav = n.Children().GetEnumerator();
 
-            var pat = nav.Clone();
+            Assert.IsTrue(nav.MoveNext());
+            Assert.AreEqual("id", nav.Current.Name);
+            Assert.AreEqual("pat1", nav.Current.Value);
+            if (typed) Assert.AreEqual("id", nav.Current.Type);
 
-            Assert.IsFalse(nav.MoveToFirstChild());
+            Assert.IsFalse(nav.Current.Children().Any());
 
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("text", nav.Name);
-            if (typed) Assert.AreEqual("Narrative", nav.Type);
-            var text = nav.Clone();
+            Assert.IsTrue(nav.MoveNext());
+            Assert.AreEqual("text", nav.Current.Name);
+            if (typed) Assert.AreEqual("Narrative", nav.Current.Type);
 
-            Assert.IsTrue(text.MoveToFirstChild("status")); // status
-            if (typed) Assert.AreEqual("code", text.Type);
-            Assert.AreEqual("generated", text.Value);
+            var text = n.Children("text").Children().GetEnumerator();
 
-            Assert.IsTrue(text.MoveToNext());
-            Assert.AreEqual("div", text.Name);
-            Assert.IsTrue(((string)text.Value).StartsWith("<div xmlns="));       // special handling of xhtml
-            if (typed) Assert.AreEqual("xhtml", text.Type);
+            Assert.IsTrue(text.MoveNext()); // status
+            if (typed) Assert.AreEqual("code", text.Current.Type);
+            Assert.AreEqual("generated", text.Current.Value);
 
-            Assert.IsFalse(text.MoveToFirstChild()); // cannot move into xhtml
-            Assert.AreEqual("div", text.Name); // still on xhtml <div>
-            Assert.IsFalse(text.MoveToNext());  // nothing more in <text>
+            Assert.IsTrue(text.MoveNext());
+            Assert.AreEqual("div", text.Current.Name);
+            Assert.IsTrue(((string)text.Current.Value).StartsWith("<div xmlns="));       // special handling of xhtml
+            if (typed) Assert.AreEqual("xhtml", text.Current.Type);
 
-            Assert.IsTrue(nav.MoveToNext()); // contained
-            Assert.AreEqual("contained", nav.Name);
-            Assert.AreEqual("Patient", nav.GetResourceType());
-            if (typed) Assert.AreEqual("Patient", nav.Type);
+            Assert.IsFalse(text.Current.Children().Any()); // cannot move into xhtml
+            Assert.AreEqual("div", text.Current.Name); // still on xhtml <div>
+            Assert.IsFalse(text.MoveNext());  // nothing more in <text>
 
-            Assert.IsTrue(nav.MoveToFirstChild()); // id
-            if (typed) Assert.AreEqual("id", nav.Type);
-            Assert.IsTrue(nav.MoveToNext()); // identifier
-            var identifier = nav.Clone();
+            Assert.IsTrue(nav.MoveNext()); // contained
+            Assert.AreEqual("contained", nav.Current.Name);
+            Assert.AreEqual("Patient", nav.Current.GetResourceType());
+            if (typed) Assert.AreEqual("Patient", nav.Current.Type);
 
-            if (typed) Assert.AreEqual("Identifier", identifier.Type);
-            Assert.IsTrue(identifier.MoveToFirstChild()); // system
-            Assert.IsTrue(identifier.MoveToNext()); // value
-            Assert.IsFalse(identifier.MoveToNext()); // still value
+            var contained = nav.Current.Children().GetEnumerator();
+            Assert.IsTrue(contained.MoveNext()); // id
+            if (typed) Assert.AreEqual("id", nav.Current.Type);
+            Assert.IsTrue(nav.MoveNext()); // identifier
+            if (typed) Assert.AreEqual("Identifier", nav.Current.Type);
 
-            Assert.AreEqual("value", identifier.Name);
-            Assert.IsFalse(identifier.MoveToFirstChild());
-            Assert.AreEqual("444222222", identifier.Value); // tests whether strings are trimmed
+            var identifier = nav.Current.Children("identifier").Children().GetEnumerator();
 
-            Assert.IsTrue(nav.MoveToNext("name"));
-            Assert.AreEqual("name", nav.Name);
-            Assert.IsTrue(nav.MoveToFirstChild());  // id (attribute)
-            Assert.AreEqual("id", nav.Name);
-            Assert.AreEqual("firstname", nav.Value);
-            Assert.IsTrue(nav.MoveToNext());  // use (element!)
-            Assert.AreEqual("use", nav.Name);
+            Assert.IsTrue(identifier.MoveNext()); // system
+            Assert.IsTrue(identifier.MoveNext()); // value
+            Assert.IsFalse(identifier.MoveNext()); // still value
 
-            Assert.IsTrue(pat.MoveToNext("birthDate"));
+            Assert.AreEqual("value", identifier.Current.Name);
+            Assert.IsFalse(identifier.Current.Children().Any());
+            Assert.AreEqual("444222222", identifier.Current.Value); // tests whether strings are trimmed
 
-            if (typed)
-            {
-                Assert.AreEqual("date", pat.Type);
-                Assert.AreEqual(PartialDateTime.Parse("1974-12-25"), pat.Value);
-            }
-            else
-                Assert.AreEqual("1974-12-25", pat.Value);
+            var name = n.Children("contained").First().Children("name").First();
+            Assert.AreEqual("name", name.Name);
+            var inname = name.Children().ToList();
+            Assert.IsTrue(inname.Any());
+            Assert.AreEqual("id", inname[0].Name);
+            Assert.AreEqual("firstname", inname[0].Value);
+            Assert.AreEqual("use", inname[1].Name);
+
+            var bd = n.Children("birthDate").Single();
 
             if (typed)
             {
-                Assert.IsTrue(pat.MoveToNext("deceased"));
-                Assert.AreEqual("boolean", pat.Type);
-                Assert.AreEqual(false, pat.Value);
+                Assert.AreEqual("date", bd.Type);
+                Assert.AreEqual(PartialDateTime.Parse("1974-12-25"), bd.Value);
+            }
+            else
+                Assert.AreEqual("1974-12-25", bd.Value);
+
+            
+
+            if (typed)
+            {
+                var dec = n.Children("deceased").Single();
+                Assert.AreEqual("boolean", dec.Type);
+                Assert.AreEqual(false, dec.Value);
             }
             else
             {
-                Assert.IsTrue(pat.MoveToNext("deceasedBoolean"));
-                Assert.AreEqual("false", pat.Value);
+                var dec = n.Children("deceasedBoolean").Single();
+                Assert.AreEqual("false", dec.Value);
             }
         }
     }

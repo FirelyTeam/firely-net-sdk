@@ -130,7 +130,7 @@ namespace Hl7.Fhir.ElementModel
         public MaskingNavigator(IElementNavigator source, MaskingNavigatorSettings settings = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
-            if (!source.InPipeline(typeof(ScopedNavigator)))
+            if (!source.InPipeline<ScopedNavigator>())
                 throw Error.Argument("MaskingNavigator can only be used on a navigator chain that contains a ScopedNavigator", nameof(source));
 
             Source = source;

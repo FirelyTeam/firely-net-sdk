@@ -285,7 +285,11 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoNavigatorExtensions
     {
 #pragma warning disable 612, 618
-        public static IElementNavigator ToElementNavigator(this Base @base, string rootName=null) => new PocoNavigator(@base, rootName);
+        public static IElementNavigator ToElementNavigator(this Base @base, string rootName=null) => 
+            new PocoNavigator(@base, rootName);
+
+        public static IElementNode ToElementNode(this Base @base, string rootName = null) =>
+            new PocoNavigator(@base, rootName).ToElementNode();
 
 #pragma warning restore 612, 618
     }

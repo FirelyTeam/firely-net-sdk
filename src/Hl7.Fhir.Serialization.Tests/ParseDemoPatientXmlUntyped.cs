@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public ISourceNode getXmlNavU(string xml, FhirXmlNavigatorSettings settings = null) =>
+        public ISourceNode getXmlUntyped(string xml, FhirXmlNavigatorSettings settings = null) =>
             FhirXmlNavigator.Untyped(xml, settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -23,23 +23,23 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CanReadThroughUntypedNavigator()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNavigator(), typed: false);
+            var nav = getXmlUntyped(tpXml);
+            ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNode(), typed: false);
         }
 
            [TestMethod]
         public void ElementNavPerformanceUntypedXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNavU(tpXml);
-            ParseDemoPatient.ElementNavPerformance(nav.ToElementNavigator());
+            var nav = getXmlUntyped(tpXml);
+            ParseDemoPatient.ElementNavPerformance(nav);
         }
 
         [TestMethod]
         public void ProducesCorrectUntypedLocations()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var patient = getXmlNavU(tpXml);
+            var patient = getXmlUntyped(tpXml);
 
             ParseDemoPatient.ProducesCorrectUntypedLocations(patient);
         }
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ReadsAttributesAsElements()
         {
-            var nav = getXmlNavU("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://example.org' q:myattr='dummy' " +
+            var nav = getXmlUntyped("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://example.org' q:myattr='dummy' " +
                 "anotherattr='nons' />",
                 new FhirXmlNavigatorSettings { AllowedExternalNamespaces = new[] { XNamespace.Get("http://example.org") } });
 
@@ -70,9 +70,9 @@ namespace Hl7.Fhir.Serialization.Tests
         public void HasLineNumbers()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNavU(tpXml);
+            var nav = getXmlUntyped(tpXml);
 
-            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav.ToElementNavigator());
+            ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav);
         }
 
         [TestMethod]
@@ -211,29 +211,27 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
-            var bundleXml = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
-            var xmlNav = getXmlNavU(bundleXml).ToElementNavigator();
-            var entryNav = xmlNav.Select("entry.resource").First();
-            var id = entryNav.Scalar("id");
-            Assert.IsNotNull(id);
+            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
+            var nav = getXmlUntyped(bundle).ToElementNavigator();
+            ParseDemoPatient.CheckBundleEntryNavigation(nav);
         }
 
         [TestMethod]
         public void CatchesLowLevelErrors()
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
-            var patient = getXmlNavU(tpXml);
+            var patient = getXmlUntyped(tpXml);
             var result = patient.VisitAndCatch();
             var originalCount = result.Count;
             Assert.AreEqual(11, result.Count);
             Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlNavU(tpXml, new FhirXmlNavigatorSettings() { DisallowSchemaLocation = true });
+            patient = getXmlUntyped(tpXml, new FhirXmlNavigatorSettings() { DisallowSchemaLocation = true });
             result = patient.VisitAndCatch();
             Assert.IsTrue(result.Count == originalCount + 1);    // one extra error about schemaLocation being present
             Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlNavU(tpXml, new FhirXmlNavigatorSettings() { PermissiveParsing = true });
+            patient = getXmlUntyped(tpXml, new FhirXmlNavigatorSettings() { PermissiveParsing = true });
             result = patient.VisitAndCatch();
             Assert.AreEqual(0, result.Count);
         }
@@ -242,12 +240,12 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesEmptyContainedResources()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><contained><OperationOutcome /></contained></Patient>";
-            var pat = getXmlNavU(xml);
+            var pat = getXmlUntyped(xml);
             var errors = pat.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("must have child elements"));
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><contained /></Patient>";
-            pat = getXmlNavU(xml);
+            pat = getXmlUntyped(xml);
             errors = pat.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("must have child elements"));
         }
@@ -271,7 +269,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void DelayedParseErrors()
         {
             var tpXml = "<Patient>";
-            var patient = getXmlNavU(tpXml);
+            var patient = getXmlUntyped(tpXml);
 
             var errors = patient.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));

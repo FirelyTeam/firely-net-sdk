@@ -1,9 +1,10 @@
-﻿using Hl7.Fhir.Utility;
+﻿using Hl7.Fhir.ElementModel.Adapters;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -97,6 +98,17 @@ namespace Hl7.Fhir.ElementModel
         nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
         public static T Annotation<T>(this IElementNode nav) where T : class =>
             nav is IAnnotated ann ? ann.Annotation<T>() : null;
+
+        [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
+        public static IElementNavigator ToElementNavigator(this IElementNode node) => new ElementNodeToElementNavAdapter(node);
+
+        public static ISourceNode ToSourceNode(this IElementNode node) => new ElementNodeToSourceNodeAdapter(node);
+
+        public static ElementDefinitionSummary GetElementDefinitionSummary(this IElementNode node) =>
+            node is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
+
+        public static string GetResourceType(this IElementNode navigator) =>
+                navigator is IAnnotated ia ? ia.GetResourceType() : null;
 
     }
 }

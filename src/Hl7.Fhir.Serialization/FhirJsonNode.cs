@@ -375,20 +375,20 @@ namespace Hl7.Fhir.Serialization
 #if NET_XSD_SCHEMA
             yield return checkXhtml;
 
-            void checkXhtml(IElementNavigator nav, IExceptionSource ies)
+            object checkXhtml(IElementNode nav, IExceptionSource ies, object _)
             {
-                if (nav.Type != "xhtml") return;
-
-                if (ValidateFhirXhtml)
+                if (nav.Type == "xhtml" && ValidateFhirXhtml)
                     FhirXmlNode.ValidateXhtml((string)nav.Value, ies, nav);
+
+                return null;
             }
 #endif
 
-            void checkArrayUse(IElementNavigator nav, IExceptionSource ies)
+            object checkArrayUse(IElementNode nav, IExceptionSource ies, object _)
             {
                 var sdSummary = nav.GetElementDefinitionSummary();
                 var serializationDetails = nav.GetJsonSerializationDetails();
-                if (sdSummary == null || serializationDetails == null) return;
+                if (sdSummary == null || serializationDetails == null) return null;
 
                 if (sdSummary.IsCollection && serializationDetails.ArrayIndex == null)
                     ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
@@ -403,6 +403,8 @@ namespace Hl7.Fhir.Serialization
                             new StructuralTypeException($"Element '{nav.Name}' does not repeat, so an array must not be used here.")));
                     }
                 }
+
+                return null;
             }
         }
 #pragma warning restore 612, 618

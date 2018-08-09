@@ -31,7 +31,6 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         string Type { get; }
 
-
         /// <summary>
         /// The value of the node (if it represents a primitive FHIR value)
         /// </summary>

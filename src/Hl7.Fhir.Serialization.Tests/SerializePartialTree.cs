@@ -12,9 +12,9 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializePartialTree
     {
-        public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) =>
+        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public IElementNavigator getJsonNav(string json, FhirJsonNavigatorSettings s = null) =>
+        public IElementNode getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
             FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
         
 
@@ -26,9 +26,9 @@ namespace Hl7.Fhir.Serialization.Tests
             var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
 
             // Should work on the parent resource
-            var navXml = getXmlNav(tpXml);
-            var navJson = getJsonNav(tpJson);
-            var navPoco = pat.ToElementNavigator();
+            var navXml = getXmlNode(tpXml);
+            var navJson = getJsonNode(tpJson);
+            var navPoco = pat.ToElementNode();
             testSubtree(navXml, navJson, navPoco);
 
             // An on a child that's a normal datatype
@@ -56,20 +56,20 @@ namespace Hl7.Fhir.Serialization.Tests
             testSubtree(subnavXml, subnavJson, subnavPoco);
         }
 
-        private void testSubtree(IElementNavigator navXml, IElementNavigator navJson, IElementNavigator navPoco)
+        private void testSubtree(IElementNode navXml, IElementNode navJson, IElementNode navPoco)
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
             var navRtXml = FhirJsonNavigator.ForElement(navXml.ToJson(), navXml.Type,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
             var navRtJson = navJson.ToPoco(ModelInfo.GetTypeForFhirType(navJson.Type))
-                .ToElementNavigator(navJson.Name);
+                .ToElementNode(navJson.Name);
             var navRtPoco = FhirXmlNavigator.ForElement(navPoco.ToXml(), navPoco.Type,
                 new PocoStructureDefinitionSummaryProvider());
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);
         }
 
-        private void assertAreNavsEqual(IElementNavigator subnavXml, IElementNavigator subnavJson, IElementNavigator subnavPoco)
+        private void assertAreNavsEqual(IElementNode subnavXml, IElementNode subnavJson, IElementNode subnavPoco)
         {
             var result = subnavXml.IsEqualTo(subnavJson);
             Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);

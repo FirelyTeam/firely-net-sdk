@@ -6,15 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Text;
 using Hl7.Fhir.Model;
-using System.IO;
-using Newtonsoft.Json;
-using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
 using System.Xml.Linq;
 using Hl7.Fhir.ElementModel;
 using System.Linq;
@@ -35,9 +29,9 @@ namespace Hl7.Fhir.Serialization
             Settings = new ParserSettings();
         }
 
-        protected static IElementNavigator makeNav(Base instance, SummaryType summary)
+        protected static IElementNode makeNav(Base instance, SummaryType summary)
         {
-            if (summary == SummaryType.False) return instance.ToElementNavigator();
+            if (summary == SummaryType.False) return instance.ToElementNavigator().ToElementNode();
 
             var patchedInstance = (Base)instance.DeepCopy();
 
@@ -48,15 +42,15 @@ namespace Hl7.Fhir.Serialization
             switch (summary)
             {
                 case SummaryType.True:
-                    return MaskingNavigator.ForSummary(baseNav);
+                    return MaskingNavigator.ForSummary(baseNav).ToElementNode();
                 case SummaryType.Text:
-                    return MaskingNavigator.ForText(baseNav);
+                    return MaskingNavigator.ForText(baseNav).ToElementNode();
                 case SummaryType.Data:
-                    return MaskingNavigator.ForData(baseNav);
+                    return MaskingNavigator.ForData(baseNav).ToElementNode();
                 case SummaryType.Count:
-                    return MaskingNavigator.ForCount(baseNav);
+                    return MaskingNavigator.ForCount(baseNav).ToElementNode();
                 default:
-                    return baseNav;
+                    return baseNav.ToElementNode();
             }
         }
     }
@@ -105,7 +99,8 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False) => makeNav(instance, summary).ToJson();
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False) => 
+            makeNav(instance, summary).ToJson();
 
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False) => makeNav(instance, summary).ToJsonBytes();
     }

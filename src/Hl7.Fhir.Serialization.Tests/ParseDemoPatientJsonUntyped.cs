@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             var nav = getJsonNodeU(tp);
-            ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNavigator(), typed: false);
+            ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNode(), typed: false);
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             var nav = getJsonNodeU(tp);
-            ParseDemoPatient.ElementNavPerformance(nav.ToElementNavigator());
+            ParseDemoPatient.ElementNavPerformance(nav);
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             var nav = getJsonNodeU(tp);
 
-            ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav.ToElementNavigator());
+            ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav);
         }
 
         [TestMethod]
@@ -81,9 +81,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
             var nav = getJsonNodeU(bundle).ToElementNavigator();
-            var entryNav = nav.Select("entry.resource").First();
-            var id = entryNav.Scalar("id");
-            Assert.IsNotNull(id);
+            ParseDemoPatient.CheckBundleEntryNavigation(nav);
         }
 
 

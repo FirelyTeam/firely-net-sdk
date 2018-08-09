@@ -21,12 +21,12 @@ namespace Hl7.Fhir.ElementModel.Adapters
     /// with the POCO-parsers.
     /// </summary>
 #pragma warning disable 612, 618
-    internal class ElementNavToFhirReaderAdapter : IFhirReader, IAnnotated
+    internal class ElementNodeToFhirReaderAdapter : IFhirReader, IAnnotated
 #pragma warning restore 612,618
     {
-        public readonly IElementNavigator Current;
+        public readonly IElementNode Current;
 
-        public ElementNavToFhirReaderAdapter(IElementNavigator root)
+        public ElementNodeToFhirReaderAdapter(IElementNode root)
         {
             Current = root;
 
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public int LinePosition => getPositionInfo(Current)?.LinePosition ?? -1;
 
-        private static IPositionInfo getPositionInfo(IElementNavigator node) =>
+        private static IPositionInfo getPositionInfo(IElementNode node) =>
             node is IAnnotated ia ?
                 (IPositionInfo)ia.Annotation<XmlSerializationDetails>() ??
                     (IPositionInfo)ia.Annotation<JsonSerializationDetails>() : null;
@@ -51,11 +51,11 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
             if (Value != null)
-                yield return Tuple.Create("value", (IFhirReader)new ElementNavToFhirReaderAdapter(Current));
+                yield return Tuple.Create("value", (IFhirReader)new ElementNodeToFhirReaderAdapter(Current));
 
             foreach (var child in Current.Children())
             {
-                var newChild = new ElementNavToFhirReaderAdapter(child);
+                var newChild = new ElementNodeToFhirReaderAdapter(child);
                 yield return Tuple.Create(newChild.Name, (IFhirReader)newChild);
             }
         }
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         IEnumerable<object> IAnnotated.Annotations(Type type)
         {
-            if (type == typeof(ElementNavToFhirReaderAdapter))
+            if (type == typeof(ElementNodeToFhirReaderAdapter))
                 return new[] { this };
             else
                 return Current.Annotations(type);

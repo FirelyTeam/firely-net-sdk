@@ -373,28 +373,42 @@ namespace Hl7.Fhir.Serialization
             return errorEncountered;
         }
 
+        private struct OrderRuleState
+        {
+            public string Name;
+            public int Order;
+        }
 #pragma warning disable 612, 618
         private IEnumerable<AdditionalStructuralRule> additionalTypeRules()
         {
             yield return checkRepresentation;
             yield return checkOrder;
 
-            void checkOrder(TypedNavigator node, IExceptionSource ies)
+            object checkOrder(IElementNode node, IExceptionSource ies, object state)
             {
-                var sdSummary = ((IElementNavigator)node).GetElementDefinitionSummary();
-                if (sdSummary == null || node.LastOrder == null) return;
+                var sdSummary = node.GetElementDefinitionSummary();
+                if (sdSummary == null) return null;
 
-                var (lastName, lastOrder) = node.LastOrder.Value;
+                if (state is OrderRuleState ors)
+                {
+                    var (lastName, lastOrder) = (ors.Name, ors.Order);
 
-                if (sdSummary.Order < lastOrder)
-                    ies.ExceptionHandler.NotifyOrThrow(node, buildException($"Element '{node.Name}' is not in the correct order and should come before element '{lastName}'."));
+                    if (sdSummary.Order < lastOrder)
+                        ies.ExceptionHandler.NotifyOrThrow(node, buildException($"Element '{node.Name}' is not in the correct order and should come before element '{lastName}'."));
+                }
+
+                if (sdSummary.Representation == XmlRepresentation.XmlElement)
+                    return new OrderRuleState() { Name = node.Name, Order = sdSummary.Order };
+                else
+                    // No change in last order, since we're not an element
+                    return state;
             }
 
-            void checkRepresentation(IElementNavigator node, IExceptionSource ies)
+            object checkRepresentation(IElementNode node, IExceptionSource ies, object _)
             {
-                var sdSummary = ((IElementNavigator)node).GetElementDefinitionSummary();
+                var sdSummary = node.GetElementDefinitionSummary();
                 var serializationDetails = node.GetXmlSerializationDetails();
-                if (sdSummary == null || serializationDetails == null) return;
+                if (sdSummary == null || serializationDetails == null) return null;
 
                 var representation = sdSummary.Representation;
 
@@ -427,6 +441,8 @@ namespace Hl7.Fhir.Serialization
                 }
                 string buildMessage(string name, XmlNodeType actualType, string message) =>
                     $"{actualType} '{name}' {message}";
+
+                return null;
             }
         }
 

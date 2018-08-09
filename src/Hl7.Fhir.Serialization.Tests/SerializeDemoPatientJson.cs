@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public IElementNavigator getJsonNav(string json, FhirJsonNavigatorSettings s = null) => 
+        public IElementNode getJsonNav(string json, FhirJsonNavigatorSettings s = null) => 
             FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
@@ -53,8 +53,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirJsonParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
             var pat = pser.Parse<Patient>(tp);
 
-            var nav = pat.ToElementNavigator();
-            var output = nav.ToJson();
+            var output = pat.ToJson();
             JsonAssert.AreSame(tp, output);
         }
 

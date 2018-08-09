@@ -26,13 +26,13 @@ namespace Hl7.Fhir.Serialization
 
     public static class FhirJsonWriterExtensions
     {
-        public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+        public static void WriteTo(this IElementNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
             new FhirJsonWriter(settings).Write(source, destination);
 
-        public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
+        public static string ToJson(this IElementNode source, FhirJsonWriterSettings settings = null)
             => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
 
-        public static byte[] ToJsonBytes(this IElementNavigator source, FhirJsonWriterSettings settings = null)
+        public static byte[] ToJsonBytes(this IElementNode source, FhirJsonWriterSettings settings = null)
                 => SerializationUtil.WriteJsonToBytes(writer => source.WriteTo(writer, settings));
     }
 
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Serialization
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
 
-        public void Write(IElementNavigator source, JsonWriter destination)
+        public void Write(IElementNode source, JsonWriter destination)
         {
             //Re-enable when the PocoNavigator is also fed through the TypedNavigator
             //if(!source.InPipeline(typeof(TypedNavigator)))
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization
             writeInternal(source, destination);
         }
 
-        private void writeInternal(IElementNavigator source, JsonWriter destination)
+        private void writeInternal(IElementNode source, JsonWriter destination)
         {
             if (source is IExceptionSource)
             {
@@ -87,14 +87,14 @@ namespace Hl7.Fhir.Serialization
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.
             if (hasJsonSource)
-                Write(source.ToElementNavigator(), destination);
+                Write(source.ToElementNode(), destination);
             else
                 throw Error.NotSupported($"The {nameof(FhirJsonWriter)} will only work correctly on an untyped " +
                     $"source if the source is a {nameof(FhirJsonNavigator)}.");
         }
 
 
-        private (JToken first, JObject second) buildNode(IElementNavigator node)
+        private (JToken first, JObject second) buildNode(IElementNode node)
         {
             var details = node.GetJsonSerializationDetails();
             object value = details != null ? node.Value : details?.OriginalValue ?? node.Value;
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Serialization
 
             return (first, second);
 
-            JObject buildChildren(IElementNavigator n)
+            JObject buildChildren(IElementNode n)
             {
                 var objectWithChildren = new JObject();
                 addChildren(n, objectWithChildren);
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal bool MustSerializeMember(IElementNavigator source, out ElementDefinitionSummary info)
+        internal bool MustSerializeMember(IElementNode source, out ElementDefinitionSummary info)
         {
             info = source.GetElementDefinitionSummary();
 
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private void addChildren(IElementNavigator node, JObject parent)
+        private void addChildren(IElementNode node, JObject parent)
         {
             var nodeSummary = node.GetElementDefinitionSummary();
 
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         private JValue buildValue(object value)
-        {          
+        {
             switch (value)
             {
                 case bool b:
@@ -216,6 +216,6 @@ namespace Hl7.Fhir.Serialization
                 default:
                     return new JValue(PrimitiveTypeConverter.ConvertTo<string>(value));
             }
-        }        
+        }
     }
 }

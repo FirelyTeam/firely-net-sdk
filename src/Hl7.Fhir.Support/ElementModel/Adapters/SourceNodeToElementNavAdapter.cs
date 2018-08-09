@@ -24,7 +24,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        public SourceNodeToElementNavAdapter() { }  // for clone
+        private SourceNodeToElementNavAdapter() { }  // for clone
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -85,10 +85,8 @@ namespace Hl7.Fhir.ElementModel.Adapters
         {
             if (type == typeof(SourceNodeToElementNavAdapter))
                 return new[] { this };
-            else if (Current is IAnnotated annotated)
-                return annotated.Annotations(type);
             else
-                return Enumerable.Empty<object>();
+                return Current.Annotations(type);
         }
     }
 }

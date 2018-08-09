@@ -88,11 +88,9 @@ namespace Hl7.Fhir.ElementModel
 
         public static void VisitAll(this ISourceNode nav) => nav.Visit(n => { var dummy = n.Text; });
 
-        //public static IElementNavigator ToElementNavigator(this ISourceNode sourceNav, IStructureDefinitionSummaryProvider provider, string type = null)
-        //{
-        //    if (provider == null) throw Error.ArgumentNull(nameof(provider));
-        //    return new TypedNavigator(sourceNav, type, provider);
-        //}
+        [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
+        public static IElementNavigator ToElementNavigator(this ISourceNode sourceNav, IStructureDefinitionSummaryProvider provider, string type = null) =>
+            sourceNav.ToElementNode(provider, type).ToElementNavigator();
 
         [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into a typed ElementNavigator without providing" +
             "type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
@@ -100,9 +98,17 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this ISourceNode sourceNav, string type = null) =>
             new SourceNodeToElementNavAdapter(sourceNav);
 
-        [Obsolete("Only here to refactor")]
-        public static ISourceNavigator ToSourceNavigator(this ISourceNode sourceNav, string type = null) =>
-            new SourceNodeToSourceNavAdapter(sourceNav);
+        public static IElementNode ToElementNode(this ISourceNode sourceNav, IStructureDefinitionSummaryProvider provider, string type = null)
+        {
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+                return new TypedNode(sourceNav, type, provider);
+        }
+
+        [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into a typed ElementNode without providing" +
+    "type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
+    "missing type information. Please don't use this overload unless you know what you are doing.")]
+        public static IElementNode ToElementNode(this ISourceNode sourceNav) =>
+                new SourceNodeToElementNodeAdapter(sourceNav);
 
     }
 }
