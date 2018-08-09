@@ -37,20 +37,20 @@ namespace Hl7.Fhir.Serialization
 
             MetaSubsettedAdder.AddSubsetted(patchedInstance, atRoot: true);
 
-            var baseNav = new ScopedNavigator(patchedInstance.ToElementNavigator());
+            var baseNav = new ScopedNode(patchedInstance.ToElementNode());
 
             switch (summary)
             {
                 case SummaryType.True:
-                    return MaskingNavigator.ForSummary(baseNav).ToElementNode();
+                    return MaskingNode.ForSummary(baseNav);
                 case SummaryType.Text:
-                    return MaskingNavigator.ForText(baseNav).ToElementNode();
+                    return MaskingNode.ForText(baseNav);
                 case SummaryType.Data:
-                    return MaskingNavigator.ForData(baseNav).ToElementNode();
+                    return MaskingNode.ForData(baseNav);
                 case SummaryType.Count:
-                    return MaskingNavigator.ForCount(baseNav).ToElementNode();
+                    return MaskingNode.ForCount(baseNav);
                 default:
-                    return baseNav.ToElementNode();
+                    return baseNav;
             }
         }
     }

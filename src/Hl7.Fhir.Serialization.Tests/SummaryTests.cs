@@ -1,16 +1,8 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Tests;
-using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -18,8 +10,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SummaryTests
     {
-        public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) => 
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s).ToElementNavigator();
+        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
+            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
 
         [TestMethod]
         public void Summary()
@@ -28,8 +20,8 @@ namespace Hl7.Fhir.Serialization.Tests
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("Patient");
             var inSummary = typeinfo.GetElements().Where(e => e.InSummary).ToList();
 
-            var nav = new ScopedNavigator(getXmlNav(tpXml));
-            var masker = MaskingNavigator.ForSummary(nav);
+            var nav = new ScopedNode(getXmlNode(tpXml));
+            var masker = MaskingNode.ForSummary(nav);
             var output = masker.ToXml();
 
             var maskedChildren = masker.Children().ToList();
@@ -43,10 +35,11 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
-            var nav = new ScopedNavigator(getXmlNav(tpXml));
-            var masker = MaskingNavigator.ForText(nav);
+            var nav = new ScopedNode(getXmlNode(tpXml));
+            var masker = MaskingNode.ForText(nav);
             var output = masker.ToXml();
 
+            var m = masker.Descendants().ToList();
             var maskedChildren = masker.Descendants().Count();
             Assert.AreEqual(8,maskedChildren);
         }
@@ -57,8 +50,8 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
-            var nav = new ScopedNavigator(getXmlNav(tpXml));
-            var masker = MaskingNavigator.ForData(nav);
+            var nav = new ScopedNode(getXmlNode(tpXml));
+            var masker = MaskingNode.ForData(nav);
             var output = masker.ToXml();
 
             var maskedChildren = masker.Descendants().Count();

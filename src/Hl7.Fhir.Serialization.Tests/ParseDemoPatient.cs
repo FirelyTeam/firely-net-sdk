@@ -130,8 +130,8 @@ namespace Hl7.Fhir.Serialization.Tests
             bool hasTypeInfo = serInfo != null;
             string output = null;
 
-            if (nav is ISourceNode isn2) output = isn2.ToJson();
-            else if (nav is IElementNode ien2) output = ien2.ToJson();
+            if (nav is ISourceNode isn2) output = isn2.ToXml();
+            else if (nav is IElementNode ien2) output = ien2.ToXml();
             else
                 throw Error.InvalidOperation("Fix unit test");
 

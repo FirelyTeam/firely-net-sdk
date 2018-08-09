@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void RoundtripXml()
+        public void RoundtripXmlUntyped()
         {
             ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNavigator.Untyped(xmlText));
         }

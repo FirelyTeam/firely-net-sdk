@@ -25,30 +25,6 @@ namespace Hl7.Fhir.Serialization
         public bool IncludeUntypedElements;
     }
 
-    public static class FhirXmlWriterExtensions
-    {
-        public static void WriteTo(this ISourceNode source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
-            new FhirXmlWriter(settings).Write(source, destination, rootName);
-
-        public static void WriteTo(this IElementNode source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
-            new FhirXmlWriter(settings).Write(source, destination, rootName);
-
-        public static void WriteTo(this IElementNavigator source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
-             source.ToElementNode().WriteTo(destination, settings,rootName);
-
-        public static string ToXml(this ISourceNode source, FhirXmlWriterSettings settings = null, string rootName = null)
-        => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings, rootName));
-
-        public static string ToXml(this IElementNode source, FhirXmlWriterSettings settings = null, string rootName = null)
-                => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings, rootName));
-
-        public static string ToXml(this IElementNavigator source, FhirXmlWriterSettings settings = null, string rootName = null)
-        => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings, rootName));
-
-        public static byte[] ToXmlBytes(this IElementNode source, FhirXmlWriterSettings settings = null, string rootName = null)
-                => SerializationUtil.WriteXmlToBytes(writer => source.WriteTo(writer, settings, rootName));
-    }
-
     public class FhirXmlWriter : IExceptionSource
     {
         public FhirXmlWriter(FhirXmlWriterSettings settings = null)
@@ -64,10 +40,24 @@ namespace Hl7.Fhir.Serialization
 
         public void Write(IElementNode source, XmlWriter destination, string rootName = null)
         {
-            //Re-enable when the PocoNavigator is also fed through the TypedNavigator
-            //if(!source.InPipeline(typeof(TypedNavigator)))
-            //    throw Error.NotSupported($"The {nameof(FhirXmlWriter)} requires a {nameof(TypedNavigator)} to be present in the pipeline.");
             writeInternal(source, destination, rootName);
+        }
+
+        public void Write(ISourceNode source, XmlWriter destination, string rootName = null)
+        {
+            bool hasXmlSource = source.InPipeline(typeof(FhirXmlNode));
+
+            // We can only work with an untyped source if we're doing a roundtrip,
+            // so we have all serialization details available.
+            if (hasXmlSource)
+            {
+                AllowUntypedElements = true;
+                IncludeUntypedElements = true;
+                writeInternal(source.ToElementNode(), destination, rootName);
+            }
+            else
+                throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
+                    $"source if the source is a {nameof(FhirXmlNavigator)}.");
         }
 
         private void writeInternal(IElementNode source, XmlWriter destination, string rootName = null)
@@ -94,19 +84,6 @@ namespace Hl7.Fhir.Serialization
             }
 
             destination.Flush();
-        }
-
-        public void Write(ISourceNode source, XmlWriter destination, string rootName = null)
-        {
-            bool hasXmlSource = source.InPipeline(typeof(FhirXmlNode));
-
-            // We can only work with an untyped source if we're doing a roundtrip,
-            // so we have all serialization details available.
-            if (hasXmlSource)
-                writeInternal(source.ToElementNode(), destination, rootName);
-            else
-                throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
-                    $"source if the source is a {nameof(FhirXmlNavigator)}.");
         }
 
         internal bool MustSerializeMember(IElementNode source, out ElementDefinitionSummary info)

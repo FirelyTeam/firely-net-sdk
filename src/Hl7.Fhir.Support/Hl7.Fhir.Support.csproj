@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Remove="ElementModel\Adapters\SourceNodeToSourceNavAdapter.cs" />
     <Compile Remove="ElementModel\ISourceNavigator.cs" />
+    <Compile Remove="ElementModel\MaskingNavigator.cs" />
     <Compile Remove="ElementModel\SourceNavigatorExtensions.cs" />
     <Compile Remove="ElementModel\TypedNavigator.cs" />
     <Compile Remove="Utility\PipelineComponent.cs" />
