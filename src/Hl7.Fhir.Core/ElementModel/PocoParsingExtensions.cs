@@ -24,6 +24,7 @@ namespace Hl7.Fhir.ElementModel
 
         public static string ToXml(this Base source, FhirXmlWriterSettings settings = null, string rootName = null)
                 => SerializationUtil.WriteXmlToString(writer => source.ToElementNode().WriteTo(writer, settings, rootName));
+
     }
 
     /// <summary>

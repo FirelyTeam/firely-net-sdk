@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void RoundtripJson()
+        public void RoundtripJsonUntyped()
         {
             ParseDemoPatient.RoundtripJson(jsonText => 
                 getJsonNodeU(jsonText, new FhirJsonNavigatorSettings { AllowJsonComments = true }));

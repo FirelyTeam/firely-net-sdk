@@ -45,8 +45,8 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = getJsonNode("{ 'resourceType': 'Patient', 'active' : true }");
 
             var active = nav.Children().Single();
-            Assert.AreEqual("active", nav.Name);        // none-xmlns attributes will come through
-            Assert.IsNotNull(nav.GetJsonSerializationDetails());
+            Assert.AreEqual("active", active.Name);        // none-xmlns attributes will come through
+            Assert.IsNotNull(active.GetJsonSerializationDetails());
         }
 
 

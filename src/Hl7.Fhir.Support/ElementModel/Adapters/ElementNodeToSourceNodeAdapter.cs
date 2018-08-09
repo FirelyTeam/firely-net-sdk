@@ -7,9 +7,7 @@
  */
 
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -56,16 +54,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public IEnumerable<ISourceNode> Children(string name = null) => 
             Current.Children()
                 .Select(c => new ElementNodeToSourceNodeAdapter(this, c))
-                .Where(c => matches(name,c.Name));
-
-        private bool matches(string filter, string name)
-        {
-            var prefixMatch = filter?.EndsWith("*") ?? false;
-
-            return name == null ||
-                filter == name ||
-                (prefixMatch && name.StartsWith(filter));     // prefix scan (choice types)
-        }
+                .Where(c => c.Name.MatchesPrefix(name));
 
         IEnumerable<object> IAnnotated.Annotations(Type type)
         {

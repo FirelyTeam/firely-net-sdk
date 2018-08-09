@@ -160,7 +160,6 @@ namespace Hl7.Fhir.Serialization
 
             var scan = first;
             string previousName = null;
-            var prefixMatch = name?.EndsWith("*") ?? false;
 
             do
             {
@@ -169,11 +168,7 @@ namespace Hl7.Fhir.Serialization
                 if (scan.Name() != "value")
                 {
                     var scanName = scan.Name().LocalName;
-
-                    bool isMatch =
-                    name == null ||      // no name filter -> any match is ok
-                        scanName == name ||    // try filter on the actual name
-                        (prefixMatch && scanName.StartsWith(name));     // prefix scan (choice types)
+                    bool isMatch = scanName.MatchesPrefix(name);
 
                     if (isMatch)
                     {                        

@@ -20,6 +20,8 @@ namespace Hl7.Fhir.Serialization
 
         public int? ArrayIndex;
 
+        public bool UsesShadow;
+
         public int LineNumber { get; internal set; }
         public int LinePosition { get; internal set; }
 

@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Numerics;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -29,8 +30,20 @@ namespace Hl7.Fhir.Serialization
         public static void WriteTo(this IElementNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
             new FhirJsonWriter(settings).Write(source, destination);
 
+        public static void WriteTo(this ISourceNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+            new FhirJsonWriter(settings).Write(source, destination);
+
+        public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+            source.ToElementNode().WriteTo(destination, settings);
+
         public static string ToJson(this IElementNode source, FhirJsonWriterSettings settings = null)
             => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
+
+        public static string ToJson(this ISourceNode source, FhirJsonWriterSettings settings = null)
+            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
+
+        public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
+              => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
 
         public static byte[] ToJsonBytes(this IElementNode source, FhirJsonWriterSettings settings = null)
                 => SerializationUtil.WriteJsonToBytes(writer => source.WriteTo(writer, settings));
@@ -97,8 +110,9 @@ namespace Hl7.Fhir.Serialization
         private (JToken first, JObject second) buildNode(IElementNode node)
         {
             var details = node.GetJsonSerializationDetails();
-            object value = details != null ? node.Value : details?.OriginalValue ?? node.Value;
-            var isPrimitive = node.Type != null ? Primitives.IsPrimitive(node.Type) : value != null;
+            var summary = node.GetElementDefinitionSummary();
+            object value = summary != null ? node.Value : details?.OriginalValue ?? node.Value;
+            var objectInShadow = node.Type != null ? Primitives.IsPrimitive(node.Type) : details.UsesShadow;
 
             JToken first = value != null ? buildValue(value) : null;
             JObject second = buildChildren(node);
@@ -106,7 +120,7 @@ namespace Hl7.Fhir.Serialization
             // If this is a complex type with a value (should not occur)
             // serialize it like a primitive, otherwise, the first member
             // is just the normal content of the complex type (the children)
-            if (!isPrimitive && first == null)
+            if (!objectInShadow && first == null)
             {
                 if (first == null)
                 {
@@ -177,7 +191,7 @@ namespace Hl7.Fhir.Serialization
                 // for unknown properties is to use an array - safest bet.
                 var generalJsonDetails = members[0].GetJsonSerializationDetails();
                 var hasIndex = generalJsonDetails?.ArrayIndex != null;
-                var needsArray = generalInfo?.IsCollection ?? (hasIndex ? true : (bool?)null) ?? true;
+                var needsArray = generalInfo?.IsCollection ?? hasIndex;
 
                 var children = members.Select(m => buildNode(m))
                             .Where(c => !(c.first == null && c.second == null)).ToList();
@@ -210,6 +224,9 @@ namespace Hl7.Fhir.Serialization
                 case Int16 i16:
                 case ulong ul:
                 case long l:
+                case double db:
+                case BigInteger bi:
+                case float f:
                     return new JValue(value);
                 case string s:
                     return new JValue(s.Trim());

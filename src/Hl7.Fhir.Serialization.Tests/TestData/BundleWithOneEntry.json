@@ -32,9 +32,6 @@
           }
         ],
         "code": "_text",
-        "base": [
-          "DomainResource"
-        ],
         "type": "string",
         "description": "Search on the narrative of the resource",
         "xpathUsage": "normal"

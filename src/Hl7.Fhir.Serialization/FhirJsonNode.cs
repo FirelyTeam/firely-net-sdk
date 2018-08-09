@@ -36,19 +36,19 @@ namespace Hl7.Fhir.Serialization
             JsonValue = null;
             JsonObject = current;
             ArrayIndex = null;
-
+            UsesShadow = false;
             _settings = settings?.Clone() ?? new FhirJsonNavigatorSettings();
         }
 
 
-        private FhirJsonNode(FhirJsonNode parent, string name, JValue value, JObject content, int? arrayIndex, string location)
+        private FhirJsonNode(FhirJsonNode parent, string name, JValue value, JObject content, bool usesShadow, int? arrayIndex, string location)
         {
             Name = name;
             JsonValue = value;
             JsonObject = content;
             ArrayIndex = arrayIndex;
             Location = location;
-
+            UsesShadow = usesShadow;
             _settings = parent._settings;
             ExceptionHandler = parent.ExceptionHandler;
         }
@@ -57,9 +57,11 @@ namespace Hl7.Fhir.Serialization
         public readonly JValue JsonValue;
         public readonly JObject JsonObject;
         public readonly int? ArrayIndex;
+        public readonly bool UsesShadow;
 
         public string Name { get; private set; }
         public string Location { get; private set; }
+        
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -138,7 +140,7 @@ namespace Hl7.Fhir.Serialization
             if (value == null && contents == null) return null;
 
             var location = $"{Location}.{name}[{index}]";
-            return new FhirJsonNode(this, name, value, contents, isArrayElement ? index : (int?)null, location);
+            return new FhirJsonNode(this, name, value, contents, shadow != null, isArrayElement ? index : (int?)null, location);
 
             JValue validateValue(JValue v, string pName)
             {
@@ -202,11 +204,7 @@ namespace Hl7.Fhir.Serialization
             var children = JsonObject.Children<JProperty>().ToLookup(jp => deriveMainName(jp));
             var processed = new HashSet<string>();
 
-            var prefixMatch = name?.EndsWith("*") ?? false;
-
-            var scanChildren = name == null ? children :
-                children.Where(n => n.Key == name ||
-                        (prefixMatch && n.Key.StartsWith(name)));     // prefix scan (choice types)
+            var scanChildren = children.Where(n => n.Key.MatchesPrefix(name));
 
             foreach (var child in scanChildren)
             {
@@ -349,7 +347,8 @@ namespace Hl7.Fhir.Serialization
                         OriginalValue = JsonValue?.Value,
                         LineNumber = lineNumber,
                         LinePosition = linePosition,
-                        ArrayIndex = ArrayIndex
+                        ArrayIndex = ArrayIndex,
+                        UsesShadow = UsesShadow
                     }
                 };
             }

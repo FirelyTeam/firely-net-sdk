@@ -34,7 +34,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public string Location => Current.Location;
 
         public IEnumerable<IElementNode> Children(string name) =>
-            Current.Children().Select(c => new SourceNodeToElementNodeAdapter(this, c));
+            Current.Children(name).Select(c => new SourceNodeToElementNodeAdapter(this, c));
 
         IEnumerable<object> IAnnotated.Annotations(Type type)
         {

@@ -18,13 +18,32 @@ namespace Hl7.Fhir.ElementModel
 {
     public class TypedNode : IElementNode, IAnnotated, IExceptionSource
     {
-        public TypedNode(ISourceNode element, string rootType, IStructureDefinitionSummaryProvider provider)
+        public TypedNode(ISourceNode element, IStructureDefinitionSummaryProvider provider)
+                    : this(element, null, provider)
         {
-            if (rootType == null) throw Error.ArgumentNull(nameof(rootType));
+            //
+        }
+
+        public TypedNode(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider)
+        {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (element == null) throw Error.ArgumentNull(nameof(element));
 
+            // All this stuff will break if there is an error, no type or the type cannot be provided,
+            // need to figure out how to delay processing
+            //using (sourceNav.Catch((o, a) => hasError = a.Exception is FormatException))
+            //{
+            var dummy = element.Text;         // trigger format exception for now.
+            //}
+
+            var rootType = type ?? element.GetResourceType() ??
+                    throw Error.Argument(nameof(element), "Underlying navigator is not located on a resource, please supply a type argument");
+
             var elementType = provider.Provide(rootType);
+
+            if (elementType == null)
+                throw Error.Argument(nameof(element), $"Cannot locate type information for type '{rootType}'");
+
             _current = NavigatorPosition.ForRoot(element, elementType, element.Name);
             PrettyPath = _current.Name;
 
@@ -184,7 +203,7 @@ namespace Hl7.Fhir.ElementModel
                 }
 
                 var prettyPath = 
-                 hit && !info.IsCollection ? $"{PrettyPath}.{scan.Name}" : $"{PrettyPath}.{scan.Name}[{_nameIndex}]";
+                 hit && !info.IsCollection ? $"{PrettyPath}.{match.Name}" : $"{PrettyPath}.{match.Name}[{_nameIndex}]";
 
                 yield return new TypedNode(this, match, prettyPath);
             }
@@ -234,7 +253,7 @@ namespace Hl7.Fhir.ElementModel
                     object state = null;
                     stateBag.TryGetValue(rule, out state);
                     state = rule(child, this, state);
-                    if (state != null) stateBag.Add(rule, state);
+                    if (state != null) stateBag[rule]=state;
                 }
 
                 yield return child;
