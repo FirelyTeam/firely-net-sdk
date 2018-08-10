@@ -9,5 +9,8 @@ Christiaan Knaap (Firely)
 Martijn Harthoorn (Firely)
 Michel Rutten (Firely)
 Tilo Christ (Siemens)
+Henley Devereux (Artisan Technology Group)
+Kenneth Myhra (Kufu)
+
 
 HSCIC (NHS Digital) for their financial support

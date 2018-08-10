@@ -6,17 +6,16 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.Diagnostics;
-using System.IO;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using ssac = System.Security.AccessControl;
-using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -156,6 +155,24 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void ExcludeSubdirectory()
+        {
+            var fa = new DirectorySource(_testPath)
+            {
+                Includes = new[] { "*.json" },
+                IncludeSubDirectories = true
+            };
+
+            var names = fa.ListArtifactNames();
+            Assert.AreEqual(1, names.Count());
+
+            fa.Excludes = new[] { "/sub/" };
+
+            names = fa.ListArtifactNames();
+            Assert.AreEqual(0, names.Count());
+        }
+
+        [TestMethod]
         public void FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
@@ -174,10 +191,10 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
             Assert.IsNotNull(sd);
 
-            var errors = fa.Errors().ToList();
+            var errors = fa.ListSummaryErrors().ToList();
             Assert.AreEqual(1, errors.Count);
             var error = errors[0];
-            Debug.Print($"{error.Origin} : {error.Error.Message}");
+            Debug.Print($"Error in file '{error.Origin}': {error.Error.Message}");
             Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));
         }
 

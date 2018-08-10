@@ -49,6 +49,15 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class Canonical : IStringValue
     {
+        public static implicit operator Canonical(string value)
+        {
+            return new Canonical(value);
+        }
+        public static implicit operator string(Canonical value)
+        {
+            return value?.Value;
+        }
+
         public static bool IsValidValue(string value)
         {
             return Regex.IsMatch(value, "^" + Canonical.PATTERN + "$", RegexOptions.Singleline);

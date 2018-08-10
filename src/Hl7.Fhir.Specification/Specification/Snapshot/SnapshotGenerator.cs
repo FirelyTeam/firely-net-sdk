@@ -6,6 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// DEBUGGING
+//#define DUMPMATCHES
+
 // Cache pre-generated snapshot root ElementDefinition instance as an annotation on the associated differential root ElementDefinition
 // When subsequently expanding the full type profile snapshot, re-use the cached root ElementDefinition instance
 // This ensures that the snapshot ElementDefinition instances are stable (and equal to OnPrepareBaseProfile event parameters)
@@ -27,6 +30,9 @@
 // #define FIX_SLICENAMES_ON_SPECIALIZATIONS
 // Detect and fix invalid non-null sliceNames on root elements
 #define FIX_SLICENAMES_ON_ROOT_ELEMENTS
+
+// [WMR 20180409] Resolve contentReference from core resource/datatype (StructureDefinition.type)
+#define FIX_CONTENTREFERENCE
 
 using System;
 using System.Collections.Generic;
@@ -356,7 +362,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             // Fill out the gaps (mostly missing parents) in the differential representation
-            var fullDifferential = DifferentialTreeConstructor.MakeTree(differential.Element);
+            var fullDifferential = (new DifferentialTreeConstructor()).MakeTree(differential.Element);
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
 #if FIX_SLICENAMES_ON_ROOT_ELEMENTS
@@ -426,7 +432,24 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (!String.IsNullOrEmpty(defn.ContentReference))
             {
+
+#if FIX_CONTENTREFERENCE
+                // [WMR 20180409] NEW
+                // Resolve contentReference from core resource/datatype definition
+                // Specified by StructureDefinition.type == root element name
+
+                var coreStructure = getStructureForContentReference(nav, true);
+                // getStructureForContentReference emits issue if profile cannot be resolved
+                if (coreStructure == null) { return false; }
+
+                var sourceNav = ElementDefinitionNavigator.ForSnapshot(coreStructure);
+#else
+                // [WMR 20180409] WRONG!
+                // Resolves contentReference from current StructureDef
+                // Recursive child items should NOT inherit constraints from parent in same profile
+
                 var sourceNav = new ElementDefinitionNavigator(nav);
+#endif
                 if (!sourceNav.JumpToNameReference(defn.ContentReference))
                 {
                     addIssueInvalidNameReference(defn);
@@ -434,12 +457,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 nav.CopyChildren(sourceNav);
 
-                // [WMR 20170710] Explicitly re-generate element ids for the copied subtree
-                // Cannot re-use original ids from reference target, as this would lead to duplicates
-                if (_settings.GenerateElementIds)
-                {
-                    ElementIdGenerator.Update(nav, true, true);
-                }
+                // [WMR 20180410]
+                // - Regenerate element IDs
+                // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
+                prepareExpandedTypeProfileElements(nav, sourceNav);
+
             }
             else if (defn.Type == null || defn.Type.Count == 0)
             {
@@ -543,8 +565,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var matches = ElementMatcher.Match(snap, diff);
 
-                // Debug.WriteLine($"Matches for children of '{snap.StructureDefinition?.Name}' : {(snap.AtRoot ? "(root)" : snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
-                // matches.DumpMatches(snap, diff);
+#if DUMPMATCHES
+                Debug.WriteLine($"Matches for children of '{snap.StructureDefinition?.Name}' : {(snap.AtRoot ? "(root)" : snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
+                matches.DumpMatches(snap, diff);
+#endif
 
                 foreach (var match in matches)
                 {
@@ -1615,6 +1639,36 @@ namespace Hl7.Fhir.Specification.Snapshot
             return baseStructure;
         }
 
+#if FIX_CONTENTREFERENCE
+        // [WMR 20180410] Resolve the defining target structure of a contentReference
+        StructureDefinition getStructureForContentReference(ElementDefinitionNavigator nav, bool ensureSnapshot)
+        {
+            Debug.Assert(nav != null);
+            Debug.Assert(nav.Current != null);
+
+            var elementDef = nav.Current;
+            var location = elementDef.ToNamedNode();
+
+            var contentReference = elementDef.ContentReference; // e.g. "#Questionnaire.item"
+
+            var coreType = nav.StructureDefinition?.Type
+                // Fall back to root element name...?
+                ?? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1));
+
+            if (!string.IsNullOrEmpty(coreType))
+            {
+                // Try to resolve the custom element type profile reference
+                var coreSd = _resolver.FindStructureDefinitionForCoreType(coreType);
+                var isValidProfile = ensureSnapshot
+                    ? this.ensureSnapshot(coreSd, coreType, location)
+                    : this.verifyStructure(coreSd, coreType, location);
+                return coreSd;
+            }
+
+            return null;
+        }
+#endif
+
         bool verifyStructure(StructureDefinition sd, string profileUrl, IElementNavigator location = null)
         {
             if (sd == null)
@@ -1844,6 +1898,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Create a fully connected element tree from a sparse (differential) element list by adding missing parent element definitions.</summary>
         /// <returns>A list of elements that represents a fully connected element tree.</returns>
         /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
-        public static List<ElementDefinition> ConstructFullTree(List<ElementDefinition> source) => DifferentialTreeConstructor.MakeTree(source);
+        public static List<ElementDefinition> ConstructFullTree(List<ElementDefinition> source) => 
+            (new DifferentialTreeConstructor()).MakeTree(source);
     }
 }

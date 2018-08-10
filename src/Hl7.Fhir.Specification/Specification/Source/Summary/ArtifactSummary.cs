@@ -9,14 +9,15 @@
 #if NET_FILESYSTEM
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Summary;
 using Errors = Hl7.Fhir.Utility.Error;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
-using Hl7.Fhir.Serialization;
 
-namespace Hl7.Fhir.Specification.Source.Summary
+namespace Hl7.Fhir.Specification.Source
 {
     // Note:
     // 1. ArtifactSummaryGenerator creates new (mutable) ArtifactSummaryPropertyBag
@@ -38,8 +39,13 @@ namespace Hl7.Fhir.Specification.Source.Summary
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ArtifactSummary : IArtifactSummaryPropertyBag
     {
+        /// <summary>Returns an empty <see cref="ArtifactSummary"/> instance.</summary>
+        public static ArtifactSummary Empty => new ArtifactSummary(ArtifactSummaryPropertyBag.Empty);
+
         // Note: omit leading underscore to be CLS compliant
         protected readonly IArtifactSummaryPropertyBag properties;
+
+        #region Factory
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance from the specified exception.</summary>
         /// <param name="error">An exception that occured while harvesting artifact summary information.</param>
@@ -59,6 +65,10 @@ namespace Hl7.Fhir.Specification.Source.Summary
             }
             return new ArtifactSummary(properties, error);
         }
+
+        #endregion
+
+        #region ctor
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance from a set of harvested artifact summary properties.</summary>
         /// <param name="properties">A property bag with harvested artifact summary information.</param>
@@ -81,6 +91,10 @@ namespace Hl7.Fhir.Specification.Source.Summary
             }
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>Returns information about errors that occured while generating the artifact summary.</summary>
         public Exception Error { get; }
 
@@ -92,10 +106,16 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public string Origin => properties.GetOrigin();
 
         /// <summary>Gets the size of the original artifact file.</summary>
-        public long FileSize => properties.GetFileSize();
+        public long? FileSize => properties.GetFileSize();
 
         /// <summary>Gets the last modified date of the original artifact file.</summary>
-        public DateTime LastModified => properties.GetLastModified();
+        public DateTime? LastModified => properties.GetLastModified();
+
+        /// <summary>
+        /// Get a string value that represents the artifact serialization format,
+        /// as defined by the <see cref="FhirSerializationFormats"/> class, if available.
+        /// </summary>
+        public string SerializationFormat => properties.GetSerializationFormat();
 
         /// <summary>
         /// Gets an opaque value that represents the position of the artifact within the container.
@@ -112,6 +132,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Gets the resource uri.</summary>
         /// <remarks>The <see cref="DirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
         public string ResourceUri => properties.GetResourceUri();
+
+        #endregion
 
         #region IEnumerable
 
@@ -147,49 +169,6 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public bool TryGetValue(string key, out object value) => properties.TryGetValue(key, out value);
 
         #endregion
-
-        /// <summary>Try to load a resource from the summary <see cref="Origin"/>.</summary>
-        /// <typeparam name="T">The resource type to return.</typeparam>
-        /// <returns>A new resource instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
-        /// <remarks>
-        /// This method annotates returned resource instances with an <seealso cref="OriginAnnotation"/>
-        /// that captures the value of the <see cref="Origin"/> property.
-        /// The <seealso cref="OriginAnnotationExtensions.GetOrigin(Resource)"/> extension method 
-        /// provides access to the annotated location.
-        /// </remarks>
-        public T LoadResource<T>() where T : Resource
-        {
-            // File path of the containing resource file (could be a Bundle)
-            var path = Origin;
-
-            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
-            {
-
-                // Handle exceptions & null return values?
-                // e.g. file may have been deleted/renamed since last scan
-
-                // Advance stream to the target resource (e.g. specific Bundle entry)
-                if (navStream != null && navStream.Seek(Position))
-                {
-                    // Create navigator for the target resource
-                    var nav = navStream.Current;
-                    if (nav != null)
-                    {
-                        // Parse target resource from navigator
-                        var parser = new BaseFhirParser();
-                        var result = parser.Parse<T>(nav);
-                        if (result != null)
-                        {
-                            // Add origin annotation
-                            result.SetOrigin(path);
-                            return result;
-                        }
-                    }
-                }
-
-                return null;
-            }
-        }
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
