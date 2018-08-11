@@ -51,13 +51,13 @@
 
 			// Check to see if this is used in more than one resource
 			var nodes = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsR);
 			var nodesTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsT);
 			var nodePaths = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]", nsR);
 			var nodePathTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]", nsT);
 			if (nodes.Count + nodesTypes.Count > 1)
 			{
 				enums.Add(valuesetUrl, "Hl7.Fhir.Model." + enumName);
@@ -193,7 +193,7 @@ if(!abstractType) {
 						// WriteLine("//		VSU: " + n3.Value);
 						valuesetUrl = n3.Value;
                     }
-					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetCanonical/@value", nsR);
+					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSet/@value", nsR);
 					if (n4 != null)
                     {
 						// WriteLine("//		VSR: " + n4.Value);
@@ -239,7 +239,7 @@ if(!abstractType) {
 			continue;
 		codedValues.Add(system + "#" + code);
 
-		string display = eval.SelectSingleNode("fhir:display/@value", nsE).Value;
+		string display = eval.SelectSingleNode("fhir:display/@value", nsE).Value.Replace("\"", "'");
 		string defintion = "MISSING DESCRIPTION";
 		if (valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE) != null)
 			defintion = valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE).Value;
@@ -249,7 +249,7 @@ if(!abstractType) {
 			defintion = "MISSING DESCRIPTION";
 #>
             /// <summary>
-            /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("<", "&lt;").Replace(">", "&gt;") #>
+            /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "'") #>
             /// (system: <#= system #>)
             /// </summary>
             [EnumLiteral("<#= code #>", "<#= system #>"), Description("<#= display #>")]
@@ -719,9 +719,15 @@ if(!abstractType) {
 			result += bit.Substring(0, 1).ToUpper();
 			result += bit.Substring(1);
         }
+		result = result.Replace(".", "_");
 		int IsIntegerValue;
 		if (int.TryParse(result, out IsIntegerValue))
 			result = "N" + result;
+		if (Char.IsDigit(result[0]))
+        {
+			var numMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+			result = numMap[int.Parse(name.Substring(0,1))] + result.Substring(1);
+        }
 		return result;
 	}
 
@@ -1066,8 +1072,8 @@ if(!abstractType) {
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSet/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSet/@value", nsR).Value;
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -1305,8 +1311,8 @@ if(!abstractType) {
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetCanonical/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSet/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSet/@value", nsR).Value;
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))

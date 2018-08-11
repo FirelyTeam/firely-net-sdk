@@ -233,6 +233,7 @@ namespace Hl7.Fhir.Model
 					case "composite" : outputType = "Composite"; break;
 					case "quantity" : outputType = "Quantity"; break;
 					case "uri" : outputType = "Uri"; break;
+					case "special" : outputType = "Special"; break;
                 }
 				string path = ""; // "ResourceType.Patient, ";
 				string xpath= "";
@@ -260,7 +261,7 @@ namespace Hl7.Fhir.Model
 					target = ", Target = new ResourceType[] { " + string.Join(", ", sc) + ", }";
                 }
 				// string path = sp.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #><#= !string.IsNullOrEmpty(xpath) ? ", XPath = \"" + xpath + "\"" : "" #><#= !string.IsNullOrEmpty(expression) ? ", Expression = \"" + expression + "\"" : "" #>, Url = "<#= url #>" },
+#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"").Replace("\r",@"\r").Replace("\n",@"\n") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #><#= !string.IsNullOrEmpty(xpath) ? ", XPath = \"" + xpath + "\"" : "" #><#= !string.IsNullOrEmpty(expression) ? ", Expression = \"" + expression + "\"" : "" #>, Url = "<#= url #>" },
 <#
             }
         }
