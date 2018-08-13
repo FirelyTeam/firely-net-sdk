@@ -21,35 +21,39 @@ namespace Hl7.FhirPath.Tests
 {
     public class ElementNodeTests
     {
-        ElementNode patient;
+        UntypedNode patient;
 
         public IElementNode getXmlNode(string xml) => 
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
 
         public ElementNodeTests()
         {
-            var annotatedNode = ElementNode.Valued("id", "myId1");
+            var annotatedNode = UntypedNode.Valued("id", "myId1");
             (annotatedNode as IAnnotatable).AddAnnotation("a string annotation");
 
-            patient = ElementNode.Node("Patient", "Patient",                
-                ElementNode.Valued("active", true, "boolean",
+            patient = UntypedNode.Node("Patient", 
+                UntypedNode.Resource("contained", "Observation", UntypedNode.Valued("valueBoolean", "true")),
+                UntypedNode.Valued("active", "true",
                    annotatedNode,
-                   ElementNode.Valued("id", "myId2"),
-                   ElementNode.Node("extension",
-                       ElementNode.Valued("value", 4, "integer")),
-                   ElementNode.Node("extension",
-                       ElementNode.Valued("value", "world!", "string"))));
+                   UntypedNode.Valued("id", "myId2"),
+                   UntypedNode.Node("extension",
+                       UntypedNode.Valued("value", "4")),
+                   UntypedNode.Node("extension",
+                       UntypedNode.Valued("value", "world!"))));
         }
 
         [Fact]
         public void TestConstruction()
         {
             var data = patient[0];
+            Assert.Equal("contained", data.Name);
+            Assert.Null(data.Text);
+            Assert.Equal("Observation", data.ResourceType);
+            Assert.Single(data.Children());
+
+            data = patient[1];
             Assert.Equal("active", data.Name);
-#pragma warning disable xUnit2004 // Do not use equality check to test for boolean conditions
-            Assert.Equal(true, data.Value);
-#pragma warning restore xUnit2004 // Do not use equality check to test for boolean conditions
-            Assert.Equal("boolean", data.InstanceType);
+            Assert.Equal("true", data.Text);
             Assert.Equal(4, data.Children().Count());
         }
 
@@ -58,11 +62,12 @@ namespace Hl7.FhirPath.Tests
         public void KnowsPath()
         {
             Assert.Equal("Patient", patient.Location);
-            Assert.Equal("Patient.active[0]", patient[0].Location);
-            Assert.Equal("Patient.active[0].id[0]", patient[0][0].Location);
-            Assert.Equal("Patient.active[0].id[1]", patient[0][1].Location);
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[0][2][0].Location);
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[0][3][0].Location);
+            Assert.Equal("Patient.contained[0].valueBoolean[0]", patient[0][0].Location);
+            Assert.Equal("Patient.active[0]", patient[1].Location);
+            Assert.Equal("Patient.active[0].id[0]", patient[1][0].Location);
+            Assert.Equal("Patient.active[0].id[1]", patient[1][1].Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[1][2][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[1][3][0].Location);
         }
 
         [Fact]
@@ -81,8 +86,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KnowsChildren()
         {
-            Assert.False(patient["active"][0]["id"].HasChildren());
-            Assert.False(patient["active"]["id"].HasChildren());
+            Assert.False(patient["active"][0]["id"].Children().Any());
+            Assert.False(patient["active"]["id"].Children().Any());
         }
 
         [Fact]
@@ -100,13 +105,12 @@ namespace Hl7.FhirPath.Tests
 
             Assert.Equal("Patient", nav.Name);
             Assert.True(nav.MoveToFirstChild());
+            Assert.True(nav.MoveToNext());
             Assert.Equal("active", nav.Name);
-            Assert.Equal("boolean", nav.Type);
+           // Assert.Equal("boolean", nav.Type);
             Assert.False(nav.MoveToNext());
 
-#pragma warning disable xUnit2004 // Do not use equality check to test for boolean conditions
-            Assert.Equal(true, nav.Value);
-#pragma warning restore xUnit2004 // Do not use equality check to test for boolean conditions
+            Assert.Equal("true", nav.Value);
             Assert.True(nav.MoveToFirstChild("id"));
             Assert.Equal("id", nav.Name);
             Assert.False(nav.MoveToFirstChild());
@@ -121,13 +125,9 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KeepsAnnotations()
         {
-            IElementNode firstIdNode = patient[0][0];
+            ISourceNode firstIdNode = patient[1][0];
             Assert.Equal("a string annotation", firstIdNode.Annotation<string>());
-
-            var nav = patient.ToElementNavigator();
-            nav.MoveToFirstChild(); // active
-            nav.MoveToFirstChild(); // id
-            Assert.Equal("a string annotation", nav.Annotation<string>());
+            Assert.Equal("a string annotation", patient["active"]["id"].First().Annotation<string>());
         }
 
         // Test clone()
@@ -136,8 +136,8 @@ namespace Hl7.FhirPath.Tests
         public void ReadsFromNav()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var nav = getXmlNode(tpXml);
-            var nodes = ElementNode.FromNode(nav);
+            var nav = getXmlNode(tpXml).ToSourceNode();
+            var nodes = UntypedNode.FromNode(nav);
             Assert.True(nav.IsEqualTo(nodes).Success);
         }
 

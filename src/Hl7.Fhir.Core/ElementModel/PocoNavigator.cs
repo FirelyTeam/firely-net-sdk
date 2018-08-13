@@ -231,11 +231,6 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(IElementNode))
-            {
-                return new[] { Current };
-            }
-            else
                 return Current.Annotations(type);
         }
     }

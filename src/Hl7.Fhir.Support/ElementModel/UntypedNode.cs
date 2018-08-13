@@ -15,11 +15,11 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public partial class ElementNode : ISourceNode, IAnnotated, IAnnotatable
+    public partial class SourceNode : ISourceNode, IAnnotated, IAnnotatable
     {
         public ISourceNode Parent { get; private set; }
 
-        private List<ElementNode> _children = new List<ElementNode>();
+        private List<SourceNode> _children = new List<SourceNode>();
 
         public IEnumerable<ISourceNode> Children(string name = null) =>
             name == null ? _children : _children.Where(c => c.Name == name);
@@ -47,53 +47,58 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private ElementNode(string name, string value, string type, 
-            IEnumerable<ElementNode> children) : this(name,value,type)
+        private SourceNode(string name, string text,  
+            IEnumerable<SourceNode> children=null, string resourceType=null)
         {
+            Name = name;
+            Text = text;
+            ResourceType = resourceType;
+
             if (children != null) AddRange(children);
         }
 
-        private ElementNode(string name, string value, string type)
-        {
-            Name = name;
-            Text = value;
-            ResourceType = type;
-        }
-
-        public void Add(ElementNode child)
+        public void Add(SourceNode child)
         {
             AddRange(new[] { child });
         }
 
-        public void AddRange(IEnumerable<ElementNode> children)
+        public void AddRange(IEnumerable<SourceNode> children)
         {
             _children.AddRange(children);
             foreach (var c in _children) c.Parent = this;
         }
 
-        public static ElementNode Valued(string name, object value, params ElementNode[] children)
+        public static SourceNode Valued(string name, string value, params SourceNode[] children)
         {
-            return new ElementNode(name, value, null, children);
+            return new SourceNode(name, value, children);
         }
 
-        public static ElementNode Valued(string name, object value, string type, params ElementNode[] children)
+        public static SourceNode Resource(string name, string type, params SourceNode[] children)
         {
-            return new ElementNode(name, value, type, children);
+            return new SourceNode(name, null, children, type);
         }
 
-        public static ElementNode Node(string name, params ElementNode[] children)
+        public static SourceNode Node(string name, params SourceNode[] children)
         {
-            return new ElementNode(name, null, null, children);
+            return new SourceNode(name, null, children);
         }
 
-        public static ElementNode Node(string name, string type, params ElementNode[] children)
+        public static SourceNode FromNode(ISourceNode node)
         {
-            return new ElementNode(name, null, type, children);
+            return buildNode(node);
         }
 
-        public IElementNode Clone()
+        private static SourceNode buildNode(ISourceNode node)
         {
-            var copy = new ElementNode(Name, Value, InstanceType, _children);
+            var me = new SourceNode(node.Name, node.Text);
+            me.AddRange(node.Children().Select(c => buildNode(c)));
+            return me;
+        }
+
+
+        public ISourceNode Clone()
+        {
+            var copy = new SourceNode(Name, Text, _children, ResourceType);
 
             if (_annotations.IsValueCreated)
                 copy.annotations.AddRange(annotations);
@@ -108,7 +113,7 @@ namespace Hl7.Fhir.ElementModel
 
         public ChildNodes this[string name] => new ChildNodes(_children.Where(c=>c.Name == name).ToList());
 
-        public ElementNode this[int index] => _children[index];
+        public SourceNode this[int index] => _children[index];
 
         public IEnumerable<object> Annotations(Type type)
         {
@@ -127,28 +132,28 @@ namespace Hl7.Fhir.ElementModel
     }
 
 
-    public class ChildNodes : IEnumerable<IElementNode>
+    public class ChildNodes : IEnumerable<ISourceNode>
     {
-        private IList<ElementNode> _wrapped;
+        private IList<SourceNode> _wrapped;
 
-        internal ChildNodes(IList<ElementNode> nodes)
+        internal ChildNodes(IList<SourceNode> nodes)
         {
             _wrapped = nodes;
         }
 
-        public ElementNode this[int index] => _wrapped[index];
+        public SourceNode this[int index] => _wrapped[index];
 
-        public ChildNodes this[string name] => new ChildNodes(_wrapped.Children(name).Cast<ElementNode>().ToList());
+        public ChildNodes this[string name] => new ChildNodes(_wrapped.Children(name).Cast<SourceNode>().ToList());
 
         public int Count => _wrapped.Count;
 
-        public bool Contains(ElementNode item) => _wrapped.Contains(item);
+        public bool Contains(SourceNode item) => _wrapped.Contains(item);
 
-        public void CopyTo(ElementNode[] array, int arrayIndex) => _wrapped.CopyTo(array, arrayIndex);
+        public void CopyTo(SourceNode[] array, int arrayIndex) => _wrapped.CopyTo(array, arrayIndex);
 
-        public IEnumerator<IElementNode> GetEnumerator() => _wrapped.GetEnumerator();
+        public IEnumerator<ISourceNode> GetEnumerator() => _wrapped.GetEnumerator();
 
-        public int IndexOf(ElementNode item) => _wrapped.IndexOf(item);
+        public int IndexOf(SourceNode item) => _wrapped.IndexOf(item);
 
         IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
     }

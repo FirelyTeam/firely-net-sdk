@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void ProducedCorrectTypedLocations(IElementNode patient)
         {
-            string getPretty(IElementNode n) => n.ShortPath;
+            string getPretty(IElementNode n) => n.Annotation<IShortPath>().ShortPath;
 
             Assert.AreEqual("Patient", getPretty(patient));
 

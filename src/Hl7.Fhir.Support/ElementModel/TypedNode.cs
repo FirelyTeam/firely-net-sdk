@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class TypedNode : IElementNode, IAnnotated, IExceptionSource
+    public class TypedNode : IElementNode, IAnnotated, IExceptionSource, IShortPath
     {
         public TypedNode(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedNodeSettings settings = null)
         {
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(TypedNode) || type == typeof(IElementNode))
+            if (type == typeof(TypedNode) || type == typeof(IElementNode) || type == typeof(IShortPath))
                 return new[] { this };
             else
                 return Current.Node.Annotations(type);

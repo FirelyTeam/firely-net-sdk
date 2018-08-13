@@ -16,7 +16,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class PocoElementNode : IElementNode, IAnnotated, IExceptionSource
+    internal class PocoElementNode : IElementNode, IAnnotated, IExceptionSource, IShortPath
     {
         public readonly object Current;
         public readonly PocoStructureDefinitionSummaryProvider Provider;
@@ -24,7 +24,7 @@ namespace Hl7.Fhir.ElementModel
         public readonly int ArrayIndex;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
-       
+
         internal PocoElementNode(Base parent, PocoStructureDefinitionSummaryProvider provider, string rootName = null)
         {
             Current = parent;
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(PocoElementNode) || type == typeof(IElementNode))
+            if (type == typeof(PocoElementNode) || type == typeof(IElementNode) || type == typeof(IShortPath))
                 return new[] { this };
             else if (FhirValue is IAnnotated ia)
                 return ia.Annotations(type);

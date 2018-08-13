@@ -63,9 +63,7 @@ namespace Hl7.Fhir.ElementModel
         /// <remarks>The format of the location is the dotted name of the property, including indices to make
         /// sure repeated occurences of an element can be distinguished. It needs to be sufficiently precise to aid 
         /// the user in locating issues in the data.</remarks>
-        string Location { get; }
-
-        string ShortPath { get;  }
+        string Location { get; }        
 
         IElementDefinitionSummary Definition { get; }
     }
