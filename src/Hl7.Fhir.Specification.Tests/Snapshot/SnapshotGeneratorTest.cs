@@ -6713,6 +6713,5 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify profile inherits constraint from external targetProfile on Reference
             Assert.AreEqual(1, nav.Current.Min);
         }
-
     }
 }
