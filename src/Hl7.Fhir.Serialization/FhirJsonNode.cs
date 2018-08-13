@@ -194,6 +194,8 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+        public string ResourceType => JsonObject?.GetResourceTypeFromObject();
+
         public IEnumerable<ISourceNode> Children(string name = null)
         {
             if (JsonObject == null || JsonObject.HasValues == false) yield break;
@@ -330,7 +332,7 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(FhirJsonNavigator))
+            if (type == typeof(FhirJsonNavigator) || type == typeof(ISourceNode))
                 return new[] { this };
 #pragma warning disable 612, 618
             else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)
@@ -352,16 +354,6 @@ namespace Hl7.Fhir.Serialization
                     }
                 };
             }
-            else if (type == typeof(ResourceTypeIndicator))
-            {
-                return new[]
-                {
-                    new ResourceTypeIndicator
-                    {
-                        ResourceType = JsonObject?.GetResourceTypeFromObject()
-                    }
-                };
-            }
             else
                 return Enumerable.Empty<object>();
         }
@@ -376,7 +368,7 @@ namespace Hl7.Fhir.Serialization
 
             object checkXhtml(IElementNode nav, IExceptionSource ies, object _)
             {
-                if (nav.Type == "xhtml" && ValidateFhirXhtml)
+                if (nav.InstanceType == "xhtml" && ValidateFhirXhtml)
                     FhirXmlNode.ValidateXhtml((string)nav.Value, ies, nav);
 
                 return null;
@@ -385,7 +377,7 @@ namespace Hl7.Fhir.Serialization
 
             object checkArrayUse(IElementNode nav, IExceptionSource ies, object _)
             {
-                var sdSummary = nav.GetElementDefinitionSummary();
+                var sdSummary = nav.Definition;
                 var serializationDetails = nav.GetJsonSerializationDetails();
                 if (sdSummary == null || serializationDetails == null) return null;
 

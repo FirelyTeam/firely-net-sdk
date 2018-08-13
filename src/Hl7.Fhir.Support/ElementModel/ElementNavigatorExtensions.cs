@@ -85,9 +85,6 @@ namespace Hl7.Fhir.ElementModel
         public static bool InPipeline<T>(this IElementNavigator navigator) =>
             navigator.InPipeline(navigator.GetType());
 
-        public static string GetResourceType(this IElementNavigator navigator) => 
-            navigator is IAnnotated ia ? ia.GetResourceType() : null;
-
         public static List<ExceptionNotification> VisitAndCatch(this IElementNavigator nav)
         {
             var errors = new List<ExceptionNotification>();
@@ -99,9 +96,6 @@ namespace Hl7.Fhir.ElementModel
 
             return errors;
         }
-
-        public static ElementDefinitionSummary GetElementDefinitionSummary(this IElementNavigator navigator) =>
-            navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
 
         public static IElementNode ToElementNode(this IElementNavigator nav) => 
             new ElementNavToElementNodeAdapter(nav);

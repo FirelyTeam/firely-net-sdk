@@ -60,11 +60,11 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
-            var navRtXml = FhirJsonNavigator.ForElement(navXml.ToJson(), navXml.Type,
+            var navRtXml = FhirJsonNavigator.ForElement(navXml.ToJson(), navXml.InstanceType,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
-            var navRtJson = navJson.ToPoco(ModelInfo.GetTypeForFhirType(navJson.Type))
+            var navRtJson = navJson.ToPoco(ModelInfo.GetTypeForFhirType(navJson.InstanceType))
                 .ToElementNode(navJson.Name);
-            var navRtPoco = FhirXmlNavigator.ForElement(navPoco.ToXml(), navPoco.Type,
+            var navRtPoco = FhirXmlNavigator.ForElement(navPoco.ToXml(), navPoco.InstanceType,
                 new PocoStructureDefinitionSummaryProvider());
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);
         }

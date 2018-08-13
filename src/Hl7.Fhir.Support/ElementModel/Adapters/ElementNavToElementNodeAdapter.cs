@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -28,11 +29,15 @@ namespace Hl7.Fhir.ElementModel
 
         public string Name => Current.Name;
 
-        public string Type => Current.Type;
+        public string InstanceType => Current.Type;
 
         public string Location => Current.Location;
 
         public object Value => Current.Value;
+
+        public IElementDefinitionSummary Definition => Current.Annotation<IElementNode>()?.Definition;
+
+        public string ShortPath => Current.Annotation<IElementNode>()?.ShortPath;
 
         public IEnumerable<IElementNode> Children(string name=null) =>
             Current.Children(name).Select(c => new ElementNavToElementNodeAdapter(this, c));

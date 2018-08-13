@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Utility
                 return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
             if (!Object.Equals(expected.Value, actual.Value))
                 return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
-            if (expected.Type != actual.Type && actual.Type != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.Type}', expected '{expected.Type}'");
+            if (expected.InstanceType != actual.InstanceType && actual.InstanceType != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.InstanceType}', expected '{expected.InstanceType}'");
             if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)

@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         {
             Current = child;
             ExceptionHandler = parent.ExceptionHandler;
-        } 
+        }
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -39,10 +39,8 @@ namespace Hl7.Fhir.ElementModel.Adapters
         {
             get
             {
-                var typeInfo = Current.GetElementDefinitionSummary();
-
-                return typeInfo?.IsChoiceElement == true ?
-                    Current.Name + Current.Type.Capitalize() : Current.Name;
+                return Current.Definition?.IsChoiceElement == true ?
+                    Current.Name + Current.InstanceType.Capitalize() : Current.Name;
             }
         }
 
@@ -51,7 +49,15 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public string Location => Current.Location;
 
-        public IEnumerable<ISourceNode> Children(string name = null) => 
+        public string ResourceType
+        {
+            get
+            {
+                return Current.Definition?.IsResource == true ? Current.InstanceType : null;
+            }
+        }
+
+        public IEnumerable<ISourceNode> Children(string name = null) =>
             Current.Children()
                 .Select(c => new ElementNodeToSourceNodeAdapter(this, c))
                 .Where(c => c.Name.MatchesPrefix(name));

@@ -158,11 +158,13 @@ namespace Hl7.Fhir.ElementModel
 
         public string Name => Source.Name;
 
-        public string Type => Source.Type;
+        public string InstanceType => Source.InstanceType;
 
         public object Value => Source.Value;
 
         public string Location => Source.Location;
+
+        public IElementDefinitionSummary Definition => Source.Definition;
 
         private bool included(IElementNode node)
         {
@@ -188,7 +190,7 @@ namespace Hl7.Fhir.ElementModel
 
             var included = _settings.IncludeAll;
 
-            var ed = ((IElementNode)scope).GetElementDefinitionSummary();
+            var ed = ((IElementNode)scope).Definition;
             if (ed != null)
             {
                 included |= _settings.IncludeMandatory && ed.IsRequired;
@@ -209,8 +211,8 @@ namespace Hl7.Fhir.ElementModel
             }
             
 
-            if (_settings.ExcludeMarkdown && scope.Type == "markdown") return false;
-            if (_settings.ExcludeNarrative & scope.Type == "Narrative") return false;
+            if (_settings.ExcludeMarkdown && scope.InstanceType == "markdown") return false;
+            if (_settings.ExcludeNarrative & scope.InstanceType == "Narrative") return false;
 
             return included;
         }

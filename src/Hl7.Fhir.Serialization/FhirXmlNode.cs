@@ -119,6 +119,12 @@ namespace Hl7.Fhir.Serialization
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
+        // If we're on the root, the root is the resource type,
+        // otherwise we should have looked at a nested node.
+        public string ResourceType => !_atRoot ?
+                            Contained?.Name()?.LocalName : Current.Name().LocalName;
+
+
         public IEnumerable<ISourceNode> Children(string name = null)
         {
             // don't move into xhtml
@@ -210,7 +216,7 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(FhirXmlNode))
+            if (type == typeof(FhirXmlNode) || type == typeof(ISourceNode))
                 return new[] { this };
 #pragma warning disable 612, 618
             else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)
@@ -284,19 +290,6 @@ namespace Hl7.Fhir.Serialization
 
                     return null;
                 }
-            }
-            if (type == typeof(ResourceTypeIndicator))
-            {
-                return new[]
-                {
-                    new ResourceTypeIndicator
-                    {
-                        // If we're on the root, the root is the resource type,
-                        // otherwise we should have looked at a nested node.
-                        ResourceType = !_atRoot ?
-                            Contained?.Name()?.LocalName : Current.Name().LocalName
-                    }
-                };
             }
             else
                 return Enumerable.Empty<object>();
@@ -381,7 +374,7 @@ namespace Hl7.Fhir.Serialization
 
             object checkOrder(IElementNode node, IExceptionSource ies, object state)
             {
-                var sdSummary = node.GetElementDefinitionSummary();
+                var sdSummary = node.Definition;
                 if (sdSummary == null) return null;
 
                 if (state is OrderRuleState ors)
@@ -401,7 +394,7 @@ namespace Hl7.Fhir.Serialization
 
             object checkRepresentation(IElementNode node, IExceptionSource ies, object _)
             {
-                var sdSummary = node.GetElementDefinitionSummary();
+                var sdSummary = node.Definition;
                 var serializationDetails = node.GetXmlSerializationDetails();
                 if (sdSummary == null || serializationDetails == null) return null;
 

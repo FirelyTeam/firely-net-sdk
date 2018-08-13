@@ -60,19 +60,19 @@ namespace Hl7.Fhir.ElementModel
         public readonly ScopedNode ParentResource;
 
         public string LocalLocation => ParentResource == null ? Location :
-                        $"{ParentResource.Type}.{Location.Substring(ParentResource.Location.Length + 1)}";
+                        $"{ParentResource.InstanceType}.{Location.Substring(ParentResource.Location.Length + 1)}";
 
         public string Name => Current.Name;
 
-        public string Type => Current.Type;
+        public string InstanceType => Current.InstanceType;
 
         public object Value => Current.Value;
 
         public string Location => Current.Location;
 
-        public bool AtResource => Current.GetElementDefinitionSummary()?.IsResource ?? false;
+        public bool AtResource => Current.Definition?.IsResource ?? false;
 
-        public string NearestResourceType => ParentResource == null ? Location : ParentResource.Type;
+        public string NearestResourceType => ParentResource == null ? Location : ParentResource.InstanceType;
 
         /// <summary>
         /// The %resource context, as defined by FHIRPath
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 var scan = this;
 
-                while (scan.ParentResource != null && scan.ParentResource.Type != "Bundle")
+                while (scan.ParentResource != null && scan.ParentResource.InstanceType != "Bundle")
                 {
                     scan = scan.ParentResource;
                 }
@@ -96,6 +96,8 @@ namespace Hl7.Fhir.ElementModel
                 return scan;
             }
         }
+
+        public IElementDefinitionSummary Definition => Current.Definition;
 
         /// <summary>
         /// Get the list of container parents in a list, nearest parent first.
@@ -149,7 +151,7 @@ namespace Hl7.Fhir.ElementModel
         {
             if (_cache.BundledResources == null)
             {
-                if (Type == "Bundle")
+                if (InstanceType == "Bundle")
                     _cache.BundledResources = from e in this.Children("entry")
                                               let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
                                               let resource = e.Children("resource").FirstOrDefault() as ScopedNode
@@ -167,7 +169,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 foreach (var parent in ParentResources())
                 {
-                    if (parent.Type == "Bundle")
+                    if (parent.InstanceType == "Bundle")
                     {
                         var fullUrl = parent.BundledResources()
                             .SingleOrDefault(be => this.Location.StartsWith(be.Resource.Location))

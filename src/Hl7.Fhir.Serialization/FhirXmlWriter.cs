@@ -83,9 +83,9 @@ namespace Hl7.Fhir.Serialization
             destination.Flush();
         }
 
-        internal bool MustSerializeMember(IElementNode source, out ElementDefinitionSummary info)
+        internal bool MustSerializeMember(IElementNode source, out IElementDefinitionSummary info)
         {
-            info = source.GetElementDefinitionSummary();
+            info = source.Definition;
 
             if (info == null && !_roundtripMode)
             {
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization
             // xhtml children require special treament:
             // - They don't use an xml "value" attribute to represent the value, instead their Value is inserted verbatim into the parent
             // - They cannot have child nodes - the "Value" on the node contains all children as raw xml text
-            var isXhtml = source.Type == "xhtml" ||
+            var isXhtml = source.InstanceType == "xhtml" ||
                 serializationInfo?.Representation == XmlRepresentation.XHtml ||
                 xmlDetails?.Namespace?.GetName("div") == XmlNs.XHTMLDIV;
 
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Serialization
                             (usesAttribute ? "" : XmlNs.FHIR);
             bool atRoot = parent is XDocument;
             var localName = serializationInfo?.IsChoiceElement == true ?
-                            source.Name + source.Type.Capitalize() : source.Name;
+                            source.Name + source.InstanceType.Capitalize() : source.Name;
 
             // If the node is represented by an attribute (e.g. an "id" child), write
             // an attribute with the child's name + the child's Value into the parent
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Serialization
             // If this needs to be serialized as a contained resource, do so
             var containedResourceType = atRoot ? null :
                             (serializationInfo?.IsResource == true ?
-                                            source.Type : source.GetResourceType());
+                                            source.InstanceType : source.Annotation<ISourceNode>()?.ResourceType);
 
             XElement containedResource = null;
             if (containedResourceType != null)
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Serialization
 
             // Now, do the same for the children
             // xml requires a certain order, so let's make sure we serialize in the right order
-            var orderedChildren = source.Children().OrderBy(c => c.GetElementDefinitionSummary()?.Order ?? 0);
+            var orderedChildren = source.Children().OrderBy(c => c.Definition?.Order ?? 0);
 
             foreach (var child in orderedChildren)
                 write(child, childParent);

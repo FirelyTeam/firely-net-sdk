@@ -38,6 +38,12 @@ namespace Hl7.Fhir.ElementModel
         string Text { get; }
 
         /// <summary>
+        /// Return the resource type of the node, if the source is located on a node which has a 
+        /// resource type indication (e.g. resourceType in json, or contained node in XML).
+        /// </summary>
+        string ResourceType { get; }
+
+        /// <summary>
         /// An indication of the location of this node within the data represented by the navigator.
         /// </summary>
         /// <remarks>The format of the location is the dotted name of the property, including indices to make

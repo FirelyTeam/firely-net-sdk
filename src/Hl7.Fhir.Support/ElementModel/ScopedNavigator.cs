@@ -94,12 +94,12 @@ namespace Hl7.Fhir.ElementModel
 
             _cache = new Cache();
 
-            var def = _wrapped.GetElementDefinitionSummary();
+            var def = _wrapped.Annotation<IElementNode>()?.Definition;
 
             return true;
         }
 
-        public bool AtResource => _wrapped.GetElementDefinitionSummary()?.IsResource ?? false;
+        public bool AtResource => _wrapped.Annotation<IElementNode>()?.Definition.IsResource ?? false;
 
         public string NearestResourceType
         {

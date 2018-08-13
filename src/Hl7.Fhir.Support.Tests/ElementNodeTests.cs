@@ -49,7 +49,7 @@ namespace Hl7.FhirPath.Tests
 #pragma warning disable xUnit2004 // Do not use equality check to test for boolean conditions
             Assert.Equal(true, data.Value);
 #pragma warning restore xUnit2004 // Do not use equality check to test for boolean conditions
-            Assert.Equal("boolean", data.Type);
+            Assert.Equal("boolean", data.InstanceType);
             Assert.Equal(4, data.Children().Count());
         }
 

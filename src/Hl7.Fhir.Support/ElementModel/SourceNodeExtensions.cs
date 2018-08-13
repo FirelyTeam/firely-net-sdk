@@ -67,12 +67,6 @@ namespace Hl7.Fhir.ElementModel
         public static bool InPipeline<T>(this ISourceNode navigator) =>
                     navigator.InPipeline(navigator.GetType());
 
-        public static ElementDefinitionSummary GetElementDefinitionSummary(this ISourceNode navigator) =>
-                navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
-
-        public static string GetResourceType(this ISourceNode node) => 
-            node is IAnnotated ia ? ia.GetResourceType() : null;
-
         public static List<ExceptionNotification> VisitAndCatch(this ISourceNode nav)
         {
             var errors = new List<ExceptionNotification>();

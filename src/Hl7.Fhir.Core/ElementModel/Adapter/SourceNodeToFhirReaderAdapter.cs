@@ -42,7 +42,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public object GetPrimitiveValue() => Value;
 
-        public string GetResourceTypeName() => Current.GetResourceType() ??
+        public string GetResourceTypeName() => Current.ResourceType ??
             throw Error.Format($"Cannot retrieve type of resource for element '{Name}' from the underlying navigator.", this);
 
 #pragma warning disable 612, 618

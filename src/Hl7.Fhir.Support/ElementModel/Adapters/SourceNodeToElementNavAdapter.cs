@@ -30,7 +30,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public string Name => Current.Name;
 
-        public string Type => Current.GetResourceType();
+        public string Type => Current.ResourceType;
 
         public object Value => Current.Text;
 

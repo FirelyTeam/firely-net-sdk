@@ -114,9 +114,8 @@ namespace Hl7.Fhir.Serialization
         private (JToken first, JObject second) buildNode(IElementNode node)
         {
             var details = node.GetJsonSerializationDetails();
-            var summary = node.GetElementDefinitionSummary();
-            object value = summary != null ? node.Value : details?.OriginalValue ?? node.Value;
-            var objectInShadow = node.Type != null ? Primitives.IsPrimitive(node.Type) : details.UsesShadow;
+            object value = node.Definition != null ? node.Value : details?.OriginalValue ?? node.Value;
+            var objectInShadow = node.InstanceType != null ? Primitives.IsPrimitive(node.InstanceType) : details.UsesShadow;
 
             JToken first = value != null ? buildValue(value) : null;
             JObject second = buildChildren(node);
@@ -147,9 +146,9 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal bool MustSerializeMember(IElementNode source, out ElementDefinitionSummary info)
+        internal bool MustSerializeMember(IElementNode source, out IElementDefinitionSummary info)
         {
-            info = source.GetElementDefinitionSummary();
+            info = source.Definition;
 
             if (info == null && !_roundtripMode)
             {
@@ -174,10 +173,8 @@ namespace Hl7.Fhir.Serialization
 
         private void addChildren(IElementNode node, JObject parent)
         {
-            var nodeSummary = node.GetElementDefinitionSummary();
-
-            var isResource = nodeSummary?.IsResource ?? node.GetResourceType() != null;
-            var containedResourceType = isResource ? (node.Type ?? node.GetResourceType()) : null;
+            var isResource = node.Definition?.IsResource ?? node.Annotation<ISourceNode>().ResourceType != null;
+            var containedResourceType = isResource ? (node.InstanceType ?? node.Annotation<ISourceNode>()?.ResourceType) : null;
             if (containedResourceType != null)
                 parent.AddFirst(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, containedResourceType));
 
@@ -207,7 +204,7 @@ namespace Hl7.Fhir.Serialization
                 var needsMainProperty = children.Any(c => c.first != null);
                 var needsShadowProperty = children.Any(c => c.second != null);
                 var propertyName = generalInfo?.IsChoiceElement == true ?
-                        members[0].Name + members[0].Type.Capitalize() : members[0].Name;
+                        members[0].Name + members[0].InstanceType.Capitalize() : members[0].Name;
 
                 if (needsMainProperty)
                     parent.Add(new JProperty(propertyName,

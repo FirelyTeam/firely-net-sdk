@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
 
         protected static IElementNode makeNav(Base instance, SummaryType summary)
         {
-            if (summary == SummaryType.False) return instance.ToElementNavigator().ToElementNode();
+            if (summary == SummaryType.False) return instance.ToElementNode();
 
             var patchedInstance = (Base)instance.DeepCopy();
 

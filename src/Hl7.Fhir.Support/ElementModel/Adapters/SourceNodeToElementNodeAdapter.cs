@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel.Adapters
@@ -27,11 +28,13 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public string Name => Current.Name;
 
-        public string Type => Current.GetResourceType();
+        public string InstanceType => Current.ResourceType;
 
         public object Value => Current.Text;
 
         public string Location => Current.Location;
+
+        public IElementDefinitionSummary Definition => null;
 
         public IEnumerable<IElementNode> Children(string name) =>
             Current.Children(name).Select(c => new SourceNodeToElementNodeAdapter(this, c));

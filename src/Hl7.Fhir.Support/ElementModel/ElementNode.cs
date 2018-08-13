@@ -11,23 +11,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public partial class ElementNode : IElementNode, IAnnotated, IAnnotatable
+    public partial class ElementNode : ISourceNode, IAnnotated, IAnnotatable
     {
-        public IElementNode Parent { get; private set; }
+        public ISourceNode Parent { get; private set; }
 
         private List<ElementNode> _children = new List<ElementNode>();
 
-        public IEnumerable<IElementNode> Children(string name = null) =>
+        public IEnumerable<ISourceNode> Children(string name = null) =>
             name == null ? _children : _children.Where(c => c.Name == name);
 
         public string Name { get; set; }
 
-        public string Type { get; set; }
+        public string ResourceType { get; set; }
 
-        public object Value { get; set; }
+        public string Text { get; set; }
 
         public string Location
         {
@@ -46,18 +47,18 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private ElementNode(string name, object value, string type, IEnumerable<ElementNode> children) : this(name,value,type)
+        private ElementNode(string name, string value, string type, 
+            IEnumerable<ElementNode> children) : this(name,value,type)
         {
             if (children != null) AddRange(children);
         }
 
-        private ElementNode(string name, object value, string type)
+        private ElementNode(string name, string value, string type)
         {
             Name = name;
-            Value = value;
-            Type = type;
+            Text = value;
+            ResourceType = type;
         }
-
 
         public void Add(ElementNode child)
         {
@@ -92,7 +93,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IElementNode Clone()
         {
-            var copy = new ElementNode(Name, Value, Type, _children);
+            var copy = new ElementNode(Name, Value, InstanceType, _children);
 
             if (_annotations.IsValueCreated)
                 copy.annotations.AddRange(annotations);
@@ -102,6 +103,8 @@ namespace Hl7.Fhir.ElementModel
 
         private Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
         private List<object> annotations { get { return _annotations.Value; } }
+
+        public IElementDefinitionSummary Definition => throw new NotImplementedException();
 
         public ChildNodes this[string name] => new ChildNodes(_children.Where(c=>c.Name == name).ToList());
 

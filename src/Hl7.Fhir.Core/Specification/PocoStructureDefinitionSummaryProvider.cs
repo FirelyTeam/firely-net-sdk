@@ -77,14 +77,12 @@ namespace Hl7.Fhir.Specification
 
     internal struct PocoTypeReferenceInfo : IStructureDefinitionReference
     {
-        private readonly string _referencedType;
-
         public PocoTypeReferenceInfo(string canonical)
         {
-            _referencedType = canonical;
+            ReferredType = canonical;
         }
 
-        public string ReferredType => _referencedType;
+        public string ReferredType { get; private set; }
     }
 
 

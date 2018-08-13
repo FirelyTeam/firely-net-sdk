@@ -44,7 +44,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public object GetPrimitiveValue() => Value;
 
-        public string GetResourceTypeName() => Current.GetResourceType() ??
+        public string GetResourceTypeName() => Current.Type ?? Current.Annotation<ISourceNode>()?.ResourceType ??
             throw Error.Format($"Cannot retrieve type of resource for element '{Name}' from the underlying navigator.", this);
 
 #pragma warning disable 612, 618
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         {
             get
             {
-                var typeInfo = Current.GetElementDefinitionSummary();
+                var typeInfo = Current.Annotation<IElementNode>()?.Definition;
 
                 return typeInfo?.IsChoiceElement == true ?
                     Current.Name + Current.Type.Capitalize() : Current.Name;

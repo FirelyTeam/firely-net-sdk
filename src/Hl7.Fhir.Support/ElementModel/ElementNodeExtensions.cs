@@ -103,12 +103,5 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this IElementNode node) => new ElementNodeToElementNavAdapter(node);
 
         public static ISourceNode ToSourceNode(this IElementNode node) => new ElementNodeToSourceNodeAdapter(node);
-
-        public static ElementDefinitionSummary GetElementDefinitionSummary(this IElementNode node) =>
-            node is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
-
-        public static string GetResourceType(this IElementNode navigator) =>
-                navigator is IAnnotated ia ? ia.GetResourceType() : null;
-
     }
 }

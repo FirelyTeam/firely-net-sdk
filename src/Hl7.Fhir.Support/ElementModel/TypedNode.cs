@@ -29,13 +29,13 @@ namespace Hl7.Fhir.ElementModel
             if (element is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
 
-            PrettyPath = element.Name;
+            ShortPath = element.Name;
             Current = buildRootPosition(element, type, provider);
         }
 
         private NavigatorPosition buildRootPosition(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider)
         {
-            var rootType = type ?? element.GetResourceType();
+            var rootType = type ?? element.ResourceType;
             if (rootType == null)
             {
                 if (_settings.ErrorMode == TypedNodeSettings.TypeErrorMode.Report)
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.ElementModel
         private TypedNode(TypedNode parent, NavigatorPosition position, string prettyPath)
         {
             Current = position;
-            PrettyPath = prettyPath;
+            ShortPath = prettyPath;
             Provider = parent.Provider;
             ExceptionHandler = parent.ExceptionHandler;
             _settings = parent._settings;
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.ElementModel
 
         public string Name => Current.Name;
 
-        public string Type => Current.InstanceType;
+        public string InstanceType => Current.InstanceType;
 
         public object Value
         {
@@ -102,9 +102,9 @@ namespace Hl7.Fhir.ElementModel
                 // for current node), all we can do is return the underlying string value
                 if (!Current.IsTracking || Current.InstanceType == null) return sourceText;
 
-                if (!Primitives.IsPrimitive(Type))
+                if (!Primitives.IsPrimitive(InstanceType))
                 {
-                    raiseTypeError($"Since type {Type} is not a primitive, it cannot have a value", Current.Node);
+                    raiseTypeError($"Since type {InstanceType} is not a primitive, it cannot have a value", Current.Node);
                     return null;
                 }
 
@@ -112,11 +112,11 @@ namespace Hl7.Fhir.ElementModel
                 // parse this primitive into the desired type
                 try
                 {
-                    return PrimitiveTypeConverter.FromSerializedValue(sourceText, Type);
+                    return PrimitiveTypeConverter.FromSerializedValue(sourceText, InstanceType);
                 }
                 catch (FormatException fe)
                 {
-                    raiseTypeError($"Literal '{sourceText}' cannot be interpreted as a {Type}: '{fe.Message}'.", Current.Node);
+                    raiseTypeError($"Literal '{sourceText}' cannot be interpreted as a {InstanceType}: '{fe.Message}'.", Current.Node);
                     return sourceText;
                 }
             }
@@ -128,13 +128,13 @@ namespace Hl7.Fhir.ElementModel
 
             if (info.IsResource)
             {
-                instanceType = current.GetResourceType();
+                instanceType = current.ResourceType;
                 if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually contain one", current);
             }
-            else if (!info.IsResource && current.GetResourceType() != null)
+            else if (!info.IsResource && current.ResourceType != null)
             {
-                raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{current.GetResourceType()}'.", current);
-                instanceType = current.GetResourceType();
+                raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{current.ResourceType}'.", current);
+                instanceType = current.ResourceType;
             }
             else if (info.IsChoiceElement)
             {
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.ElementModel
                 }
 
                 var prettyPath =
-                 hit && !info.IsCollection ? $"{PrettyPath}.{match.Name}" : $"{PrettyPath}.{match.Name}[{_nameIndex}]";
+                 hit && !info.IsCollection ? $"{ShortPath}.{match.Name}" : $"{ShortPath}.{match.Name}[{_nameIndex}]";
 
                 yield return new TypedNode(this, match, prettyPath);
             }
@@ -280,18 +280,16 @@ namespace Hl7.Fhir.ElementModel
 
         public string Location => Current.Node.Location;
 
-        public string PrettyPath { get; set; }
+        public string ShortPath { get; private set; }
+
+        public IElementDefinitionSummary Definition => Current.SerializationInfo;
 
         public override string ToString() => $"{(Current.IsTracking ? ($"[{Current.InstanceType}] ") : "")}{Current.Node.ToString()}";
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(TypedNode))
+            if (type == typeof(TypedNode) || type == typeof(IElementNode))
                 return new[] { this };
-            else if (type == typeof(PrettyPath))
-                return new[] { new PrettyPath { Path = PrettyPath } };
-            else if (type == typeof(ElementDefinitionSummary) && Current.IsTracking)
-                return new[] { new ElementDefinitionSummary(Current.SerializationInfo) };
             else
                 return Current.Node.Annotations(type);
 
@@ -300,22 +298,4 @@ namespace Hl7.Fhir.ElementModel
 
     [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
     public delegate object AdditionalStructuralRule(IElementNode node, IExceptionSource ies, object state);
-
-    public class StructuralTypeException : Exception
-    {
-        public StructuralTypeException() { }
-        public StructuralTypeException(string message) : base(message) { }
-        public StructuralTypeException(string message, Exception inner) : base(message, inner) { }
-    }
-
-
-    /// <summary>
-    /// Represents a dotted path into an instance, where indices on members are only included
-    /// when the elements repeats.
-    /// </summary>
-    public class PrettyPath
-    {
-        public string Path;
-    }
-
 }

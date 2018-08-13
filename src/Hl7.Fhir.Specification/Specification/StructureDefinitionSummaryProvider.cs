@@ -145,7 +145,6 @@ namespace Hl7.Fhir.Specification
     {
         private readonly Lazy<ITypeSerializationInfo[]> _types;
         private readonly ElementDefinition _definition;
-        private readonly int _order;
 
         internal ElementDefinitionSerializationInfo(ElementDefinitionNavigator nav)
         {
@@ -154,7 +153,7 @@ namespace Hl7.Fhir.Specification
             _types = new Lazy<ITypeSerializationInfo[]>(() => buildTypes(nav));
             ElementName = noChoiceSuffix(nav.PathName);
             _definition = nav.Current;
-            _order = nav.OrdinalPosition.Value;     // cannot be null, since nav.Current != null
+            Order = nav.OrdinalPosition.Value;     // cannot be null, since nav.Current != null
 
             string noChoiceSuffix(string n)
             {
@@ -208,7 +207,7 @@ namespace Hl7.Fhir.Specification
 
         public bool IsChoiceElement => _definition.IsChoice();
 
-        public int Order => _order;
+        public int Order { get; private set; }
 
         public bool IsResource => isResource(_definition);
 

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.ElementModel
 
         public string Name => Current.Name;
 
-        public string Type => Current.Type;
+        public string Type => Current.InstanceType;
 
         public string Location => Current.Location;
 

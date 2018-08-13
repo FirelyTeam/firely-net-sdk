@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Serialization.Tests
             nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><text><status value= 'generated' />" +
                 "<div>hi!</div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.First().Message.Contains("should use an XHTML element."));
+            Assert.IsTrue(errors.First().Message.Contains("should be an XHTML element."));
             Assert.AreEqual(2, errors.Count);
 
             // Use an element where an attribute was expected

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.ElementModel
 
         private static ElementNode buildNode(IElementNode node)
         {
-            var me = new ElementNode(node.Name, node.Value, node.Type);
+            var me = new ElementNode(node.Name, node.Value, node.InstanceType);
             me.AddRange(node.Children().Select(c => buildNode(c)));              
             return me;
         }
