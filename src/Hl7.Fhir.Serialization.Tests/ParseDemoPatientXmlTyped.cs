@@ -5,6 +5,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,8 +16,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings settings = null) =>
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), settings);
+        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings settings = null, TypedNodeSettings tnSettings=null) =>
+            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -113,9 +114,9 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesBasicTypeErrorsWithUnknownRoot()
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
-            var patient = getXmlNode(tpXml);
+            var patient = getXmlNode(tpXml, tnSettings: new TypedNodeSettings { ErrorMode = TypedNodeSettings.TypeErrorMode.Passthrough });
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(12, result.Count);  // 11 syntax errors + 1 error reporting the root type is unknown
+            Assert.AreEqual(11, result.Count);  // 11 syntax errors, unknown root is passed through without errors
         }
 
         [TestMethod]
@@ -174,8 +175,8 @@ namespace Hl7.Fhir.Serialization.Tests
              "<status value='generated' />" +
              "<div><p>Donald</p></div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.AreEqual(3, errors.Count);
-            Assert.IsTrue(errors.Any(e => e.Message.Contains("should use an XHTML element")));
+            Assert.AreEqual(2, errors.Count);
+            Assert.IsTrue(errors.Any(e => e.Message.Contains("should be an XHTML element")));
 
             // Active content
             nav = getValidatingXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
@@ -189,13 +190,19 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void DelayedParseErrors()
+        public void CatchParseErrors()
         {
             var tpXml = "<Patient>";
-            var patient = getXmlNode(tpXml);
 
-            var errors = patient.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));
+            try
+            {
+                var patient = getXmlNode(tpXml);
+                Assert.Fail();
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+            }
         }
 
 

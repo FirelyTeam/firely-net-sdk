@@ -217,13 +217,19 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void DelayedParseErrors()
+        public void CatchParseErrors()
         {
             var text = "{";
-            var patient = getJsonNodeU(text);
 
-            var errors = patient.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("Invalid Json encountered"));
+            try
+            {
+                var patient = getJsonNodeU(text);
+                Assert.Fail();
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+            }
         }
     }
 }

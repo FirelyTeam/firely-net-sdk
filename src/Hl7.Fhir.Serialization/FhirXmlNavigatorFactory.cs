@@ -64,14 +64,14 @@ namespace Hl7.Fhir.Serialization
             return createUntyped(doc.Root, settings);
         }
 
-        public static IElementNode ForResource(string xml, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null)
+        public static IElementNode ForResource(string xml, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings = null, TypedNodeSettings tnSettings=null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: false))
             {
-                return createTyped(reader, null, provider, settings);
+                return createTyped(reader, null, provider, settings, tnSettings);
             }
         }
 
@@ -133,25 +133,17 @@ namespace Hl7.Fhir.Serialization
 
         private static ISourceNode createUntyped(XmlReader reader, FhirXmlNavigatorSettings settings)
         {
-            try
-            {
-                var doc = SerializationUtil.XDocumentFromReader(reader, ignoreComments: false);
-
-                return createUntyped(doc.Root, settings);
-            }
-            catch (FormatException fe)
-            {
-                return new ParseErrorStubNode(fe);
-            }
+            var doc = SerializationUtil.XDocumentFromReader(reader, ignoreComments: false);
+            return createUntyped(doc.Root, settings);
         }
 
-        private static ISourceNode createUntyped(XElement element, FhirXmlNavigatorSettings settings) => 
+        private static ISourceNode createUntyped(XElement element, FhirXmlNavigatorSettings settings) =>
             new FhirXmlNode(element, settings);
 
-        private static IElementNode createTyped(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings) =>
-            createUntyped(elem, settings).ToElementNode(provider, type);
+        private static IElementNode createTyped(XElement elem, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings, TypedNodeSettings tnSettings = null) =>
+            createUntyped(elem, settings).ToElementNode(provider, type, tnSettings);
 
-        private static IElementNode createTyped(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings) => 
-            createUntyped(reader, settings).ToElementNode(provider, type);
+        private static IElementNode createTyped(XmlReader reader, string type, IStructureDefinitionSummaryProvider provider, FhirXmlNavigatorSettings settings, TypedNodeSettings tnSettings = null) =>
+            createUntyped(reader, settings).ToElementNode(provider, type, tnSettings);
     }
 }

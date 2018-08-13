@@ -21,20 +21,18 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirXmlWriterSettings
     {
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
+        public bool SkipUnknownElements;
     }
 
     public class FhirXmlWriter : IExceptionSource
     {
         public FhirXmlWriter(FhirXmlWriterSettings settings = null)
         {
-            AllowUntypedElements = settings?.AllowUntypedElements ?? false;
-            IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
+            _settings = settings ?? new FhirXmlWriterSettings();
         }
 
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
+        private FhirXmlWriterSettings _settings;
+        private bool _roundtripMode;
         
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -51,8 +49,7 @@ namespace Hl7.Fhir.Serialization
             // so we have all serialization details available.
             if (hasXmlSource)
             {
-                AllowUntypedElements = true;
-                IncludeUntypedElements = true;
+                _roundtripMode = true;
                 writeInternal(source.ToElementNode(), destination, rootName);
             }
             else
@@ -90,21 +87,22 @@ namespace Hl7.Fhir.Serialization
         {
             info = source.GetElementDefinitionSummary();
 
-            if (info == null && !AllowUntypedElements)
+            if (info == null && !_roundtripMode)
             {
                 var message = $"Element '{source.Location}' is missing type information.";
-                if (IncludeUntypedElements)
+
+                if (_settings.SkipUnknownElements)
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));
-                    return true;
                 }
                 else
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
                         new MissingTypeInformationException(message)));
-                    return false;
                 }
+
+                return false;
             }
 
             return true;

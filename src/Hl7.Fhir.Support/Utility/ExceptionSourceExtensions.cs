@@ -27,25 +27,26 @@ namespace Hl7.Fhir.Utility
     public static IDisposable Catch(this IElementNavigator source, ExceptionNotificationHandler handler) =>
             source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
 
-        public static IDisposable Catch(this IExceptionSource source, ExceptionNotificationHandler handler) => new ExceptionInterceptor(source, handler);
+        public static IDisposable Catch(this IExceptionSource source, ExceptionNotificationHandler handler, bool forward=false) => new ExceptionInterceptor(source, handler, forward);
 
         private class ExceptionInterceptor : IDisposable
         {
             private readonly IExceptionSource _source;
             private readonly ExceptionNotificationHandler _originalHandler;
+            private bool _forward;
 
-            public ExceptionInterceptor(IExceptionSource source, ExceptionNotificationHandler handler)
+            public ExceptionInterceptor(IExceptionSource source, ExceptionNotificationHandler handler, bool forward)
             {
                 _source = source;
                 _originalHandler = source.ExceptionHandler;
                 source.ExceptionHandler = nestedHandler;
+                _forward = forward;
 
                 void nestedHandler(object s, ExceptionNotification a)
                 {
                     handler(s, a);
-                    // we have no true/false coming back from the handler.
-                    // if the handler wants to propagate, it can do so itself, we're not doing it.
-                    //_originalHandler.NotifyOrThrow(s, a);
+
+                    if(forward)  _originalHandler.NotifyOrThrow(s, a);
                 }
             }
 

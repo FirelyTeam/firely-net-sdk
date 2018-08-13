@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Serialization
                 {
                     case XmlRepresentation.XHtml when !serializationDetails.IsXhtml:
                         ies.NotifyOrThrow(node, buildException(
-                            buildMessage(node.Name, serializationDetails.NodeType, "should use an XHTML element.")));
+                            buildMessage(node.Name, serializationDetails.NodeType, "should be an XHTML element.")));
                         break;
                     case XmlRepresentation.XmlAttr when serializationDetails.NodeType != XmlNodeType.Attribute:
                         ies.NotifyOrThrow(node, buildException(

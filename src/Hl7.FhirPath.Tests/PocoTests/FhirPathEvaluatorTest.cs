@@ -496,7 +496,11 @@ namespace Hl7.FhirPath.Tests
             // Check ==
             fixture.IsTrue("today() = @" + PartialDateTime.Today());
 
-            fixture.IsTrue("now() > @" + PartialDateTime.Today());
+            // This unit-test will fail if you are working between midnight
+            // and start-of-day in GMT:
+            // e.g. 2018-08-10T01:00T+02:00 > 2018-08-10 will fail, which is then
+            // test on the next line
+            //fixture.IsTrue("now() > @" + PartialDateTime.Today());
             fixture.IsTrue("now() >= @" + PartialDateTime.Now());
         }
 

@@ -55,8 +55,8 @@ namespace Hl7.Fhir.ElementModel
 
         public static void Visit(this ISourceNode navigator, Action<int, ISourceNode> visitor) => navigator.visit(visitor, 0);
 
-        public static IDisposable Catch(this ISourceNode source, ExceptionNotificationHandler handler) =>
-            source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
+        public static IDisposable Catch(this ISourceNode source, ExceptionNotificationHandler handler, bool forward=false) =>
+            source is IExceptionSource s ? s.Catch(handler, forward) : throw new NotImplementedException("source does not implement IExceptionSource");
 
         public static IEnumerable<object> Annotations(this ISourceNode nav, Type type) =>
             nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
@@ -98,10 +98,10 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this ISourceNode sourceNav, string type = null) =>
             new SourceNodeToElementNavAdapter(sourceNav);
 
-        public static IElementNode ToElementNode(this ISourceNode sourceNav, IStructureDefinitionSummaryProvider provider, string type = null)
+        public static IElementNode ToElementNode(this ISourceNode sourceNav, IStructureDefinitionSummaryProvider provider, string type = null, TypedNodeSettings settings=null)
         {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
-                return new TypedNode(sourceNav, type, provider);
+                return new TypedNode(sourceNav, type, provider, settings: settings);
         }
 
         [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into a typed ElementNode without providing" +

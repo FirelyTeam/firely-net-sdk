@@ -3,6 +3,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -155,13 +156,19 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void DelayedParseErrors()
+        public void CatchParseErrors()
         {
             var text = "{";
-            var patient = getJsonNode(text);
 
-            var errors = patient.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("Invalid Json encountered"));
+            try
+            {
+                var patient = getJsonNode(text);
+                Assert.Fail();
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+            }
         }
 
     }

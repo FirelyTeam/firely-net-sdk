@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             bool hasTypeInfo = serInfo != null;
 
-            var serializer = new FhirJsonWriter(new FhirJsonWriterSettings { AllowUntypedElements = !hasTypeInfo });
+            var serializer = new FhirJsonWriter(new FhirJsonWriterSettings {  });
             string output = null;
 
             if (nav is ISourceNode isn2) output = isn2.ToJson();

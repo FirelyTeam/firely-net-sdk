@@ -21,6 +21,7 @@
     <Compile Remove="FhirJsonNavigator.cs" />
     <Compile Remove="FhirJsonNavigatorNode.cs" />
     <Compile Remove="FhirXmlNavigator.cs" />
+    <Compile Remove="ParseErrorStubNode.cs" />
   </ItemGroup>
 
   <ItemGroup>

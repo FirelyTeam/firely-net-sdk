@@ -266,13 +266,19 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void DelayedParseErrors()
+        public void CatchParseErrors()
         {
             var tpXml = "<Patient>";
-            var patient = getXmlUntyped(tpXml);
 
-            var errors = patient.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));
+            try
+            {
+                var patient = getXmlUntyped(tpXml);
+                Assert.Fail();
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+            }
         }
 
     }

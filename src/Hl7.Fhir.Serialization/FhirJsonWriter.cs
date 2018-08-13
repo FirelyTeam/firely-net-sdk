@@ -21,8 +21,10 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirJsonWriterSettings
     {
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
+        /// <summary>
+        /// When encountering an unknown member, just skip it instead of reporting an error.
+        /// </summary>
+        public bool SkipUnknownElements;
     }
 
     public static class FhirJsonWriterExtensions
@@ -53,14 +55,13 @@ namespace Hl7.Fhir.Serialization
     {
         public FhirJsonWriter(FhirJsonWriterSettings settings = null)
         {
-            AllowUntypedElements = settings?.AllowUntypedElements ?? false;
-            IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
+            _settings = settings ?? new FhirJsonWriterSettings();
         }
 
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        private FhirJsonWriterSettings _settings;
+        private bool _roundtripMode = true;
 
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         public void Write(IElementNode source, JsonWriter destination)
         {
@@ -101,8 +102,7 @@ namespace Hl7.Fhir.Serialization
             // so we have all serialization details available.
             if (hasJsonSource)
             {
-                AllowUntypedElements = true;
-                IncludeUntypedElements = true;
+                _roundtripMode = true;          // will allow unknown elements to be processed
                 Write(source.ToElementNode(), destination);
             }
             else
@@ -151,21 +151,22 @@ namespace Hl7.Fhir.Serialization
         {
             info = source.GetElementDefinitionSummary();
 
-            if (info == null && !AllowUntypedElements)
+            if (info == null && !_roundtripMode)
             {
                 var message = $"Element '{source.Location}' is missing type information.";
-                if (IncludeUntypedElements)
+
+                if (_settings.SkipUnknownElements)
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));
-                    return true;
                 }
                 else
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
                         new MissingTypeInformationException(message)));
-                    return false;
                 }
+
+                return false;
             }
 
             return true;
