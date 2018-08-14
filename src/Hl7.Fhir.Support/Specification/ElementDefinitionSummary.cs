@@ -76,8 +76,5 @@ namespace Hl7.Fhir.Specification
     {
         public static ElementDefinitionSummary GetElementDefinitionSummary(this IAnnotated ann) =>
             ann.TryGetAnnotation<ElementDefinitionSummary>(out var rt) ? rt : null;
-
-        public static ElementDefinitionSummary GetElementDefinitionSummary(this IElementNavigator navigator) =>
-            navigator is IAnnotated ia ? ia.GetElementDefinitionSummary() : null;
     }
 }

@@ -15,24 +15,39 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Numerics;
 
 namespace Hl7.Fhir.Serialization
 {
     public class FhirJsonWriterSettings
     {
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
+        /// <summary>
+        /// When encountering an unknown member, just skip it instead of reporting an error.
+        /// </summary>
+        public bool SkipUnknownElements;
     }
 
     public static class FhirJsonWriterExtensions
     {
-        public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+        public static void WriteTo(this IElementNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
             new FhirJsonWriter(settings).Write(source, destination);
 
-        public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
+        public static void WriteTo(this ISourceNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+            new FhirJsonWriter(settings).Write(source, destination);
+
+        public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+            source.ToElementNode().WriteTo(destination, settings);
+
+        public static string ToJson(this IElementNode source, FhirJsonWriterSettings settings = null)
             => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
 
-        public static byte[] ToJsonBytes(this IElementNavigator source, FhirJsonWriterSettings settings = null)
+        public static string ToJson(this ISourceNode source, FhirJsonWriterSettings settings = null)
+            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
+
+        public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
+              => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
+
+        public static byte[] ToJsonBytes(this IElementNode source, FhirJsonWriterSettings settings = null)
                 => SerializationUtil.WriteJsonToBytes(writer => source.WriteTo(writer, settings));
     }
 
@@ -40,16 +55,15 @@ namespace Hl7.Fhir.Serialization
     {
         public FhirJsonWriter(FhirJsonWriterSettings settings = null)
         {
-            AllowUntypedElements = settings?.AllowUntypedElements ?? false;
-            IncludeUntypedElements = settings?.IncludeUntypedElements ?? false;
+            _settings = settings ?? new FhirJsonWriterSettings();
         }
 
-        public bool AllowUntypedElements;
-        public bool IncludeUntypedElements;
+        private FhirJsonWriterSettings _settings;
+        private bool _roundtripMode = true;
+
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-
-        public void Write(IElementNavigator source, JsonWriter destination)
+        public void Write(IElementNode source, JsonWriter destination)
         {
             //Re-enable when the PocoNavigator is also fed through the TypedNavigator
             //if(!source.InPipeline(typeof(TypedNavigator)))
@@ -57,7 +71,7 @@ namespace Hl7.Fhir.Serialization
             writeInternal(source, destination);
         }
 
-        private void writeInternal(IElementNavigator source, JsonWriter destination)
+        private void writeInternal(IElementNode source, JsonWriter destination)
         {
             if (source is IExceptionSource)
             {
@@ -80,25 +94,28 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public void Write(ISourceNavigator source, JsonWriter destination)
+        public void Write(ISourceNode source, JsonWriter destination)
         {
             bool hasJsonSource = source.InPipeline(typeof(FhirJsonNavigator));
 
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.
             if (hasJsonSource)
-                Write(source.ToElementNavigator(), destination);
+            {
+                _roundtripMode = true;          // will allow unknown elements to be processed
+                Write(source.ToElementNode(), destination);
+            }
             else
                 throw Error.NotSupported($"The {nameof(FhirJsonWriter)} will only work correctly on an untyped " +
                     $"source if the source is a {nameof(FhirJsonNavigator)}.");
         }
 
 
-        private (JToken first, JObject second) buildNode(IElementNavigator node)
+        private (JToken first, JObject second) buildNode(IElementNode node)
         {
             var details = node.GetJsonSerializationDetails();
-            object value = details != null ? node.Value : details?.OriginalValue ?? node.Value;
-            var isPrimitive = node.Type != null ? Primitives.IsPrimitive(node.Type) : value != null;
+            object value = node.Definition != null ? node.Value : details?.OriginalValue ?? node.Value;
+            var objectInShadow = node.InstanceType != null ? Primitives.IsPrimitive(node.InstanceType) : details.UsesShadow;
 
             JToken first = value != null ? buildValue(value) : null;
             JObject second = buildChildren(node);
@@ -106,7 +123,7 @@ namespace Hl7.Fhir.Serialization
             // If this is a complex type with a value (should not occur)
             // serialize it like a primitive, otherwise, the first member
             // is just the normal content of the complex type (the children)
-            if (!isPrimitive && first == null)
+            if (!objectInShadow && first == null)
             {
                 if (first == null)
                 {
@@ -117,7 +134,7 @@ namespace Hl7.Fhir.Serialization
 
             return (first, second);
 
-            JObject buildChildren(IElementNavigator n)
+            JObject buildChildren(IElementNode n)
             {
                 var objectWithChildren = new JObject();
                 addChildren(n, objectWithChildren);
@@ -129,36 +146,35 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal bool MustSerializeMember(IElementNavigator source, out ElementDefinitionSummary info)
+        internal bool MustSerializeMember(IElementNode source, out IElementDefinitionSummary info)
         {
-            info = source.GetElementDefinitionSummary();
+            info = source.Definition;
 
-            if (info == null && !AllowUntypedElements)
+            if (info == null && !_roundtripMode)
             {
                 var message = $"Element '{source.Location}' is missing type information.";
-                if (IncludeUntypedElements)
+
+                if (_settings.SkipUnknownElements)
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));
-                    return true;
                 }
                 else
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Error(
                         new MissingTypeInformationException(message)));
-                    return false;
                 }
+
+                return false;
             }
 
             return true;
         }
 
-        private void addChildren(IElementNavigator node, JObject parent)
+        private void addChildren(IElementNode node, JObject parent)
         {
-            var nodeSummary = node.GetElementDefinitionSummary();
-
-            var isResource = nodeSummary?.IsResource ?? node.GetResourceType() != null;
-            var containedResourceType = isResource ? (node.Type ?? node.GetResourceType()) : null;
+            var isResource = node.Definition?.IsResource ?? node.Annotation<ISourceNode>().ResourceType != null;
+            var containedResourceType = isResource ? (node.InstanceType ?? node.Annotation<ISourceNode>()?.ResourceType) : null;
             if (containedResourceType != null)
                 parent.AddFirst(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, containedResourceType));
 
@@ -177,7 +193,7 @@ namespace Hl7.Fhir.Serialization
                 // for unknown properties is to use an array - safest bet.
                 var generalJsonDetails = members[0].GetJsonSerializationDetails();
                 var hasIndex = generalJsonDetails?.ArrayIndex != null;
-                var needsArray = generalInfo?.IsCollection ?? (hasIndex ? true : (bool?)null) ?? true;
+                var needsArray = generalInfo?.IsCollection ?? hasIndex;
 
                 var children = members.Select(m => buildNode(m))
                             .Where(c => !(c.first == null && c.second == null)).ToList();
@@ -188,7 +204,7 @@ namespace Hl7.Fhir.Serialization
                 var needsMainProperty = children.Any(c => c.first != null);
                 var needsShadowProperty = children.Any(c => c.second != null);
                 var propertyName = generalInfo?.IsChoiceElement == true ?
-                        members[0].Name + members[0].Type.Capitalize() : members[0].Name;
+                        members[0].Name + members[0].InstanceType.Capitalize() : members[0].Name;
 
                 if (needsMainProperty)
                     parent.Add(new JProperty(propertyName,
@@ -201,7 +217,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         private JValue buildValue(object value)
-        {          
+        {
             switch (value)
             {
                 case bool b:
@@ -210,12 +226,15 @@ namespace Hl7.Fhir.Serialization
                 case Int16 i16:
                 case ulong ul:
                 case long l:
+                case double db:
+                case BigInteger bi:
+                case float f:
                     return new JValue(value);
                 case string s:
                     return new JValue(s.Trim());
                 default:
                     return new JValue(PrimitiveTypeConverter.ConvertTo<string>(value));
             }
-        }        
+        }
     }
 }

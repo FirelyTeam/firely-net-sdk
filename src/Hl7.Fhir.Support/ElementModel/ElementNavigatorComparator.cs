@@ -57,14 +57,6 @@ namespace Hl7.Fhir.ElementModel
                 ComparisonResult.Fail(actual.Location, $"number of children was different");
 
             return ComparisonResult.OK;
-
-            //bool valuesEqual(object e, object a)
-            //{
-            //    string eVal = e != null ? PrimitiveTypeConverter.ConvertTo<string>(e) : null;
-            //    string aVal = a != null ? PrimitiveTypeConverter.ConvertTo<string>(a) : null;
-
-            //    return eVal == aVal;
-            //}
         }
     }
 }

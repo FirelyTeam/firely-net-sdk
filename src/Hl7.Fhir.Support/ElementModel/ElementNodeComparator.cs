@@ -7,17 +7,21 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using System;
 using System.Linq;
 using static Hl7.Fhir.ElementModel.ElementNavigatorComparator;
 
 namespace Hl7.Fhir.Utility
 {
-    public static class SourceNavigatorComparator
+    public static class ElementNodeComparator
     {
-        public static ComparisonResult IsEqualTo(this ISourceNavigator expected, ISourceNavigator actual)
+        public static ComparisonResult IsEqualTo(this IElementNode expected, IElementNode actual)
         {
-            if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
-            if (expected.Text != actual.Text) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Text}', expected '{expected.Text}'");
+            if (expected.Name != actual.Name)
+                return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
+            if (!Object.Equals(expected.Value, actual.Value))
+                return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
+            if (expected.InstanceType != actual.InstanceType && actual.InstanceType != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.InstanceType}', expected '{expected.InstanceType}'");
             if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)
@@ -40,8 +44,6 @@ namespace Hl7.Fhir.Utility
                 ComparisonResult.Fail(actual.Location, $"number of children was different");
 
             return ComparisonResult.OK;
-
-            bool namesEqual(string e, string a) => e == a || (a != null && e != null && (a.StartsWith(e)));
         }
     }
 }

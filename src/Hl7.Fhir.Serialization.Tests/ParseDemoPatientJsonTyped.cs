@@ -1,12 +1,9 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -15,7 +12,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonTyped
     {
-        public IElementNavigator getJsonNav(string json, FhirJsonNavigatorSettings settings = null) 
+        public IElementNode getJsonNode(string json, FhirJsonNavigatorSettings settings = null) 
             => FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -23,42 +20,34 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CanReadThroughTypedNavigator()
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
-            var nav = getJsonNav(tp);
+            var nav = getJsonNode(tp);
             ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
-        }
-
-        [TestMethod]
-        public void CloningWorks()
-        {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
-            var nav = getJsonNav(tp);
-            ParseDemoPatient.CloningWorks(nav);
         }
 
         [TestMethod]
         public void ElementNavPerformanceTypedJson()
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
-            var nav = getJsonNav(tp);
-            ParseDemoPatient.ElementNavPerformance(nav);
+            var nav = getJsonNode(tp);
+            ParseDemoPatient.ElementNavPerformance(nav.ToSourceNode());
         }
 
         [TestMethod]
         public void ProducesCorrectTypedLocations()
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
-            var patient = getJsonNav(tp);
+            var patient = getJsonNode(tp);
             ParseDemoPatient.ProducedCorrectTypedLocations(patient);
         }
 
         [TestMethod]
         public void ForwardsLowLevelDetails()
         {
-            var nav = getJsonNav("{ 'resourceType': 'Patient', 'active' : true }");
+            var nav = getJsonNode("{ 'resourceType': 'Patient', 'active' : true }");
 
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual("active", nav.Name);        // none-xmlns attributes will come through
-            Assert.IsNotNull((nav as IAnnotated).Annotation<JsonSerializationDetails>());
+            var active = nav.Children().Single();
+            Assert.AreEqual("active", active.Name);        // none-xmlns attributes will come through
+            Assert.IsNotNull(active.GetJsonSerializationDetails());
         }
 
 
@@ -66,15 +55,23 @@ namespace Hl7.Fhir.Serialization.Tests
         public void HasLineNumbersTypedJson()
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
-            var nav = getJsonNav(tp);
-            ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav);
+            var nav = getJsonNode(tp);
+            ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav.ToSourceNode());
+        }
+
+        [TestMethod]
+        public void CheckBundleEntryNavigation()
+        {
+            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
+            var nav = getJsonNode(bundle).ToElementNavigator();
+            ParseDemoPatient.CheckBundleEntryNavigation(nav);
         }
 
         [TestMethod]
         public void RoundtripJson()
         {
             ParseDemoPatient.RoundtripJson(jsonText =>
-                getJsonNav(jsonText, new FhirJsonNavigatorSettings { AllowJsonComments = true }));
+                getJsonNode(jsonText, new FhirJsonNavigatorSettings { AllowJsonComments = true }));
         }
 
         [TestMethod]
@@ -127,7 +124,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesIncorrectNarrativeXhtml()
         {
             // Total crap - passes unless we activate xhtml validation
-            var nav = getJsonNav("{ 'resourceType': 'Patient', 'text': {" +
+            var nav = getJsonNode("{ 'resourceType': 'Patient', 'text': {" +
              "'status': 'generated', " +
              "'div': 'crap' } }");
             var errors = nav.VisitAndCatch();
@@ -154,18 +151,24 @@ namespace Hl7.Fhir.Serialization.Tests
             errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
-            IElementNavigator getValidatingJsonNav(string jsonText) =>
-                getJsonNav(jsonText, new FhirJsonNavigatorSettings { ValidateFhirXhtml = true });
+            IElementNode getValidatingJsonNav(string jsonText) =>
+                getJsonNode(jsonText, new FhirJsonNavigatorSettings { ValidateFhirXhtml = true });
         }
 
         [TestMethod]
-        public void DelayedParseErrors()
+        public void CatchParseErrors()
         {
             var text = "{";
-            var patient = getJsonNav(text);
 
-            var errors = patient.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("Invalid Json encountered"));
+            try
+            {
+                var patient = getJsonNode(text);
+                Assert.Fail();
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+            }
         }
 
     }

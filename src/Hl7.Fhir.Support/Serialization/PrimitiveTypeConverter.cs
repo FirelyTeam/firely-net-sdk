@@ -149,6 +149,8 @@ namespace Hl7.Fhir.Serialization
                 return PartialDateTime.Parse(value);
             if (typeof(PartialTime) == to)
                 return PartialTime.Parse(value);
+            if (typeof(BigInteger) == to)
+                return BigInteger.Parse(value);
             if (to.IsEnum())
             {
                 var result = EnumUtility.ParseLiteral(value, to);

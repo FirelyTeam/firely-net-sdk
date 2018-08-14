@@ -18,6 +18,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FhirJsonNavigator.cs" />
+    <Compile Remove="FhirJsonNavigatorNode.cs" />
+    <Compile Remove="FhirXmlNavigator.cs" />
+    <Compile Remove="ParseErrorStubNode.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>

@@ -13,12 +13,12 @@ namespace Hl7.Fhir.ElementModel
 {
     internal class NavigatorPosition 
     {
-        public readonly ISourceNavigator Node;
+        public readonly ISourceNode Node;
         public readonly IElementDefinitionSummary SerializationInfo;
         public readonly string Name;
         public readonly string InstanceType;
 
-        public NavigatorPosition(ISourceNavigator current, IElementDefinitionSummary info, string name, string instanceType)
+        public NavigatorPosition(ISourceNode current, IElementDefinitionSummary info, string name, string instanceType)
         {
             SerializationInfo = info;
             Node = current ?? throw Error.ArgumentNull(nameof(current));
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.ElementModel
             Name = name ?? throw Error.ArgumentNull(nameof(name));
         }
 
-        public static NavigatorPosition ForRoot(ISourceNavigator element, IStructureDefinitionSummary elementType, string elementName)
+        public static NavigatorPosition ForRoot(ISourceNode element, IStructureDefinitionSummary elementType, string elementName)
         {
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
 

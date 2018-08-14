@@ -43,10 +43,10 @@ namespace Hl7.Fhir.Serialization
         public static XmlSerializationDetails GetXmlSerializationDetails(this IAnnotated ann) =>
             ann.TryGetAnnotation<XmlSerializationDetails>(out var rt) ? rt : null;
 
-        public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNavigator navigator) =>
-            navigator is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
+        public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNode node) =>
+                node is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
 
-        public static XmlSerializationDetails GetXmlSerializationDetails(this ISourceNavigator navigator) =>
+        public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNavigator navigator) =>
             navigator is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
     }
 }

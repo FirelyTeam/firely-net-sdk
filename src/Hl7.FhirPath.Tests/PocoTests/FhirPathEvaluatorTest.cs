@@ -139,10 +139,11 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestDynaBinding()
         {
-            var input = (ElementNode.Node("root", 
-                    ElementNode.Valued("child", "Hello world!", "string"), ElementNode.Valued("child", 4L, "integer"))).ToNavigator();
+            var input = (UntypedNode.Node("root", 
+                    UntypedNode.Valued("child", "Hello world!"), 
+                    UntypedNode.Valued("child", "4"))).ToElementNavigator();
 
-            Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1])"));
+            Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
 
 
@@ -495,7 +496,11 @@ namespace Hl7.FhirPath.Tests
             // Check ==
             fixture.IsTrue("today() = @" + PartialDateTime.Today());
 
-            fixture.IsTrue("now() > @" + PartialDateTime.Today());
+            // This unit-test will fail if you are working between midnight
+            // and start-of-day in GMT:
+            // e.g. 2018-08-10T01:00T+02:00 > 2018-08-10 will fail, which is then
+            // test on the next line
+            //fixture.IsTrue("now() > @" + PartialDateTime.Today());
             fixture.IsTrue("now() >= @" + PartialDateTime.Now());
         }
 

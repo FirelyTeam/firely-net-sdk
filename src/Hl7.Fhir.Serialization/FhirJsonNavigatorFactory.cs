@@ -19,25 +19,28 @@ namespace Hl7.Fhir.Serialization
     public struct JsonDomFhirNavigator
     {
         [Obsolete("Use FhirJsonNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(JObject root, string rootName = null) => FhirJsonNavigator.Untyped(root, rootName);
+        public static IElementNavigator Create(JObject root, string rootName = null) =>
+            FhirJsonNavigator.Untyped(root, rootName).ToElementNavigator();
 
         [Obsolete("Use FhirJsonNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(JsonReader reader, string rootName = null) => FhirJsonNavigator.Untyped(reader, rootName);
+        public static IElementNavigator Create(JsonReader reader, string rootName = null) =>
+            FhirJsonNavigator.Untyped(reader, rootName).ToElementNavigator();
 
         [Obsolete("Use FhirJsonNavigator.Untyped() instead")]
-        public static ISourceNavigator Create(string json, string rootName = null) => FhirJsonNavigator.Untyped(json, rootName);
+        public static IElementNavigator Create(string json, string rootName = null) =>
+            FhirJsonNavigator.Untyped(json, rootName).ToElementNavigator();
     }
 
     public partial class FhirJsonNavigator
     {
-        public static ISourceNavigator Untyped(JsonReader reader, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static ISourceNode Untyped(JsonReader reader, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
 
             return createUntyped(reader, rootName, settings);
         }
 
-        public static ISourceNavigator Untyped(string json, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static ISourceNode Untyped(string json, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
 
@@ -47,14 +50,14 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static ISourceNavigator Untyped(JObject root, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static ISourceNode Untyped(JObject root, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (root == null) throw Error.ArgumentNull(nameof(root));
 
             return createUntyped(root, rootName, settings);
         }
 
-        public static IElementNavigator ForResource(string json, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNode ForResource(string json, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -65,7 +68,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static IElementNavigator ForElement(string json, string type, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNode ForElement(string json, string type, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -77,7 +80,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static IElementNavigator ForResource(JsonReader reader, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNode ForResource(JsonReader reader, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -85,7 +88,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(reader, null, rootName, provider, settings);
         }
 
-        public static IElementNavigator ForElement(JsonReader reader, string type, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNode ForElement(JsonReader reader, string type, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -94,7 +97,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(reader, type, rootName, provider, settings);
         }
 
-        public static IElementNavigator ForResource(JObject root, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNode ForResource(JObject root, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (root == null) throw Error.ArgumentNull(nameof(root));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -102,7 +105,7 @@ namespace Hl7.Fhir.Serialization
             return createTyped(root, null, rootName, provider, settings);
         }
 
-        public static IElementNavigator ForElement(JObject root, string type, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
+        public static IElementNode ForElement(JObject root, string type, IStructureDefinitionSummaryProvider provider, string rootName = null, FhirJsonNavigatorSettings settings = null)
         {
             if (root == null) throw Error.ArgumentNull(nameof(root));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -112,40 +115,26 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private static ISourceNavigator createUntyped(JsonReader reader, string rootName, FhirJsonNavigatorSettings settings)
+        private static ISourceNode createUntyped(JsonReader reader, string rootName, FhirJsonNavigatorSettings settings)
         {
-            try
-            {
-                var doc = SerializationUtil.JObjectFromReader(reader);
-                return createUntyped(doc, rootName, settings);
-            }
-            catch (FormatException fe)
-            {
-                return new ParseErrorStubNavigator(fe);
-            }
+            var doc = SerializationUtil.JObjectFromReader(reader);
+            return createUntyped(doc, rootName, settings);
         }
 
-        private static ISourceNavigator createUntyped(JObject root, string rootName, FhirJsonNavigatorSettings settings)
+        private static ISourceNode createUntyped(JObject root, string rootName, FhirJsonNavigatorSettings settings)
         {
             var name = rootName ?? root.GetResourceTypeFromObject();
 
             if (name == null)
                 throw Error.InvalidOperation("Root object has no type indication (resourceType) and therefore cannot be used to construct the navigator. Alternatively, specify a rootName using the parameter.");
 
-            return new FhirJsonNavigator(root, name, settings);
-
+            return new FhirJsonNode(root, name, settings);
         }
 
-        private static IElementNavigator createTyped(JObject root, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings)
-        {
-            var untypedNav = createUntyped(root, rootName ?? type?.ToLower(), settings);
-            return untypedNav.ToElementNavigator(type, provider);
-        }
+        private static IElementNode createTyped(JObject root, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings) =>
+            createUntyped(root, rootName ?? type?.ToLower(), settings).ToElementNode(provider, type);
 
-        private static IElementNavigator createTyped(JsonReader reader, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings)
-        {
-            var untypedNav = createUntyped(reader, rootName ?? type?.ToLower(), settings);
-            return untypedNav.ToElementNavigator(type, provider);
-        }
+        private static IElementNode createTyped(JsonReader reader, string type, string rootName, IStructureDefinitionSummaryProvider provider, FhirJsonNavigatorSettings settings) =>
+            createUntyped(reader, rootName ?? type?.ToLower(), settings).ToElementNode(provider, type);
     }
 }

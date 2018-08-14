@@ -19,9 +19,9 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientXml
     {
-        public IElementNavigator getXmlNav(string xml, FhirXmlNavigatorSettings s = null) =>
+        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public IElementNavigator getJsonNav(string json, FhirJsonNavigatorSettings s = null) =>
+        public IElementNode getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
             FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
 
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
 
-            var nav = getXmlNav(tpXml);
+            var nav = getXmlNode(tpXml);
 
             var xmlBuilder = new StringBuilder();
 
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\test-empty-nodes.xml");
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getXmlNav(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });
+            var nav = getXmlNode(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });
 
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void TestElementReordering()
         {
             var tpXml = File.ReadAllText(@"TestData\patient-out-of-order.xml");
-            var nav = getXmlNav(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });  // since the order is incorrect
+            var nav = getXmlNode(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });  // since the order is incorrect
 
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false });
             var pat = pser.Parse<Patient>(tpXml);
 
-            var nav = pat.ToElementNavigator();
+            var nav = pat.ToElementNode();
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();
             using (var writer = XmlWriter.Create(xmlBuilder))
@@ -110,15 +110,15 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void CanSerializeSubtree()
+        public void CompareSubtrees()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
             var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
 
-            var navXml = getXmlNav(tpXml);
-            var navJson = getJsonNav(tpJson);
-            var navPoco = pat.ToElementNavigator();
+            var navXml = getXmlNode(tpXml);
+            var navJson = getJsonNode(tpJson);
+            var navPoco = pat.ToElementNode();
             assertAreAllEqual(navXml, navJson, navPoco);
 
             // A subtree that's a normal datatype
@@ -126,17 +126,9 @@ namespace Hl7.Fhir.Serialization.Tests
             var subnavJson = navJson.Children("photo").First();
             var subnavPoco = navPoco.Children("photo").First();
             assertAreAllEqual(subnavXml, subnavJson, subnavPoco);
-
-            //var navRtXml = FhirJsonNavigator.ForElement(subnavXml.ToJson(), subnavXml.Type,
-            //    new PocoStructureDefinitionSummaryProvider(), subnavXml.Name );
-            //var navRtJson = (new FhirJsonParser()).Parse(subnavJson, 
-            //    ModelInfo.GetTypeForFhirType(subnavJson.Type)).ToElementNavigator();
-            //var navRtPoco = FhirXmlNavigator.ForElement(subnavPoco.ToXml(), subnavPoco.Type,
-            //    new PocoStructureDefinitionSummaryProvider());
-            //assertAreAllEqual(navRtXml, navRtJson, navRtPoco);
         }
 
-        private void assertAreAllEqual(IElementNavigator subnavXml, IElementNavigator subnavJson, IElementNavigator subnavPoco)
+        private void assertAreAllEqual(IElementNode subnavXml, IElementNode subnavJson, IElementNode subnavPoco)
         {
             Assert.IsTrue(subnavXml.IsEqualTo(subnavJson).Success);
             Assert.IsTrue(subnavJson.IsEqualTo(subnavPoco).Success);

@@ -20,6 +20,8 @@ namespace Hl7.Fhir.Serialization
 
         public int? ArrayIndex;
 
+        public bool UsesShadow;
+
         public int LineNumber { get; internal set; }
         public int LinePosition { get; internal set; }
 
@@ -33,7 +35,8 @@ namespace Hl7.Fhir.Serialization
         public static JsonSerializationDetails GetJsonSerializationDetails(this IElementNavigator navigator) =>
             navigator is IAnnotated ia ? ia.GetJsonSerializationDetails() : null;
 
-        public static JsonSerializationDetails GetJsonSerializationDetails(this ISourceNavigator navigator) =>
-            navigator is IAnnotated ia ? ia.GetJsonSerializationDetails() : null;
+        public static JsonSerializationDetails GetJsonSerializationDetails(this IElementNode node) =>
+            node is IAnnotated ia ? ia.GetJsonSerializationDetails() : null;
+
     }
 }

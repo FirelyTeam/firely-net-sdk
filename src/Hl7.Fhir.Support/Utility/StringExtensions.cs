@@ -130,5 +130,23 @@ namespace Hl7.Fhir.Utility
                 return Tuple.Create(key, value);
             }
         }
+
+        /// <summary>
+        /// See if text matches prefix, where the prefix can be either a
+        /// string, or string ending in '*'. In the latter case a prefix match
+        /// is done, otherwise the full strings are compared.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="prefix"></param>
+        /// <returns></returns>
+        public static bool MatchesPrefix(this string text, string prefix)
+        {
+            var prefixMatch = prefix?.EndsWith("*") ?? false;
+
+            return prefix == null ||
+                text == prefix ||
+                (prefixMatch && text.StartsWith(prefix.TrimEnd('*')));     // prefix scan (choice types)
+
+        }
     }
 }

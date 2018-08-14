@@ -10,12 +10,23 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
+    public static class PocoSerializationExtensions
+    {
+        public static string ToJson(this Base source, FhirJsonWriterSettings settings = null) =>
+            SerializationUtil.WriteJsonToString(writer => source.ToElementNode().WriteTo(writer, settings));
+
+        public static string ToXml(this Base source, FhirXmlWriterSettings settings = null, string rootName = null)
+                => SerializationUtil.WriteXmlToString(writer => source.ToElementNode().WriteTo(writer, settings, rootName));
+
+    }
+
     /// <summary>
     /// A class to do basic parsing of POCO classes from an IElementNavigator.  Can be replaced by the real
     /// IElementNavigator-based PocoParser when we have that piece of infrastructure ready.
@@ -24,12 +35,24 @@ namespace Hl7.Fhir.ElementModel
     /// Update: we have the infrastructure ready! So, using ToPoco() could replace the other methods in
     /// this class now. But I'll wait until I need to.
     /// </remarks>
-    public static class ElementNavigatorParsingExtensions
+    public static class PocoParsingExtensions
     {
         public static Base ToPoco(this IElementNavigator navigator, Type pocoType) => 
             (new FhirJsonParser()).Parse(navigator, pocoType);
 
         public static T ToPoco<T>(this IElementNavigator navigator) where T : Base =>
+               (T)navigator.ToPoco(typeof(T));
+
+        public static Base ToPoco(this IElementNode navigator, Type pocoType) =>
+            (new FhirJsonParser()).Parse(navigator, pocoType);
+
+        public static T ToPoco<T>(this IElementNode navigator) where T : Base =>
+               (T)navigator.ToPoco(typeof(T));
+
+        public static Base ToPoco(this ISourceNode navigator, Type pocoType) => 
+            (new FhirJsonParser()).Parse(navigator, pocoType);
+
+        public static T ToPoco<T>(this ISourceNode navigator) where T : Base =>
                (T)navigator.ToPoco(typeof(T));
 
         public static Model.Quantity ParseQuantity(this IElementNavigator instance)
