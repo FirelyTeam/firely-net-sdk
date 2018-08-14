@@ -160,13 +160,14 @@ namespace Hl7.Fhir.Specification.Tests
                         UntypedNode.Valued("id", "myId1"),
                         UntypedNode.Valued("id", "myId2"),
                         UntypedNode.Node("extension",
-                            UntypedNode.Valued("value", "4")),
+                            UntypedNode.Valued("valueInteger", "4")),
                         UntypedNode.Node("extension",
-                            UntypedNode.Valued("value", "world!")))
+                            UntypedNode.Valued("valueString", "world!")))
                             .ToElementNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
                             .ToElementNavigator();
 
             var report = _validator.Validate(data, boolSd);
+            output.WriteLine(report.ToString());
             Assert.Equal(3, report.Errors);
             Assert.Equal(0, report.Warnings);
         }
@@ -470,8 +471,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.NotNull(careplan);
             var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
+            output.WriteLine(report.ToString());
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);            // 3x invariant
+
         }
 
 

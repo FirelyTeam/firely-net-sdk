@@ -17,15 +17,6 @@
     <AssemblyName>Hl7.Fhir.Support</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="ElementModel\Adapters\SourceNodeToSourceNavAdapter.cs" />
-    <Compile Remove="ElementModel\ISourceNavigator.cs" />
-    <Compile Remove="ElementModel\MaskingNavigator.cs" />
-    <Compile Remove="ElementModel\SourceNavigatorExtensions.cs" />
-    <Compile Remove="ElementModel\TypedNavigator.cs" />
-    <Compile Remove="Utility\PipelineComponent.cs" />
-  </ItemGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
     <Compile Remove="Properties\Resources.Designer.cs" />
   </ItemGroup>
