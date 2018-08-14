@@ -13,14 +13,22 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public interface IElementNode
+    /// <summary>
+    /// A element within a tree of typed FHIR data.
+    /// </summary>
+    /// <remarks>
+    /// This interface represents FHIR data as a tree of elements, including type information either present in 
+    /// the instance or derived from fully aware of the FHIR definitions and types
+    /// </remarks>
+
+    public interface ITypedElement
     {
         /// <summary>
         /// Enumerate the child nodes present in the source representation (if any)
         /// </summary>
         /// <param name="name">Return only the children with the given name.</param>
         /// <returns></returns>
-        IEnumerable<IElementNode> Children(string name=null);
+        IEnumerable<ITypedElement> Children(string name=null);
 
         /// <summary>
         /// Name of the node, e.g. "active", "value".

@@ -6,7 +6,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class ElementNavToElementNodeAdapter : IElementNode, IAnnotated, IExceptionSource
+    internal class ElementNavToElementNodeAdapter : ITypedElement, IAnnotated, IExceptionSource
     {
         public readonly IElementNavigator Current;
 
@@ -35,11 +35,11 @@ namespace Hl7.Fhir.ElementModel
 
         public object Value => Current.Value;
 
-        public IElementDefinitionSummary Definition => Current.Annotation<IElementNode>()?.Definition;
+        public IElementDefinitionSummary Definition => Current.Annotation<ITypedElement>()?.Definition;
 
         public string ShortPath => Current.Annotation<IShortPath>()?.ShortPath;
 
-        public IEnumerable<IElementNode> Children(string name=null) =>
+        public IEnumerable<ITypedElement> Children(string name=null) =>
             Current.Children(name).Select(c => new ElementNavToElementNodeAdapter(this, c));
 
         IEnumerable<object> IAnnotated.Annotations(Type type)

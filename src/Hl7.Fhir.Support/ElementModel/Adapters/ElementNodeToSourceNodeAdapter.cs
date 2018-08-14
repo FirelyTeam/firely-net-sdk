@@ -17,9 +17,9 @@ namespace Hl7.Fhir.ElementModel.Adapters
 {
     public class ElementNodeToSourceNodeAdapter : ISourceNode, IAnnotated, IExceptionSource
     {
-        public readonly IElementNode Current;
+        public readonly ITypedElement Current;
 
-        public ElementNodeToSourceNodeAdapter(IElementNode sourceNav)
+        public ElementNodeToSourceNodeAdapter(ITypedElement sourceNav)
         {
             this.Current = sourceNav;
 
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private ElementNodeToSourceNodeAdapter(ElementNodeToSourceNodeAdapter parent, IElementNode child)
+        private ElementNodeToSourceNodeAdapter(ElementNodeToSourceNodeAdapter parent, ITypedElement child)
         {
             Current = child;
             ExceptionHandler = parent.ExceptionHandler;

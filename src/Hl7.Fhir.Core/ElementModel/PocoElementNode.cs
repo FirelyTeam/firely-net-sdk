@@ -16,7 +16,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class PocoElementNode : IElementNode, IAnnotated, IExceptionSource, IShortPath
+    internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPath
     {
         public readonly object Current;
         public readonly PocoStructureDefinitionSummaryProvider Provider;
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        public IEnumerable<IElementNode> Children(string name)
+        public IEnumerable<ITypedElement> Children(string name)
         {
             if (!(Current is Base parentBase)) yield break;
 
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(PocoElementNode) || type == typeof(IElementNode) || type == typeof(IShortPath))
+            if (type == typeof(PocoElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPath))
                 return new[] { this };
             else if (FhirValue is IAnnotated ia)
                 return ia.Annotations(type);

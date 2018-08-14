@@ -20,9 +20,9 @@ namespace Hl7.Fhir.ElementModel
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
     public class PocoNavigator : IElementNavigator, IAnnotated, IExceptionSource
     {
-        private IList<IElementNode> _siblings;
+        private IList<ITypedElement> _siblings;
         private int _index;
-        internal IElementNode Current => _siblings[_index];
+        internal ITypedElement Current => _siblings[_index];
 
         [Obsolete("This class has been deprecated. Do not use this class directly, instead call " +
             "ToElementNavigator() (for backwards compatibility) or the new ToElementNode() on any resource or datatype")]
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.ElementModel
         {
             if (model == null) throw Error.ArgumentNull(nameof(model));
 
-            _siblings = new List<IElementNode>
+            _siblings = new List<ITypedElement>
             {
                 new PocoElementNode(model, new PocoStructureDefinitionSummaryProvider(), rootName: rootName)
             };
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.ElementModel
             return true;
         }
 
-        private int nextMatch(IList<IElementNode> nodes, string namefilter = null, int startAfter = -1)
+        private int nextMatch(IList<ITypedElement> nodes, string namefilter = null, int startAfter = -1)
         {
             for (int scan = startAfter + 1; scan < nodes.Count; scan++)
             {
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this Base @base, string rootName = null) =>
             new PocoNavigator(@base, rootName);
 
-        public static IElementNode ToElementNode(this Base @base, string rootName = null) =>
+        public static ITypedElement ToElementNode(this Base @base, string rootName = null) =>
             new PocoNavigator(@base, rootName).ToElementNode();
 
 #pragma warning restore 612, 618

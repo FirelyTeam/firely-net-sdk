@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
         
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public void Write(IElementNode source, XmlWriter destination, string rootName = null)
+        public void Write(ITypedElement source, XmlWriter destination, string rootName = null)
         {
             writeInternal(source, destination, rootName);
         }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization
                     $"source if the source is a {nameof(FhirXmlNavigator)}.");
         }
 
-        private void writeInternal(IElementNode source, XmlWriter destination, string rootName = null)
+        private void writeInternal(ITypedElement source, XmlWriter destination, string rootName = null)
         {
             var dest = new XDocument();
 
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Serialization
             destination.Flush();
         }
 
-        internal bool MustSerializeMember(IElementNode source, out IElementDefinitionSummary info)
+        internal bool MustSerializeMember(ITypedElement source, out IElementDefinitionSummary info)
         {
             info = source.Definition;
 
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private void write(IElementNode source, XContainer parent, string rootName = null)
+        private void write(ITypedElement source, XContainer parent, string rootName = null)
         {
             var xmlDetails = source.GetXmlSerializationDetails();
             var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();

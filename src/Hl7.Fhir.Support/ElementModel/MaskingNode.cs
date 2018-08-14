@@ -96,16 +96,16 @@ namespace Hl7.Fhir.ElementModel
 
     }
 
-    public class MaskingNode : IElementNode, IAnnotated, IExceptionSource
+    public class MaskingNode : ITypedElement, IAnnotated, IExceptionSource
     {
-        public static MaskingNode ForSummary(IElementNode node) =>
+        public static MaskingNode ForSummary(ITypedElement node) =>
             new MaskingNode(node, new MaskingNavigatorSettings
             {
                 IncludeInSummary = true,
                 PreserveBundle = MaskingNavigatorSettings.PreserveBundleMode.Root
             });
 
-        public static MaskingNode ForText(IElementNode node) =>
+        public static MaskingNode ForText(ITypedElement node) =>
             new MaskingNode(node, new MaskingNavigatorSettings
             {
                 IncludeElements = new[] { "text", "id", "meta" },
@@ -113,24 +113,24 @@ namespace Hl7.Fhir.ElementModel
                 PreserveBundle = MaskingNavigatorSettings.PreserveBundleMode.All
             });
 
-        public static MaskingNode ForData(IElementNode node) =>
+        public static MaskingNode ForData(ITypedElement node) =>
             new MaskingNode(node, new MaskingNavigatorSettings
             {
                 IncludeAll = true,
                 ExcludeNarrative = true
             });
 
-        public static MaskingNode ForCount(IElementNode node) =>
+        public static MaskingNode ForCount(ITypedElement node) =>
           new MaskingNode(node, new MaskingNavigatorSettings
           {
               IncludeMandatory = true,
               IncludeElements = new[] { "id", "total" },
           });
 
-        public MaskingNode(IElementNode source, MaskingNavigatorSettings settings = null)
+        public MaskingNode(ITypedElement source, MaskingNavigatorSettings settings = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
-            if (!source.InPipeline(typeof(ScopedNode)))
+            if (source.Annotation<ScopedNode>() == null)
                 throw Error.Argument("MaskingNavigator can only be used on a navigator chain that contains a ScopedNavigator", nameof(source));
 
             Source = source;
@@ -140,19 +140,19 @@ namespace Hl7.Fhir.ElementModel
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private MaskingNode(MaskingNode parent, IElementNode source)
+        private MaskingNode(MaskingNode parent, ITypedElement source)
         {
             Source = source;
             _settings = parent._settings;
             ExceptionHandler = parent.ExceptionHandler;
         }
 
-        private ScopedNode getScope(IElementNode node) =>
+        private ScopedNode getScope(ITypedElement node) =>
             node.Annotation<ScopedNode>();
 
         private MaskingNavigatorSettings _settings;
 
-        public IElementNode Source { get; private set; }
+        public ITypedElement Source { get; private set; }
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IElementDefinitionSummary Definition => Source.Definition;
 
-        private bool included(IElementNode node)
+        private bool included(ITypedElement node)
         {
             // Trivially, we will include the root
             if (!node.Location.Contains(".")) return true;
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.ElementModel
 
             var included = _settings.IncludeAll;
 
-            var ed = ((IElementNode)scope).Definition;
+            var ed = ((ITypedElement)scope).Definition;
             if (ed != null)
             {
                 included |= _settings.IncludeMandatory && ed.IsRequired;
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.ElementModel
                 return Source.Annotations(type);
         }
 
-        public IEnumerable<IElementNode> Children(string name = null) =>
+        public IEnumerable<ITypedElement> Children(string name = null) =>
             Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c)); 
     }
 }

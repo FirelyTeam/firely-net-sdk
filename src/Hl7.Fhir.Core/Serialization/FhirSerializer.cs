@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
             Settings = new ParserSettings();
         }
 
-        protected static IElementNode makeNav(Base instance, SummaryType summary)
+        protected static ITypedElement makeNav(Base instance, SummaryType summary)
         {
             if (summary == SummaryType.False) return instance.ToElementNode();
 

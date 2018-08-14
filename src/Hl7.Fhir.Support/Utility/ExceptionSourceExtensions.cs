@@ -3,7 +3,7 @@ using System;
 
 namespace Hl7.Fhir.Utility
 {
-    
+
 
     public static class ExceptionSourceExtensions
     {
@@ -23,11 +23,30 @@ namespace Hl7.Fhir.Utility
                 throw args.Exception;
         }
 
-
-    public static IDisposable Catch(this IElementNavigator source, ExceptionNotificationHandler handler) =>
-            source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
-
-        public static IDisposable Catch(this IExceptionSource source, ExceptionNotificationHandler handler, bool forward=false) => new ExceptionInterceptor(source, handler, forward);
+        /// <summary>
+        /// Registers an <see cref="ExceptionNotificationHandler" /> with an <see cref="IExceptionSource"/>.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="handler"></param>
+        /// <param name="forward">If true, also forwards the error to the original handler (if any).</param>
+        /// <returns>An object that, when disposed, unregisters the handler from the source.</returns>
+        /// <remarks>
+        /// <para>This function can be used directly inside a <c>using</c> block, to scope the interception
+        /// of exceptions by the given handler to that block.</para>
+        /// <para>The <paramref name="handler"/> replaces the handler already in place in the source (of any), but
+        /// as soon as executing leaves the block, the handler is unregistered, and the original handler restored.</para>
+        /// <para>If the source originally had a handler set, the <paramref name="forward"/> can be used to forward
+        /// the exception to the original handler, after invoking the handler passed in with <paramref name="handler"/>.</para>
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// using(source.Catch((o,a) => lastError = a)) 
+        /// {
+        ///      var children = source.Children();
+        /// }
+        /// </code></example>
+        public static IDisposable Catch(this IExceptionSource source, ExceptionNotificationHandler handler, bool forward = false) => 
+            new ExceptionInterceptor(source, handler, forward);
 
         private class ExceptionInterceptor : IDisposable
         {
@@ -46,7 +65,7 @@ namespace Hl7.Fhir.Utility
                 {
                     handler(s, a);
 
-                    if(forward)  _originalHandler.NotifyOrThrow(s, a);
+                    if (forward) _originalHandler.NotifyOrThrow(s, a);
                 }
             }
 

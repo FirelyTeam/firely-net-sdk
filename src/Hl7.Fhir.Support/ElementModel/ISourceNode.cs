@@ -14,50 +14,56 @@ using System.Collections.Generic;
 namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
-    /// A navigator across a tree representing FHIR data, independent of serialization format or FHIR version.
+    /// A node within a tree of FHIR data.
     /// </summary>
     /// <remarks>
-    /// This interface is typically implemented by a parser for one of the low-level serialization formats for FHIR, i.e.
-    /// FHIR xml/json/rdf of v3 XML.  This interface assumes there is no type information available (in contrast to
-    /// IElementNavigator), so the names of the nodes still may have their type suffixes (for choice types) and all 
-    /// primitives values are represented as strings, instead of native objects.
+    /// <para>This interface is typically implemented by a parser for one of the low-level serialization formats for FHIR, i.e.
+    /// FHIR xml/json/rdf or v3 XML. The interface does not depend on the availability of FHIR metadata and definitions
+    /// (in contrast to <see cref="ITypedElement" />), so the names of the nodes will have their type suffixes (for choice types) 
+    /// and all primitives values are represented as strings, instead of native objects.</para>
+    /// <para>Implementations of this interface that want to report errors while parsing should only do so on the 
+    /// <see cref="Children(string)"/> function and <see cref="Text"/> getter.</para>
     /// </remarks>
     public interface ISourceNode
     {
         /// <summary>
-        /// Name of the node, e.g. "active", "valueQuantity".
+        /// Gets the name of the node, e.g. "active", "valueQuantity".
         /// </summary>
-        /// <remarks>Since the navigator has no type information, choice elements are represented as their 
-        /// "raw" name on the wire.
+        /// <remarks>Since the node has no type information, choice elements are represented as their 
+        /// name on the wire, possibly including the type suffix for choice elements.
         /// </remarks>
         string Name { get; }
 
         /// <summary>
-        /// The raw text of the primitive value of the node (if it represents a primitive FHIR value)
+        /// Gets the text of the primitive value of the node
         /// </summary>
+        /// <value>Returns the raw textual value as represented in the serialization, or null if there is no value in this node.</value>
         string Text { get; }
 
         /// <summary>
-        /// Return the resource type of the node, if the source is located on a node which has a 
-        /// resource type indication (e.g. resourceType in json, or contained node in XML).
+        /// Gets the resource type found at the location of the node in the source data (if any).
         /// </summary>
+        /// <value>The value of resource type indicator (e.g. <c>resourceType</c> in json, or contained node in XML) or
+        /// <c>null</c> if such an indicator was not found.</value>
         string ResourceType { get; }
 
         /// <summary>
-        /// An indication of the location of this node within the data represented by the navigator.
+        /// Gets the location of this node within the tree of data.
         /// </summary>
-        /// <remarks>The format of the location is the dotted name of the property, including indices to make
-        /// sure repeated occurences of an element can be distinguished. It needs to be sufficiently precise to aid 
-        /// the user in locating issues in the data.</remarks>
+        /// <value>A string of dot-separated names representing the path to the node within the tree, including indices
+        /// to distinguish repeated occurences of an element.</value>
         string Location { get; }
 
         /// <summary>
-        /// Enumerate the child nodes present in the source representation (if any)
+        /// Enumerates the direct child nodes of the current node (if any).
         /// </summary>
-        /// <param name="name">Return only the children with the given name.</param>
-        /// <returns></returns>
-        /// <remarks>If the <paramref name="name"/> parameter ends in an asterix ('*'),
-        /// the function will return the children of which the name starts with the given name</remarks>
+        /// <param name="name">Optional. The name filter for the children. Can be omitted to not filter by name.</param>
+        /// <returns>The children of the node matching the given filter, or all children if no filter was specified.
+        /// If no children match the given filter, the function returns an empty enumerable.</returns>
+        /// <remarks>
+        /// <para>If the <paramref name="name"/>parameter ends in an asterix ('*'),
+        /// the function will return the children of which the name starts with the given name.</para>
+        /// <para>Repeating elements will always be returned consecutively.</para></remarks>
         IEnumerable<ISourceNode> Children(string name = null);
     }
 }

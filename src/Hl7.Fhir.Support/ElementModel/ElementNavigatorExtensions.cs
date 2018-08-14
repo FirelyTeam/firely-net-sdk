@@ -74,16 +74,8 @@ namespace Hl7.Fhir.ElementModel
 
         public static void Visit(this IElementNavigator navigator, Action<int, IElementNavigator> visitor) => navigator.visit(visitor, 0);
 
-        public static IEnumerable<object> Annotations(this IElementNavigator nav, Type type) =>
-                nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
-        public static T Annotation<T>(this IElementNavigator nav) where T:class =>
-            nav is IAnnotated ann ? ann.Annotation<T>() : null;
-
-
-        public static bool InPipeline(this IElementNavigator navigator, Type componentType) =>
-            navigator is IAnnotated ia ? ia.Annotation(componentType) != null : false;
-        public static bool InPipeline<T>(this IElementNavigator navigator) =>
-            navigator.InPipeline(navigator.GetType());
+        public static IDisposable Catch(this IElementNavigator source, ExceptionNotificationHandler handler) =>
+        source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
 
         public static List<ExceptionNotification> VisitAndCatch(this IElementNavigator nav)
         {
@@ -97,7 +89,12 @@ namespace Hl7.Fhir.ElementModel
             return errors;
         }
 
-        public static IElementNode ToElementNode(this IElementNavigator nav) => 
+        public static IEnumerable<object> Annotations(this IElementNavigator nav, Type type) =>
+        nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
+        public static T Annotation<T>(this IElementNavigator nav) where T : class =>
+            nav is IAnnotated ann ? ann.Annotation<T>() : null;
+
+        public static ITypedElement ToElementNode(this IElementNavigator nav) => 
             new ElementNavToElementNodeAdapter(nav);
     }
 }

@@ -10,10 +10,10 @@ namespace Hl7.Fhir.ElementModel
 {
     public static class ElementNodeExtensions
     {
-        public static IEnumerable<IElementNode> Children(this IEnumerable<IElementNode> nodes, string name = null) => 
+        public static IEnumerable<ITypedElement> Children(this IEnumerable<ITypedElement> nodes, string name = null) => 
             nodes.SelectMany(n => n.Children(name));
 
-        public static IEnumerable<IElementNode> Descendants(this IElementNode element)
+        public static IEnumerable<ITypedElement> Descendants(this ITypedElement element)
         {
             foreach (var child in element.Children())
             {
@@ -26,82 +26,55 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        public static IEnumerable<IElementNode> Descendants(this IEnumerable<IElementNode> elements) => 
+        public static IEnumerable<ITypedElement> Descendants(this IEnumerable<ITypedElement> elements) => 
             elements.SelectMany(e => e.Descendants());
 
 
-        public static IEnumerable<IElementNode> DescendantsAndSelf(this IElementNode element) => 
+        public static IEnumerable<ITypedElement> DescendantsAndSelf(this ITypedElement element) => 
             (new[] { element }).Concat(element.Descendants());
 
-        public static IEnumerable<IElementNode> DescendantsAndSelf(this IEnumerable<IElementNode> elements) => 
+        public static IEnumerable<ITypedElement> DescendantsAndSelf(this IEnumerable<ITypedElement> elements) => 
             elements.SelectMany(e => e.DescendantsAndSelf());
 
+        public static void Visit(this ITypedElement root, Action<int, ITypedElement> visitor) => root.visit(visitor, 0);
 
-        //public static IEnumerable<IElementNode> Ancestors(this IElementNode node)
-        //{
-        //    var scan = node.Parent;
-
-        //    while(scan != null)
-        //    {
-        //        yield return scan;
-        //        scan = scan.Parent;
-        //    }
-        //}
-
-        //public static IEnumerable<IElementNode> Ancestors(this IEnumerable<IElementNode> nodes)
-        //{
-        //    // all the parents of the given lists of nodes. Does not include the nodes, except if one is a parent of another.
-        //    return nodes.SelectMany(e => e.Ancestors()).Distinct();
-        //}
-
-        [Obsolete("This method can be prohibitively expensive, and should not be used anymore.")]
-        public static bool HasChildren(this IElementNode node) => node.Children().Any();
-
-        [Obsolete("This method can be prohibitively expensive, and should not be used anymore.")]
-        public static bool HasChildren(this IEnumerable<IElementNode> nodes) => nodes.Children().Any();
-
-
-        private static void visit(this IElementNode node, Action<int, IElementNode> visitor, int depth = 0)
+        private static void visit(this ITypedElement root, Action<int, ITypedElement> visitor, int depth = 0)
         {
-            visitor(depth, node);
+            visitor(depth, root);
 
-            foreach (var child in node.Children())
+            foreach (var child in root.Children())
             {
                 visit(child, visitor, depth + 1);
             }
         }
 
-        public static void Visit(this IElementNode node, Action<int, IElementNode> visitor) => node.visit(visitor, 0);
+        public static IDisposable Catch(this ITypedElement source, ExceptionNotificationHandler handler) =>
+            source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("Element does not implement IExceptionSource.");
 
-        public static bool InPipeline(this IElementNode node, Type componentType) =>
-            node is IAnnotated ia ? ia.Annotation(componentType) != null : false;
-        public static bool InPipeline<T>(this IElementNode node) =>
-            node.InPipeline(node.GetType());
+        public static void VisitAll(this ITypedElement nav) => nav.Visit((_,n) => { var dummy = n.Value; });
 
-        public static IDisposable Catch(this IElementNode source, ExceptionNotificationHandler handler) =>
-            source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
-
-
-        public static List<ExceptionNotification> VisitAndCatch(this IElementNode node)
+        public static List<ExceptionNotification> VisitAndCatch(this ITypedElement node)
         {
             var errors = new List<ExceptionNotification>();
 
             using (node.Catch((o, arg) => errors.Add(arg)))
             {
-                node.Visit((d,n) => { var dummy = n.Value; });
+                node.VisitAll();
             }
 
             return errors;
         }
 
-        public static IEnumerable<object> Annotations(this IElementNode nav, Type type) =>
+
+
+        public static IEnumerable<object> Annotations(this ITypedElement nav, Type type) =>
         nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
-        public static T Annotation<T>(this IElementNode nav) where T : class =>
+        public static T Annotation<T>(this ITypedElement nav) where T : class =>
             nav is IAnnotated ann ? ann.Annotation<T>() : null;
 
         [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
-        public static IElementNavigator ToElementNavigator(this IElementNode node) => new ElementNodeToElementNavAdapter(node);
+        public static IElementNavigator ToElementNavigator(this ITypedElement node) => new ElementNodeToElementNavAdapter(node);
 
-        public static ISourceNode ToSourceNode(this IElementNode node) => new ElementNodeToSourceNodeAdapter(node);
+        public static ISourceNode ToSourceNode(this ITypedElement node) => new ElementNodeToSourceNodeAdapter(node);
     }
 }

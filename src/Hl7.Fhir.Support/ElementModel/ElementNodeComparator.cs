@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Utility
 {
     public static class ElementNodeComparator
     {
-        public static ComparisonResult IsEqualTo(this IElementNode expected, IElementNode actual)
+        public static ComparisonResult IsEqualTo(this ITypedElement expected, ITypedElement actual)
         {
             if (expected.Name != actual.Name)
                 return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");

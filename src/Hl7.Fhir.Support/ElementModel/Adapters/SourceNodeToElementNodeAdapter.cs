@@ -6,7 +6,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
-    internal class SourceNodeToElementNodeAdapter : IElementNode, IAnnotated, IExceptionSource
+    internal class SourceNodeToElementNodeAdapter : ITypedElement, IAnnotated, IExceptionSource
     {
         public readonly ISourceNode Current;
 
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public IElementDefinitionSummary Definition => null;
 
-        public IEnumerable<IElementNode> Children(string name) =>
+        public IEnumerable<ITypedElement> Children(string name) =>
             Current.Children(name).Select(c => new SourceNodeToElementNodeAdapter(this, c));
 
         IEnumerable<object> IAnnotated.Annotations(Type type)

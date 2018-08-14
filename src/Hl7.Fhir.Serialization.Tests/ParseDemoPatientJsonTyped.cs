@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonTyped
     {
-        public IElementNode getJsonNode(string json, FhirJsonNavigatorSettings settings = null) 
+        public ITypedElement getJsonNode(string json, FhirJsonNavigatorSettings settings = null) 
             => FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Serialization.Tests
             errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
-            IElementNode getValidatingJsonNav(string jsonText) =>
+            ITypedElement getValidatingJsonNav(string jsonText) =>
                 getJsonNode(jsonText, new FhirJsonNavigatorSettings { ValidateFhirXhtml = true });
         }
 

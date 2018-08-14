@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : IElementNode, IAnnotated, IExceptionSource
+    public class ScopedNode : ITypedElement, IAnnotated, IExceptionSource
     {
         private class Cache
         {
@@ -29,9 +29,9 @@ namespace Hl7.Fhir.ElementModel
 
         private Cache _cache = new Cache();
 
-        public readonly IElementNode Current = null;
+        public readonly ITypedElement Current = null;
 
-        public ScopedNode(IElementNode wrapped)
+        public ScopedNode(ITypedElement wrapped)
         {
             //if (wrapped.GetElementDefinitionSummary() == null)
             //    throw Error.Argument("ScopedNavigator can only be used on a navigator chain that supplies type information (e.g. TypedNavigator, PocoNavigator)", nameof(wrapped));
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.ElementModel
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private ScopedNode(ScopedNode parent, ScopedNode parentResource, IElementNode wrapped)
+        private ScopedNode(ScopedNode parent, ScopedNode parentResource, ITypedElement wrapped)
         {
             Current = wrapped;
             ExceptionHandler = parent.ExceptionHandler;
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.ElementModel
         /// this would be the resource the element is part of. Do not go past a root resource into a bundle, 
         /// if it is contained in a bundle.
         /// </remarks>
-        public IElementNode ResourceContext
+        public ITypedElement ResourceContext
         {
             get
             {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.ElementModel
                 return Current.Annotations(type);
         }
 
-        public IEnumerable<IElementNode> Children(string name = null) =>
+        public IEnumerable<ITypedElement> Children(string name = null) =>
             Current.Children(name).Select(c => new ScopedNode(this, this.ParentResource, c));
     }
 }

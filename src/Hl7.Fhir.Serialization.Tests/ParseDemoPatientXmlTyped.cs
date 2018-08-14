@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings settings = null, TypedNodeSettings tnSettings=null) =>
+        public ITypedElement getXmlNode(string xml, FhirXmlNavigatorSettings settings = null, TypedNodeSettings tnSettings=null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Serialization.Tests
             errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
-            IElementNode getValidatingXmlNav(string jsonText) =>
+            ITypedElement getValidatingXmlNav(string jsonText) =>
                 getXmlNode(jsonText, new FhirXmlNavigatorSettings { ValidateFhirXhtml = true });
         }
 

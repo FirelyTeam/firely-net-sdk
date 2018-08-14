@@ -12,9 +12,9 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializePartialTree
     {
-        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
+        public ITypedElement getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public IElementNode getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
+        public ITypedElement getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
             FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
         
 
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Serialization.Tests
             testSubtree(subnavXml, subnavJson, subnavPoco);
         }
 
-        private void testSubtree(IElementNode navXml, IElementNode navJson, IElementNode navPoco)
+        private void testSubtree(ITypedElement navXml, ITypedElement navJson, ITypedElement navPoco)
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Serialization.Tests
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);
         }
 
-        private void assertAreNavsEqual(IElementNode subnavXml, IElementNode subnavJson, IElementNode subnavPoco)
+        private void assertAreNavsEqual(ITypedElement subnavXml, ITypedElement subnavJson, ITypedElement subnavPoco)
         {
             var result = subnavXml.IsEqualTo(subnavJson);
             Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);

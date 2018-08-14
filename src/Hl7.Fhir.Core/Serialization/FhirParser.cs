@@ -152,10 +152,10 @@ namespace Hl7.Fhir.Serialization
                 return new ComplexTypeReader(reader, Settings).Deserialize(dataType);
         }
 
-        public Base Parse(IElementNode nav, Type dataType) =>
+        public Base Parse(ITypedElement nav, Type dataType) =>
             Parse(new ElementNodeToFhirReaderAdapter(nav), dataType);
 
-        public T Parse<T>(IElementNode nav) where T : Base => (T)Parse(nav, typeof(T));
+        public T Parse<T>(ITypedElement nav) where T : Base => (T)Parse(nav, typeof(T));
 
 
         public Base Parse(IElementNavigator nav, Type dataType) =>

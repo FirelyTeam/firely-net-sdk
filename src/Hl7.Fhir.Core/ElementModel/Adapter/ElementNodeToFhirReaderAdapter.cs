@@ -24,9 +24,9 @@ namespace Hl7.Fhir.ElementModel.Adapters
     internal class ElementNodeToFhirReaderAdapter : IFhirReader, IAnnotated
 #pragma warning restore 612,618
     {
-        public readonly IElementNode Current;
+        public readonly ITypedElement Current;
 
-        public ElementNodeToFhirReaderAdapter(IElementNode root)
+        public ElementNodeToFhirReaderAdapter(ITypedElement root)
         {
             Current = root;
 
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public int LinePosition => getPositionInfo(Current)?.LinePosition ?? -1;
 
-        private static IPositionInfo getPositionInfo(IElementNode node) =>
+        private static IPositionInfo getPositionInfo(ITypedElement node) =>
             node is IAnnotated ia ?
                 (IPositionInfo)ia.Annotation<XmlSerializationDetails>() ??
                     (IPositionInfo)ia.Annotation<JsonSerializationDetails>() : null;

@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
 
     public static class FhirJsonWriterExtensions
     {
-        public static void WriteTo(this IElementNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+        public static void WriteTo(this ITypedElement source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
             new FhirJsonWriter(settings).Write(source, destination);
 
         public static void WriteTo(this ISourceNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
         public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
             source.ToElementNode().WriteTo(destination, settings);
 
-        public static string ToJson(this IElementNode source, FhirJsonWriterSettings settings = null)
+        public static string ToJson(this ITypedElement source, FhirJsonWriterSettings settings = null)
             => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
 
         public static string ToJson(this ISourceNode source, FhirJsonWriterSettings settings = null)
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization
         public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
               => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
 
-        public static byte[] ToJsonBytes(this IElementNode source, FhirJsonWriterSettings settings = null)
+        public static byte[] ToJsonBytes(this ITypedElement source, FhirJsonWriterSettings settings = null)
                 => SerializationUtil.WriteJsonToBytes(writer => source.WriteTo(writer, settings));
     }
 
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Serialization
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public void Write(IElementNode source, JsonWriter destination)
+        public void Write(ITypedElement source, JsonWriter destination)
         {
             //Re-enable when the PocoNavigator is also fed through the TypedNavigator
             //if(!source.InPipeline(typeof(TypedNavigator)))
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization
             writeInternal(source, destination);
         }
 
-        private void writeInternal(IElementNode source, JsonWriter destination)
+        private void writeInternal(ITypedElement source, JsonWriter destination)
         {
             if (source is IExceptionSource)
             {
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        private (JToken first, JObject second) buildNode(IElementNode node)
+        private (JToken first, JObject second) buildNode(ITypedElement node)
         {
             var details = node.GetJsonSerializationDetails();
             object value = node.Definition != null ? node.Value : details?.OriginalValue ?? node.Value;
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Serialization
 
             return (first, second);
 
-            JObject buildChildren(IElementNode n)
+            JObject buildChildren(ITypedElement n)
             {
                 var objectWithChildren = new JObject();
                 addChildren(n, objectWithChildren);
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        internal bool MustSerializeMember(IElementNode source, out IElementDefinitionSummary info)
+        internal bool MustSerializeMember(ITypedElement source, out IElementDefinitionSummary info)
         {
             info = source.Definition;
 
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private void addChildren(IElementNode node, JObject parent)
+        private void addChildren(ITypedElement node, JObject parent)
         {
             var isResource = node.Definition?.IsResource ?? node.Annotation<ISourceNode>().ResourceType != null;
             var containedResourceType = isResource ? (node.InstanceType ?? node.Annotation<ISourceNode>()?.ResourceType) : null;

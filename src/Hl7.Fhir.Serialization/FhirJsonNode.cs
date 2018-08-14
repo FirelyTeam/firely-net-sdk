@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Serialization
 #if NET_XSD_SCHEMA
             yield return checkXhtml;
 
-            object checkXhtml(IElementNode nav, IExceptionSource ies, object _)
+            object checkXhtml(ITypedElement nav, IExceptionSource ies, object _)
             {
                 if (nav.InstanceType == "xhtml" && ValidateFhirXhtml)
                     FhirXmlNode.ValidateXhtml((string)nav.Value, ies, nav);
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Serialization
             }
 #endif
 
-            object checkArrayUse(IElementNode nav, IExceptionSource ies, object _)
+            object checkArrayUse(ITypedElement nav, IExceptionSource ies, object _)
             {
                 var sdSummary = nav.Definition;
                 var serializationDetails = nav.GetJsonSerializationDetails();

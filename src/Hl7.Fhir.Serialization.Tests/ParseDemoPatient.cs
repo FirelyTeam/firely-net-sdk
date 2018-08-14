@@ -64,9 +64,9 @@ namespace Hl7.Fhir.Serialization.Tests
                 patient.Children("contained").First().Children("name").Skip(1).First().Children("use").Single().Location);
         }
 
-        public static void ProducedCorrectTypedLocations(IElementNode patient)
+        public static void ProducedCorrectTypedLocations(ITypedElement patient)
         {
-            string getPretty(IElementNode n) => n.Annotation<IShortPath>().ShortPath;
+            string getPretty(ITypedElement n) => n.Annotation<IShortPath>().ShortPath;
 
             Assert.AreEqual("Patient", getPretty(patient));
 
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 case ISourceNode isn:
                     serInfo = null;
                     break;
-                case IElementNode ien:
+                case ITypedElement ien:
                     serInfo = ien.Definition;
                     break;
                 default:
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Serialization.Tests
             string output = null;
 
             if (nav is ISourceNode isn2) output = isn2.ToXml();
-            else if (nav is IElementNode ien2) output = ien2.ToXml();
+            else if (nav is ITypedElement ien2) output = ien2.ToXml();
             else
                 throw Error.InvalidOperation("Fix unit test");
 
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 case ISourceNode isn:
                     serInfo = null;
                     break;
-                case IElementNode ien:
+                case ITypedElement ien:
                     serInfo = ien.Definition;
                     break;
                 default:
@@ -170,14 +170,14 @@ namespace Hl7.Fhir.Serialization.Tests
             string output = null;
 
             if (nav is ISourceNode isn2) output = isn2.ToJson();
-            else if (nav is IElementNode ien2) output = ien2.ToJson();
+            else if (nav is ITypedElement ien2) output = ien2.ToJson();
             else
                 throw Error.InvalidOperation("Fix unit test");
             
             JsonAssert.AreSame(expected, output);
         }
 
-        public static void CanReadThroughNavigator(IElementNode n, bool typed)
+        public static void CanReadThroughNavigator(ITypedElement n, bool typed)
         {
             Assert.AreEqual("Patient", n.Name);
             Assert.AreEqual("Patient", n.Annotation<ISourceNode>().ResourceType);

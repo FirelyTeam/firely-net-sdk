@@ -65,7 +65,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         {
             get
             {
-                var typeInfo = Current.Annotation<IElementNode>()?.Definition;
+                var typeInfo = Current.Annotation<ITypedElement>()?.Definition;
 
                 return typeInfo?.IsChoiceElement == true ?
                     Current.Name + Current.Type.Capitalize() : Current.Name;

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public IElementNode getJsonNav(string json, FhirJsonNavigatorSettings s = null) => 
+        public ITypedElement getJsonNav(string json, FhirJsonNavigatorSettings s = null) => 
             FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]

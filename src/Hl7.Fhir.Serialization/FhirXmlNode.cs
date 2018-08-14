@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Serialization
             yield return checkRepresentation;
             yield return checkOrder;
 
-            object checkOrder(IElementNode node, IExceptionSource ies, object state)
+            object checkOrder(ITypedElement node, IExceptionSource ies, object state)
             {
                 var sdSummary = node.Definition;
                 if (sdSummary == null) return null;
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Serialization
                     return state;
             }
 
-            object checkRepresentation(IElementNode node, IExceptionSource ies, object _)
+            object checkRepresentation(ITypedElement node, IExceptionSource ies, object _)
             {
                 var sdSummary = node.Definition;
                 var serializationDetails = node.GetXmlSerializationDetails();

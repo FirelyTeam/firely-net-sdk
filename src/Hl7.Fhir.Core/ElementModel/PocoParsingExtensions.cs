@@ -43,10 +43,10 @@ namespace Hl7.Fhir.ElementModel
         public static T ToPoco<T>(this IElementNavigator navigator) where T : Base =>
                (T)navigator.ToPoco(typeof(T));
 
-        public static Base ToPoco(this IElementNode navigator, Type pocoType) =>
+        public static Base ToPoco(this ITypedElement navigator, Type pocoType) =>
             (new FhirJsonParser()).Parse(navigator, pocoType);
 
-        public static T ToPoco<T>(this IElementNode navigator) where T : Base =>
+        public static T ToPoco<T>(this ITypedElement navigator) where T : Base =>
                (T)navigator.ToPoco(typeof(T));
 
         public static Base ToPoco(this ISourceNode navigator, Type pocoType) => 

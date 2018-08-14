@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void NameMatching()
         {
             var data = UntypedNode.Valued("active", "true")
-                .ToElementNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
+                .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
                 .ToElementNavigator();
 
             Assert.True(ChildNameMatcher.NameMatches("active", data));
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Specification.Tests
                             UntypedNode.Valued("value", "4")),
                         UntypedNode.Node("extension",
                             UntypedNode.Valued("value", "world!")))
-                            .ToElementNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
+                            .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
                             .ToElementNavigator();
 
             var report = _validator.Validate(data, boolSd);

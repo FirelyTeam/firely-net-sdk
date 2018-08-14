@@ -19,9 +19,9 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientXml
     {
-        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
+        public ITypedElement getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public IElementNode getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
+        public ITypedElement getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
             FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
 
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Serialization.Tests
             assertAreAllEqual(subnavXml, subnavJson, subnavPoco);
         }
 
-        private void assertAreAllEqual(IElementNode subnavXml, IElementNode subnavJson, IElementNode subnavPoco)
+        private void assertAreAllEqual(ITypedElement subnavXml, ITypedElement subnavJson, ITypedElement subnavPoco)
         {
             Assert.IsTrue(subnavXml.IsEqualTo(subnavJson).Success);
             Assert.IsTrue(subnavJson.IsEqualTo(subnavPoco).Success);

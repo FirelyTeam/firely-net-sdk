@@ -179,7 +179,7 @@ namespace Hl7.Fhir
             doCompare(pocoP, jsonP, "poco<->json");
             doCompare(pocoP, xmlP, "poco<->xml");
 
-            void doCompare(IElementNode one, IElementNode two, string what)
+            void doCompare(ITypedElement one, ITypedElement two, string what)
             {
                 var compare = one.IsEqualTo(two);
 

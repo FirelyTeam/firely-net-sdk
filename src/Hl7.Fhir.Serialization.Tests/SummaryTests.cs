@@ -10,7 +10,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SummaryTests
     {
-        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
+        public ITypedElement getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
 
         [TestMethod]

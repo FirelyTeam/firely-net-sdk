@@ -7,13 +7,13 @@ namespace Hl7.Fhir.ElementModel
 {
     internal class ElementNodeToElementNavAdapter : IElementNavigator, IAnnotated, IExceptionSource
     {
-        private IList<IElementNode> _siblings;
+        private IList<ITypedElement> _siblings;
         private int _index;
-        public IElementNode Current =>  _siblings[_index]; 
+        public ITypedElement Current =>  _siblings[_index]; 
 
-        public ElementNodeToElementNavAdapter(IElementNode sourceNode)
+        public ElementNodeToElementNavAdapter(ITypedElement sourceNode)
         {
-            _siblings = new List<IElementNode> { sourceNode };
+            _siblings = new List<ITypedElement> { sourceNode };
             _index = 0;
 
             if (sourceNode is IExceptionSource ies && ies.ExceptionHandler == null)
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.ElementModel
             };
 
 
-        private int nextMatch(IList<IElementNode> nodes, string namefilter = null, int startAfter = -1)
+        private int nextMatch(IList<ITypedElement> nodes, string namefilter = null, int startAfter = -1)
         {
             for (int scan = startAfter + 1; scan < nodes.Count; scan++)
             {

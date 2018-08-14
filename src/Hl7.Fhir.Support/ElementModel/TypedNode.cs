@@ -16,9 +16,9 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class TypedNode : IElementNode, IAnnotated, IExceptionSource, IShortPath
+    public class TypedElement : ITypedElement, IAnnotated, IExceptionSource, IShortPath
     {
-        public TypedNode(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedNodeSettings settings = null)
+        public TypedElement(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedNodeSettings settings = null)
         {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (element == null) throw Error.ArgumentNull(nameof(element));
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        private TypedNode(TypedNode parent, NavigatorPosition position, string prettyPath)
+        private TypedElement(TypedElement parent, NavigatorPosition position, string prettyPath)
         {
             Current = position;
             ShortPath = prettyPath;
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.ElementModel
             return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
         }
 
-        private IEnumerable<TypedNode> enumerateElements(ElementDefinitionSummaryCache dis, ISourceNode parent, string name)
+        private IEnumerable<TypedElement> enumerateElements(ElementDefinitionSummaryCache dis, ISourceNode parent, string name)
         {
             IEnumerable<ISourceNode> childSet = null;
 
@@ -213,11 +213,11 @@ namespace Hl7.Fhir.ElementModel
                 var prettyPath =
                  hit && !info.IsCollection ? $"{ShortPath}.{match.Name}" : $"{ShortPath}.{match.Name}[{_nameIndex}]";
 
-                yield return new TypedNode(this, match, prettyPath);
+                yield return new TypedElement(this, match, prettyPath);
             }
         }
 
-        public IEnumerable<IElementNode> Children(string nameFilter = null)
+        public IEnumerable<ITypedElement> Children(string nameFilter = null)
         {
             var firstChildDef = down(Current);
 
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.ElementModel
 
                 // Don't go on with the (untyped) children, unless explicitly told to do so
                 if (_settings.ErrorMode != TypedNodeSettings.TypeErrorMode.Passthrough)
-                    return Enumerable.Empty<IElementNode>();
+                    return Enumerable.Empty<ITypedElement>();
                 else
                     // Ok, pass through the untyped members, but since there is no type information, 
                     // don't bother to run the additional rules
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private IEnumerable<IElementNode> runAdditionalRules(IEnumerable<IElementNode> children)
+        private IEnumerable<ITypedElement> runAdditionalRules(IEnumerable<ITypedElement> children)
         {
 #pragma warning disable 612,618
             var additionalRules = Current.Node.Annotations(typeof(AdditionalStructuralRule));
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(TypedNode) || type == typeof(IElementNode) || type == typeof(IShortPath))
+            if (type == typeof(TypedElement) || type == typeof(ITypedElement) || type == typeof(IShortPath))
                 return new[] { this };
             else
                 return Current.Node.Annotations(type);
@@ -297,5 +297,5 @@ namespace Hl7.Fhir.ElementModel
     }
 
     [Obsolete("This class is used for internal purposes and is subject to change without notice. Don't use.")]
-    public delegate object AdditionalStructuralRule(IElementNode node, IExceptionSource ies, object state);
+    public delegate object AdditionalStructuralRule(ITypedElement node, IExceptionSource ies, object state);
 }
