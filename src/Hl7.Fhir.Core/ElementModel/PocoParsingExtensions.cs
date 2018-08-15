@@ -20,10 +20,10 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoSerializationExtensions
     {
         public static string ToJson(this Base source, FhirJsonWriterSettings settings = null) =>
-            SerializationUtil.WriteJsonToString(writer => source.ToElementNode().WriteTo(writer, settings));
+            SerializationUtil.WriteJsonToString(writer => source.ToTypedElement().WriteTo(writer, settings));
 
         public static string ToXml(this Base source, FhirXmlWriterSettings settings = null, string rootName = null)
-                => SerializationUtil.WriteXmlToString(writer => source.ToElementNode().WriteTo(writer, settings, rootName));
+                => SerializationUtil.WriteXmlToString(writer => source.ToTypedElement().WriteTo(writer, settings, rootName));
 
     }
 
@@ -57,17 +57,17 @@ namespace Hl7.Fhir.ElementModel
 
         public static Model.Quantity ParseQuantity(this IElementNavigator instance)
         {
-            var newQuantity = new Quantity();
-
-            newQuantity.Value = instance.Children("value").SingleOrDefault()?.Value as decimal?;
+            var newQuantity = new Quantity
+            {
+                Value = instance.Children("value").SingleOrDefault()?.Value as decimal?,
+                Unit = instance.Children("unit").GetString(),
+                System = instance.Children("system").GetString(),
+                Code = instance.Children("code").GetString()
+            };
 
             var comp = instance.Children("comparator").GetString();
             if(comp != null)
                 newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { ObjectValue = comp };
-
-            newQuantity.Unit = instance.Children("unit").GetString();
-            newQuantity.System = instance.Children("system").GetString();
-            newQuantity.Code = instance.Children("code").GetString();
 
             return newQuantity;
         }
@@ -130,11 +130,7 @@ namespace Hl7.Fhir.ElementModel
                 // HACK: For now, assume this is a typed navigator, so we have "value",
                 // not the unparsed "valueCode" etc AND we have Type (in ParseBindable())
                 var valueChild = instance.Children("value").FirstOrDefault();
-
-                if (valueChild != null)
-                    return valueChild.ParseBindable();
-                else
-                    return null;
+                return valueChild?.ParseBindable();
             }
         }
 

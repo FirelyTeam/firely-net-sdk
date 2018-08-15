@@ -6,12 +6,11 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Utility;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlNavigatorSettings
+    public class FhirXmlNodeSettings
     {
         public XNamespace[] AllowedExternalNamespaces;
         public bool DisallowSchemaLocation;
@@ -21,8 +20,8 @@ namespace Hl7.Fhir.Serialization
         public bool ValidateFhirXhtml;
 #endif
 
-        public FhirXmlNavigatorSettings Clone() =>
-            new FhirXmlNavigatorSettings
+        public FhirXmlNodeSettings Clone() =>
+            new FhirXmlNodeSettings
             {
                 AllowedExternalNamespaces = (XNamespace[])AllowedExternalNamespaces?.Clone(),
                 DisallowSchemaLocation = DisallowSchemaLocation,

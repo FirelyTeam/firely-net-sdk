@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Specification;
@@ -6,19 +14,19 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
-    internal class SourceNodeToElementNodeAdapter : ITypedElement, IAnnotated, IExceptionSource
+    internal class SourceNodeToTypedElementAdapter : ITypedElement, IAnnotated, IExceptionSource
     {
         public readonly ISourceNode Current;
 
-        public SourceNodeToElementNodeAdapter(ISourceNode sourceNode)
+        public SourceNodeToTypedElementAdapter(ISourceNode node)
         {
-            this.Current = sourceNode;
+            this.Current = node;
 
-            if (sourceNode is IExceptionSource ies && ies.ExceptionHandler == null)
+            if (node is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private SourceNodeToElementNodeAdapter(SourceNodeToElementNodeAdapter parent, ISourceNode sourceNode)
+        private SourceNodeToTypedElementAdapter(SourceNodeToTypedElementAdapter parent, ISourceNode sourceNode)
         {
             this.Current = sourceNode;
             this.ExceptionHandler = parent.ExceptionHandler;
@@ -37,7 +45,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public IElementDefinitionSummary Definition => null;
 
         public IEnumerable<ITypedElement> Children(string name) =>
-            Current.Children(name).Select(c => new SourceNodeToElementNodeAdapter(this, c));
+            Current.Children(name).Select(c => new SourceNodeToTypedElementAdapter(this, c));
 
         IEnumerable<object> IAnnotated.Annotations(Type type) => Current.Annotations(type);
     }

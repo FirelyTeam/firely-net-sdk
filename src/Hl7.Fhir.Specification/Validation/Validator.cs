@@ -122,19 +122,11 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
 
-            StructureDefinition profileResolutionNeeded(string canonical)
-            {
-                if (Settings.ResourceResolver != null)
-                    return Settings.ResourceResolver.FindStructureDefinition(canonical);
-                else
-                    return null;
-            }
+            StructureDefinition profileResolutionNeeded(string canonical) =>
+                Settings.ResourceResolver?.FindStructureDefinition(canonical);
         }
 
-        internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
-        {
-            return Validate(instance, new[] { definition });
-        }
+        internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition) => Validate(instance, new[] { definition });
 
 
         // This is the one and only main internal entry point for all validations, which in its term
@@ -377,12 +369,9 @@ namespace Hl7.Fhir.Validation
             // type? Would it convert it to a .NET native type? How to check?
 
             // The spec has no regexes for the primitives mentioned below, so don't check them
-            if  (definition.Type.Count() == 1)
-            {
-                return ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex");
-            }
-
-            return outcome;
+            return definition.Type.Count() == 1
+                ? ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
+                : outcome;
         }
 
 
@@ -416,25 +405,23 @@ namespace Hl7.Fhir.Validation
 
         internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, string location)
         {
-            if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                return outcome.AddIssue(message, issue, location);
-
-            return null;
+            return Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information
+                ? outcome.AddIssue(message, issue, location)
+                : null;
         }
 
         internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
-            if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                return Trace(outcome, message, issue, location.Location);
-
-            return null;
+            return Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information
+                ? Trace(outcome, message, issue, location.Location)
+                : null;
         }
 
         private string toStringRepresentation(IElementNavigator vp)
         {
-            if (vp == null || vp.Value == null) return null;
-
-            return PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
+            return vp == null || vp.Value == null ? 
+                null : 
+                PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
         }
 
         internal IElementNavigator ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)

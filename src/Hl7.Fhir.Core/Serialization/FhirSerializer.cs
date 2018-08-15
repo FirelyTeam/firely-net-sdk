@@ -31,13 +31,13 @@ namespace Hl7.Fhir.Serialization
 
         protected static ITypedElement makeNav(Base instance, SummaryType summary)
         {
-            if (summary == SummaryType.False) return instance.ToElementNode();
+            if (summary == SummaryType.False) return instance.ToTypedElement();
 
             var patchedInstance = (Base)instance.DeepCopy();
 
             MetaSubsettedAdder.AddSubsetted(patchedInstance, atRoot: true);
 
-            var baseNav = new ScopedNode(patchedInstance.ToElementNode());
+            var baseNav = new ScopedNode(patchedInstance.ToTypedElement());
 
             switch (summary)
             {

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization
             new FhirXmlWriter(settings).Write(source, destination, rootName);
 
         public static void WriteTo(this IElementNavigator source, XmlWriter destination, FhirXmlWriterSettings settings = null, string rootName = null) =>
-             source.ToElementNode().WriteTo(destination, settings,rootName);
+             source.ToTypedElement().WriteTo(destination, settings,rootName);
 
         public static string ToXml(this ISourceNode source, FhirXmlWriterSettings settings = null, string rootName = null)
         => SerializationUtil.WriteXmlToString(writer => source.WriteTo(writer, settings, rootName));

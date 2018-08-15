@@ -17,10 +17,9 @@ namespace Hl7.Fhir.Serialization
         {
             var type = o[JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME];
 
-            if (type is JValue typeValue && typeValue.Type == JTokenType.String)
-                return (string)typeValue.Value;
-            else
-                return null;
+            return type is JValue typeValue && typeValue.Type == JTokenType.String ? 
+                (string)typeValue.Value : 
+                null;
         }
     }
 

@@ -6,8 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -159,10 +157,9 @@ namespace Hl7.Fhir.ElementModel
         {
             if (_cache.ContainedResources == null)
             {
-                if (AtResource)
-                    _cache.ContainedResources = this.Children("contained").Cast<ScopedNavigator>();
-                else
-                    _cache.ContainedResources = Enumerable.Empty<ScopedNavigator>();
+                _cache.ContainedResources = AtResource ? 
+                    this.Children("contained").Cast<ScopedNavigator>() : 
+                    Enumerable.Empty<ScopedNavigator>();
             }
             return _cache.ContainedResources;
         }

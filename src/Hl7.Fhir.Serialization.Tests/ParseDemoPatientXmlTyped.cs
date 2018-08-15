@@ -16,8 +16,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlNavigatorSettings settings = null, TypedNodeSettings tnSettings=null) =>
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
+        public ITypedElement getXmlNode(string xml, FhirXmlNodeSettings settings = null, TypedNodeSettings tnSettings=null) =>
+            XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
             var navXml = getXmlNode(tpXml);
-            var navJson = FhirJsonNavigator.ForResource(tpJson, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(tpJson, new PocoStructureDefinitionSummaryProvider());
 
             var compare = navXml.IsEqualTo(navJson);
 
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.ForResource(reader, new PocoStructureDefinitionSummaryProvider()));
+            ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
         }
 
         [TestMethod]
@@ -101,10 +101,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.xml");
             // will allow whitespace and comments to come through      
-            var navXml = FhirXmlNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var json = navXml.ToJson();
 
-            var navJson = FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider());
             var xml = navJson.ToXml();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
             ITypedElement getValidatingXmlNav(string jsonText) =>
-                getXmlNode(jsonText, new FhirXmlNavigatorSettings { ValidateFhirXhtml = true });
+                getXmlNode(jsonText, new FhirXmlNodeSettings { ValidateFhirXhtml = true });
         }
 
         [TestMethod]

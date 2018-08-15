@@ -25,7 +25,7 @@ namespace Hl7.Fhir.ElementModel
         internal ITypedElement Current => _siblings[_index];
 
         [Obsolete("This class has been deprecated. Do not use this class directly, instead call " +
-            "ToElementNavigator() (for backwards compatibility) or the new ToElementNode() on any resource or datatype")]
+            "ToElementNavigator() (for backwards compatibility) or the new ToTypedNode() on any resource or datatype")]
         public PocoNavigator(Base model, string rootName = null)
         {
             if (model == null) throw Error.ArgumentNull(nameof(model));
@@ -242,8 +242,8 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this Base @base, string rootName = null) =>
             new PocoNavigator(@base, rootName);
 
-        public static ITypedElement ToElementNode(this Base @base, string rootName = null) =>
-            new PocoNavigator(@base, rootName).ToElementNode();
+        public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
+            new PocoNavigator(@base, rootName).ToTypedElement();
 
 #pragma warning restore 612, 618
     }

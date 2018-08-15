@@ -7,9 +7,6 @@
  */
 
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel
 {

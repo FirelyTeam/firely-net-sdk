@@ -6,9 +6,7 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -16,8 +14,6 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-
-
     public class MaskingNavigatorSettings
     {
         public enum PreserveBundleMode
@@ -209,7 +205,7 @@ namespace Hl7.Fhir.ElementModel
                 var f = nearest + "." + filter;
                 return loc == f || loc.StartsWith(f + ".") || loc.StartsWith(f + "[");    // include matches + children
             }
-            
+
 
             if (_settings.ExcludeMarkdown && scope.InstanceType == "markdown") return false;
             if (_settings.ExcludeNarrative & scope.InstanceType == "Narrative") return false;
@@ -227,6 +223,6 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public IEnumerable<ITypedElement> Children(string name = null) =>
-            Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c)); 
+            Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c));
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -15,19 +15,19 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
-    public class ElementNodeToSourceNodeAdapter : ISourceNode, IAnnotated, IExceptionSource
+    internal class TypedElementToSourceNodeAdapter : ISourceNode, IAnnotated, IExceptionSource
     {
         public readonly ITypedElement Current;
 
-        public ElementNodeToSourceNodeAdapter(ITypedElement sourceNav)
+        public TypedElementToSourceNodeAdapter(ITypedElement element)
         {
-            this.Current = sourceNav;
+            this.Current = element;
 
-            if (sourceNav is IExceptionSource ies && ies.ExceptionHandler == null)
+            if (element is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private ElementNodeToSourceNodeAdapter(ElementNodeToSourceNodeAdapter parent, ITypedElement child)
+        private TypedElementToSourceNodeAdapter(TypedElementToSourceNodeAdapter parent, ITypedElement child)
         {
             Current = child;
             ExceptionHandler = parent.ExceptionHandler;
@@ -59,16 +59,10 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public IEnumerable<ISourceNode> Children(string name = null) =>
             Current.Children()
-                .Select(c => new ElementNodeToSourceNodeAdapter(this, c))
+                .Select(c => new TypedElementToSourceNodeAdapter(this, c))
                 .Where(c => c.Name.MatchesPrefix(name));
 
-        IEnumerable<object> IAnnotated.Annotations(Type type)
-        {
-            if (type == typeof(ElementNodeToSourceNodeAdapter))
-                return new[] { this };
-            else
-                return Current.Annotations(type);
-        }
+        IEnumerable<object> IAnnotated.Annotations(Type type) => Current.Annotations(type);
     }
 
 }

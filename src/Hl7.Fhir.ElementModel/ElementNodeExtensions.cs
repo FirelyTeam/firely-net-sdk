@@ -1,6 +1,12 @@
-﻿using Hl7.Fhir.ElementModel.Adapters;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification;
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.ElementModel.Adapters;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -73,8 +79,8 @@ namespace Hl7.Fhir.ElementModel
             nav is IAnnotated ann ? ann.Annotation<T>() : null;
 
         [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
-        public static IElementNavigator ToElementNavigator(this ITypedElement node) => new ElementNodeToElementNavAdapter(node);
+        public static IElementNavigator ToElementNavigator(this ITypedElement node) => new TypedElementToElementNavAdapter(node);
 
-        public static ISourceNode ToSourceNode(this ITypedElement node) => new ElementNodeToSourceNodeAdapter(node);
+        public static ISourceNode ToSourceNode(this ITypedElement node) => new TypedElementToSourceNodeAdapter(node);
     }
 }

@@ -19,8 +19,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public ITypedElement getJsonNav(string json, FhirJsonNavigatorSettings s = null) => 
-            FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+        public ITypedElement getJsonNav(string json, FhirJsonNodeSettings s = null) => 
+            JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(@"TestData\test-empty-nodes.json");
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getJsonNav(tp, new FhirJsonNavigatorSettings { PermissiveParsing = true });
+            var nav = getJsonNav(tp, new FhirJsonNodeSettings { PermissiveParsing = true });
 
             var output = nav.ToJson();
             var doc = JObject.Parse(output);

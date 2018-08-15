@@ -1,12 +1,11 @@
 ﻿/* 
- * Copyright (c) 2016, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2019, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -133,10 +132,9 @@ namespace Hl7.Fhir.ElementModel
         {
             if (_cache.ContainedResources == null)
             {
-                if (AtResource)
-                    _cache.ContainedResources = this.Children("contained").Cast<ScopedNode>();
-                else
-                    _cache.ContainedResources = Enumerable.Empty<ScopedNode>();
+                _cache.ContainedResources = AtResource ? 
+                    this.Children("contained").Cast<ScopedNode>():
+                    Enumerable.Empty<ScopedNode>();
             }
             return _cache.ContainedResources;
         }

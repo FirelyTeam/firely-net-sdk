@@ -40,8 +40,8 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612, 618
         public Base Parse(string xml, Type dataType)
         {
-            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNavigator.Untyped(xml,
-                new FhirXmlNavigatorSettings
+            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNode.Parse(xml,
+                new FhirXmlNodeSettings
                 {
                     DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot,
                 }));
@@ -51,8 +51,8 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNavigator.Untyped(reader,
-                new FhirXmlNavigatorSettings
+            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNode.Read(reader,
+                new FhirXmlNodeSettings
                 {
                     DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot
                 }));
@@ -82,8 +82,8 @@ namespace Hl7.Fhir.Serialization
         public Base Parse(string json, Type dataType)
         {
             IFhirReader jsonReader = new SourceNodeToFhirReaderAdapter(
-                FhirJsonNavigator.Untyped(json, ModelInfo.GetFhirTypeNameForType(dataType),
-                new FhirJsonNavigatorSettings
+                FhirJsonNode.Parse(json, ModelInfo.GetFhirTypeNameForType(dataType),
+                new FhirJsonNodeSettings
                 {
                     AllowJsonComments = true       // DSTU2, should be false in STU3
                 }));
@@ -94,8 +94,8 @@ namespace Hl7.Fhir.Serialization
         public Base Parse(JsonReader reader, Type dataType)
         {
             IFhirReader jsonReader = new SourceNodeToFhirReaderAdapter(
-                FhirJsonNavigator.Untyped(reader, ModelInfo.GetFhirTypeNameForType(dataType),
-                new FhirJsonNavigatorSettings
+                FhirJsonNode.Read(reader, ModelInfo.GetFhirTypeNameForType(dataType),
+                new FhirJsonNodeSettings
                 {
                     AllowJsonComments = true       // DSTU2, should be false in STU3
                 })); return Parse(jsonReader, dataType);
@@ -146,10 +146,9 @@ namespace Hl7.Fhir.Serialization
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
-            if (dataType.CanBeTreatedAsType(typeof(Resource)))
-                return new ResourceReader(reader, Settings).Deserialize();
-            else
-                return new ComplexTypeReader(reader, Settings).Deserialize(dataType);
+            return dataType.CanBeTreatedAsType(typeof(Resource))
+                ? new ResourceReader(reader, Settings).Deserialize()
+                : new ComplexTypeReader(reader, Settings).Deserialize(dataType);
         }
 
         public Base Parse(ITypedElement nav, Type dataType) =>
@@ -190,68 +189,33 @@ namespace Hl7.Fhir.Serialization
         private static FhirJsonParser _jsonParser = new FhirJsonParser();
 
         [Obsolete("Create an instance of FhirXmlParser and call Parse<Resource>()")]
-        public static Resource ParseResourceFromXml(string xml)
-        {
-            return _xmlParser.Parse<Resource>(xml);
-        }
+        public static Resource ParseResourceFromXml(string xml) => _xmlParser.Parse<Resource>(xml);
 
         [Obsolete("Create an instance of FhirXmlParser and call Parse()")]
-        public static Base ParseFromXml(string xml, Type dataType = null)
-        {
-            if (dataType == null)
-                return _xmlParser.Parse<Base>(xml);
-            else
-                return _xmlParser.Parse(xml, dataType);
-        }
+        public static Base ParseFromXml(string xml, Type dataType = null) =>
+            dataType == null ? _xmlParser.Parse<Base>(xml) : _xmlParser.Parse(xml, dataType);
 
         [Obsolete("Create an instance of FhirJsonParser and call Parse<Resource>()")]
-        public static Resource ParseResourceFromJson(string json)
-        {
-            return _jsonParser.Parse<Resource>(json);
-        }
+        public static Resource ParseResourceFromJson(string json) => _jsonParser.Parse<Resource>(json);
 
         [Obsolete("Create an instance of FhirJsonParser and call Parse()")]
-        public static Base ParseFromJson(string json, Type dataType = null)
-        {
-            if (dataType == null)
-                return _jsonParser.Parse<Base>(json);
-            else
-                return _jsonParser.Parse(json, dataType);
-        }
+        public static Base ParseFromJson(string json, Type dataType = null) => dataType == null ? _jsonParser.Parse<Base>(json) : _jsonParser.Parse(json, dataType);
 
         [Obsolete("Create an instance of FhirXmlParser and call Parse<Resource>()")]
         // [WMR 20160421] Caller is responsible for disposing reader
-        public static Resource ParseResource(XmlReader reader)
-        {
-            return _xmlParser.Parse<Resource>(reader);
-        }
+        public static Resource ParseResource(XmlReader reader) => _xmlParser.Parse<Resource>(reader);
 
         [Obsolete("Create an instance of FhirJsonParser and call Parse<Resource>()")]
         // [WMR 20160421] Caller is responsible for disposing reader
-        public static Resource ParseResource(JsonReader reader)
-        {
-            return _jsonParser.Parse<Resource>(reader);
-        }
+        public static Resource ParseResource(JsonReader reader) => _jsonParser.Parse<Resource>(reader);
 
         [Obsolete("Create an instance of FhirXmlParser and call Parse()")]
         // [WMR 20160421] Caller is responsible for disposing reader
-        public static Base Parse(XmlReader reader, Type dataType = null)
-        {
-            if (dataType == null)
-                return _xmlParser.Parse<Base>(reader);
-            else
-                return _xmlParser.Parse(reader, dataType);
-        }
+        public static Base Parse(XmlReader reader, Type dataType = null) => dataType == null ? _xmlParser.Parse<Base>(reader) : _xmlParser.Parse(reader, dataType);
 
         [Obsolete("Create an instance of FhirJsonParser and call Parse()")]
         // [WMR 20160421] Caller is responsible for disposing reader
-        public static Base Parse(JsonReader reader, Type dataType = null)
-        {
-            if (dataType == null)
-                return _jsonParser.Parse<Base>(reader);
-            else
-                return _jsonParser.Parse(reader, dataType);
-        }
+        public static Base Parse(JsonReader reader, Type dataType = null) => dataType == null ? _jsonParser.Parse<Base>(reader) : _jsonParser.Parse(reader, dataType);
     }
 
 }

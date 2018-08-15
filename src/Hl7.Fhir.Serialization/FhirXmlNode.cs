@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -9,13 +17,13 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class FhirXmlNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
+    public partial class FhirXmlNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {  
-        public FhirXmlNode(XObject node, FhirXmlNavigatorSettings settings) 
+        internal FhirXmlNode(XObject node, FhirXmlNodeSettings settings) 
         {
             Current = node;
             Location = Name;
-            _settings = settings?.Clone() ?? new FhirXmlNavigatorSettings();
+            _settings = settings?.Clone() ?? new FhirXmlNodeSettings();
             _atRoot = true;
         }
 
@@ -29,7 +37,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         public readonly XObject Current;
-        private readonly FhirXmlNavigatorSettings _settings;
+        private readonly FhirXmlNodeSettings _settings;
         private readonly bool _atRoot = false;
 
         public XNamespace[] AllowedExternalNamespaces => _settings.AllowedExternalNamespaces;

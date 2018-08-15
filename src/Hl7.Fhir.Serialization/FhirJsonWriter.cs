@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
             new FhirJsonWriter(settings).Write(source, destination);
 
         public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
-            source.ToElementNode().WriteTo(destination, settings);
+            source.ToTypedElement().WriteTo(destination, settings);
 
         public static string ToJson(this ITypedElement source, FhirJsonWriterSettings settings = null)
             => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Serialization
 
         public void Write(ISourceNode source, JsonWriter destination)
         {
-            bool hasJsonSource = source.Annotation<FhirJsonNavigator>() != null;
+            bool hasJsonSource = source.Annotation<FhirJsonNode>() != null;
 
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.
@@ -104,12 +104,12 @@ namespace Hl7.Fhir.Serialization
             {
                 _roundtripMode = true;          // will allow unknown elements to be processed
 #pragma warning disable 612,618
-                Write(source.ToElementNode(), destination);
+                Write(source.ToTypedElement(), destination);
 #pragma warning restore 612,618
             }
             else
                 throw Error.NotSupported($"The {nameof(FhirJsonWriter)} will only work correctly on an untyped " +
-                    $"source if the source is a {nameof(FhirJsonNavigator)}.");
+                    $"source if the source is a {nameof(FhirJsonNode)}.");
         }
 
 

@@ -1,9 +1,16 @@
-﻿using System.Linq;
+﻿/* 
+ * Copyright (c) 2018 Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System.Linq;
 using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification;
+using Hl7.Fhir.ElementModel.Adapters;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -74,27 +81,12 @@ namespace Hl7.Fhir.ElementModel
 
         public static void Visit(this IElementNavigator navigator, Action<int, IElementNavigator> visitor) => navigator.visit(visitor, 0);
 
-        public static IDisposable Catch(this IElementNavigator source, ExceptionNotificationHandler handler) =>
-        source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("source does not implement IExceptionSource");
-
-        public static List<ExceptionNotification> VisitAndCatch(this IElementNavigator nav)
-        {
-            var errors = new List<ExceptionNotification>();
-
-            using (nav.Catch((o, arg) => errors.Add(arg)))
-            {
-                nav.Visit(n => { var dummy = n.Value; });
-            }
-
-            return errors;
-        }
-
         public static IEnumerable<object> Annotations(this IElementNavigator nav, Type type) =>
         nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
         public static T Annotation<T>(this IElementNavigator nav) where T : class =>
             nav is IAnnotated ann ? ann.Annotation<T>() : null;
 
-        public static ITypedElement ToElementNode(this IElementNavigator nav) => 
-            new ElementNavToElementNodeAdapter(nav);
+        public static ITypedElement ToTypedElement(this IElementNavigator nav) => 
+            new ElementNavToTypedElementAdapter(nav);
     }
 }

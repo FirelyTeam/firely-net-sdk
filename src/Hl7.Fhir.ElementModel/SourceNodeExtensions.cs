@@ -1,10 +1,17 @@
-﻿using System.Linq;
+﻿/* 
+ * Copyright (c) 2018 Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System.Linq;
 using System.Collections.Generic;
 using System;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.ElementModel.Adapters;
 
 namespace Hl7.Fhir.ElementModel
@@ -182,7 +189,7 @@ namespace Hl7.Fhir.ElementModel
         /// <remarks>This extension method decorates the <c>ISourceNode</c> with a new instance of
         /// an <see cref="TypedElement"/>, passing on the parameters of this extension method.</remarks>
         /// <seealso cref="ITypedElement"/>
-        public static ITypedElement ToTypedNode(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedNodeSettings settings = null)
+        public static ITypedElement ToTypedElement(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedNodeSettings settings = null)
             => new TypedElement(node, type, provider, settings: settings);
 
 
@@ -191,7 +198,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        /// <remarks>In contrast to <see cref="ToTypedNode(ISourceNode, IStructureDefinitionSummaryProvider, string, TypedNodeSettings)"/>,
+        /// <remarks>In contrast to <see cref="ToTypedElement(ISourceNode, IStructureDefinitionSummaryProvider, string, TypedNodeSettings)"/>,
         /// this method simulates an <c>ITypedElement</c> on top of an <c>ISourceNode</c>, without adding type information to
         /// it. This is used internally in a few places in the API, where the component using the <c>ITypedNode</c> is aware it
         /// cannot depend on type information being present, but should normally not be used.
@@ -199,8 +206,8 @@ namespace Hl7.Fhir.ElementModel
         [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into a typed ElementNode without providing" +
 "type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
 "missing type information. Please don't use this overload unless you know what you are doing.")]
-        public static ITypedElement ToElementNode(this ISourceNode node) =>
-        new SourceNodeToElementNodeAdapter(node);
+        public static ITypedElement ToTypedElement(this ISourceNode node) =>
+        new SourceNodeToTypedElementAdapter(node);
 
 #pragma warning disable 612, 618
         /// <summary>

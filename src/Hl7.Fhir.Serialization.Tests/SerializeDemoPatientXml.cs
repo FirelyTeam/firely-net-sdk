@@ -19,10 +19,10 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientXml
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public ITypedElement getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
-            FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+        public ITypedElement getXmlNode(string xml, FhirXmlNodeSettings s = null) =>
+            XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
+        public ITypedElement getJsonNode(string json, FhirJsonNodeSettings s = null) =>
+            JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\test-empty-nodes.xml");
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getXmlNode(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });
+            var nav = getXmlNode(tpXml, new FhirXmlNodeSettings { PermissiveParsing = true });
 
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void TestElementReordering()
         {
             var tpXml = File.ReadAllText(@"TestData\patient-out-of-order.xml");
-            var nav = getXmlNode(tpXml, new FhirXmlNavigatorSettings { PermissiveParsing = true });  // since the order is incorrect
+            var nav = getXmlNode(tpXml, new FhirXmlNodeSettings { PermissiveParsing = true });  // since the order is incorrect
 
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false });
             var pat = pser.Parse<Patient>(tpXml);
 
-            var nav = pat.ToElementNode();
+            var nav = pat.ToTypedElement();
             var xmlBuilder = new StringBuilder();
             var serializer = new FhirXmlWriter();
             using (var writer = XmlWriter.Create(xmlBuilder))
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var navXml = getXmlNode(tpXml);
             var navJson = getJsonNode(tpJson);
-            var navPoco = pat.ToElementNode();
+            var navPoco = pat.ToTypedElement();
             assertAreAllEqual(navXml, navJson, navPoco);
 
             // A subtree that's a normal datatype

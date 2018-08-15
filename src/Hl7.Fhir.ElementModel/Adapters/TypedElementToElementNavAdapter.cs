@@ -1,26 +1,34 @@
+/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
 using System.Linq;
 using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Utility;
 
-namespace Hl7.Fhir.ElementModel
+namespace Hl7.Fhir.ElementModel.Adapters
 {
-    internal class ElementNodeToElementNavAdapter : IElementNavigator, IAnnotated, IExceptionSource
+    internal class TypedElementToElementNavAdapter : IElementNavigator, IAnnotated, IExceptionSource
     {
         private IList<ITypedElement> _siblings;
         private int _index;
         public ITypedElement Current =>  _siblings[_index]; 
 
-        public ElementNodeToElementNavAdapter(ITypedElement sourceNode)
+        public TypedElementToElementNavAdapter(ITypedElement element)
         {
-            _siblings = new List<ITypedElement> { sourceNode };
+            _siblings = new List<ITypedElement> { element };
             _index = 0;
 
-            if (sourceNode is IExceptionSource ies && ies.ExceptionHandler == null)
+            if (element is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private ElementNodeToElementNavAdapter() { }  // for clone
+        private TypedElementToElementNavAdapter() { }  // for clone
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -33,7 +41,7 @@ namespace Hl7.Fhir.ElementModel
         public object Value => Current.Value;
 
         public IElementNavigator Clone() =>
-            new ElementNodeToElementNavAdapter
+            new TypedElementToElementNavAdapter
             {
                 _siblings = this._siblings,
                 _index = this._index,
@@ -78,15 +86,6 @@ namespace Hl7.Fhir.ElementModel
             return true;
         }
 
-        IEnumerable<object> IAnnotated.Annotations(Type type)
-        {
-            if (type == typeof(ElementNodeToElementNavAdapter))
-                return new[] { this };
-            else
-                return Current.Annotations(type);
-        }
+        IEnumerable<object> IAnnotated.Annotations(Type type) => Current.Annotations(type);
     }
-
-
-
 }

@@ -6,8 +6,6 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Utility;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {

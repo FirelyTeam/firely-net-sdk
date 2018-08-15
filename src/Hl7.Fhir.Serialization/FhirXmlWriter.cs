@@ -51,12 +51,12 @@ namespace Hl7.Fhir.Serialization
             {
                 _roundtripMode = true;
 #pragma warning disable 612,618
-                writeInternal(source.ToElementNode(), destination, rootName);
+                writeInternal(source.ToTypedElement(), destination, rootName);
 #pragma warning restore 612, 618
             }
             else
                 throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
-                    $"source if the source is a {nameof(FhirXmlNavigator)}.");
+                    $"source if the source is a {nameof(FhirXmlNode)}.");
         }
 
         private void writeInternal(ITypedElement source, XmlWriter destination, string rootName = null)
