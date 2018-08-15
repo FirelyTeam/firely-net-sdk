@@ -53,8 +53,6 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    // [WMR 20161012] Note: internal scope for unit testing
-
     /// <summary>
     /// Differential structures may contain paths that "skip" over parents. For our profile expansion logic,
     /// it's easier to have the skipped parents present. This class will insert these missing parents.
@@ -64,6 +62,9 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// </summary>
     public class DifferentialTreeConstructor
     {
+        /// <summary>Singleton. Global default instance.</summary>
+        public static DifferentialTreeConstructor Default { get; } = new DifferentialTreeConstructor();
+
         /// <summary>Create a valid tree structure from a sparse differential element list by adding missing parent element definitions.</summary>
         /// <returns>A tree structure representing the differential component.</returns>
         /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
