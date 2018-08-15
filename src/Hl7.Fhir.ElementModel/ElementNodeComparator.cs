@@ -13,6 +13,12 @@ namespace Hl7.Fhir.ElementModel
 {
     public static class ElementNodeComparator
     {
+        /// <summary>
+        /// Compares two <see cref="ITypedElement"/> trees.
+        /// </summary>
+        /// <param name="expected">The tree that contains the expected, "correct" data.</param>
+        /// <param name="actual">The tree to compare against the <paramref name="expected"/> tree.</param>
+        /// <returns>A <see cref="TreeComparisonResult"/> that summarizes the differences between the trees.</returns>
         public static TreeComparisonResult IsEqualTo(this ITypedElement expected, ITypedElement actual)
         {
             if (expected.Name != actual.Name)

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlNodeSettings settings = null, TypedNodeSettings tnSettings=null) =>
+        public ITypedElement getXmlNode(string xml, FhirXmlNodeSettings settings = null, TypedElementSettings tnSettings=null) =>
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesBasicTypeErrorsWithUnknownRoot()
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
-            var patient = getXmlNode(tpXml, tnSettings: new TypedNodeSettings { ErrorMode = TypedNodeSettings.TypeErrorMode.Passthrough });
+            var patient = getXmlNode(tpXml, tnSettings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
             var result = patient.VisitAndCatch();
             Assert.AreEqual(11, result.Count);  // 11 syntax errors, unknown root is passed through without errors
         }

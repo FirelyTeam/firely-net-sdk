@@ -18,12 +18,12 @@ namespace Hl7.Fhir.ElementModel
 {
     public class TypedElement : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
     {
-        public TypedElement(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedNodeSettings settings = null)
+        public TypedElement(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedElementSettings settings = null)
         {
             if (element == null) throw Error.ArgumentNull(nameof(element));
 
             Provider = provider ?? throw Error.ArgumentNull(nameof(provider));
-            _settings = settings ?? new TypedNodeSettings();
+            _settings = settings ?? new TypedElementSettings();
 
             if (element is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.ElementModel
             var rootType = type ?? element.GetResourceTypeIndicator();
             if (rootType == null)
             {
-                if (_settings.ErrorMode == TypedNodeSettings.TypeErrorMode.Report)
+                if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
                     throw Error.Argument(nameof(type), $"Cannot determine the type of the root element at '{element.Location}', " +
                         $"please supply a type argument.");
                 else
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.ElementModel
 
             if (elementType == null)
             {
-                if (_settings.ErrorMode == TypedNodeSettings.TypeErrorMode.Report)
+                if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
                     throw Error.Argument(nameof(type), $"Cannot locate type information for type '{rootType}'");
                 else
                     return NavigatorPosition.ForRoot(element, null, element.Name);
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.ElementModel
 
         public readonly IStructureDefinitionSummaryProvider Provider;
 
-        private readonly TypedNodeSettings _settings;
+        private readonly TypedElementSettings _settings;
 
         public string Name => Current.Name;
 
@@ -191,10 +191,10 @@ namespace Hl7.Fhir.ElementModel
                 if (dis != ElementDefinitionSummaryCache.Empty && !match.IsTracking)
                 {
                     raiseTypeError($"Encountered unknown element '{scan.Name}'", this,
-                            warning: _settings.ErrorMode != TypedNodeSettings.TypeErrorMode.Report);
+                            warning: _settings.ErrorMode != TypedElementSettings.TypeErrorMode.Report);
 
                     // don't include member, unless we are explicitly told to let it pass
-                    if (_settings.ErrorMode != TypedNodeSettings.TypeErrorMode.Passthrough)
+                    if (_settings.ErrorMode != TypedElementSettings.TypeErrorMode.Passthrough)
                         continue;
                 }
 
@@ -221,11 +221,11 @@ namespace Hl7.Fhir.ElementModel
             {
                 // No type information available for the type representing the children....
 
-                if (Current.InstanceType != null && _settings.ErrorMode == TypedNodeSettings.TypeErrorMode.Report)
+                if (Current.InstanceType != null && _settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
                     raiseTypeError($"Encountered unknown type '{Current.InstanceType}'", Current.Node);
 
                 // Don't go on with the (untyped) children, unless explicitly told to do so
-                if (_settings.ErrorMode != TypedNodeSettings.TypeErrorMode.Passthrough)
+                if (_settings.ErrorMode != TypedElementSettings.TypeErrorMode.Passthrough)
                     return Enumerable.Empty<ITypedElement>();
                 else
                     // Ok, pass through the untyped members, but since there is no type information, 

@@ -156,6 +156,10 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
+        /// <summary>
+        /// Gets the <see cref="IResourceTypeSupplier" /> annotation from an <c>ISourceNode</c>
+        /// </summary>
+        /// <param name="node"></param>
         public static string GetResourceTypeIndicator(this ISourceNode node) =>
             node.Annotation<IResourceTypeSupplier>()?.ResourceType;
 
@@ -189,7 +193,7 @@ namespace Hl7.Fhir.ElementModel
         /// <remarks>This extension method decorates the <c>ISourceNode</c> with a new instance of
         /// an <see cref="TypedElement"/>, passing on the parameters of this extension method.</remarks>
         /// <seealso cref="ITypedElement"/>
-        public static ITypedElement ToTypedElement(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedNodeSettings settings = null)
+        public static ITypedElement ToTypedElement(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedElementSettings settings = null)
             => new TypedElement(node, type, provider, settings: settings);
 
 
@@ -198,7 +202,7 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        /// <remarks>In contrast to <see cref="ToTypedElement(ISourceNode, IStructureDefinitionSummaryProvider, string, TypedNodeSettings)"/>,
+        /// <remarks>In contrast to <see cref="ToTypedElement(ISourceNode, IStructureDefinitionSummaryProvider, string, TypedElementSettings)"/>,
         /// this method simulates an <c>ITypedElement</c> on top of an <c>ISourceNode</c>, without adding type information to
         /// it. This is used internally in a few places in the API, where the component using the <c>ITypedNode</c> is aware it
         /// cannot depend on type information being present, but should normally not be used.

@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Serialization.Tests
     internal static class JsonParsingHelpers
     {
         internal static ITypedElement ParseToTypedElement(string json, IStructureDefinitionSummaryProvider provider, string rootName = null,
-    FhirJsonNodeSettings settings = null, TypedNodeSettings tnSettings = null)
+    FhirJsonNodeSettings settings = null, TypedElementSettings tnSettings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         internal static ITypedElement ParseToTypedElement(string json, string type, IStructureDefinitionSummaryProvider provider, string rootName = null,
-            FhirJsonNodeSettings settings = null, TypedNodeSettings tnSettings = null)
+            FhirJsonNodeSettings settings = null, TypedElementSettings tnSettings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
     internal static class XmlParsingHelpers
     {
-        public static ITypedElement ParseToTypedElement(string xml, IStructureDefinitionSummaryProvider provider, FhirXmlNodeSettings settings = null, TypedNodeSettings tnSettings = null)
+        public static ITypedElement ParseToTypedElement(string xml, IStructureDefinitionSummaryProvider provider, FhirXmlNodeSettings settings = null, TypedElementSettings tnSettings = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         public static ITypedElement ParseToTypedElement(string xml, string type, IStructureDefinitionSummaryProvider provider,
-            FhirXmlNodeSettings settings = null, TypedNodeSettings tnSettings = null)
+            FhirXmlNodeSettings settings = null, TypedElementSettings tnSettings = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (type == null) throw Error.ArgumentNull(nameof(type));

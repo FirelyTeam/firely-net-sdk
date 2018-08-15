@@ -9,7 +9,7 @@
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class TypedNodeSettings
+    public class TypedElementSettings
     {
         public enum TypeErrorMode
         {
@@ -20,8 +20,8 @@ namespace Hl7.Fhir.ElementModel
 
         public TypeErrorMode ErrorMode;
 
-        public TypedNodeSettings Clone() =>
-            new TypedNodeSettings
+        public TypedElementSettings Clone() =>
+            new TypedElementSettings
             {
                 ErrorMode = ErrorMode
             };
