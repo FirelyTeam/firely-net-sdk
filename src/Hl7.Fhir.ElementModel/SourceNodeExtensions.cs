@@ -9,7 +9,6 @@ using Hl7.Fhir.ElementModel.Adapters;
 
 namespace Hl7.Fhir.ElementModel
 {
-
     public static class SourceNodeExtensions
     {
         /// <summary>
@@ -129,7 +128,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
         /// <summary>
-        /// Visit all nodes in a tree while catching any reported parsing errors. />
+        /// Visits all nodes in a tree while catching any reported parsing errors. />
         /// </summary>
         /// <param name="root">The root of the tree to visit.</param>
         /// <returns>The list of all exceptions reported while visiting the tree passed in
@@ -167,11 +166,38 @@ namespace Hl7.Fhir.ElementModel
         public static T Annotation<T>(this ISourceNode nav) where T : class =>
             nav is IAnnotated ann ? ann.Annotation<T>() : null;
 
-        public static ITypedElement ToTypedNode(this ISourceNode sourceNav, IStructureDefinitionSummaryProvider provider, string type = null, TypedNodeSettings settings = null)
-        {
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
-            return new TypedElement(sourceNav, type, provider, settings: settings);
-        }
+
+        /// <summary>
+        /// Turns the <c>ISourceNode</c> into a <see cref="ITypedElement"/> by adding type information to it.
+        /// </summary>
+        /// <param name="node">The node containing the source information.</param>
+        /// <param name="provider">The provider which supplies type information.</param>
+        /// <param name="type">Optional. The type of the element at the root.</param>
+        /// <param name="settings"></param>
+        /// <returns>An <see cref="ITypedElement"/> that represents the data in the node, with type information
+        /// added to it.</returns>
+        /// <remarks>This extension method decorates the <c>ISourceNode</c> with a new instance of
+        /// an <see cref="TypedElement"/>, passing on the parameters of this extension method.</remarks>
+        /// <seealso cref="ITypedElement"/>
+        public static ITypedElement ToTypedNode(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedNodeSettings settings = null)
+            => new TypedElement(node, type, provider, settings: settings);
+
+
+        /// <summary>
+        /// Adapting an <c>ISourceNode</c> to a <see cref="ITypedElement"/> without adding type information to it.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        /// <remarks>In contrast to <see cref="ToTypedNode(ISourceNode, IStructureDefinitionSummaryProvider, string, TypedNodeSettings)"/>,
+        /// this method simulates an <c>ITypedElement</c> on top of an <c>ISourceNode</c>, without adding type information to
+        /// it. This is used internally in a few places in the API, where the component using the <c>ITypedNode</c> is aware it
+        /// cannot depend on type information being present, but should normally not be used.
+        /// </remarks>
+        [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into a typed ElementNode without providing" +
+"type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
+"missing type information. Please don't use this overload unless you know what you are doing.")]
+        public static ITypedElement ToElementNode(this ISourceNode node) =>
+        new SourceNodeToElementNodeAdapter(node);
 
 #pragma warning disable 612, 618
         /// <summary>
@@ -189,12 +215,5 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this ISourceNode node) =>
             new SourceNodeToElementNavAdapter(node);
 #pragma warning restore 612,618
-
-        [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into a typed ElementNode without providing" +
-    "type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
-    "missing type information. Please don't use this overload unless you know what you are doing.")]
-        public static ITypedElement ToElementNode(this ISourceNode sourceNav) =>
-                new SourceNodeToElementNodeAdapter(sourceNav);
-
     }
 }

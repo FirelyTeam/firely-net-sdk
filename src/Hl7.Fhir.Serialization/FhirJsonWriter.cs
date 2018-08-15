@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Serialization
 
         public void Write(ISourceNode source, JsonWriter destination)
         {
-            bool hasJsonSource = source.InPipeline(typeof(FhirJsonNavigator));
+            bool hasJsonSource = source.Annotation<FhirJsonNavigator>() != null;
 
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.

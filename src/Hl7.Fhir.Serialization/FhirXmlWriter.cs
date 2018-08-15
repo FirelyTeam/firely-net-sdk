@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization
 
         public void Write(ISourceNode source, XmlWriter destination, string rootName = null)
         {
-            bool hasXmlSource = source.InPipeline(typeof(FhirXmlNode));
+            bool hasXmlSource = source.Annotation<FhirXmlNode>() != null;
 
             // We can only work with an untyped source if we're doing a roundtrip,
             // so we have all serialization details available.

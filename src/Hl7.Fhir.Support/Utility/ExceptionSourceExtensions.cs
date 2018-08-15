@@ -1,5 +1,4 @@
-﻿using Hl7.Fhir.ElementModel;
-using System;
+﻿using System;
 
 namespace Hl7.Fhir.Utility
 {
