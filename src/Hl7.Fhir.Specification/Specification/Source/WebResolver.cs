@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Net;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -14,6 +15,8 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
+    /// <summary>Fetches FHIR artifacts (Profiles, ValueSets, ...) from a FHIR server.</summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class WebResolver : IResourceResolver
     {
         /// <summary>Default request timeout in milliseconds.</summary>
@@ -80,6 +83,14 @@ namespace Hl7.Fhir.Specification.Source
         {
             return ResolveByUri(uri);
         }
+
+        // Allow derived classes to override
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        internal protected virtual string DebuggerDisplay
+            => $"{GetType().Name}"
+            + (LastError != null ? $" LastError: '{LastError.Message}'" : null);
+
 
     }
 }
