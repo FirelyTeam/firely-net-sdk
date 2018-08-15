@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Default value of the <see cref="FormatPreference"/> configuration setting.</summary>
         public const DirectorySource.DuplicateFilenameResolution DefaultFormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml;
 
-        /// <summary>Default value of the <see cref="Masks"/> configuration setting.</summary>
+        /// <summary>Default value of the <see cref="Masks"/> configuration setting (*.*)</summary>
         public readonly static string[] DefaultMasks = new[] { "*.*" };
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
@@ -284,6 +284,24 @@ namespace Hl7.Fhir.Specification.Source
         /// </para>
         /// </remarks>
         public ArtifactSummaryHarvester[] SummaryDetailsHarvesters { get; set; }
+
+        // [WMR 20180813] NEW
+
+        /// <summary>
+        /// Determines the behavior of the internal <see cref="ArtifactSummaryGenerator"/>
+        /// for handling non-parseable (invalid or non-FHIR) content files.
+        /// <para>
+        /// By default (<c>false</c>), the source will generate summaries for all files
+        /// that exist in the specified content directory and match the specified mask,
+        /// including files that cannot be parsed (e.g. invalid or non-FHIR content).
+        /// </para>
+        /// <para>
+        /// If <c>true</c>, then the source will only generate summaries for valid
+        /// FHIR artifacts that exist in the specified content directory and match the
+        /// specified mask. Unparseable files are ignored and excluded from the result.
+        /// </para>
+        /// </summary>
+        public bool ExcludeSummariesForUnknownArtifacts { get; set; } // = false;
     }
 
 }
