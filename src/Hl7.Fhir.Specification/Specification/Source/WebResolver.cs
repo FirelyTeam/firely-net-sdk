@@ -7,21 +7,22 @@
  */
 
 using System;
+using System.Net;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using System.Net;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
     public class WebResolver : IResourceResolver
     {
+        /// <summary>Default request timeout in milliseconds.</summary>
+        public const int DefaultTimeOut = 5000;
+
         readonly Func<Uri, FhirClient> _clientFactory;
 
         /// <summary>Default constructor.</summary>
-        public WebResolver()
-        {
-        }
+        public WebResolver() { }
 
         /// <summary>Create a new <see cref="WebResolver"/> instance that supports a custom <see cref="FhirClient"/> implementation.</summary>
         /// <param name="fhirClientFactory">
@@ -33,37 +34,52 @@ namespace Hl7.Fhir.Specification.Source
             _clientFactory = fhirClientFactory ?? throw Error.ArgumentNull(nameof(fhirClientFactory));
         }
 
-        public Hl7.Fhir.Model.Resource ResolveByUri(string uri)
+        /// <summary>Gets or sets the request timeout of the internal <see cref="FhirClient"/> instance.</summary>
+        public int TimeOut { get; set; } = DefaultTimeOut;
+
+        /// <summary>
+        /// Gets the runtime <see cref="Exception"/> from the last call to the
+        /// <see cref="ResolveByUri(string)"/> method, if any, or <c>null</c> otherwise.
+        /// </summary>
+        public Exception LastError { get; private set; }
+
+        public Resource ResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-
-            if (!ResourceIdentity.IsRestResourceIdentity(uri)) return null;     // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
+            if (!ResourceIdentity.IsRestResourceIdentity(uri))
+            {
+                // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
+                return null;     
+            }
 
             var id = new ResourceIdentity(uri);
-
-            // [WMR 20150810] Use custom FhirClient factory if specified
-            var client = _clientFactory != null ? _clientFactory(id.BaseUri) : new FhirClient(id.BaseUri) { Timeout = 5000 };
+            var client = _clientFactory?.Invoke(id.BaseUri)
+                         ?? new FhirClient(id.BaseUri) { Timeout = this.TimeOut };
 
             try
             {
                 var resultResource = client.Read<Resource>(id);
                 resultResource.SetOrigin(uri);
+                LastError = null;
                 return resultResource;
             }
-            catch (FhirOperationException)
+            catch (FhirOperationException foe)
             {
+                LastError = foe;
                 return null;
             }
-            catch (WebException)
+            catch (WebException we)
             {
+                LastError = we;
                 return null;
             }
-
+            // Other runtime exceptions are fatal...
         }
 
         public Resource ResolveByCanonicalUri(string uri)
         {
             return ResolveByUri(uri);
         }
+
     }
 }
