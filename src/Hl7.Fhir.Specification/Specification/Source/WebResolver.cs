@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -16,12 +16,12 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class WebResolver : IResourceResolver
     {
+        readonly Func<Uri, FhirClient> _clientFactory;
+
         /// <summary>Default constructor.</summary>
         public WebResolver()
         {
         }
-
-        Func<Uri, FhirClient> _clientFactory;
 
         /// <summary>Create a new <see cref="WebResolver"/> instance that supports a custom <see cref="FhirClient"/> implementation.</summary>
         /// <param name="fhirClientFactory">
