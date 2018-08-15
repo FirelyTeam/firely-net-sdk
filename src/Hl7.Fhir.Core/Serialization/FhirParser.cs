@@ -1,21 +1,17 @@
 ﻿/* 
- * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.ElementModel.Adapters;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
@@ -25,82 +21,61 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirXmlParser : BaseFhirParser
     {
-        public FhirXmlParser() : base()
+        public FhirXmlParser(ParserSettings settings=null) : base(settings)
         {
-
+            //
         }
 
-        public FhirXmlParser(ParserSettings settings) : base(settings)
-        {
-        }
-
-        public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
         public T Parse<T>(XmlReader reader) where T : Base => (T)Parse(reader, typeof(T));
 
-#pragma warning disable 612, 618
-        public Base Parse(string xml, Type dataType)
-        {
-            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNode.Parse(xml,
+        public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
+
+        private FhirXmlNodeSettings buildNodeSettings(ParserSettings settings) =>
                 new FhirXmlNodeSettings
                 {
-                    DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot,
-                }));
+                    DisallowSchemaLocation = Settings.DisallowXsiAttributesOnRoot,
+                };
+
+        public Base Parse(string xml, Type dataType)
+        {
+            var xmlReader = FhirXmlNode.Parse(xml, buildNodeSettings(Settings));
             return Parse(xmlReader, dataType);
         }
 
-        // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            IFhirReader xmlReader = new SourceNodeToFhirReaderAdapter(FhirXmlNode.Read(reader,
-                new FhirXmlNodeSettings
-                {
-                    DisallowSchemaLocation = this.Settings.DisallowXsiAttributesOnRoot
-                }));
+            var xmlReader = FhirXmlNode.Read(reader, buildNodeSettings(Settings));
             return Parse(xmlReader, dataType);
         }
-#pragma warning restore 612, 618
     }
 
     public class FhirJsonParser : BaseFhirParser
     {
-        public FhirJsonParser() : base()
+        public FhirJsonParser(ParserSettings settings=null) : base(settings)
         {
-
-        }
-
-        public FhirJsonParser(ParserSettings settings) : base(settings)
-        {
+            //
         }
 
         public T Parse<T>(string json) where T : Base => (T)Parse(json, typeof(T));
 
-        // [WMR 20160421] Caller is responsible for disposing reader
         public T Parse<T>(JsonReader reader) where T : Base => (T)Parse(reader, typeof(T));
 
+        // TODO: True for DSTU2, should be false in STU3
+        private readonly FhirJsonNodeSettings jsonNodeSettings = new FhirJsonNodeSettings { AllowJsonComments = true };
 
-#pragma warning disable 612,618
         public Base Parse(string json, Type dataType)
         {
-            IFhirReader jsonReader = new SourceNodeToFhirReaderAdapter(
-                FhirJsonNode.Parse(json, ModelInfo.GetFhirTypeNameForType(dataType),
-                new FhirJsonNodeSettings
-                {
-                    AllowJsonComments = true       // DSTU2, should be false in STU3
-                }));
+            var jsonReader =
+                FhirJsonNode.Parse(json, ModelInfo.GetFhirTypeNameForType(dataType), jsonNodeSettings);
             return Parse(jsonReader, dataType);
         }
 
-        // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            IFhirReader jsonReader = new SourceNodeToFhirReaderAdapter(
-                FhirJsonNode.Read(reader, ModelInfo.GetFhirTypeNameForType(dataType),
-                new FhirJsonNodeSettings
-                {
-                    AllowJsonComments = true       // DSTU2, should be false in STU3
-                })); return Parse(jsonReader, dataType);
+            var jsonReader =
+                FhirJsonNode.Read(reader, ModelInfo.GetFhirTypeNameForType(dataType), jsonNodeSettings);
+            return Parse(jsonReader, dataType);
         }
-#pragma warning restore 612, 618
     }
 
 
@@ -108,14 +83,9 @@ namespace Hl7.Fhir.Serialization
     {
         public ParserSettings Settings { get; private set; }
 
-        public BaseFhirParser(ParserSettings settings)
+        public BaseFhirParser(ParserSettings settings = null)
         {
-            Settings = settings ?? throw Error.ArgumentNull(nameof(settings));
-        }
-
-        public BaseFhirParser()
-        {
-            Settings = new ParserSettings();
+            Settings = settings ?? new ParserSettings();
         }
 
         private static Lazy<ModelInspector> _inspector = createDefaultModelInspector();
@@ -140,33 +110,28 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        [Obsolete("Create a new navigating parser using FhirXmlNavigator/FhirJsonNavigator.ForRoot()")]
-        internal Base Parse(IFhirReader reader, Type dataType)
-        {
-            if (reader == null) throw Error.ArgumentNull(nameof(reader));
-            if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
+        private PocoBuilderSettings buildBuilderSettings(ParserSettings ps) =>
+            new PocoBuilderSettings
+            {
+                AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
+                IgnoreUnknownMembers = ps.AcceptUnknownMembers
+            };
 
-            return dataType.CanBeTreatedAsType(typeof(Resource))
-                ? new ResourceReader(reader, Settings).Deserialize()
-                : new ComplexTypeReader(reader, Settings).Deserialize(dataType);
-        }
+        public Base Parse(ITypedElement element) => element.ToPoco(buildBuilderSettings(Settings));
 
-        public Base Parse(ITypedElement nav, Type dataType) =>
-            Parse(new ElementNodeToFhirReaderAdapter(nav), dataType);
+        public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(buildBuilderSettings(Settings));
 
-        public T Parse<T>(ITypedElement nav) where T : Base => (T)Parse(nav, typeof(T));
+        public Base Parse(ISourceNode node, Type type=null) => node.ToPoco(type, buildBuilderSettings(Settings));
 
+        public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(buildBuilderSettings(Settings));
 
-        public Base Parse(IElementNavigator nav, Type dataType) =>
-            Parse(new ElementNavToFhirReaderAdapter(nav), dataType);
+#pragma warning disable 612, 618
+        public Base Parse(IElementNavigator nav, Type type = null) => nav.ToPoco(type, buildBuilderSettings(Settings));
 
-        public T Parse<T>(IElementNavigator nav) where T : Base => (T)Parse(nav, typeof(T));
+        public T Parse<T>(IElementNavigator nav) where T : Base => (T)nav.ToPoco<T>(buildBuilderSettings(Settings));
+#pragma warning restore 612, 618
 
 
-        public Base Parse(ISourceNode nav, Type dataType) =>
-            Parse(new SourceNodeToFhirReaderAdapter(nav), dataType);
-
-        public T Parse<T>(ISourceNode nav) where T : Base => (T)Parse(nav, typeof(T));
     }
 
 

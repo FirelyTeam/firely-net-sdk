@@ -19,17 +19,12 @@ namespace Hl7.Fhir.Serialization
     {
         public ParserSettings Settings { get; private set; }
 
-        public BaseFhirSerializer(ParserSettings settings)
+        public BaseFhirSerializer(ParserSettings settings=null)
         {
-            Settings = settings ?? throw Error.ArgumentNull(nameof(settings));
+            Settings = settings ?? new ParserSettings();
         }
 
-        public BaseFhirSerializer()
-        {
-            Settings = new ParserSettings();
-        }
-
-        protected static ITypedElement makeNav(Base instance, SummaryType summary)
+        protected static ITypedElement MakeNav(Base instance, SummaryType summary)
         {
             if (summary == SummaryType.False) return instance.ToTypedElement();
 
@@ -57,25 +52,23 @@ namespace Hl7.Fhir.Serialization
 
     public class FhirXmlSerializer : BaseFhirSerializer
     {
-        public FhirXmlSerializer() : base()
+        public FhirXmlSerializer(ParserSettings settings=null) : base(settings)
         {
         }
 
-        public FhirXmlSerializer(ParserSettings settings) : base(settings)
-        {
-        }
-
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null) => makeNav(instance, summary).ToXml(rootName: root);
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null) => 
+            MakeNav(instance, summary).ToXml(rootName: root);
 
 
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => makeNav(instance, summary).ToXmlBytes(rootName: root);
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => 
+            MakeNav(instance, summary).ToXmlBytes(rootName: root);
 
 #if NET45
         // [WMR 20180409] NEW
         // https://github.com/ewoutkramer/fhir-net-api/issues/545
         public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null)
         {
-            var nav = makeNav(instance, summary);
+            var nav = MakeNav(instance, summary);
 
             return SerializationUtil.WriteXmlToDocument(w =>
             {
@@ -91,18 +84,14 @@ namespace Hl7.Fhir.Serialization
 
     public class FhirJsonSerializer : BaseFhirSerializer
     {
-        public FhirJsonSerializer() : base()
-        {
-        }
-
-        public FhirJsonSerializer(ParserSettings settings) : base(settings)
+        public FhirJsonSerializer(ParserSettings settings=null) : base(settings)
         {
         }
 
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False) => 
-            makeNav(instance, summary).ToJson();
+            MakeNav(instance, summary).ToJson();
 
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False) => makeNav(instance, summary).ToJsonBytes();
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False) => MakeNav(instance, summary).ToJsonBytes();
     }
 
     //[Obsolete("Obsolete. Instead, create a new FhirXmlSerializer or FhirJsonSerializer instance and call one of the serialization methods.")]

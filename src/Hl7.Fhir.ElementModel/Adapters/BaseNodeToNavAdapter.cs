@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
+
+#pragma warning disable 612, 618
     /// <summary>
     /// An abstract class on which to build adapter components that adapt a node-based
     /// representation of FHIR data to a navigator based representation.
@@ -88,4 +90,5 @@ namespace Hl7.Fhir.ElementModel.Adapters
             return -1;
         }
     }
+#pragma warning restore 612, 618
 }

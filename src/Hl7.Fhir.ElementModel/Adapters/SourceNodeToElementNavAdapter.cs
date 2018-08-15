@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
+#pragma warning disable 612, 618
     internal class SourceNodeToElementNavAdapter : IElementNavigator, IAnnotated, IExceptionSource
     {
         private IList<ISourceNode> _siblings;
@@ -91,4 +92,5 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public IEnumerable<object> Annotations(Type type) => Current.Annotations(type);
     }
+#pragma warning restore 612, 618
 }

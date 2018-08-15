@@ -62,8 +62,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var navRtXml = JsonParsingHelpers.ParseToTypedElement(navXml.ToJson(), navXml.InstanceType,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
-            var navRtJson = navJson.ToPoco(ModelInfo.GetTypeForFhirType(navJson.InstanceType))
-                .ToTypedElement(navJson.Name);
+            var navRtJson = navJson.ToPoco().ToTypedElement(navJson.Name);
             var navRtPoco = XmlParsingHelpers.ParseToTypedElement(navPoco.ToXml(), navPoco.InstanceType,
                 new PocoStructureDefinitionSummaryProvider());
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);

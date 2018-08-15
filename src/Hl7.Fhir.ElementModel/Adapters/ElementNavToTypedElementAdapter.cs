@@ -14,6 +14,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel.Adapters
 {
+#pragma warning disable 612, 618
     internal class ElementNavToTypedElementAdapter : ITypedElement, IAnnotated, IExceptionSource
     {
         public readonly IElementNavigator Current;
@@ -28,7 +29,10 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         private ElementNavToTypedElementAdapter(ElementNavToTypedElementAdapter parent, IElementNavigator child)
         {
-            Current = child.Clone();
+            //Don't think this is necessary, since the only caller of this private constructor has
+            //just called the .GetChildren() method, which returns clones.
+            //Current = child.Clone();  
+            Current = child;
             ExceptionHandler = parent.ExceptionHandler;
         }
 
@@ -45,11 +49,10 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public IElementDefinitionSummary Definition => Current.Annotation<ITypedElement>()?.Definition;
 
-        public string ShortPath => Current.Annotation<IShortPathGenerator>()?.ShortPath;
-
         public IEnumerable<ITypedElement> Children(string name=null) =>
             Current.Children(name).Select(c => new ElementNavToTypedElementAdapter(this, c));
 
         IEnumerable<object> IAnnotated.Annotations(Type type) => Current.Annotations(type);
     }
+#pragma warning restore 612, 618
 }

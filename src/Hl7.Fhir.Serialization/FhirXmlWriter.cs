@@ -11,29 +11,23 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlWriterSettings
-    {
-        public bool SkipUnknownElements;
-    }
 
     public class FhirXmlWriter : IExceptionSource
     {
         public FhirXmlWriter(FhirXmlWriterSettings settings = null)
         {
-            _settings = settings ?? new FhirXmlWriterSettings();
+            _settings = settings?.Clone() ?? new FhirXmlWriterSettings();
         }
 
         private FhirXmlWriterSettings _settings;
         private bool _roundtripMode;
-        
+
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         public void Write(ITypedElement source, XmlWriter destination, string rootName = null)
@@ -179,7 +173,7 @@ namespace Hl7.Fhir.Serialization
             // If this needs to be serialized as a contained resource, do so
             var containedResourceType = atRoot ? null :
                             (serializationInfo?.IsResource == true ?
-                                            source.InstanceType : 
+                                            source.InstanceType :
                                             source.Annotation<IResourceTypeSupplier>()?.ResourceType);
 
             XElement containedResource = null;

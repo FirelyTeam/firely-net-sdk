@@ -19,43 +19,11 @@ using System.Numerics;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirJsonWriterSettings
-    {
-        /// <summary>
-        /// When encountering an unknown member, just skip it instead of reporting an error.
-        /// </summary>
-        public bool SkipUnknownElements;
-    }
-
-    public static class FhirJsonWriterExtensions
-    {
-        public static void WriteTo(this ITypedElement source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
-            new FhirJsonWriter(settings).Write(source, destination);
-
-        public static void WriteTo(this ISourceNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
-            new FhirJsonWriter(settings).Write(source, destination);
-
-        public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
-            source.ToTypedElement().WriteTo(destination, settings);
-
-        public static string ToJson(this ITypedElement source, FhirJsonWriterSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
-
-        public static string ToJson(this ISourceNode source, FhirJsonWriterSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
-
-        public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
-              => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
-
-        public static byte[] ToJsonBytes(this ITypedElement source, FhirJsonWriterSettings settings = null)
-                => SerializationUtil.WriteJsonToBytes(writer => source.WriteTo(writer, settings));
-    }
-
     public class FhirJsonWriter : IExceptionSource
     {
         public FhirJsonWriter(FhirJsonWriterSettings settings = null)
         {
-            _settings = settings ?? new FhirJsonWriterSettings();
+            _settings = settings?.Clone() ?? new FhirJsonWriterSettings();
         }
 
         private FhirJsonWriterSettings _settings;

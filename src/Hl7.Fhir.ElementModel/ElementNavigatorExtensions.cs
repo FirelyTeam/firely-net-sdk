@@ -14,7 +14,7 @@ using Hl7.Fhir.ElementModel.Adapters;
 
 namespace Hl7.Fhir.ElementModel
 {
-
+#pragma warning disable 612, 618
     public static class ElementNavigatorExtensions
     {
         public static IEnumerable<IElementNavigator> Children(this IElementNavigator navigator, string name = null)
@@ -88,5 +88,9 @@ namespace Hl7.Fhir.ElementModel
 
         public static ITypedElement ToTypedElement(this IElementNavigator nav) => 
             new ElementNavToTypedElementAdapter(nav);
+        public static ISourceNode ToSourceNode(this IElementNavigator nav) =>
+            new ElementNavToSourceNodeAdapter(nav);
+
     }
+#pragma warning restore 612, 618
 }

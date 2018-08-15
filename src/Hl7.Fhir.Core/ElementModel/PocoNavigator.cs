@@ -141,7 +141,7 @@ namespace Hl7.Fhir.ElementModel
         protected override IList<ITypedElement> GetChildren() =>
             Current.Children().ToList();
 
-        public bool MoveToFirstChild(string nameFilter = null)
+        public override bool MoveToFirstChild(string nameFilter = null)
         {
             var oldCP = CommonPath;
 
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.ElementModel
             return true;
         }
 
-        public bool MoveToNext(string nameFilter = null) => base.MoveToNext(nameFilter);
+        public override bool MoveToNext(string nameFilter = null) => base.MoveToNext(nameFilter);
 
         protected override BaseNodeToNavAdapter NewClone() =>
             new PocoNavigator()

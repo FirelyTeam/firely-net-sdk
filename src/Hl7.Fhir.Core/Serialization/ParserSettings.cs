@@ -16,11 +16,10 @@ namespace Hl7.Fhir.Serialization
     {
         public static readonly ParserSettings Default = new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false, DisallowXsiAttributesOnRoot = true };
 
-        public bool AcceptUnknownMembers { get; set; }
-
         public bool DisallowXsiAttributesOnRoot { get; set; }
 
         public bool AllowUnrecognizedEnums { get; set; }
+        public bool AcceptUnknownMembers { get; set; }
 
         //public ISerializerCustomization CustomSerializer { get; set; }
 
