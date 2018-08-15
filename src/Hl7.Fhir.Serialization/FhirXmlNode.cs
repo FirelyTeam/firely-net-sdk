@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class FhirXmlNode : ISourceNode, IAnnotated, IExceptionSource
+    internal class FhirXmlNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {  
         public FhirXmlNode(XObject node, FhirXmlNavigatorSettings settings) 
         {
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
 
         public readonly XObject Current;
         private readonly FhirXmlNavigatorSettings _settings;
-        private bool _atRoot = false;
+        private readonly bool _atRoot = false;
 
         public XNamespace[] AllowedExternalNamespaces => _settings.AllowedExternalNamespaces;
         public bool DisallowSchemaLocation => _settings.DisallowSchemaLocation;
@@ -69,19 +69,13 @@ namespace Hl7.Fhir.Serialization
                     {
                         bool errorEncountered = verifyContained(contained, this, PermissiveParsing);
 
-                        if (PermissiveParsing && errorEncountered)
-                            _containedResource = NO_CONTAINED_FOUND;
-                        else
-                            _containedResource = contained;
+                        _containedResource = PermissiveParsing && errorEncountered ? NO_CONTAINED_FOUND : contained;
                     }
                     else
                         _containedResource = NO_CONTAINED_FOUND;
                 }
 
-                if (_containedResource == NO_CONTAINED_FOUND)
-                    return null;
-                else
-                    return _containedResource;
+                return _containedResource == NO_CONTAINED_FOUND ? null : _containedResource;
             }
         }
 
@@ -216,7 +210,7 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(FhirXmlNode) || type == typeof(ISourceNode))
+            if (type == typeof(FhirXmlNode) || type == typeof(ISourceNode) || type == typeof(IResourceTypeSupplier))
                 return new[] { this };
 #pragma warning disable 612, 618
             else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)
@@ -240,9 +234,9 @@ namespace Hl7.Fhir.Serialization
 
                 string[] closingComment(XObject current)
                 {
-                    if (current is XContainer xc && xc.LastNode != null)
-                        return filterComments(cons(xc.LastNode, xc.LastNode.PreviousNodes()));
-                    return new string[0];
+                    return current is XContainer xc && xc.LastNode != null
+                        ? filterComments(cons(xc.LastNode, xc.LastNode.PreviousNodes()))
+                        : (new string[0]);
                 }
 
                 string[] docEndComments(XObject current) =>
@@ -327,13 +321,8 @@ namespace Hl7.Fhir.Serialization
             ies.NotifyOrThrow(source, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
         }
 
-        private static (int lineNumber, int linePosition) getPosition(XObject node)
-        {
-            if (node is IXmlLineInfo xli)
-                return (xli.LineNumber, xli.LinePosition);
-            else
-                return (-1, -1);
-        }
+        private static (int lineNumber, int linePosition) getPosition(XObject node) => 
+            node is IXmlLineInfo xli ? (xli.LineNumber, xli.LinePosition) : (-1, -1);
 
         private static bool verifyContained(XElement contained, IExceptionSource ies, bool permissive)
         {

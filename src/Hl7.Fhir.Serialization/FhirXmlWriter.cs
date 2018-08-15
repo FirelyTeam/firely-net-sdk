@@ -50,7 +50,9 @@ namespace Hl7.Fhir.Serialization
             if (hasXmlSource)
             {
                 _roundtripMode = true;
+#pragma warning disable 612,618
                 writeInternal(source.ToElementNode(), destination, rootName);
+#pragma warning restore 612, 618
             }
             else
                 throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
@@ -177,7 +179,8 @@ namespace Hl7.Fhir.Serialization
             // If this needs to be serialized as a contained resource, do so
             var containedResourceType = atRoot ? null :
                             (serializationInfo?.IsResource == true ?
-                                            source.InstanceType : source.Annotation<ISourceNode>()?.ResourceType);
+                                            source.InstanceType : 
+                                            source.Annotation<IResourceTypeSupplier>()?.ResourceType);
 
             XElement containedResource = null;
             if (containedResourceType != null)

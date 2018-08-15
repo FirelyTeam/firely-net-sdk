@@ -139,9 +139,9 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestDynaBinding()
         {
-            var input = (UntypedNode.Node("root", 
-                    UntypedNode.Valued("child", "Hello world!"), 
-                    UntypedNode.Valued("child", "4"))).ToElementNavigator();
+            var input = (SourceNode.Node("root", 
+                    SourceNode.Valued("child", "Hello world!"), 
+                    SourceNode.Valued("child", "4"))).ToElementNavigator();
 
             Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }

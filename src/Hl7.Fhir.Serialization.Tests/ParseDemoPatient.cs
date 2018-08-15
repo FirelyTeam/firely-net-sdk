@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void ProducedCorrectTypedLocations(ITypedElement patient)
         {
-            string getPretty(ITypedElement n) => n.Annotation<IShortPath>().ShortPath;
+            string getPretty(ITypedElement n) => n.Annotation<IShortPathGenerator>().ShortPath;
 
             Assert.AreEqual("Patient", getPretty(patient));
 
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public static void CanReadThroughNavigator(ITypedElement n, bool typed)
         {
             Assert.AreEqual("Patient", n.Name);
-            Assert.AreEqual("Patient", n.Annotation<ISourceNode>().ResourceType);
+            Assert.AreEqual("Patient", n.Annotation<IResourceTypeSupplier>()?.ResourceType);
             if (typed) Assert.AreEqual("Patient", n.InstanceType);
 
             var nav = n.Children().GetEnumerator();
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             Assert.IsTrue(nav.MoveNext()); // contained
             Assert.AreEqual("contained", nav.Current.Name);
-            Assert.AreEqual("Patient", nav.Current.Annotation<ISourceNode>().ResourceType);
+            Assert.AreEqual("Patient", nav.Current.Annotation<IResourceTypeSupplier>().ResourceType);
             if (typed) Assert.AreEqual("Patient", nav.Current.InstanceType);
 
             var contained = nav.Current.Children().GetEnumerator();

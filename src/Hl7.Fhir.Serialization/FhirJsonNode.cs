@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,24 +16,14 @@ using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    /*
-        JToken
-            JContainer
-                JArray
-                JConstructor
-                JObject
-                JProperty
-            JValue
-                JRaw
-     */
-    internal class FhirJsonNode : ISourceNode, IAnnotated, IExceptionSource
+    internal class FhirJsonNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {
-        public FhirJsonNode(JObject current, string nodeName, FhirJsonNavigatorSettings settings = null)
+        public FhirJsonNode(JObject source, string nodeName, FhirJsonNavigatorSettings settings = null)
         {
             Name = nodeName;
             Location = Name;
             JsonValue = null;
-            JsonObject = current;
+            JsonObject = source;
             ArrayIndex = null;
             UsesShadow = false;
             _settings = settings?.Clone() ?? new FhirJsonNavigatorSettings();
@@ -61,18 +50,24 @@ namespace Hl7.Fhir.Serialization
 
         public string Name { get; private set; }
         public string Location { get; private set; }
-        
+
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public bool AllowJsonComments => _settings.AllowJsonComments;
         public bool PermissiveParsing => _settings.PermissiveParsing;
-#if NET_XSD_SCHEMA
-        public bool ValidateFhirXhtml => _settings.ValidateFhirXhtml;
-#endif
 
+        public JToken PositionNode => JsonValue ?? (JToken)JsonObject;
 
-        public JToken PositionNode => (JToken)JsonValue ?? (JToken)JsonObject;
+        /*
+    JToken
+        JContainer
+            JArray
+            JConstructor
+            JObject
+            JProperty
+        JValue
+            JRaw
+ */
 
         private FhirJsonNode build(string name, JToken main, JToken shadow, bool isArrayElement, int index)
         {
@@ -183,10 +178,8 @@ namespace Hl7.Fhir.Serialization
                     {
                         // Make sure the representation of this Json-typed value is turned
                         // into a string representation compatible with the XML serialization
-                        if (JsonValue.Value is string s)
-                            return s.Trim();
-                        else
-                            return PrimitiveTypeConverter.ConvertTo<string>(JsonValue.Value);
+                        return JsonValue.Value is string s ? s.Trim() 
+                            : PrimitiveTypeConverter.ConvertTo<string>(JsonValue.Value);
                     }
                 }
 
@@ -217,7 +210,7 @@ namespace Hl7.Fhir.Serialization
 
                 if (child.Key == "fhir_comments")
                 {
-                    if (!AllowJsonComments && !PermissiveParsing)
+                    if (!_settings.AllowJsonComments && !PermissiveParsing)
                         raiseFormatError("The 'fhir_comments' feature is disabled.", main ?? shadow);
                     continue;      // ignore pre-DSTU2 Json comments
                 }
@@ -237,21 +230,15 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private bool isResourceTypeIndicator(IGrouping<string, JProperty> child)
-        {
-            if (child.Key != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME) return false;
-
-            return child.First().Value.Type == JTokenType.String;
-        }
+        private bool isResourceTypeIndicator(IGrouping<string, JProperty> child) => 
+            child.Key != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME ?
+                false : child.First().Value.Type == JTokenType.String;
 
         private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string, JProperty> child)
         {
             JProperty main = child.First(), shadow = child.Skip(1).FirstOrDefault();
 
-            if (main.Name[0] != '_')
-                return (main, shadow);
-            else
-                return (shadow, main);
+            return main.Name[0] != '_' ? (main, shadow) : (shadow, main);
         }
 
         private IEnumerable<FhirJsonNode> enumerateElement(string name, JProperty main, JProperty shadow)
@@ -322,17 +309,12 @@ namespace Hl7.Fhir.Serialization
             ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
         }
 
-        private (int lineNumber, int linePosition) getPosition(JToken node)
-        {
-            if (node is IJsonLineInfo jli)
-                return (jli.LineNumber, jli.LinePosition);
-            else
-                return (-1, -1);
-        }
+        private (int lineNumber, int linePosition) getPosition(JToken node) => 
+            node is IJsonLineInfo jli ? (jli.LineNumber, jli.LinePosition) : (-1, -1);
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(FhirJsonNavigator) || type == typeof(ISourceNode))
+            if (type == typeof(FhirJsonNavigator) || type == typeof(ISourceNode) || type == typeof(IResourceTypeSupplier))
                 return new[] { this };
 #pragma warning disable 612, 618
             else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)
@@ -340,7 +322,7 @@ namespace Hl7.Fhir.Serialization
 #pragma warning restore 612, 618
             else if (type == typeof(JsonSerializationDetails))
             {
-                var (lineNumber, linePosition) = getPosition((JToken)JsonValue ?? (JToken)JsonObject);
+                var (lineNumber, linePosition) = getPosition(JsonValue ?? (JToken)JsonObject);
 
                 return new[]
                 {
@@ -368,7 +350,7 @@ namespace Hl7.Fhir.Serialization
 
             object checkXhtml(ITypedElement nav, IExceptionSource ies, object _)
             {
-                if (nav.InstanceType == "xhtml" && ValidateFhirXhtml)
+                if (nav.InstanceType == "xhtml" && _settings.ValidateFhirXhtml)
                     FhirXmlNode.ValidateXhtml((string)nav.Value, ies, nav);
 
                 return null;

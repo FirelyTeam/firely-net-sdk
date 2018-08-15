@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Support.Tests
 {
     [TestClass]
-    public class ExceptionSinkTests
+    public class ExceptionSourceTests
     {
         class TestSource : IExceptionSource
         {

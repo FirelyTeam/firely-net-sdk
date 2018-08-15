@@ -149,6 +149,9 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
+        public static string GetResourceTypeIndicator(this ISourceNode node) =>
+            node.Annotation<IResourceTypeSupplier>()?.ResourceType;
+
         /// <summary>
         /// Gets specific annotations from the list of annotations on the node.
         /// </summary>

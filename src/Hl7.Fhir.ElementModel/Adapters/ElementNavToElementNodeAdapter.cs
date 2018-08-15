@@ -37,7 +37,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IElementDefinitionSummary Definition => Current.Annotation<ITypedElement>()?.Definition;
 
-        public string ShortPath => Current.Annotation<IShortPath>()?.ShortPath;
+        public string ShortPath => Current.Annotation<IShortPathGenerator>()?.ShortPath;
 
         public IEnumerable<ITypedElement> Children(string name=null) =>
             Current.Children(name).Select(c => new ElementNavToElementNodeAdapter(this, c));

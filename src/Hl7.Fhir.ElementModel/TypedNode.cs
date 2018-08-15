@@ -16,14 +16,13 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class TypedElement : ITypedElement, IAnnotated, IExceptionSource, IShortPath
+    public class TypedElement : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
     {
         public TypedElement(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedNodeSettings settings = null)
         {
-            if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (element == null) throw Error.ArgumentNull(nameof(element));
 
-            Provider = provider;
+            Provider = provider ?? throw Error.ArgumentNull(nameof(provider));
             _settings = settings ?? new TypedNodeSettings();
 
             if (element is IExceptionSource ies && ies.ExceptionHandler == null)
@@ -35,7 +34,7 @@ namespace Hl7.Fhir.ElementModel
 
         private NavigatorPosition buildRootPosition(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider)
         {
-            var rootType = type ?? element.ResourceType;
+            var rootType = type ?? element.GetResourceTypeIndicator();
             if (rootType == null)
             {
                 if (_settings.ErrorMode == TypedNodeSettings.TypeErrorMode.Report)
@@ -125,16 +124,17 @@ namespace Hl7.Fhir.ElementModel
         private NavigatorPosition deriveInstanceType(ISourceNode current, IElementDefinitionSummary info)
         {
             string instanceType = null;
+            var resourceTypeIndicator = current.GetResourceTypeIndicator();
 
             if (info.IsResource)
             {
-                instanceType = current.ResourceType;
+                instanceType = resourceTypeIndicator;
                 if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually contain one", current);
             }
-            else if (!info.IsResource && current.ResourceType != null)
+            else if (!info.IsResource && resourceTypeIndicator != null)
             {
-                raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{current.ResourceType}'.", current);
-                instanceType = current.ResourceType;
+                raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{resourceTypeIndicator}'.", current);
+                instanceType = resourceTypeIndicator;
             }
             else if (info.IsChoiceElement)
             {
@@ -172,10 +172,9 @@ namespace Hl7.Fhir.ElementModel
             else
             {
                 var hit = dis.TryGetBySuffixedName(name, out var info);
-                if (hit && info.IsChoiceElement)
-                    childSet = parent.Children(name + "*");
-                else
-                    childSet = parent.Children(name);
+                childSet = hit && info.IsChoiceElement ? 
+                    parent.Children(name + "*") :
+                    parent.Children(name);
             }
 
             string lastName = null;
@@ -184,12 +183,9 @@ namespace Hl7.Fhir.ElementModel
             foreach (var scan in childSet)
             {
                 var hit = dis.TryGetBySuffixedName(scan.Name, out var info);
-                NavigatorPosition match = null;
-
-                if (info == null)
-                    match = new NavigatorPosition(scan, null, scan.Name, null);
-                else
-                    match = deriveInstanceType(scan, info);
+                NavigatorPosition match = info == null ? 
+                    new NavigatorPosition(scan, null, scan.Name, null) : 
+                    deriveInstanceType(scan, info);
 
                 // If we found a type, but we don't know about the specific child, complain
                 if (dis != ElementDefinitionSummaryCache.Empty && !match.IsTracking)
@@ -251,10 +247,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 var si = Provider.Provide(current.InstanceType);
 
-                if (si == null)
-                    return ElementDefinitionSummaryCache.Empty;
-                else
-                    return ElementDefinitionSummaryCache.ForType(si);
+                return si == null ? ElementDefinitionSummaryCache.Empty : ElementDefinitionSummaryCache.ForType(si);
             }
         }
 
@@ -267,8 +260,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 foreach (var rule in additionalRules.Cast<AdditionalStructuralRule>())
                 {
-                    object state = null;
-                    stateBag.TryGetValue(rule, out state);
+                    stateBag.TryGetValue(rule, out object state);
                     state = rule(child, this, state);
                     if (state != null) stateBag[rule] = state;
                 }
@@ -288,7 +280,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(TypedElement) || type == typeof(ITypedElement) || type == typeof(IShortPath))
+            if (type == typeof(TypedElement) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 return new[] { this };
             else
                 return Current.Node.Annotations(type);

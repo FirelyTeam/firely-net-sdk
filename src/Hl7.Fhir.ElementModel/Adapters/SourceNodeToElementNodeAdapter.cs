@@ -28,7 +28,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public string Name => Current.Name;
 
-        public string InstanceType => Current.ResourceType;
+        public string InstanceType => Current.GetResourceTypeIndicator(); 
 
         public object Value => Current.Text;
 
@@ -39,12 +39,6 @@ namespace Hl7.Fhir.ElementModel.Adapters
         public IEnumerable<ITypedElement> Children(string name) =>
             Current.Children(name).Select(c => new SourceNodeToElementNodeAdapter(this, c));
 
-        IEnumerable<object> IAnnotated.Annotations(Type type)
-        {
-            if (type == typeof(SourceNodeToElementNodeAdapter))
-                return new[] { this };
-            else
-                return Current.Annotations(type);
-        }
+        IEnumerable<object> IAnnotated.Annotations(Type type) => Current.Annotations(type);
     }
 }

@@ -30,7 +30,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public string Name => Current.Name;
 
-        public string Type => Current.ResourceType;
+        public string Type => Current.GetResourceTypeIndicator();
 
         public object Value => Current.Text;
 
@@ -81,12 +81,6 @@ namespace Hl7.Fhir.ElementModel.Adapters
             return true;
         }
 
-        public IEnumerable<object> Annotations(Type type)
-        {
-            if (type == typeof(SourceNodeToElementNavAdapter))
-                return new[] { this };
-            else
-                return Current.Annotations(type);
-        }
+        public IEnumerable<object> Annotations(Type type) => Current.Annotations(type);
     }
 }

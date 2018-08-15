@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestEmptyElement()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
-            var data = UntypedNode.Node("active").ToElementNavigator();
+            var data = SourceNode.Node("active").ToElementNavigator();
 
             var result = _validator.Validate(data, boolSd);
             Assert.False(result.Success);
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void NameMatching()
         {
-            var data = UntypedNode.Valued("active", "true")
+            var data = SourceNode.Valued("active", "true")
                 .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
                 .ToElementNavigator();
 
@@ -93,10 +93,10 @@ namespace Hl7.Fhir.Specification.Tests
             var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
-            var data = UntypedNode.Valued("active", "true",
-                    UntypedNode.Node("extension",
-                        UntypedNode.Valued("value", "4")),
-                    UntypedNode.Node("nonExistant")
+            var data = SourceNode.Valued("active", "true",
+                    SourceNode.Node("extension",
+                        SourceNode.Valued("value", "4")),
+                    SourceNode.Node("nonExistant")
                         ).ToElementNavigator();
 
             var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNavigator(data));
@@ -157,13 +157,13 @@ namespace Hl7.Fhir.Specification.Tests
         public void ValidateCardinality()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
-            var data = UntypedNode.Valued("active", "true",
-                        UntypedNode.Valued("id", "myId1"),
-                        UntypedNode.Valued("id", "myId2"),
-                        UntypedNode.Node("extension",
-                            UntypedNode.Valued("value", "4")),
-                        UntypedNode.Node("extension",
-                            UntypedNode.Valued("value", "world!")))
+            var data = SourceNode.Valued("active", "true",
+                        SourceNode.Valued("id", "myId1"),
+                        SourceNode.Valued("id", "myId2"),
+                        SourceNode.Node("extension",
+                            SourceNode.Valued("value", "4")),
+                        SourceNode.Node("extension",
+                            SourceNode.Valued("value", "world!")))
                             .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
                             .ToElementNavigator();
 

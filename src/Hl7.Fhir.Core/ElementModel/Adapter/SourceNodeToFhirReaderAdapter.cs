@@ -42,7 +42,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public object GetPrimitiveValue() => Value;
 
-        public string GetResourceTypeName() => Current.ResourceType ??
+        public string GetResourceTypeName() => Current.GetResourceTypeIndicator() ??
             throw Error.Format($"Cannot retrieve type of resource for element '{Name}' from the underlying navigator.", this);
 
 #pragma warning disable 612, 618
@@ -62,13 +62,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public object Value => Current.Text;
 
-        IEnumerable<object> IAnnotated.Annotations(Type type)
-        {
-            if (type == typeof(SourceNodeToFhirReaderAdapter))
-                return new[] { this };
-            else
-                return Current.Annotations(type);
-        }
+        IEnumerable<object> IAnnotated.Annotations(Type type) => Current.Annotations(type);
 
     }
 }

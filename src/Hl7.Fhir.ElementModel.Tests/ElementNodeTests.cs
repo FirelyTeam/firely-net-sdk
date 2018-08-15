@@ -21,25 +21,25 @@ namespace Hl7.FhirPath.Tests
 {
     public class ElementNodeTests
     {
-        UntypedNode patient;
+        SourceNode patient;
 
         public ITypedElement getXmlNode(string xml) => 
             FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
 
         public ElementNodeTests()
         {
-            var annotatedNode = UntypedNode.Valued("id", "myId1");
+            var annotatedNode = SourceNode.Valued("id", "myId1");
             (annotatedNode as IAnnotatable).AddAnnotation("a string annotation");
 
-            patient = UntypedNode.Node("Patient", 
-                UntypedNode.Resource("contained", "Observation", UntypedNode.Valued("valueBoolean", "true")),
-                UntypedNode.Valued("active", "true",
+            patient = SourceNode.Node("Patient", 
+                SourceNode.Resource("contained", "Observation", SourceNode.Valued("valueBoolean", "true")),
+                SourceNode.Valued("active", "true",
                    annotatedNode,
-                   UntypedNode.Valued("id", "myId2"),
-                   UntypedNode.Node("extension",
-                       UntypedNode.Valued("value", "4")),
-                   UntypedNode.Node("extension",
-                       UntypedNode.Valued("value", "world!"))));
+                   SourceNode.Valued("id", "myId2"),
+                   SourceNode.Node("extension",
+                       SourceNode.Valued("value", "4")),
+                   SourceNode.Node("extension",
+                       SourceNode.Valued("value", "world!"))));
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace Hl7.FhirPath.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlNode(tpXml).ToSourceNode();
-            var nodes = UntypedNode.FromNode(nav);
+            var nodes = SourceNode.FromNode(nav);
             Assert.True(nav.IsEqualTo(nodes).Success);
         }
 

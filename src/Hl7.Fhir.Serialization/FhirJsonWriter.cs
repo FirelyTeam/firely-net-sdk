@@ -103,7 +103,9 @@ namespace Hl7.Fhir.Serialization
             if (hasJsonSource)
             {
                 _roundtripMode = true;          // will allow unknown elements to be processed
+#pragma warning disable 612,618
                 Write(source.ToElementNode(), destination);
+#pragma warning restore 612,618
             }
             else
                 throw Error.NotSupported($"The {nameof(FhirJsonWriter)} will only work correctly on an untyped " +
@@ -139,10 +141,7 @@ namespace Hl7.Fhir.Serialization
                 var objectWithChildren = new JObject();
                 addChildren(n, objectWithChildren);
 
-                if (objectWithChildren.Count == 0)
-                    return null;
-                else
-                    return objectWithChildren;
+                return objectWithChildren.Count == 0 ? null : objectWithChildren;
             }
         }
 
@@ -173,8 +172,9 @@ namespace Hl7.Fhir.Serialization
 
         private void addChildren(ITypedElement node, JObject parent)
         {
-            var isResource = node.Definition?.IsResource ?? node.Annotation<ISourceNode>().ResourceType != null;
-            var containedResourceType = isResource ? (node.InstanceType ?? node.Annotation<ISourceNode>()?.ResourceType) : null;
+            var resourceTypeIndicator = node.Annotation<IResourceTypeSupplier>()?.ResourceType;
+            var isResource = node.Definition?.IsResource ?? resourceTypeIndicator != null;
+            var containedResourceType = isResource ? (node.InstanceType ?? resourceTypeIndicator) : null;
             if (containedResourceType != null)
                 parent.AddFirst(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, containedResourceType));
 

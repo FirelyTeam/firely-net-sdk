@@ -41,13 +41,6 @@ namespace Hl7.Fhir.ElementModel
         string Text { get; }
 
         /// <summary>
-        /// Gets the resource type found at the location of the node in the source data (if any).
-        /// </summary>
-        /// <value>The value of resource type indicator (e.g. <c>resourceType</c> in json, or contained node in XML) or
-        /// <c>null</c> if such an indicator was not found.</value>
-        string ResourceType { get; }
-
-        /// <summary>
         /// Gets the location of this node within the tree of data.
         /// </summary>
         /// <value>A string of dot-separated names representing the path to the node within the tree, including indices

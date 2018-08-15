@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var patient = getJsonNodeU(tpJson, new FhirJsonNavigatorSettings { AllowJsonComments = true });
 
             Assert.AreEqual("Patient", patient.Name);
-            Assert.AreEqual("Patient", patient.ResourceType);
+            Assert.AreEqual("Patient", patient.GetResourceTypeIndicator());
 
             // Move into child Patient.identifier
             var patientC = patient.Children().ToList();
@@ -132,11 +132,11 @@ namespace Hl7.Fhir.Serialization.Tests
             var contained = patient.Children("contained").ToList();
 
             Assert.AreEqual("contained", contained[0].Name);
-            Assert.AreEqual("Binary", contained[0].ResourceType);
+            Assert.AreEqual("Binary", contained[0].GetResourceTypeIndicator());
 
             // Check Patient.contained[1], an Organization
             Assert.AreEqual("contained", contained[1].Name);
-            Assert.AreEqual("Organization", contained[1].ResourceType);
+            Assert.AreEqual("Organization", contained[1].GetResourceTypeIndicator());
         }
 
         [TestMethod]
