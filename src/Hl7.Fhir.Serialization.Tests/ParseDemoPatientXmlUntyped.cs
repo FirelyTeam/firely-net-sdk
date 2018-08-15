@@ -24,10 +24,12 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = getXmlUntyped(tpXml);
+#pragma warning disable 612,618
             ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNode(), typed: false);
+#pragma warning restore 612, 618
         }
 
-           [TestMethod]
+        [TestMethod]
         public void ElementNavPerformanceUntypedXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
@@ -212,8 +214,10 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
-            var nav = getXmlUntyped(bundle).ToElementNavigator();
-            ParseDemoPatient.CheckBundleEntryNavigation(nav);
+            var node = getXmlUntyped(bundle);
+#pragma warning disable 612, 618
+            ParseDemoPatient.CheckBundleEntryNavigation(node.ToElementNode());
+#pragma warning restore 612, 618
         }
 
         [TestMethod]

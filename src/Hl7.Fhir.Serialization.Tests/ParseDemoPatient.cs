@@ -97,9 +97,9 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreNotEqual(0, posInfo.LinePosition);
         }
 
-        [TestMethod]
-        public static void CheckBundleEntryNavigation(IElementNavigator nav)
+        public static void CheckBundleEntryNavigation(ITypedElement node)
         {
+            var nav = node.ToElementNavigator();
             var entryNav = nav.Select("entry.resource").First();
             var id = entryNav.Scalar("id");
             Assert.IsNotNull(id);

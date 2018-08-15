@@ -85,8 +85,8 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
-            var nav = getXmlNode(bundle).ToElementNavigator();
-            ParseDemoPatient.CheckBundleEntryNavigation(nav);
+            var node = getXmlNode(bundle);
+            ParseDemoPatient.CheckBundleEntryNavigation(node);
         }
 
 

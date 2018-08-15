@@ -23,7 +23,9 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             var nav = getJsonNodeU(tp);
+#pragma warning disable 612, 618
             ParseDemoPatient.CanReadThroughNavigator(nav.ToElementNode(), typed: false);
+#pragma warning restore 612, 618
         }
 
         [TestMethod]
@@ -80,8 +82,10 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
-            var nav = getJsonNodeU(bundle).ToElementNavigator();
-            ParseDemoPatient.CheckBundleEntryNavigation(nav);
+            var nav = getJsonNodeU(bundle);
+#pragma warning disable 612,618
+            ParseDemoPatient.CheckBundleEntryNavigation(nav.ToElementNode());
+#pragma warning restore 612, 618
         }
 
 

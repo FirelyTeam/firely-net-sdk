@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
-            var nav = getJsonNode(bundle).ToElementNavigator();
+            var nav = getJsonNode(bundle);
             ParseDemoPatient.CheckBundleEntryNavigation(nav);
         }
 

@@ -352,10 +352,10 @@ namespace Hl7.Fhir.Utility
         {
             XmlSchemaSet schemas = new XmlSchemaSet();
 
-            var schema = new StringReader(Support.Properties.Resources.xml);
+            var schema = new StringReader(Serialization.Properties.Resources.xml);
             schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
 
-            schema = new StringReader(Support.Properties.Resources.fhir_xhtml);
+            schema = new StringReader(Serialization.Properties.Resources.fhir_xhtml);
             schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
 
             schemas.Compile();
