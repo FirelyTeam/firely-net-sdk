@@ -28,8 +28,10 @@ namespace Hl7.Fhir.Specification.Source
         /// Factory function that should create a new <see cref="FhirClient"/> instance for the specified <see cref="Uri"/>.
         /// If this parameter equals <c>null</c>, then the new instance creates a default <see cref="FhirClient"/> instance.
         /// </param>
-        public WebResolver(Func<Uri, FhirClient> fhirClientFactory) { _clientFactory = fhirClientFactory; }
-
+        public WebResolver(Func<Uri, FhirClient> fhirClientFactory)
+        {
+            _clientFactory = fhirClientFactory ?? throw Error.ArgumentNull(nameof(fhirClientFactory));
+        }
 
         public Hl7.Fhir.Model.Resource ResolveByUri(string uri)
         {
