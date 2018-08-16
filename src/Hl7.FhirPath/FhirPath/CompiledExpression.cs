@@ -57,6 +57,9 @@ namespace Hl7.FhirPath
             return Predicate(evaluator, input, new EvaluationContext(container));
         }
 
+        public static bool Predicate(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
+            => Predicate(evaluator, input.ToElementNavigator(), ctx);
+
         // For predicates, Empty is considered true
         public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
         {

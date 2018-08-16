@@ -55,7 +55,13 @@ namespace Hl7.Fhir.ElementModel
         public static T ToPoco<T>(this ISourceNode navigator) where T : Base =>
                (T)navigator.ToPoco(typeof(T));
 
+        [Obsolete("Use ParseQuantity(this ITypedElement instance) instead")]
         public static Model.Quantity ParseQuantity(this IElementNavigator instance)
+        {
+            return ParseQuantity(instance.ToElementNode());
+        }
+
+        public static Model.Quantity ParseQuantity(this ITypedElement instance)
         {
             var newQuantity = new Quantity();
 
@@ -70,6 +76,12 @@ namespace Hl7.Fhir.ElementModel
             newQuantity.Code = instance.Children("code").GetString();
 
             return newQuantity;
+        }
+
+        [Obsolete("Use ParseBindable(this ITypedElement instance) instead")]
+        public static Element ParseBindable(this IElementNavigator instance)
+        {
+            return ParseBindable(instance.ToElementNode());
         }
 
         /// <summary>
@@ -88,9 +100,9 @@ namespace Hl7.Fhir.ElementModel
         ///   'string' => code
         ///   'uri' => code
         /// </remarks>
-        public static Element ParseBindable(this IElementNavigator instance)
+        public static Element ParseBindable(this ITypedElement instance)
         {
-            var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.Type);
+            var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
 
             switch (instanceType)
             {
@@ -116,7 +128,7 @@ namespace Hl7.Fhir.ElementModel
                     return null;
             }
 
-            Coding parseQuantity(IElementNavigator nav)
+            Coding parseQuantity(ITypedElement nav)
             {
                 var newCoding = new Coding();
                 var q = instance.ParseQuantity();
@@ -125,7 +137,7 @@ namespace Hl7.Fhir.ElementModel
                 return newCoding;
             }
 
-            Element parseExtension(IElementNavigator nav)
+            Element parseExtension(ITypedElement nav)
             {
                 // HACK: For now, assume this is a typed navigator, so we have "value",
                 // not the unparsed "valueCode" etc AND we have Type (in ParseBindable())
@@ -138,10 +150,18 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        public static T ParsePrimitive<T>(this IElementNavigator instance) where T:Primitive, new()
+        [Obsolete("Use ParsePrimitive<T>(this ITypedElement instance) instead")]
+        public static T ParsePrimitive<T>(this IElementNavigator instance) where T : Primitive, new()
+            => ParsePrimitive<T>(instance.ToElementNode());
+        
+        public static T ParsePrimitive<T>(this ITypedElement instance) where T:Primitive, new()
                     => new T() { ObjectValue = instance.Value };
 
+        [Obsolete("Use ParseCoding(this ITypedElement instance) instead")]
         public static Coding ParseCoding(this IElementNavigator instance)
+            => ParseCoding(instance.ToElementNode());
+
+        public static Coding ParseCoding(this ITypedElement instance)
         {
             return new Coding()
             {
@@ -153,18 +173,24 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
+        [Obsolete("Use ParseResourceReference(this ITypedElement instance) instead")]
         public static ResourceReference ParseResourceReference(this IElementNavigator instance)
+             => ParseResourceReference(instance.ToElementNode());
+
+        public static ResourceReference ParseResourceReference(this ITypedElement instance)
         {
             return new ResourceReference()
             {
                 Reference = instance.Children("reference").GetString(),
-                Display = instance.Children("display").GetString()           
+                Display = instance.Children("display").GetString()
             };
         }
 
-
-
+        [Obsolete("Use ParseCodeableConcept(this ITypedElement instance) instead")]
         public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
+            => ParseCodeableConcept(instance.ToElementNode());
+
+        public static CodeableConcept ParseCodeableConcept(this ITypedElement instance)
         {
             return new CodeableConcept()
             {
@@ -174,7 +200,11 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
+        [Obsolete("Use GetString(this IEnumerable<ITypedElement> instance) instead")]
         public static string GetString(this IEnumerable<IElementNavigator> instance)
+            => instance.SingleOrDefault()?.Value as string;
+        
+        public static string GetString(this IEnumerable<ITypedElement> instance)
         {
             return instance.SingleOrDefault()?.Value as string;
         }

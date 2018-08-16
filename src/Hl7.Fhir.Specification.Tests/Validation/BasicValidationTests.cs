@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestEmptyElement()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
-            var data = SourceNode.Node("active").ToElementNavigator();
+            var data = SourceNode.Node("active").ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var result = _validator.Validate(data, boolSd);
             Assert.False(result.Success);
@@ -76,8 +76,8 @@ namespace Hl7.Fhir.Specification.Tests
         public void NameMatching()
         {
             var data = SourceNode.Valued("active", "true")
-                .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
-                .ToElementNavigator();
+                .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean");
+                
 
             Assert.True(ChildNameMatcher.NameMatches("active", data));
             Assert.True(ChildNameMatcher.NameMatches("activeBoolean", data));
@@ -97,9 +97,9 @@ namespace Hl7.Fhir.Specification.Tests
                     SourceNode.Node("extension",
                         SourceNode.Valued("value", "4")),
                     SourceNode.Node("nonExistant")
-                        ).ToElementNavigator();
+                        ).ToTypedNode(new PocoStructureDefinitionSummaryProvider(), type: "boolean", settings: new TypedNodeSettings() { ErrorMode = TypedNodeSettings.TypeErrorMode.Passthrough });
 
-            var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNavigator(data));
+            var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNode(data));
             Assert.Single(matches.UnmatchedInstanceElements);
             Assert.Equal(3, matches.Matches.Count());        // id, extension, value
             Assert.Empty(matches.Matches[0].InstanceElements); // id
@@ -164,8 +164,7 @@ namespace Hl7.Fhir.Specification.Tests
                             SourceNode.Valued("value", "4")),
                         SourceNode.Node("extension",
                             SourceNode.Valued("value", "world!")))
-                            .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
-                            .ToElementNavigator();
+                            .ToTypedNode(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var report = _validator.Validate(data, boolSd);
             Assert.Equal(3, report.ListErrors().Count());
