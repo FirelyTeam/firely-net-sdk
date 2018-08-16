@@ -11,35 +11,16 @@ namespace Hl7.Fhir.Serialization
         public static ITypedElement Rename(this ITypedElement wrapped, string name) =>
             name != null ? new RootRenamer(wrapped, name) : wrapped;
 
-        private class RootRenamer : ITypedElement, IAnnotated, IExceptionSource
+        private class RootRenamer : BaseTypedElement
         {
-            private readonly string _rootName;
-            private readonly ITypedElement _wrapped;
+            private readonly string _renamed;
 
-            public RootRenamer(ITypedElement wrapped, string name)
+            public RootRenamer(ITypedElement wrapped, string name) : base(wrapped)
             {
-                _wrapped = wrapped;
-                _rootName = name;
-
-                if (wrapped is IExceptionSource ies && ies.ExceptionHandler == null)
-                    ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
+                _renamed = name ?? throw Error.ArgumentNull(name);
             }
 
-            public ExceptionNotificationHandler ExceptionHandler { get; set; }
-
-            public string Name => _rootName;
-
-            public string InstanceType => _wrapped.InstanceType;
-
-            public object Value => _wrapped.Value;
-
-            public string Location => _wrapped.Location;
-
-            public IElementDefinitionSummary Definition => _wrapped.Definition;
-
-            public IEnumerable<object> Annotations(Type type) => _wrapped.Annotations(type);
-
-            public IEnumerable<ITypedElement> Children(string name = null) => _wrapped.Children(name);
+            public override string Name => _renamed;
         }
     }
 }
