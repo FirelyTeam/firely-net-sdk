@@ -147,14 +147,15 @@ namespace Hl7.Fhir.Utility
             }
         }
 
-        public static string WriteXmlToString(Action<XmlWriter> serializer)
+        public static string WriteXmlToString(Action<XmlWriter> serializer, bool pretty=false)
         {
             StringBuilder sb = new StringBuilder();
 
             XmlWriterSettings settings = new XmlWriterSettings
             {
                 OmitXmlDeclaration = true,
-                NewLineHandling = NewLineHandling.Entitize
+                NewLineHandling = NewLineHandling.Entitize,
+                Indent = pretty
             };
 
             // [WMR 20160421] Explicit disposal
@@ -179,7 +180,7 @@ namespace Hl7.Fhir.Utility
             return doc;
         }
 
-        public static string WriteJsonToString(Action<JsonWriter> serializer)
+        public static string WriteJsonToString(Action<JsonWriter> serializer, bool pretty=false)
         {
             StringBuilder resultBuilder = new StringBuilder();
 
@@ -187,6 +188,7 @@ namespace Hl7.Fhir.Utility
             using (StringWriter sw = new StringWriter(resultBuilder))
             using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
             {
+                jw.Formatting = pretty ? Newtonsoft.Json.Formatting.Indented : Newtonsoft.Json.Formatting.None;
                 serializer(jw);
                 jw.Flush();
                 return resultBuilder.ToString();
@@ -229,10 +231,7 @@ namespace Hl7.Fhir.Utility
             return doc.First as JObject;
         }
 
-        public static JsonWriter CreateJsonTextWriter(TextWriter writer)
-        {
-            return new BetterDecimalJsonTextWriter(writer);
-        }
+        public static JsonWriter CreateJsonTextWriter(TextWriter writer) => new BetterDecimalJsonTextWriter(writer);
 
         internal class BetterDecimalJsonTextWriter : JsonTextWriter
         {

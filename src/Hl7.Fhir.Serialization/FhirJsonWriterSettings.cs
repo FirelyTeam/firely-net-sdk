@@ -15,12 +15,15 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// When encountering an unknown member, just skip it instead of reporting an error.
         /// </summary>
-        public bool SkipUnknownElements;
+        public bool IgnoreUnknownElements;
+
+        public bool Pretty;
 
         public FhirJsonWriterSettings Clone() =>
             new FhirJsonWriterSettings
             {
-                SkipUnknownElements = SkipUnknownElements
+                IgnoreUnknownElements = IgnoreUnknownElements,
+                Pretty = Pretty
             };
     }
 }

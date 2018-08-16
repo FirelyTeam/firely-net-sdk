@@ -12,10 +12,13 @@ namespace Hl7.Fhir.Serialization
     {
         public bool SkipUnknownElements;
 
+        public bool Pretty;
+
         public FhirXmlWriterSettings Clone() =>
             new FhirXmlWriterSettings
             {
-                SkipUnknownElements = SkipUnknownElements
+                SkipUnknownElements = SkipUnknownElements,
+                Pretty = Pretty
             };
     }
 }

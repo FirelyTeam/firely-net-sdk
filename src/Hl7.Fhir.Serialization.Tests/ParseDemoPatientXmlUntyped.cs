@@ -200,9 +200,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var xmlWriter = new FhirXmlWriter();
-
-                var output = SerializationUtil.WriteXmlToString(writer => xmlWriter.Write(jsonNav, writer));
+                var output = jsonNav.ToXml();
                 Assert.Fail();
             }
             catch (NotSupportedException)

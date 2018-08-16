@@ -6,14 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
+
 using System;
 
 namespace Hl7.Fhir.Serialization
 {
     public class ParserSettings
     {
+        [Obsolete("Due to a bug, the Default has always been ignored, so it is now officially deprecated")]
         public static readonly ParserSettings Default = new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false, DisallowXsiAttributesOnRoot = true };
 
         public bool DisallowXsiAttributesOnRoot { get; set; }
@@ -21,25 +21,12 @@ namespace Hl7.Fhir.Serialization
         public bool AllowUnrecognizedEnums { get; set; }
         public bool AcceptUnknownMembers { get; set; }
 
-        //public ISerializerCustomization CustomSerializer { get; set; }
-
-        //public IDeserializerCustomization CustomDeserializer { get; set; }
+        public ParserSettings Clone() =>
+            new ParserSettings
+            {
+                DisallowXsiAttributesOnRoot = DisallowXsiAttributesOnRoot,
+                AllowUnrecognizedEnums = AllowUnrecognizedEnums,
+                AcceptUnknownMembers = AllowUnrecognizedEnums
+            };
     }
-
-    //public interface ISerializerCustomization
-    //{
-    //    [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
-    //    void OnBeforeSerializeComplexType(object instance, IFhirWriter writer);
-
-    //    [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
-    //    bool OnBeforeSerializeProperty(string name, object value, IFhirWriter writer);
-
-    //    [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
-    //    void OnAfterSerializeComplexType(object instance, IFhirWriter writer);
-    //}
-
-    //public interface IDeserializerCustomization
-    //{
-    //    bool OnBeforeDeserializeProperty(string name, Base parent, IElementNavigator current);
-    //}
 }

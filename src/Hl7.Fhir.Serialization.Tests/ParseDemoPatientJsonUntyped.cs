@@ -68,9 +68,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var jsonWriter = new FhirJsonWriter();
-
-                var output = SerializationUtil.WriteJsonToString(writer => jsonWriter.Write(xmlNav, writer));
+                var output = xmlNav.ToJson();
                 Assert.Fail();
             }
             catch (NotSupportedException)

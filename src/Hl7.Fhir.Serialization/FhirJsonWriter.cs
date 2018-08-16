@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Serialization
             {
                 var message = $"Element '{source.Location}' is missing type information.";
 
-                if (_settings.SkipUnknownElements)
+                if (_settings.IgnoreUnknownElements)
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));

@@ -26,14 +26,14 @@ namespace Hl7.Fhir.Serialization
             source.ToTypedElement().WriteTo(destination, settings);
 #pragma warning restore 612, 618
         public static string ToJson(this ITypedElement source, FhirJsonWriterSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
+            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
 
         public static string ToJson(this ISourceNode source, FhirJsonWriterSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
+            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
 
 #pragma warning disable 612, 618
         public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
-              => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings));
+              => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
 #pragma warning restore 612, 618
 
         public static byte[] ToJsonBytes(this ITypedElement source, FhirJsonWriterSettings settings = null)

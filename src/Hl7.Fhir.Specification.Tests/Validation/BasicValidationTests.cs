@@ -96,8 +96,8 @@ namespace Hl7.Fhir.Specification.Tests
             var data = SourceNode.Valued("active", "true",
                     SourceNode.Node("extension",
                         SourceNode.Valued("value", "4")),
-                    SourceNode.Node("nonExistant")
-                        ).ToElementNavigator();
+                    SourceNode.Node("nonExistant"))
+                        .ToElementNavigator();
 
             var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNavigator(data));
             Assert.Single(matches.UnmatchedInstanceElements);
