@@ -10,18 +10,31 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public static class FhirJsonWriterExtensions
+    public static class FhirJsonBuilderExtensions
     {
+        private static void writeTo(this JObject root, JsonWriter destination, string rootName = null)
+        {
+            root.WriteTo(destination);
+            destination.Flush();
+        }
+
         public static void WriteTo(this ITypedElement source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
-            new FhirJsonWriter(settings).Write(source, destination);
+            new FhirJsonBuilder(settings).Build(source).writeTo(destination);
 
         public static void WriteTo(this ISourceNode source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
-            new FhirJsonWriter(settings).Write(source, destination);
+            new FhirJsonBuilder(settings).Build(source).writeTo(destination);
 
-#pragma warning disable 612, 618
+        public static JObject ToJObject(this ISourceNode source, FhirJsonWriterSettings settings = null) =>
+            new FhirJsonBuilder(settings).Build(source);
+
+        public static JObject ToJObject(this ITypedElement source, FhirJsonWriterSettings settings = null) =>
+            new FhirJsonBuilder(settings).Build(source);
+
+        #pragma warning disable 612, 618
         public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
             source.ToTypedElement().WriteTo(destination, settings);
 #pragma warning restore 612, 618

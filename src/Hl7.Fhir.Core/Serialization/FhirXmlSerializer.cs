@@ -25,26 +25,23 @@ namespace Hl7.Fhir.Serialization
             new FhirXmlWriterSettings { Pretty = Settings.Pretty };
 
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null) => 
-            MakeNav(instance, summary).ToXml(settings: buildFhirXmlWriterSettings(), rootName: root);
-
+            MakeElementStack(instance, summary)
+            .Rename(root)
+            .ToXml(settings: buildFhirXmlWriterSettings());
 
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => 
-            MakeNav(instance, summary).ToXmlBytes(settings: buildFhirXmlWriterSettings(), rootName: root);
+            MakeElementStack(instance, summary)
+            .Rename(root)
+            .ToXmlBytes(settings: buildFhirXmlWriterSettings());
 
-        // [WMR 20180409] NEW
-        // https://github.com/ewoutkramer/fhir-net-api/issues/545
-        public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null)
-        {
-            var nav = MakeNav(instance, summary);
-
-            return SerializationUtil.WriteXmlToDocument(w =>
-            {
-                var fhirWriter = new FhirXmlWriter(buildFhirXmlWriterSettings());
-                fhirWriter.Write(nav, w, root);
-            });
-        }
+        public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null) =>
+           MakeElementStack(instance, summary)
+            .Rename(root)
+            .ToXDocument(buildFhirXmlWriterSettings()).Rename(root);
 
         public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null) =>
-            MakeNav(instance, summary).WriteTo(writer, settings: buildFhirXmlWriterSettings(), rootName:root);
+            MakeElementStack(instance, summary)
+            .Rename(root)
+            .WriteTo(writer, settings: buildFhirXmlWriterSettings());
     }
 }

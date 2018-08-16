@@ -11,7 +11,6 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
@@ -19,9 +18,9 @@ using System.Numerics;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirJsonWriter : IExceptionSource
+    public class FhirJsonBuilder : IExceptionSource
     {
-        public FhirJsonWriter(FhirJsonWriterSettings settings = null)
+        internal FhirJsonBuilder(FhirJsonWriterSettings settings = null)
         {
             _settings = settings?.Clone() ?? new FhirJsonWriterSettings();
         }
@@ -31,38 +30,9 @@ namespace Hl7.Fhir.Serialization
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public void Write(ITypedElement source, JsonWriter destination)
-        {
-            //Re-enable when the PocoNavigator is also fed through the TypedNavigator
-            //if(!source.InPipeline(typeof(TypedNavigator)))
-            //    throw Error.NotSupported($"The {nameof(FhirXmlWriter)} requires a {nameof(TypedNavigator)} to be present in the pipeline.");
-            writeInternal(source, destination);
-        }
+        public JObject Build(ITypedElement source) => buildInternal(source);
 
-        private void writeInternal(ITypedElement source, JsonWriter destination)
-        {
-            if (source is IExceptionSource)
-            {
-                using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
-                {
-                    write();
-                }
-            }
-            else
-                write();
-
-            destination.Flush();
-
-            void write()
-            {
-                var root = new JObject();
-                addChildren(source, root);
-                root.WriteTo(destination);
-            }
-        }
-
-
-        public void Write(ISourceNode source, JsonWriter destination)
+        public JObject Build(ISourceNode source)
         {
             bool hasJsonSource = source.Annotation<FhirJsonNode>() != null;
 
@@ -72,12 +42,31 @@ namespace Hl7.Fhir.Serialization
             {
                 _roundtripMode = true;          // will allow unknown elements to be processed
 #pragma warning disable 612,618
-                Write(source.ToTypedElement(), destination);
+                return buildInternal(source.ToTypedElement());
 #pragma warning restore 612,618
             }
             else
-                throw Error.NotSupported($"The {nameof(FhirJsonWriter)} will only work correctly on an untyped " +
+            {
+                throw Error.NotSupported($"The {nameof(FhirJsonBuilder)} will only work correctly on an untyped " +
                     $"source if the source is a {nameof(FhirJsonNode)}.");
+            }
+        }
+
+        private JObject buildInternal(ITypedElement source)
+        {
+            var dest = new JObject();
+
+            if (source is IExceptionSource)
+            {
+                using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
+                {
+                    addChildren(source, dest);
+                }
+            }
+            else
+                addChildren(source, dest);
+
+            return dest;
         }
 
 

@@ -10,6 +10,7 @@ using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -23,12 +24,15 @@ namespace Hl7.Fhir.Serialization
             new FhirJsonWriterSettings { Pretty = Settings.Pretty };
 
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False) => 
-            MakeNav(instance, summary).ToJson(buildFhirJsonWriterSettings());
+            MakeElementStack(instance, summary).ToJson(buildFhirJsonWriterSettings());
 
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False) => 
-            MakeNav(instance, summary).ToJsonBytes(buildFhirJsonWriterSettings());
+            MakeElementStack(instance, summary).ToJsonBytes(buildFhirJsonWriterSettings());
 
-        public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False, string root = null) =>
-            MakeNav(instance, summary).WriteTo(writer, buildFhirJsonWriterSettings());
+        public JObject SerializeToDocument(Base instance, SummaryType summary = SummaryType.False) => 
+            MakeElementStack(instance, summary).ToJObject(buildFhirJsonWriterSettings());
+
+        public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False) =>
+            MakeElementStack(instance, summary).WriteTo(writer, buildFhirJsonWriterSettings());
     }
 }

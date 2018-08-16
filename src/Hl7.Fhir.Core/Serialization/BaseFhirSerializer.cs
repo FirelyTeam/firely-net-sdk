@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization
             Settings = settings?.Clone() ?? new SerializerSettings();
         }
 
-        protected static ITypedElement MakeNav(Base instance, SummaryType summary)
+        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary)
         {
             if (summary == SummaryType.False) return instance.ToTypedElement();
 

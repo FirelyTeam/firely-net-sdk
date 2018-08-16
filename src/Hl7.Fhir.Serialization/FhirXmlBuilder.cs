@@ -17,10 +17,9 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-
-    public class FhirXmlWriter : IExceptionSource
+    public class FhirXmlBuilder : IExceptionSource
     {
-        public FhirXmlWriter(FhirXmlWriterSettings settings = null)
+        internal FhirXmlBuilder(FhirXmlWriterSettings settings = null)
         {
             _settings = settings?.Clone() ?? new FhirXmlWriterSettings();
         }
@@ -30,12 +29,10 @@ namespace Hl7.Fhir.Serialization
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        public void Write(ITypedElement source, XmlWriter destination, string rootName = null)
-        {
-            writeInternal(source, destination, rootName);
-        }
+        public XDocument Build(ITypedElement source) =>
+            buildInternal(source);
 
-        public void Write(ISourceNode source, XmlWriter destination, string rootName = null)
+        public XDocument Build(ISourceNode source)
         {
             bool hasXmlSource = source.Annotation<FhirXmlNode>() != null;
 
@@ -44,16 +41,18 @@ namespace Hl7.Fhir.Serialization
             if (hasXmlSource)
             {
                 _roundtripMode = true;
-#pragma warning disable 612,618
-                writeInternal(source.ToTypedElement(), destination, rootName);
-#pragma warning restore 612, 618
+#pragma warning disable CS0618 // Type or member is obsolete
+                return buildInternal(source.ToTypedElement());
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             else
-                throw Error.NotSupported($"The {nameof(FhirXmlWriter)} will only work correctly on an untyped " +
+            {
+                throw Error.NotSupported($"The {nameof(FhirXmlBuilder)} will only work correctly on an untyped " +
                     $"source if the source is a {nameof(FhirXmlNode)}.");
+            }
         }
 
-        private void writeInternal(ITypedElement source, XmlWriter destination, string rootName = null)
+        public XDocument buildInternal(ITypedElement source)
         {
             var dest = new XDocument();
 
@@ -61,22 +60,13 @@ namespace Hl7.Fhir.Serialization
             {
                 using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
                 {
-                    write(source, dest, rootName);
+                    build(source, dest);
                 }
             }
             else
-                write(source, dest, rootName);
+                build(source, dest);
 
-            if (dest.Root != null)
-            {
-                // The name of the root node can be overidden - if so, change the name of the root element
-                if (rootName != null)
-                    dest.Root.Name = XName.Get(rootName, dest.Root.Name.Namespace.NamespaceName);
-
-                dest.WriteTo(destination);
-            }
-
-            destination.Flush();
+            return dest;
         }
 
         internal bool MustSerializeMember(ITypedElement source, out IElementDefinitionSummary info)
@@ -104,7 +94,7 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        private void write(ITypedElement source, XContainer parent, string rootName = null)
+        private void build(ITypedElement source, XContainer parent)
         {
             var xmlDetails = source.GetXmlSerializationDetails();
             var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
@@ -187,7 +177,7 @@ namespace Hl7.Fhir.Serialization
             var orderedChildren = source.Children().OrderBy(c => c.Definition?.Order ?? 0);
 
             foreach (var child in orderedChildren)
-                write(child, childParent);
+                build(child, childParent);
 
             if (serializationInfo?.Representation == XmlRepresentation.XmlText || xmlDetails?.NodeText != null)
             {

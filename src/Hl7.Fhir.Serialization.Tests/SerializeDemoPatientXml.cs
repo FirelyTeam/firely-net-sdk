@@ -29,20 +29,8 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CanSerializeThroughNavigatorAndCompare()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-
             var nav = getXmlElement(tpXml);
-
-            var xmlBuilder = new StringBuilder();
-
-            // Do the serialization without relying on present xml details from the source,
-            // so serialization will only be based on the supplied type information
-            var serializer = new FhirXmlWriter();
-            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true }))
-            {
-                serializer.Write(nav, writer);
-            }
-
-            var output = xmlBuilder.ToString();
+            var output = nav.ToXml();
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
@@ -53,16 +41,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
             var nav = getXmlElement(tpXml, new FhirXmlNodeSettings { PermissiveParsing = true });
-
-            var xmlBuilder = new StringBuilder();
-            var serializer = new FhirXmlWriter();
-            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true }))
-            {
-                serializer.Write(nav, writer);
-            }
-
-            var output = xmlBuilder.ToString();
-            var doc = XDocument.Parse(output).Root;
+            var doc = nav.ToXDocument().Root;
             Assert.AreEqual(10, doc.DescendantNodesAndSelf().Count());  // only 8 nodes + 2 comments left after pruning
         }
 
@@ -71,16 +50,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(@"TestData\patient-out-of-order.xml");
             var nav = getXmlElement(tpXml, new FhirXmlNodeSettings { PermissiveParsing = true });  // since the order is incorrect
-
-            var xmlBuilder = new StringBuilder();
-            var serializer = new FhirXmlWriter();
-            using (var writer = XmlWriter.Create(xmlBuilder, new XmlWriterSettings { Indent = true }))
-            {
-                serializer.Write(nav, writer);
-            }
-
-            var output = xmlBuilder.ToString();
-            var root = XDocument.Parse(output).Root;
+            var root = nav.ToXDocument().Root;
 
             var orderedNames = root.Elements().Select(e => e.Name.LocalName).ToList();
             CollectionAssert.AreEqual(new[] { "id", "text", "identifier", "identifier", "active", "name", "telecom" }, orderedNames);
@@ -98,14 +68,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pat = pser.Parse<Patient>(tpXml);
 
             var nav = pat.ToTypedElement();
-            var xmlBuilder = new StringBuilder();
-            var serializer = new FhirXmlWriter();
-            using (var writer = XmlWriter.Create(xmlBuilder))
-            {
-                serializer.Write(nav, writer);
-            }
-
-            var output = xmlBuilder.ToString();
+            var output = nav.ToXml();
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
