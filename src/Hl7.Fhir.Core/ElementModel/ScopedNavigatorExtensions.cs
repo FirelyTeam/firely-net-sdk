@@ -20,7 +20,7 @@ namespace Hl7.Fhir.ElementModel
 
             Func<string, ITypedElement> convertedExternalResolver = null;
             if (externalResolver != null)
-                convertedExternalResolver  = (s) => externalResolver(s).Annotation<ScopedNode>() ?? nav.ToElementNode();
+                convertedExternalResolver  = (s) => externalResolver(s).Annotation<ScopedNode>() ?? nav.ToTypedElement();
             return (T)node.Resolve(reference, convertedExternalResolver).ToElementNavigator();
         }
 
@@ -33,10 +33,10 @@ namespace Hl7.Fhir.ElementModel
         [Obsolete("Use Resolve<T>(this T element, Func<string, T> externalResolver = null) where T : class, ITypedElement instead ")]
         public static T Resolve<T>(this T nav, Func<string, T> externalResolver = null) where T : class, IElementNavigator
         {
-            var node = nav.Annotation<ScopedNode>() ?? (ITypedElement)nav.ToElementNode();
+            var node = nav.Annotation<ScopedNode>() ?? (ITypedElement)nav.ToTypedElement();
             Func<string, ITypedElement> convertedExternalResolver = null;
             if (externalResolver != null)
-                convertedExternalResolver = (s) => externalResolver(s).Annotation<ScopedNode>() ?? nav.ToElementNode();
+                convertedExternalResolver = (s) => externalResolver(s).Annotation<ScopedNode>() ?? nav.ToTypedElement();
             return (T)node.Resolve(convertedExternalResolver).ToElementNavigator();
         }
     }

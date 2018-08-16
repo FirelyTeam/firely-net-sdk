@@ -6,12 +6,10 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Utility;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class TypedNodeSettings
+    public class TypedElementSettings
     {
         public enum TypeErrorMode
         {
@@ -22,8 +20,8 @@ namespace Hl7.Fhir.ElementModel
 
         public TypeErrorMode ErrorMode;
 
-        public TypedNodeSettings Clone() =>
-            new TypedNodeSettings
+        public TypedElementSettings Clone() =>
+            new TypedElementSettings
             {
                 ErrorMode = ErrorMode
             };

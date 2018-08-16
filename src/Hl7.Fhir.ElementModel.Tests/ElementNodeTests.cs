@@ -24,7 +24,7 @@ namespace Hl7.FhirPath.Tests
         SourceNode patient;
 
         public ITypedElement getXmlNode(string xml) => 
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
+            FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
         public ElementNodeTests()
         {

@@ -113,31 +113,31 @@ namespace Hl7.Fhir.Validation
         [Obsolete("Use Validate(ITypedElement instance) instead")]
         public OperationOutcome Validate(IElementNavigator instance)
         {
-            return Validate(instance.ToElementNode(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null);
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null);
         }
 
         [Obsolete("Use Validate(ITypedElement instance, params string[] definitionUris) instead")]
         public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
         {
-            return Validate(instance.ToElementNode(), (IEnumerable<string>)definitionUris);
+            return Validate(instance.ToTypedElement(), (IEnumerable<string>)definitionUris);
         }
 
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<string> definitionUris) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            return Validate(instance.ToElementNode(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null);
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null);
         }
 
         [Obsolete("Use Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance.ToElementNode(), (IEnumerable<StructureDefinition>)structureDefinitions);
+            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions);
         }
 
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return Validate(instance.ToElementNode(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions);
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions);
         }
         #endregion
 
@@ -153,13 +153,8 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
 
-            StructureDefinition profileResolutionNeeded(string canonical)
-            {
-                if (Settings.ResourceResolver != null)
-                    return Settings.ResourceResolver.FindStructureDefinition(canonical);
-                else
-                    return null;
-            }
+            StructureDefinition profileResolutionNeeded(string canonical) =>
+                Settings.ResourceResolver?.FindStructureDefinition(canonical);
         }
 
         internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
@@ -408,12 +403,9 @@ namespace Hl7.Fhir.Validation
             // type? Would it convert it to a .NET native type? How to check?
 
             // The spec has no regexes for the primitives mentioned below, so don't check them
-            if  (definition.Type.Count() == 1)
-            {
-                return ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex");
-            }
-
-            return outcome;
+            return definition.Type.Count() == 1
+                ? ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
+                : outcome;
         }
 
 
@@ -447,25 +439,23 @@ namespace Hl7.Fhir.Validation
 
         internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, string location)
         {
-            if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                return outcome.AddIssue(message, issue, location);
-
-            return null;
+            return Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information
+                ? outcome.AddIssue(message, issue, location)
+                : null;
         }
 
         internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, ITypedElement location)
         {
-            if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                return Trace(outcome, message, issue, location.Location);
-
-            return null;
+            return Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information
+                ? Trace(outcome, message, issue, location.Location)
+                : null;
         }
 
         private string toStringRepresentation(ITypedElement vp)
         {
-            if (vp == null || vp.Value == null) return null;
-
-            return PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
+            return vp == null || vp.Value == null ? 
+                null : 
+                PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
         }
 
         internal ITypedElement ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
@@ -495,7 +485,7 @@ namespace Hl7.Fhir.Validation
                 {
                     var poco = Settings.ResourceResolver.ResolveByUri(reference);
                     if (poco != null)
-                        return poco.ToElementNode();
+                        return poco.ToTypedElement();
                 }
                 catch (Exception e)
                 {

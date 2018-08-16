@@ -14,8 +14,8 @@ using System.Collections.Generic;
 namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
-    /// This interface is implemented by FHIR parsers to be able to represent the resource type indicator
-    /// present in the parsed data.
+    /// This interface is implemented by FHIR parsers to represent the resource type indicator
+    /// found in the parsed data.
     /// </summary>
     public interface IResourceTypeSupplier
     {

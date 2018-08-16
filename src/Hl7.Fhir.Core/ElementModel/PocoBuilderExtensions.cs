@@ -7,73 +7,56 @@
  */
 
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public static class PocoSerializationExtensions
+    public static class PocoBuilderExtensions
     {
-        public static string ToJson(this Base source, FhirJsonWriterSettings settings = null) =>
-            SerializationUtil.WriteJsonToString(writer => source.ToElementNode().WriteTo(writer, settings));
+        public static Base ToPoco(this ISourceNode source, Type pocoType = null, PocoBuilderSettings settings = null) =>
+            new PocoBuilder(settings).BuildFrom(source, pocoType);
 
-        public static string ToXml(this Base source, FhirXmlWriterSettings settings = null, string rootName = null)
-                => SerializationUtil.WriteXmlToString(writer => source.ToElementNode().WriteTo(writer, settings, rootName));
+        public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings settings = null) where T : Base =>
+               (T)source.ToPoco(typeof(T), settings);
 
-    }
+        public static Base ToPoco(this ITypedElement element, PocoBuilderSettings settings = null) =>
+            new PocoBuilder(settings).BuildFrom(element);
 
-    /// <summary>
-    /// A class to do basic parsing of POCO classes from an IElementNavigator.  Can be replaced by the real
-    /// IElementNavigator-based PocoParser when we have that piece of infrastructure ready.
-    /// </summary>
-    /// <remarks>
-    /// Update: we have the infrastructure ready! So, using ToPoco() could replace the other methods in
-    /// this class now. But I'll wait until I need to.
-    /// </remarks>
-    public static class PocoParsingExtensions
-    {
-        public static Base ToPoco(this IElementNavigator navigator, Type pocoType) => 
-            (new FhirJsonParser()).Parse(navigator, pocoType);
+        public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings settings = null) where T : Base =>
+               (T)element.ToPoco(settings);
 
-        public static T ToPoco<T>(this IElementNavigator navigator) where T : Base =>
-               (T)navigator.ToPoco(typeof(T));
+#pragma warning disable 612, 618
+        public static Base ToPoco(this IElementNavigator navigator, Type pocoType=null, PocoBuilderSettings settings = null) =>
+            new PocoBuilder(settings).BuildFrom(navigator.ToSourceNode(), pocoType);
 
-        public static Base ToPoco(this ITypedElement navigator, Type pocoType) =>
-            (new FhirJsonParser()).Parse(navigator, pocoType);
+        public static T ToPoco<T>(this IElementNavigator navigator, PocoBuilderSettings settings = null) where T : Base =>
+               (T)navigator.ToPoco(typeof(T), settings);
+#pragma warning restore 612, 618
 
-        public static T ToPoco<T>(this ITypedElement navigator) where T : Base =>
-               (T)navigator.ToPoco(typeof(T));
-
-        public static Base ToPoco(this ISourceNode navigator, Type pocoType) => 
-            (new FhirJsonParser()).Parse(navigator, pocoType);
-
-        public static T ToPoco<T>(this ISourceNode navigator) where T : Base =>
-               (T)navigator.ToPoco(typeof(T));
 
         [Obsolete("Use ParseQuantity(this ITypedElement instance) instead")]
         public static Model.Quantity ParseQuantity(this IElementNavigator instance)
         {
-            return ParseQuantity(instance.ToElementNode());
+            return ParseQuantity(instance.ToTypedElement());
         }
 
         public static Model.Quantity ParseQuantity(this ITypedElement instance)
         {
-            var newQuantity = new Quantity();
-
-            newQuantity.Value = instance.Children("value").SingleOrDefault()?.Value as decimal?;
+            var newQuantity = new Quantity
+            {
+                Value = instance.Children("value").SingleOrDefault()?.Value as decimal?,
+                Unit = instance.Children("unit").GetString(),
+                System = instance.Children("system").GetString(),
+                Code = instance.Children("code").GetString()
+            };
 
             var comp = instance.Children("comparator").GetString();
             if(comp != null)
                 newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { ObjectValue = comp };
-
-            newQuantity.Unit = instance.Children("unit").GetString();
-            newQuantity.System = instance.Children("system").GetString();
-            newQuantity.Code = instance.Children("code").GetString();
 
             return newQuantity;
         }
@@ -81,7 +64,7 @@ namespace Hl7.Fhir.ElementModel
         [Obsolete("Use ParseBindable(this ITypedElement instance) instead")]
         public static Element ParseBindable(this IElementNavigator instance)
         {
-            return ParseBindable(instance.ToElementNode());
+            return ParseBindable(instance.ToTypedElement());
         }
 
         /// <summary>
@@ -142,24 +125,20 @@ namespace Hl7.Fhir.ElementModel
                 // HACK: For now, assume this is a typed navigator, so we have "value",
                 // not the unparsed "valueCode" etc AND we have Type (in ParseBindable())
                 var valueChild = instance.Children("value").FirstOrDefault();
-
-                if (valueChild != null)
-                    return valueChild.ParseBindable();
-                else
-                    return null;
+                return valueChild?.ParseBindable();
             }
         }
 
         [Obsolete("Use ParsePrimitive<T>(this ITypedElement instance) instead")]
         public static T ParsePrimitive<T>(this IElementNavigator instance) where T : Primitive, new()
-            => ParsePrimitive<T>(instance.ToElementNode());
+            => ParsePrimitive<T>(instance.ToTypedElement());
         
         public static T ParsePrimitive<T>(this ITypedElement instance) where T:Primitive, new()
                     => new T() { ObjectValue = instance.Value };
 
         [Obsolete("Use ParseCoding(this ITypedElement instance) instead")]
         public static Coding ParseCoding(this IElementNavigator instance)
-            => ParseCoding(instance.ToElementNode());
+            => ParseCoding(instance.ToTypedElement());
 
         public static Coding ParseCoding(this ITypedElement instance)
         {
@@ -175,7 +154,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("Use ParseResourceReference(this ITypedElement instance) instead")]
         public static ResourceReference ParseResourceReference(this IElementNavigator instance)
-             => ParseResourceReference(instance.ToElementNode());
+             => ParseResourceReference(instance.ToTypedElement());
 
         public static ResourceReference ParseResourceReference(this ITypedElement instance)
         {
@@ -188,7 +167,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("Use ParseCodeableConcept(this ITypedElement instance) instead")]
         public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
-            => ParseCodeableConcept(instance.ToElementNode());
+            => ParseCodeableConcept(instance.ToTypedElement());
 
         public static CodeableConcept ParseCodeableConcept(this ITypedElement instance)
         {

@@ -260,15 +260,15 @@ namespace Hl7.Fhir.Serialization.Tests
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var nav = FhirXmlNavigator.ForResource(xml, provider);
+                var nav = XmlParsingHelpers.ParseToTypedElement(xml, provider);
                 var json = nav.ToJson();
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var nav = FhirJsonNavigator.ForResource(json, provider, 
-                    settings: new FhirJsonNavigatorSettings { AllowJsonComments = true } );
+                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider, 
+                    settings: new FhirJsonNodeSettings { AllowJsonComments = true } );
                 var xml = nav.ToXml();
                 File.WriteAllText(outputFile, xml);
             }

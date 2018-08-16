@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Support
         [Obsolete("Use NewOutcomeWithIssue(this Issue infoIssue, string message, ITypedElement location) instead")]
         public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, IElementNavigator location)
         {
-            return NewOutcomeWithIssue(infoIssue, message, location.ToElementNode());
+            return NewOutcomeWithIssue(infoIssue, message, location.ToTypedElement());
         }
 
         public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, string location = null)
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Support
         [Obsolete("Use AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, ITypedElement location) instead")]
         public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
         {
-            return AddIssue(outcome, message, infoIssue, location.ToElementNode());
+            return AddIssue(outcome, message, infoIssue, location.ToTypedElement());
         }
 
 

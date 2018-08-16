@@ -6,23 +6,27 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using System;
 using System.Linq;
-using static Hl7.Fhir.ElementModel.ElementNavigatorComparator;
 
-namespace Hl7.Fhir.Utility
+namespace Hl7.Fhir.ElementModel
 {
     public static class ElementNodeComparator
     {
-        public static ComparisonResult IsEqualTo(this ITypedElement expected, ITypedElement actual)
+        /// <summary>
+        /// Compares two <see cref="ITypedElement"/> trees.
+        /// </summary>
+        /// <param name="expected">The tree that contains the expected, "correct" data.</param>
+        /// <param name="actual">The tree to compare against the <paramref name="expected"/> tree.</param>
+        /// <returns>A <see cref="TreeComparisonResult"/> that summarizes the differences between the trees.</returns>
+        public static TreeComparisonResult IsEqualTo(this ITypedElement expected, ITypedElement actual)
         {
             if (expected.Name != actual.Name)
-                return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
+                return TreeComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
             if (!Object.Equals(expected.Value, actual.Value))
-                return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
-            if (expected.InstanceType != actual.InstanceType && actual.InstanceType != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.InstanceType}', expected '{expected.InstanceType}'");
-            if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
+                return TreeComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
+            if (expected.InstanceType != actual.InstanceType && actual.InstanceType != null) return TreeComparisonResult.Fail(actual.Location, $"type: was '{actual.InstanceType}', expected '{expected.InstanceType}'");
+            if (expected.Location != actual.Location) TreeComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)
             var childrenExp = expected.Children().OrderBy(e => e.Name);
@@ -34,16 +38,16 @@ namespace Hl7.Fhir.Utility
             foreach (var exp in childrenExp)
             {
                 if (!childrenActual.MoveNext())
-                    ComparisonResult.Fail(actual.Location, $"number of children was different");
+                    TreeComparisonResult.Fail(actual.Location, $"number of children was different");
 
                 var result = exp.IsEqualTo(childrenActual.Current);
                 if (!result.Success)
                     return result;
             }
             if (childrenActual.MoveNext())
-                ComparisonResult.Fail(actual.Location, $"number of children was different");
+                TreeComparisonResult.Fail(actual.Location, $"number of children was different");
 
-            return ComparisonResult.OK;
+            return TreeComparisonResult.OK;
         }
     }
 }

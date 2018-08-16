@@ -51,7 +51,7 @@ namespace Hl7.Fhir.FhirPath
                 if (value == null)
                     _elementResolver = null;
                 else
-                    _elementResolver = (s) => value(s).ToElementNode();
+                    _elementResolver = (s) => value(s).ToTypedElement();
             }
         }
 

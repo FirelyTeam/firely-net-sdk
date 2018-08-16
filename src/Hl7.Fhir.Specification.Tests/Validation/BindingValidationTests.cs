@@ -39,36 +39,36 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Non-bindeable things should succeed
             Element v = new FhirBoolean(true);
-            var node = v.ToElementNode();            
+            var node = v.ToTypedElement();            
             Assert.True(_validator.ValidateBinding(ed, node).Success);
 
             v = new Quantity(4.0m, "masked", "http://hl7.org/fhir/data-absent-reason");  // nonsense, but hey UCUM is not provided with the spec
-            node = v.ToElementNode();
+            node = v.ToTypedElement();
             Assert.True(_validator.ValidateBinding(ed, node).Success);
 
             v = new Quantity(4.0m, "maskedx", "http://hl7.org/fhir/data-absent-reason");  // nonsense, but hey UCUM is not provided with the spec
-            node = v.ToElementNode();
+            node = v.ToTypedElement();
             Assert.False(_validator.ValidateBinding(ed,node).Success);
 
             v = new Quantity(4.0m, "kg");  // sorry, UCUM is not provided with the spec - still validate against data-absent-reason
-            node = v.ToElementNode();
+            node = v.ToTypedElement();
             Assert.False(_validator.ValidateBinding(ed,node).Success);
 
             v = new FhirString("masked");
-            node = v.ToElementNode();
+            node = v.ToTypedElement();
             Assert.True(_validator.ValidateBinding(ed,node).Success);
 
             v = new FhirString("maskedx");
-            node = v.ToElementNode();
+            node = v.ToTypedElement();
             Assert.False(_validator.ValidateBinding(ed,node).Success);
 
             var ic = new Coding("http://hl7.org/fhir/data-absent-reason", "masked");
             var ext = new Extension { Value = ic };
-            node = ext.ToElementNode();
+            node = ext.ToTypedElement();
             Assert.True(_validator.ValidateBinding(ed, node).Success);
 
             ic.Code = "maskedx";
-            node = ext.ToElementNode();
+            node = ext.ToTypedElement();
             Assert.False(_validator.ValidateBinding(ed, node).Success);
         }
 

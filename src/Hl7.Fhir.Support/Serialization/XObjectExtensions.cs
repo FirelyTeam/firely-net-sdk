@@ -110,5 +110,12 @@ namespace Hl7.Fhir.Utility
         }
 
         public static bool AtXhtmlDiv(this XObject node) => (node as XElement)?.Name == XmlNs.XHTMLDIV;
+
+        public static XDocument Rename(this XDocument doc, string newRootName)
+        {
+            if (newRootName != null)
+                doc.Root.Name = XName.Get(newRootName, doc.Root.Name.Namespace.NamespaceName);
+            return doc;
+        }
     }
 }

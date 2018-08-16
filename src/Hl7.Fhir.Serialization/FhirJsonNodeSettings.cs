@@ -6,12 +6,10 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Utility;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirJsonNavigatorSettings
+    public class FhirJsonNodeSettings
     {
         public bool PermissiveParsing;
         public bool AllowJsonComments;
@@ -20,8 +18,8 @@ namespace Hl7.Fhir.Serialization
         public bool ValidateFhirXhtml;
 #endif
 
-        public FhirJsonNavigatorSettings Clone() =>
-            new FhirJsonNavigatorSettings
+        public FhirJsonNodeSettings Clone() =>
+            new FhirJsonNodeSettings
             {
                 PermissiveParsing = PermissiveParsing,
                 AllowJsonComments = AllowJsonComments,

@@ -33,11 +33,7 @@ namespace Hl7.Fhir
                 {
                     object[] bits = (f as IEnumerable<IElementNavigator>).Select(i =>
                     {
-                        if (i is PocoNavigator)
-                        {
-                            return (i as PocoNavigator).ShortPath;
-                        }
-                        return "?";
+                        return i is PocoNavigator ? (i as PocoNavigator).ShortPath : "?";
                     }).ToArray();
                     return FhirValueList.Create(bits);
                 }
@@ -170,11 +166,10 @@ namespace Hl7.Fhir
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var pocoP = (new FhirJsonParser()).Parse<Patient>(json).ToElementNode();
-            var jsonP = FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(),
-                settings: new FhirJsonNavigatorSettings {  AllowJsonComments = true }
-                );
-            var xmlP = FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
+            var pocoP = (new FhirJsonParser()).Parse<Patient>(json).ToTypedElement();
+            var jsonP = FhirJsonNode.Parse(json, settings: new FhirJsonNodeSettings { AllowJsonComments = true })
+                .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+            var xmlP = FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
             doCompare(pocoP, jsonP, "poco<->json");
             doCompare(pocoP, xmlP, "poco<->xml");

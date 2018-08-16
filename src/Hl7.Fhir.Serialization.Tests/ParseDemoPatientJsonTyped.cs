@@ -12,8 +12,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonTyped
     {
-        public ITypedElement getJsonNode(string json, FhirJsonNavigatorSettings settings = null) 
-            => FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
+        public ITypedElement getJsonNode(string json, FhirJsonNodeSettings settings = null) 
+            => JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void RoundtripJson()
         {
             ParseDemoPatient.RoundtripJson(jsonText =>
-                getJsonNode(jsonText, new FhirJsonNavigatorSettings { AllowJsonComments = true }));
+                getJsonNode(jsonText, new FhirJsonNodeSettings { AllowJsonComments = true }));
         }
 
         [TestMethod]
@@ -79,10 +79,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
             // will allow whitespace and comments to come through      
-            var navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var xml = navJson.ToXml();
 
-            var navXml = FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider());
+            var navXml = XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider());
             var json = navXml.ToJson();
 
             JsonAssert.AreSame(tp, json);
@@ -93,13 +93,13 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             // First, use a simple value where a complex type was expected
             var tp = "{ 'resourceType' : 'Patient', 'maritalStatus' : 'UNK' }";
-            var navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
 
             // then, use a simple value where an array (of a complex type) was expected
             tp = "{ 'resourceType' : 'Patient', 'name' : ['Ewout'] }";
-            navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
         }
@@ -109,13 +109,13 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             // Use a single element where an array was expected
             var tp = "{ 'resourceType' : 'Patient', 'identifier' :  { 'value': 'AB60001' }}";
-            var navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("an array must be used here"));
 
             // Use an array where a single value was expected
             tp = "{ 'resourceType' : 'Patient', 'active' : [true,false] }";
-            navJson = FhirJsonNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("an array must not be used here"));
         }
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
             ITypedElement getValidatingJsonNav(string jsonText) =>
-                getJsonNode(jsonText, new FhirJsonNavigatorSettings { ValidateFhirXhtml = true });
+                getJsonNode(jsonText, new FhirJsonNodeSettings { ValidateFhirXhtml = true });
         }
 
         [TestMethod]

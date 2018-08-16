@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Validation
 
             if (definition.Fixed != null)
             {
-                ITypedElement fixedValueNav = definition.Fixed.ToElementNode();
+                ITypedElement fixedValueNav = definition.Fixed.ToTypedElement();
 
                 if (!instance.IsExactlyEqualTo(fixedValueNav))
                 {
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Validation
 
             if (definition.Pattern != null)
             {
-                ITypedElement patternValueNav = definition.Pattern.ToElementNode();
+                ITypedElement patternValueNav = definition.Pattern.ToTypedElement();
 
                 if (!instance.Matches(patternValueNav))
                 {

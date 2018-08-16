@@ -16,17 +16,21 @@ using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class FhirJsonNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
+    public partial class FhirJsonNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {
-        public FhirJsonNode(JObject source, string nodeName, FhirJsonNavigatorSettings settings = null)
+        internal FhirJsonNode(JObject root, string nodeName, FhirJsonNodeSettings settings = null)
         {
-            Name = nodeName;
+            JsonObject = root ?? throw Error.ArgumentNull(nameof(root));
+
+            var rootName = nodeName ?? JsonObject.GetResourceTypeFromObject();
+            Name = rootName ?? throw Error.InvalidOperation("Root object has no type indication (resourceType) and therefore cannot be used to construct an FhirJsonNode. " +
+                    $"Alternatively, specify a {nameof(nodeName)} using the parameter.");
             Location = Name;
-            JsonValue = null;
-            JsonObject = source;
+
+            JsonValue = null;           
             ArrayIndex = null;
             UsesShadow = false;
-            _settings = settings?.Clone() ?? new FhirJsonNavigatorSettings();
+            _settings = settings?.Clone() ?? new FhirJsonNodeSettings();
         }
 
 
@@ -42,7 +46,7 @@ namespace Hl7.Fhir.Serialization
             ExceptionHandler = parent.ExceptionHandler;
         }
 
-        private readonly FhirJsonNavigatorSettings _settings;
+        private readonly FhirJsonNodeSettings _settings;
         public readonly JValue JsonValue;
         public readonly JObject JsonObject;
         public readonly int? ArrayIndex;
@@ -314,7 +318,7 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(FhirJsonNavigator) || type == typeof(ISourceNode) || type == typeof(IResourceTypeSupplier))
+            if (type == typeof(FhirJsonNode) || type == typeof(ISourceNode) || type == typeof(IResourceTypeSupplier))
                 return new[] { this };
 #pragma warning disable 612, 618
             else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)

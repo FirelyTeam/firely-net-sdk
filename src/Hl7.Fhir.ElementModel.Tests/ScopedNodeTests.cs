@@ -22,7 +22,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
-            _bundleNode = new ScopedNode(bundle.ToElementNode());
+            _bundleNode = new ScopedNode(bundle.ToTypedElement());
         }
 
         [TestMethod]

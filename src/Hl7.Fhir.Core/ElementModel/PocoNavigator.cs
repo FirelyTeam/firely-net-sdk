@@ -6,36 +6,30 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel.Adapters;
 using Hl7.Fhir.Model;
-using System;
-using Hl7.Fhir.Utility;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
-    public class PocoNavigator : IElementNavigator, IAnnotated, IExceptionSource
+    public class PocoNavigator : BaseNodeToNavAdapter
     {
-        private IList<ITypedElement> _siblings;
-        private int _index;
-        internal ITypedElement Current => _siblings[_index];
-
         [Obsolete("This class has been deprecated. Do not use this class directly, instead call " +
-            "ToElementNavigator() (for backwards compatibility) or the new ToElementNode() on any resource or datatype")]
+            "ToElementNavigator() (for backwards compatibility) or the new ToTypedNode() on any resource or datatype")]
         public PocoNavigator(Base model, string rootName = null)
         {
             if (model == null) throw Error.ArgumentNull(nameof(model));
 
-            _siblings = new List<ITypedElement>
-            {
-                new PocoElementNode(model, new PocoStructureDefinitionSummaryProvider(), rootName: rootName)
-            };
+            Initialize(
+                new PocoElementNode(model, new PocoStructureDefinitionSummaryProvider(), rootName: rootName));
 
-            _index = 0;
             _parentCommonPath = "";
         }
 
@@ -43,33 +37,11 @@ namespace Hl7.Fhir.ElementModel
         {
         }
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
-
         private string _parentCommonPath;
 
-        /// <summary>
-        /// Returns 
-        /// </summary>
-        public object Value => Current.Value;
-
-        /// <summary>
-        /// Returns 
-        /// </summary>
-        public Base FhirValue => ((PocoElementNode)Current).Current as Base;
-
-        /// <summary>
-        /// Return the FHIR TypeName
-        /// </summary>
-        public string Type => Current.InstanceType;
-
-        /// <summary>
-        /// The FHIR TypeName is also returned for the name of the root element
-        /// </summary>
-        public string Name => Current.Name;
-
-        public string Location => Current.Location;
-
         public bool IsCollection => Current.Definition.IsCollection;
+
+        public Base FhirValue => ((PocoElementNode)Current).Current as Base;
 
         /// <summary>
         /// The ShortPath is almost the same as the Path except that
@@ -166,73 +138,26 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
+        protected override IList<ITypedElement> GetChildren() =>
+            Current.Children().ToList();
 
-
-        private readonly object lockObject = new object();
-
-        public bool MoveToFirstChild(string nameFilter = null)
+        public override bool MoveToFirstChild(string nameFilter = null)
         {
             var oldCP = CommonPath;
 
-            var children = Current.Children().ToList();
+            if (!base.MoveToFirstChild(nameFilter)) return false;
 
-            if (!children.Any()) return false;
-
-            var found = nextMatch(children, nameFilter);
-            if (found == -1) return false;
-
-            _siblings = children;
-            _index = found;
             _parentCommonPath = oldCP;
             return true;
         }
 
-        private int nextMatch(IList<ITypedElement> nodes, string namefilter = null, int startAfter = -1)
-        {
-            for (int scan = startAfter + 1; scan < nodes.Count; scan++)
-            {
-                if (namefilter == null || nodes[scan].Name == namefilter)
-                    return scan;
-            }
+        public override bool MoveToNext(string nameFilter = null) => base.MoveToNext(nameFilter);
 
-            return -1;
-        }
-
-        /// <summary>
-        /// Move onto the next element in the list
-        /// </summary>
-        /// <returns>
-        /// true if there was a next element, false if it was the last element
-        /// </returns>
-        public bool MoveToNext(string nameFilter = null)
-        {
-            var found = nextMatch(_siblings, nameFilter, _index);
-
-            if (found == -1) return false;
-
-            _index = found;
-            return true;
-        }
-
-
-
-        /// <summary>
-        /// Clone this navigator
-        /// </summary>
-        /// <returns></returns>
-        public IElementNavigator Clone() =>
+        protected override BaseNodeToNavAdapter NewClone() =>
             new PocoNavigator()
             {
-                _siblings = _siblings,
-                _index = _index,
-                _parentCommonPath = _parentCommonPath,
-                ExceptionHandler = ExceptionHandler
+                _parentCommonPath = _parentCommonPath
             };
-
-        public IEnumerable<object> Annotations(Type type)
-        {
-                return Current.Annotations(type);
-        }
     }
 
 
@@ -242,8 +167,8 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this Base @base, string rootName = null) =>
             new PocoNavigator(@base, rootName);
 
-        public static ITypedElement ToElementNode(this Base @base, string rootName = null) =>
-            new PocoNavigator(@base, rootName).ToElementNode();
+        public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
+            new PocoNavigator(@base, rootName).ToTypedElement();
 
 #pragma warning restore 612, 618
     }

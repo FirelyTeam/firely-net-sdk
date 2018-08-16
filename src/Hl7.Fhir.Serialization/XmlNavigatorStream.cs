@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
         private readonly Stream _stream = null;
         private XmlReader _reader = null;
         private (XElement element, string fullUrl)? _current = null;
-        private bool _disposeStream;
+        private readonly bool _disposeStream;
 
         /// <summary>Create a new <see cref="XmlNavigatorStream"/> instance for the specified serialized xml resource file.</summary>
         /// <param name="path">The filepath of a serialized xml resource.</param>
@@ -255,10 +255,7 @@ namespace Hl7.Fhir.Serialization
             {
                 throwIfDisposed();
                 var xelem = _current?.element;
-                if (xelem != null)
-                    return FhirXmlNavigator.Untyped(xelem).ToElementNavigator();
-                else
-                    return null;
+                return xelem != null ? FhirXmlNode.Create(xelem).ToElementNavigator() : null;
             }
         }
 

@@ -66,14 +66,11 @@ namespace Hl7.Fhir.Serialization
         public static string GetSerializationFormat(string path)
         {
             if (FhirFileFormats.HasXmlExtension(path))
-            {
                 return FhirSerializationFormats.Xml;
-            }
-            if (FhirFileFormats.HasJsonExtension(path))
-            {
+            else if (FhirFileFormats.HasJsonExtension(path))
                 return FhirSerializationFormats.Json;
-            }
-            return null;
+            else
+                return null;
         }
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var bundleXml = File.ReadAllText("TestData\\bundle-contained-references.xml");
 
             _parsed = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
-            _bundleElement = new ScopedNode(_parsed.ToElementNode());
+            _bundleElement = new ScopedNode(_parsed.ToTypedElement());
         }
 
 

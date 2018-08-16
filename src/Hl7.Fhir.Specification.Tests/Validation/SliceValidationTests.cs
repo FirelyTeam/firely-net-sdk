@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Specification.Tests
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
-            var pnode = new ScopedNode(p.ToElementNode());
+            var pnode = new ScopedNode(p.ToTypedElement());
 
             var telecoms = pnode.Children("telecom").Cast<ScopedNode>();
 
