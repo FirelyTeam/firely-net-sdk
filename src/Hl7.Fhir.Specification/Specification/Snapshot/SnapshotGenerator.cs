@@ -222,14 +222,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        /// <summary>Create a fully connected element tree from a sparse (differential) element list by adding missing parent element definitions.</summary>
-        /// <returns>A list of elements that represents a fully connected element tree.</returns>
-        /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
-        public static List<ElementDefinition> ConstructFullTree(List<ElementDefinition> source)
-        {
-            return DifferentialTreeConstructor.Default.MakeTree(source);
-        }
-
         // ***** Private Interface *****
 
         /// <summary>
@@ -332,7 +324,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             // Fill out the gaps (mostly missing parents) in the differential representation
-            var fullDifferential = DifferentialTreeConstructor.Default.MakeTree(differential.Element);
+            var fullDifferential = differential.MakeTree();
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
 #if FIX_SLICENAMES_ON_ROOT_ELEMENTS
