@@ -4,9 +4,9 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Utility
 {
-    internal static class PropertyInfoExtensions
+    public static class PropertyInfoExtensions
     {
         public static Func<T, object> GetValueGetter<T>(this PropertyInfo propertyInfo)
         {
