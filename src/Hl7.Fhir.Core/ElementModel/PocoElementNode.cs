@@ -110,13 +110,12 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                if (Current is string)
-                    return Current;
-
                 try
                 {
                     switch (Current)
                     {
+                        case string s:
+                            return s;
                         case Hl7.Fhir.Model.Instant ins:
                             return ins.ToPartialDateTime();
                         case Hl7.Fhir.Model.Time time:

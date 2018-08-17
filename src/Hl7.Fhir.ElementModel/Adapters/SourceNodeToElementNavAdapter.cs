@@ -26,6 +26,8 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public SourceNodeToElementNavAdapter(ISourceNode node)
         {
+            if (node == null) throw Error.ArgumentNull(nameof(node));
+
             _siblings = new List<ISourceNode> { node };
             _index = 0;
 

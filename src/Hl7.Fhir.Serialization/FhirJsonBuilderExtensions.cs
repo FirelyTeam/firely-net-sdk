@@ -11,6 +11,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -34,7 +35,8 @@ namespace Hl7.Fhir.Serialization
         public static JObject ToJObject(this ITypedElement source, FhirJsonWriterSettings settings = null) =>
             new FhirJsonBuilder(settings).Build(source);
 
-        #pragma warning disable 612, 618
+#pragma warning disable 612, 618
+        [Obsolete("Please consider switching to ITypedElement (which is what the new parsers return).")]
         public static void WriteTo(this IElementNavigator source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
             source.ToTypedElement().WriteTo(destination, settings);
 #pragma warning restore 612, 618
@@ -45,6 +47,7 @@ namespace Hl7.Fhir.Serialization
             => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
 
 #pragma warning disable 612, 618
+        [Obsolete("Please consider switching to ITypedElement (which is what the new parsers return).")]
         public static string ToJson(this IElementNavigator source, FhirJsonWriterSettings settings = null)
               => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
 #pragma warning restore 612, 618

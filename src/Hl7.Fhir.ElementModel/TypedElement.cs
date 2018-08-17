@@ -213,7 +213,7 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        public IEnumerable<ITypedElement> Children(string nameFilter = null)
+        public IEnumerable<ITypedElement> Children(string name = null)
         {
             var firstChildDef = down(Current);
 
@@ -230,10 +230,10 @@ namespace Hl7.Fhir.ElementModel
                 else
                     // Ok, pass through the untyped members, but since there is no type information, 
                     // don't bother to run the additional rules
-                    return enumerateElements(firstChildDef, Current.Node, nameFilter);
+                    return enumerateElements(firstChildDef, Current.Node, name);
             }
             else
-                return runAdditionalRules(enumerateElements(firstChildDef, Current.Node, nameFilter));
+                return runAdditionalRules(enumerateElements(firstChildDef, Current.Node, name));
         }
 
         private ElementDefinitionSummaryCache down(NavigatorPosition current)

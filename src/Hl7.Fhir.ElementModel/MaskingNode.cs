@@ -146,7 +146,7 @@ namespace Hl7.Fhir.ElementModel
         private ScopedNode getScope(ITypedElement node) =>
             node.Annotation<ScopedNode>();
 
-        private MaskingNavigatorSettings _settings;
+        private readonly MaskingNavigatorSettings _settings;
 
         public ITypedElement Source { get; private set; }
 
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.ElementModel
 
             var included = _settings.IncludeAll;
 
-            var ed = ((ITypedElement)scope).Definition;
+            var ed = scope.Definition;
             if (ed != null)
             {
                 included |= _settings.IncludeMandatory && ed.IsRequired;
