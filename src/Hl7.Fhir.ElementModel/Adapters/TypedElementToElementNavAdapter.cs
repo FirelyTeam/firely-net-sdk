@@ -17,6 +17,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
     {
         public TypedElementToElementNavAdapter(ITypedElement element)
         {
+            if (element == null) throw Error.ArgumentNull(nameof(element));
             Initialize(element);
         }
 

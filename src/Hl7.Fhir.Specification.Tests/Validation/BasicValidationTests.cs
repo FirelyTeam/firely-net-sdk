@@ -458,7 +458,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
-
         [Fact]
         public void ValidateContained()
         {
@@ -469,6 +468,7 @@ namespace Hl7.Fhir.Specification.Tests
             var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
 
             var report = _validator.Validate(careplan, careplanSd);
+            //output.WriteLine(report.ToString());
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);            // 3x invariant
         }
