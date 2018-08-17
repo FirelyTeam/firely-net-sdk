@@ -160,13 +160,12 @@ namespace Hl7.Fhir.Specification.Tests
                         SourceNode.Valued("id", "myId1"),
                         SourceNode.Valued("id", "myId2"),
                         SourceNode.Node("extension",
-                            SourceNode.Valued("value", "4")),
-                        SourceNode.Node("extension",
-                            SourceNode.Valued("value", "world!")))
+                            SourceNode.Valued("valueInteger", "4")))
                             .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var report = _validator.Validate(data, boolSd);
-            Assert.Equal(3, report.ListErrors().Count());
+
+            Assert.Equal(2, report.ListErrors().Count());
         }
 
         [Fact]
