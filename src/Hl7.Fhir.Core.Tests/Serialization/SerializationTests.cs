@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             // Verify that reloading the content into an object...
             // make sure we accept the crappy output with empty groups
-            var nav = FhirXmlNavigator.Untyped(qText, new FhirXmlNavigatorSettings { PermissiveParsing = true });
+            var nav = FhirXmlNode.Parse(qText, new FhirXmlNodeSettings { PermissiveParsing = true });
 
             var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
             Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
@@ -850,6 +850,38 @@ namespace Hl7.Fhir.Tests.Serialization
 
             doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.False);
             Assert.IsTrue(doc.Contains("<extension"), "Extension exists when Summary = false");
+        }
+
+        /// <summary>
+        /// This test proves issue 657: https://github.com/ewoutkramer/fhir-net-api/issues/657
+        /// </summary>
+        [TestMethod]
+        public void DateTimeOffsetAccuracyTest()
+        {
+            var patient = new Patient { Meta = new Meta { LastUpdated = DateTimeOffset.UtcNow } };
+            var json = new FhirJsonSerializer().SerializeToString(patient); 
+            var res = new FhirJsonParser().Parse<Patient>(json);
+            Assert.IsTrue(patient.IsExactly(res), "1");
+           
+            // Is the parsing still correct without milliseconds?
+            patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, TimeSpan.Zero)} };
+            json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56+00:00\"}}";
+            res = new FhirJsonParser().Parse<Patient>(json);
+            Assert.IsTrue(patient.IsExactly(res), "2");
+
+            // Is the serialization still correct without milliseconds?
+            var json2 = new FhirJsonSerializer().SerializeToString(patient); 
+            Assert.AreEqual(json, json2, "3");
+
+            // Is the parsing still correct with a few milliseconds and TimeZone?
+            patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, 12, TimeSpan.Zero) } };
+            json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56.012+00:00\"}}";
+            res = new FhirJsonParser().Parse<Patient>(json);
+            Assert.IsTrue(patient.IsExactly(res), "4");
+
+            // Is the serialization still correct with a few milliseconds?
+            json2 = new FhirJsonSerializer().SerializeToString(patient);
+            Assert.AreEqual(json, json2, "5");
         }
     }
 }

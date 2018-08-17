@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestEmptyElement()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
-            var data = UntypedNode.Node("active").ToElementNavigator();
+            var data = SourceNode.Node("active").ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var result = _validator.Validate(data, boolSd);
             Assert.False(result.Success);
@@ -75,9 +75,8 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void NameMatching()
         {
-            var data = UntypedNode.Valued("active", "true")
-                .ToElementNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
-                .ToElementNavigator();
+            var data = SourceNode.Valued("active", "true")
+                .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             Assert.True(ChildNameMatcher.NameMatches("active", data));
             Assert.True(ChildNameMatcher.NameMatches("activeBoolean", data));
@@ -93,13 +92,13 @@ namespace Hl7.Fhir.Specification.Tests
             var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
-            var data = UntypedNode.Valued("active", "true",
-                    UntypedNode.Node("extension",
-                        UntypedNode.Valued("value", "4")),
-                    UntypedNode.Node("nonExistant")
-                        ).ToElementNavigator();
-
-            var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNavigator(data));
+            var data = SourceNode.Valued("active", "true",
+                    SourceNode.Node("extension",
+                        SourceNode.Valued("value", "4")),
+                    SourceNode.Node("nonExistant")
+                        ).ToTypedElement(new PocoStructureDefinitionSummaryProvider(), type: "boolean", settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough});
+                    
+            var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNode(data));
             Assert.Single(matches.UnmatchedInstanceElements);
             Assert.Equal(3, matches.Matches.Count());        // id, extension, value
             Assert.Empty(matches.Matches[0].InstanceElements); // id
@@ -156,15 +155,14 @@ namespace Hl7.Fhir.Specification.Tests
         public void ValidateCardinality()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
-            var data = UntypedNode.Valued("active", "true",
-                        UntypedNode.Valued("id", "myId1"),
-                        UntypedNode.Valued("id", "myId2"),
-                        UntypedNode.Node("extension",
-                            UntypedNode.Valued("valueInteger", "4")),
-                        UntypedNode.Node("extension",
-                            UntypedNode.Valued("valueString", "world!")))
-                            .ToElementNode(new PocoStructureDefinitionSummaryProvider(), "boolean")
-                            .ToElementNavigator();
+            var data = SourceNode.Valued("active", "true",
+                        SourceNode.Valued("id", "myId1"),
+                        SourceNode.Valued("id", "myId2"),
+                        SourceNode.Node("extension",
+                            SourceNode.Valued("value", "4")),
+                        SourceNode.Node("extension",
+                            SourceNode.Valued("value", "world!")))
+                            .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var report = _validator.Validate(data, boolSd);
             output.WriteLine(report.ToString());

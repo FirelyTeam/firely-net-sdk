@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -9,13 +17,13 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class FhirXmlNode : ISourceNode, IAnnotated, IExceptionSource
+    public partial class FhirXmlNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {  
-        public FhirXmlNode(XObject node, FhirXmlNavigatorSettings settings) 
+        internal FhirXmlNode(XObject node, FhirXmlNodeSettings settings) 
         {
             Current = node;
             Location = Name;
-            _settings = settings?.Clone() ?? new FhirXmlNavigatorSettings();
+            _settings = settings?.Clone() ?? new FhirXmlNodeSettings();
             _atRoot = true;
         }
 
@@ -29,8 +37,8 @@ namespace Hl7.Fhir.Serialization
         }
 
         public readonly XObject Current;
-        private readonly FhirXmlNavigatorSettings _settings;
-        private bool _atRoot = false;
+        private readonly FhirXmlNodeSettings _settings;
+        private readonly bool _atRoot = false;
 
         public XNamespace[] AllowedExternalNamespaces => _settings.AllowedExternalNamespaces;
         public bool DisallowSchemaLocation => _settings.DisallowSchemaLocation;
@@ -59,7 +67,7 @@ namespace Hl7.Fhir.Serialization
         private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
 
 
-        public XElement Contained
+        private XElement contained
         {
             get
             {
@@ -69,19 +77,13 @@ namespace Hl7.Fhir.Serialization
                     {
                         bool errorEncountered = verifyContained(contained, this, PermissiveParsing);
 
-                        if (PermissiveParsing && errorEncountered)
-                            _containedResource = NO_CONTAINED_FOUND;
-                        else
-                            _containedResource = contained;
+                        _containedResource = PermissiveParsing && errorEncountered ? NO_CONTAINED_FOUND : contained;
                     }
                     else
                         _containedResource = NO_CONTAINED_FOUND;
                 }
 
-                if (_containedResource == NO_CONTAINED_FOUND)
-                    return null;
-                else
-                    return _containedResource;
+                return _containedResource == NO_CONTAINED_FOUND ? null : _containedResource;
             }
         }
 
@@ -122,7 +124,7 @@ namespace Hl7.Fhir.Serialization
         // If we're on the root, the root is the resource type,
         // otherwise we should have looked at a nested node.
         public string ResourceType => !_atRoot ?
-                            Contained?.Name()?.LocalName : Current.Name().LocalName;
+                            contained?.Name()?.LocalName : Current.Name().LocalName;
 
 
         public IEnumerable<ISourceNode> Children(string name = null)
@@ -142,10 +144,10 @@ namespace Hl7.Fhir.Serialization
 
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
-            var parent = Contained ?? element;
+            var parent = contained ?? element;
             var schemaAttr = parent.Attribute(XmlNs.XSCHEMALOCATION);
             if (schemaAttr != null && DisallowSchemaLocation)
-                raiseFormatError(this, this, $"The 'schemaLocation' attribute is disallowed.", schemaAttr);
+                raiseFormatError(this, this, "The 'schemaLocation' attribute is disallowed.", schemaAttr);
 
             XObject firstChild = parent.FirstChildElementOrAttribute();
 
@@ -216,7 +218,7 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(FhirXmlNode) || type == typeof(ISourceNode))
+            if (type == typeof(FhirXmlNode) || type == typeof(ISourceNode) || type == typeof(IResourceTypeSupplier))
                 return new[] { this };
 #pragma warning disable 612, 618
             else if (type == typeof(AdditionalStructuralRule) && !PermissiveParsing)
@@ -240,9 +242,9 @@ namespace Hl7.Fhir.Serialization
 
                 string[] closingComment(XObject current)
                 {
-                    if (current is XContainer xc && xc.LastNode != null)
-                        return filterComments(cons(xc.LastNode, xc.LastNode.PreviousNodes()));
-                    return new string[0];
+                    return current is XContainer xc && xc.LastNode != null
+                        ? filterComments(cons(xc.LastNode, xc.LastNode.PreviousNodes()))
+                        : (new string[0]);
                 }
 
                 string[] docEndComments(XObject current) =>
@@ -327,13 +329,8 @@ namespace Hl7.Fhir.Serialization
             ies.NotifyOrThrow(source, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
         }
 
-        private static (int lineNumber, int linePosition) getPosition(XObject node)
-        {
-            if (node is IXmlLineInfo xli)
-                return (xli.LineNumber, xli.LinePosition);
-            else
-                return (-1, -1);
-        }
+        private static (int lineNumber, int linePosition) getPosition(XObject node) => 
+            node is IXmlLineInfo xli ? (xli.LineNumber, xli.LinePosition) : (-1, -1);
 
         private static bool verifyContained(XElement contained, IExceptionSource ies, bool permissive)
         {
@@ -372,7 +369,7 @@ namespace Hl7.Fhir.Serialization
             yield return checkRepresentation;
             yield return checkOrder;
 
-            object checkOrder(IElementNode node, IExceptionSource ies, object state)
+            object checkOrder(ITypedElement node, IExceptionSource ies, object state)
             {
                 var sdSummary = node.Definition;
                 if (sdSummary == null) return null;
@@ -392,7 +389,7 @@ namespace Hl7.Fhir.Serialization
                     return state;
             }
 
-            object checkRepresentation(IElementNode node, IExceptionSource ies, object _)
+            object checkRepresentation(ITypedElement node, IExceptionSource ies, object _)
             {
                 var sdSummary = node.Definition;
                 var serializationDetails = node.GetXmlSerializationDetails();

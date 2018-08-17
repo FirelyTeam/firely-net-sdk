@@ -16,7 +16,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class PocoElementNode : IElementNode, IAnnotated, IExceptionSource, IShortPath
+    internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
     {
         public readonly object Current;
         public readonly PocoStructureDefinitionSummaryProvider Provider;
@@ -55,19 +55,14 @@ namespace Hl7.Fhir.ElementModel
 
         public string ShortPath { get; private set; }
 
-        private IStructureDefinitionSummary down()
-        {
+        private IStructureDefinitionSummary down() =>
             // If this is a backbone element, the child type is the nested complex type
-            if (Definition.Type[0] is IStructureDefinitionSummary be)
-                return be;
-            else
-            {
-                return Provider.Provide(InstanceType);
-            }
-        }
+            Definition.Type[0] is IStructureDefinitionSummary be ? 
+                    be : 
+                    Provider.Provide(InstanceType);
 
 
-        public IEnumerable<IElementNode> Children(string name)
+        public IEnumerable<ITypedElement> Children(string name)
         {
             if (!(Current is Base parentBase)) yield break;
 
@@ -115,13 +110,12 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                if (Current is string)
-                    return Current;
-
                 try
                 {
                     switch (Current)
                     {
+                        case string s:
+                            return s;
                         case Hl7.Fhir.Model.Instant ins:
                             return ins.ToPartialDateTime();
                         case Hl7.Fhir.Model.Time time:
@@ -160,17 +154,14 @@ namespace Hl7.Fhir.ElementModel
             var typeName = !summary.IsChoiceElement && !summary.IsResource ?
                         summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
 
-            if (ModelInfo.IsProfiledQuantity(typeName))
-                return "Quantity";
-            else
-                return typeName;
+            return ModelInfo.IsProfiledQuantity(typeName) ? "Quantity" : typeName;
         }
 
         public string Location { get; private set; }
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(PocoElementNode) || type == typeof(IElementNode) || type == typeof(IShortPath))
+            if (type == typeof(PocoElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 return new[] { this };
             else if (FhirValue is IAnnotated ia)
                 return ia.Annotations(type);

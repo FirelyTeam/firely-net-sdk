@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
         private readonly Stream _stream = null;
         private JsonReader _reader = null;
         private (JObject element, string fullUrl)? _current = null;
-        private bool _disposeStream;
+        private readonly bool _disposeStream;
 
         /// <summary>Create a new <see cref="JsonNavigatorStream"/> instance for the specified serialized json resource file.</summary>
         /// <param name="path">The filepath of a serialized json resource.</param>
@@ -228,10 +228,7 @@ namespace Hl7.Fhir.Serialization
             {
                 throwIfDisposed();
                 var jelem = _current?.element;
-                if (jelem != null)
-                    return FhirJsonNavigator.Untyped(jelem).ToElementNavigator();
-                else
-                    return null;
+                return jelem != null ? FhirJsonNode.Create(jelem).ToElementNavigator() : null;
             }
         }
 

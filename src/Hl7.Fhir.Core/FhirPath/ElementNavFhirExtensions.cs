@@ -30,11 +30,45 @@ namespace Hl7.Fhir.FhirPath
         {
         }
 
+        [Obsolete("Use FhirEvaluationContext(ITypedElement context) instead")]
         public FhirEvaluationContext(IElementNavigator context) : base(context)
         {
         }
 
-        public Func<string,IElementNavigator> Resolver { get; set; }
+        public FhirEvaluationContext(ITypedElement context) : base(context.ToElementNavigator())
+        {
+        }
+
+        private Func<string, IElementNavigator> _resolver;
+
+        [Obsolete("Use property ElementResolver instead")]
+        public Func<string, IElementNavigator> Resolver
+        {
+            get { return _resolver; }
+            set
+            {
+                _resolver = value;
+                if (value == null)
+                    _elementResolver = null;
+                else
+                    _elementResolver = (s) => value(s).ToTypedElement();
+            }
+        }
+
+        private Func<string, ITypedElement> _elementResolver;
+
+        public Func<string, ITypedElement> ElementResolver
+        {
+            get { return _elementResolver; }
+            set
+            {
+                _elementResolver = value;
+                if (value == null)
+                    _resolver = null;
+                else
+                    _resolver = (s) => value(s).ToElementNavigator();
+            }
+        }
     }
 
     public static class ElementNavFhirExtensions

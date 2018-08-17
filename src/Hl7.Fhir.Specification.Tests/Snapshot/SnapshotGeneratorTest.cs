@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestFullyExpandCorePatient()
         {
             // [WMR 20180115] Iteratively expand all complex elements
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Specification.Tests
             var fullElems = fullyExpand(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
-            Assert.AreEqual(313, fullElems.Count);
+            Assert.AreEqual(310, fullElems.Count);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
         // Note: result is different from TestCoreOrganizationNL, contains more elements - correct!
         // Older approach was flawed, e.g. see exclusion for Organization.type
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestFullyExpandNLCoreOrganization()
         {
             // core-organization-nl references extension core-address-nl
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
                 dumpBaseElems(fullElems);
                 dumpIssues(issues);
-                Assert.AreEqual(350, fullElems.Count);
+                Assert.AreEqual(347, fullElems.Count);
                 Assert.AreEqual(0, issues.Count);
 
                 // Verify
@@ -1040,6 +1040,7 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.identifier", "C/1");
         }
 
+#if false
         [TestMethod]
         public void DebugDifferentialTree()
         {
@@ -1049,6 +1050,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
         }
+#endif
 
         // [WMR 20160802] Unit tests for SnapshotGenerator.ExpandElement
 
@@ -2158,7 +2160,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        [Ignore]
         public void TestExpandCoreArtifacts()
         {
 
@@ -3123,6 +3124,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(baseElem.Alias.SequenceEqual(extElem.Alias));
         }
 
+#if false
         // [WMR 20170213] New - issue reported by Marten - cannot slice Organization.type ?
         // Specifically, snapshot generator drops the slicing component from the slice entry element
         // Explanation: Organization.type is not a list (max = 1) and not a choice type => slicing is not allowed!
@@ -3144,15 +3146,16 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement -= elementHandler;
             }
 
-            dumpOutcome(_generator.Outcome);
+            //dumpOutcome(_generator.Outcome);
 
-            var elems = expanded.Snapshot.Element;
-            elems.Dump();
+            //var elems = expanded.Snapshot.Element;
+            //elems.Dump();
             //dumpBaseElems(elems);
 
             // TODO: Verify slice
 
         }
+#endif
 
         // [WMR 2017024] NEW: Test for bug with snapshot expansion of ElementDefinition.Binding (reported by NHS)
         // If the diff constrains only Binding.Strength, then snapshot also contains only Binding.Strength - WRONG!
@@ -6108,17 +6111,6 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement -= elementHandler;
             }
 
-        }
-
-        [TestMethod]
-        [Ignore]
-        public void DumpTypes()
-        {
-            Debug.WriteLine($"{"Type", -30} {"Resource",-10} {"DataType", -10} {"Primitive", -10} {"!Primitive",-10} {"Complex", -10}");
-            foreach (FHIRAllTypes type in Enum.GetValues(typeof(FHIRAllTypes)))
-            {
-                Debug.WriteLine($"{type, -30} {ModelInfo.IsKnownResource(type),-10} {ModelInfo.IsDataType(type), -10} {ModelInfo.IsPrimitive(type), -10} {!ModelInfo.IsPrimitive(type),-10} {isComplexDataTypeOrResource(type)}");
-            }
         }
 
         // [WMR 20180115]

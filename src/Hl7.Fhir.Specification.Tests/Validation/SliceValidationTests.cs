@@ -131,14 +131,14 @@ namespace Hl7.Fhir.Specification.Tests
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
-            var pnav = new ScopedNavigator(p.ToElementNavigator());
+            var pnode = new ScopedNode(p.ToTypedElement());
 
-            var telecoms = pnav.Children("telecom").Cast<ScopedNavigator>();
+            var telecoms = pnode.Children("telecom").Cast<ScopedNode>();
 
             foreach(var telecom in telecoms)
                 Assert.True(s.Add(telecom));
 
-            var outcome = s.Validate(_validator, pnav);
+            var outcome = s.Validate(_validator, pnode);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);   
             

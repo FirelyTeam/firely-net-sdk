@@ -64,9 +64,9 @@ namespace Hl7.Fhir.Serialization.Tests
                 patient.Children("contained").First().Children("name").Skip(1).First().Children("use").Single().Location);
         }
 
-        public static void ProducedCorrectTypedLocations(IElementNode patient)
+        public static void ProducedCorrectTypedLocations(ITypedElement patient)
         {
-            string getPretty(IElementNode n) => n.Annotation<IShortPath>().ShortPath;
+            string getPretty(ITypedElement n) => n.Annotation<IShortPathGenerator>().ShortPath;
 
             Assert.AreEqual("Patient", getPretty(patient));
 
@@ -97,9 +97,9 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreNotEqual(0, posInfo.LinePosition);
         }
 
-        [TestMethod]
-        public static void CheckBundleEntryNavigation(IElementNavigator nav)
+        public static void CheckBundleEntryNavigation(ITypedElement node)
         {
+            var nav = node.ToElementNavigator();
             var entryNav = nav.Select("entry.resource").First();
             var id = entryNav.Scalar("id");
             Assert.IsNotNull(id);
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 case ISourceNode isn:
                     serInfo = null;
                     break;
-                case IElementNode ien:
+                case ITypedElement ien:
                     serInfo = ien.Definition;
                     break;
                 default:
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Serialization.Tests
             string output = null;
 
             if (nav is ISourceNode isn2) output = isn2.ToXml();
-            else if (nav is IElementNode ien2) output = ien2.ToXml();
+            else if (nav is ITypedElement ien2) output = ien2.ToXml();
             else
                 throw Error.InvalidOperation("Fix unit test");
 
@@ -159,28 +159,28 @@ namespace Hl7.Fhir.Serialization.Tests
                 case ISourceNode isn:
                     serInfo = null;
                     break;
-                case IElementNode ien:
+                case ITypedElement ien:
                     serInfo = ien.Definition;
                     break;
                 default:
                     throw Error.InvalidOperation("Fix unit test");
             }
 
-            var serializer = new FhirJsonWriter(new FhirJsonWriterSettings {  });
+            var serializer = new FhirJsonBuilder(new FhirJsonWriterSettings {  });
             string output = null;
 
             if (nav is ISourceNode isn2) output = isn2.ToJson();
-            else if (nav is IElementNode ien2) output = ien2.ToJson();
+            else if (nav is ITypedElement ien2) output = ien2.ToJson();
             else
                 throw Error.InvalidOperation("Fix unit test");
             
             JsonAssert.AreSame(expected, output);
         }
 
-        public static void CanReadThroughNavigator(IElementNode n, bool typed)
+        public static void CanReadThroughNavigator(ITypedElement n, bool typed)
         {
             Assert.AreEqual("Patient", n.Name);
-            Assert.AreEqual("Patient", n.Annotation<ISourceNode>().ResourceType);
+            Assert.AreEqual("Patient", n.Annotation<IResourceTypeSupplier>()?.ResourceType);
             if (typed) Assert.AreEqual("Patient", n.InstanceType);
 
             var nav = n.Children().GetEnumerator();
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             Assert.IsTrue(nav.MoveNext()); // contained
             Assert.AreEqual("contained", nav.Current.Name);
-            Assert.AreEqual("Patient", nav.Current.Annotation<ISourceNode>().ResourceType);
+            Assert.AreEqual("Patient", nav.Current.Annotation<IResourceTypeSupplier>().ResourceType);
             if (typed) Assert.AreEqual("Patient", nav.Current.InstanceType);
 
             var contained = nav.Current.Children().GetEnumerator();

@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- First comment -->
+<Patient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://hl7.org/fhir ../../../Hl7.Fhir.Specification/data/fhir-all.xsd"
+ xmlns="http://hl7.org/fhir">
+  <!-- Comments here -->
+  <id value="pat1"/>
+  <!-- where's this comment? -->
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
+    </div>
+  </text>
+  <!-- comment on contained -->
+  <contained>
+    <!-- Where does this end up?-->
+    <Patient>
+      <!-- Maybe here ?-->
+      <id value="1"/>
+      <identifier>
+        <system value="http://hl7.org/fhir/sid/us-ssn" />
+        <value value="444222222"/>
+      </identifier>
+      <active value ="true"/>
+      <name id="firstname">
+        <!-- See if this is roundtripped -->
+        <use value="official"/>
+        <family value="Everywoman"/>
+        <given value="Eve"/>
+      </name>
+      <name id="anothername">
+        <!-- See if this is roundtripped -->
+        <use value="usual"/>
+        <family value="Everywoman"/>
+        <given value="Eveline"/>
+      </name>
+      <telecom>
+        <system value="phone"/>
+        <value value="555-555-2003"/>
+        <use value="work"/>
+        <rank value="1"/>
+      </telecom>
+      <gender value="female"/>
+      <birthDate value="1973-05-31"/>
+      <address>
+        <use value="home"/>
+        <line value="2222 Home Street"/>
+      </address>
+      <managingOrganization>
+        <reference value="Organization/hl7"/>
+      </managingOrganization>
+    </Patient>
+  </contained>
+  <contained>
+    <Questionnaire>
+      <id value="3141"/>
+      <text>
+        <status value="generated"/>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+
+
+          <pre>
+            Comorbidity? YES
+            Cardial Comorbidity? YES
+            Angina? YES
+            MI? NO
+            Vascular Comorbidity?
+            (no answers)
+            ...
+            Histopathology
+            Abdominal
+            pT category: 1a
+            ...
+          </pre>
+
+
+        </div>
+      </text>
+      <status value="draft"/>
+      <date value="2012-01"/>
+      <subjectType value="Patient"/>
+      <item>
+        <linkId value="1"/>
+        <text value="Cancer Quality Forum Questionnaire 2012"/>
+        <type value="display" />
+        <item>
+          <!--     COMORBIDITY     -->
+          <!--     First main section of the form, questions about comorbidity     -->
+          <linkId value="1.1"/>
+          <code>
+            <system value="http://example.org/system/code/sections"/>
+            <code value="COMORBIDITY"/>
+          </code>
+          <!--     section contains one question: whether there is comorbidity     -->
+          <type value="display" />
+          <item>
+            <linkId value="1.1.1"/>
+            <code>
+              <system value="http://example.org/system/code/questions"/>
+              <code value="COMORB"/>
+            </code>
+            <type value="choice"/>
+            <options>
+              <reference value="#yesno"/>
+            </options>
+            <item>
+              <!--     COMORBIDITY/CARDIAL     -->
+              <!--     Subsection about specific comorbidity: cardial     -->
+              <linkId value="1.1.1.1"/>
+              <code>
+                <system value="http://example.org/system/code/sections"/>
+                <code value="CARDIAL"/>
+              </code>
+              <type value="display" />
+              <item>
+                <linkId value="1.1.1.1.1"/>
+                <code>
+                  <system value="http://example.org/system/code/questions"/>
+                  <code value="COMORBCAR"/>
+                </code>
+                <type value="choice"/>
+                <options>
+                  <reference value="#yesno"/>
+                </options>
+              </item>
+              <item>
+                <!--     This answer carries both the questionnaire-specific name and an equivalent SNOMED
+             CT code     -->
+                <linkId value="1.1.1.1.2"/>
+                <code>
+                  <system value="http://example.org/system/code/questions"/>
+                  <code value="COMCAR00"/>
+                  <display value="Angina Pectoris"/>
+                </code>
+                <code>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="194828000"/>
+                  <display value="Angina (disorder)"/>
+                </code>
+                <type value="choice"/>
+                <options>
+                  <reference value="#yesno"/>
+                </options>
+              </item>
+              <item>
+                <linkId value="1.1.1.1.3"/>
+                <code>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="22298006"/>
+                  <display value="Myocardial infarction (disorder)"/>
+                </code>
+                <type value="choice"/>
+                <options>
+                  <reference value="#yesno"/>
+                </options>
+              </item>
+            </item>
+            <item>
+              <!--     COMORBIDITY/VASCULAR     -->
+              <linkId value="1.1.1.2"/>
+              <code>
+                <system value="http://example.org/system/code/sections"/>
+                <code value="VASCULAR"/>
+              </code>
+              <type value="display" />
+            </item>
+          </item>
+        </item>
+        <!--     Todo: What's supposed to go here?     -->
+        <item>
+          <!--     HISTOPATHOLOGY     -->
+          <linkId value="1.2"/>
+          <code>
+            <system value="http://example.org/system/code/sections"/>
+            <code value="HISTOPATHOLOGY"/>
+          </code>
+          <type value="display" />
+          <item>
+            <linkId value="1.2.1"/>
+            <code>
+              <system value="http://example.org/system/code/sections"/>
+              <code value="ABDOMINAL"/>
+            </code>
+            <type value="display" />
+            <item>
+              <linkId value="1.2.1.2"/>
+              <type value="display" />
+            </item>
+          </item>
+        </item>
+      </item>
+    </Questionnaire>
+  </contained>
+  <identifier>
+    <use value="usual"/>
+    <system value="urn:oid:0.1.2.3.4.5.6.7"/>
+    <value value="654321"/>
+  </identifier>
+  <identifier>
+    <use value="official"/>
+    <system value="urn:oid:9.0.1.2.3.4.5.6.7"/>
+    <value value="7654321"/>
+  </identifier>
+  <identifier>
+    <use value="official"/>
+    <system value="http://some.other/system"/>
+    <value value="11223344"/>
+  </identifier>
+  <active value ="true"/>
+  <name>
+    <use value="official"/>
+    <family value="Donald"/>
+    <given value="Duck"/>
+  </name>
+  <telecom>
+    <system value="phone"/>
+    <value value="555-555-2003"/>
+    <use value="work"/>
+    <rank value="1"/>
+  </telecom>
+  <gender value="male">
+    <extension url="http://example.org/StructureDefinition/real-gender">
+      <valueCode value="metrosexual" />
+    </extension>
+  </gender>
+  <birthDate value="1974-12-25">
+    <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+      <valueDateTime value="1974-12-25T14:35:45-05:00"/>
+    </extension>
+  </birthDate>
+  <deceasedBoolean value="false" />
+  <photo>
+    <contentType value="image/gif"/>
+    <data value="R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7"/>
+  </photo>
+  <contact>
+    <relationship>
+      <coding>
+        <system value="http://hl7.org/fhir/ValueSet/patient-contact-relationship"/>
+        <code value="owner"/>
+      </coding>
+    </relationship>
+    <organization>
+      <!--   Which organization to contact to reach this patient   -->
+      <reference value="Organization/1"/>
+      <display value="Walt Disney Corporation"/>
+    </organization>
+  </contact>
+  <communication>
+    <language>
+      <coding>
+        <code value="nl-nl" />
+      </coding>
+    </language>
+    <preferred value="true">
+      <extension url="http://example.org/StructureDefinition/language-preference">
+        <valueCode value="in-writing" />
+      </extension>
+    </preferred>
+  </communication>
+  <communication>
+    <language>
+      <coding>
+        <code value="nl-nl" />
+      </coding>
+    </language>
+    <preferred value="true">
+      <extension url="http://example.org/StructureDefinition/language-preference">
+        <valueCode value="oral" />
+      </extension>
+    </preferred>
+  </communication>
+  <managingOrganization>
+    <reference value="Organization/1"/>
+    <display value="ACME Healthcare, Inc"/>
+  </managingOrganization>
+  <link>
+    <other>
+      <reference value="Patient/pat2"/>
+    </other>
+    <type value="seealso"/>
+  </link>
+</Patient>
+<!-- Last comment -->

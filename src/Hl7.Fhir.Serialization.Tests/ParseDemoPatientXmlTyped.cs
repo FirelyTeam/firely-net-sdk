@@ -16,8 +16,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings settings = null, TypedNodeSettings tnSettings=null) =>
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
+        public ITypedElement getXmlNode(string xml, FhirXmlNodeSettings settings = null, TypedElementSettings tnSettings=null) =>
+            XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
             var navXml = getXmlNode(tpXml);
-            var navJson = FhirJsonNavigator.ForResource(tpJson, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(tpJson, new PocoStructureDefinitionSummaryProvider());
 
             var compare = navXml.IsEqualTo(navJson);
 
@@ -85,15 +85,15 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
-            var nav = getXmlNode(bundle).ToElementNavigator();
-            ParseDemoPatient.CheckBundleEntryNavigation(nav);
+            var node = getXmlNode(bundle);
+            ParseDemoPatient.CheckBundleEntryNavigation(node);
         }
 
 
         [TestMethod]
         public void RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(reader => FhirXmlNavigator.ForResource(reader, new PocoStructureDefinitionSummaryProvider()));
+            ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
         }
 
         [TestMethod]
@@ -101,10 +101,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(@"TestData\fp-test-patient.xml");
             // will allow whitespace and comments to come through      
-            var navXml = FhirXmlNavigator.ForResource(tp, new PocoStructureDefinitionSummaryProvider());
+            var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var json = navXml.ToJson();
 
-            var navJson = FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider());
             var xml = navJson.ToXml();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesBasicTypeErrorsWithUnknownRoot()
         {
             var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
-            var patient = getXmlNode(tpXml, tnSettings: new TypedNodeSettings { ErrorMode = TypedNodeSettings.TypeErrorMode.Passthrough });
+            var patient = getXmlNode(tpXml, tnSettings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
             var result = patient.VisitAndCatch();
             Assert.AreEqual(11, result.Count);  // 11 syntax errors, unknown root is passed through without errors
         }
@@ -185,8 +185,8 @@ namespace Hl7.Fhir.Serialization.Tests
             errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
-            IElementNode getValidatingXmlNav(string jsonText) =>
-                getXmlNode(jsonText, new FhirXmlNavigatorSettings { ValidateFhirXhtml = true });
+            ITypedElement getValidatingXmlNav(string jsonText) =>
+                getXmlNode(jsonText, new FhirXmlNodeSettings { ValidateFhirXhtml = true });
         }
 
         [TestMethod]

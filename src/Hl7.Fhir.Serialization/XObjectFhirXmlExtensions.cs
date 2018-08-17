@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.Utility;
+﻿/* 
+ * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
 using System.Xml;
@@ -71,8 +79,8 @@ namespace Hl7.Fhir.Serialization
         {
             if (current.AtXhtmlDiv())
                 return ((XElement)current).ToString(SaveOptions.DisableFormatting);
-
-            return current is XElement xelem ?
+            else
+                return current is XElement xelem ?
                     xelem.Attribute("value")?.Value.Trim() : current.Value();
         }
     }

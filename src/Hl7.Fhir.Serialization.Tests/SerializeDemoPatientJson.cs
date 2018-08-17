@@ -19,15 +19,15 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public IElementNode getJsonNav(string json, FhirJsonNavigatorSettings s = null) => 
-            FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+        public ITypedElement getJsonElement(string json, FhirJsonNodeSettings s = null) => 
+            JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()
         {
             var json = File.ReadAllText(@"TestData\fp-test-patient.json");
 
-            var nav = getJsonNav(json);
+            var nav = getJsonElement(json);
             var output = nav.ToJson();
             JsonAssert.AreSame(json, output);
         }
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(@"TestData\test-empty-nodes.json");
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getJsonNav(tp, new FhirJsonNavigatorSettings { PermissiveParsing = true });
+            var nav = getJsonElement(tp, new FhirJsonNodeSettings { PermissiveParsing = true });
 
             var output = nav.ToJson();
             var doc = JObject.Parse(output);
@@ -57,5 +57,22 @@ namespace Hl7.Fhir.Serialization.Tests
             JsonAssert.AreSame(tp, output);
         }
 
+        [TestMethod]
+        public void DoesPretty()
+        {
+            var json = File.ReadAllText(@"TestData\fp-test-patient.json");
+
+            var nav = getJsonElement(json);
+            var output = nav.ToJson();
+            Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
+            var pretty = nav.ToJson(new FhirJsonWriterSettings { Pretty = true });
+            Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
+
+            var p = (new FhirJsonParser()).Parse<Patient>(json);
+            output = (new FhirJsonSerializer(new SerializerSettings { Pretty = false })).SerializeToString(p);
+            Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
+            pretty = (new FhirJsonSerializer(new SerializerSettings { Pretty = true })).SerializeToString(p);
+            Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
+        }
     }
 }

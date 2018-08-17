@@ -55,25 +55,6 @@ namespace Hl7.Fhir.Tests.Introspection
         }
 
 
-        [TestMethod,Ignore]
-        public void TypeDataTypeNameResolving()
-        {
-            var inspector = new ModelInspector();
-
-            inspector.ImportType(typeof(AnimalName));
-            inspector.ImportType(typeof(NewAnimalName));
-
-            var result = inspector.FindClassMappingForFhirDataType("animalname");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(result.NativeType, typeof(NewAnimalName));
-
-            // Validate a mapping for a type will return the newest registration
-            result = inspector.FindClassMappingByType(typeof(AnimalName));
-            Assert.IsNotNull(result);
-            Assert.AreEqual(typeof(NewAnimalName),result.NativeType);
-        }
-
-
         [TestMethod]
         public void TestAssemblyInspection()
         {

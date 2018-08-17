@@ -12,10 +12,10 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializePartialTree
     {
-        public IElementNode getXmlNode(string xml, FhirXmlNavigatorSettings s = null) =>
-            FhirXmlNavigator.ForResource(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public IElementNode getJsonNode(string json, FhirJsonNavigatorSettings s = null) =>
-            FhirJsonNavigator.ForResource(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+        public ITypedElement getXmlNode(string xml, FhirXmlNodeSettings s = null) =>
+            XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
+        public ITypedElement getJsonNode(string json, FhirJsonNodeSettings s = null) =>
+            JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
         
 
         [TestMethod]
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Serialization.Tests
             // Should work on the parent resource
             var navXml = getXmlNode(tpXml);
             var navJson = getJsonNode(tpJson);
-            var navPoco = pat.ToElementNode();
+            var navPoco = pat.ToTypedElement();
             testSubtree(navXml, navJson, navPoco);
 
             // An on a child that's a normal datatype
@@ -56,20 +56,19 @@ namespace Hl7.Fhir.Serialization.Tests
             testSubtree(subnavXml, subnavJson, subnavPoco);
         }
 
-        private void testSubtree(IElementNode navXml, IElementNode navJson, IElementNode navPoco)
+        private void testSubtree(ITypedElement navXml, ITypedElement navJson, ITypedElement navPoco)
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
-            var navRtXml = FhirJsonNavigator.ForElement(navXml.ToJson(), navXml.InstanceType,
+            var navRtXml = JsonParsingHelpers.ParseToTypedElement(navXml.ToJson(), navXml.InstanceType,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
-            var navRtJson = navJson.ToPoco(ModelInfo.GetTypeForFhirType(navJson.InstanceType))
-                .ToElementNode(navJson.Name);
-            var navRtPoco = FhirXmlNavigator.ForElement(navPoco.ToXml(), navPoco.InstanceType,
+            var navRtJson = navJson.ToPoco().ToTypedElement(navJson.Name);
+            var navRtPoco = XmlParsingHelpers.ParseToTypedElement(navPoco.ToXml(), navPoco.InstanceType,
                 new PocoStructureDefinitionSummaryProvider());
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);
         }
 
-        private void assertAreNavsEqual(IElementNode subnavXml, IElementNode subnavJson, IElementNode subnavPoco)
+        private void assertAreNavsEqual(ITypedElement subnavXml, ITypedElement subnavJson, ITypedElement subnavPoco)
         {
             var result = subnavXml.IsEqualTo(subnavJson);
             Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
@@ -77,4 +76,49 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(subnavPoco.IsEqualTo(subnavXml).Success);
         }
     }
+
+    internal static class JsonParsingHelpers
+    {
+        internal static ITypedElement ParseToTypedElement(string json, IStructureDefinitionSummaryProvider provider, string rootName = null,
+    FhirJsonNodeSettings settings = null, TypedElementSettings tnSettings = null)
+        {
+            if (json == null) throw Error.ArgumentNull(nameof(json));
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+
+            return FhirJsonNode.Parse(json, rootName, settings).ToTypedElement(provider, null, tnSettings);
+        }
+
+        internal static ITypedElement ParseToTypedElement(string json, string type, IStructureDefinitionSummaryProvider provider, string rootName = null,
+            FhirJsonNodeSettings settings = null, TypedElementSettings tnSettings = null)
+        {
+            if (json == null) throw Error.ArgumentNull(nameof(json));
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+
+            return FhirJsonNode.Parse(json, rootName, settings).ToTypedElement(provider, type, tnSettings);
+        }
+    }
+
+    internal static class XmlParsingHelpers
+    {
+        public static ITypedElement ParseToTypedElement(string xml, IStructureDefinitionSummaryProvider provider, FhirXmlNodeSettings settings = null, TypedElementSettings tnSettings = null)
+        {
+            if (xml == null) throw Error.ArgumentNull(nameof(xml));
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+
+            return FhirXmlNode.Parse(xml, settings).ToTypedElement(provider, null, tnSettings);
+        }
+
+        public static ITypedElement ParseToTypedElement(string xml, string type, IStructureDefinitionSummaryProvider provider,
+            FhirXmlNodeSettings settings = null, TypedElementSettings tnSettings = null)
+        {
+            if (xml == null) throw Error.ArgumentNull(nameof(xml));
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+
+            return FhirXmlNode.Parse(xml, settings).ToTypedElement(provider, type, tnSettings);
+        }
+
+    }
+
 }

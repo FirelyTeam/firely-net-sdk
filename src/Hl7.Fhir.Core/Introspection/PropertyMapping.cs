@@ -94,9 +94,6 @@ namespace Hl7.Fhir.Introspection
 
             referredTypes = foundTypes;
 
-            // May need to generate getters/setters using pre-compiled expression trees for performance.
-            // See http://weblogs.asp.net/marianor/archive/2009/04/10/using-expression-trees-to-get-property-getter-and-setters.aspx
-
 #if USE_CODE_GEN
             result._getter = prop.GetValueGetter();
             result._setter = prop.GetValueSetter();

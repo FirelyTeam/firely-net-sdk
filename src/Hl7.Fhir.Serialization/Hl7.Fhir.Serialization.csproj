@@ -17,14 +17,13 @@
     <AssemblyName>Hl7.Fhir.Serialization</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="FhirJsonNavigator.cs" />
-    <Compile Remove="FhirJsonNavigatorNode.cs" />
-    <Compile Remove="FhirXmlNavigator.cs" />
-    <Compile Remove="ParseErrorStubNode.cs" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+    <Compile Remove="Properties\Resources.Designer.cs" />
   </ItemGroup>
-
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <Compile Remove="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+    <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
@@ -36,6 +35,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.ElementModel\Hl7.Fhir.ElementModel.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

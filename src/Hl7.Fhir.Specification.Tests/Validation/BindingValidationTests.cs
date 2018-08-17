@@ -39,37 +39,37 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Non-bindeable things should succeed
             Element v = new FhirBoolean(true);
-            var nav = v.ToElementNavigator();            
-            Assert.True(_validator.ValidateBinding(ed, nav).Success);
+            var node = v.ToTypedElement();            
+            Assert.True(_validator.ValidateBinding(ed, node).Success);
 
             v = new Quantity(4.0m, "masked", "http://hl7.org/fhir/data-absent-reason");  // nonsense, but hey UCUM is not provided with the spec
-            nav = v.ToElementNavigator();
-            Assert.True(_validator.ValidateBinding(ed, nav).Success);
+            node = v.ToTypedElement();
+            Assert.True(_validator.ValidateBinding(ed, node).Success);
 
             v = new Quantity(4.0m, "maskedx", "http://hl7.org/fhir/data-absent-reason");  // nonsense, but hey UCUM is not provided with the spec
-            nav = v.ToElementNavigator();
-            Assert.False(_validator.ValidateBinding(ed,nav).Success);
+            node = v.ToTypedElement();
+            Assert.False(_validator.ValidateBinding(ed,node).Success);
 
             v = new Quantity(4.0m, "kg");  // sorry, UCUM is not provided with the spec - still validate against data-absent-reason
-            nav = v.ToElementNavigator();
-            Assert.False(_validator.ValidateBinding(ed,nav).Success);
+            node = v.ToTypedElement();
+            Assert.False(_validator.ValidateBinding(ed,node).Success);
 
             v = new FhirString("masked");
-            nav = v.ToElementNavigator();
-            Assert.True(_validator.ValidateBinding(ed,nav).Success);
+            node = v.ToTypedElement();
+            Assert.True(_validator.ValidateBinding(ed,node).Success);
 
             v = new FhirString("maskedx");
-            nav = v.ToElementNavigator();
-            Assert.False(_validator.ValidateBinding(ed,nav).Success);
+            node = v.ToTypedElement();
+            Assert.False(_validator.ValidateBinding(ed,node).Success);
 
             var ic = new Coding("http://hl7.org/fhir/data-absent-reason", "masked");
             var ext = new Extension { Value = ic };
-            nav = ext.ToElementNavigator();
-            Assert.True(_validator.ValidateBinding(ed, nav).Success);
+            node = ext.ToTypedElement();
+            Assert.True(_validator.ValidateBinding(ed, node).Success);
 
             ic.Code = "maskedx";
-            nav = ext.ToElementNavigator();
-            Assert.False(_validator.ValidateBinding(ed, nav).Success);
+            node = ext.ToTypedElement();
+            Assert.False(_validator.ValidateBinding(ed, node).Success);
         }
 
 
