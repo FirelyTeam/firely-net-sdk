@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("StatusHistoryComponent")]
         [DataContract]
-        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StatusHistoryComponent"; } }
@@ -267,8 +267,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ClassHistoryComponent")]
         [DataContract]
-        public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ClassHistoryComponent"; } }
@@ -373,8 +373,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Class != null) yield return new ElementValue("class", false, Class);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Class != null) yield return new ElementValue("class", Class);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -497,9 +497,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    if (Individual != null) yield return new ElementValue("individual", false, Individual);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    if (Individual != null) yield return new ElementValue("individual", Individual);
                 }
             }
 
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DiagnosisComponent")]
         [DataContract]
-        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DiagnosisComponent"; } }
@@ -641,9 +641,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Condition != null) yield return new ElementValue("condition", false, Condition);
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (RankElement != null) yield return new ElementValue("rank", false, RankElement);
+                    if (Condition != null) yield return new ElementValue("condition", Condition);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (RankElement != null) yield return new ElementValue("rank", RankElement);
                 }
             }
 
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("HospitalizationComponent")]
         [DataContract]
-        public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "HospitalizationComponent"; } }
@@ -872,15 +872,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (PreAdmissionIdentifier != null) yield return new ElementValue("preAdmissionIdentifier", false, PreAdmissionIdentifier);
-                    if (Origin != null) yield return new ElementValue("origin", false, Origin);
-                    if (AdmitSource != null) yield return new ElementValue("admitSource", false, AdmitSource);
-                    if (ReAdmission != null) yield return new ElementValue("reAdmission", false, ReAdmission);
-                    foreach (var elem in DietPreference) { if (elem != null) yield return new ElementValue("dietPreference", true, elem); }
-                    foreach (var elem in SpecialCourtesy) { if (elem != null) yield return new ElementValue("specialCourtesy", true, elem); }
-                    foreach (var elem in SpecialArrangement) { if (elem != null) yield return new ElementValue("specialArrangement", true, elem); }
-                    if (Destination != null) yield return new ElementValue("destination", false, Destination);
-                    if (DischargeDisposition != null) yield return new ElementValue("dischargeDisposition", false, DischargeDisposition);
+                    if (PreAdmissionIdentifier != null) yield return new ElementValue("preAdmissionIdentifier", PreAdmissionIdentifier);
+                    if (Origin != null) yield return new ElementValue("origin", Origin);
+                    if (AdmitSource != null) yield return new ElementValue("admitSource", AdmitSource);
+                    if (ReAdmission != null) yield return new ElementValue("reAdmission", ReAdmission);
+                    foreach (var elem in DietPreference) { if (elem != null) yield return new ElementValue("dietPreference", elem); }
+                    foreach (var elem in SpecialCourtesy) { if (elem != null) yield return new ElementValue("specialCourtesy", elem); }
+                    foreach (var elem in SpecialArrangement) { if (elem != null) yield return new ElementValue("specialArrangement", elem); }
+                    if (Destination != null) yield return new ElementValue("destination", Destination);
+                    if (DischargeDisposition != null) yield return new ElementValue("dischargeDisposition", DischargeDisposition);
                 }
             }
 
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LocationComponent")]
         [DataContract]
-        public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LocationComponent"; } }
@@ -1022,9 +1022,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Location != null) yield return new ElementValue("location", false, Location);
-                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Location != null) yield return new ElementValue("location", Location);
+                    if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -1494,27 +1494,27 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in StatusHistory) { if (elem != null) yield return new ElementValue("statusHistory", true, elem); }
-                if (Class != null) yield return new ElementValue("class", false, Class);
-                foreach (var elem in ClassHistory) { if (elem != null) yield return new ElementValue("classHistory", true, elem); }
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                if (Priority != null) yield return new ElementValue("priority", false, Priority);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                foreach (var elem in EpisodeOfCare) { if (elem != null) yield return new ElementValue("episodeOfCare", true, elem); }
-                foreach (var elem in IncomingReferral) { if (elem != null) yield return new ElementValue("incomingReferral", true, elem); }
-                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
-                if (Appointment != null) yield return new ElementValue("appointment", false, Appointment);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Length != null) yield return new ElementValue("length", false, Length);
-                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
-                foreach (var elem in Diagnosis) { if (elem != null) yield return new ElementValue("diagnosis", true, elem); }
-                foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", true, elem); }
-                if (Hospitalization != null) yield return new ElementValue("hospitalization", false, Hospitalization);
-                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }
-                if (ServiceProvider != null) yield return new ElementValue("serviceProvider", false, ServiceProvider);
-                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in StatusHistory) { if (elem != null) yield return new ElementValue("statusHistory", elem); }
+                if (Class != null) yield return new ElementValue("class", Class);
+                foreach (var elem in ClassHistory) { if (elem != null) yield return new ElementValue("classHistory", elem); }
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                if (Priority != null) yield return new ElementValue("priority", Priority);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                foreach (var elem in EpisodeOfCare) { if (elem != null) yield return new ElementValue("episodeOfCare", elem); }
+                foreach (var elem in IncomingReferral) { if (elem != null) yield return new ElementValue("incomingReferral", elem); }
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
+                if (Appointment != null) yield return new ElementValue("appointment", Appointment);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Length != null) yield return new ElementValue("length", Length);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
+                foreach (var elem in Diagnosis) { if (elem != null) yield return new ElementValue("diagnosis", elem); }
+                foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", elem); }
+                if (Hospitalization != null) yield return new ElementValue("hospitalization", Hospitalization);
+                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
+                if (ServiceProvider != null) yield return new ElementValue("serviceProvider", ServiceProvider);
+                if (PartOf != null) yield return new ElementValue("partOf", PartOf);
             }
         }
 

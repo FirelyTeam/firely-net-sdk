@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CollectionComponent")]
         [DataContract]
-        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CollectionComponent"; } }
@@ -238,11 +238,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Collector != null) yield return new ElementValue("collector", false, Collector);
-                    if (Collected != null) yield return new ElementValue("collected", false, Collected);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
+                    if (Collector != null) yield return new ElementValue("collector", Collector);
+                    if (Collected != null) yield return new ElementValue("collected", Collected);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Method != null) yield return new ElementValue("method", Method);
+                    if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
                 }
             }
 
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProcessingComponent")]
         [DataContract]
-        public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProcessingComponent"; } }
@@ -403,10 +403,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Procedure != null) yield return new ElementValue("procedure", false, Procedure);
-                    foreach (var elem in Additive) { if (elem != null) yield return new ElementValue("additive", true, elem); }
-                    if (Time != null) yield return new ElementValue("time", false, Time);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Procedure != null) yield return new ElementValue("procedure", Procedure);
+                    foreach (var elem in Additive) { if (elem != null) yield return new ElementValue("additive", elem); }
+                    if (Time != null) yield return new ElementValue("time", Time);
                 }
             }
 
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContainerComponent")]
         [DataContract]
-        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContainerComponent"; } }
@@ -599,12 +599,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Capacity != null) yield return new ElementValue("capacity", false, Capacity);
-                    if (SpecimenQuantity != null) yield return new ElementValue("specimenQuantity", false, SpecimenQuantity);
-                    if (Additive != null) yield return new ElementValue("additive", false, Additive);
+                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Capacity != null) yield return new ElementValue("capacity", Capacity);
+                    if (SpecimenQuantity != null) yield return new ElementValue("specimenQuantity", SpecimenQuantity);
+                    if (Additive != null) yield return new ElementValue("additive", Additive);
                 }
             }
 
@@ -927,18 +927,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (AccessionIdentifier != null) yield return new ElementValue("accessionIdentifier", false, AccessionIdentifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (ReceivedTimeElement != null) yield return new ElementValue("receivedTime", false, ReceivedTimeElement);
-                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
-                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", true, elem); }
-                if (Collection != null) yield return new ElementValue("collection", false, Collection);
-                foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", true, elem); }
-                foreach (var elem in Container) { if (elem != null) yield return new ElementValue("container", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (AccessionIdentifier != null) yield return new ElementValue("accessionIdentifier", AccessionIdentifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (ReceivedTimeElement != null) yield return new ElementValue("receivedTime", ReceivedTimeElement);
+                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", elem); }
+                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", elem); }
+                if (Collection != null) yield return new ElementValue("collection", Collection);
+                foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", elem); }
+                foreach (var elem in Container) { if (elem != null) yield return new ElementValue("container", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

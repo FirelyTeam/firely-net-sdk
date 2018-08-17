@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PractitionerComponent")]
         [DataContract]
-        public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PractitionerComponent"; } }
@@ -174,8 +174,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Actor != null) yield return new ElementValue("actor", Actor);
                 }
             }
 
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExplanationComponent")]
         [DataContract]
-        public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExplanationComponent"; } }
@@ -280,8 +280,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
-                    foreach (var elem in ReasonNotGiven) { if (elem != null) yield return new ElementValue("reasonNotGiven", true, elem); }
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
+                    foreach (var elem in ReasonNotGiven) { if (elem != null) yield return new ElementValue("reasonNotGiven", elem); }
                 }
             }
 
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ReactionComponent")]
         [DataContract]
-        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
@@ -441,9 +441,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (Detail != null) yield return new ElementValue("detail", false, Detail);
-                    if (ReportedElement != null) yield return new ElementValue("reported", false, ReportedElement);
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (Detail != null) yield return new ElementValue("detail", Detail);
+                    if (ReportedElement != null) yield return new ElementValue("reported", ReportedElement);
                 }
             }
 
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VaccinationProtocolComponent")]
         [DataContract]
-        public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "VaccinationProtocolComponent"; } }
@@ -728,14 +728,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", false, DoseSequenceElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                    if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
-                    if (SeriesDosesElement != null) yield return new ElementValue("seriesDoses", false, SeriesDosesElement);
-                    foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", true, elem); }
-                    if (DoseStatus != null) yield return new ElementValue("doseStatus", false, DoseStatus);
-                    if (DoseStatusReason != null) yield return new ElementValue("doseStatusReason", false, DoseStatusReason);
+                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", DoseSequenceElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Authority != null) yield return new ElementValue("authority", Authority);
+                    if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
+                    if (SeriesDosesElement != null) yield return new ElementValue("seriesDoses", SeriesDosesElement);
+                    foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", elem); }
+                    if (DoseStatus != null) yield return new ElementValue("doseStatus", DoseStatus);
+                    if (DoseStatusReason != null) yield return new ElementValue("doseStatusReason", DoseStatusReason);
                 }
             }
 
@@ -1312,27 +1312,27 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (NotGivenElement != null) yield return new ElementValue("notGiven", false, NotGivenElement);
-                if (VaccineCode != null) yield return new ElementValue("vaccineCode", false, VaccineCode);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PrimarySourceElement != null) yield return new ElementValue("primarySource", false, PrimarySourceElement);
-                if (ReportOrigin != null) yield return new ElementValue("reportOrigin", false, ReportOrigin);
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
-                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
-                if (Site != null) yield return new ElementValue("site", false, Site);
-                if (Route != null) yield return new ElementValue("route", false, Route);
-                if (DoseQuantity != null) yield return new ElementValue("doseQuantity", false, DoseQuantity);
-                foreach (var elem in Practitioner) { if (elem != null) yield return new ElementValue("practitioner", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                if (Explanation != null) yield return new ElementValue("explanation", false, Explanation);
-                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", true, elem); }
-                foreach (var elem in VaccinationProtocol) { if (elem != null) yield return new ElementValue("vaccinationProtocol", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (NotGivenElement != null) yield return new ElementValue("notGiven", NotGivenElement);
+                if (VaccineCode != null) yield return new ElementValue("vaccineCode", VaccineCode);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PrimarySourceElement != null) yield return new ElementValue("primarySource", PrimarySourceElement);
+                if (ReportOrigin != null) yield return new ElementValue("reportOrigin", ReportOrigin);
+                if (Location != null) yield return new ElementValue("location", Location);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
+                if (Site != null) yield return new ElementValue("site", Site);
+                if (Route != null) yield return new ElementValue("route", Route);
+                if (DoseQuantity != null) yield return new ElementValue("doseQuantity", DoseQuantity);
+                foreach (var elem in Practitioner) { if (elem != null) yield return new ElementValue("practitioner", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                if (Explanation != null) yield return new ElementValue("explanation", Explanation);
+                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", elem); }
+                foreach (var elem in VaccinationProtocol) { if (elem != null) yield return new ElementValue("vaccinationProtocol", elem); }
             }
         }
 

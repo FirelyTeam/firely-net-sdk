@@ -5,6 +5,8 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -65,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// identifies the meaning of the extension
         /// </summary>
-        [FhirElement("url", XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 30)]
+        [FhirElement("url", XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30, TypeRedirect = typeof(FhirUri))]
         [Cardinality(Min = 1, Max = 1)]
         [UriPattern]
         [DataMember]
@@ -153,8 +155,8 @@ namespace Hl7.Fhir.Model
             {
                 // Extension elements 
                 foreach (var item in base.NamedChildren) yield return item;
-                if(Url != null) yield return new ElementValue("url", false, Url);
-                if (Value != null) yield return new ElementValue ("value", false, Value);
+                if(Url != null) yield return new ElementValue("url",Url);
+                if (Value != null) yield return new ElementValue ("value",Value);
             }
         } 
     }

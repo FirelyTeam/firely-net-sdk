@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("UdiComponent")]
         [DataContract]
-        public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "UdiComponent"; } }
@@ -446,13 +446,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", false, DeviceIdentifierElement);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", false, JurisdictionElement);
-                    if (CarrierHRFElement != null) yield return new ElementValue("carrierHRF", false, CarrierHRFElement);
-                    if (CarrierAIDCElement != null) yield return new ElementValue("carrierAIDC", false, CarrierAIDCElement);
-                    if (IssuerElement != null) yield return new ElementValue("issuer", false, IssuerElement);
-                    if (EntryTypeElement != null) yield return new ElementValue("entryType", false, EntryTypeElement);
+                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", DeviceIdentifierElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", JurisdictionElement);
+                    if (CarrierHRFElement != null) yield return new ElementValue("carrierHRF", CarrierHRFElement);
+                    if (CarrierAIDCElement != null) yield return new ElementValue("carrierAIDC", CarrierAIDCElement);
+                    if (IssuerElement != null) yield return new ElementValue("issuer", IssuerElement);
+                    if (EntryTypeElement != null) yield return new ElementValue("entryType", EntryTypeElement);
                 }
             }
 
@@ -971,23 +971,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Udi != null) yield return new ElementValue("udi", false, Udi);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", false, ManufacturerElement);
-                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", false, ManufactureDateElement);
-                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
-                if (ModelElement != null) yield return new ElementValue("model", false, ModelElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Udi != null) yield return new ElementValue("udi", Udi);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", ManufacturerElement);
+                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", ManufactureDateElement);
+                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
+                if (ModelElement != null) yield return new ElementValue("model", ModelElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Owner != null) yield return new ElementValue("owner", Owner);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Location != null) yield return new ElementValue("location", Location);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", elem); }
             }
         }
 

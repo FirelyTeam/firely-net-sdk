@@ -126,8 +126,8 @@ namespace Hl7.Fhir.Tests.Model
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = new PocoNavigator(resource);
-            var navigator = new PocoNavigator(resource);
+            var resourceModel = resource.ToElementNavigator();
+            var navigator = resource.ToElementNavigator();
 
             try
             {

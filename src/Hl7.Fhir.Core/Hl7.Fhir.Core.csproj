@@ -24,13 +24,8 @@
      <None Remove="Rest\Search\**" />
    </ItemGroup>
 
-   <ItemGroup>
-     <Compile Remove="Serialization\JsonNavFhirReader.cs" />
-     <Compile Remove="Serialization\XmlNavFhirReader.cs" />
-   </ItemGroup>
- 
   <ItemGroup>    
-    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' and '$(TargetFramework)' != 'net40' ">
@@ -50,30 +45,21 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Validation\xhtml\fhir-xhtml.xsd" />
-    <None Include="Validation\xhtml\xml.xsd" />
     <None Include="Model\Source\expansions.xml" />
     <None Include="Model\Source\profiles-resources.xml" />
     <None Include="Model\Source\profiles-types.xml" />
     <None Include="Model\Source\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
     <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <Compile Remove="Properties\Resources.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <Compile Remove="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Model\Generated\Template-Bindings.cs">

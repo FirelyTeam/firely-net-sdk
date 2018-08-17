@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -343,12 +345,12 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
-                if (CitationElement != null) yield return new ElementValue("citation", false, CitationElement);
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (Document != null) yield return new ElementValue("document", false, Document);
-                if (Resource != null) yield return new ElementValue("resource", false, Resource);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
+                if (CitationElement != null) yield return new ElementValue("citation", CitationElement);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (Document != null) yield return new ElementValue("document", Document);
+                if (Resource != null) yield return new ElementValue("resource", Resource);
  
             } 
         } 

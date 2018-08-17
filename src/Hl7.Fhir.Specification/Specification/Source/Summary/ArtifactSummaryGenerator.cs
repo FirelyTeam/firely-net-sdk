@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Specification.Summary
         // Generate summary for a single artifact
         static ArtifactSummary generate(
             ArtifactSummaryPropertyBag props,
-            IElementNavigator nav, 
+            IElementNavigator nav,
             ArtifactSummaryHarvester[] harvesters)
         {
             Exception error = null;

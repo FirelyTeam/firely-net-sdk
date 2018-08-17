@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Tests.Introspection
     [TestClass]
     public class FhirPathExtensionTest
     {
-        IElementNavigator _bundleNav;
+        ITypedElement _bundleElement;
         Bundle _parsed;
 
         [TestInitialize]
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var bundleXml = File.ReadAllText("TestData\\bundle-contained-references.xml");
 
             _parsed = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
-            _bundleNav = new ScopedNavigator(new PocoNavigator(_parsed));
+            _bundleElement = new ScopedNode(_parsed.ToTypedElement());
         }
 
 
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
                          ".resource.managingOrganization.resolve().id";
 
-            var result = _bundleNav.Select(statement);
+            var result = _bundleElement.ToElementNavigator().Select(statement);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual("orgY", result.First().Value);
 
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var statement = "'http://example.org/doesntexist'.resolve().id";
             var called = false;
-            var result = _bundleNav.Select(statement, new FhirEvaluationContext() { Resolver = resolver });
+            var result = _bundleElement.ToElementNavigator().Select(statement, new FhirEvaluationContext() { Resolver = resolver });
             Assert.IsTrue(called);
 
             IElementNavigator resolver(string url)

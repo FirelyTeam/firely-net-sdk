@@ -144,14 +144,7 @@ namespace Hl7.Fhir.Model.Primitives
 
         public static PartialDateTime FromDateTime(DateTime dt)
         {
-
-#if NETSTANDARD
-            // todo: check equivalence
-            return new PartialDateTime { _value = XmlConvert.ToString(dt) };
-#else
             return new PartialDateTime { _value = PrimitiveTypeConverter.ConvertTo<string>(dt) };
-#endif
-
         }
 
         public int CompareTo(object obj)

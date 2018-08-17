@@ -86,9 +86,8 @@ namespace Hl7.Fhir.Model.Primitives
         {
             if (obj == null) return false;
 
-            if (obj is Quantity)
+            if (obj is Quantity q)
             {
-                Quantity q = (Quantity)obj;
                 return q.Unit == this.Unit
                         && q.Value == this.Value
                         && q.System == this.System;
@@ -106,10 +105,8 @@ namespace Hl7.Fhir.Model.Primitives
         {
             if (obj == null) return 1;
 
-            if (obj is Quantity)
+            if (obj is Quantity p)
             {
-                var p = (Quantity)obj;
-
                 if (this < p) return -1;
                 if (this > p) return 1;
                 return 0;

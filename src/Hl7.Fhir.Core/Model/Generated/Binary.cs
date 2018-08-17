@@ -208,9 +208,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
-                if (SecurityContext != null) yield return new ElementValue("securityContext", false, SecurityContext);
-                if (ContentElement != null) yield return new ElementValue("content", false, ContentElement);
+                if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+                if (SecurityContext != null) yield return new ElementValue("securityContext", SecurityContext);
+                if (ContentElement != null) yield return new ElementValue("content", ContentElement);
             }
         }
 

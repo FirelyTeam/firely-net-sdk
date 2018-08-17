@@ -278,13 +278,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in Qualifier) { if (elem != null) yield return new ElementValue("qualifier", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                foreach (var elem in Qualifier) { if (elem != null) yield return new ElementValue("qualifier", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
             }
         }
 

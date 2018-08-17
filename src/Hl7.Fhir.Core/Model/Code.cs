@@ -30,16 +30,13 @@
 
 
 using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Model
 {
@@ -81,7 +78,7 @@ namespace Hl7.Fhir.Model
 
 
         // Primitive value of element
-        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 30)]
+        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
         [DataMember]
         public T? Value
         {

@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="CodeSystem"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="CodeSystem"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        internal static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (properties.IsCodeSystemSummary())
             {

@@ -6,30 +6,22 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System.Collections;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class RepeatingElementReader
+    internal class RepeatingElementReader
     {
 #pragma warning disable 612, 618
-        private IFhirReader _current;
-        private ModelInspector _inspector;
+        private readonly ISourceNode _current;
+        private readonly ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        public RepeatingElementReader(IFhirReader reader, ParserSettings settings)
+        internal RepeatingElementReader(ISourceNode reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;
@@ -39,15 +31,15 @@ namespace Hl7.Fhir.Serialization
 
 #pragma warning restore 612, 618
 
-        public IList Deserialize(PropertyMapping prop, string memberName, IList existing=null)
+        public IList Deserialize(PropertyMapping prop, string memberName, IList existing = null)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
             IList result = existing;
 
-            if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
+            if (result == null) result = ReflectionHelper.CreateGenericList(prop.ImplementingType);
 
-            var reader = new DispatchingReader(_current, Settings, arrayMode: true);                 
+            var reader = new DispatchingReader(_current, Settings, arrayMode: true);
             result.Add(reader.Deserialize(prop, memberName));
 
             return result;

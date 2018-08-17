@@ -186,8 +186,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
             CachedResolver.LoadResourceEventArgs eventArgs = null;
-            CachedResolver.LoadResourceEventHandler handler = (sender, args) => { eventArgs = args; };
-            src.Load += handler;
+            src.Load += (sender, args) => { eventArgs = args; };
 
             // Verify that the Load event is fired on the initial load
             const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";

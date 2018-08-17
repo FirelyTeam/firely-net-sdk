@@ -107,7 +107,6 @@
     </element>
     <element>
       <path value="MedicationStatement.status" />
-      <requirements value=" " />
       <mustSupport value="true" />
     </element>
     <element>
@@ -314,7 +313,6 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing" />
-      <requirements value=" " />
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.extension" />
@@ -369,7 +367,6 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.repeat" />
-      <comment value=" " />
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.repeat.extension" />

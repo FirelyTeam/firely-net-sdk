@@ -14,7 +14,7 @@ namespace Hl7.FhirPath.Tests
         {
             SucceedsWith(parser, input, t =>
             {
-                Assert.Equal(1, t.Count());
+                Assert.Single(t);
                 Assert.Equal(expectedResult, t.Single());
             });
         }
