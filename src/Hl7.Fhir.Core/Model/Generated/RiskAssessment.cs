@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PredictionComponent")]
         [DataContract]
-        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PredictionComponent"; } }
@@ -243,11 +243,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
-                    if (Probability != null) yield return new ElementValue("probability", false, Probability);
-                    if (RelativeRiskElement != null) yield return new ElementValue("relativeRisk", false, RelativeRiskElement);
-                    if (When != null) yield return new ElementValue("when", false, When);
-                    if (RationaleElement != null) yield return new ElementValue("rationale", false, RationaleElement);
+                    if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                    if (Probability != null) yield return new ElementValue("probability", Probability);
+                    if (RelativeRiskElement != null) yield return new ElementValue("relativeRisk", RelativeRiskElement);
+                    if (When != null) yield return new ElementValue("when", When);
+                    if (RationaleElement != null) yield return new ElementValue("rationale", RationaleElement);
                 }
             }
 
@@ -555,16 +555,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Condition != null) yield return new ElementValue("condition", false, Condition);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Performer != null) yield return new ElementValue("performer", false, Performer);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (Method != null) yield return new ElementValue("method", false, Method);
-                foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", true, elem); }
-                foreach (var elem in Prediction) { if (elem != null) yield return new ElementValue("prediction", true, elem); }
-                if (MitigationElement != null) yield return new ElementValue("mitigation", false, MitigationElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Condition != null) yield return new ElementValue("condition", Condition);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Performer != null) yield return new ElementValue("performer", Performer);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (Method != null) yield return new ElementValue("method", Method);
+                foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", elem); }
+                foreach (var elem in Prediction) { if (elem != null) yield return new ElementValue("prediction", elem); }
+                if (MitigationElement != null) yield return new ElementValue("mitigation", MitigationElement);
             }
         }
 

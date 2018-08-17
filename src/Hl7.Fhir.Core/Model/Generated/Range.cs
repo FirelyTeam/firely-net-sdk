@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -139,8 +141,8 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Low != null) yield return new ElementValue("low", false, Low);
-                if (High != null) yield return new ElementValue("high", false, High);
+                if (Low != null) yield return new ElementValue("low", Low);
+                if (High != null) yield return new ElementValue("high", High);
  
             } 
         } 

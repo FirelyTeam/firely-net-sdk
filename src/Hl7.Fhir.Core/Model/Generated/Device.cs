@@ -594,22 +594,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", false, ManufacturerElement);
-                if (ModelElement != null) yield return new ElementValue("model", false, ModelElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", false, ManufactureDateElement);
-                if (ExpiryElement != null) yield return new ElementValue("expiry", false, ExpiryElement);
-                if (UdiElement != null) yield return new ElementValue("udi", false, UdiElement);
-                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", ManufacturerElement);
+                if (ModelElement != null) yield return new ElementValue("model", ModelElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", ManufactureDateElement);
+                if (ExpiryElement != null) yield return new ElementValue("expiry", ExpiryElement);
+                if (UdiElement != null) yield return new ElementValue("udi", UdiElement);
+                if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                if (Owner != null) yield return new ElementValue("owner", Owner);
+                if (Location != null) yield return new ElementValue("location", Location);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
             }
         }
 

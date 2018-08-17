@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(issueTypeVs.HasExpansion);
             var id = issueTypeVs.Expansion.Identifier;
             Assert.NotNull(id);
-            Assert.False(issueTypeVs.Expansion.Parameter.Any(c => c.Name == "version"));
+            Assert.DoesNotContain(issueTypeVs.Expansion.Parameter, c => c.Name == "version");
 
             Assert.True(issueTypeVs.CodeInExpansion("security", "http://hl7.org/fhir/issue-type"));
             Assert.True(issueTypeVs.CodeInExpansion("expired", "http://hl7.org/fhir/issue-type"));

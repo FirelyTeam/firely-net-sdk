@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
 // TODO: the enumeration ParameterTypesusedinOperationDefinitions contains an expansion that has duplicates
         [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -212,8 +212,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
                 }
             }
 
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -556,15 +556,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (UseElement != null) yield return new ElementValue("use", false, UseElement);
-                    if (MinElement != null) yield return new ElementValue("min", false, MinElement);
-                    if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
-                    if (Binding != null) yield return new ElementValue("binding", false, Binding);
-                    foreach (var elem in Part) { if (elem != null) yield return new ElementValue("part", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (UseElement != null) yield return new ElementValue("use", UseElement);
+                    if (MinElement != null) yield return new ElementValue("min", MinElement);
+                    if (MaxElement != null) yield return new ElementValue("max", MaxElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Profile != null) yield return new ElementValue("profile", Profile);
+                    if (Binding != null) yield return new ElementValue("binding", Binding);
+                    foreach (var elem in Part) { if (elem != null) yield return new ElementValue("part", elem); }
                 }
             }
 
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BindingComponent")]
         [DataContract]
-        public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BindingComponent"; } }
@@ -690,8 +690,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StrengthElement != null) yield return new ElementValue("strength", false, StrengthElement);
-                    if (ValueSet != null) yield return new ElementValue("valueSet", false, ValueSet);
+                    if (StrengthElement != null) yield return new ElementValue("strength", StrengthElement);
+                    if (ValueSet != null) yield return new ElementValue("valueSet", ValueSet);
                 }
             }
 
@@ -1407,25 +1407,25 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
-                if (IdempotentElement != null) yield return new ElementValue("idempotent", false, IdempotentElement);
-                if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                if (NotesElement != null) yield return new ElementValue("notes", false, NotesElement);
-                if (Base != null) yield return new ElementValue("base", false, Base);
-                if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                foreach (var elem in TypeElement) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                if (InstanceElement != null) yield return new ElementValue("instance", false, InstanceElement);
-                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (KindElement != null) yield return new ElementValue("kind", KindElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (RequirementsElement != null) yield return new ElementValue("requirements", RequirementsElement);
+                if (IdempotentElement != null) yield return new ElementValue("idempotent", IdempotentElement);
+                if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                if (NotesElement != null) yield return new ElementValue("notes", NotesElement);
+                if (Base != null) yield return new ElementValue("base", Base);
+                if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+                foreach (var elem in TypeElement) { if (elem != null) yield return new ElementValue("type", elem); }
+                if (InstanceElement != null) yield return new ElementValue("instance", InstanceElement);
+                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", elem); }
             }
         }
 

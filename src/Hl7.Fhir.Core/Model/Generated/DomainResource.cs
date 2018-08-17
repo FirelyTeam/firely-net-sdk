@@ -45,6 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A resource with narrative, extensions, and contained resources
     /// </summary>
+    [FhirType("DomainResource", IsResource=true)]
     [DataContract]
     public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -221,10 +222,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Text != null) yield return new ElementValue("text", false, Text);
-                foreach (var elem in Contained) { if (elem != null) yield return new ElementValue("contained", true, elem); }
-                foreach (var elem in Extension) { if (elem != null) yield return new ElementValue("extension", true, elem); }
-                foreach (var elem in ModifierExtension) { if (elem != null) yield return new ElementValue("modifierExtension", true, elem); }
+                if (Text != null) yield return new ElementValue("text", Text);
+                foreach (var elem in Contained) { if (elem != null) yield return new ElementValue("contained", elem); }
+                foreach (var elem in Extension) { if (elem != null) yield return new ElementValue("extension", elem); }
+                foreach (var elem in ModifierExtension) { if (elem != null) yield return new ElementValue("modifierExtension", elem); }
             }
         }
 

@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ConditionComponent")]
         [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ConditionComponent"; } }
@@ -219,10 +219,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
-                    if (Onset != null) yield return new ElementValue("onset", false, Onset);
-                    if (Note != null) yield return new ElementValue("note", false, Note);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                    if (Onset != null) yield return new ElementValue("onset", Onset);
+                    if (Note != null) yield return new ElementValue("note", Note);
                 }
             }
 
@@ -593,18 +593,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
-                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
-                if (Born != null) yield return new ElementValue("born", false, Born);
-                if (Age != null) yield return new ElementValue("age", false, Age);
-                if (Deceased != null) yield return new ElementValue("deceased", false, Deceased);
-                if (Note != null) yield return new ElementValue("note", false, Note);
-                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                if (Born != null) yield return new ElementValue("born", Born);
+                if (Age != null) yield return new ElementValue("age", Age);
+                if (Deceased != null) yield return new ElementValue("deceased", Deceased);
+                if (Note != null) yield return new ElementValue("note", Note);
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
             }
         }
 

@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("WhenComponent")]
         [DataContract]
-        public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "WhenComponent"; } }
@@ -182,8 +182,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Schedule != null) yield return new ElementValue("schedule", false, Schedule);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Schedule != null) yield return new ElementValue("schedule", Schedule);
                 }
             }
 
@@ -470,16 +470,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Source != null) yield return new ElementValue("source", false, Source);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Kind != null) yield return new ElementValue("kind", false, Kind);
-                if (OrderedItem != null) yield return new ElementValue("orderedItem", false, OrderedItem);
-                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", true, elem); }
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
-                if (When != null) yield return new ElementValue("when", false, When);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Kind != null) yield return new ElementValue("kind", Kind);
+                if (OrderedItem != null) yield return new ElementValue("orderedItem", OrderedItem);
+                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", elem); }
+                if (Reason != null) yield return new ElementValue("reason", Reason);
+                if (When != null) yield return new ElementValue("when", When);
             }
         }
 

@@ -363,13 +363,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Request != null) yield return new ElementValue("request", false, Request);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Who != null) yield return new ElementValue("who", false, Who);
-                if (OrderStatus_Element != null) yield return new ElementValue("orderStatus", false, OrderStatus_Element);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Fulfillment) { if (elem != null) yield return new ElementValue("fulfillment", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Who != null) yield return new ElementValue("who", Who);
+                if (OrderStatus_Element != null) yield return new ElementValue("orderStatus", OrderStatus_Element);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Fulfillment) { if (elem != null) yield return new ElementValue("fulfillment", elem); }
             }
         }
 

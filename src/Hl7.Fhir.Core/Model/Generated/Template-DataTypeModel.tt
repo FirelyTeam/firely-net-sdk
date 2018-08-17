@@ -209,7 +209,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -280,7 +282,7 @@ if (!abstractType){
         /// <summary>
         /// Primitive value of the element
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
+        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
 <#
 	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
 		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant"
@@ -423,7 +425,7 @@ if (!abstractType){
 #>
         [FhirType("<#= componentName #>")]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
@@ -837,6 +839,8 @@ if (!abstractType){
 		public string BackboneComponentType;
 		public string CodeRequiredBinding;
 		public bool isXmlAttribute;
+		public bool IsChoice;
+		public bool IsContained;
 
 		public string PropTypeWithCard()
         {
@@ -1116,6 +1120,7 @@ if (!abstractType){
             {
 				result.PropType = "Hl7.Fhir.Model.Element";
 				result.Name = result.Name.Substring(0, result.Name.IndexOf("["));
+				result.IsChoice = true;
 				result.FhirName = result.FhirName.Substring(0, result.FhirName.IndexOf("["));
 				result.AllowedTypes = "";
 
@@ -1179,6 +1184,9 @@ if (!abstractType){
 				result.NativeName = null;
 				result.NativeType = null;
             }
+
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 
 			return result;
         }
@@ -1406,6 +1414,8 @@ if (!abstractType){
                 }
             }
 
+			result.IsChoice = result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 			return result;
         }
     }

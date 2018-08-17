@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -197,7 +199,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("RepeatComponent")]
         [DataContract]
-        public partial class RepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RepeatComponent"; } }
@@ -634,17 +636,17 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (Bounds != null) yield return new ElementValue("bounds", false, Bounds);
-                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
-                    if (DurationMaxElement != null) yield return new ElementValue("durationMax", false, DurationMaxElement);
-                    if (DurationUnitsElement != null) yield return new ElementValue("durationUnits", false, DurationUnitsElement);
-                    if (FrequencyElement != null) yield return new ElementValue("frequency", false, FrequencyElement);
-                    if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", false, FrequencyMaxElement);
-                    if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
-                    if (PeriodMaxElement != null) yield return new ElementValue("periodMax", false, PeriodMaxElement);
-                    if (PeriodUnitsElement != null) yield return new ElementValue("periodUnits", false, PeriodUnitsElement);
-                    if (WhenElement != null) yield return new ElementValue("when", false, WhenElement);
+                    if (Bounds != null) yield return new ElementValue("bounds", Bounds);
+                    if (CountElement != null) yield return new ElementValue("count", CountElement);
+                    if (DurationElement != null) yield return new ElementValue("duration", DurationElement);
+                    if (DurationMaxElement != null) yield return new ElementValue("durationMax", DurationMaxElement);
+                    if (DurationUnitsElement != null) yield return new ElementValue("durationUnits", DurationUnitsElement);
+                    if (FrequencyElement != null) yield return new ElementValue("frequency", FrequencyElement);
+                    if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", FrequencyMaxElement);
+                    if (PeriodElement != null) yield return new ElementValue("period", PeriodElement);
+                    if (PeriodMaxElement != null) yield return new ElementValue("periodMax", PeriodMaxElement);
+                    if (PeriodUnitsElement != null) yield return new ElementValue("periodUnits", PeriodUnitsElement);
+                    if (WhenElement != null) yield return new ElementValue("when", WhenElement);
  
                 } 
             } 
@@ -775,9 +777,9 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                foreach (var elem in EventElement) { if (elem != null) yield return new ElementValue("event", true, elem); }
-                if (Repeat != null) yield return new ElementValue("repeat", false, Repeat);
-                if (Code != null) yield return new ElementValue("code", false, Code);
+                foreach (var elem in EventElement) { if (elem != null) yield return new ElementValue("event", elem); }
+                if (Repeat != null) yield return new ElementValue("repeat", Repeat);
+                if (Code != null) yield return new ElementValue("code", Code);
  
             } 
         } 

@@ -468,7 +468,10 @@ namespace Hl7.Fhir.Model
 
         public static bool IsProfiledQuantity(string type)
         {
-            return IsPrimitive(type) && IsProfiledQuantity(FhirTypeNameToFhirType(type).Value);
+            var definedType = FhirTypeNameToFhirType(type);
+            if (definedType == null) return false;
+
+            return IsProfiledQuantity(definedType.Value);
         }
 
 

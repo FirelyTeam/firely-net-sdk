@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -393,13 +395,13 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (UseElement != null) yield return new ElementValue("use", false, UseElement);
-                if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                foreach (var elem in FamilyElement) { if (elem != null) yield return new ElementValue("family", true, elem); }
-                foreach (var elem in GivenElement) { if (elem != null) yield return new ElementValue("given", true, elem); }
-                foreach (var elem in PrefixElement) { if (elem != null) yield return new ElementValue("prefix", true, elem); }
-                foreach (var elem in SuffixElement) { if (elem != null) yield return new ElementValue("suffix", true, elem); }
-                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (UseElement != null) yield return new ElementValue("use", UseElement);
+                if (TextElement != null) yield return new ElementValue("text", TextElement);
+                foreach (var elem in FamilyElement) { if (elem != null) yield return new ElementValue("family", elem); }
+                foreach (var elem in GivenElement) { if (elem != null) yield return new ElementValue("given", elem); }
+                foreach (var elem in PrefixElement) { if (elem != null) yield return new ElementValue("prefix", elem); }
+                foreach (var elem in SuffixElement) { if (elem != null) yield return new ElementValue("suffix", elem); }
+                if (Period != null) yield return new ElementValue("period", Period);
  
             } 
         } 

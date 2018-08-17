@@ -191,75 +191,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod, Ignore]
-        public void TestFullyExpandCorePatient_Old()
-        {
-            // [WMR 20161005] This simulates custom Forge post-processing logic
-            // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
-
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            Assert.IsNotNull(sd);
-            generateSnapshot(sd);
-            Assert.IsTrue(sd.HasSnapshot);
-            var elems = sd.Snapshot.Element;
-            Assert.AreEqual("Patient.identifier", elems[9].Path);
-            Assert.AreEqual("Patient.active", elems[10].Path);
-
-            var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-            var expanded = fullyExpand(sd.Snapshot.Element, issues);
-
-            Assert.IsNotNull(expanded);
-
-            var tempPath = Path.GetTempPath();
-            var sdSave = (StructureDefinition)sd.DeepCopy();
-            sdSave.Snapshot.Element = expanded.ToList();
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), new FhirXmlSerializer().SerializeToString(sdSave));
-
-            foreach (var elem in expanded)
-            {
-                Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base != null ? elem.Base.Path : null);
-            }
-
-            int i = expanded.FindIndex(e => e.Path == "Patient.identifier");
-            Assert.IsTrue(i > -1);
-            // Assert.AreEqual("Patient.identifier", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.id", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.extension", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.use", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.id", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.extension", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.id", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.extension", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.system", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.version", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.code", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.display", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.userSelected", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.text", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.system", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.value", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.period", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.id", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.extension", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.start", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.end", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.id", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.extension", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.reference", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.display", expanded[++i].Path);
-
-            for (int j = 1; j < expanded.Count; j++)
-            {
-                if (isExpandableElement(expanded[j]))
-                {
-                    verifyExpandElement(expanded[j], elems, expanded);
-                }
-            }
-        }
-
         // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
         [TestMethod]
         public void TestFullyExpandCoreOrganization()
@@ -352,93 +283,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         static bool isComplexDataTypeOrResource(FHIRDefinedType type) => !ModelInfo.IsPrimitive(type);
 
-        // [WMR 20180115] OBSOLETE - See TestFullyExpandCorePatient
-        [Ignore]
-        [TestMethod]
-        public void TestCorePatientExpandAllWithEvent()
-        {
-            // [WMR 20170105] New - hook new BeforeExpand event in order to force full expansion of all complex elements
-            // Note: BeforeExpandElement is only raised for diff constraints, not for all snapshot elements...!
-            // => Cannot use this to fully expand a sparse diff
-            // => first generate regular snapshot, then re-run on result to expand all
-
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
-
-            Assert.IsNotNull(sd);
-
-            // generateSnapshot(sd);
-            _generator = new SnapshotGenerator(_testResolver, _settings);
-            _generator.BeforeExpandElement += beforeExpandElementHandler;
-            StructureDefinition expanded = null;
-            try
-            {
-                generateSnapshotAndCompare(sd, out expanded);
-            }
-            finally
-            {
-                _generator.BeforeExpandElement -= beforeExpandElementHandler;
-            }
-
-            Assert.IsNotNull(expanded);
-            Assert.IsTrue(expanded.HasSnapshot);
-            var elems = expanded.Snapshot.Element;
-
-            //foreach (var elem in elems)
-            //{
-            //    Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base?.Path);
-            //}
-            Debug.WriteLine("Patient snapshot:");
-            dumpBaseElems(elems);
-
-            // [WMR 20180115] Problem: beforeExpandElementHandler also causes full expansion of referenced external profiles...
-            // WRONG! Recursive calls should generate a regular snapshot
-            var sdIdentifier = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Identifier);
-            Assert.IsNotNull(sdIdentifier);
-            Assert.IsTrue(sdIdentifier.HasSnapshot);
-            Debug.WriteLine("Identifier snapshot:");
-            dumpBaseElems(sdIdentifier.Snapshot.Element);
-
-            int i = elems.FindIndex(e => e.Path == "Patient.identifier");
-            Assert.IsTrue(i > -1);
-            // Assert.AreEqual("Patient.identifier", expanded[++i].Path);
-            Assert.AreEqual("Patient.identifier.id", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.extension", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.use", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.id", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.extension", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.id", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.extension", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.system", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.version", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.code", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.display", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.coding.userSelected", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.type.text", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.system", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.value", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.period", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.id", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.extension", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.start", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.period.end", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.id", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.extension", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.reference", elems[++i].Path);
-            Assert.AreEqual("Patient.identifier.assigner.display", elems[++i].Path);
-
-            for (int j = 1; j < elems.Count; j++)
-            {
-                if (isExpandableElement(elems[j]))
-                {
-                    verifyExpandElement(elems[j], elems, elems);
-                }
-            }
-        }
-
         // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
         [TestMethod]
         public void TestFullyExpandCorePatient()
@@ -465,10 +309,7 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
             
-            // [WMR 20180725] Changed; snapshot generator now expands dataType Reference
-            // Assert.AreEqual(304, fullElems.Count);
-            Assert.AreEqual(308, fullElems.Count);
-
+            Assert.AreEqual(305, fullElems.Count);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -521,7 +362,7 @@ namespace Hl7.Fhir.Specification.Tests
             var fullElems = fullyExpand(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
-            Assert.AreEqual(334, fullElems.Count);
+            Assert.AreEqual(331, fullElems.Count);
 
             // Expecting issues about missing external extension definitions
             dumpIssues(issues);
@@ -541,83 +382,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-
-        // [WMR 20180115] OBSOLETE - See TestFullyExpandCoreOrganizationNL
-        [Ignore]
-        [TestMethod]
-        public void TestCoreOrganizationNL()
-        {
-            // core-organization-nl references extension core-address-nl
-            // BUG: expanded extension child elements have incorrect .Base.Path ...?!
-            // e.g. Organization.address.type - Base = Organization.address.use
-            // Fixed by adding conditional to copyChildren
-
-            var sd = _testResolver.FindStructureDefinition(@"http://fhir.nl/fhir/StructureDefinition/nl-core-organization");
-            Assert.IsNotNull(sd);
-
-            _generator = new SnapshotGenerator(_testResolver, _settings);
-            _generator.PrepareElement += elementHandler;
-            _generator.BeforeExpandElement += beforeExpandElementHandler;
-            StructureDefinition expanded = null;
-            try
-            {
-                generateSnapshotAndCompare(sd, out expanded);
-            }
-            finally
-            {
-                _generator.PrepareElement -= elementHandler;
-                _generator.BeforeExpandElement -= beforeExpandElementHandler;
-            }
-
-            Assert.IsNotNull(expanded);
-            Assert.IsTrue(expanded.HasSnapshot);
-            var elems = expanded.Snapshot.Element;
-
-            foreach (var elem in elems)
-            {
-                Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base?.Path);
-            }
-
-            for (int j = 1; j < elems.Count; j++)
-            {
-                // [WMR 20170306] Problem: isExpandableElement now receives the already merged snapshot element
-                // Result may now be different than before, e.g. because type has been merged
-                // HACK: Explicitly exclude Organization.type (no child constraints in diff)
-
-                if (isExpandableElement(elems[j])
-                    && elems[j].Path != "Organization.type")
-                {
-                    verifyExpandElement(elems[j], elems, elems);
-                }
-            }
-        }
-
-        // [WMR 20180115] Obsolete - full expansion via BeforeExpandElement event is flawed...
-        // Instead, call the fullyExpand() method
-        void beforeExpandElementHandler(object sender, SnapshotExpandElementEventArgs e)
-        {
-            // [WMR 20180115] Issue: we only want to fully expand the top-level profile
-            // Snapshot generator may recurse to generate dependent snapshots
-            // However for these external profiles, we want to generate a regular snapshot
-
-            // Attempt: inspect the current snapshot recursion stack
-            // Problem: inlined complex types no longer get fully expanded
-            // Generator would need to re-enumerate child elements introduced by external profiles
-
-            //if (sender is SnapshotGenerator gen && gen.RecursionDepth > 1)
-            //{
-            //    Debug.WriteLine($"[beforeExpandElementHandler] #{e.Element.GetHashCode()} '{e.Element.Path}' | HasChildren = {e.HasChildren} | MustExpand = {e.MustExpand} | RecursionDepth = {gen.RecursionDepth}");
-            //    return;
-            //}
-
-            var isExpandable = isExpandableElement(e.Element);
-
-            Debug.WriteLine($"[beforeExpandElementHandler] #{e.Element.GetHashCode()} '{e.Element.Path}' | HasChildren = {e.HasChildren} | MustExpand = {e.MustExpand} => {isExpandable}");
-
-            // Never clear flag if already set by snapshot generator...!
-            e.MustExpand |= isExpandable;
-        }
-
+        
         [TestMethod]
         public void TestSnapshotRecursionChecker()
         {
@@ -1038,9 +803,8 @@ namespace Hl7.Fhir.Specification.Tests
         //	// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
         //	// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
         //};
-
-        [TestMethod]
-        [Ignore]
+#if false
+        [TestMethod, Ignore]
         public void GenerateSnapshot()
         {
             var sw = new Stopwatch();
@@ -1065,6 +829,8 @@ namespace Hl7.Fhir.Specification.Tests
             sw.Stop();
             _source.ShowDuration(count, sw.Elapsed);
         }
+
+#endif
 
         //private void forDoc()
         //{
@@ -1241,8 +1007,8 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.identifier", "C/1");
         }
 
+#if false
         [TestMethod]
-        [Ignore]
         public void DebugDifferentialTree()
         {
             var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
@@ -1251,6 +1017,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
         }
+#endif
 
         // [WMR 20160802] Unit tests for SnapshotGenerator.ExpandElement
 
@@ -2266,7 +2033,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.DefinitionElement)
                 || isChanged(elem.Example)
                 || hasChanges(elem.Extension)
-                || hasChanges(elem.FhirCommentsElement)
+             //   || hasChanges(elem.FhirCommentsElement)
                 || isChanged(elem.Fixed)
                 || isChanged(elem.IsModifierElement)
                 || isChanged(elem.IsSummaryElement)
@@ -2307,7 +2074,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.DefinitionElement)) { return "Definition"; }
             if (isChanged(element.Example)) { return "Example"; }
             if (hasChanges(element.Extension)) { return "Extension"; }
-            if (hasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
+            //if (hasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
             if (isChanged(element.Fixed)) { return "Fixed"; }
             if (isChanged(element.IsModifierElement)) { return "IsModifier"; }
             if (isChanged(element.IsSummaryElement)) { return "IsSummary"; }
@@ -2357,7 +2124,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        [Ignore]
         public void TestExpandCoreArtifacts()
         {
 
@@ -2395,6 +2161,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        [TestCategory("LongRunner")]
         public void TestExpandAllCoreResources()
         {
             // Generate snapshots for all core resources, in the original order as they are defined
@@ -2780,7 +2547,6 @@ namespace Hl7.Fhir.Specification.Tests
         // http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen : 'TestData/snapshot-test/extensions\extension-questionnaire-enablewhen.xml'
 
         [TestMethod]
-        [Ignore]
         public void FindComplexTestExtensions()
         {
             Debug.WriteLine("Complex extension in TestData folder:");
@@ -3302,11 +3068,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(baseElem.Alias.SequenceEqual(extElem.Alias));
         }
 
+#if false
         // [WMR 20170213] New - issue reported by Marten - cannot slice Organization.type ?
         // Specifically, snapshot generator drops the slicing component from the slice entry element
         // Explanation: Organization.type is not a list (max = 1) and not a choice type => slicing is not allowed!
         [TestMethod]
-        [Ignore]
         public void TestOrganizationTypeSlice()
         {
             var org = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MySlicedOrganization");
@@ -3324,15 +3090,16 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement -= elementHandler;
             }
 
-            dumpOutcome(_generator.Outcome);
+            //dumpOutcome(_generator.Outcome);
 
-            var elems = expanded.Snapshot.Element;
-            elems.Dump();
+            //var elems = expanded.Snapshot.Element;
+            //elems.Dump();
             //dumpBaseElems(elems);
 
             // TODO: Verify slice
 
         }
+#endif
 
         // [WMR 2017024] NEW: Test for bug with snapshot expansion of ElementDefinition.Binding (reported by NHS)
         // If the diff constrains only Binding.Strength, then snapshot also contains only Binding.Strength - WRONG!
@@ -5307,17 +5074,6 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement -= elementHandler;
             }
 
-        }
-
-        [TestMethod]
-        [Ignore]
-        public void DumpTypes()
-        {
-            Debug.WriteLine($"{"Type", -30} {"Resource",-10} {"DataType", -10} {"Primitive", -10} {"!Primitive",-10} {"Complex", -10}");
-            foreach (FHIRDefinedType type in Enum.GetValues(typeof(FHIRDefinedType)))
-            {
-                Debug.WriteLine($"{type, -30} {ModelInfo.IsKnownResource(type),-10} {ModelInfo.IsDataType(type), -10} {ModelInfo.IsPrimitive(type), -10} {!ModelInfo.IsPrimitive(type),-10} {isComplexDataTypeOrResource(type)}");
-            }
         }
 
         // [WMR 20180115]

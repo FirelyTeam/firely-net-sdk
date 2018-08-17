@@ -33,7 +33,7 @@ namespace Hl7.FhirPath.Tests
             // return navigator;
 
             var patient = (new FhirXmlParser()).Parse<Hl7.Fhir.Model.Patient>(tpXml);
-            return new PocoNavigator(patient);
+            return patient.ToElementNavigator();
         }
 
         [Fact]

@@ -106,7 +106,7 @@ namespace Hl7.FhirPath.Tests
         private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected)
         {
             var tpXml = new FhirXmlSerializer().SerializeToString(resource);
-            var npoco = new PocoNavigator(resource);
+            var npoco = resource.ToElementNavigator();
             //       FhirPathEvaluatorTest.Render(npoco);
 
             IEnumerable<IElementNavigator> actual = npoco.Select(expression);
@@ -132,8 +132,8 @@ namespace Hl7.FhirPath.Tests
         // @SuppressWarnings("deprecation")
         private void testBoolean(Model.Resource resource, Model.Base focus, String focusType, String expression, boolean value)
         {
-            var input = new PocoNavigator(focus);
-            var container = resource != null ? new PocoNavigator(resource) : null;
+            var input = focus.ToElementNavigator();
+            var container = resource?.ToElementNavigator();
 
             Assert.True(input.IsBoolean(expression, value, new EvaluationContext(container)));
         }
@@ -148,7 +148,7 @@ namespace Hl7.FhirPath.Tests
         {
             try
             {
-                var resourceNav = new PocoNavigator(resource);
+                var resourceNav = resource.ToElementNavigator();
                 resourceNav.Select(expression);
                 throw new Exception();
             }
@@ -283,8 +283,10 @@ namespace Hl7.FhirPath.Tests
         [Fact, Trait("Area", "FhirPathFromSpec")]
         public void testTyping()
         {
-            Model.ElementDefinition ed = new Model.ElementDefinition();
-            ed.Binding = new Model.ElementDefinition.BindingComponent();
+            Model.ElementDefinition ed = new Model.ElementDefinition
+            {
+                Binding = new Model.ElementDefinition.BindingComponent()
+            };
             ed.Binding.setValueSet(new UriType("http://test.org"));
             testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
         }

@@ -385,14 +385,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Schedule != null) yield return new ElementValue("schedule", false, Schedule);
-                if (FreeBusyTypeElement != null) yield return new ElementValue("freeBusyType", false, FreeBusyTypeElement);
-                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
-                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
-                if (OverbookedElement != null) yield return new ElementValue("overbooked", false, OverbookedElement);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Schedule != null) yield return new ElementValue("schedule", Schedule);
+                if (FreeBusyTypeElement != null) yield return new ElementValue("freeBusyType", FreeBusyTypeElement);
+                if (StartElement != null) yield return new ElementValue("start", StartElement);
+                if (EndElement != null) yield return new ElementValue("end", EndElement);
+                if (OverbookedElement != null) yield return new ElementValue("overbooked", OverbookedElement);
+                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
             }
         }
 

@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -342,13 +344,13 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Origin != null) yield return new ElementValue("origin", false, Origin);
-                if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
-                if (FactorElement != null) yield return new ElementValue("factor", false, FactorElement);
-                if (LowerLimitElement != null) yield return new ElementValue("lowerLimit", false, LowerLimitElement);
-                if (UpperLimitElement != null) yield return new ElementValue("upperLimit", false, UpperLimitElement);
-                if (DimensionsElement != null) yield return new ElementValue("dimensions", false, DimensionsElement);
-                if (DataElement != null) yield return new ElementValue("data", false, DataElement);
+                if (Origin != null) yield return new ElementValue("origin", Origin);
+                if (PeriodElement != null) yield return new ElementValue("period", PeriodElement);
+                if (FactorElement != null) yield return new ElementValue("factor", FactorElement);
+                if (LowerLimitElement != null) yield return new ElementValue("lowerLimit", LowerLimitElement);
+                if (UpperLimitElement != null) yield return new ElementValue("upperLimit", UpperLimitElement);
+                if (DimensionsElement != null) yield return new ElementValue("dimensions", DimensionsElement);
+                if (DataElement != null) yield return new ElementValue("data", DataElement);
  
             } 
         } 
