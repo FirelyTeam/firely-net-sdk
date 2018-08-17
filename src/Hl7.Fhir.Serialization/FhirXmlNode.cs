@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Serialization
         private static readonly XElement NO_CONTAINED_FOUND = new XElement("dummy");
 
 
-        public XElement Contained
+        private XElement contained
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Serialization
         // If we're on the root, the root is the resource type,
         // otherwise we should have looked at a nested node.
         public string ResourceType => !_atRoot ?
-                            Contained?.Name()?.LocalName : Current.Name().LocalName;
+                            contained?.Name()?.LocalName : Current.Name().LocalName;
 
 
         public IEnumerable<ISourceNode> Children(string name = null)
@@ -144,10 +144,10 @@ namespace Hl7.Fhir.Serialization
 
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
-            var parent = Contained ?? element;
+            var parent = contained ?? element;
             var schemaAttr = parent.Attribute(XmlNs.XSCHEMALOCATION);
             if (schemaAttr != null && DisallowSchemaLocation)
-                raiseFormatError(this, this, $"The 'schemaLocation' attribute is disallowed.", schemaAttr);
+                raiseFormatError(this, this, "The 'schemaLocation' attribute is disallowed.", schemaAttr);
 
             XObject firstChild = parent.FirstChildElementOrAttribute();
 
