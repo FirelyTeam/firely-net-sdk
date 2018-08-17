@@ -24,6 +24,8 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ResolverTests
     {
+        const int DefaultTimeOut = 15 * 1000; // 15 seconds
+
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
@@ -68,7 +70,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()
         {
-            var wa = new WebResolver();
+            var wa = new WebResolver() { TimeOut = DefaultTimeOut };
 
             var artifact = wa.ResolveByUri("http://test.fhir.org/r2/StructureDefinition/Observation");
 
@@ -110,7 +112,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             TestFhirClient client = null;
 
-            var wa = new WebResolver(id => client = new TestFhirClient(id));
+            var wa = new WebResolver(id => client = new TestFhirClient(id)) { TimeOut = DefaultTimeOut };
 
             Assert.IsNull(client);
 
@@ -127,7 +129,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod,TestCategory("IntegrationTest")]
         public void RetrieveArtifactMulti()
         {
-            var resolver = new MultiResolver(source, new WebResolver());
+            var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
 
             var vs = resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
@@ -144,7 +146,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void TestSourceCaching()
         {
-            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new WebResolver()));
+            var src = new CachedResolver(
+                new MultiResolver(
+                    ZipSource.CreateValidationSource(),
+                    new WebResolver() { TimeOut = DefaultTimeOut }));
 
             Stopwatch sw1 = new Stopwatch();
 
