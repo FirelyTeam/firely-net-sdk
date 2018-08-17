@@ -20,7 +20,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public SourceNodeToTypedElementAdapter(ISourceNode node)
         {
-            this.Current = node;
+            Current = node ?? throw Error.ArgumentNull(nameof(node));
 
             if (node is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);

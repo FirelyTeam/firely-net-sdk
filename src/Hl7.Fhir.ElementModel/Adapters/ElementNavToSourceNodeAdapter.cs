@@ -22,6 +22,8 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public ElementNavToSourceNodeAdapter(IElementNavigator nav)
         {
+            if (nav == null) throw Error.ArgumentNull(nameof(nav));
+
             Current = nav.Clone();
 
             if (nav is IExceptionSource ies && ies.ExceptionHandler == null)

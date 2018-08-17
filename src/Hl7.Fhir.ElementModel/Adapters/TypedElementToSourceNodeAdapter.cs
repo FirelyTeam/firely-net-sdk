@@ -21,7 +21,7 @@ namespace Hl7.Fhir.ElementModel.Adapters
 
         public TypedElementToSourceNodeAdapter(ITypedElement element)
         {
-            this.Current = element;
+            this.Current = element ?? throw Error.ArgumentNull(nameof(element));
 
             if (element is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
