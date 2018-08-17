@@ -142,14 +142,14 @@ namespace Hl7.Fhir.Specification.Summary
                 {
                     var childNav = nav.Clone();
                     if (childNav.MoveToFirstChild("url"))
-                        
+
                     {
                         if (childNav.Value is string url)
                         {
                             extensionValueHarvester(childNav, properties, url);
                         }
                     }
-                // [WMR 20171219] BUG: MoveToNext advances to extension.url (child attribute) instead of the next extension element
+                    // [WMR 20171219] BUG: MoveToNext advances to extension.url (child attribute) instead of the next extension element
                 } while (nav.MoveToNext(extension));
             }
         }

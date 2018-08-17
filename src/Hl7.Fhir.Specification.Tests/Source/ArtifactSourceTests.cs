@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(resourceIds);
             Assert.IsTrue(resourceIds.Count > 0);
             Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
-            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  // xhtml is not represented in the pocos
+            //resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  // xhtml is not represented in the pocos
 
             // + total number of known FHIR core types
             // - total number of known (concrete) resources

@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -227,10 +227,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (Member != null) yield return new ElementValue("member", false, Member);
-                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Member != null) yield return new ElementValue("member", Member);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -565,18 +565,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                foreach (var elem in ManagingOrganization) { if (elem != null) yield return new ElementValue("managingOrganization", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (Period != null) yield return new ElementValue("period", Period);
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in ManagingOrganization) { if (elem != null) yield return new ElementValue("managingOrganization", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

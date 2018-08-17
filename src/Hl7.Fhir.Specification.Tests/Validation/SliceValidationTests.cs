@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Tests
             var slice = s as SliceGroupBucket;
 
             Assert.Equal(ElementDefinition.SlicingRules.OpenAtEnd, slice.Rules);
-            Assert.Equal(true, slice.Ordered);
+            Assert.True(slice.Ordered);
             Assert.Equal("Patient.telecom", slice.Name);
             Assert.Equal(3, slice.ChildSlices.Count);
             Assert.IsType<ElementBucket>(slice.Entry);
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Specification.Tests
             var email = slice.ChildSlices[1] as SliceGroupBucket;
             Assert.Equal("Patient.telecom:email", email.Name);
             Assert.Equal(ElementDefinition.SlicingRules.Closed, email.Rules);
-            Assert.Equal(false, email.Ordered);
+            Assert.False(email.Ordered);
 
             Assert.IsType<SliceBucket>(email.Entry);
             Assert.Equal(2, email.ChildSlices.Count);
@@ -131,14 +131,14 @@ namespace Hl7.Fhir.Specification.Tests
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
-            var pnav = new ScopedNavigator(new PocoNavigator(p));
+            var pnode = new ScopedNode(p.ToTypedElement());
 
-            var telecoms = pnav.Children("telecom").Cast<ScopedNavigator>();
+            var telecoms = pnode.Children("telecom").Cast<ScopedNode>();
 
             foreach(var telecom in telecoms)
                 Assert.True(s.Add(telecom));
 
-            var outcome = s.Validate(_validator, pnav);
+            var outcome = s.Validate(_validator, pnode);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);   
             

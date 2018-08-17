@@ -597,24 +597,24 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                if (DateAssertedElement != null) yield return new ElementValue("dateAsserted", false, DateAssertedElement);
-                if (InformationSource != null) yield return new ElementValue("informationSource", false, InformationSource);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", true, elem); }
-                if (TakenElement != null) yield return new ElementValue("taken", false, TakenElement);
-                foreach (var elem in ReasonNotTaken) { if (elem != null) yield return new ElementValue("reasonNotTaken", true, elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Medication != null) yield return new ElementValue("medication", Medication);
+                if (Effective != null) yield return new ElementValue("effective", Effective);
+                if (DateAssertedElement != null) yield return new ElementValue("dateAsserted", DateAssertedElement);
+                if (InformationSource != null) yield return new ElementValue("informationSource", InformationSource);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
+                if (TakenElement != null) yield return new ElementValue("taken", TakenElement);
+                foreach (var elem in ReasonNotTaken) { if (elem != null) yield return new ElementValue("reasonNotTaken", elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", elem); }
             }
         }
 

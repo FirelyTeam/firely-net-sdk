@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <AssemblyName>Hl7.Fhir.Serialization.Tests</AssemblyName>
+    <ContainsTests>true</ContainsTests>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestData\**\*.xml;TestData\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TestData\BundleWithOneEntry.json" />
+    <None Remove="TestData\mask-text.xml" />
+    <None Remove="TestData\patient-out-of-order.xml" />
+    <None Remove="TestData\profiles-types.json" />
+    <None Remove="TestData\profiles-types.xml" />
+    <None Remove="TestData\source-test\books.xml" />
+    <None Remove="TestData\source-test\project.assets.json" />
+    <None Remove="TestData\test-empty-nodes.json" />
+    <None Remove="TestData\test-empty-nodes.xml" />
+    <None Remove="TestData\typeErrors.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
+    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples.zip" Link="TestData\examples.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+</Project>

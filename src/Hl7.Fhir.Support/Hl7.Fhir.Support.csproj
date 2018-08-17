@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;netstandard1.0;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard1.1;netstandard1.3</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\platforms.props" />
@@ -17,9 +17,8 @@
     <AssemblyName>Hl7.Fhir.Support</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  <ItemGroup>    
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">

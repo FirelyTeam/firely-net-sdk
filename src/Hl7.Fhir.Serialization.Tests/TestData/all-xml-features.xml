@@ -1,0 +1,23 @@
+﻿<!-- 
+    A demo 'resource' that shows the capabilities of the FHIR Xml reader 
+    Note that the reader supports a wider set of XML features than the
+    standard FHIR serialization would.  This allows us to parse invalid
+    XML and report structural errors about it.
+-->
+<SomeResource xmlns='http://hl7.org/fhir' xmlns:cust='http://example.org/some-ns'>
+  <anElement value='true' cust:customAttribute='primitive' />
+  <anElementWithValueAndChildren value='4'>
+    <firstChild customAttribute='morning'>I have text &#x0063;ontent</firstChild>
+    <secondChild value='afternoon'>I have text &#x0063;ontent too</secondChild>
+    Crap, mixed content!
+    <ThirdChild custom='evening'><!-- this should be possible --></ThirdChild>
+    Is Merged
+  </anElementWithValueAndChildren>
+  <!-- next line intentionally left empty -->
+  
+  <!-- Div is really special, since the value includes the node itself -->
+  <div xmlns="http://www.w3.org/1999/xhtml">
+ <p>Some &#x0068;tml</p>
+  </div>
+</SomeResource>
+<!-- Again, this is not standard FHIR -->

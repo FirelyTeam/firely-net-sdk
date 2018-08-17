@@ -17,20 +17,21 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestGetComparable()
         {
-            var navQ = new PocoNavigator(new Model.FhirDateTime(1972, 11, 30));
-            Assert.Equal(0,navQ.GetComparableValue(typeof(Model.FhirDateTime)).CompareTo(Model.Primitives.PartialDateTime.Parse("1972-11-30")));
+            var nodeQ = (new Model.FhirDateTime(1972, 11, 30)).ToTypedElement();
+            Assert.Equal(0,nodeQ.GetComparableValue(typeof(Model.FhirDateTime)).CompareTo(Model.Primitives.PartialDateTime.Parse("1972-11-30")));
 
-            navQ = new PocoNavigator(new Model.Quantity(3.14m, "kg"));
-            Assert.Equal(-1, navQ.GetComparableValue(typeof(Model.Quantity)).CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
+            nodeQ = (new Model.Quantity(3.14m, "kg")).ToTypedElement();
+            Assert.Equal(-1, nodeQ.GetComparableValue(typeof(Model.Quantity)).CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
 
-            navQ = new PocoNavigator(new Model.HumanName());
-            Assert.Null(navQ.GetComparableValue(typeof(Model.HumanName)));
+            nodeQ = (new Model.HumanName()).ToTypedElement();
+            Assert.Null(nodeQ.GetComparableValue(typeof(Model.HumanName)));
 
-            var navQ2 = new PocoNavigator(new Model.Quantity(3.14m, "kg") { Comparator = Model.Quantity.QuantityComparator.GreaterOrEqual });
-            Assert.Throws<NotSupportedException>(() => navQ2.GetComparableValue(typeof(Model.Quantity)));
+            var nodeQ2 = (new Model.Quantity(3.14m, "kg")
+                { Comparator = Model.Quantity.QuantityComparator.GreaterOrEqual }).ToTypedElement();
+            Assert.Throws<NotSupportedException>(() => nodeQ2.GetComparableValue(typeof(Model.Quantity)));
 
-            var navQ3 = new PocoNavigator(new Model.Quantity());
-            Assert.Throws<NotSupportedException>(() => navQ3.GetComparableValue(typeof(Model.Quantity)));
+            var nodeQ3 = (new Model.Quantity()).ToTypedElement();
+            Assert.Throws<NotSupportedException>(() => nodeQ3.GetComparableValue(typeof(Model.Quantity)));
         }
 
         [Fact]
@@ -55,38 +56,40 @@ namespace Hl7.Fhir.Validation
         {
             var validator = new Validator();
 
-            var ed = new ElementDefinition();
-            ed.MinValue = new Model.Integer(4);
-            ed.MaxValue = new Model.Integer(6);
+            var ed = new ElementDefinition
+            {
+                MinValue = new Model.Integer(4),
+                MaxValue = new Model.Integer(6)
+            };
 
-            var nav = new PocoNavigator(new Model.Integer(5));
-            var outcome = validator.ValidateMinMaxValue(ed, nav);
+            var node = (new Model.Integer(5)).ToTypedElement();
+            var outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            nav = new PocoNavigator(new Model.Integer(4));
-            outcome = validator.ValidateMinMaxValue(ed, nav);
+            node = (new Model.Integer(4)).ToTypedElement();
+            outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            nav = new PocoNavigator(new Model.Integer(6));
-            outcome = validator.ValidateMinMaxValue(ed, nav);
+            node = (new Model.Integer(6)).ToTypedElement();
+            outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            nav = new PocoNavigator(new Model.Integer(1));
-            outcome = validator.ValidateMinMaxValue(ed, nav);
+            node = (new Model.Integer(1)).ToTypedElement();
+            outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.False(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            nav = new PocoNavigator(new Model.FhirString("hi"));
-            outcome = validator.ValidateMinMaxValue(ed, nav);
+            node = (new Model.FhirString("hi")).ToTypedElement();
+            outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(2, outcome.Warnings);
 
             ed.MinValue = new Model.HumanName();
             ed.MaxValue = new Model.FhirString("i comes after hi");
-            outcome = validator.ValidateMinMaxValue(ed, nav);
+            outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(1, outcome.Warnings);
         }

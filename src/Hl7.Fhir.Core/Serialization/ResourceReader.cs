@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
@@ -20,15 +21,15 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class ResourceReader
+    internal class ResourceReader
     {
 #pragma warning disable 612, 618
-        private IFhirReader _reader;
+        private ISourceNode _reader;
         private ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        public ResourceReader(IFhirReader reader, ParserSettings settings)
+        internal ResourceReader(ISourceNode reader, ParserSettings settings)
         {
             _reader = reader;
             _inspector = BaseFhirParser.Inspector;
@@ -40,11 +41,11 @@ namespace Hl7.Fhir.Serialization
         {
             // If there's no a priori knowledge of the type of Resource we will encounter,
             // we'll have to determine from the data itself. 
-            var resourceTypeName = _reader.GetResourceTypeName();
+            var resourceTypeName = _reader.GetResourceTypeIndicator();
             var mapping = _inspector.FindClassMappingForResource(resourceTypeName);
 
             if (mapping == null)
-                throw Error.Format("Asked to deserialize unknown resource '" + resourceTypeName + "'", _reader);
+                throw Error.Format("Asked to deserialize unknown resource '" + resourceTypeName + "'", _reader.Location);
              
             // Delegate the actual work to the ComplexTypeReader, since
             // the serialization of Resources and ComplexTypes are virtually the same

@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(humanName);
         }
 
-        [TestMethod, Ignore]
+#if false
         public void TestSourceSpeedTest()
         {
             var jsonSource = new DirectorySource(
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsTrue(sw.ElapsedMilliseconds < maxDuration);
             }
         }
-
+#endif
         [TestMethod]
         public async Tasks.Task TestThreadSafety()
         {

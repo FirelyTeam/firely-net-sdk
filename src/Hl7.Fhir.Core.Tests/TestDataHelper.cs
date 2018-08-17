@@ -11,9 +11,10 @@ namespace Hl7.Fhir.Tests
     {
         public static string GetFullPathForExample(string filename)
         {
-            string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
-            var path = Path.GetDirectoryName(location);
-            return Path.Combine(path, "TestData", filename);
+            //string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
+            //var path = Path.GetDirectoryName(location);
+            //return Path.Combine(path, "TestData", filename);
+            return Path.Combine("TestData",filename);
         }
 
         public static string ReadTestData(string filename)

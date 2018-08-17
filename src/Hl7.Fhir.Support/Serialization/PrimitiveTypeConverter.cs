@@ -10,11 +10,20 @@ using System;
 using System.Xml;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Support.Model;
+using System.Numerics;
 
 namespace Hl7.Fhir.Serialization
 {
     public static class PrimitiveTypeConverter
     {
+        public static object FromSerializedValue(string value, string primitiveType)
+        {
+            var type = Primitives.GetNativeRepresentation(primitiveType);
+            return ConvertTo(value, type);
+        }
+
+
         public static T ConvertTo<T>(object value)
         {
             return (T)ConvertTo(value, typeof(T));
@@ -46,7 +55,6 @@ namespace Hl7.Fhir.Serialization
                 // conversion from any type implementing IConvertable
                 return System.Convert.ChangeType(value, to, null);
         }
-
 
         public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK";
         private const string FMT_YEAR = "{0:D4}";
@@ -93,8 +101,10 @@ namespace Hl7.Fhir.Serialization
                 return pdt.ToString();
             if (value is PartialTime pt)
                 return pt.ToString();
-            if (value is Enum)
-                return ((Enum)value).GetLiteral();
+            if (value is Enum en)
+                return en.GetLiteral();
+            if (value is BigInteger bi)
+                return bi.ToString();
 
             throw Error.NotSupported($"Cannot convert '{value.GetType().Name}' value '{value}' to string");
         }
@@ -135,6 +145,12 @@ namespace Hl7.Fhir.Serialization
                 return ConvertToDatetimeOffset(value);
             if (typeof(System.Uri) == to)
                 return new Uri(value, UriKind.RelativeOrAbsolute);
+            if (typeof(PartialDateTime) == to)
+                return PartialDateTime.Parse(value);
+            if (typeof(PartialTime) == to)
+                return PartialTime.Parse(value);
+            if (typeof(BigInteger) == to)
+                return BigInteger.Parse(value);
             if (to.IsEnum())
             {
                 var result = EnumUtility.ParseLiteral(value, to);
