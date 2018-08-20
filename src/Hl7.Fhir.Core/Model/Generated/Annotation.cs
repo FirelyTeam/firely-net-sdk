@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -99,21 +99,21 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The annotation  - text content
+        /// The annotation  - text content (as markdown)
         /// </summary>
         [FhirElement("text", InSummary=true, Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString TextElement
+        public Hl7.Fhir.Model.Markdown TextElement
         {
             get { return _TextElement; }
             set { _TextElement = value; OnPropertyChanged("TextElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _TextElement;
+        private Hl7.Fhir.Model.Markdown _TextElement;
         
         /// <summary>
-        /// The annotation  - text content
+        /// The annotation  - text content (as markdown)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   TextElement = null; 
                 else
-                  TextElement = new Hl7.Fhir.Model.FhirString(value);
+                  TextElement = new Hl7.Fhir.Model.Markdown(value);
                 OnPropertyChanged("Text");
             }
         }
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.Element)Author.DeepCopy();
                 if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
-                if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+                if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.Markdown)TextElement.DeepCopy();
                 return dest;
             }
             else

@@ -5,9 +5,7 @@
     <versionId value="1"/>
     <lastUpdated value="2017-04-10T10:54:15.22+10:00"/>
   </meta>
-  <questionnaire>
-    <reference value="Questionnaire/demo-fhirpath"/>
-  </questionnaire>
+  <questionnaire value="Questionnaire/demo-fhirpath"/>
   <status value="completed"/>
   <authored value="2017-04-10T00:54:14.688Z"/>
   <item>

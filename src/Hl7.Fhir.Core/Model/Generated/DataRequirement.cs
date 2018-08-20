@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DataRequirement"; } }
         
         /// <summary>
-        /// The possible sort directions, ascending or descending
+        /// The possible sort directions, ascending or descending.
         /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
         /// </summary>
         [FhirEnumeration("SortDirection")]
@@ -80,10 +80,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CodeFilterComponent"; } }
             
             /// <summary>
-            /// The code-valued attribute of the filter
+            /// A code-valued attribute to filter on
             /// </summary>
             [FhirElement("path", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
             {
@@ -94,7 +93,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _PathElement;
             
             /// <summary>
-            /// The code-valued attribute of the filter
+            /// A code-valued attribute to filter on
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -113,24 +112,73 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Valueset for the filter
+            /// A coded (token) parameter to search on
             /// </summary>
-            [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
+            [FhirElement("searchParam", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Element ValueSet
+            public Hl7.Fhir.Model.FhirString SearchParamElement
             {
-                get { return _ValueSet; }
-                set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
+                get { return _SearchParamElement; }
+                set { _SearchParamElement = value; OnPropertyChanged("SearchParamElement"); }
             }
             
-            private Hl7.Fhir.Model.Element _ValueSet;
+            private Hl7.Fhir.Model.FhirString _SearchParamElement;
+            
+            /// <summary>
+            /// A coded (token) parameter to search on
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string SearchParam
+            {
+                get { return SearchParamElement != null ? SearchParamElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                      SearchParamElement = null; 
+                    else
+                      SearchParamElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("SearchParam");
+                }
+            }
+            
+            /// <summary>
+            /// Valueset for the filter
+            /// </summary>
+            [FhirElement("valueSet", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Canonical ValueSetElement
+            {
+                get { return _ValueSetElement; }
+                set { _ValueSetElement = value; OnPropertyChanged("ValueSetElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Canonical _ValueSetElement;
+            
+            /// <summary>
+            /// Valueset for the filter
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string ValueSet
+            {
+                get { return ValueSetElement != null ? ValueSetElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                      ValueSetElement = null; 
+                    else
+                      ValueSetElement = new Hl7.Fhir.Model.Canonical(value);
+                    OnPropertyChanged("ValueSet");
+                }
+            }
             
             /// <summary>
             /// What code is expected
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=60)]
+            [FhirElement("code", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Code
@@ -149,7 +197,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Element)ValueSet.DeepCopy();
+                    if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopy();
+                    if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopy();
                     if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
                     return dest;
                 }
@@ -169,7 +218,8 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
-                if( !DeepComparable.Matches(ValueSet, otherT.ValueSet)) return false;
+                if( !DeepComparable.Matches(SearchParamElement, otherT.SearchParamElement)) return false;
+                if( !DeepComparable.Matches(ValueSetElement, otherT.ValueSetElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 
                 return true;
@@ -182,7 +232,8 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
-                if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
+                if( !DeepComparable.IsExactly(SearchParamElement, otherT.SearchParamElement)) return false;
+                if( !DeepComparable.IsExactly(ValueSetElement, otherT.ValueSetElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 
                 return true;
@@ -195,7 +246,8 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
-                    if (ValueSet != null) yield return ValueSet;
+                    if (SearchParamElement != null) yield return SearchParamElement;
+                    if (ValueSetElement != null) yield return ValueSetElement;
                     foreach (var elem in Code) { if (elem != null) yield return elem; }
                 }
             }
@@ -207,7 +259,8 @@ namespace Hl7.Fhir.Model
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
                     if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (ValueSet != null) yield return new ElementValue("valueSet", false, ValueSet);
+                    if (SearchParamElement != null) yield return new ElementValue("searchParam", false, SearchParamElement);
+                    if (ValueSetElement != null) yield return new ElementValue("valueSet", false, ValueSetElement);
                     foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
  
                 } 
@@ -222,10 +275,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DateFilterComponent"; } }
             
             /// <summary>
-            /// The date-valued attribute of the filter
+            /// A date-valued attribute to filter on
             /// </summary>
             [FhirElement("path", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
             {
@@ -236,7 +288,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _PathElement;
             
             /// <summary>
-            /// The date-valued attribute of the filter
+            /// A date-valued attribute to filter on
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -255,9 +307,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// A date valued parameter to search on
+            /// </summary>
+            [FhirElement("searchParam", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString SearchParamElement
+            {
+                get { return _SearchParamElement; }
+                set { _SearchParamElement = value; OnPropertyChanged("SearchParamElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _SearchParamElement;
+            
+            /// <summary>
+            /// A date valued parameter to search on
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string SearchParam
+            {
+                get { return SearchParamElement != null ? SearchParamElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                      SearchParamElement = null; 
+                    else
+                      SearchParamElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("SearchParam");
+                }
+            }
+            
+            /// <summary>
             /// The value of the filter, as a Period, DateTime, or Duration value
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration))]
             [DataMember]
@@ -277,6 +361,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
+                    if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     return dest;
                 }
@@ -296,6 +381,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.Matches(SearchParamElement, otherT.SearchParamElement)) return false;
                 if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 
                 return true;
@@ -308,6 +394,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(SearchParamElement, otherT.SearchParamElement)) return false;
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
@@ -320,6 +407,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
+                    if (SearchParamElement != null) yield return SearchParamElement;
                     if (Value != null) yield return Value;
                 }
             }
@@ -331,6 +419,7 @@ namespace Hl7.Fhir.Model
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
                     if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (SearchParamElement != null) yield return new ElementValue("searchParam", false, SearchParamElement);
                     if (Value != null) yield return new ElementValue("value", false, Value);
  
                 } 
@@ -560,7 +649,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Subject;
         
         /// <summary>
-        /// Indicates that specific structure elements are referenced by the knowledge module
+        /// Indicates specific structure elements that are referenced by the knowledge module
         /// </summary>
         [FhirElement("mustSupport", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
@@ -574,7 +663,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirString> _MustSupportElement;
         
         /// <summary>
-        /// Indicates that specific structure elements are referenced by the knowledge module
+        /// Indicates specific structure elements that are referenced by the knowledge module
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

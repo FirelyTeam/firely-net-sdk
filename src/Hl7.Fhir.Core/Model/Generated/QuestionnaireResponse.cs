@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -199,24 +199,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The subject this group's answers are about
-            /// </summary>
-            [FhirElement("subject", Order=70)]
-            [CLSCompliant(false)]
-			[References()]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Subject
-            {
-                get { return _Subject; }
-                set { _Subject = value; OnPropertyChanged("Subject"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Subject;
-            
-            /// <summary>
             /// The response(s) to the question
             /// </summary>
-            [FhirElement("answer", Order=80)]
+            [FhirElement("answer", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
@@ -230,7 +215,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire response items
             /// </summary>
-            [FhirElement("item", Order=90)]
+            [FhirElement("item", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
@@ -251,7 +236,6 @@ namespace Hl7.Fhir.Model
                     if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
                     if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)DefinitionElement.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                     if(Answer != null) dest.Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(Answer.DeepCopy());
                     if(Item != null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopy());
                     return dest;
@@ -274,7 +258,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
                 if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
                 if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.Matches(Answer, otherT.Answer)) return false;
                 if( !DeepComparable.Matches(Item, otherT.Item)) return false;
                 
@@ -290,7 +273,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
                 if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.IsExactly(Answer, otherT.Answer)) return false;
                 if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 
@@ -307,7 +289,6 @@ namespace Hl7.Fhir.Model
                     if (LinkIdElement != null) yield return LinkIdElement;
                     if (DefinitionElement != null) yield return DefinitionElement;
                     if (TextElement != null) yield return TextElement;
-                    if (Subject != null) yield return Subject;
                     foreach (var elem in Answer) { if (elem != null) yield return elem; }
                     foreach (var elem in Item) { if (elem != null) yield return elem; }
                 }
@@ -322,7 +303,6 @@ namespace Hl7.Fhir.Model
                     if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
                     if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
                     if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    if (Subject != null) yield return new ElementValue("subject", false, Subject);
                     foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
                     foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
                 }
@@ -616,7 +596,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[References("Device","Practitioner","Patient","RelatedPerson")]
+		[References("Device","Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

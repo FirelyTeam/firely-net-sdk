@@ -1982,7 +1982,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var client = new FhirClient(testEndpoint);
 
-            var binary = new Binary() { Content = arr, ContentType = "image/png" };
+            var binary = new Binary() { Data = arr, ContentType = "image/png" };
             var result = client.Create(binary);
 
             Assert.IsNotNull(result);

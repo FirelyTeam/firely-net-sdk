@@ -130,14 +130,14 @@ namespace Hl7.Fhir.Specification.Tests
             var cs = source.ListResourceUris(ResourceType.CodeSystem); Assert.IsTrue(cs.Any());
             var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
-            var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            // var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
             var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
 
             var all = source.ListResourceUris();
 
             Assert.AreEqual(sd.Count() + sm.Count() + cf.Count() + md.Count() + od.Count() +
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
-                        ep.Count() + ns.Count(), all.Count());
+                        /*ep.Count() + */ ns.Count(), all.Count());
 
             Assert.IsTrue(sd.Contains("http://hl7.org/fhir/StructureDefinition/shareablevalueset"));
             Assert.IsTrue(cf.Contains("http://hl7.org/fhir/CapabilityStatement/base"));

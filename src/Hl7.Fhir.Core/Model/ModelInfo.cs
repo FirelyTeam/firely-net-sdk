@@ -284,7 +284,6 @@ namespace Hl7.Fhir.Model
             FHIRAllTypes.CodeSystem,
             FHIRAllTypes.ValueSet,
             FHIRAllTypes.ConceptMap,
-            FHIRAllTypes.ExpansionProfile,
             FHIRAllTypes.NamingSystem,
             FHIRAllTypes.TestScript,
             FHIRAllTypes.TestReport
@@ -316,7 +315,6 @@ namespace Hl7.Fhir.Model
             ResourceType.CodeSystem,
             ResourceType.ValueSet,
             ResourceType.ConceptMap,
-            ResourceType.ExpansionProfile,
             ResourceType.NamingSystem,
             ResourceType.TestScript,
             ResourceType.TestReport

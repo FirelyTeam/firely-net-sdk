@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,8 +51,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "markdown"; } }
         
-        // Must conform to the pattern "\s*(\S|\s)*"
-        public const string PATTERN = @"\s*(\S|\s)*";
+        // Must conform to the pattern "[ \r\n\t\S]+"
+        public const string PATTERN = @"[ \r\n\t\S]+";
 
 		public Markdown(string value)
 		{

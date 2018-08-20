@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Sequence"; } }
         
         /// <summary>
-        /// Type for orientation
+        /// Type for orientation.
         /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
         /// </summary>
         [FhirEnumeration("orientationType")]
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Type for strand
+        /// Type for strand.
         /// (url: http://hl7.org/fhir/ValueSet/strand-type)
         /// </summary>
         [FhirEnumeration("strandType")]
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Type for quality report
+        /// Type for quality report.
         /// (url: http://hl7.org/fhir/ValueSet/quality-type)
         /// </summary>
         [FhirEnumeration("qualityType")]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Type for access of external URI
+        /// Type for access of external URI.
         /// (url: http://hl7.org/fhir/ValueSet/repository-type)
         /// </summary>
         [FhirEnumeration("repositoryType")]

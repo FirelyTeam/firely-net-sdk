@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -131,33 +131,33 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who participated
             /// </summary>
-            [FhirElement("who", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("who", InSummary=true, Order=60)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Who
+            public Hl7.Fhir.Model.ResourceReference Who
             {
                 get { return _Who; }
                 set { _Who = value; OnPropertyChanged("Who"); }
             }
             
-            private Hl7.Fhir.Model.Element _Who;
+            private Hl7.Fhir.Model.ResourceReference _Who;
             
             /// <summary>
             /// Who the agent is representing
             /// </summary>
-            [FhirElement("onBehalfOf", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("onBehalfOf", Order=70)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.Element OnBehalfOf
+            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
             {
                 get { return _OnBehalfOf; }
                 set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
             }
             
-            private Hl7.Fhir.Model.Element _OnBehalfOf;
+            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -168,8 +168,8 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
-                    if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
-                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.Element)OnBehalfOf.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
                     return dest;
                 }
                 else
@@ -283,18 +283,18 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identity of entity
             /// </summary>
-            [FhirElement("what", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("what", InSummary=true, Order=50)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element What
+            public Hl7.Fhir.Model.ResourceReference What
             {
                 get { return _What; }
                 set { _What = value; OnPropertyChanged("What"); }
             }
             
-            private Hl7.Fhir.Model.Element _What;
+            private Hl7.Fhir.Model.ResourceReference _What;
             
             /// <summary>
             /// Entity is attributed to this agent
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(RoleElement != null) dest.RoleElement = (Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>)RoleElement.DeepCopy();
-                    if(What != null) dest.What = (Hl7.Fhir.Model.Element)What.DeepCopy();
+                    if(What != null) dest.What = (Hl7.Fhir.Model.ResourceReference)What.DeepCopy();
                     if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());
                     return dest;
                 }

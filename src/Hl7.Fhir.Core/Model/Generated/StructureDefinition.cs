@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("logical", "http://hl7.org/fhir/structure-definition-kind"), Description("Logical Model")]
+            [EnumLiteral("logical", "http://hl7.org/fhir/structure-definition-kind"), Description("Logical")]
             Logical,
         }
 
@@ -1331,13 +1331,22 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:snapshot/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)])) and not(exists(f:differential/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)]))"
         };
 
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15A = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(kind!='logical'  and differential.element.first().path.contains('.').not()) implies differential.element.first().type.empty()",
+            Key = "sdf-15a",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the first element in a differential has no \".\" in the path and it's not a logical model, it has no type",
+            Xpath = "f:kind/@value='logical' or not(f:differential/f:element[1][not(contains(f:path/@value, '.'))]/f:type)"
+        };
+
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_19 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "kind = 'logical' or (differential.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')) and snapshot.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')))",
+            Expression = "url.startsWith('http://hl7.org/fhir/StructureDefinition') implies (differential.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')) and snapshot.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')))",
             Key = "sdf-19",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Custom types can only be used in logical models",
-            Xpath = "f:kind/@value = 'logical' or count(f:differential/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]|f:snapshot/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]) =0"
+            Human = "FHIR Specification models only use FHIR defined types",
+            Xpath = "not(starts-with(f:url/@value, 'http://hl7.org/fhir/StructureDefinition')) or count(f:differential/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]|f:snapshot/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]) =0"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_16 = new ElementDefinition.ConstraintComponent()
@@ -1347,6 +1356,15 @@ namespace Hl7.Fhir.Model
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "All element definitions must have unique ids (snapshot)",
             Xpath = "count(f:snapshot/f:element)=count(f:snapshot/f:element/@id) and (count(f:snapshot/f:element)=count(distinct-values(f:snapshot/f:element/@id)))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "kind!='logical'  implies snapshot.element.first().type.empty()",
+            Key = "sdf-15",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The first element in a snapshot has no type unless model is a logical model.",
+            Xpath = "f:kind/@value='logical' or not(f:snapshot/f:element[1]/f:type)"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_18 = new ElementDefinition.ConstraintComponent()
@@ -1367,13 +1385,13 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:differential/f:element)=count(f:differential/f:element/@id) and (count(f:differential/f:element)=count(distinct-values(f:differential/f:element/@id)))"
         };
 
-        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_12 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_23 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "snapshot.exists() implies (snapshot.element.base.exists() = baseDefinition.exists())",
-            Key = "sdf-12",
+            Expression = "(snapshot | differential).element.all(path.contains('.').not() implies sliceName.empty())",
+            Key = "sdf-23",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "element.base cannot appear if there is no base on the structure definition",
-            Xpath = "f:baseDefinition or not(exists(f:snapshot/f:element/f:base) or exists(f:differential/f:element/f:base))"
+            Human = "No slice name on root",
+            Xpath = "count(*[self::snapshot or self::differential]/f:element[not(contains(f:path/@value, '.')) and f:sliceName])=0"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_11 = new ElementDefinition.ConstraintComponent()
@@ -1383,6 +1401,15 @@ namespace Hl7.Fhir.Model
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If there's a type, its content must match the path name in the first element of a snapshot",
             Xpath = "(f:kind/@value = 'logical') or not(exists(f:snapshot)) or (f:type/@value = f:snapshot/f:element[1]/f:path/@value)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_22 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "url.startsWith('http://hl7.org/fhir/StructureDefinition') implies (snapshot.element.defaultValue.empty() and differential.element.defaultValue.empty())",
+            Key = "sdf-22",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "FHIR Specification models never have default values",
+            Xpath = "not(starts-with(f:url/@value, 'http://hl7.org/fhir/StructureDefinition')) or (not(exists(f:snapshot/f:element/*[starts-with(local-name(), 'defaultValue')])) and not(exists(f:differential/f:element/*[starts-with(local-name(), 'defaultValue')])))"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_14 = new ElementDefinition.ConstraintComponent()
@@ -1405,20 +1432,20 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_21 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(snapshot.element.defaultValue.exists() or differential.element.defaultValue.exists()) implies ((kind = 'logical') and (derivation = 'specialization'))",
+            Expression = "differential.element.defaultValue.exists() implies (derivation = 'specialization')",
             Key = "sdf-21",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Default values can only be specified on logical models",
-            Xpath = "(not(exists(f:snapshot/f:element/*[starts-with(local-name(), 'defaultValue')])) and not(exists(f:differential/f:element/*[starts-with(local-name(), 'defaultValue')]))) or ((f:kind/@value = 'logical') and (f:derivation/@value = 'specialization'))"
+            Human = "Default values can only be specified on specializations",
+            Xpath = "not(exists(f:differential/f:element/*[starts-with(local-name(), 'defaultValue')])) or (f:derivation/@value = 'specialization')"
         };
 
-        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_7 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_0 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(derivation = 'constraint') or (kind = 'logical') or (url = 'http://hl7.org/fhir/StructureDefinition/'+id)",
-            Key = "sdf-7",
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "sdf-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the structure describes a base Resource or Type, the URL has to start with \"http://hl7.org/fhir/StructureDefinition/\" and the tail must match the id",
-            Xpath = "(f:derivation/@value = 'constraint') or (f:kind/@value = 'logical') or (f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value))"
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_6 = new ElementDefinition.ConstraintComponent()
@@ -1457,21 +1484,12 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:uri) or exists(f:name)"
         };
 
-        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "snapshot.all(element.first().type.empty())",
-            Key = "sdf-15",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The first element in a snapshot has no type",
-            Xpath = "not(f:element[1]/f:type)"
-        };
-
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "snapshot.all(element.first().path = %resource.type and element.tail().all(path.startsWith(%resource.type&'.')) and element.all(base.exists()))",
+            Expression = "snapshot.all(element.first().path = %resource.type and element.tail().all(path.startsWith(%resource.type&'.')))",
             Key = "sdf-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "In any snapshot, all the elements must be in the specified type, and must have a base definition",
+            Human = "All snapshot elements must be in the StructureDefinition's specified type",
             Xpath = "f:element[1]/f:path/@value=parent::f:StructureDefinition/f:type/@value and count(f:element[position()!=1])=count(f:element[position()!=1][starts-with(f:path/@value, concat(ancestor::f:StructureDefinition/f:type/@value, '.'))])"
         };
 
@@ -1484,22 +1502,22 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
         };
 
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8B = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "snapshot.all(element.all(base.exists()))",
+            Key = "sdf-8b",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "All snapshot elements must have a base definition",
+            Xpath = "count(f:element) = count(f:element/f:base)"
+        };
+
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_10 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "snapshot.element.all(binding.empty() or binding.valueSet.exists() or binding.description.exists())",
             Key = "sdf-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "provide either a binding reference or a description (or both)",
-            Xpath = "not(exists(f:binding)) or (exists(f:binding/f:valueSetUri) or exists(f:binding/f:valueSetReference)) or exists(f:binding/f:description)"
-        };
-
-        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15A = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "differential.all(element.first().path.contains('.').not() implies element.first().type.empty())",
-            Key = "sdf-15a",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the first element in a differential has no \".\" in the path, it has no type",
-            Xpath = "not(f:element[1][not(contains(f:path/@value, '.'))]/f:type)"
+            Xpath = "not(exists(f:binding)) or exists(f:binding/f:valueSet) or exists(f:binding/f:description)"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_20 = new ElementDefinition.ConstraintComponent()
@@ -1513,7 +1531,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8A = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "differential.all(element.first().path.startsWith(%resource.type) and element.tail().all(path.startsWith(%resource.type&'.')))",
+            Expression = "differential.all(element.first().path.startsWith(%resource.type) and (element.tail().not() or element.tail().all(path.startsWith(%resource.type&'.'))))",
             Key = "sdf-8a",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "In any differential, all the elements must be in the specified type",
@@ -1525,25 +1543,27 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(StructureDefinition_SDF_9);
+            InvariantConstraints.Add(StructureDefinition_SDF_15A);
             InvariantConstraints.Add(StructureDefinition_SDF_19);
             InvariantConstraints.Add(StructureDefinition_SDF_16);
+            InvariantConstraints.Add(StructureDefinition_SDF_15);
             InvariantConstraints.Add(StructureDefinition_SDF_18);
             InvariantConstraints.Add(StructureDefinition_SDF_17);
-            InvariantConstraints.Add(StructureDefinition_SDF_12);
+            InvariantConstraints.Add(StructureDefinition_SDF_23);
             InvariantConstraints.Add(StructureDefinition_SDF_11);
+            InvariantConstraints.Add(StructureDefinition_SDF_22);
             InvariantConstraints.Add(StructureDefinition_SDF_14);
             InvariantConstraints.Add(StructureDefinition_SDF_1);
             InvariantConstraints.Add(StructureDefinition_SDF_21);
-            InvariantConstraints.Add(StructureDefinition_SDF_7);
+            InvariantConstraints.Add(StructureDefinition_SDF_0);
             InvariantConstraints.Add(StructureDefinition_SDF_6);
             InvariantConstraints.Add(StructureDefinition_SDF_5);
             InvariantConstraints.Add(StructureDefinition_SDF_4);
             InvariantConstraints.Add(StructureDefinition_SDF_2);
-            InvariantConstraints.Add(StructureDefinition_SDF_15);
             InvariantConstraints.Add(StructureDefinition_SDF_8);
             InvariantConstraints.Add(StructureDefinition_SDF_3);
+            InvariantConstraints.Add(StructureDefinition_SDF_8B);
             InvariantConstraints.Add(StructureDefinition_SDF_10);
-            InvariantConstraints.Add(StructureDefinition_SDF_15A);
             InvariantConstraints.Add(StructureDefinition_SDF_20);
             InvariantConstraints.Add(StructureDefinition_SDF_8A);
         }

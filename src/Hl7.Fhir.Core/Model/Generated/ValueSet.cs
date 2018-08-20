@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ComposeComponent"; } }
             
             /// <summary>
-            /// Fixed date for version-less references (transitive)
+            /// Fixed date for references with no specified version (transitive)
             /// </summary>
             [FhirElement("lockedDate", InSummary=true, Order=40)]
             [DataMember]
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Date _LockedDateElement;
             
             /// <summary>
-            /// Fixed date for version-less references (transitive)
+            /// Fixed date for references with no specified version (transitive)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Details how this designation would be used
+            /// Types of uses of designations
             /// </summary>
             [FhirElement("use", Order=50)]
             [DataMember]
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ExpansionComponent"; } }
             
             /// <summary>
-            /// Uniquely identifies this expansion
+            /// Identifies the value set expansion (business identifier)
             /// </summary>
             [FhirElement("identifier", Order=40)]
             [DataMember]
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _IdentifierElement;
             
             /// <summary>
-            /// Uniquely identifies this expansion
+            /// Identifies the value set expansion (business identifier)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
-            /// Name as assigned by the server
+            /// Name as assigned by the client or server
             /// </summary>
             [FhirElement("name", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Name as assigned by the server
+            /// Name as assigned by the client or server
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1258,7 +1258,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Code))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirDateTime))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -2052,41 +2052,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Copyright;
         
         /// <summary>
-        /// Whether this is intended to be used with an extensible binding
+        /// Content logical definition of the value set (CLD)
         /// </summary>
-        [FhirElement("extensible", InSummary=true, Order=250)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ExtensibleElement
-        {
-            get { return _ExtensibleElement; }
-            set { _ExtensibleElement = value; OnPropertyChanged("ExtensibleElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _ExtensibleElement;
-        
-        /// <summary>
-        /// Whether this is intended to be used with an extensible binding
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Extensible
-        {
-            get { return ExtensibleElement != null ? ExtensibleElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  ExtensibleElement = null; 
-                else
-                  ExtensibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Extensible");
-            }
-        }
-        
-        /// <summary>
-        /// Definition of the content of the value set
-        /// </summary>
-        [FhirElement("compose", Order=260)]
+        [FhirElement("compose", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.ValueSet.ComposeComponent Compose
         {
@@ -2099,7 +2067,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Used when the value set is "expanded"
         /// </summary>
-        [FhirElement("expansion", Order=270)]
+        [FhirElement("expansion", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.ValueSet.ExpansionComponent Expansion
         {
@@ -2119,13 +2087,13 @@ namespace Hl7.Fhir.Model
             Xpath = "f:status/@value='active' or exists(f:compose) or not(exists(f:expansion)"
         };
 
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_5 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_0 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "compose.exists() or expansion.exists()",
-            Key = "vsd-5",
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "vsd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Value set SHALL contain at least one of a compose or an expansion element",
-            Xpath = "exists(f:compose) or exists(f:expansion)"
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_2 = new ElementDefinition.ConstraintComponent()
@@ -2187,7 +2155,7 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(ValueSet_VSD_11);
-            InvariantConstraints.Add(ValueSet_VSD_5);
+            InvariantConstraints.Add(ValueSet_VSD_0);
             InvariantConstraints.Add(ValueSet_VSD_2);
             InvariantConstraints.Add(ValueSet_VSD_3);
             InvariantConstraints.Add(ValueSet_VSD_1);
@@ -2219,7 +2187,6 @@ namespace Hl7.Fhir.Model
                 if(ImmutableElement != null) dest.ImmutableElement = (Hl7.Fhir.Model.FhirBoolean)ImmutableElement.DeepCopy();
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
-                if(ExtensibleElement != null) dest.ExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)ExtensibleElement.DeepCopy();
                 if(Compose != null) dest.Compose = (Hl7.Fhir.Model.ValueSet.ComposeComponent)Compose.DeepCopy();
                 if(Expansion != null) dest.Expansion = (Hl7.Fhir.Model.ValueSet.ExpansionComponent)Expansion.DeepCopy();
                 return dest;
@@ -2255,7 +2222,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ImmutableElement, otherT.ImmutableElement)) return false;
             if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
-            if( !DeepComparable.Matches(ExtensibleElement, otherT.ExtensibleElement)) return false;
             if( !DeepComparable.Matches(Compose, otherT.Compose)) return false;
             if( !DeepComparable.Matches(Expansion, otherT.Expansion)) return false;
             
@@ -2284,7 +2250,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ImmutableElement, otherT.ImmutableElement)) return false;
             if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
-            if( !DeepComparable.IsExactly(ExtensibleElement, otherT.ExtensibleElement)) return false;
             if( !DeepComparable.IsExactly(Compose, otherT.Compose)) return false;
             if( !DeepComparable.IsExactly(Expansion, otherT.Expansion)) return false;
             
@@ -2313,7 +2278,6 @@ namespace Hl7.Fhir.Model
 				if (ImmutableElement != null) yield return ImmutableElement;
 				if (Purpose != null) yield return Purpose;
 				if (Copyright != null) yield return Copyright;
-				if (ExtensibleElement != null) yield return ExtensibleElement;
 				if (Compose != null) yield return Compose;
 				if (Expansion != null) yield return Expansion;
             }
@@ -2341,7 +2305,6 @@ namespace Hl7.Fhir.Model
                 if (ImmutableElement != null) yield return new ElementValue("immutable", false, ImmutableElement);
                 if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
                 if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (ExtensibleElement != null) yield return new ElementValue("extensible", false, ExtensibleElement);
                 if (Compose != null) yield return new ElementValue("compose", false, Compose);
                 if (Expansion != null) yield return new ElementValue("expansion", false, Expansion);
             }

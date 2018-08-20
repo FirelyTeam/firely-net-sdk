@@ -13,8 +13,7 @@
   </contact>
   <description value="Conformance statement for the IMO FHIR Terminology Server" />
   <kind value="capability" />
-  <fhirVersion value="3.0.1" />
-  <acceptUnknown value="no" />
+  <fhirVersion value="3.5.0" />
   <format value="xml" />
   <format value="json" />
   <rest>
@@ -22,9 +21,7 @@
     <documentation value="IMO FHIR Terminology Server" />
     <resource>
       <type value="ValueSet" />
-      <profile>
-        <reference value="http://hl7.org/fhir/StructureDefinition/ValueSet" />
-      </profile>
+      <profile value="http://hl7.org/fhir/StructureDefinition/ValueSet" />
       <interaction>
         <code value="read" />
         <documentation value="Read allows clients to get the logical definitions of the value sets" />
@@ -46,9 +43,7 @@
     </resource>
     <operation>
       <name value="expand" />
-      <definition>
-        <reference value="http://hl7.org/fhir/OperationDefinition/ValueSet-expand" />
-      </definition>
+      <definition value="http://hl7.org/fhir/OperationDefinition/ValueSet-expand" />
     </operation>
   </rest>
 </CapabilityStatement>

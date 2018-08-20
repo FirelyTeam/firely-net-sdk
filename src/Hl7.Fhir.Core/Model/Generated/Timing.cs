@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -183,87 +183,87 @@ namespace Hl7.Fhir.Model
             PHS,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("HS", "http://hl7.org/fhir/v3/TimingEvent"), Description("HS")]
+            [EnumLiteral("HS", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("HS")]
             HS,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("WAKE", "http://hl7.org/fhir/v3/TimingEvent"), Description("WAKE")]
+            [EnumLiteral("WAKE", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("WAKE")]
             WAKE,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("C", "http://hl7.org/fhir/v3/TimingEvent"), Description("C")]
+            [EnumLiteral("C", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("C")]
             C,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("CM", "http://hl7.org/fhir/v3/TimingEvent"), Description("CM")]
+            [EnumLiteral("CM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("CM")]
             CM,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("CD", "http://hl7.org/fhir/v3/TimingEvent"), Description("CD")]
+            [EnumLiteral("CD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("CD")]
             CD,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("CV", "http://hl7.org/fhir/v3/TimingEvent"), Description("CV")]
+            [EnumLiteral("CV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("CV")]
             CV,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("AC", "http://hl7.org/fhir/v3/TimingEvent"), Description("AC")]
+            [EnumLiteral("AC", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("AC")]
             AC,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("ACM", "http://hl7.org/fhir/v3/TimingEvent"), Description("ACM")]
+            [EnumLiteral("ACM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("ACM")]
             ACM,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("ACD", "http://hl7.org/fhir/v3/TimingEvent"), Description("ACD")]
+            [EnumLiteral("ACD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("ACD")]
             ACD,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("ACV", "http://hl7.org/fhir/v3/TimingEvent"), Description("ACV")]
+            [EnumLiteral("ACV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("ACV")]
             ACV,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("PC", "http://hl7.org/fhir/v3/TimingEvent"), Description("PC")]
+            [EnumLiteral("PC", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PC")]
             PC,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("PCM", "http://hl7.org/fhir/v3/TimingEvent"), Description("PCM")]
+            [EnumLiteral("PCM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PCM")]
             PCM,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("PCD", "http://hl7.org/fhir/v3/TimingEvent"), Description("PCD")]
+            [EnumLiteral("PCD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PCD")]
             PCD,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
             /// </summary>
-            [EnumLiteral("PCV", "http://hl7.org/fhir/v3/TimingEvent"), Description("PCV")]
+            [EnumLiteral("PCV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PCV")]
             PCV,
         }
 
@@ -294,13 +294,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("count", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer CountElement
+            public Hl7.Fhir.Model.PositiveInt CountElement
             {
                 get { return _CountElement; }
                 set { _CountElement = value; OnPropertyChanged("CountElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _CountElement;
+            private Hl7.Fhir.Model.PositiveInt _CountElement;
             
             /// <summary>
             /// Number of times to repeat
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                       CountElement = null; 
                     else
-                      CountElement = new Hl7.Fhir.Model.Integer(value);
+                      CountElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Count");
                 }
             }
@@ -326,13 +326,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("countMax", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer CountMaxElement
+            public Hl7.Fhir.Model.PositiveInt CountMaxElement
             {
                 get { return _CountMaxElement; }
                 set { _CountMaxElement = value; OnPropertyChanged("CountMaxElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _CountMaxElement;
+            private Hl7.Fhir.Model.PositiveInt _CountMaxElement;
             
             /// <summary>
             /// Maximum number of times to repeat
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                       CountMaxElement = null; 
                     else
-                      CountMaxElement = new Hl7.Fhir.Model.Integer(value);
+                      CountMaxElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("CountMax");
                 }
             }
@@ -454,13 +454,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("frequency", InSummary=true, Order=100)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer FrequencyElement
+            public Hl7.Fhir.Model.PositiveInt FrequencyElement
             {
                 get { return _FrequencyElement; }
                 set { _FrequencyElement = value; OnPropertyChanged("FrequencyElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _FrequencyElement;
+            private Hl7.Fhir.Model.PositiveInt _FrequencyElement;
             
             /// <summary>
             /// Event occurs frequency times per period
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                       FrequencyElement = null; 
                     else
-                      FrequencyElement = new Hl7.Fhir.Model.Integer(value);
+                      FrequencyElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Frequency");
                 }
             }
@@ -486,13 +486,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("frequencyMax", InSummary=true, Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer FrequencyMaxElement
+            public Hl7.Fhir.Model.PositiveInt FrequencyMaxElement
             {
                 get { return _FrequencyMaxElement; }
                 set { _FrequencyMaxElement = value; OnPropertyChanged("FrequencyMaxElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _FrequencyMaxElement;
+            private Hl7.Fhir.Model.PositiveInt _FrequencyMaxElement;
             
             /// <summary>
             /// Event occurs up to frequencyMax times per period
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                       FrequencyMaxElement = null; 
                     else
-                      FrequencyMaxElement = new Hl7.Fhir.Model.Integer(value);
+                      FrequencyMaxElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("FrequencyMax");
                 }
             }
@@ -748,13 +748,13 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Bounds != null) dest.Bounds = (Hl7.Fhir.Model.Element)Bounds.DeepCopy();
-                    if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-                    if(CountMaxElement != null) dest.CountMaxElement = (Hl7.Fhir.Model.Integer)CountMaxElement.DeepCopy();
+                    if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.PositiveInt)CountElement.DeepCopy();
+                    if(CountMaxElement != null) dest.CountMaxElement = (Hl7.Fhir.Model.PositiveInt)CountMaxElement.DeepCopy();
                     if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)DurationElement.DeepCopy();
                     if(DurationMaxElement != null) dest.DurationMaxElement = (Hl7.Fhir.Model.FhirDecimal)DurationMaxElement.DeepCopy();
                     if(DurationUnitElement != null) dest.DurationUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)DurationUnitElement.DeepCopy();
-                    if(FrequencyElement != null) dest.FrequencyElement = (Hl7.Fhir.Model.Integer)FrequencyElement.DeepCopy();
-                    if(FrequencyMaxElement != null) dest.FrequencyMaxElement = (Hl7.Fhir.Model.Integer)FrequencyMaxElement.DeepCopy();
+                    if(FrequencyElement != null) dest.FrequencyElement = (Hl7.Fhir.Model.PositiveInt)FrequencyElement.DeepCopy();
+                    if(FrequencyMaxElement != null) dest.FrequencyMaxElement = (Hl7.Fhir.Model.PositiveInt)FrequencyMaxElement.DeepCopy();
                     if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
                     if(PeriodMaxElement != null) dest.PeriodMaxElement = (Hl7.Fhir.Model.FhirDecimal)PeriodMaxElement.DeepCopy();
                     if(PeriodUnitElement != null) dest.PeriodUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitElement.DeepCopy();
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Timing.RepeatComponent _Repeat;
         
         /// <summary>
-        /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +
+        /// BID | TID | QID | AM | PM | QD | QOD | +
         /// </summary>
         [FhirElement("code", InSummary=true, Order=110)]
         [DataMember]

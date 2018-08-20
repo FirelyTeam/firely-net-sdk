@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> _Element;
             
             /// <summary>
-            /// When there is no match for the source concept in the target system, so no mapping is available
+            /// What to do when there is no mapping for the source concept
             /// </summary>
             [FhirElement("unmapped", Order=90)]
             [DataMember]
@@ -1651,6 +1651,15 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ConceptMap.GroupComponent> _Group;
         
 
+        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_0 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "cmd-0",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+        };
+
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "group.element.target.all(comment.exists() or equivalence.empty() or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
@@ -1682,6 +1691,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(ConceptMap_CMD_0);
             InvariantConstraints.Add(ConceptMap_CMD_1);
             InvariantConstraints.Add(ConceptMap_CMD_3);
             InvariantConstraints.Add(ConceptMap_CMD_2);

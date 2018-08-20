@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,8 +51,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "decimal"; } }
         
-        // Must conform to the pattern "-?([0]|([1-9][0-9]*))(\.[0-9]+)?"
-        public const string PATTERN = @"-?([0]|([1-9][0-9]*))(\.[0-9]+)?";
+        // Must conform to the pattern "-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?"
+        public const string PATTERN = @"-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?";
 
 		public FhirDecimal(decimal? value)
 		{

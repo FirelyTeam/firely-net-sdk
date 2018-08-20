@@ -34,8 +34,7 @@ namespace Hl7.Fhir.Validation
             if (binding.Strength == null)
                 return Issue.PROFILE_INCOMPLETE_BINDING.NewOutcomeWithIssue($"Encountered a binding element without a binding strength", _path);
 
-            var uri = (binding.ValueSet as FhirUri)?.Value ??
-                        (binding.ValueSet as ResourceReference)?.Reference;
+            var uri = binding.ValueSet;
 
             if (uri == null)
                 return Issue.PROFILE_INCOMPLETE_BINDING.NewOutcomeWithIssue($"Encountered a binding element without either a ValueSet reference or uri", _path);

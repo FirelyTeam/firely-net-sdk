@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ImagingStudy"; } }
         
         /// <summary>
-        /// The status of the ImagingStudy
+        /// The status of the ImagingStudy.
         /// (url: http://hl7.org/fhir/ValueSet/imagingstudy-status)
         /// </summary>
         [FhirEnumeration("ImagingStudyStatus")]
@@ -1077,7 +1077,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
         
         /// <summary>
-        /// Institution-generated description
+        /// User-defined comments
         /// </summary>
         [FhirElement("note", InSummary=true, Order=260)]
         [Cardinality(Min=0,Max=-1)]
@@ -1091,9 +1091,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
+        /// Institution-generated description
+        /// </summary>
+        [FhirElement("description", InSummary=true, Order=270)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString DescriptionElement
+        {
+            get { return _DescriptionElement; }
+            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _DescriptionElement;
+        
+        /// <summary>
+        /// Institution-generated description
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Description
+        {
+            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DescriptionElement = null; 
+                else
+                  DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Description");
+            }
+        }
+        
+        /// <summary>
         /// Each study has one or more series of instances
         /// </summary>
-        [FhirElement("series", InSummary=true, Order=270)]
+        [FhirElement("series", InSummary=true, Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> Series
@@ -1136,6 +1168,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent>(Series.DeepCopy());
                 return dest;
             }
@@ -1172,6 +1205,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Series, otherT.Series)) return false;
             
             return true;
@@ -1201,6 +1235,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
             
             return true;
@@ -1230,6 +1265,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
 				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in Series) { if (elem != null) yield return elem; }
             }
         }
@@ -1258,6 +1294,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
                 foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                 foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", true, elem); }
             }
         }

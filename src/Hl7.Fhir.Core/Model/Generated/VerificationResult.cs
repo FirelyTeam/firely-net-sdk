@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,216 +56,48 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "VerificationResult"; } }
         
         /// <summary>
-        /// The frequency with which the target must be validated
-        /// (url: http://hl7.org/fhir/ValueSet/need)
-        /// </summary>
-        [FhirEnumeration("need")]
-        public enum need
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/need)
-            /// </summary>
-            [EnumLiteral("none", "http://hl7.org/fhir/need"), Description("None")]
-            None,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/need)
-            /// </summary>
-            [EnumLiteral("initial", "http://hl7.org/fhir/need"), Description("Initial")]
-            Initial,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/need)
-            /// </summary>
-            [EnumLiteral("periodic", "http://hl7.org/fhir/need"), Description("Periodic")]
-            Periodic,
-        }
-
-        /// <summary>
         /// The validation status of the target
-        /// (url: http://hl7.org/fhir/ValueSet/status)
+        /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
         /// </summary>
         [FhirEnumeration("status")]
         public enum status
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/status)
+            /// (system: http://hl7.org/fhir/CodeSystem/status)
             /// </summary>
-            [EnumLiteral("attested", "http://hl7.org/fhir/status"), Description("Attested")]
+            [EnumLiteral("attested", "http://hl7.org/fhir/CodeSystem/status"), Description("Attested")]
             Attested,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/status)
+            /// (system: http://hl7.org/fhir/CodeSystem/status)
             /// </summary>
-            [EnumLiteral("validated", "http://hl7.org/fhir/status"), Description("Validated")]
+            [EnumLiteral("validated", "http://hl7.org/fhir/CodeSystem/status"), Description("Validated")]
             Validated,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/status)
+            /// (system: http://hl7.org/fhir/CodeSystem/status)
             /// </summary>
-            [EnumLiteral("in-process", "http://hl7.org/fhir/status"), Description("In process")]
+            [EnumLiteral("in-process", "http://hl7.org/fhir/CodeSystem/status"), Description("In process")]
             InProcess,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/status)
+            /// (system: http://hl7.org/fhir/CodeSystem/status)
             /// </summary>
-            [EnumLiteral("req-revalid", "http://hl7.org/fhir/status"), Description("Requires revalidation")]
+            [EnumLiteral("req-revalid", "http://hl7.org/fhir/CodeSystem/status"), Description("Requires revalidation")]
             ReqRevalid,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/status)
+            /// (system: http://hl7.org/fhir/CodeSystem/status)
             /// </summary>
-            [EnumLiteral("val-fail", "http://hl7.org/fhir/status"), Description("Validation failed")]
+            [EnumLiteral("val-fail", "http://hl7.org/fhir/CodeSystem/status"), Description("Validation failed")]
             ValFail,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/status)
+            /// (system: http://hl7.org/fhir/CodeSystem/status)
             /// </summary>
-            [EnumLiteral("reval-fail", "http://hl7.org/fhir/status"), Description("Re-Validation failed")]
+            [EnumLiteral("reval-fail", "http://hl7.org/fhir/CodeSystem/status"), Description("Re-Validation failed")]
             RevalFail,
-        }
-
-        /// <summary>
-        /// What the target is validated against
-        /// (url: http://hl7.org/fhir/ValueSet/validation-type)
-        /// </summary>
-        [FhirEnumeration("validation_type")]
-        public enum validation_type
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/validation-type)
-            /// </summary>
-            [EnumLiteral("nothing", "http://hl7.org/fhir/validation-type"), Description("Nothing")]
-            Nothing,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/validation-type)
-            /// </summary>
-            [EnumLiteral("primary", "http://hl7.org/fhir/validation-type"), Description("Primary Source")]
-            Primary,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/validation-type)
-            /// </summary>
-            [EnumLiteral("multiple", "http://hl7.org/fhir/validation-type"), Description("Multiple Sources")]
-            Multiple,
-        }
-
-        /// <summary>
-        /// The result if validation fails
-        /// (url: http://hl7.org/fhir/ValueSet/failure-action)
-        /// </summary>
-        [FhirEnumeration("failure_action")]
-        public enum failure_action
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/failure-action)
-            /// </summary>
-            [EnumLiteral("fatal", "http://hl7.org/fhir/failure-action"), Description("Fatal")]
-            Fatal,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/failure-action)
-            /// </summary>
-            [EnumLiteral("warn", "http://hl7.org/fhir/failure-action"), Description("Warning")]
-            Warn,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/failure-action)
-            /// </summary>
-            [EnumLiteral("rec-only", "http://hl7.org/fhir/failure-action"), Description("Record only")]
-            RecOnly,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/failure-action)
-            /// </summary>
-            [EnumLiteral("none", "http://hl7.org/fhir/failure-action"), Description("None")]
-            None,
-        }
-
-        /// <summary>
-        /// Status of the validation of the target against the primary source
-        /// (url: http://hl7.org/fhir/ValueSet/validation-status)
-        /// </summary>
-        [FhirEnumeration("validation_status")]
-        public enum validation_status
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/validation-status)
-            /// </summary>
-            [EnumLiteral("successful", "http://hl7.org/fhir/validation-status"), Description("Successful")]
-            Successful,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/validation-status)
-            /// </summary>
-            [EnumLiteral("failed", "http://hl7.org/fhir/validation-status"), Description("Failed")]
-            Failed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/validation-status)
-            /// </summary>
-            [EnumLiteral("unknown", "http://hl7.org/fhir/validation-status"), Description("Unknown")]
-            Unknown,
-        }
-
-        /// <summary>
-        /// Ability of the primary source to push updates/alerts
-        /// (url: http://hl7.org/fhir/ValueSet/can-push-updates)
-        /// </summary>
-        [FhirEnumeration("can_push_updates")]
-        public enum can_push_updates
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/can-push-updates)
-            /// </summary>
-            [EnumLiteral("yes", "http://hl7.org/fhir/can-push-updates"), Description("Yes")]
-            Yes,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/can-push-updates)
-            /// </summary>
-            [EnumLiteral("no", "http://hl7.org/fhir/can-push-updates"), Description("No")]
-            No,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/can-push-updates)
-            /// </summary>
-            [EnumLiteral("undetermined", "http://hl7.org/fhir/can-push-updates"), Description("Undetermined")]
-            Undetermined,
-        }
-
-        /// <summary>
-        /// Type of alerts/updates the primary source can send
-        /// (url: http://hl7.org/fhir/ValueSet/push-type-available)
-        /// </summary>
-        [FhirEnumeration("push_type_available")]
-        public enum push_type_available
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/push-type-available)
-            /// </summary>
-            [EnumLiteral("specific", "http://hl7.org/fhir/push-type-available"), Description("Specific requested changes")]
-            Specific,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/push-type-available)
-            /// </summary>
-            [EnumLiteral("any", "http://hl7.org/fhir/push-type-available"), Description("Any changes")]
-            Any,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/push-type-available)
-            /// </summary>
-            [EnumLiteral("source", "http://hl7.org/fhir/push-type-available"), Description("As defined by source")]
-            Source,
         }
 
         [FhirType("PrimarySourceComponent")]
@@ -276,22 +108,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PrimarySourceComponent"; } }
             
             /// <summary>
-            /// URI of the primary source for validation
-            /// </summary>
-            [FhirElement("identifier", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
-            {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _Identifier;
-            
-            /// <summary>
             /// Reference to the primary source
             /// </summary>
-            [FhirElement("organization", Order=50)]
+            [FhirElement("organization", Order=40)]
             [CLSCompliant(false)]
 			[References("Organization")]
             [DataMember]
@@ -306,8 +125,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=-1)]
+            [FhirElement("type", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Type
             {
@@ -318,10 +137,10 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Type;
             
             /// <summary>
-            /// Method for communicating with the primary source (manual; API; Push)
+            /// The process(es) by which the target is validated
             /// </summary>
-            [FhirElement("validationProcess", InSummary=true, Order=70)]
-            [Cardinality(Min=1,Max=-1)]
+            [FhirElement("validationProcess", InSummary=true, Order=60)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> ValidationProcess
             {
@@ -334,39 +153,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// successful | failed | unknown
             /// </summary>
-            [FhirElement("validationStatus", Order=80)]
+            [FhirElement("validationStatus", Order=70)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.VerificationResult.validation_status> ValidationStatusElement
+            public Hl7.Fhir.Model.CodeableConcept ValidationStatus
             {
-                get { return _ValidationStatusElement; }
-                set { _ValidationStatusElement = value; OnPropertyChanged("ValidationStatusElement"); }
+                get { return _ValidationStatus; }
+                set { _ValidationStatus = value; OnPropertyChanged("ValidationStatus"); }
             }
             
-            private Code<Hl7.Fhir.Model.VerificationResult.validation_status> _ValidationStatusElement;
-            
-            /// <summary>
-            /// successful | failed | unknown
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.VerificationResult.validation_status? ValidationStatus
-            {
-                get { return ValidationStatusElement != null ? ValidationStatusElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        ValidationStatusElement = null; 
-                    else
-                        ValidationStatusElement = new Code<Hl7.Fhir.Model.VerificationResult.validation_status>(value);
-                    OnPropertyChanged("ValidationStatus");
-                }
-            }
+            private Hl7.Fhir.Model.CodeableConcept _ValidationStatus;
             
             /// <summary>
             /// When the target was validated against the primary source
             /// </summary>
-            [FhirElement("validationDate", Order=90)]
+            [FhirElement("validationDate", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime ValidationDateElement
             {
@@ -398,68 +198,29 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// yes | no | undetermined
             /// </summary>
-            [FhirElement("canPushUpdates", InSummary=true, Order=100)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("canPushUpdates", InSummary=true, Order=90)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.VerificationResult.can_push_updates> CanPushUpdatesElement
+            public Hl7.Fhir.Model.CodeableConcept CanPushUpdates
             {
-                get { return _CanPushUpdatesElement; }
-                set { _CanPushUpdatesElement = value; OnPropertyChanged("CanPushUpdatesElement"); }
+                get { return _CanPushUpdates; }
+                set { _CanPushUpdates = value; OnPropertyChanged("CanPushUpdates"); }
             }
             
-            private Code<Hl7.Fhir.Model.VerificationResult.can_push_updates> _CanPushUpdatesElement;
-            
-            /// <summary>
-            /// yes | no | undetermined
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.VerificationResult.can_push_updates? CanPushUpdates
-            {
-                get { return CanPushUpdatesElement != null ? CanPushUpdatesElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        CanPushUpdatesElement = null; 
-                    else
-                        CanPushUpdatesElement = new Code<Hl7.Fhir.Model.VerificationResult.can_push_updates>(value);
-                    OnPropertyChanged("CanPushUpdates");
-                }
-            }
+            private Hl7.Fhir.Model.CodeableConcept _CanPushUpdates;
             
             /// <summary>
             /// specific | any | source
             /// </summary>
-            [FhirElement("pushTypeAvailable", Order=110)]
+            [FhirElement("pushTypeAvailable", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Code<Hl7.Fhir.Model.VerificationResult.push_type_available>> PushTypeAvailableElement
+            public List<Hl7.Fhir.Model.CodeableConcept> PushTypeAvailable
             {
-                get { if(_PushTypeAvailableElement==null) _PushTypeAvailableElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VerificationResult.push_type_available>>(); return _PushTypeAvailableElement; }
-                set { _PushTypeAvailableElement = value; OnPropertyChanged("PushTypeAvailableElement"); }
+                get { if(_PushTypeAvailable==null) _PushTypeAvailable = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PushTypeAvailable; }
+                set { _PushTypeAvailable = value; OnPropertyChanged("PushTypeAvailable"); }
             }
             
-            private List<Code<Hl7.Fhir.Model.VerificationResult.push_type_available>> _PushTypeAvailableElement;
-            
-            /// <summary>
-            /// specific | any | source
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.VerificationResult.push_type_available?> PushTypeAvailable
-            {
-                get { return PushTypeAvailableElement != null ? PushTypeAvailableElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if (value == null)
-                        PushTypeAvailableElement = null; 
-                    else
-                        PushTypeAvailableElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VerificationResult.push_type_available>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.VerificationResult.push_type_available>(elem)));
-                    OnPropertyChanged("PushTypeAvailable");
-                }
-            }
+            private List<Hl7.Fhir.Model.CodeableConcept> _PushTypeAvailable;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -468,14 +229,13 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                     if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());
-                    if(ValidationStatusElement != null) dest.ValidationStatusElement = (Code<Hl7.Fhir.Model.VerificationResult.validation_status>)ValidationStatusElement.DeepCopy();
+                    if(ValidationStatus != null) dest.ValidationStatus = (Hl7.Fhir.Model.CodeableConcept)ValidationStatus.DeepCopy();
                     if(ValidationDateElement != null) dest.ValidationDateElement = (Hl7.Fhir.Model.FhirDateTime)ValidationDateElement.DeepCopy();
-                    if(CanPushUpdatesElement != null) dest.CanPushUpdatesElement = (Code<Hl7.Fhir.Model.VerificationResult.can_push_updates>)CanPushUpdatesElement.DeepCopy();
-                    if(PushTypeAvailableElement != null) dest.PushTypeAvailableElement = new List<Code<Hl7.Fhir.Model.VerificationResult.push_type_available>>(PushTypeAvailableElement.DeepCopy());
+                    if(CanPushUpdates != null) dest.CanPushUpdates = (Hl7.Fhir.Model.CodeableConcept)CanPushUpdates.DeepCopy();
+                    if(PushTypeAvailable != null) dest.PushTypeAvailable = new List<Hl7.Fhir.Model.CodeableConcept>(PushTypeAvailable.DeepCopy());
                     return dest;
                 }
                 else
@@ -493,14 +253,13 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(ValidationProcess, otherT.ValidationProcess)) return false;
-                if( !DeepComparable.Matches(ValidationStatusElement, otherT.ValidationStatusElement)) return false;
+                if( !DeepComparable.Matches(ValidationStatus, otherT.ValidationStatus)) return false;
                 if( !DeepComparable.Matches(ValidationDateElement, otherT.ValidationDateElement)) return false;
-                if( !DeepComparable.Matches(CanPushUpdatesElement, otherT.CanPushUpdatesElement)) return false;
-                if( !DeepComparable.Matches(PushTypeAvailableElement, otherT.PushTypeAvailableElement)) return false;
+                if( !DeepComparable.Matches(CanPushUpdates, otherT.CanPushUpdates)) return false;
+                if( !DeepComparable.Matches(PushTypeAvailable, otherT.PushTypeAvailable)) return false;
                 
                 return true;
             }
@@ -511,14 +270,13 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(ValidationProcess, otherT.ValidationProcess)) return false;
-                if( !DeepComparable.IsExactly(ValidationStatusElement, otherT.ValidationStatusElement)) return false;
+                if( !DeepComparable.IsExactly(ValidationStatus, otherT.ValidationStatus)) return false;
                 if( !DeepComparable.IsExactly(ValidationDateElement, otherT.ValidationDateElement)) return false;
-                if( !DeepComparable.IsExactly(CanPushUpdatesElement, otherT.CanPushUpdatesElement)) return false;
-                if( !DeepComparable.IsExactly(PushTypeAvailableElement, otherT.PushTypeAvailableElement)) return false;
+                if( !DeepComparable.IsExactly(CanPushUpdates, otherT.CanPushUpdates)) return false;
+                if( !DeepComparable.IsExactly(PushTypeAvailable, otherT.PushTypeAvailable)) return false;
                 
                 return true;
             }
@@ -530,14 +288,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
                     if (Organization != null) yield return Organization;
                     foreach (var elem in Type) { if (elem != null) yield return elem; }
                     foreach (var elem in ValidationProcess) { if (elem != null) yield return elem; }
-                    if (ValidationStatusElement != null) yield return ValidationStatusElement;
+                    if (ValidationStatus != null) yield return ValidationStatus;
                     if (ValidationDateElement != null) yield return ValidationDateElement;
-                    if (CanPushUpdatesElement != null) yield return CanPushUpdatesElement;
-                    foreach (var elem in PushTypeAvailableElement) { if (elem != null) yield return elem; }
+                    if (CanPushUpdates != null) yield return CanPushUpdates;
+                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -547,14 +304,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                     if (Organization != null) yield return new ElementValue("organization", false, Organization);
                     foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
                     foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", true, elem); }
-                    if (ValidationStatusElement != null) yield return new ElementValue("validationStatus", false, ValidationStatusElement);
+                    if (ValidationStatus != null) yield return new ElementValue("validationStatus", false, ValidationStatus);
                     if (ValidationDateElement != null) yield return new ElementValue("validationDate", false, ValidationDateElement);
-                    if (CanPushUpdatesElement != null) yield return new ElementValue("canPushUpdates", false, CanPushUpdatesElement);
-                    foreach (var elem in PushTypeAvailableElement) { if (elem != null) yield return new ElementValue("pushTypeAvailable", true, elem); }
+                    if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", false, CanPushUpdates);
+                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", true, elem); }
                 }
             }
 
@@ -575,7 +331,6 @@ namespace Hl7.Fhir.Model
             [FhirElement("source", InSummary=true, Order=40)]
             [CLSCompliant(false)]
 			[References("Practitioner")]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Source
             {
@@ -591,7 +346,6 @@ namespace Hl7.Fhir.Model
             [FhirElement("organization", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[References("Organization")]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Organization
             {
@@ -605,7 +359,6 @@ namespace Hl7.Fhir.Model
             /// Who is providing the attested information (owner; authorized representative; authorized intermediary; non-authorized source)
             /// </summary>
             [FhirElement("method", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
             {
@@ -619,7 +372,6 @@ namespace Hl7.Fhir.Model
             /// The date the information was attested to
             /// </summary>
             [FhirElement("date", InSummary=true, Order=70)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Date DateElement
             {
@@ -712,6 +464,36 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Proxy signature
+            /// </summary>
+            [FhirElement("signedProxyRight", Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element SignedProxyRight
+            {
+                get { return _SignedProxyRight; }
+                set { _SignedProxyRight = value; OnPropertyChanged("SignedProxyRight"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _SignedProxyRight;
+            
+            /// <summary>
+            /// Attester signature
+            /// </summary>
+            [FhirElement("signedSourceAttestation", Order=110, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element SignedSourceAttestation
+            {
+                get { return _SignedSourceAttestation; }
+                set { _SignedSourceAttestation = value; OnPropertyChanged("SignedSourceAttestation"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _SignedSourceAttestation;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AttestationComponent;
@@ -725,6 +507,8 @@ namespace Hl7.Fhir.Model
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
                     if(SourceIdentityCertificateElement != null) dest.SourceIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)SourceIdentityCertificateElement.DeepCopy();
                     if(ProxyIdentityCertificateElement != null) dest.ProxyIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)ProxyIdentityCertificateElement.DeepCopy();
+                    if(SignedProxyRight != null) dest.SignedProxyRight = (Hl7.Fhir.Model.Element)SignedProxyRight.DeepCopy();
+                    if(SignedSourceAttestation != null) dest.SignedSourceAttestation = (Hl7.Fhir.Model.Element)SignedSourceAttestation.DeepCopy();
                     return dest;
                 }
                 else
@@ -748,6 +532,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
                 if( !DeepComparable.Matches(SourceIdentityCertificateElement, otherT.SourceIdentityCertificateElement)) return false;
                 if( !DeepComparable.Matches(ProxyIdentityCertificateElement, otherT.ProxyIdentityCertificateElement)) return false;
+                if( !DeepComparable.Matches(SignedProxyRight, otherT.SignedProxyRight)) return false;
+                if( !DeepComparable.Matches(SignedSourceAttestation, otherT.SignedSourceAttestation)) return false;
                 
                 return true;
             }
@@ -764,6 +550,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
                 if( !DeepComparable.IsExactly(SourceIdentityCertificateElement, otherT.SourceIdentityCertificateElement)) return false;
                 if( !DeepComparable.IsExactly(ProxyIdentityCertificateElement, otherT.ProxyIdentityCertificateElement)) return false;
+                if( !DeepComparable.IsExactly(SignedProxyRight, otherT.SignedProxyRight)) return false;
+                if( !DeepComparable.IsExactly(SignedSourceAttestation, otherT.SignedSourceAttestation)) return false;
                 
                 return true;
             }
@@ -781,6 +569,8 @@ namespace Hl7.Fhir.Model
                     if (DateElement != null) yield return DateElement;
                     if (SourceIdentityCertificateElement != null) yield return SourceIdentityCertificateElement;
                     if (ProxyIdentityCertificateElement != null) yield return ProxyIdentityCertificateElement;
+                    if (SignedProxyRight != null) yield return SignedProxyRight;
+                    if (SignedSourceAttestation != null) yield return SignedSourceAttestation;
                 }
             }
 
@@ -796,6 +586,8 @@ namespace Hl7.Fhir.Model
                     if (DateElement != null) yield return new ElementValue("date", false, DateElement);
                     if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", false, SourceIdentityCertificateElement);
                     if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", false, ProxyIdentityCertificateElement);
+                    if (SignedProxyRight != null) yield return new ElementValue("signedProxyRight", false, SignedProxyRight);
+                    if (SignedSourceAttestation != null) yield return new ElementValue("signedSourceAttestation", false, SignedSourceAttestation);
                 }
             }
 
@@ -811,22 +603,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ValidatorComponent"; } }
             
             /// <summary>
-            /// URI of the validator
-            /// </summary>
-            [FhirElement("identifier", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
-            {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _Identifier;
-            
-            /// <summary>
             /// Reference to the organization validating information
             /// </summary>
-            [FhirElement("organization", Order=50)]
+            [FhirElement("organization", Order=40)]
             [CLSCompliant(false)]
 			[References("Organization")]
             [Cardinality(Min=1,Max=1)]
@@ -842,7 +621,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A digital identity certificate associated with the validator
             /// </summary>
-            [FhirElement("identityCertificate", Order=60)]
+            [FhirElement("identityCertificate", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IdentityCertificateElement
             {
@@ -872,37 +651,19 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Date on which the validator last validated the information
+            /// Validator signature
             /// </summary>
-            [FhirElement("dateValidated", Order=70)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("signedValidatorAttestation", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
             [DataMember]
-            public Hl7.Fhir.Model.Date DateValidatedElement
+            public Hl7.Fhir.Model.Element SignedValidatorAttestation
             {
-                get { return _DateValidatedElement; }
-                set { _DateValidatedElement = value; OnPropertyChanged("DateValidatedElement"); }
+                get { return _SignedValidatorAttestation; }
+                set { _SignedValidatorAttestation = value; OnPropertyChanged("SignedValidatorAttestation"); }
             }
             
-            private Hl7.Fhir.Model.Date _DateValidatedElement;
-            
-            /// <summary>
-            /// Date on which the validator last validated the information
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string DateValidated
-            {
-                get { return DateValidatedElement != null ? DateValidatedElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        DateValidatedElement = null; 
-                    else
-                        DateValidatedElement = new Hl7.Fhir.Model.Date(value);
-                    OnPropertyChanged("DateValidated");
-                }
-            }
+            private Hl7.Fhir.Model.Element _SignedValidatorAttestation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -911,10 +672,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(IdentityCertificateElement != null) dest.IdentityCertificateElement = (Hl7.Fhir.Model.FhirString)IdentityCertificateElement.DeepCopy();
-                    if(DateValidatedElement != null) dest.DateValidatedElement = (Hl7.Fhir.Model.Date)DateValidatedElement.DeepCopy();
+                    if(SignedValidatorAttestation != null) dest.SignedValidatorAttestation = (Hl7.Fhir.Model.Element)SignedValidatorAttestation.DeepCopy();
                     return dest;
                 }
                 else
@@ -932,10 +692,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.Matches(IdentityCertificateElement, otherT.IdentityCertificateElement)) return false;
-                if( !DeepComparable.Matches(DateValidatedElement, otherT.DateValidatedElement)) return false;
+                if( !DeepComparable.Matches(SignedValidatorAttestation, otherT.SignedValidatorAttestation)) return false;
                 
                 return true;
             }
@@ -946,10 +705,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
                 if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.IsExactly(IdentityCertificateElement, otherT.IdentityCertificateElement)) return false;
-                if( !DeepComparable.IsExactly(DateValidatedElement, otherT.DateValidatedElement)) return false;
+                if( !DeepComparable.IsExactly(SignedValidatorAttestation, otherT.SignedValidatorAttestation)) return false;
                 
                 return true;
             }
@@ -961,10 +719,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Identifier != null) yield return Identifier;
                     if (Organization != null) yield return Organization;
                     if (IdentityCertificateElement != null) yield return IdentityCertificateElement;
-                    if (DateValidatedElement != null) yield return DateValidatedElement;
+                    if (SignedValidatorAttestation != null) yield return SignedValidatorAttestation;
                 }
             }
 
@@ -974,10 +731,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                     if (Organization != null) yield return new ElementValue("organization", false, Organization);
                     if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", false, IdentityCertificateElement);
-                    if (DateValidatedElement != null) yield return new ElementValue("dateValidated", false, DateValidatedElement);
+                    if (SignedValidatorAttestation != null) yield return new ElementValue("signedValidatorAttestation", false, SignedValidatorAttestation);
                 }
             }
 
@@ -1038,34 +794,14 @@ namespace Hl7.Fhir.Model
         /// none | initial | periodic
         /// </summary>
         [FhirElement("need", InSummary=true, Order=110)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.VerificationResult.need> NeedElement
+        public Hl7.Fhir.Model.CodeableConcept Need
         {
-            get { return _NeedElement; }
-            set { _NeedElement = value; OnPropertyChanged("NeedElement"); }
+            get { return _Need; }
+            set { _Need = value; OnPropertyChanged("Need"); }
         }
         
-        private Code<Hl7.Fhir.Model.VerificationResult.need> _NeedElement;
-        
-        /// <summary>
-        /// none | initial | periodic
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.VerificationResult.need? Need
-        {
-            get { return NeedElement != null ? NeedElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  NeedElement = null; 
-                else
-                  NeedElement = new Code<Hl7.Fhir.Model.VerificationResult.need>(value);
-                OnPropertyChanged("Need");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _Need;
         
         /// <summary>
         /// attested | validated | in-process | req-revalid | val-fail | reval-fail
@@ -1104,7 +840,6 @@ namespace Hl7.Fhir.Model
         /// When the validation status was updated
         /// </summary>
         [FhirElement("statusDate", InSummary=true, Order=130)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StatusDateElement
         {
@@ -1137,40 +872,20 @@ namespace Hl7.Fhir.Model
         /// nothing | primary | multiple
         /// </summary>
         [FhirElement("validationType", InSummary=true, Order=140)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.VerificationResult.validation_type> ValidationTypeElement
+        public Hl7.Fhir.Model.CodeableConcept ValidationType
         {
-            get { return _ValidationTypeElement; }
-            set { _ValidationTypeElement = value; OnPropertyChanged("ValidationTypeElement"); }
+            get { return _ValidationType; }
+            set { _ValidationType = value; OnPropertyChanged("ValidationType"); }
         }
         
-        private Code<Hl7.Fhir.Model.VerificationResult.validation_type> _ValidationTypeElement;
-        
-        /// <summary>
-        /// nothing | primary | multiple
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.VerificationResult.validation_type? ValidationType
-        {
-            get { return ValidationTypeElement != null ? ValidationTypeElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  ValidationTypeElement = null; 
-                else
-                  ValidationTypeElement = new Code<Hl7.Fhir.Model.VerificationResult.validation_type>(value);
-                OnPropertyChanged("ValidationType");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _ValidationType;
         
         /// <summary>
         /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
         /// </summary>
         [FhirElement("validationProcess", InSummary=true, Order=150)]
-        [Cardinality(Min=1,Max=-1)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ValidationProcess
         {
@@ -1261,34 +976,14 @@ namespace Hl7.Fhir.Model
         /// fatal | warn | rec-only | none
         /// </summary>
         [FhirElement("failureAction", InSummary=true, Order=190)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.VerificationResult.failure_action> FailureActionElement
+        public Hl7.Fhir.Model.CodeableConcept FailureAction
         {
-            get { return _FailureActionElement; }
-            set { _FailureActionElement = value; OnPropertyChanged("FailureActionElement"); }
+            get { return _FailureAction; }
+            set { _FailureAction = value; OnPropertyChanged("FailureAction"); }
         }
         
-        private Code<Hl7.Fhir.Model.VerificationResult.failure_action> _FailureActionElement;
-        
-        /// <summary>
-        /// fatal | warn | rec-only | none
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.VerificationResult.failure_action? FailureAction
-        {
-            get { return FailureActionElement != null ? FailureActionElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  FailureActionElement = null; 
-                else
-                  FailureActionElement = new Code<Hl7.Fhir.Model.VerificationResult.failure_action>(value);
-                OnPropertyChanged("FailureAction");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _FailureAction;
         
         /// <summary>
         /// Information about the primary source(s) involved in validation
@@ -1347,15 +1042,15 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(TargetLocationElement != null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopy());
-                if(NeedElement != null) dest.NeedElement = (Code<Hl7.Fhir.Model.VerificationResult.need>)NeedElement.DeepCopy();
+                if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.status>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
-                if(ValidationTypeElement != null) dest.ValidationTypeElement = (Code<Hl7.Fhir.Model.VerificationResult.validation_type>)ValidationTypeElement.DeepCopy();
+                if(ValidationType != null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)ValidationType.DeepCopy();
                 if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());
                 if(Frequency != null) dest.Frequency = (Hl7.Fhir.Model.Timing)Frequency.DeepCopy();
                 if(LastPerformedElement != null) dest.LastPerformedElement = (Hl7.Fhir.Model.FhirDateTime)LastPerformedElement.DeepCopy();
                 if(NextScheduledElement != null) dest.NextScheduledElement = (Hl7.Fhir.Model.Date)NextScheduledElement.DeepCopy();
-                if(FailureActionElement != null) dest.FailureActionElement = (Code<Hl7.Fhir.Model.VerificationResult.failure_action>)FailureActionElement.DeepCopy();
+                if(FailureAction != null) dest.FailureAction = (Hl7.Fhir.Model.CodeableConcept)FailureAction.DeepCopy();
                 if(PrimarySource != null) dest.PrimarySource = new List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>(PrimarySource.DeepCopy());
                 if(Attestation != null) dest.Attestation = (Hl7.Fhir.Model.VerificationResult.AttestationComponent)Attestation.DeepCopy();
                 if(Validator != null) dest.Validator = new List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>(Validator.DeepCopy());
@@ -1378,15 +1073,15 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(TargetLocationElement, otherT.TargetLocationElement)) return false;
-            if( !DeepComparable.Matches(NeedElement, otherT.NeedElement)) return false;
+            if( !DeepComparable.Matches(Need, otherT.Need)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
-            if( !DeepComparable.Matches(ValidationTypeElement, otherT.ValidationTypeElement)) return false;
+            if( !DeepComparable.Matches(ValidationType, otherT.ValidationType)) return false;
             if( !DeepComparable.Matches(ValidationProcess, otherT.ValidationProcess)) return false;
             if( !DeepComparable.Matches(Frequency, otherT.Frequency)) return false;
             if( !DeepComparable.Matches(LastPerformedElement, otherT.LastPerformedElement)) return false;
             if( !DeepComparable.Matches(NextScheduledElement, otherT.NextScheduledElement)) return false;
-            if( !DeepComparable.Matches(FailureActionElement, otherT.FailureActionElement)) return false;
+            if( !DeepComparable.Matches(FailureAction, otherT.FailureAction)) return false;
             if( !DeepComparable.Matches(PrimarySource, otherT.PrimarySource)) return false;
             if( !DeepComparable.Matches(Attestation, otherT.Attestation)) return false;
             if( !DeepComparable.Matches(Validator, otherT.Validator)) return false;
@@ -1402,15 +1097,15 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(TargetLocationElement, otherT.TargetLocationElement)) return false;
-            if( !DeepComparable.IsExactly(NeedElement, otherT.NeedElement)) return false;
+            if( !DeepComparable.IsExactly(Need, otherT.Need)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
-            if( !DeepComparable.IsExactly(ValidationTypeElement, otherT.ValidationTypeElement)) return false;
+            if( !DeepComparable.IsExactly(ValidationType, otherT.ValidationType)) return false;
             if( !DeepComparable.IsExactly(ValidationProcess, otherT.ValidationProcess)) return false;
             if( !DeepComparable.IsExactly(Frequency, otherT.Frequency)) return false;
             if( !DeepComparable.IsExactly(LastPerformedElement, otherT.LastPerformedElement)) return false;
             if( !DeepComparable.IsExactly(NextScheduledElement, otherT.NextScheduledElement)) return false;
-            if( !DeepComparable.IsExactly(FailureActionElement, otherT.FailureActionElement)) return false;
+            if( !DeepComparable.IsExactly(FailureAction, otherT.FailureAction)) return false;
             if( !DeepComparable.IsExactly(PrimarySource, otherT.PrimarySource)) return false;
             if( !DeepComparable.IsExactly(Attestation, otherT.Attestation)) return false;
             if( !DeepComparable.IsExactly(Validator, otherT.Validator)) return false;
@@ -1426,15 +1121,15 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Target) { if (elem != null) yield return elem; }
 				foreach (var elem in TargetLocationElement) { if (elem != null) yield return elem; }
-				if (NeedElement != null) yield return NeedElement;
+				if (Need != null) yield return Need;
 				if (StatusElement != null) yield return StatusElement;
 				if (StatusDateElement != null) yield return StatusDateElement;
-				if (ValidationTypeElement != null) yield return ValidationTypeElement;
+				if (ValidationType != null) yield return ValidationType;
 				foreach (var elem in ValidationProcess) { if (elem != null) yield return elem; }
 				if (Frequency != null) yield return Frequency;
 				if (LastPerformedElement != null) yield return LastPerformedElement;
 				if (NextScheduledElement != null) yield return NextScheduledElement;
-				if (FailureActionElement != null) yield return FailureActionElement;
+				if (FailureAction != null) yield return FailureAction;
 				foreach (var elem in PrimarySource) { if (elem != null) yield return elem; }
 				if (Attestation != null) yield return Attestation;
 				foreach (var elem in Validator) { if (elem != null) yield return elem; }
@@ -1449,15 +1144,15 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
                 foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", true, elem); }
-                if (NeedElement != null) yield return new ElementValue("need", false, NeedElement);
+                if (Need != null) yield return new ElementValue("need", false, Need);
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (StatusDateElement != null) yield return new ElementValue("statusDate", false, StatusDateElement);
-                if (ValidationTypeElement != null) yield return new ElementValue("validationType", false, ValidationTypeElement);
+                if (ValidationType != null) yield return new ElementValue("validationType", false, ValidationType);
                 foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", true, elem); }
                 if (Frequency != null) yield return new ElementValue("frequency", false, Frequency);
                 if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", false, LastPerformedElement);
                 if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", false, NextScheduledElement);
-                if (FailureActionElement != null) yield return new ElementValue("failureAction", false, FailureActionElement);
+                if (FailureAction != null) yield return new ElementValue("failureAction", false, FailureAction);
                 foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", true, elem); }
                 if (Attestation != null) yield return new ElementValue("attestation", false, Attestation);
                 foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", true, elem); }

@@ -127,14 +127,14 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public partial class ExpansionProfile : IVersionableConformanceResource
-    {
-        public Markdown Purpose
-        {
-            get { return null; }
-            set { throw new NotImplementedException(); }
-        }
-    }
+    //public partial class ExpansionProfile : IVersionableConformanceResource
+    //{
+    //    public Markdown Purpose
+    //    {
+    //        get { return null; }
+    //        set { throw new NotImplementedException(); }
+    //    }
+    //}
 
     public partial class NamingSystem : IConformanceResource
     {

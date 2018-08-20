@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "MeasureReport"; } }
         
         /// <summary>
-        /// The status of the measure report
+        /// The status of the measure report.
         /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
         /// </summary>
         [FhirEnumeration("MeasureReportStatus")]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// The type of the measure report
+        /// The type of the measure report.
         /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
         /// </summary>
         [FhirEnumeration("MeasureReportType")]
@@ -107,6 +107,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("summary", "http://hl7.org/fhir/measure-report-type"), Description("Summary")]
             Summary,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/measure-report-type)
+            /// </summary>
+            [EnumLiteral("data-collection", "http://hl7.org/fhir/measure-report-type"), Description("Data Collection")]
+            DataCollection,
         }
 
         [FhirType("GroupComponent")]
@@ -304,19 +310,19 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// For subject-list reports, the subjects in this population
+            /// For subject-list reports, the subject results in this population
             /// </summary>
-            [FhirElement("subjects", Order=60)]
+            [FhirElement("subjectResults", Order=60)]
             [CLSCompliant(false)]
 			[References("List")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Subjects
+            public Hl7.Fhir.Model.ResourceReference SubjectResults
             {
-                get { return _Subjects; }
-                set { _Subjects = value; OnPropertyChanged("Subjects"); }
+                get { return _SubjectResults; }
+                set { _SubjectResults = value; OnPropertyChanged("SubjectResults"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Subjects;
+            private Hl7.Fhir.Model.ResourceReference _SubjectResults;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -327,7 +333,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-                    if(Subjects != null) dest.Subjects = (Hl7.Fhir.Model.ResourceReference)Subjects.DeepCopy();
+                    if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopy();
                     return dest;
                 }
                 else
@@ -347,7 +353,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.Matches(Subjects, otherT.Subjects)) return false;
+                if( !DeepComparable.Matches(SubjectResults, otherT.SubjectResults)) return false;
                 
                 return true;
             }
@@ -360,7 +366,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.IsExactly(Subjects, otherT.Subjects)) return false;
+                if( !DeepComparable.IsExactly(SubjectResults, otherT.SubjectResults)) return false;
                 
                 return true;
             }
@@ -374,7 +380,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (CountElement != null) yield return CountElement;
-                    if (Subjects != null) yield return Subjects;
+                    if (SubjectResults != null) yield return SubjectResults;
                 }
             }
 
@@ -386,7 +392,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (Subjects != null) yield return new ElementValue("subjects", false, Subjects);
+                    if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
                 }
             }
 
@@ -676,19 +682,19 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// For subject-list reports, the subjects in this population
+            /// For subject-list reports, the subject results in this population
             /// </summary>
-            [FhirElement("subjects", Order=60)]
+            [FhirElement("subjectResults", Order=60)]
             [CLSCompliant(false)]
 			[References("List")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Subjects
+            public Hl7.Fhir.Model.ResourceReference SubjectResults
             {
-                get { return _Subjects; }
-                set { _Subjects = value; OnPropertyChanged("Subjects"); }
+                get { return _SubjectResults; }
+                set { _SubjectResults = value; OnPropertyChanged("SubjectResults"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Subjects;
+            private Hl7.Fhir.Model.ResourceReference _SubjectResults;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -699,7 +705,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-                    if(Subjects != null) dest.Subjects = (Hl7.Fhir.Model.ResourceReference)Subjects.DeepCopy();
+                    if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopy();
                     return dest;
                 }
                 else
@@ -719,7 +725,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.Matches(Subjects, otherT.Subjects)) return false;
+                if( !DeepComparable.Matches(SubjectResults, otherT.SubjectResults)) return false;
                 
                 return true;
             }
@@ -732,7 +738,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(CountElement, otherT.CountElement)) return false;
-                if( !DeepComparable.IsExactly(Subjects, otherT.Subjects)) return false;
+                if( !DeepComparable.IsExactly(SubjectResults, otherT.SubjectResults)) return false;
                 
                 return true;
             }
@@ -746,7 +752,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (CountElement != null) yield return CountElement;
-                    if (Subjects != null) yield return Subjects;
+                    if (SubjectResults != null) yield return SubjectResults;
                 }
             }
 
@@ -758,7 +764,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (Subjects != null) yield return new ElementValue("subjects", false, Subjects);
+                    if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
                 }
             }
 
@@ -814,7 +820,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// individual | subject-list | summary
+        /// individual | subject-list | summary | data-collection
         /// </summary>
         [FhirElement("type", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
@@ -828,7 +834,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> _TypeElement;
         
         /// <summary>
-        /// individual | subject-list | summary
+        /// individual | subject-list | summary | data-collection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -884,7 +890,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("Patient","Practitioner","Location","Device","RelatedPerson","Group")]
+		[References("Patient","Practitioner","PractitionerRole","Location","Device","RelatedPerson","Group")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -931,7 +937,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("reporter", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Practitioner","PractitionerRole","Location","Organization","Group")]
+		[References("Practitioner","PractitionerRole","Location","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Reporter
         {
@@ -956,9 +962,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
+        /// increase | decrease
+        /// </summary>
+        [FhirElement("improvementNotation", InSummary=true, Order=170)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.MeasureImprovementNotation> ImprovementNotationElement
+        {
+            get { return _ImprovementNotationElement; }
+            set { _ImprovementNotationElement = value; OnPropertyChanged("ImprovementNotationElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.MeasureImprovementNotation> _ImprovementNotationElement;
+        
+        /// <summary>
+        /// increase | decrease
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.MeasureImprovementNotation? ImprovementNotation
+        {
+            get { return ImprovementNotationElement != null ? ImprovementNotationElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ImprovementNotationElement = null; 
+                else
+                  ImprovementNotationElement = new Code<Hl7.Fhir.Model.MeasureImprovementNotation>(value);
+                OnPropertyChanged("ImprovementNotation");
+            }
+        }
+        
+        /// <summary>
         /// Measure results for each group
         /// </summary>
-        [FhirElement("group", Order=170)]
+        [FhirElement("group", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
@@ -972,23 +1010,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What data was used to calculate the measure score
         /// </summary>
-        [FhirElement("evaluatedResources", Order=180)]
+        [FhirElement("evaluatedResource", Order=190)]
         [CLSCompliant(false)]
-		[References("Bundle")]
+		[References()]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference EvaluatedResources
+        public List<Hl7.Fhir.Model.ResourceReference> EvaluatedResource
         {
-            get { return _EvaluatedResources; }
-            set { _EvaluatedResources = value; OnPropertyChanged("EvaluatedResources"); }
+            get { if(_EvaluatedResource==null) _EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(); return _EvaluatedResource; }
+            set { _EvaluatedResource = value; OnPropertyChanged("EvaluatedResource"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _EvaluatedResources;
+        private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
         
+
+        public static ElementDefinition.ConstraintComponent MeasureReport_MRP_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(type != 'data-collection') or group.exists().not()",
+            Key = "mrp-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Measure Reports used for data collection SHALL NOT communicate group and score information",
+            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
+        };
 
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(MeasureReport_MRP_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1006,8 +1055,9 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                if(ImprovementNotationElement != null) dest.ImprovementNotationElement = (Code<Hl7.Fhir.Model.MeasureImprovementNotation>)ImprovementNotationElement.DeepCopy();
                 if(Group != null) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(Group.DeepCopy());
-                if(EvaluatedResources != null) dest.EvaluatedResources = (Hl7.Fhir.Model.ResourceReference)EvaluatedResources.DeepCopy();
+                if(EvaluatedResource != null) dest.EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(EvaluatedResource.DeepCopy());
                 return dest;
             }
             else
@@ -1033,8 +1083,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            if( !DeepComparable.Matches(ImprovementNotationElement, otherT.ImprovementNotationElement)) return false;
             if( !DeepComparable.Matches(Group, otherT.Group)) return false;
-            if( !DeepComparable.Matches(EvaluatedResources, otherT.EvaluatedResources)) return false;
+            if( !DeepComparable.Matches(EvaluatedResource, otherT.EvaluatedResource)) return false;
             
             return true;
         }
@@ -1053,8 +1104,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+            if( !DeepComparable.IsExactly(ImprovementNotationElement, otherT.ImprovementNotationElement)) return false;
             if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
-            if( !DeepComparable.IsExactly(EvaluatedResources, otherT.EvaluatedResources)) return false;
+            if( !DeepComparable.IsExactly(EvaluatedResource, otherT.EvaluatedResource)) return false;
             
             return true;
         }
@@ -1073,8 +1125,9 @@ namespace Hl7.Fhir.Model
 				if (DateElement != null) yield return DateElement;
 				if (Reporter != null) yield return Reporter;
 				if (Period != null) yield return Period;
+				if (ImprovementNotationElement != null) yield return ImprovementNotationElement;
 				foreach (var elem in Group) { if (elem != null) yield return elem; }
-				if (EvaluatedResources != null) yield return EvaluatedResources;
+				foreach (var elem in EvaluatedResource) { if (elem != null) yield return elem; }
             }
         }
 
@@ -1092,8 +1145,9 @@ namespace Hl7.Fhir.Model
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
                 if (Reporter != null) yield return new ElementValue("reporter", false, Reporter);
                 if (Period != null) yield return new ElementValue("period", false, Period);
+                if (ImprovementNotationElement != null) yield return new ElementValue("improvementNotation", false, ImprovementNotationElement);
                 foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
-                if (EvaluatedResources != null) yield return new ElementValue("evaluatedResources", false, EvaluatedResources);
+                foreach (var elem in EvaluatedResource) { if (elem != null) yield return new ElementValue("evaluatedResource", true, elem); }
             }
         }
 

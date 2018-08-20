@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -304,14 +304,15 @@ namespace Hl7.Fhir.Model
             /// High, low, normal, etc.
             /// </summary>
             [FhirElement("interpretation", Order=70)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Interpretation
+            public List<Hl7.Fhir.Model.CodeableConcept> Interpretation
             {
-                get { return _Interpretation; }
+                get { if(_Interpretation==null) _Interpretation = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Interpretation; }
                 set { _Interpretation = value; OnPropertyChanged("Interpretation"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Interpretation;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Interpretation;
             
             /// <summary>
             /// Provides guide for interpretation of component result
@@ -337,7 +338,7 @@ namespace Hl7.Fhir.Model
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
-                    if(Interpretation != null) dest.Interpretation = (Hl7.Fhir.Model.CodeableConcept)Interpretation.DeepCopy();
+                    if(Interpretation != null) dest.Interpretation = new List<Hl7.Fhir.Model.CodeableConcept>(Interpretation.DeepCopy());
                     if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent>(ReferenceRange.DeepCopy());
                     return dest;
                 }
@@ -390,7 +391,7 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return Code;
                     if (Value != null) yield return Value;
                     if (DataAbsentReason != null) yield return DataAbsentReason;
-                    if (Interpretation != null) yield return Interpretation;
+                    foreach (var elem in Interpretation) { if (elem != null) yield return elem; }
                     foreach (var elem in ReferenceRange) { if (elem != null) yield return elem; }
                 }
             }
@@ -404,7 +405,7 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (Value != null) yield return new ElementValue("value", false, Value);
                     if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
-                    if (Interpretation != null) yield return new ElementValue("interpretation", false, Interpretation);
+                    foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", true, elem); }
                     foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", true, elem); }
                 }
             }
@@ -521,7 +522,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
-        /// Who and/or what this is about
+        /// Who and/or what the observation is about
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=150)]
         [CLSCompliant(false)]
@@ -536,41 +537,42 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// The "focal point" of the observation
+        /// What the observation is about, when it is not about the subject of record
         /// </summary>
         [FhirElement("focus", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References()]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Focus
+        public List<Hl7.Fhir.Model.ResourceReference> Focus
         {
-            get { return _Focus; }
+            get { if(_Focus==null) _Focus = new List<Hl7.Fhir.Model.ResourceReference>(); return _Focus; }
             set { _Focus = value; OnPropertyChanged("Focus"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Focus;
+        private List<Hl7.Fhir.Model.ResourceReference> _Focus;
         
         /// <summary>
         /// Healthcare event during which this observation is made
         /// </summary>
-        [FhirElement("context", Order=170)]
+        [FhirElement("encounter", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Clinically relevant time/time-period for observation
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Instant))]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
         {
@@ -660,17 +662,18 @@ namespace Hl7.Fhir.Model
         /// High, low, normal, etc.
         /// </summary>
         [FhirElement("interpretation", Order=230)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Interpretation
+        public List<Hl7.Fhir.Model.CodeableConcept> Interpretation
         {
-            get { return _Interpretation; }
+            get { if(_Interpretation==null) _Interpretation = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Interpretation; }
             set { _Interpretation = value; OnPropertyChanged("Interpretation"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Interpretation;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Interpretation;
         
         /// <summary>
-        /// Comments about result
+        /// Comments about the test result value
         /// </summary>
         [FhirElement("comment", Order=240)]
         [DataMember]
@@ -683,7 +686,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
-        /// Comments about result
+        /// Comments about the test result value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -747,7 +750,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("device", Order=280)]
         [CLSCompliant(false)]
-		[References("Device","DeviceComponent","DeviceMetric")]
+		[References("Device","DeviceMetric")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Device
         {
@@ -868,14 +871,14 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
-                if(Interpretation != null) dest.Interpretation = (Hl7.Fhir.Model.CodeableConcept)Interpretation.DeepCopy();
+                if(Interpretation != null) dest.Interpretation = new List<Hl7.Fhir.Model.CodeableConcept>(Interpretation.DeepCopy());
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
@@ -910,7 +913,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
@@ -944,7 +947,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
@@ -977,14 +980,14 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;
 				if (Subject != null) yield return Subject;
-				if (Focus != null) yield return Focus;
-				if (Context != null) yield return Context;
+				foreach (var elem in Focus) { if (elem != null) yield return elem; }
+				if (Encounter != null) yield return Encounter;
 				if (Effective != null) yield return Effective;
 				if (IssuedElement != null) yield return IssuedElement;
 				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				if (Value != null) yield return Value;
 				if (DataAbsentReason != null) yield return DataAbsentReason;
-				if (Interpretation != null) yield return Interpretation;
+				foreach (var elem in Interpretation) { if (elem != null) yield return elem; }
 				if (CommentElement != null) yield return CommentElement;
 				if (BodySite != null) yield return BodySite;
 				if (Method != null) yield return Method;
@@ -1010,14 +1013,14 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Focus != null) yield return new ElementValue("focus", false, Focus);
-                if (Context != null) yield return new ElementValue("context", false, Context);
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
                 if (Effective != null) yield return new ElementValue("effective", false, Effective);
                 if (IssuedElement != null) yield return new ElementValue("issued", false, IssuedElement);
                 foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
                 if (Value != null) yield return new ElementValue("value", false, Value);
                 if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
-                if (Interpretation != null) yield return new ElementValue("interpretation", false, Interpretation);
+                foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", true, elem); }
                 if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
                 if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
                 if (Method != null) yield return new ElementValue("method", false, Method);

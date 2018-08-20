@@ -46,13 +46,13 @@ namespace Hl7.FhirPath.Tests
         {
             me.System = value;
         }
-        public static void setValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me, Model.Element value)
+        public static void setValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me, string value)
         {
             me.ValueSet = value;
         }
-        public static Model.Element getValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me)
+        public static Model.Canonical getValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me)
         {
-            return me.ValueSet;
+            return me.ValueSetElement;
         }
 
         public static Model.Range setLow(this Model.Range me, Model.SimpleQuantity value)
@@ -280,8 +280,8 @@ namespace Hl7.FhirPath.Tests
         {
             Model.ElementDefinition ed = new Model.ElementDefinition();
             ed.Binding = new Model.ElementDefinition.ElementDefinitionBindingComponent();
-            ed.Binding.setValueSet(new UriType("http://test.org"));
-            testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
+            ed.Binding.setValueSet("http://test.org");
+            testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSet", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
         }
 
         [Fact, Trait("Area", "FhirPathFromSpec")]

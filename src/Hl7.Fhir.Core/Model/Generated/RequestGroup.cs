@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -191,9 +191,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// routine | urgent | asap | stat
+            /// </summary>
+            [FhirElement("priority", Order=80)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
+            {
+                get { return _PriorityElement; }
+                set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
+            
+            /// <summary>
+            /// routine | urgent | asap | stat
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.RequestPriority? Priority
+            {
+                get { return PriorityElement != null ? PriorityElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        PriorityElement = null; 
+                    else
+                        PriorityElement = new Code<Hl7.Fhir.Model.RequestPriority>(value);
+                    OnPropertyChanged("Priority");
+                }
+            }
+            
+            /// <summary>
             /// Code representing the meaning of the action or sub-actions
             /// </summary>
-            [FhirElement("code", Order=80)]
+            [FhirElement("code", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -207,7 +239,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supporting documentation for the intended performer of the action
             /// </summary>
-            [FhirElement("documentation", Order=90)]
+            [FhirElement("documentation", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<RelatedArtifact> Documentation
@@ -221,7 +253,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether or not the action is applicable
             /// </summary>
-            [FhirElement("condition", Order=100)]
+            [FhirElement("condition", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.RequestGroup.ConditionComponent> Condition
@@ -235,7 +267,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship to another action
             /// </summary>
-            [FhirElement("relatedAction", Order=110)]
+            [FhirElement("relatedAction", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.RequestGroup.RelatedActionComponent> RelatedAction
@@ -249,7 +281,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the action should take place
             /// </summary>
-            [FhirElement("timing", Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -264,7 +296,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who should perform the action
             /// </summary>
-            [FhirElement("participant", Order=130)]
+            [FhirElement("participant", Order=140)]
             [CLSCompliant(false)]
 			[References("Patient","Practitioner","RelatedPerson")]
             [Cardinality(Min=0,Max=-1)]
@@ -280,7 +312,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// create | update | remove | fire-event
             /// </summary>
-            [FhirElement("type", Order=140)]
+            [FhirElement("type", Order=150)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -293,7 +325,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// visual-group | logical-group | sentence-group
             /// </summary>
-            [FhirElement("groupingBehavior", Order=150)]
+            [FhirElement("groupingBehavior", Order=160)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
             {
@@ -325,7 +357,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
             /// </summary>
-            [FhirElement("selectionBehavior", Order=160)]
+            [FhirElement("selectionBehavior", Order=170)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
             {
@@ -357,7 +389,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// must | could | must-unless-documented
             /// </summary>
-            [FhirElement("requiredBehavior", Order=170)]
+            [FhirElement("requiredBehavior", Order=180)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
             {
@@ -389,7 +421,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// yes | no
             /// </summary>
-            [FhirElement("precheckBehavior", Order=180)]
+            [FhirElement("precheckBehavior", Order=190)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
             {
@@ -421,7 +453,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// single | multiple
             /// </summary>
-            [FhirElement("cardinalityBehavior", Order=190)]
+            [FhirElement("cardinalityBehavior", Order=200)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
             {
@@ -453,7 +485,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The target of the action
             /// </summary>
-            [FhirElement("resource", Order=200)]
+            [FhirElement("resource", Order=210)]
             [CLSCompliant(false)]
 			[References()]
             [DataMember]
@@ -468,7 +500,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Sub action
             /// </summary>
-            [FhirElement("action", Order=210)]
+            [FhirElement("action", Order=220)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.RequestGroup.ActionComponent> Action
@@ -490,6 +522,7 @@ namespace Hl7.Fhir.Model
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(TextEquivalentElement != null) dest.TextEquivalentElement = (Hl7.Fhir.Model.FhirString)TextEquivalentElement.DeepCopy();
+                    if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
                     if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(Documentation != null) dest.Documentation = new List<RelatedArtifact>(Documentation.DeepCopy());
                     if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.RequestGroup.ConditionComponent>(Condition.DeepCopy());
@@ -525,6 +558,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(TextEquivalentElement, otherT.TextEquivalentElement)) return false;
+                if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
@@ -553,6 +587,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(TextEquivalentElement, otherT.TextEquivalentElement)) return false;
+                if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
@@ -582,6 +617,7 @@ namespace Hl7.Fhir.Model
                     if (TitleElement != null) yield return TitleElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (TextEquivalentElement != null) yield return TextEquivalentElement;
+                    if (PriorityElement != null) yield return PriorityElement;
                     foreach (var elem in Code) { if (elem != null) yield return elem; }
                     foreach (var elem in Documentation) { if (elem != null) yield return elem; }
                     foreach (var elem in Condition) { if (elem != null) yield return elem; }
@@ -609,6 +645,7 @@ namespace Hl7.Fhir.Model
                     if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                     if (TextEquivalentElement != null) yield return new ElementValue("textEquivalent", false, TextEquivalentElement);
+                    if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
                     foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
                     foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", true, elem); }
                     foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }

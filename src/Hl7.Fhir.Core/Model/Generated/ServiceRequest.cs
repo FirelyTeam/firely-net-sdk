@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,42 +70,75 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Protocol or definition
+        /// Instantiates FHIR protocol or definition
         /// </summary>
-        [FhirElement("instantiates", InSummary=true, Order=100)]
+        [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirUri> InstantiatesElement
+        public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
         {
-            get { if(_InstantiatesElement==null) _InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(); return _InstantiatesElement; }
-            set { _InstantiatesElement = value; OnPropertyChanged("InstantiatesElement"); }
+            get { if(_InstantiatesCanonicalElement==null) _InstantiatesCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(); return _InstantiatesCanonicalElement; }
+            set { _InstantiatesCanonicalElement = value; OnPropertyChanged("InstantiatesCanonicalElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirUri> _InstantiatesElement;
+        private List<Hl7.Fhir.Model.Canonical> _InstantiatesCanonicalElement;
         
         /// <summary>
-        /// Protocol or definition
+        /// Instantiates FHIR protocol or definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Instantiates
+        public IEnumerable<string> InstantiatesCanonical
         {
-            get { return InstantiatesElement != null ? InstantiatesElement.Select(elem => elem.Value) : null; }
+            get { return InstantiatesCanonicalElement != null ? InstantiatesCanonicalElement.Select(elem => elem.Value) : null; }
             set
             {
                 if (value == null)
-                  InstantiatesElement = null; 
+                  InstantiatesCanonicalElement = null; 
                 else
-                  InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
-                OnPropertyChanged("Instantiates");
+                  InstantiatesCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
+                OnPropertyChanged("InstantiatesCanonical");
+            }
+        }
+        
+        /// <summary>
+        /// Instantiates external protocol or definition
+        /// </summary>
+        [FhirElement("instantiatesUri", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
+        {
+            get { if(_InstantiatesUriElement==null) _InstantiatesUriElement = new List<Hl7.Fhir.Model.FhirUri>(); return _InstantiatesUriElement; }
+            set { _InstantiatesUriElement = value; OnPropertyChanged("InstantiatesUriElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.FhirUri> _InstantiatesUriElement;
+        
+        /// <summary>
+        /// Instantiates external protocol or definition
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> InstantiatesUri
+        {
+            get { return InstantiatesUriElement != null ? InstantiatesUriElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  InstantiatesUriElement = null; 
+                else
+                  InstantiatesUriElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                OnPropertyChanged("InstantiatesUri");
             }
         }
         
         /// <summary>
         /// What request fulfills
         /// </summary>
-        [FhirElement("basedOn", InSummary=true, Order=110)]
+        [FhirElement("basedOn", InSummary=true, Order=120)]
         [CLSCompliant(false)]
 		[References("CarePlan","ServiceRequest","MedicationRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -121,7 +154,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What request replaces
         /// </summary>
-        [FhirElement("replaces", InSummary=true, Order=120)]
+        [FhirElement("replaces", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -137,7 +170,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composite Request ID
         /// </summary>
-        [FhirElement("requisition", InSummary=true, Order=130)]
+        [FhirElement("requisition", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Requisition
         {
@@ -150,7 +183,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | suspended | completed | entered-in-error | cancelled
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=140)]
+        [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -183,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposal | plan | order +
         /// </summary>
-        [FhirElement("intent", InSummary=true, Order=150)]
+        [FhirElement("intent", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -216,7 +249,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Classification of service
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=160)]
+        [FhirElement("category", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -230,7 +263,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | asap | stat
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=170)]
+        [FhirElement("priority", InSummary=true, Order=180)]
         [DataMember]
         public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
         {
@@ -262,7 +295,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if service/procedure should not be performed
         /// </summary>
-        [FhirElement("doNotPerform", InSummary=true, Order=180)]
+        [FhirElement("doNotPerform", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
         {
@@ -294,7 +327,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What is being requested/ordered
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=190)]
+        [FhirElement("code", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -307,7 +340,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional order information
         /// </summary>
-        [FhirElement("orderDetail", InSummary=true, Order=200)]
+        [FhirElement("orderDetail", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> OrderDetail
@@ -319,9 +352,24 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _OrderDetail;
         
         /// <summary>
+        /// Service amount
+        /// </summary>
+        [FhirElement("quantity", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Quantity
+        {
+            get { return _Quantity; }
+            set { _Quantity = value; OnPropertyChanged("Quantity"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Quantity;
+        
+        /// <summary>
         /// Individual the service is ordered for
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=210)]
+        [FhirElement("subject", InSummary=true, Order=230)]
         [CLSCompliant(false)]
 		[References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
@@ -337,7 +385,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter or Episode during which request was created
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=220)]
+        [FhirElement("context", InSummary=true, Order=240)]
         [CLSCompliant(false)]
 		[References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -352,7 +400,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When service should occur
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
@@ -367,7 +415,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Preconditions for service
         /// </summary>
-        [FhirElement("asNeeded", InSummary=true, Order=240, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", InSummary=true, Order=260, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
@@ -382,7 +430,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date request signed
         /// </summary>
-        [FhirElement("authoredOn", InSummary=true, Order=250)]
+        [FhirElement("authoredOn", InSummary=true, Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
         {
@@ -414,7 +462,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who/what is requesting service
         /// </summary>
-        [FhirElement("requester", InSummary=true, Order=260)]
+        [FhirElement("requester", InSummary=true, Order=280)]
         [CLSCompliant(false)]
 		[References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson","Device")]
         [DataMember]
@@ -429,7 +477,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Performer role
         /// </summary>
-        [FhirElement("performerType", InSummary=true, Order=270)]
+        [FhirElement("performerType", InSummary=true, Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PerformerType
         {
@@ -442,7 +490,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Requested performer
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=280)]
+        [FhirElement("performer", InSummary=true, Order=300)]
         [CLSCompliant(false)]
 		[References("Practitioner","PractitionerRole","Organization","CareTeam","HealthcareService","Patient","Device","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
@@ -456,9 +504,39 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Performer;
         
         /// <summary>
+        /// Requested location
+        /// </summary>
+        [FhirElement("locationCode", InSummary=true, Order=310)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> LocationCode
+        {
+            get { if(_LocationCode==null) _LocationCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _LocationCode; }
+            set { _LocationCode = value; OnPropertyChanged("LocationCode"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _LocationCode;
+        
+        /// <summary>
+        /// Requested location
+        /// </summary>
+        [FhirElement("locationReference", InSummary=true, Order=320)]
+        [CLSCompliant(false)]
+		[References("Location")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> LocationReference
+        {
+            get { if(_LocationReference==null) _LocationReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _LocationReference; }
+            set { _LocationReference = value; OnPropertyChanged("LocationReference"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _LocationReference;
+        
+        /// <summary>
         /// Explanation/Justification for procedure or service
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=290)]
+        [FhirElement("reasonCode", InSummary=true, Order=330)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -472,7 +550,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Explanation/Justification for service or service
         /// </summary>
-        [FhirElement("reasonReference", InSummary=true, Order=300)]
+        [FhirElement("reasonReference", InSummary=true, Order=340)]
         [CLSCompliant(false)]
 		[References("Condition","Observation","DiagnosticReport","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -488,7 +566,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Associated insurance coverage
         /// </summary>
-        [FhirElement("insurance", Order=310)]
+        [FhirElement("insurance", Order=350)]
         [CLSCompliant(false)]
 		[References("Coverage","ClaimResponse")]
         [Cardinality(Min=0,Max=-1)]
@@ -504,7 +582,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional clinical information
         /// </summary>
-        [FhirElement("supportingInfo", Order=320)]
+        [FhirElement("supportingInfo", Order=360)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
@@ -520,7 +598,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Procedure Samples
         /// </summary>
-        [FhirElement("specimen", InSummary=true, Order=330)]
+        [FhirElement("specimen", InSummary=true, Order=370)]
         [CLSCompliant(false)]
 		[References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
@@ -536,7 +614,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Location on Body
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=340)]
+        [FhirElement("bodySite", InSummary=true, Order=380)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -550,7 +628,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments
         /// </summary>
-        [FhirElement("note", Order=350)]
+        [FhirElement("note", Order=390)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -564,7 +642,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient or consumer-oriented instructions
         /// </summary>
-        [FhirElement("patientInstruction", InSummary=true, Order=360)]
+        [FhirElement("patientInstruction", InSummary=true, Order=400)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PatientInstructionElement
         {
@@ -596,7 +674,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request provenance
         /// </summary>
-        [FhirElement("relevantHistory", Order=370)]
+        [FhirElement("relevantHistory", Order=410)]
         [CLSCompliant(false)]
 		[References("Provenance")]
         [Cardinality(Min=0,Max=-1)]
@@ -634,7 +712,8 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(InstantiatesElement != null) dest.InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(InstantiatesElement.DeepCopy());
+                if(InstantiatesCanonicalElement != null) dest.InstantiatesCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(InstantiatesCanonicalElement.DeepCopy());
+                if(InstantiatesUriElement != null) dest.InstantiatesUriElement = new List<Hl7.Fhir.Model.FhirUri>(InstantiatesUriElement.DeepCopy());
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
                 if(Requisition != null) dest.Requisition = (Hl7.Fhir.Model.Identifier)Requisition.DeepCopy();
@@ -645,6 +724,7 @@ namespace Hl7.Fhir.Model
                 if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(OrderDetail != null) dest.OrderDetail = new List<Hl7.Fhir.Model.CodeableConcept>(OrderDetail.DeepCopy());
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Element)Quantity.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
@@ -653,6 +733,8 @@ namespace Hl7.Fhir.Model
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(PerformerType != null) dest.PerformerType = (Hl7.Fhir.Model.CodeableConcept)PerformerType.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
+                if(LocationCode != null) dest.LocationCode = new List<Hl7.Fhir.Model.CodeableConcept>(LocationCode.DeepCopy());
+                if(LocationReference != null) dest.LocationReference = new List<Hl7.Fhir.Model.ResourceReference>(LocationReference.DeepCopy());
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Insurance != null) dest.Insurance = new List<Hl7.Fhir.Model.ResourceReference>(Insurance.DeepCopy());
@@ -680,7 +762,8 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(InstantiatesElement, otherT.InstantiatesElement)) return false;
+            if( !DeepComparable.Matches(InstantiatesCanonicalElement, otherT.InstantiatesCanonicalElement)) return false;
+            if( !DeepComparable.Matches(InstantiatesUriElement, otherT.InstantiatesUriElement)) return false;
             if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.Matches(Replaces, otherT.Replaces)) return false;
             if( !DeepComparable.Matches(Requisition, otherT.Requisition)) return false;
@@ -691,6 +774,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(OrderDetail, otherT.OrderDetail)) return false;
+            if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
@@ -699,6 +783,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(PerformerType, otherT.PerformerType)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(LocationCode, otherT.LocationCode)) return false;
+            if( !DeepComparable.Matches(LocationReference, otherT.LocationReference)) return false;
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(Insurance, otherT.Insurance)) return false;
@@ -719,7 +805,8 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(InstantiatesElement, otherT.InstantiatesElement)) return false;
+            if( !DeepComparable.IsExactly(InstantiatesCanonicalElement, otherT.InstantiatesCanonicalElement)) return false;
+            if( !DeepComparable.IsExactly(InstantiatesUriElement, otherT.InstantiatesUriElement)) return false;
             if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.IsExactly(Replaces, otherT.Replaces)) return false;
             if( !DeepComparable.IsExactly(Requisition, otherT.Requisition)) return false;
@@ -730,6 +817,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(OrderDetail, otherT.OrderDetail)) return false;
+            if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
@@ -738,6 +826,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(PerformerType, otherT.PerformerType)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(LocationCode, otherT.LocationCode)) return false;
+            if( !DeepComparable.IsExactly(LocationReference, otherT.LocationReference)) return false;
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(Insurance, otherT.Insurance)) return false;
@@ -758,7 +848,8 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				foreach (var elem in InstantiatesElement) { if (elem != null) yield return elem; }
+				foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return elem; }
+				foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return elem; }
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				foreach (var elem in Replaces) { if (elem != null) yield return elem; }
 				if (Requisition != null) yield return Requisition;
@@ -769,6 +860,7 @@ namespace Hl7.Fhir.Model
 				if (DoNotPerformElement != null) yield return DoNotPerformElement;
 				if (Code != null) yield return Code;
 				foreach (var elem in OrderDetail) { if (elem != null) yield return elem; }
+				if (Quantity != null) yield return Quantity;
 				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;
 				if (Occurrence != null) yield return Occurrence;
@@ -777,6 +869,8 @@ namespace Hl7.Fhir.Model
 				if (Requester != null) yield return Requester;
 				if (PerformerType != null) yield return PerformerType;
 				foreach (var elem in Performer) { if (elem != null) yield return elem; }
+				foreach (var elem in LocationCode) { if (elem != null) yield return elem; }
+				foreach (var elem in LocationReference) { if (elem != null) yield return elem; }
 				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
 				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				foreach (var elem in Insurance) { if (elem != null) yield return elem; }
@@ -796,7 +890,8 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", true, elem); }
+                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", true, elem); }
+                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", true, elem); }
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
                 foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
                 if (Requisition != null) yield return new ElementValue("requisition", false, Requisition);
@@ -807,6 +902,7 @@ namespace Hl7.Fhir.Model
                 if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", false, DoNotPerformElement);
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 foreach (var elem in OrderDetail) { if (elem != null) yield return new ElementValue("orderDetail", true, elem); }
+                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (Context != null) yield return new ElementValue("context", false, Context);
                 if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
@@ -815,6 +911,8 @@ namespace Hl7.Fhir.Model
                 if (Requester != null) yield return new ElementValue("requester", false, Requester);
                 if (PerformerType != null) yield return new ElementValue("performerType", false, PerformerType);
                 foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
+                foreach (var elem in LocationCode) { if (elem != null) yield return new ElementValue("locationCode", true, elem); }
+                foreach (var elem in LocationReference) { if (elem != null) yield return new ElementValue("locationReference", true, elem); }
                 foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
                 foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
                 foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", true, elem); }

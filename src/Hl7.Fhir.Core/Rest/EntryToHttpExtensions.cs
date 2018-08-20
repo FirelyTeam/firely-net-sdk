@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Rest
             if (data is Binary)
             {
                 var bin = (Binary)data;
-                body = bin.Content;
+                body = bin.Data;
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, bin.Content);

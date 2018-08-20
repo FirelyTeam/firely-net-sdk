@@ -9,6 +9,28 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Model
 {
+    #region << STU3 Compatibility >>
+    public partial class Binary
+    {
+        /// <summary>
+        /// The actual content (replaces with Data property)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        [Obsolete("The Content property was renamed, please change to use Data", true)]
+        public byte[] Content
+        {
+            get { return Data; }
+            set
+            {
+                Data = value;
+            }
+        }
+
+    }
+    #endregion
+
     #region << DSTU2 Compatability >>
     public partial class StructureDefinition
     {

@@ -2999,7 +2999,7 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Composition.section.code", null);
             Assert.IsNotNull(verifier.CurrentElement.Binding);
             Assert.AreEqual(BindingStrength.Required, verifier.CurrentElement.Binding.Strength);
-            Assert.AreEqual("http://example.org/ValueSet/SectionTitles", (verifier.CurrentElement.Binding.ValueSet as ResourceReference)?.Reference);
+            Assert.AreEqual("http://example.org/ValueSet/SectionTitles", verifier.CurrentElement.Binding.ValueSet);
         }
 
         [TestMethod]
@@ -3221,7 +3221,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(BindingStrength.Example, baseBinding.Strength);
 
             Assert.AreEqual(baseBinding.Description, profileBinding.Description);
-            Assert.IsTrue(baseBinding.ValueSet.IsExactly(profileBinding.ValueSet));
+            Assert.AreEqual(baseBinding.ValueSet, profileBinding.ValueSet);
         }
 
         // [WMR 2017024] NEW: Snapshot generator should reject profile extensions mapped to a StructureDefinition that is not an Extension definition.
@@ -4279,10 +4279,10 @@ namespace Hl7.Fhir.Specification.Tests
             // Condition.extension:typedStaging.extension:type.valueCodeableConcept
             Assert.IsTrue(nav.MoveToChild("valueCodeableConcept"));
             Assert.IsNotNull(nav.Current.Binding);
-            var valueSetReference = nav.Current.Binding.ValueSet as ResourceReference;
+            var valueSetReference = nav.Current.Binding.ValueSet;
             Assert.IsNotNull(valueSetReference);
             Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
-            Assert.AreEqual("https://example.org/fhir/ValueSet/cds-cancerstagingtype", valueSetReference.Reference);
+            Assert.AreEqual("https://example.org/fhir/ValueSet/cds-cancerstagingtype", valueSetReference);
         }
 
         // [WMR 20170424] For debugging ElementIdGenerator
@@ -4808,7 +4808,7 @@ namespace Hl7.Fhir.Specification.Tests
                         Binding = new ElementDefinition.ElementDefinitionBindingComponent()
                         {
                             Strength = BindingStrength.Extensible,
-                            ValueSet = new ResourceReference(PatientIdentifierTypeValueSetUri)
+                            ValueSet = PatientIdentifierTypeValueSetUri
                         }
                     },
                 }
@@ -4968,10 +4968,10 @@ namespace Hl7.Fhir.Specification.Tests
                 var binding = elem.Binding;
                 Assert.IsNotNull(binding);
                 Assert.AreEqual(BindingStrength.Example, binding.Strength);
-                var ValueSetReference = binding.ValueSet as ResourceReference;
+                var ValueSetReference = binding.ValueSet;
                 Assert.IsNotNull(ValueSetReference);
-                // Assert.AreEqual("http://hl7.org/fhir/ValueSet/questionnaire-answers", ValueSetReference.Url.OriginalString);
-                Assert.IsTrue(ValueSetReference.Url.Equals("http://hl7.org/fhir/ValueSet/questionnaire-answers"));
+                Assert.AreEqual("http://hl7.org/fhir/ValueSet/questionnaire-answers", ValueSetReference);
+                // Assert.IsTrue(ValueSetReference.Url.Equals("http://hl7.org/fhir/ValueSet/questionnaire-answers"));
                 var bindingNameExtension = binding.Extension.FirstOrDefault(e => e.Url == "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName");
                 Assert.IsNotNull(bindingNameExtension);
                 var bindingNameValue = bindingNameExtension.Value as FhirString;
@@ -5549,7 +5549,7 @@ namespace Hl7.Fhir.Specification.Tests
                         Binding = new ElementDefinition.ElementDefinitionBindingComponent()
                         {
                             Strength = BindingStrength.Required,
-                            ValueSet = new FhirUri(SL_NameSuffixValueSetUri)
+                            ValueSet = SL_NameSuffixValueSetUri
                         }
                     }
                 }
@@ -5599,8 +5599,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
             Assert.IsNotNull(nav.Current.Binding);
             Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
-            url = nav.Current.Binding.ValueSet as FhirUri;
-            Assert.AreEqual(SL_NameSuffixValueSetUri, url?.Value);
+            var vsUrl = nav.Current.Binding.ValueSet;
+            Assert.AreEqual(SL_NameSuffixValueSetUri, vsUrl);
         }
 
         // [WMR 20170927] ContentReference

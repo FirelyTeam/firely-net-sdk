@@ -107,14 +107,14 @@ namespace Hl7.Fhir.Specification.Tests
             var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
             var vs = source.ListSummaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
-            var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            // var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
             var ns = source.ListSummaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
 
             var all = source.ListSummaries();
 
             Assert.AreEqual(sd.Count() + sm.Count() + cf.Count() + md.Count() + od.Count() +
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
-                        ep.Count() + ns.Count(), all.Count());
+                        /*ep.Count() +*/ ns.Count(), all.Count());
         }
 
         [TestMethod]

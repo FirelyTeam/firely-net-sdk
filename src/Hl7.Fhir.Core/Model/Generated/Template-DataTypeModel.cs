@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Wed, 06 Jun 2018 14:31:25 GMT for FHIR v3.3.0
+// Model Generated on Mon, 20 Aug 2018 13:21:54 GMT for FHIR v3.5.0
 //
 // Generated Shared Enumeration: Use
 
@@ -10,6 +10,8 @@
 // Generated Shared Enumeration: OperationParameterUse
 	// Used in model class (type): ParameterDefinition.use
 
+// Generated Shared Enumeration: DeviceNameType
+
 // Generated Shared Enumeration: FilterOperator
 
 // Generated Shared Enumeration: ActionSelectionBehavior
@@ -17,6 +19,8 @@
 // Generated Shared Enumeration: RequestPriority
 
 // Generated Shared Enumeration: RequestIntent
+
+// Generated Shared Enumeration: MeasureImprovementNotation
 
 // Generated Shared Enumeration: AdministrativeGender
 
@@ -43,11 +47,15 @@
 
 // Generated Shared Enumeration: ActionCardinalityBehavior
 
+// Generated Shared Enumeration: CapabilityStatementKind
+
 // Generated Shared Enumeration: ActionConditionKind
 
 // Generated Shared Enumeration: CompartmentType
 
 // Generated Shared Enumeration: ActionParticipantType
+
+// Generated Shared Enumeration: InvoicePriceComponentType
 
 // Generated Shared Enumeration: DaysOfWeek
 	// Used in model class (type): Timing.repeat.dayOfWeek
@@ -90,10 +98,12 @@
 // Hl7.Fhir.Core\Model\Generated\ProdCharacteristic.cs
 // Hl7.Fhir.Core\Model\Generated\Period.cs
 // Hl7.Fhir.Core\Model\Generated\ParameterDefinition.cs
+// Hl7.Fhir.Core\Model\Generated\Money.cs
 // Hl7.Fhir.Core\Model\Generated\Meta.cs
 // Hl7.Fhir.Core\Model\Generated\MarketingStatus.cs
 // Hl7.Fhir.Core\Model\Generated\Identifier.cs
 // Hl7.Fhir.Core\Model\Generated\HumanName.cs
+// Hl7.Fhir.Core\Model\Generated\Expression.cs
 // Hl7.Fhir.Core\Model\Generated\ElementDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Dosage.cs
 // Hl7.Fhir.Core\Model\Generated\DataRequirement.cs

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -126,9 +126,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Collected;
             
             /// <summary>
+            /// How long it took to collect specimen
+            /// </summary>
+            [FhirElement("duration", InSummary=true, Order=60)]
+            [DataMember]
+            public Duration Duration
+            {
+                get { return _Duration; }
+                set { _Duration = value; OnPropertyChanged("Duration"); }
+            }
+            
+            private Duration _Duration;
+            
+            /// <summary>
             /// The quantity of specimen collected
             /// </summary>
-            [FhirElement("quantity", Order=60)]
+            [FhirElement("quantity", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
@@ -141,7 +154,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Technique used to perform collection
             /// </summary>
-            [FhirElement("method", Order=70)]
+            [FhirElement("method", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
             {
@@ -154,7 +167,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Anatomical collection site
             /// </summary>
-            [FhirElement("bodySite", Order=80)]
+            [FhirElement("bodySite", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BodySite
             {
@@ -163,6 +176,21 @@ namespace Hl7.Fhir.Model
             }
             
             private Hl7.Fhir.Model.CodeableConcept _BodySite;
+            
+            /// <summary>
+            /// Whether or how long patient abstained from food and/or drink
+            /// </summary>
+            [FhirElement("fastingStatus", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Duration))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element FastingStatus
+            {
+                get { return _FastingStatus; }
+                set { _FastingStatus = value; OnPropertyChanged("FastingStatus"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _FastingStatus;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -173,9 +201,11 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
                     if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
+                    if(Duration != null) dest.Duration = (Duration)Duration.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
+                    if(FastingStatus != null) dest.FastingStatus = (Hl7.Fhir.Model.Element)FastingStatus.DeepCopy();
                     return dest;
                 }
                 else
@@ -195,9 +225,11 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Collector, otherT.Collector)) return false;
                 if( !DeepComparable.Matches(Collected, otherT.Collected)) return false;
+                if( !DeepComparable.Matches(Duration, otherT.Duration)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.Matches(Method, otherT.Method)) return false;
                 if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.Matches(FastingStatus, otherT.FastingStatus)) return false;
                 
                 return true;
             }
@@ -210,9 +242,11 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Collector, otherT.Collector)) return false;
                 if( !DeepComparable.IsExactly(Collected, otherT.Collected)) return false;
+                if( !DeepComparable.IsExactly(Duration, otherT.Duration)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
+                if( !DeepComparable.IsExactly(FastingStatus, otherT.FastingStatus)) return false;
                 
                 return true;
             }
@@ -226,9 +260,11 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Collector != null) yield return Collector;
                     if (Collected != null) yield return Collected;
+                    if (Duration != null) yield return Duration;
                     if (Quantity != null) yield return Quantity;
                     if (Method != null) yield return Method;
                     if (BodySite != null) yield return BodySite;
+                    if (FastingStatus != null) yield return FastingStatus;
                 }
             }
 
@@ -240,9 +276,11 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Collector != null) yield return new ElementValue("collector", false, Collector);
                     if (Collected != null) yield return new ElementValue("collected", false, Collected);
+                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
                     if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
                     if (Method != null) yield return new ElementValue("method", false, Method);
                     if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
+                    if (FastingStatus != null) yield return new ElementValue("fastingStatus", false, FastingStatus);
                 }
             }
 
@@ -690,7 +728,6 @@ namespace Hl7.Fhir.Model
         [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Patient","Group","Device","Substance","Location")]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -806,9 +843,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Specimen.ContainerComponent> _Container;
         
         /// <summary>
+        /// State of the specimen
+        /// </summary>
+        [FhirElement("condition", InSummary=true, Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Condition
+        {
+            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Condition; }
+            set { _Condition = value; OnPropertyChanged("Condition"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Condition;
+        
+        /// <summary>
         /// Comments
         /// </summary>
-        [FhirElement("note", Order=200)]
+        [FhirElement("note", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -844,6 +895,7 @@ namespace Hl7.Fhir.Model
                 if(Collection != null) dest.Collection = (Hl7.Fhir.Model.Specimen.CollectionComponent)Collection.DeepCopy();
                 if(Processing != null) dest.Processing = new List<Hl7.Fhir.Model.Specimen.ProcessingComponent>(Processing.DeepCopy());
                 if(Container != null) dest.Container = new List<Hl7.Fhir.Model.Specimen.ContainerComponent>(Container.DeepCopy());
+                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.CodeableConcept>(Condition.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
@@ -873,6 +925,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Collection, otherT.Collection)) return false;
             if( !DeepComparable.Matches(Processing, otherT.Processing)) return false;
             if( !DeepComparable.Matches(Container, otherT.Container)) return false;
+            if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
@@ -895,6 +948,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Collection, otherT.Collection)) return false;
             if( !DeepComparable.IsExactly(Processing, otherT.Processing)) return false;
             if( !DeepComparable.IsExactly(Container, otherT.Container)) return false;
+            if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
@@ -917,6 +971,7 @@ namespace Hl7.Fhir.Model
 				if (Collection != null) yield return Collection;
 				foreach (var elem in Processing) { if (elem != null) yield return elem; }
 				foreach (var elem in Container) { if (elem != null) yield return elem; }
+				foreach (var elem in Condition) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
@@ -938,6 +993,7 @@ namespace Hl7.Fhir.Model
                 if (Collection != null) yield return new ElementValue("collection", false, Collection);
                 foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", true, elem); }
                 foreach (var elem in Container) { if (elem != null) yield return new ElementValue("container", true, elem); }
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
             }
         }

@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "TriggerDefinition"; } }
         
         /// <summary>
-        /// The type of trigger
+        /// The type of trigger.
         /// (url: http://hl7.org/fhir/ValueSet/trigger-type)
         /// </summary>
         [FhirEnumeration("TriggerType")]
@@ -108,184 +108,6 @@ namespace Hl7.Fhir.Model
             DataAccessEnded,
         }
 
-        [FhirType("ConditionComponent")]
-        [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ConditionComponent"; } }
-            
-            /// <summary>
-            /// Natural language description of the condition
-            /// </summary>
-            [FhirElement("description", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Natural language description of the condition
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            /// <summary>
-            /// text/cql | text/fhirpath | etc.
-            /// </summary>
-            [FhirElement("language", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Code LanguageElement
-            {
-                get { return _LanguageElement; }
-                set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Code _LanguageElement;
-            
-            /// <summary>
-            /// text/cql | text/fhirpath | etc.
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Language
-            {
-                get { return LanguageElement != null ? LanguageElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                      LanguageElement = null; 
-                    else
-                      LanguageElement = new Hl7.Fhir.Model.Code(value);
-                    OnPropertyChanged("Language");
-                }
-            }
-            
-            /// <summary>
-            /// Boolean-valued expression
-            /// </summary>
-            [FhirElement("expression", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ExpressionElement
-            {
-                get { return _ExpressionElement; }
-                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ExpressionElement;
-            
-            /// <summary>
-            /// Boolean-valued expression
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Expression
-            {
-                get { return ExpressionElement != null ? ExpressionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                      ExpressionElement = null; 
-                    else
-                      ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Expression");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ConditionComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
-                    if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ConditionComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ConditionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
-                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ConditionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
-                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
-                
-                return true;
-            }
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (DescriptionElement != null) yield return DescriptionElement;
-                    if (LanguageElement != null) yield return LanguageElement;
-                    if (ExpressionElement != null) yield return ExpressionElement;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren 
-            { 
-                get 
-                { 
-                    foreach (var item in base.NamedChildren) yield return item; 
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
- 
-                } 
-            } 
-            
-        }                
         /// <summary>
         /// named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
         /// </summary>
@@ -380,17 +202,17 @@ namespace Hl7.Fhir.Model
         private DataRequirement _Data;
         
         /// <summary>
-        /// Whether the event triggers
+        /// Whether the event triggers (boolean expression)
         /// </summary>
         [FhirElement("condition", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.TriggerDefinition.ConditionComponent Condition
+        public Expression Condition
         {
             get { return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
         
-        private Hl7.Fhir.Model.TriggerDefinition.ConditionComponent _Condition;
+        private Expression _Condition;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -404,7 +226,7 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                 if(Data != null) dest.Data = (DataRequirement)Data.DeepCopy();
-                if(Condition != null) dest.Condition = (Hl7.Fhir.Model.TriggerDefinition.ConditionComponent)Condition.DeepCopy();
+                if(Condition != null) dest.Condition = (Expression)Condition.DeepCopy();
                 return dest;
             }
             else

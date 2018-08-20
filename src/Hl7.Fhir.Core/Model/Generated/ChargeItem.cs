@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ChargeItem"; } }
         
         /// <summary>
-        /// Codes identifying the lifecycle stage of a ChargeItem
+        /// Codes identifying the lifecycle stage of a ChargeItem.
         /// (url: http://hl7.org/fhir/ValueSet/chargeitem-status)
         /// </summary>
         [FhirEnumeration("ChargeItemStatus")]
@@ -106,32 +106,32 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("ParticipantComponent")]
+        [FhirType("PerformerComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ParticipantComponent"; } }
+            public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
             /// What type of performance was done
             /// </summary>
-            [FhirElement("role", Order=40)]
+            [FhirElement("function", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Role
+            public Hl7.Fhir.Model.CodeableConcept Function
             {
-                get { return _Role; }
-                set { _Role = value; OnPropertyChanged("Role"); }
+                get { return _Function; }
+                set { _Function = value; OnPropertyChanged("Function"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Role;
+            private Hl7.Fhir.Model.CodeableConcept _Function;
             
             /// <summary>
             /// Individual who was performing
             /// </summary>
             [FhirElement("actor", Order=50)]
             [CLSCompliant(false)]
-			[References("Practitioner","Organization","Patient","Device","RelatedPerson")]
+			[References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
@@ -144,12 +144,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ParticipantComponent;
+                var dest = other as PerformerComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                    if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopy();
                     if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                     return dest;
                 }
@@ -159,16 +159,16 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ParticipantComponent());
+                return CopyTo(new PerformerComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ParticipantComponent;
+                var otherT = other as PerformerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(Function, otherT.Function)) return false;
                 if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
                 
                 return true;
@@ -176,11 +176,11 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ParticipantComponent;
+                var otherT = other as PerformerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                if( !DeepComparable.IsExactly(Function, otherT.Function)) return false;
                 if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
                 
                 return true;
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Role != null) yield return Role;
+                    if (Function != null) yield return Function;
                     if (Actor != null) yield return Actor;
                 }
             }
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
+                    if (Function != null) yield return new ElementValue("function", false, Function);
                     if (Actor != null) yield return new ElementValue("actor", false, Actor);
                 }
             }
@@ -372,16 +372,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who performed charged service
         /// </summary>
-        [FhirElement("participant", Order=170)]
+        [FhirElement("performer", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ChargeItem.ParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.ChargeItem.PerformerComponent> Performer
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.ChargeItem.ParticipantComponent>(); return _Participant; }
-            set { _Participant = value; OnPropertyChanged("Participant"); }
+            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ChargeItem.PerformerComponent>(); return _Performer; }
+            set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private List<Hl7.Fhir.Model.ChargeItem.ParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.ChargeItem.PerformerComponent> _Performer;
         
         /// <summary>
         /// Organization providing the charged sevice
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("costCenter", Order=200)]
         [CLSCompliant(false)]
-		[References("Organization","OrganizationRole")]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference CostCenter
         {
@@ -610,9 +610,24 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Service;
         
         /// <summary>
+        /// Product charged
+        /// </summary>
+        [FhirElement("product", Order=300, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Product
+        {
+            get { return _Product; }
+            set { _Product = value; OnPropertyChanged("Product"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Product;
+        
+        /// <summary>
         /// Account to place this charge
         /// </summary>
-        [FhirElement("account", InSummary=true, Order=300)]
+        [FhirElement("account", InSummary=true, Order=310)]
         [CLSCompliant(false)]
 		[References("Account")]
         [Cardinality(Min=0,Max=-1)]
@@ -628,7 +643,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments made about the ChargeItem
         /// </summary>
-        [FhirElement("note", Order=310)]
+        [FhirElement("note", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -642,7 +657,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Further information supporting this charge
         /// </summary>
-        [FhirElement("supportingInformation", Order=320)]
+        [FhirElement("supportingInformation", Order=330)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
@@ -677,7 +692,7 @@ namespace Hl7.Fhir.Model
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.ChargeItem.ParticipantComponent>(Participant.DeepCopy());
+                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ChargeItem.PerformerComponent>(Performer.DeepCopy());
                 if(PerformingOrganization != null) dest.PerformingOrganization = (Hl7.Fhir.Model.ResourceReference)PerformingOrganization.DeepCopy();
                 if(RequestingOrganization != null) dest.RequestingOrganization = (Hl7.Fhir.Model.ResourceReference)RequestingOrganization.DeepCopy();
                 if(CostCenter != null) dest.CostCenter = (Hl7.Fhir.Model.ResourceReference)CostCenter.DeepCopy();
@@ -690,6 +705,7 @@ namespace Hl7.Fhir.Model
                 if(EnteredDateElement != null) dest.EnteredDateElement = (Hl7.Fhir.Model.FhirDateTime)EnteredDateElement.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Service != null) dest.Service = new List<Hl7.Fhir.Model.ResourceReference>(Service.DeepCopy());
+                if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                 if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
@@ -718,7 +734,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
-            if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(PerformingOrganization, otherT.PerformingOrganization)) return false;
             if( !DeepComparable.Matches(RequestingOrganization, otherT.RequestingOrganization)) return false;
             if( !DeepComparable.Matches(CostCenter, otherT.CostCenter)) return false;
@@ -731,6 +747,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(EnteredDateElement, otherT.EnteredDateElement)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Service, otherT.Service)) return false;
+            if( !DeepComparable.Matches(Product, otherT.Product)) return false;
             if( !DeepComparable.Matches(Account, otherT.Account)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
@@ -752,7 +769,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
-            if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(PerformingOrganization, otherT.PerformingOrganization)) return false;
             if( !DeepComparable.IsExactly(RequestingOrganization, otherT.RequestingOrganization)) return false;
             if( !DeepComparable.IsExactly(CostCenter, otherT.CostCenter)) return false;
@@ -765,6 +782,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(EnteredDateElement, otherT.EnteredDateElement)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Service, otherT.Service)) return false;
+            if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
             if( !DeepComparable.IsExactly(Account, otherT.Account)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
@@ -786,7 +804,7 @@ namespace Hl7.Fhir.Model
 				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;
 				if (Occurrence != null) yield return Occurrence;
-				foreach (var elem in Participant) { if (elem != null) yield return elem; }
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				if (PerformingOrganization != null) yield return PerformingOrganization;
 				if (RequestingOrganization != null) yield return RequestingOrganization;
 				if (CostCenter != null) yield return CostCenter;
@@ -799,6 +817,7 @@ namespace Hl7.Fhir.Model
 				if (EnteredDateElement != null) yield return EnteredDateElement;
 				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				foreach (var elem in Service) { if (elem != null) yield return elem; }
+				if (Product != null) yield return Product;
 				foreach (var elem in Account) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
@@ -819,7 +838,7 @@ namespace Hl7.Fhir.Model
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
                 if (Context != null) yield return new ElementValue("context", false, Context);
                 if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
                 if (PerformingOrganization != null) yield return new ElementValue("performingOrganization", false, PerformingOrganization);
                 if (RequestingOrganization != null) yield return new ElementValue("requestingOrganization", false, RequestingOrganization);
                 if (CostCenter != null) yield return new ElementValue("costCenter", false, CostCenter);
@@ -832,6 +851,7 @@ namespace Hl7.Fhir.Model
                 if (EnteredDateElement != null) yield return new ElementValue("enteredDate", false, EnteredDateElement);
                 foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
                 foreach (var elem in Service) { if (elem != null) yield return new ElementValue("service", true, elem); }
+                if (Product != null) yield return new ElementValue("product", false, Product);
                 foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", true, elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
                 foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
