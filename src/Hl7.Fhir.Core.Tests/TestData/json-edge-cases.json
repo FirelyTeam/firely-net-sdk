@@ -148,7 +148,7 @@
             ]
         },
         "relationship": [{"coding": [{
-            "system": "http://hl7.org/fhir/patient-contact-relationship",
+            "system": "http://example.org/fhir/CodeSystem/patient-contact-relationship",
             "code": "partner"
         }]}],
         "telecom": [{

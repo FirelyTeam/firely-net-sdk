@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/2018May/";
+$server = "http://hl7.org/fhir/2018Sep/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -110,3 +110,7 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/j
 
 # Still need to add:
 # extract schemas and xsd from fhir-all.zip -> data
+
+# Run the text transformation tools to update the Models from the templates
+# pushd ..\src\Hl7.Fhir.Core\Model\Generated
+# "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\TestTransform.exe" 

@@ -129,6 +129,8 @@ namespace Hl7.Fhir.Model
 					// reformat the name so that it is a valid .NET enumeration name
 					enumName = enumName.Replace(" ", "").Replace("-", "_");
 
+					if (enumName == "MimeTypes")
+						continue;
 					if (generatedSets.Contains(enumName))
 						continue;
 					generatedSets.Add(enumName);
