@@ -10,6 +10,7 @@ using System;
 using System.Xml;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Model.Primitives;
+using System.Globalization;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -110,7 +111,11 @@ namespace Hl7.Fhir.Serialization
             if (typeof(DateTime) == to)
                 return ConvertToDatetimeOffset(value).UtcDateTime;
             if (typeof(Decimal) == to)
-                return XmlConvert.ToDecimal(value);
+            {
+                decimal result;
+                decimal.TryParse(value, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                return result;
+            }
             if (typeof(Double) == to)
                 return XmlConvert.ToDouble(value);      // Could lead to loss in precision
             if (typeof(Int16) == to)
