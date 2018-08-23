@@ -1,9 +1,5 @@
 ﻿using Hl7.Fhir.Introspection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Hl7.Fhir.Model
 {
@@ -15,27 +11,27 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// usual | official | temp | secondary (If known)
         /// </summary>
-        IdentifierUse? Use { get; }
+        IdentifierUse? Use { get; set; }
 
         /// <summary>
         /// Description of identifier
         /// </summary>
-        CodeableConcept Type { get; }
+        CodeableConcept Type { get; set; }
 
         /// <summary>
         /// The namespace for the identifier value
         /// </summary>
-        string System { get; }
+        string System { get; set; }
 
         /// <summary>
         /// The value that is unique
         /// </summary>
-        string Value { get; }
+        string Value { get; set; }
 
         /// <summary>
         /// Time period when id is/was valid for use
         /// </summary>
-        Period Period { get; }
+        Period Period { get; set; }
 
         /// <summary>
         /// Organization that issued id (may be just text)
