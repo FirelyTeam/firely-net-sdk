@@ -1,4 +1,8 @@
 ﻿{
+  "fhir_comments": [
+    " yadayada "
+  ],
+
   "resourceType": "Patient",
   "id": "example",
   "text": {
@@ -36,9 +40,7 @@
         "   Peter James Chalmers, but called \"Jim\"   "
       ],
       "use": "official",
-      "family": [
-        "Chalmers"
-      ],
+      "family": "Chalmers",
       "given": [
         "Peter",
         "James"
@@ -61,8 +63,7 @@
     {
       "system": "phone",
       "value": "(03) 5555 6473",
-      "use": "work",
-      "rank": 1
+      "use": "work"
     }
   ],
   "gender": "male",
@@ -110,24 +111,18 @@
         }
       ],
       "name": {
-        "family": [
-          "du",
-          "Marché"
-        ],
-        "_family": [
-          {
-            "extension": [
-              {
-                "fhir_comments": [
-                  "   the \"du\" part is a family name prefix (VV in iso 21090)   "
-                ],
-                "url": "http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier",
-                "valueCode": "VV"
-              }
-            ]
-          },
-          null
-        ],
+        "family": "du Marché",
+        "_family": {
+          "extension": [
+            {
+              "fhir_comments": [
+                "   the \"du\" part is a family name prefix (VV in iso 21090)   "
+              ],
+              "url": "http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier",
+              "valueCode": "VV"
+            }
+          ]
+        },
         "given": [
           "Bénédicte"
         ]
