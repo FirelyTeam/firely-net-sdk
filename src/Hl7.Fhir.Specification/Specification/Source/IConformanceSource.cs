@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Source
         // [WMR 20171204] We could convert the following members to extension methods (ConformanceSourceExtensions)
         // Breaking change, but decreases interface implementer burden
 
-        /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type.</summary>
+        /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type. (these are not Canonical Uris)</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);

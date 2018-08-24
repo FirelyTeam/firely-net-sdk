@@ -124,10 +124,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void FindAllResources()
         {
-            var uris = source.ListResourceUris(ResourceType.ConceptMap);
+            var uris = source.ListResourceUris(ResourceType.ConceptMap).ToList();
             Assert.IsTrue(uris.Any());
 
-            var cmaps = source.FindAll<ConceptMap>();
+            var cmaps = source.FindAll<ConceptMap>().ToList();
             Assert.AreEqual(uris.Count(), cmaps.Count());
         }
 

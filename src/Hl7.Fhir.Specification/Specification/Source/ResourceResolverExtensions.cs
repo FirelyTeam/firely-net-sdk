@@ -79,7 +79,12 @@ namespace Hl7.Fhir.Specification.Source
             return source.ResolveByCanonicalUri(uri) as CodeSystem;
         }
 
-
+        /// <summary>
+        /// List all the 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T:Resource
         {
             var type = ModelInfo.GetFhirTypeNameForType(typeof(T));
@@ -91,7 +96,7 @@ namespace Hl7.Fhir.Specification.Source
                 // EK: What needs fixing?   Re-enabling to see whether the bug still turns up.
                 // var uris = source.ListResourceUris(resourceType).Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
                 var uris = source.ListResourceUris(resourceType);
-                return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
+                return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
                 
             }
             else

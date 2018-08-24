@@ -71,15 +71,15 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var wa = new WebResolver();
 
-            var artifact = wa.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Observation");
+            var artifact = wa.ResolveByUri("http://test.fhir.org/r4/StructureDefinition/Observation");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
             Assert.AreEqual("Observation", ((StructureDefinition)artifact).Name);
 
             // var ci = artifact.Annotation<OriginAnnotation>();
-            // Assert.AreEqual("http://test.fhir.org/r3/StructureDefinition/Observation", ci.Origin);
-            Assert.AreEqual("http://test.fhir.org/r3/StructureDefinition/Observation", artifact.GetOrigin());
+            // Assert.AreEqual("http://test.fhir.org/r4/StructureDefinition/Observation", ci.Origin);
+            Assert.AreEqual("http://test.fhir.org/r4/StructureDefinition/Observation", artifact.GetOrigin());
         }
 
         private class TestFhirClient : Rest.FhirClient
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNull(client);
 
-            var artifact = wa.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Patient");
+            var artifact = wa.ResolveByUri("http://test.fhir.org/r4/StructureDefinition/Patient");
 
             Assert.IsNotNull(client);
             Assert.AreEqual(client.Status, 3);
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var artifact = resolver.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Patient");
+            var artifact = resolver.ResolveByUri("http://test.fhir.org/r4/StructureDefinition/Patient");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
