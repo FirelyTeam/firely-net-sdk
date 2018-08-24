@@ -42,6 +42,14 @@ namespace Hl7.FhirPath.Tests
                 Hl7.Fhir.Model.Resource resource = null;
                 try
                 {
+                    // Exclude the fhirpath unit test config files
+                    if (item.Contains("csharp-tests"))
+                        continue;
+                    if (item.Contains("tests-fhir-r2"))
+                        continue;
+                    if (item.Contains("tests-fhir-r4"))
+                        continue;
+
                     if (item.EndsWith(".dll"))
                         continue;
                     if (item.EndsWith(".exe"))
