@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-08-09T16:30:06.949+02:00" />
@@ -145,7 +145,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
     </element>
     <element>
@@ -167,9 +167,7 @@
       <binding>
         <strength value="required" />
         <description value="Indicates the purpose of a bundle - how it was intended to be used." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/bundle-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/bundle-type" />
       </binding>
       <mapping>
         <identity value="w5" />
@@ -570,7 +568,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
     </element>
     <element>
@@ -592,9 +590,7 @@
       <binding>
         <strength value="required" />
         <description value="Indicates the purpose of a bundle - how it was intended to be used." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/bundle-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/bundle-type" />
       </binding>
       <mapping>
         <identity value="w5" />
@@ -1027,9 +1023,7 @@
       <binding>
         <strength value="required" />
         <description value="Why an entry is in the result set - whether it's included as a match or because of an _include requirement." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/search-entry-mode" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode" />
       </binding>
     </element>
     <element>
@@ -1150,9 +1144,7 @@
       <binding>
         <strength value="required" />
         <description value="HTTP verbs (in the HTTP command line)." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/http-verb" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb" />
       </binding>
     </element>
     <element>
@@ -1505,9 +1497,7 @@
       <binding>
         <strength value="required" />
         <description value="Why an entry is in the result set - whether it's included as a match or because of an _include requirement." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/search-entry-mode" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode" />
       </binding>
     </element>
     <element>
@@ -1628,9 +1618,7 @@
       <binding>
         <strength value="required" />
         <description value="HTTP verbs (in the HTTP command line)." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/http-verb" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb" />
       </binding>
     </element>
     <element>

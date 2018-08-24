@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="au-practitioner" />
   <meta>
@@ -60,7 +60,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Practitioner.identifier:hpii.type.coding">
@@ -130,7 +130,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Practitioner.identifier:prescriberNumber.type.coding">

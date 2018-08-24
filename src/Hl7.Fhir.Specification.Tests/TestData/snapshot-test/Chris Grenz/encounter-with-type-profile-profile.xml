@@ -189,7 +189,7 @@
 			<binding>
 				<strength value="required" />
 				<description value="A human language." />
-				<valueSetUri value="http://tools.ietf.org/html/bcp47" />
+				<valueSet value="http://tools.ietf.org/html/bcp47" />
 			</binding>
 			<mapping>
 				<identity value="rim" />
@@ -416,7 +416,7 @@
 			<binding>
 				<strength value="required" />
 				<description value="Current state of the encounter" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-state" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-state" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -599,7 +599,7 @@
 			<binding>
 				<strength value="required" />
 				<description value="Current state of the encounter" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-state" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-state" />
 			</binding>
 			<mapping>
 				<identity value="rim" />
@@ -674,7 +674,7 @@
 			<binding>
 				<strength value="required" />
 				<description value="Classification of the encounter" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-class" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-class" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -720,7 +720,7 @@
 			<binding>
 				<strength value="example" />
 				<description value="The type of encounter" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-type" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-type" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -1619,7 +1619,7 @@
 			<binding>
 				<strength value="example" />
 				<description value="Indicates the urgency of the encounter." />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-priority" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-priority" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -2800,7 +2800,7 @@
 			<binding>
 				<strength value="extensible" />
 				<description value="Role of participant in encounter" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-participant-type" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-participant-type" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -3105,7 +3105,7 @@
 			<binding>
 				<strength value="example" />
 				<description value="Reason why the encounter takes place." />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-reason" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-reason" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -3450,7 +3450,7 @@
 			<binding>
 				<strength value="preferred" />
 				<description value="From where the patient was admitted." />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-admit-source" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-admit-source" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -3590,7 +3590,7 @@
 			<binding>
 				<strength value="example" />
 				<description value="Medical, cultural or ethical food preferences to help with catering requirements." />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-diet" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-diet" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -3643,7 +3643,7 @@
 			<binding>
 				<strength value="preferred" />
 				<description value="Special courtesies" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-special-courtesy" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-special-courtesy" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -3696,7 +3696,7 @@
 			<binding>
 				<strength value="preferred" />
 				<description value="Special arrangements" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-special-arrangements" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-special-arrangements" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -3795,7 +3795,7 @@
 			<binding>
 				<strength value="preferred" />
 				<description value="Discharge Disposition" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-discharge-disposition" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-discharge-disposition" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -4082,7 +4082,7 @@
 			<binding>
 				<strength value="required" />
 				<description value="The status of the location." />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/encounter-location-status" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/encounter-location-status" />
 			</binding>
 			<mapping>
 				<identity value="rim" />

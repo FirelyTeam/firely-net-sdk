@@ -146,10 +146,7 @@
       <alias value="OrganisatieType" />
       <binding>
         <strength value="extensible" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.17.2.3--20150401000000" />
-          <display value="OrganisatieTypeCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.17.2.3--20150401000000" />
       </binding>
       <mapping>
         <identity value="hcim-healthcareprovider-v1.2-2015EN" />
@@ -164,10 +161,7 @@
       <alias value="AfdelingSpeciaisme" />
       <binding>
         <strength value="extensible" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.17.2.4--20150401000000" />
-          <display value="AfdelingSpecialismeCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.17.2.4--20150401000000" />
       </binding>
       <mapping>
         <identity value="hcim-healthcareprovider-v1.2-2015EN" />

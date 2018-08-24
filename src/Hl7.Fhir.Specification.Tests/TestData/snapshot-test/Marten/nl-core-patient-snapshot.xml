@@ -232,7 +232,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -542,9 +542,7 @@
       <binding>
         <strength value="required" />
         <description value="Identifies the purpose for this identifier, if known ." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/identifier-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -589,9 +587,7 @@
       <binding>
         <strength value="extensible" />
         <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/identifier-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-type" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -1721,9 +1717,7 @@
       <binding>
         <strength value="required" />
         <description value="Identifies the purpose for this identifier, if known ." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/identifier-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -1768,9 +1762,7 @@
       <binding>
         <strength value="extensible" />
         <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/identifier-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-type" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -2944,9 +2936,7 @@
       <binding>
         <strength value="required" />
         <description value="The use of a human name" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/name-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/name-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -3549,9 +3539,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -3645,9 +3633,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -4081,9 +4067,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -4185,9 +4169,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -4625,9 +4607,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -4729,9 +4709,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -5028,9 +5006,7 @@
       <binding>
         <strength value="required" />
         <description value="The gender of a person used for administrative purposes." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -5320,9 +5296,7 @@
       <binding>
         <strength value="required" />
         <description value="The use of an address" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/address-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -5371,9 +5345,7 @@
       <binding>
         <strength value="required" />
         <description value="The type of an address (physical / postal)" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/address-type" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -5961,10 +5933,7 @@
       <isSummary value="true" />
       <binding>
         <strength value="required" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.7.9.1--20150401000000" />
-          <display value="BurgerlijkeStaatCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.7.9.1--20150401000000" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -6658,7 +6627,7 @@
       <binding>
         <strength value="required" />
         <description value="The mime type of an attachment. Any valid mime type is allowed." />
-        <valueSetUri value="http://www.rfc-editor.org/bcp/bcp13.txt" />
+        <valueSet value="http://www.rfc-editor.org/bcp/bcp13.txt" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -6704,7 +6673,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -7134,9 +7103,7 @@
       <binding>
         <strength value="extensible" />
         <description value="The nature of the relationship between a patient and a contact person for that patient." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/patient-contact-relationship" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/patient-contact-relationship" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -7650,10 +7617,7 @@
       <isSummary value="true" />
       <binding>
         <strength value="extensible" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.1--20150401000000" />
-          <display value="RelatieCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.1--20150401000000" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -8171,10 +8135,7 @@
       <isSummary value="true" />
       <binding>
         <strength value="extensible" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.2--20150401000000" />
-          <display value="RolCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.2--20150401000000" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -8819,9 +8780,7 @@
       <binding>
         <strength value="required" />
         <description value="The use of a human name" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/name-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/name-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -9424,9 +9383,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -9520,9 +9477,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -9956,9 +9911,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -10060,9 +10013,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -10500,9 +10451,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -10604,9 +10553,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -11031,9 +10978,7 @@
       <binding>
         <strength value="required" />
         <description value="The use of an address" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/address-use" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -11082,9 +11027,7 @@
       <binding>
         <strength value="required" />
         <description value="The type of an address (physical / postal)" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/address-type" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -11671,9 +11614,7 @@
       <binding>
         <strength value="required" />
         <description value="The gender of a person used for administrative purposes." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -12268,9 +12209,7 @@
       <binding>
         <strength value="example" />
         <description value="The species of an animal." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/animal-species" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/animal-species" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -12782,9 +12721,7 @@
       <binding>
         <strength value="example" />
         <description value="The breed of an animal." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/animal-breeds" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/animal-breeds" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -13296,9 +13233,7 @@
       <binding>
         <strength value="example" />
         <description value="The state of the animal's reproductive organs." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/animal-genderstatus" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/animal-genderstatus" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -13953,7 +13888,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -15102,9 +15037,7 @@
       <binding>
         <strength value="required" />
         <description value="The type of link between this patient resource and another patient resource." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/link-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/link-type" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -15313,10 +15246,7 @@
       <alias value="BurgerlijkeStaat" />
       <binding>
         <strength value="required" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.7.9.1--20150401000000" />
-          <display value="BurgerlijkeStaatCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.7.9.1--20150401000000" />
       </binding>
       <mapping>
         <identity value="zib-burgerlijkestaat" />
@@ -15360,10 +15290,7 @@
       <alias value="Relatie" />
       <binding>
         <strength value="extensible" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.1--20150401000000" />
-          <display value="RelatieCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.1--20150401000000" />
       </binding>
       <mapping>
         <identity value="zib-contactpersoon" />
@@ -15378,10 +15305,7 @@
       <alias value="Rol" />
       <binding>
         <strength value="extensible" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.2--20150401000000" />
-          <display value="RolCodelijst" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.3.1.2--20150401000000" />
       </binding>
       <mapping>
         <identity value="zib-contactpersoon" />

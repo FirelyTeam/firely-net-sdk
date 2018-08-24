@@ -132,7 +132,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
     </element>
     <element>
@@ -308,9 +308,7 @@
       <binding>
         <strength value="required" />
         <description value="Codes providing the status of an observation." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-status" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-status" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -344,9 +342,7 @@
       <binding>
         <strength value="example" />
         <description value="Codes for high level observation categories ." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-category" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-category" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -376,9 +372,7 @@
       <binding>
         <strength value="example" />
         <description value="Codes identifying names of simple observations." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-codes" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-codes" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -642,9 +636,7 @@
       <binding>
         <strength value="extensible" />
         <description value="Codes specifying why the result (Observation.value[x]) is missing." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -674,9 +666,7 @@
       <binding>
         <strength value="extensible" />
         <description value="Codes identifying interpretations of observations." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-interpretation" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -730,9 +720,7 @@
       <binding>
         <strength value="example" />
         <description value="Codes describing anatomical locations. May include laterality." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/body-site" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/body-site" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -762,9 +750,7 @@
       <binding>
         <strength value="example" />
         <description value="Methods for simple observations." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-methods" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-methods" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -999,9 +985,7 @@
       <binding>
         <strength value="example" />
         <description value="Code for the meaning of a reference range." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/referencerange-meaning" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/referencerange-meaning" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -1166,9 +1150,7 @@
       <binding>
         <strength value="required" />
         <description value="Codes specifying how two observations are related." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -1315,9 +1297,7 @@
       <binding>
         <strength value="example" />
         <description value="Codes identifying names of simple observations." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-codes" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-codes" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -1405,9 +1385,7 @@
       <binding>
         <strength value="extensible" />
         <description value="Codes specifying why the result (Observation.value[x]) is missing." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason" />
       </binding>
       <mapping>
         <identity value="v2" />

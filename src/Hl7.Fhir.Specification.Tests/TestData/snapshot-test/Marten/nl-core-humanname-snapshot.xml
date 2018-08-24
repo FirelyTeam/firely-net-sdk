@@ -258,9 +258,7 @@
       <binding>
         <strength value="required" />
         <description value="The use of a human name" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/name-use" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/name-use" />
       </binding>
       <mapping>
         <identity value="rim" />

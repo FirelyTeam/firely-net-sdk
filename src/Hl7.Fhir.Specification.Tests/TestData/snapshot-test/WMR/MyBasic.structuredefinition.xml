@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-08-03T18:00:18.565+02:00" />
@@ -109,7 +109,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
     </element>
     <element>
@@ -249,9 +249,7 @@
       <isSummary value="true" />
       <binding>
         <strength value="example" />
-        <valueSetReference>
-          <reference value="http://example.org/fhir/dummy" />
-        </valueSetReference>
+        <valueSet value="http://example.org/fhir/dummy" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -527,9 +525,7 @@
       <path value="Basic.code" />
       <binding>
         <strength value="example" />
-        <valueSetReference>
-          <reference value="http://example.org/fhir/dummy" />
-        </valueSetReference>
+        <valueSet value="http://example.org/fhir/dummy" />
       </binding>
     </element>
     <!-- Base element definition is inherited from DomainResource -->
