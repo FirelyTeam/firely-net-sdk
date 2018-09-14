@@ -26,7 +26,6 @@ namespace Hl7.Fhir.Specification.Source
     }
 
     /// <summary>Reads and caches FHIR artifacts (Profiles, ValueSets, ...) from an internal <see cref="IResourceResolver"/> instance.</summary>
-    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class CachedResolver : IResourceResolver
     {
         /// <summary>Default expiration time for cached entries.</summary>
@@ -40,7 +39,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="cacheDuration">Default expiration time of a cache entry, in seconds.</param>
         public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION)
         {
-            Source = source ?? throw Error.ArgumentNull(nameof(source));
+            Source = source;
             CacheDuration = cacheDuration;
 
             _resourcesByUri = new Cache<Resource>(id => InternalResolveByUri(id), CacheDuration);
@@ -172,7 +171,6 @@ namespace Hl7.Fhir.Specification.Source
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal protected virtual string DebuggerDisplay
             => $"{GetType().Name} for {Source.DebuggerDisplayString()}";
-
 
         private class Cache<T>
         {

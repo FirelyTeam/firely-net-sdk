@@ -10,8 +10,12 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class UtilityOperators
     {
+#if WAY_TOO_MUCH_OUTPUT
         static Action<string> WriteLine = (string s) => Debug.WriteLine(s);
-         
+#else
+        static Action<string> WriteLine = (string s) => { };
+#endif
+
         public static IEnumerable<IElementNavigator> Extension(this IEnumerable<IElementNavigator> focus, string url)
         {
             return focus.Navigate("extension").Where(es => es.Navigate("url").Single().IsEqualTo(new ConstantValue(url)));

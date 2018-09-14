@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
         {
             var result = new HumanName()
             {
-                Family = new string[] { family }
+                Family = family
             };
             return result;
         }
@@ -58,8 +58,7 @@ namespace Hl7.Fhir.Model
 
         public HumanName AndFamily(string family)
         {
-            if(this.FamilyElement == null) this.FamilyElement = new List<FhirString>();
-            this.FamilyElement.Add(new FhirString(family));
+            this.Family = family;
 
             return this;
         }

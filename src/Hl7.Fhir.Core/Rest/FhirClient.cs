@@ -6,10 +6,10 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -82,23 +82,23 @@ namespace Hl7.Fhir.Rest
             get;
             set;
         }
-        
+
         /// <summary>
         /// The preferred format of the content to be used when communicating with the FHIR server (XML or JSON)
         /// </summary>
         public ResourceFormat PreferredFormat
         {
-            get     { return _requester.PreferredFormat; }
-            set     { _requester.PreferredFormat = value; }
+            get { return _requester.PreferredFormat; }
+            set { _requester.PreferredFormat = value; }
         }
-        
+
         /// <summary>
         /// When passing the content preference, use the _format parameter instead of the request header
         /// </summary>
-        public bool UseFormatParam 
+        public bool UseFormatParam
         {
-            get     { return _requester.UseFormatParameter; }
-            set     { _requester.UseFormatParameter = value; }
+            get { return _requester.UseFormatParameter; }
+            set { _requester.UseFormatParameter = value; }
         }
 
         /// <summary>
@@ -117,11 +117,36 @@ namespace Hl7.Fhir.Rest
         /// Should calls to Create, Update and transaction operations return the whole updated content?
         /// </summary>
         /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
+        [Obsolete("In STU3 this is no longer a true/false option, use the PreferredReturn property instead")]
         public bool ReturnFullResource
         {
-            get => _requester.Prefer == Prefer.ReturnRepresentation;
-            set => _requester.Prefer = value ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
+            get => _requester.PreferredReturn == Prefer.ReturnRepresentation;
+            set => _requester.PreferredReturn = value ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
         }
+
+        /// <summary>
+        /// Should calls to Create, Update and transaction operations return the whole updated content, 
+        /// or an OperationOutcome?
+        /// </summary>
+        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
+
+        public Prefer? PreferredReturn
+        {
+            get => _requester.PreferredReturn;
+            set => _requester.PreferredReturn = value;
+        }
+
+        /// <summary>
+        /// Should server return which search parameters were supported after executing a search?
+        /// If true, the server should return an error for any unknown or unsupported parameter, otherwise
+        /// the server may ignore any unknown or unsupported parameter.
+        /// </summary>
+        public SearchParameterHandling? PreferredParameterHandling
+        {
+            get => _requester.PreferredParameterHandling;
+            set => _requester.PreferredParameterHandling = value;
+        }
+
 
 #if NET_COMPRESSION
         /// <summary>
@@ -153,8 +178,8 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings
         {
-            get { return _requester.ParserSettings;  }
-            set { _requester.ParserSettings = value;  }
+            get { return _requester.ParserSettings; }
+            set { _requester.ParserSettings = value; }
         }
 
 
@@ -369,7 +394,7 @@ namespace Hl7.Fhir.Rest
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
             var upd = new TransactionBuilder(Endpoint);
-                
+
             if (versionAware && resource.HasVersionId)
                 upd.Update(condition, resource, versionId: resource.VersionId);
             else
@@ -414,14 +439,14 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public async Task DeleteAsync(Uri location)
+        public async System.Threading.Tasks.Task DeleteAsync(Uri location)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToBundle();
 
-            await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }).ConfigureAwait(false);
+            await executeAsync<Model.Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }).ConfigureAwait(false);
         }
         /// <summary>
         /// Delete a resource at the given endpoint.
@@ -441,7 +466,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public Task DeleteAsync(string location)
+        public System.Threading.Tasks.Task DeleteAsync(string location)
         {
             return DeleteAsync(new Uri(location, UriKind.Relative));
         }
@@ -462,7 +487,7 @@ namespace Hl7.Fhir.Rest
         /// Delete a resource
         /// </summary>
         /// <param name="resource">The resource to delete</param>
-        public async Task DeleteAsync(Resource resource)
+        public async System.Threading.Tasks.Task DeleteAsync(Resource resource)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Entry must have an id");
@@ -483,7 +508,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="resourceType">The type of resource to delete</param>
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
-        public async Task DeleteAsync(string resourceType, SearchParams condition)
+        public async System.Threading.Tasks.Task DeleteAsync(string resourceType, SearchParams condition)
         {
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
@@ -542,7 +567,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
-            var tx = new TransactionBuilder(Endpoint).Create(resource,condition).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).Create(resource, condition).ToBundle();
 
             return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
@@ -559,15 +584,29 @@ namespace Hl7.Fhir.Rest
         /// Get a conformance statement for the system
         /// </summary>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public Task<Conformance> ConformanceAsync(SummaryType? summary = null)
+        [Obsolete("The Conformance operation has been replaced by the CapabilityStatement", false)]
+        public CapabilityStatement Conformance(SummaryType? summary = null)
         {
-            var tx = new TransactionBuilder(Endpoint).Conformance(summary).ToBundle();
-            return executeAsync<Conformance>(tx, HttpStatusCode.OK);
+            return CapabilityStatement(summary);
         }
 
-        public Conformance Conformance(SummaryType? summary = null)
+        /// <summary>
+        /// Get a conformance statement for the system
+        /// </summary>
+        /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
+        public Task<CapabilityStatement> CapabilityStatementAsync(SummaryType? summary = null)
         {
-            return ConformanceAsync(summary).WaitResult();
+            var tx = new TransactionBuilder(Endpoint).CapabilityStatement(summary).ToBundle();
+            return executeAsync<CapabilityStatement>(tx, HttpStatusCode.OK);
+        }
+
+        /// <summary>
+        /// Get a conformance statement for the system
+        /// </summary>
+        /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
+        public CapabilityStatement CapabilityStatement(SummaryType? summary = null)
+        {
+            return CapabilityStatementAsync(summary).WaitResult();
         }
         #endregion
 
@@ -1007,11 +1046,11 @@ namespace Hl7.Fhir.Rest
         }
 
         // Original
-        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Resource
+        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
         {
             return executeAsync<TResource>(tx, new[] { expect }).WaitResult();
         }
-        public Task<TResource> executeAsync<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Resource
+        public Task<TResource> executeAsync<TResource>(Model.Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
         {
             return executeAsync<TResource>(tx, new[] { expect });
         }
@@ -1040,8 +1079,8 @@ namespace Hl7.Fhir.Rest
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
             var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
-            if (noRealBody && isPostOrPut(request)
-                && ReturnFullResource && response.Response.Location != null
+            if (noRealBody && isPostOrPut(request) 
+                && PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
             {
                 result = await GetAsync(response.Response.Location).ConfigureAwait(false);
@@ -1082,10 +1121,10 @@ namespace Hl7.Fhir.Rest
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
-            Conformance conf = null;
+            CapabilityStatement conf = null;
             try
             {
-                conf = Conformance();
+                conf = CapabilityStatement(SummaryType.True); // don't get the full version as its huge just to read the fhir version
             }
             catch (FormatException)
             {

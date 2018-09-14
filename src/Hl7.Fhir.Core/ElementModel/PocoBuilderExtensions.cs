@@ -89,19 +89,19 @@ namespace Hl7.Fhir.ElementModel
 
             switch (instanceType)
             {
-                case FHIRDefinedType.Code:
+                case FHIRAllTypes.Code:
                     return instance.ParsePrimitive<Code>();
-                case FHIRDefinedType.Coding:
+                case FHIRAllTypes.Coding:
                     return instance.ParseCoding();
-                case FHIRDefinedType.CodeableConcept:
+                case FHIRAllTypes.CodeableConcept:
                     return instance.ParseCodeableConcept();
-                case FHIRDefinedType.Quantity:
+                case FHIRAllTypes.Quantity:
                     return parseQuantity(instance);
-                case FHIRDefinedType.String:
+                case FHIRAllTypes.String:
                     return new Code(instance.ParsePrimitive<FhirString>()?.Value);
-                case FHIRDefinedType.Uri:
+                case FHIRAllTypes.Uri:
                     return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
-                case FHIRDefinedType.Extension:
+                case FHIRAllTypes.Extension:
                     return parseExtension(instance);
                 case null:
                     //HACK: fall through - IElementNav did not provide a type

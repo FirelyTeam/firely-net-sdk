@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,14 +49,14 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Describes the type of the metric. For example: Heart Rate, PEEP Setting, etc.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="identifier" minOccurs="1" maxOccurs="1" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">Describes the unique identification of this metric that has been assigned by the device or gateway software. For example: handle ID.  It should be noted that in order to make the identifier unique, the system element of the identifier should be set to the unique identifier of the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the type of the metric. For example: Heart Rate, PEEP Setting, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="unit" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -66,7 +66,7 @@
           </xs:element>
           <xs:element name="source" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Describes the link to the  Device that this DeviceMetric belongs to and that contains administrative device information such as manufacture, serial number, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">Describes the link to the  Device that this DeviceMetric belongs to and that contains administrative device information such as manufacturer, serial number, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="parent" minOccurs="0" maxOccurs="1" type="Reference">
@@ -129,46 +129,81 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:simpleType name="DeviceMetricCalibrationType-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="unspecified">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unspecified</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="offset">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Offset</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gain">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Gain</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="two-point">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Two Point</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DeviceMetricCalibrationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Describes the type of a metric calibration.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="DeviceMetricCalibrationType-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:simpleType name="DeviceMetricColor-list">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="code-primitive">
       <xs:enumeration value="black">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - black.</xs:documentation>
+          <xs:documentation xml:lang="en">Color Black</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="red">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - red.</xs:documentation>
+          <xs:documentation xml:lang="en">Color Red</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="green">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - green.</xs:documentation>
+          <xs:documentation xml:lang="en">Color Green</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="yellow">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - yellow.</xs:documentation>
+          <xs:documentation xml:lang="en">Color Yellow</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="blue">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - blue.</xs:documentation>
+          <xs:documentation xml:lang="en">Color Blue</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="magenta">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - magenta.</xs:documentation>
+          <xs:documentation xml:lang="en">Color Magenta</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="cyan">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - cyan.</xs:documentation>
+          <xs:documentation xml:lang="en">Color Cyan</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="white">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Color for representation - white.</xs:documentation>
+          <xs:documentation xml:lang="en">Color White</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -185,25 +220,25 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="DeviceMetricCalibrationState-list">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="code-primitive">
       <xs:enumeration value="not-calibrated">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The metric has not been calibrated.</xs:documentation>
+          <xs:documentation xml:lang="en">Not Calibrated</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="calibration-required">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The metric needs to be calibrated.</xs:documentation>
+          <xs:documentation xml:lang="en">Calibration Required</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="calibrated">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The metric has been calibrated.</xs:documentation>
+          <xs:documentation xml:lang="en">Calibrated</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="unspecified">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The state of calibration of this metric is unspecified.</xs:documentation>
+          <xs:documentation xml:lang="en">Unspecified</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -219,91 +254,26 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceMetricCalibrationType-list">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="unspecified">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TODO</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="offset">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TODO</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="gain">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TODO</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="two-point">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TODO</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="DeviceMetricCalibrationType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the type of a metric calibration.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceMetricCalibrationType-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="DeviceMetricCategory-list">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="measurement">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceObservations generated for this DeviceMetric are measured.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="setting">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceObservations generated for this DeviceMetric is a setting that will influence the behavior of the Device.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="calculation">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceObservations generated for this DeviceMetric are calculated.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="unspecified">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">The category of this DeviceMetric is unspecified.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="DeviceMetricCategory">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the category of the metric.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceMetricCategory-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:simpleType name="DeviceMetricOperationalStatus-list">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="code-primitive">
       <xs:enumeration value="on">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The DeviceMetric is operating and will generate DeviceObservations.</xs:documentation>
+          <xs:documentation xml:lang="en">On</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="off">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The DeviceMetric is not operating.</xs:documentation>
+          <xs:documentation xml:lang="en">Off</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="standby">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The DeviceMetric is operating, but will not generate any DeviceObservations.</xs:documentation>
+          <xs:documentation xml:lang="en">Standby</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered In Error</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -316,6 +286,41 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="DeviceMetricOperationalStatus-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="DeviceMetricCategory-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="measurement">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Measurement</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="setting">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Setting</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="calculation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Calculation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unspecified">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unspecified</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DeviceMetricCategory">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Describes the category of the metric.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="DeviceMetricCategory-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

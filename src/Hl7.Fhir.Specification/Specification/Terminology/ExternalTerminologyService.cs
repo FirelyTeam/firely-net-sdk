@@ -8,6 +8,8 @@
 
 using System;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
@@ -30,14 +32,11 @@ namespace Hl7.Fhir.Specification.Terminology
             Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 
             bool? @abstract = null, string displayLanguage = null)
         {
-            if (!String.IsNullOrEmpty(displayLanguage))
-                throw Error.NotSupported($"The '{nameof(displayLanguage)}' parameter is not supported in DSTU2 terminology services.");
-
             try
             {
                 var resultValidateCode =
                     Endpoint.ValidateCode(
-                                identifier: canonical != null ? new FhirUri(canonical) : null,
+                                url: canonical != null ? new FhirUri(canonical) : null,
                                 context: context != null ? new FhirUri(context) : null,
                                 valueSet: valueSet, 
                                 code: code != null ? new Code(code) : null,
@@ -45,7 +44,8 @@ namespace Hl7.Fhir.Specification.Terminology
                                 version: version != null ? new FhirString(version) : null,
                                 display: display != null ? new FhirString(display) : null,
                                 coding: coding, codeableConcept: codeableConcept, date: date, 
-                                @abstract: @abstract != null ? new FhirBoolean(@abstract) : null);
+                                @abstract: @abstract != null ? new FhirBoolean(@abstract) : null,
+                                displayLanguage: displayLanguage != null ? new Code(displayLanguage) : null);
 
                 OperationOutcome outcome = processResult(code, system, display, coding, codeableConcept, resultValidateCode);
 

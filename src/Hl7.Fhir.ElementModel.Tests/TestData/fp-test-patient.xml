@@ -1,25 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- First comment -->
-<Patient xmlns="http://hl7.org/fhir">
+<Patient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://hl7.org/fhir ../../../Hl7.Fhir.Specification/data/fhir-all.xsd"
+ xmlns="http://hl7.org/fhir">
   <!-- Comments here -->
-  <id value="pat1"/>   <!-- where's this comment? -->
+  <id value="pat1"/>
+  <!-- where's this comment? -->
   <text>
     <status value="generated"/>
-    <div xmlns="http://www.w3.org/1999/xhtml"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
+    </div>
   </text>
   <!-- comment on contained -->
   <contained>
     <!-- Where does this end up?-->
-    <Patient>      
+    <Patient>
       <!-- Maybe here ?-->
-      <id value="1"/>     
+      <id value="1"/>
       <identifier>
         <system value="http://hl7.org/fhir/sid/us-ssn" />
         <value value="444222222"/>
       </identifier>
       <active value ="true"/>
       <name id="firstname">
-        <!-- See if this is roundtripped -->        
+        <!-- See if this is roundtripped -->
         <use value="official"/>
         <family value="Everywoman"/>
         <given value="Eve"/>
@@ -34,8 +39,8 @@
         <system value="phone"/>
         <value value="555-555-2003"/>
         <use value="work"/>
-		<rank value="1"/>
-	  </telecom>
+        <rank value="1"/>
+      </telecom>
       <gender value="female"/>
       <birthDate value="1973-05-31"/>
       <address>
@@ -75,115 +80,116 @@
       <status value="draft"/>
       <date value="2012-01"/>
       <subjectType value="Patient"/>
-      <group>
+      <item>
         <linkId value="1"/>
-        <title value="Cancer Quality Forum Questionnaire 2012"/>
-        <required value="true"/>
-        <group>
+        <text value="Cancer Quality Forum Questionnaire 2012"/>
+        <type value="display" />
+        <item>
           <!--     COMORBIDITY     -->
           <!--     First main section of the form, questions about comorbidity     -->
           <linkId value="1.1"/>
-          <concept>
+          <code>
             <system value="http://example.org/system/code/sections"/>
             <code value="COMORBIDITY"/>
-          </concept>
+          </code>
           <!--     section contains one question: whether there is comorbidity     -->
-          <question>
+          <type value="display" />
+          <item>
             <linkId value="1.1.1"/>
-            <concept>
+            <code>
               <system value="http://example.org/system/code/questions"/>
               <code value="COMORB"/>
-            </concept>
+            </code>
             <type value="choice"/>
             <options>
               <reference value="#yesno"/>
             </options>
-            <group>
+            <item>
               <!--     COMORBIDITY/CARDIAL     -->
               <!--     Subsection about specific comorbidity: cardial     -->
               <linkId value="1.1.1.1"/>
-              <concept>
+              <code>
                 <system value="http://example.org/system/code/sections"/>
                 <code value="CARDIAL"/>
-              </concept>
-              <question>
+              </code>
+              <type value="display" />
+              <item>
                 <linkId value="1.1.1.1.1"/>
-                <concept>
+                <code>
                   <system value="http://example.org/system/code/questions"/>
                   <code value="COMORBCAR"/>
-                </concept>
+                </code>
                 <type value="choice"/>
                 <options>
                   <reference value="#yesno"/>
                 </options>
-              </question>
-              <question>
+              </item>
+              <item>
                 <!--     This answer carries both the questionnaire-specific name and an equivalent SNOMED
              CT code     -->
                 <linkId value="1.1.1.1.2"/>
-                <concept>
+                <code>
                   <system value="http://example.org/system/code/questions"/>
                   <code value="COMCAR00"/>
                   <display value="Angina Pectoris"/>
-                </concept>
-                <concept>
+                </code>
+                <code>
                   <system value="http://snomed.info/sct"/>
                   <code value="194828000"/>
                   <display value="Angina (disorder)"/>
-                </concept>
+                </code>
                 <type value="choice"/>
                 <options>
                   <reference value="#yesno"/>
                 </options>
-              </question>
-              <question>
+              </item>
+              <item>
                 <linkId value="1.1.1.1.3"/>
-                <concept>
+                <code>
                   <system value="http://snomed.info/sct"/>
                   <code value="22298006"/>
                   <display value="Myocardial infarction (disorder)"/>
-                </concept>
+                </code>
                 <type value="choice"/>
                 <options>
                   <reference value="#yesno"/>
                 </options>
-              </question>
-            </group>
-            <group>
+              </item>
+            </item>
+            <item>
               <!--     COMORBIDITY/VASCULAR     -->
               <linkId value="1.1.1.2"/>
-              <concept>
+              <code>
                 <system value="http://example.org/system/code/sections"/>
                 <code value="VASCULAR"/>
-              </concept>
-            </group>
-          </question>
-        </group>
+              </code>
+              <type value="display" />
+            </item>
+          </item>
+        </item>
         <!--     Todo: What's supposed to go here?     -->
-        <group>
+        <item>
           <!--     HISTOPATHOLOGY     -->
           <linkId value="1.2"/>
-          <concept>
+          <code>
             <system value="http://example.org/system/code/sections"/>
             <code value="HISTOPATHOLOGY"/>
-          </concept>
-          <group>
+          </code>
+          <type value="display" />
+          <item>
             <linkId value="1.2.1"/>
-            <concept>
+            <code>
               <system value="http://example.org/system/code/sections"/>
               <code value="ABDOMINAL"/>
-            </concept>
-            <question>
+            </code>
+            <type value="display" />
+            <item>
               <linkId value="1.2.1.2"/>
-              <concept>
-                <system value="http://example.org/system/code/questions"/>
-                <code value="STADPT"/>
-                <display value="pT category"/>
-              </concept>
-            </question>
-          </group>
-        </group>
-      </group>
+              <type value="display" />
+            </item>
+          </item>
+        </item>
+      </item>
     </Questionnaire>
   </contained>
   <identifier>
@@ -207,12 +213,12 @@
     <family value="Donald"/>
     <given value="Duck"/>
   </name>
-      <telecom>
-        <system value="phone"/>
-        <value value="555-555-2003"/>
-        <use value="work"/>
-		<rank value="1"/>
-	  </telecom>
+  <telecom>
+    <system value="phone"/>
+    <value value="555-555-2003"/>
+    <use value="work"/>
+    <rank value="1"/>
+  </telecom>
   <gender value="male">
     <extension url="http://example.org/StructureDefinition/real-gender">
       <valueCode value="metrosexual" />
@@ -242,6 +248,11 @@
     </organization>
   </contact>
   <communication>
+    <language>
+      <coding>
+        <code value="nl-nl" />
+      </coding>
+    </language>
     <preferred value="true">
       <extension url="http://example.org/StructureDefinition/language-preference">
         <valueCode value="in-writing" />
@@ -249,6 +260,11 @@
     </preferred>
   </communication>
   <communication>
+    <language>
+      <coding>
+        <code value="nl-nl" />
+      </coding>
+    </language>
     <preferred value="true">
       <extension url="http://example.org/StructureDefinition/language-preference">
         <valueCode value="oral" />

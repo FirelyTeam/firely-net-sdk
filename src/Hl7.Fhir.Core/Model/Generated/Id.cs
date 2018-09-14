@@ -39,10 +39,13 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Primitive Type id
+    /// </summary>
     [FhirType("id")]
     [DataContract]
     public partial class Id : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged

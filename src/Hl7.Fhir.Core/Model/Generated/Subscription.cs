@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,25 +63,25 @@ namespace Hl7.Fhir.Model
         public enum SubscriptionStatus
         {
             /// <summary>
-            /// The client has requested the subscription, and the server has not yet set it up.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("requested", "http://hl7.org/fhir/subscription-status"), Description("Requested")]
             Requested,
             /// <summary>
-            /// The subscription is active.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("active", "http://hl7.org/fhir/subscription-status"), Description("Active")]
             Active,
             /// <summary>
-            /// The server has an error executing the notification.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("error", "http://hl7.org/fhir/subscription-status"), Description("Error")]
             Error,
             /// <summary>
-            /// Too many errors have occurred or the subscription has expired.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("off", "http://hl7.org/fhir/subscription-status"), Description("Off")]
@@ -95,31 +96,31 @@ namespace Hl7.Fhir.Model
         public enum SubscriptionChannelType
         {
             /// <summary>
-            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("rest-hook", "http://hl7.org/fhir/subscription-channel-type"), Description("Rest Hook")]
             RestHook,
             /// <summary>
-            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("websocket", "http://hl7.org/fhir/subscription-channel-type"), Description("Websocket")]
             Websocket,
             /// <summary>
-            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("email", "http://hl7.org/fhir/subscription-channel-type"), Description("Email")]
             Email,
             /// <summary>
-            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("sms", "http://hl7.org/fhir/subscription-channel-type"), Description("SMS")]
             Sms,
             /// <summary>
-            /// The channel is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc.) to the application identified in the URI.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("message", "http://hl7.org/fhir/subscription-channel-type"), Description("Message")]
@@ -199,10 +200,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Mimetype to send, or blank for no payload
+            /// Mimetype to send, or omit for no payload
             /// </summary>
             [FhirElement("payload", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PayloadElement
             {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _PayloadElement;
             
             /// <summary>
-            /// Mimetype to send, or blank for no payload
+            /// Mimetype to send, or omit for no payload
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -235,14 +235,15 @@ namespace Hl7.Fhir.Model
             /// Usage depends on the channel type
             /// </summary>
             [FhirElement("header", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString HeaderElement
+            public List<Hl7.Fhir.Model.FhirString> HeaderElement
             {
-                get { return _HeaderElement; }
+                get { if(_HeaderElement==null) _HeaderElement = new List<Hl7.Fhir.Model.FhirString>(); return _HeaderElement; }
                 set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _HeaderElement;
+            private List<Hl7.Fhir.Model.FhirString> _HeaderElement;
             
             /// <summary>
             /// Usage depends on the channel type
@@ -250,15 +251,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Header
+            public IEnumerable<string> Header
             {
-                get { return HeaderElement != null ? HeaderElement.Value : null; }
+                get { return HeaderElement != null ? HeaderElement.Select(elem => elem.Value) : null; }
                 set
                 {
                     if (value == null)
                         HeaderElement = null; 
                     else
-                        HeaderElement = new Hl7.Fhir.Model.FhirString(value);
+                        HeaderElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("Header");
                 }
             }
@@ -273,7 +274,7 @@ namespace Hl7.Fhir.Model
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>)TypeElement.DeepCopy();
                     if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
                     if(PayloadElement != null) dest.PayloadElement = (Hl7.Fhir.Model.FhirString)PayloadElement.DeepCopy();
-                    if(HeaderElement != null) dest.HeaderElement = (Hl7.Fhir.Model.FhirString)HeaderElement.DeepCopy();
+                    if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
                     return dest;
                 }
                 else
@@ -323,7 +324,7 @@ namespace Hl7.Fhir.Model
                     if (TypeElement != null) yield return TypeElement;
                     if (EndpointElement != null) yield return EndpointElement;
                     if (PayloadElement != null) yield return PayloadElement;
-                    if (HeaderElement != null) yield return HeaderElement;
+                    foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -336,7 +337,7 @@ namespace Hl7.Fhir.Model
                     if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                     if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
                     if (PayloadElement != null) yield return new ElementValue("payload", PayloadElement);
-                    if (HeaderElement != null) yield return new ElementValue("header", HeaderElement);
+                    foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", elem); }
                 }
             }
 
@@ -345,89 +346,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Rule for server push criteria
-        /// </summary>
-        [FhirElement("criteria", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString CriteriaElement
-        {
-            get { return _CriteriaElement; }
-            set { _CriteriaElement = value; OnPropertyChanged("CriteriaElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _CriteriaElement;
-        
-        /// <summary>
-        /// Rule for server push criteria
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Criteria
-        {
-            get { return CriteriaElement != null ? CriteriaElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  CriteriaElement = null; 
-                else
-                  CriteriaElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Criteria");
-            }
-        }
-        
-        /// <summary>
-        /// Contact details for source (e.g. troubleshooting)
-        /// </summary>
-        [FhirElement("contact", InSummary=true, Order=100)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ContactPoint> Contact
-        {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
-            set { _Contact = value; OnPropertyChanged("Contact"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ContactPoint> _Contact;
-        
-        /// <summary>
-        /// Description of why this subscription was created
-        /// </summary>
-        [FhirElement("reason", InSummary=true, Order=110)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString ReasonElement
-        {
-            get { return _ReasonElement; }
-            set { _ReasonElement = value; OnPropertyChanged("ReasonElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _ReasonElement;
-        
-        /// <summary>
-        /// Description of why this subscription was created
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Reason
-        {
-            get { return ReasonElement != null ? ReasonElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  ReasonElement = null; 
-                else
-                  ReasonElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Reason");
-            }
-        }
-        
-        /// <summary>
         /// requested | active | error | off
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement
@@ -458,9 +379,121 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Contact details for source (e.g. troubleshooting)
+        /// </summary>
+        [FhirElement("contact", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ContactPoint> Contact
+        {
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
+            set { _Contact = value; OnPropertyChanged("Contact"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ContactPoint> _Contact;
+        
+        /// <summary>
+        /// When to automatically delete the subscription
+        /// </summary>
+        [FhirElement("end", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.Instant EndElement
+        {
+            get { return _EndElement; }
+            set { _EndElement = value; OnPropertyChanged("EndElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Instant _EndElement;
+        
+        /// <summary>
+        /// When to automatically delete the subscription
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public DateTimeOffset? End
+        {
+            get { return EndElement != null ? EndElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  EndElement = null; 
+                else
+                  EndElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("End");
+            }
+        }
+        
+        /// <summary>
+        /// Description of why this subscription was created
+        /// </summary>
+        [FhirElement("reason", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString ReasonElement
+        {
+            get { return _ReasonElement; }
+            set { _ReasonElement = value; OnPropertyChanged("ReasonElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _ReasonElement;
+        
+        /// <summary>
+        /// Description of why this subscription was created
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Reason
+        {
+            get { return ReasonElement != null ? ReasonElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  ReasonElement = null; 
+                else
+                  ReasonElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Reason");
+            }
+        }
+        
+        /// <summary>
+        /// Rule for server push criteria
+        /// </summary>
+        [FhirElement("criteria", InSummary=true, Order=130)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString CriteriaElement
+        {
+            get { return _CriteriaElement; }
+            set { _CriteriaElement = value; OnPropertyChanged("CriteriaElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _CriteriaElement;
+        
+        /// <summary>
+        /// Rule for server push criteria
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Criteria
+        {
+            get { return CriteriaElement != null ? CriteriaElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  CriteriaElement = null; 
+                else
+                  CriteriaElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Criteria");
+            }
+        }
+        
+        /// <summary>
         /// Latest error note
         /// </summary>
-        [FhirElement("error", InSummary=true, Order=130)]
+        [FhirElement("error", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ErrorElement
         {
@@ -492,7 +525,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The channel on which to report matches to the criteria
         /// </summary>
-        [FhirElement("channel", InSummary=true, Order=140)]
+        [FhirElement("channel", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Subscription.ChannelComponent Channel
@@ -502,38 +535,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.Subscription.ChannelComponent _Channel;
-        
-        /// <summary>
-        /// When to automatically delete the subscription
-        /// </summary>
-        [FhirElement("end", InSummary=true, Order=150)]
-        [DataMember]
-        public Hl7.Fhir.Model.Instant EndElement
-        {
-            get { return _EndElement; }
-            set { _EndElement = value; OnPropertyChanged("EndElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Instant _EndElement;
-        
-        /// <summary>
-        /// When to automatically delete the subscription
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public DateTimeOffset? End
-        {
-            get { return EndElement != null ? EndElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  EndElement = null; 
-                else
-                  EndElement = new Hl7.Fhir.Model.Instant(value);
-                OnPropertyChanged("End");
-            }
-        }
         
         /// <summary>
         /// A tag to add to matching resources
@@ -563,13 +564,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(CriteriaElement != null) dest.CriteriaElement = (Hl7.Fhir.Model.FhirString)CriteriaElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
-                if(ReasonElement != null) dest.ReasonElement = (Hl7.Fhir.Model.FhirString)ReasonElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>)StatusElement.DeepCopy();
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
+                if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
+                if(ReasonElement != null) dest.ReasonElement = (Hl7.Fhir.Model.FhirString)ReasonElement.DeepCopy();
+                if(CriteriaElement != null) dest.CriteriaElement = (Hl7.Fhir.Model.FhirString)CriteriaElement.DeepCopy();
                 if(ErrorElement != null) dest.ErrorElement = (Hl7.Fhir.Model.FhirString)ErrorElement.DeepCopy();
                 if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.ChannelComponent)Channel.DeepCopy();
-                if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
                 return dest;
             }
@@ -588,13 +589,13 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(CriteriaElement, otherT.CriteriaElement)) return false;
-            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(ReasonElement, otherT.ReasonElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
+            if( !DeepComparable.Matches(ReasonElement, otherT.ReasonElement)) return false;
+            if( !DeepComparable.Matches(CriteriaElement, otherT.CriteriaElement)) return false;
             if( !DeepComparable.Matches(ErrorElement, otherT.ErrorElement)) return false;
             if( !DeepComparable.Matches(Channel, otherT.Channel)) return false;
-            if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.Matches(Tag, otherT.Tag)) return false;
             
             return true;
@@ -606,13 +607,13 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(CriteriaElement, otherT.CriteriaElement)) return false;
-            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
+            if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
+            if( !DeepComparable.IsExactly(CriteriaElement, otherT.CriteriaElement)) return false;
             if( !DeepComparable.IsExactly(ErrorElement, otherT.ErrorElement)) return false;
             if( !DeepComparable.IsExactly(Channel, otherT.Channel)) return false;
-            if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.IsExactly(Tag, otherT.Tag)) return false;
             
             return true;
@@ -624,13 +625,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (CriteriaElement != null) yield return CriteriaElement;
-				foreach (var elem in Contact) { if (elem != null) yield return elem; }
-				if (ReasonElement != null) yield return ReasonElement;
 				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (EndElement != null) yield return EndElement;
+				if (ReasonElement != null) yield return ReasonElement;
+				if (CriteriaElement != null) yield return CriteriaElement;
 				if (ErrorElement != null) yield return ErrorElement;
 				if (Channel != null) yield return Channel;
-				if (EndElement != null) yield return EndElement;
 				foreach (var elem in Tag) { if (elem != null) yield return elem; }
             }
         }
@@ -641,13 +642,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (CriteriaElement != null) yield return new ElementValue("criteria", CriteriaElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-                if (ReasonElement != null) yield return new ElementValue("reason", ReasonElement);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (EndElement != null) yield return new ElementValue("end", EndElement);
+                if (ReasonElement != null) yield return new ElementValue("reason", ReasonElement);
+                if (CriteriaElement != null) yield return new ElementValue("criteria", CriteriaElement);
                 if (ErrorElement != null) yield return new ElementValue("error", ErrorElement);
                 if (Channel != null) yield return new ElementValue("channel", Channel);
-                if (EndElement != null) yield return new ElementValue("end", EndElement);
                 foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", elem); }
             }
         }

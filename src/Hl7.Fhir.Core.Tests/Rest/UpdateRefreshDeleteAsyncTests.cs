@@ -14,12 +14,12 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Task UpdateDelete_UsingResourceIdentity_ResultReturned()
+        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
             var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
-                ReturnFullResource = true
+                PreferredReturn = Prefer.ReturnRepresentation
             };
 
             var pat = new Patient()
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     new HumanName()
                     {
                         Given = new List<string>() {"test_given"},
-                        Family = new List<string>() {"test_family"},
+                        Family = "test_family",
                     }
                 },
                 Id = "async-test-patient"
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             await client.DeleteAsync(p);
 
             Console.WriteLine("Reading patient...");
-            Func<Task> act = async () =>
+            Func<System.Threading.Tasks.Task> act = async () =>
             {
                 await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
             };

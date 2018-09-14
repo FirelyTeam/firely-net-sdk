@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="Schedule" type="Schedule">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A container for slot(s) of time that may be available for booking appointments.</xs:documentation>
+      <xs:documentation xml:lang="en">A container for slots of time that may be available for booking appointments.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="Schedule">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A container for slot(s) of time that may be available for booking appointments.</xs:documentation>
+      <xs:documentation xml:lang="en">A container for slots of time that may be available for booking appointments.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -54,14 +54,29 @@
               <xs:documentation xml:lang="en">External Ids for this item.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The schedule type can be used for the categorization of healthcare services or other appointment types.</xs:documentation>
+              <xs:documentation xml:lang="en">Whether this schedule record is in active use, or should not be used (such as was entered in error).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="actor" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="serviceCategory" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson.</xs:documentation>
+              <xs:documentation xml:lang="en">A broad categorisation of the service that is to be performed during this appointment.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="serviceType" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The specific service that is to be performed during this appointment.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="specialty" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The specialty of a practitioner that would be required to perform the service requested in this appointment.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="actor" minOccurs="1" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, PractitionerRole, Device, Patient or RelatedPerson.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="planningHorizon" minOccurs="0" maxOccurs="1" type="Period">
@@ -71,7 +86,7 @@
           </xs:element>
           <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated.</xs:documentation>
+              <xs:documentation xml:lang="en">Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

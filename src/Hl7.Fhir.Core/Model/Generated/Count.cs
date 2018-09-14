@@ -37,11 +37,14 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Quantity")]
+    /// <summary>
+    /// A measured or measurable amount
+    /// </summary>
+    [FhirType("Count")]
     public partial class Count : Quantity
     {
         [NotMapped]
@@ -53,6 +56,6 @@ namespace Hl7.Fhir.Model
         }
         
         // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code with a value of "1" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.
+        // * A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies.
     }
 }

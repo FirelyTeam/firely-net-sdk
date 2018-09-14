@@ -30,8 +30,8 @@ namespace Hl7.Fhir.Rest
         event EventHandler<AfterResponseEventArgs> OnAfterResponse;
         event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
-        Conformance Conformance(SummaryType? summary = default(SummaryType?));
-        Task<Conformance> ConformanceAsync(SummaryType? summary = default(SummaryType?));
+        CapabilityStatement CapabilityStatement(SummaryType? summary = default(SummaryType?));
+        Task<CapabilityStatement> CapabilityStatementAsync(SummaryType? summary = default(SummaryType?));
         Bundle Continue(Bundle current, PageDirection direction = PageDirection.Next);
         Task<Bundle> ContinueAsync(Bundle current, PageDirection direction = PageDirection.Next);
         TResource Create<TResource>(TResource resource) where TResource : Resource;
@@ -42,10 +42,10 @@ namespace Hl7.Fhir.Rest
         void Delete(string location);
         void Delete(string resourceType, SearchParams condition);
         void Delete(Uri location);
-        Task DeleteAsync(Resource resource);
-        Task DeleteAsync(string location);
-        Task DeleteAsync(string resourceType, SearchParams condition);
-        Task DeleteAsync(Uri location);
+        System.Threading.Tasks.Task DeleteAsync(Resource resource);
+        System.Threading.Tasks.Task DeleteAsync(string location);
+        System.Threading.Tasks.Task DeleteAsync(string resourceType, SearchParams condition);
+        System.Threading.Tasks.Task DeleteAsync(Uri location);
         Task<TResource> executeAsync<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Resource;
         Resource Get(string url);
         Resource Get(Uri url);

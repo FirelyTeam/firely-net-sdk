@@ -24,19 +24,18 @@
   </contact>
   <date value="2015-11-04"/>
   <description value="Types of resources that are part of group"/>
-  <codeSystem>
+  <compose>
+    <include>
     <system value="http://example.org/fhir/group-type-human"/>
     <version value="1.0"/>
-    <caseSensitive value="true"/>
     <concept>
       <code value="person"/>
       <display value="Person"/>
-      <definition value="Group contains &quot;person&quot; Patient resources"/>
     </concept>
     <concept>
       <code value="practitioner"/>
       <display value="Practitioner"/>
-      <definition value="Group contains healthcare practitioner resources"/>
     </concept>
-  </codeSystem>
+    </include>
+  </compose>
 </ValueSet>
