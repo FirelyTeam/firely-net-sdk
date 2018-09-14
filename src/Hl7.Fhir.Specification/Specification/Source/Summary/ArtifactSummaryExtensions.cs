@@ -11,6 +11,7 @@
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
@@ -62,6 +63,10 @@ namespace Hl7.Fhir.Specification.Source
             }
             return result;
         }
+
+        /// <summary>Find <see cref="ArtifactSummary"/> instance(s) for resources contained in the specified file.</summary>
+        public static IEnumerable<ArtifactSummary> FromFile(this IEnumerable<ArtifactSummary> summaries, string filePath)
+            => summaries.Where(s => StringComparer.OrdinalIgnoreCase.Equals(s.Origin, filePath));
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the resource with the specified uri.</summary>
         public static ArtifactSummary ResolveByUri(this IEnumerable<ArtifactSummary> summaries, string uri)
