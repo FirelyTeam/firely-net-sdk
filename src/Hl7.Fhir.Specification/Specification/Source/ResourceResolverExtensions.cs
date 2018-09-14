@@ -77,9 +77,14 @@ namespace Hl7.Fhir.Specification.Source
             if (type != null)
             {
                 var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
-                // for some reason there is an issue with this StructureDefinition (needs fixing)
-                var uris = source.ListResourceUris(resourceType).Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
-                return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
+                var uris = source.ListResourceUris(resourceType);
+                // [WMR 20180914] OBSOLETE
+                // For some reason there is an issue with this StructureDefinition (needs fixing)
+                // .Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
+
+                // [WMR 20180824] FIXED
+                //return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
+                return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
             }
             else
                 return null;
