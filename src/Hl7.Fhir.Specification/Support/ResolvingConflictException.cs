@@ -5,12 +5,23 @@ using System.Text;
 
 namespace Hl7.Fhir.Support
 {
-    // cf. System.Enumerable.SingleOrDefault, throws Error.MoreThanOneElement = InvalidOperationException
+    // [WMR 20180917]
+    // Could implement specific subclasses, but does not seem very useful (yet?)
+    //   - client that wants to handle all conflict errors can just catch the base class
+    //   - client that performs specialized resolver call also knows how to interpret any conflicts
 
-    /// <summary>The exception that is throw to report a resolving conflict caused by multiple conflicting artifacts with the same identifier.</summary>
+    /// <summary>
+    /// The exception that is thrown to report a resource resolving conflict.
+    /// <para>
+    /// Indicates that the source was unable to resolve a single target resource,
+    /// because it found multiple existing resources matching the specified identifier.
+    /// </para>
+    /// </summary>
     /// <remarks>Generic replacement for the obsolete <seealso cref="CanonicalUrlConflictException"/>.</remarks>
     public class ResolvingConflictException : InvalidOperationException
     {
+        #region Factory
+
         readonly static string ResourceUriConflictErrorMessage = "Found multiple conflicting resources with the same resource uri identifier.";
 
         /// <summary>Generate a new <see cref="ResolvingConflictException"/> to report multiple conflicting resources with the same Resource Uri identifier.</summary>
@@ -41,33 +52,44 @@ namespace Hl7.Fhir.Support
         public static ResolvingConflictException ConceptMapUrlConflict(IEnumerable<ResolvingConflict> conflicts)
             => new ResolvingConflictException(ConceptMapUrlConflictErrorMessage, conflicts);
 
-        /// <summary>Provides information about a resolving conflict for a group of resources identified by the same url.</summary>
+        #endregion
+
+        /// <summary>
+        /// Provides information about a specific resolving conflict,
+        /// as reported by the <see cref="ResolvingConflictException"/>.
+        /// </summary>
         public class ResolvingConflict
         {
-            public ResolvingConflict(string identifier, IEnumerable<string> filePaths)
+            /// <summary>Create a new <see cref="ResolvingConflict"/> instance.</summary>
+            /// <param name="identifier">An identifier that matches multiple conflicting resources.</param>
+            /// <param name="origins">The original locations (e.g. file paths) of the conflicting resources that match the specified <paramref name="identifier"/> value.</param>
+            public ResolvingConflict(string identifier, IEnumerable<string> origins)
             {
                 Identifier = identifier;
-                FilePaths = filePaths.ToArray();
+                Origins = origins.ToArray();
             }
 
-            /// <summary>The identifier value associated with multiple conflicting resources.</summary>
+            /// <summary>The identifier value matched by multiple conflicting resources.</summary>
             public string Identifier { get; }
 
-            /// <summary>File paths of conflicting resources identified by the same value.</summary>
-            public string[] FilePaths { get; }
+            /// <summary>The original locations (e.g. file paths) of conflicting resources that match the specified <see cref="Identifier"/> value.</summary>
+            public string[] Origins { get; }
         }
 
         /// <summary>
-        /// Create a new <see cref="ResolvingConflictException"/> instance.
-        /// Use static factory methods to create exceptions for specific types of conflicts.
+        /// Create a new generic <see cref="ResolvingConflictException"/> instance.
+        /// <para>
+        /// The <see cref="ResolvingConflictException"/> class also provides static
+        /// factory methods to create exceptions for specific types of conflicts.
+        /// </para>
         /// </summary>
-        public ResolvingConflictException(string errorMessage, IEnumerable<ResolvingConflict> conflicts)
+        ResolvingConflictException(string errorMessage, IEnumerable<ResolvingConflict> conflicts)
              : base(formatMessage(errorMessage, conflicts))
         {
             Conflicts = conflicts.ToArray();
         }
 
-        /// <summary>Returns a list of resolving conflicts, indicating the source discovered multiple resources that match a specified identifier.</summary>
+        /// <summary>Returns a list of resolving conflicts.</summary>
         public ResolvingConflict[] Conflicts { get; private set; }
 
         static string formatMessage(string errorMessage, IEnumerable<ResolvingConflict> conflicts)
@@ -81,7 +103,7 @@ namespace Hl7.Fhir.Support
                 {
                     sb.Append("Url: ");
                     sb.AppendLine(conflict.Identifier);
-                    foreach (var file in conflict.FilePaths)
+                    foreach (var file in conflict.Origins)
                     {
                         sb.Append("   File: ");
                         sb.AppendLine(file);
