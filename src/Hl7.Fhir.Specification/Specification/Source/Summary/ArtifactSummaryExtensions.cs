@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the comformance resource with the specified canonical uri.</summary>
-        /// <exception cref="CanonicalUrlConflictException">The <see cref="ISummarySource"/> instance encountered conflicting Conformance Resource artifacts with the same canonical url identifier.</exception>
+        /// <exception cref="ResolvingConflictException">The <see cref="ISummarySource"/> instance encountered conflicting Conformance Resource artifacts with the same canonical url identifier.</exception>
         public static ArtifactSummary ResolveByCanonicalUri(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
         {
             var matches = summaries.FindConformanceResources(canonicalUrl);

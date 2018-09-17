@@ -64,15 +64,11 @@ namespace Hl7.Fhir.Support
         public ResolvingConflictException(string errorMessage, IEnumerable<ResolvingConflict> conflicts)
              : base(formatMessage(errorMessage, conflicts))
         {
-            //
+            Conflicts = conflicts.ToArray();
         }
 
-        // public bool IsResolved => Conflicts?.All(c => c.FilePaths.Count() == 1) == true;
-
-        /// <summary>Returns a list of canonical url conflicts.</summary>
+        /// <summary>Returns a list of resolving conflicts, indicating the source discovered multiple resources that match a specified identifier.</summary>
         public ResolvingConflict[] Conflicts { get; private set; }
-
-        //readonly static string errorMessage = "Unable to resolve resource. Found multiple conflicting resources identified by the same uri.";
 
         static string formatMessage(string errorMessage, IEnumerable<ResolvingConflict> conflicts)
         {
