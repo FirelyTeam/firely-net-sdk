@@ -59,10 +59,14 @@ namespace Hl7.Fhir.Rest
 
             var interactionType = entry.Annotation<TransactionBuilder.InteractionType>();
 
-            if (interactionType == TransactionBuilder.InteractionType.Create && returnPreference != null)
+            if (canHaveReturnPreference() && returnPreference != null)
                 request.Headers["Prefer"] = "return=" + PrimitiveTypeConverter.ConvertTo<string>(returnPreference);
-            else if(interactionType == TransactionBuilder.InteractionType.Search && handlingPreference != null)
-                request.Headers["Prefer"] = "handling=" + PrimitiveTypeConverter.ConvertTo<string>(handlingPreference);
+            else if (interactionType == TransactionBuilder.InteractionType.Search && handlingPreference != null)
+                request.Headers["Prefer"] = "handling=" + handlingPreference.GetLiteral();
+
+            bool canHaveReturnPreference() => interactionType == TransactionBuilder.InteractionType.Create ||
+                interactionType == TransactionBuilder.InteractionType.Update ||
+                interactionType == TransactionBuilder.InteractionType.Patch;
 
             if (entry.Resource != null)
             {
