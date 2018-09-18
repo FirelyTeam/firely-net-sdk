@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Validation
 
             other.EnableXsdValidation = EnableXsdValidation;
             other.GenerateSnapshot = GenerateSnapshot;
-            other.GenerateSnapshotSettings = GenerateSnapshotSettings.Clone();
+            other.GenerateSnapshotSettings = GenerateSnapshotSettings?.Clone();
             other.ResolveExteralReferences = ResolveExteralReferences;
             other.ResourceResolver = ResourceResolver;
             other.SkipConstraintValidation = SkipConstraintValidation;
