@@ -19,22 +19,22 @@ namespace Hl7.Fhir.ElementModel
 {
     public static class PocoSerializationExtensions
     {
-        public static string ToJson(this Base source, FhirJsonWriterSettings settings = null) =>
+        public static string ToJson(this Base source, FhirJsonBuilderSettings settings = null) =>
             source.ToTypedElement().ToJson(settings);
-        public static byte[] ToJsonBytes(this Base source, FhirJsonWriterSettings settings = null) =>
+        public static byte[] ToJsonBytes(this Base source, FhirJsonBuilderSettings settings = null) =>
             source.ToTypedElement().ToJsonBytes(settings);
-        public static void WriteTo(this Base source, JsonWriter destination, FhirJsonWriterSettings settings = null) =>
+        public static void WriteTo(this Base source, JsonWriter destination, FhirJsonBuilderSettings settings = null) =>
             source.ToTypedElement().WriteTo(destination, settings);
-        public static JObject ToJObject(this Base source, FhirJsonWriterSettings settings = null) =>
+        public static JObject ToJObject(this Base source, FhirJsonBuilderSettings settings = null) =>
             source.ToTypedElement().ToJObject(settings);
 
-        public static string ToXml(this Base source, FhirXmlWriterSettings settings = null) =>
+        public static string ToXml(this Base source, FhirXmlBuilderSettings settings = null) =>
             source.ToTypedElement().ToXml(settings);
-        public static byte[] ToXmlBytes(this Base source, FhirXmlWriterSettings settings = null) =>
+        public static byte[] ToXmlBytes(this Base source, FhirXmlBuilderSettings settings = null) =>
             source.ToTypedElement().ToXmlBytes(settings);
-        public static void WriteTo(this Base source, XmlWriter destination, FhirXmlWriterSettings settings = null) =>
+        public static void WriteTo(this Base source, XmlWriter destination, FhirXmlBuilderSettings settings = null) =>
             source.ToTypedElement().WriteTo(destination, settings);
-        public static XDocument ToXDocument(this Base source, FhirXmlWriterSettings settings = null) =>
+        public static XDocument ToXDocument(this Base source, FhirXmlBuilderSettings settings = null) =>
             source.ToTypedElement().ToXDocument(settings);
     }
 }
