@@ -74,10 +74,10 @@ namespace Hl7.Fhir.Model
             set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
 
-#if NET_XSD_SCHEMA
-        public static bool IsValidValue(string value) => !SerializationUtil.RunFhirXhtmlSchemaValidation(value).Any();
-#else
+#if NETSTANDARD1_1
         public static bool IsValidValue(string value) => true;
+#else
+        public static bool IsValidValue(string value) => !SerializationUtil.RunFhirXhtmlSchemaValidation(value).Any();
 #endif
 
     }

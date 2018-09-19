@@ -15,9 +15,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
     public sealed class SnapshotGeneratorSettings
-#if DOTNETFW
         : ICloneable
-#endif
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         [Obsolete("Use the CreateDefault() method")]
@@ -52,10 +50,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
         public SnapshotGeneratorSettings Clone() => new SnapshotGeneratorSettings(this);
 
-#if DOTNETFW
         /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
         object ICloneable.Clone() => Clone();
-#endif
 
         /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="SnapshotGeneratorSettings"/> instance.</param>

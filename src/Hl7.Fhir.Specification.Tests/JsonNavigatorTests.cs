@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-#if NET_XSD_SCHEMA
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -284,4 +283,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-#endif

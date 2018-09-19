@@ -123,7 +123,6 @@ namespace Hl7.Fhir.Rest
             set => _requester.Prefer = value ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
         }
 
-#if NET_COMPRESSION
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -143,8 +142,6 @@ namespace Hl7.Fhir.Rest
             get { return _requester.CompressRequestBody; }
             set { _requester.CompressRequestBody = value; }
         }
-#endif
-
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server

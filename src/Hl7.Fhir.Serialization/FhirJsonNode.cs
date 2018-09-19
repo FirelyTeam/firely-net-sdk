@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Serialization
         {
             yield return checkArrayUse;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
             yield return checkXhtml;
 
             object checkXhtml(ITypedElement nav, IExceptionSource ies, object _)

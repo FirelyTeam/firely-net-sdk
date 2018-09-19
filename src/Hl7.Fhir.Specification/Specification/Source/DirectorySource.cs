@@ -9,8 +9,6 @@
 // [WMR 20171023] TODO
 // - Allow configuration of duplicate canonical url handling strategy
 
-#if NET_FILESYSTEM
-
 // [WMR 20171102] NEW
 // Implement thread-safe access
 // Only necessary for clients that trigger Refresh() by changing settings at runtime
@@ -42,14 +40,9 @@ namespace Hl7.Fhir.Specification.Source
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource
     {
-        // netstandard has no CurrentCultureIgnoreCase comparer
-#if DOTNETFW
         private static readonly StringComparer ExtensionComparer = StringComparer.InvariantCultureIgnoreCase;
         private static readonly StringComparison ExtensionComparison = StringComparison.InvariantCultureIgnoreCase;
-#else
-        private static readonly StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringComparison ExtensionComparison = StringComparison.OrdinalIgnoreCase;
-#endif
+
         // Files with following extensions are ALWAYS excluded from the result
         private static readonly string[] ExecutableExtensions = { ".exe", ".dll", ".cpl", ".scr" };
 
@@ -962,5 +955,3 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 }
-
-#endif
