@@ -50,7 +50,8 @@ namespace Hl7.Fhir.Rest
             Capabilities,
             History,
             Operation,
-            Transaction
+            Transaction,
+            Patch
         }
 
         private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
