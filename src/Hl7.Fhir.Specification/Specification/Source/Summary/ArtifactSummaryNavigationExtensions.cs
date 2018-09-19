@@ -100,6 +100,29 @@ namespace Hl7.Fhir.Specification.Summary
             return false;
         }
 
+        /// <summary>Harvest an array of element values into a property bag.</summary>
+        /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
+        /// <param name="properties">A property bag to store harvested summary information.</param>
+        /// <param name="key">A property key.</param>
+        /// <param name="element">An element name.</param>
+        public static bool HarvestValues(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element)
+        {
+            if (nav.Find(element))
+            {
+                var values = new List<string>();
+                do
+                {
+                    HarvestValue(nav, values);
+                } while (nav.MoveToNext(element));
+                if (values.Count > 0)
+                {
+                    properties[key] = values.ToArray();
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>Harvest an array of child element values into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
         /// <param name="properties">A property bag to store harvested summary information.</param>
