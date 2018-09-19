@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Serialization
         public bool DisallowSchemaLocation => _settings.DisallowSchemaLocation;
         public bool PermissiveParsing => _settings.PermissiveParsing;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         public bool ValidateFhirXhtml => _settings.ValidateFhirXhtml;
 #endif
 
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Serialization
             // don't move into xhtml
             if (Current.AtXhtmlDiv())
             {
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
                 if (!PermissiveParsing && ValidateFhirXhtml)
                     ValidateXhtml(new XDocument(Current), this, this);
 #endif
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Serialization
                 return Enumerable.Empty<object>();
         }
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         public static void ValidateXhtml(string xmlText, IExceptionSource ies, object source)
         {
             reportOnValidation(() =>

@@ -12,7 +12,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     public abstract class Primitive : Element
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
         }
     }
 
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     public abstract class Primitive<T> : Primitive

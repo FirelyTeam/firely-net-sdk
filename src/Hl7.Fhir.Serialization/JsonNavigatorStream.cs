@@ -16,7 +16,7 @@ using System;
 using Hl7.Fhir.ElementModel;
 using System.Collections;
 
-#if NET_FILESYSTEM
+#if !NETSTANDARD1_1
 
 namespace Hl7.Fhir.Serialization
 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization
             Reset();
         }
 
-        #region IDisposable
+#region IDisposable
 
         bool _disposed;
 
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        #endregion
+#endregion
 
         /// <summary>The typename of the underlying resource (container).</summary>
         /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Serialization
 
         object IEnumerator.Current => this.Current;
 
-        #region private helpers
+#region private helpers
 
         string scanForResourceType(JsonReader reader) => skipTo(reader, "resourceType") ? reader.ReadAsString() : null;
 
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Serialization
             if (_disposed) { throw new ObjectDisposedException(GetType().FullName); }
         }
 
-        #endregion
+#endregion
 
     }
 }

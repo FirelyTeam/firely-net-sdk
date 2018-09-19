@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Serialization
 
         public static bool CanConvert(Type type)
         {
-#if !DOTNETFW
+#if NETSTANDARD1_1
 			// We support all primitive .NET types in the serializer
 			if (type == typeof(Boolean)
 				|| type == typeof(Byte)

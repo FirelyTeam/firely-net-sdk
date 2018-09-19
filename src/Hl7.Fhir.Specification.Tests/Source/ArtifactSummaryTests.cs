@@ -232,8 +232,6 @@ namespace Hl7.Fhir.Specification.Tests
             return summary;
         }
 
-#if NET_COMPRESSION
-
         [TestMethod]
         public void TestZipSummary()
         {
@@ -318,8 +316,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
         }
-
-#endif
 
     }
 }

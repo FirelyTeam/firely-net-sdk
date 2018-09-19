@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization
         public bool DisallowSchemaLocation;
         public bool PermissiveParsing;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         public bool ValidateFhirXhtml;
 #endif
 
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Serialization
                 DisallowSchemaLocation = DisallowSchemaLocation,
                 PermissiveParsing = PermissiveParsing,
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
                 ValidateFhirXhtml = ValidateFhirXhtml
 #endif
             };

@@ -6,8 +6,6 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-#if NET_FILESYSTEM
-
 using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Utility;
 using System;
@@ -36,9 +34,7 @@ namespace Hl7.Fhir.Specification.Source
 
     /// <summary>Configuration settings for the <see cref="DirectorySource"/> class.</summary>
     public sealed class DirectorySourceSettings
-#if DOTNETFW
         : ICloneable
-#endif
     {
         /// <summary>Default value of the <see cref="FormatPreference"/> configuration setting.</summary>
         public const DirectorySource.DuplicateFilenameResolution DefaultFormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml;
@@ -79,21 +75,15 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         public DirectorySourceSettings Clone() => new DirectorySourceSettings(this);
 
-#if DOTNETFW
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         object ICloneable.Clone() => Clone();
-#endif
 
         /// <summary>Returns the default content directory of the <see cref="DirectorySource"/>.</summary>
         public static string SpecificationDirectory
         {
             get
             {
-#if DOTNETFW
                 var codebase = AppDomain.CurrentDomain.BaseDirectory;
-#else
-                var codebase = AppContext.BaseDirectory;
-#endif
                 return Directory.Exists(codebase) ? codebase : Directory.GetCurrentDirectory();
             }
         }
@@ -285,5 +275,3 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 }
-
-#endif
