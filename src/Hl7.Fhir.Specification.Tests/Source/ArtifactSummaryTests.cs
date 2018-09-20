@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             const string path = @"TestData\profiles-types.json";
 
-            var summaries = ArtifactSummaryGenerator.Generate(path);
+            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             const string path = @"TestData\profiles-resources.xml";
 
-            var summaries = ArtifactSummaryGenerator.Generate(path);
+            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -214,11 +214,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
-            if (harvesters == null || harvesters.Length == 0)
-            {
-                harvesters = ArtifactSummaryGenerator.ConformanceHarvesters;
-            }
-            var summaries = ArtifactSummaryGenerator.Generate(path, harvesters);
+            var summaries = ArtifactSummaryGenerator.Default.Generate(path, harvesters);
             Assert.IsNotNull(summaries);
             Assert.AreEqual(1, summaries.Count);
             var summary = summaries[0];
@@ -287,7 +283,7 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var entryStream = entry.Open())
                 using (var navStream = new XmlNavigatorStream(entryStream))
                 {
-                    var summaries = ArtifactSummaryGenerator.Generate(navStream);
+                    var summaries = ArtifactSummaryGenerator.Default.Generate(navStream);
                     Assert.IsNotNull(summaries);
                     corePatientSummary = summaries.FindConformanceResources(corePatientUrl).FirstOrDefault();
                 }

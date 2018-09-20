@@ -26,11 +26,18 @@ namespace Hl7.Fhir.Specification.Source
         public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, ResourceType resourceType)
             => summaries.Where(s => s.ResourceType == resourceType);
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.</summary>
+        /// <summary>
+        /// Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.
+        /// If <paramref name="resourceType"/> equals <c>null</c>, then filter summaries for all valid FHIR resources.
+        /// </summary>
         public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, ResourceType? resourceType)
             => resourceType.HasValue
             ? summaries.Where(s => s.ResourceType == resourceType.Value)
-            : summaries;
+            : summaries.Where(s => s.IsFhirResource);
+
+        /// <summary>Filter <see cref="ArtifactSummary"/> instances for valid FHIR resources.</summary>
+        public static IEnumerable<ArtifactSummary> FhirResources(this IEnumerable<ArtifactSummary> summaries)
+            => summaries.Where(s => s.IsFhirResource);
 
         /// <summary>Find <see cref="ArtifactSummary"/> instances for <see cref="NamingSystem"/> resources with the specified uniqueId value.</summary>
         public static IEnumerable<ArtifactSummary> FindNamingSystems(this IEnumerable<ArtifactSummary> summaries, string uniqueId)
