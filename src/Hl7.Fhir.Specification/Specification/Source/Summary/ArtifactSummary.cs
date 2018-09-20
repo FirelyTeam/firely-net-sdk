@@ -102,6 +102,10 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>If <c>true</c>, then the <see cref="Error"/> property returns detailed error information.</remarks>
         public bool IsFaulted => Error != null; // cf. Task
 
+        /// <summary>Indicates if the summary describes a valid FHIR resource.</summary>
+        /// <value>Returns <c>true</c> if <see cref="ResourceType"/> is known (not <c>null</c>), or <c>false</c> otherwise.</value>
+        public bool IsFhirResource => ResourceType != null;
+
         /// <summary>Gets the original location of the associated artifact.</summary>
         public string Origin => properties.GetOrigin();
 
