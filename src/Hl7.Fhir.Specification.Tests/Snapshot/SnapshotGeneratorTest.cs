@@ -803,7 +803,6 @@ namespace Hl7.Fhir.Specification.Tests
         //	// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
         //	// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
         //};
-#if false
         [TestMethod, Ignore]
         public void GenerateSnapshot()
         {
@@ -829,8 +828,6 @@ namespace Hl7.Fhir.Specification.Tests
             sw.Stop();
             _source.ShowDuration(count, sw.Elapsed);
         }
-
-#endif
 
         //private void forDoc()
         //{
@@ -894,6 +891,23 @@ namespace Hl7.Fhir.Specification.Tests
 
         IEnumerable<StructureDefinition> findConstraintStrucDefs()
         {
+#if true
+            if (_source.Source is DirectorySource dirSource)
+            {
+                //var summaries = dirSource.ListSummaries(ResourceType.StructureDefinition);
+                //summaries = summaries.Where(s => Path.GetFileNameWithoutExtension(s.Origin) == "profiles-others");
+                var path = Path.GetFullPath(@"TestData\snapshot-test\WMR\profiles-others.xml");
+                var summaries = dirSource.ListSummaries(ResourceType.StructureDefinition).FromFile(path);
+                foreach (var summary in summaries)
+                {
+                    var canonical = summary.GetConformanceCanonicalUrl();
+                    if (canonical != null)
+                    {
+                        yield return _source.ResolveByCanonicalUri(canonical) as StructureDefinition;
+                    }
+                }
+            }
+#else
             var testSDs = _source.FindAll<StructureDefinition>();
 
             foreach (var testSD in testSDs)
@@ -913,6 +927,7 @@ namespace Hl7.Fhir.Specification.Tests
                         yield return testSD;
                 }
             }
+#endif
         }
 
         // Unit tests for DifferentialTreeConstructor
