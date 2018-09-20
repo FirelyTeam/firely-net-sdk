@@ -142,7 +142,7 @@ namespace Vonk.Core.Tests.Support
         public static IEnumerable<IElementNavigator> Select(this IElementNavigator input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = GetCompiledExpression(expression);
-            return evaluator(input, ctx ?? EvaluationContext.Default);
+            return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
         }
 
     }

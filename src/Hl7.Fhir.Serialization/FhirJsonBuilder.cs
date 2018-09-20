@@ -20,12 +20,12 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirJsonBuilder : IExceptionSource
     {
-        internal FhirJsonBuilder(FhirJsonWriterSettings settings = null)
+        internal FhirJsonBuilder(FhirJsonBuilderSettings settings = null)
         {
-            _settings = settings?.Clone() ?? new FhirJsonWriterSettings();
+            _settings = settings?.Clone() ?? new FhirJsonBuilderSettings();
         }
 
-        private FhirJsonWriterSettings _settings;
+        private FhirJsonBuilderSettings _settings;
         private bool _roundtripMode = true;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }

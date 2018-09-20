@@ -206,14 +206,6 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 
-    public class ValueSetExpanderSettings
-    {
-        public static ValueSetExpanderSettings Default = new ValueSetExpanderSettings();
-
-        public IResourceResolver ValueSetSource { get; set; }
-
-        public int MaxExpansionSize { get; set; } = 500;
-    }
 
     public static class ContainsSetExtensions
     {
@@ -226,14 +218,14 @@ namespace Hl7.Fhir.Specification.Terminology
             newContains.Display = display;
             newContains.Version = version;
 
-            if(children != null)
+            if (children != null)
                 newContains.Contains = new List<ValueSet.ContainsComponent>(children);
 
             dest.Add(newContains);
 
             return newContains;
         }
-  
+
         public static void Remove(this List<ValueSet.ContainsComponent> dest, string system, string code)
         {
             dest.RemoveAll(c => c.System == system && c.Code == code);
@@ -263,7 +255,7 @@ namespace Hl7.Fhir.Specification.Terminology
             newContains.Display = source.Display;
 
             var abstractProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).SingleOrDefault();
-            if(abstractProperty?.Value is FhirBoolean isAbstract)
+            if (abstractProperty?.Value is FhirBoolean isAbstract)
                 newContains.Abstract = isAbstract.Value;
 
             var inactiveProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_STATUS).SingleOrDefault();
@@ -275,6 +267,6 @@ namespace Hl7.Fhir.Specification.Terminology
                     source.Concept.Select(c => c.ToContainsComponent(system)));
 
             return newContains;
-        }      
+        }
     }
 }
