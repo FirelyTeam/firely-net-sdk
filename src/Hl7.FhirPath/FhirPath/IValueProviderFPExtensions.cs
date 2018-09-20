@@ -59,7 +59,7 @@ namespace Hl7.FhirPath
         public static IEnumerable<IElementNavigator> Select(this IElementNavigator input, string expression, EvaluationContext ctx=null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator(input, ctx ?? EvaluationContext.Default);
+            return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
         }
 
         [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
@@ -72,7 +72,7 @@ namespace Hl7.FhirPath
         public static object Scalar(this IElementNavigator input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator.Scalar(input, ctx ?? EvaluationContext.Default);
+            return evaluator.Scalar(input, ctx ?? EvaluationContext.CreateDefault());
         }
 
         [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
@@ -84,7 +84,7 @@ namespace Hl7.FhirPath
         public static bool Predicate(this IElementNavigator input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator.Predicate(input, ctx ?? EvaluationContext.Default);
+            return evaluator.Predicate(input, ctx ?? EvaluationContext.CreateDefault());
         }
 
         [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
@@ -97,7 +97,7 @@ namespace Hl7.FhirPath
         public static bool IsBoolean(this IElementNavigator input, string expression, bool value, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator.IsBoolean(value, input, ctx ?? EvaluationContext.Default);
+            return evaluator.IsBoolean(value, input, ctx ?? EvaluationContext.CreateDefault());
         }
 
         [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]

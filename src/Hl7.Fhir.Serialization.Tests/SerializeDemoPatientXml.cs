@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = getXmlElement(xml);
             var output = nav.ToXml();
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
-            var pretty = nav.ToXml(new FhirXmlWriterSettings { Pretty = true });
+            var pretty = nav.ToXml(new FhirXmlBuilderSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
 
             var p = (new FhirXmlParser()).Parse<Patient>(xml);

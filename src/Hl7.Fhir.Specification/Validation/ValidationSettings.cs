@@ -9,6 +9,7 @@
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Utility;
 using System;
 
 namespace Hl7.Fhir.Validation
@@ -16,10 +17,17 @@ namespace Hl7.Fhir.Validation
 
     public class ValidationSettings
     {
+        [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         public static readonly ValidationSettings Default = new ValidationSettings();
 
+        /// <summary>
+        /// The resolver to use when references to other resources are encountered in the instance.
+        /// </summary>
         public IResourceResolver ResourceResolver { get; set; }
 
+        /// <summary>
+        /// The terminology service to use to validate coded instance data.
+        /// </summary>
         public ITerminologyService TerminologyService { get; set; }
 
         /// <summary>
@@ -64,15 +72,40 @@ namespace Hl7.Fhir.Validation
         /// .NET XSD validation prior to running profile validation
         /// </summary>
         public bool EnableXsdValidation { get; set; }
-    }
 
-    [Flags]
-    public enum ReferenceKind
-    {
-        None = 0x0,
-        Contained = 0x1,
-        Bundled = 0x2,
-        External = 0x4
-    }
+        /// <summary>Default constructor. Creates a new <see cref="ValidationSettings"/> instance with default property values.</summary>
+        public ValidationSettings() { }
 
+        /// <summary>Clone constructor. Generates a new <see cref="ValidationSettings"/> instance initialized from the state of the specified instance.</summary>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
+        public ValidationSettings(ValidationSettings other)
+        {
+            if (other == null) throw Error.ArgumentNull(nameof(other));
+            other.CopyTo(this);
+        }
+
+        /// <summary>Copy all configuration settings to another instance.</summary>
+        /// <param name="other">Another <see cref="ValidationSettings"/> instance.</param>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
+        public void CopyTo(ValidationSettings other)
+        {
+            if (other == null) throw Error.ArgumentNull(nameof(other));
+
+            other.EnableXsdValidation = EnableXsdValidation;
+            other.GenerateSnapshot = GenerateSnapshot;
+            other.GenerateSnapshotSettings = GenerateSnapshotSettings?.Clone();
+            other.ResolveExteralReferences = ResolveExteralReferences;
+            other.ResourceResolver = ResourceResolver;
+            other.SkipConstraintValidation = SkipConstraintValidation;
+            other.TerminologyService = TerminologyService;
+            other.Trace = Trace;
+        }
+
+        /// <summary>Creates a new <see cref="ValidationSettings"/> object that is a copy of the current instance.</summary>
+        public ValidationSettings Clone() => new ValidationSettings(this);
+
+        /// <summary>Creates a new <see cref="ValidationSettings"/> instance with default property values.</summary>
+        public static ValidationSettings CreateDefault() => new ValidationSettings();
+
+    }
 }
