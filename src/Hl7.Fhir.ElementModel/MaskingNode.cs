@@ -14,123 +14,45 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class MaskingNavigatorSettings
-    {
-        public enum PreserveBundleMode
-        {
-            /// <summary>
-            /// All Bundles (including nested) are masked like any other resource 
-            /// </summary>
-            None,
-
-            /// <summary>
-            /// The Bundle at the root is preserved, nested bundles are masked
-            /// </summary>
-            Root,
-
-            /// <summary>
-            /// All Bundles (including nested) are exempt from masking
-            /// </summary>
-            All
-        }
-
-        public PreserveBundleMode PreserveBundle;
-
-        /// <summary>
-        /// Include top-level mandatory elements, including all their children
-        /// </summary>
-        public bool IncludeMandatory;
-
-        /// <summary>
-        /// Include all elements marked "in summary" in the definition of the element
-        /// </summary>
-        public bool IncludeInSummary;
-
-        ///// <summary>
-        ///// Include all elements marked "is modifier" in the definition of the element
-        ///// </summary>
-        //public bool IncludeIsModifier;
-
-        /// <summary>
-        /// Exclude all elements of type "Narrative"
-        /// </summary>
-        public bool ExcludeNarrative;
-
-        /// <summary>
-        /// Exclude all elements of type "Markdown"
-        /// </summary>
-        public bool ExcludeMarkdown;
-
-        /// <summary>
-        /// Start by including all elements
-        /// </summary>
-        public bool IncludeAll;
-
-        /// <summary>
-        /// List of names op top-level elements to include, including their children
-        /// </summary>
-        public string[] IncludeElements;
-
-        /// <summary>
-        /// List of top-level elements to exclude
-        /// </summary>
-        public string[] ExcludeElements;
-
-        internal MaskingNavigatorSettings Clone() =>
-            new MaskingNavigatorSettings
-            {
-                PreserveBundle = this.PreserveBundle,
-                IncludeMandatory = this.IncludeMandatory,
-                IncludeInSummary = this.IncludeInSummary,
-                //   IncludeIsModifier = this.IncludeIsModifier,
-                ExcludeMarkdown = this.ExcludeMarkdown,
-                ExcludeNarrative = this.ExcludeNarrative,
-                IncludeAll = this.IncludeAll,
-                IncludeElements = this.IncludeElements?.ToArray(),
-                ExcludeElements = this.ExcludeElements?.ToArray()
-            };
-
-    }
-
     public class MaskingNode : ITypedElement, IAnnotated, IExceptionSource
     {
         public static MaskingNode ForSummary(ITypedElement node) =>
-            new MaskingNode(node, new MaskingNavigatorSettings
+            new MaskingNode(node, new MaskingNodeSettings
             {
                 IncludeInSummary = true,
-                PreserveBundle = MaskingNavigatorSettings.PreserveBundleMode.Root
+                PreserveBundle = MaskingNodeSettings.PreserveBundleMode.Root
             });
 
         public static MaskingNode ForText(ITypedElement node) =>
-            new MaskingNode(node, new MaskingNavigatorSettings
+            new MaskingNode(node, new MaskingNodeSettings
             {
                 IncludeElements = new[] { "text", "id", "meta" },
                 IncludeMandatory = true, //IncludeIsModifier = true,
-                PreserveBundle = MaskingNavigatorSettings.PreserveBundleMode.All
+                PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 
         public static MaskingNode ForData(ITypedElement node) =>
-            new MaskingNode(node, new MaskingNavigatorSettings
+            new MaskingNode(node, new MaskingNodeSettings
             {
                 IncludeAll = true,
                 ExcludeNarrative = true
             });
 
         public static MaskingNode ForCount(ITypedElement node) =>
-          new MaskingNode(node, new MaskingNavigatorSettings
+          new MaskingNode(node, new MaskingNodeSettings
           {
               IncludeMandatory = true,
               IncludeElements = new[] { "id", "total" },
           });
 
-        public MaskingNode(ITypedElement source, MaskingNavigatorSettings settings = null)
+        public MaskingNode(ITypedElement source, MaskingNodeSettings settings = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
             if (source.Annotation<ScopedNode>() == null)
                 throw Error.Argument("MaskingNavigator can only be used on a navigator chain that contains a ScopedNavigator", nameof(source));
 
             Source = source;
-            _settings = settings?.Clone() ?? new MaskingNavigatorSettings();
+            _settings = settings?.Clone() ?? new MaskingNodeSettings();
 
             if (Source is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
@@ -146,7 +68,7 @@ namespace Hl7.Fhir.ElementModel
         private ScopedNode getScope(ITypedElement node) =>
             node.Annotation<ScopedNode>();
 
-        private readonly MaskingNavigatorSettings _settings;
+        private readonly MaskingNodeSettings _settings;
 
         public ITypedElement Source { get; private set; }
 
@@ -178,8 +100,8 @@ namespace Hl7.Fhir.ElementModel
 
             switch (_settings.PreserveBundle)
             {
-                case MaskingNavigatorSettings.PreserveBundleMode.All when atBundle():
-                case MaskingNavigatorSettings.PreserveBundleMode.Root when atRootBundle():
+                case MaskingNodeSettings.PreserveBundleMode.All when atBundle():
+                case MaskingNodeSettings.PreserveBundleMode.Root when atRootBundle():
                     return true;
                     // else fall through
             }

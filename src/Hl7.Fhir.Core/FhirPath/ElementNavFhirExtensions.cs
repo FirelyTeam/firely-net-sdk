@@ -18,59 +18,6 @@ using System.Text;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public class FhirEvaluationContext : EvaluationContext
-    {
-        new public static readonly FhirEvaluationContext Default = new FhirEvaluationContext();
-
-        public FhirEvaluationContext() : base()
-        {
-        }
-
-        public FhirEvaluationContext(Resource context) : base(context?.ToElementNavigator())
-        {
-        }
-
-        [Obsolete("Use FhirEvaluationContext(ITypedElement context) instead")]
-        public FhirEvaluationContext(IElementNavigator context) : base(context)
-        {
-        }
-
-        public FhirEvaluationContext(ITypedElement context) : base(context.ToElementNavigator())
-        {
-        }
-
-        private Func<string, IElementNavigator> _resolver;
-
-        [Obsolete("Use property ElementResolver instead")]
-        public Func<string, IElementNavigator> Resolver
-        {
-            get { return _resolver; }
-            set
-            {
-                _resolver = value;
-                if (value == null)
-                    _elementResolver = null;
-                else
-                    _elementResolver = (s) => value(s).ToTypedElement();
-            }
-        }
-
-        private Func<string, ITypedElement> _elementResolver;
-
-        public Func<string, ITypedElement> ElementResolver
-        {
-            get { return _elementResolver; }
-            set
-            {
-                _elementResolver = value;
-                if (value == null)
-                    _resolver = null;
-                else
-                    _resolver = (s) => value(s).ToElementNavigator();
-            }
-        }
-    }
-
     public static class ElementNavFhirExtensions
     {
         internal static bool _fhirSymbolTableExtensionsAdded = false;
@@ -197,7 +144,7 @@ namespace Hl7.Fhir.FhirPath
         public static IEnumerable<Base> Select(this Base input, string expression, FhirEvaluationContext ctx = null)
         {
             var inputNav = input.ToElementNavigator();
-            var result = inputNav.Select(expression, ctx ?? FhirEvaluationContext.Default);
+            var result = inputNav.Select(expression, ctx ?? FhirEvaluationContext.CreateDefault());
             return result.ToFhirValues();            
         }
 
@@ -210,7 +157,7 @@ namespace Hl7.Fhir.FhirPath
         public static object Scalar(this Base input, string expression, FhirEvaluationContext ctx = null)
         {
             var inputNav = input.ToElementNavigator();
-            return inputNav.Scalar(expression, ctx ?? FhirEvaluationContext.Default);
+            return inputNav.Scalar(expression, ctx ?? FhirEvaluationContext.CreateDefault());
         }
 
         [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter")]
@@ -222,7 +169,7 @@ namespace Hl7.Fhir.FhirPath
         public static bool Predicate(this Base input, string expression, FhirEvaluationContext ctx = null)
         {
             var inputNav = input.ToElementNavigator();
-            return inputNav.Predicate(expression, ctx ?? FhirEvaluationContext.Default);
+            return inputNav.Predicate(expression, ctx ?? FhirEvaluationContext.CreateDefault());
         }
 
         [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter")]
@@ -234,7 +181,7 @@ namespace Hl7.Fhir.FhirPath
         public static bool IsBoolean(this Base input, string expression, bool value, FhirEvaluationContext ctx = null)
         {
             var inputNav = input.ToElementNavigator();
-            return inputNav.IsBoolean(expression, value, ctx ?? FhirEvaluationContext.Default);
+            return inputNav.IsBoolean(expression, value, ctx ?? FhirEvaluationContext.CreateDefault());
         }
 
         [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter")]

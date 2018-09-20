@@ -200,14 +200,15 @@ namespace Hl7.Fhir.Specification.Tests
 
             var instance = new Identifier("http://clearly.incorrect.nl/definition", "1234");
 
-            var validationContext = new ValidationSettings { ResourceResolver = _source, GenerateSnapshot = false };
-            var automatedValidator = new Validator(validationContext);
+            var settingsNoSnapshot = new ValidationSettings { ResourceResolver = _source, GenerateSnapshot = false };
+            var validator = new Validator(settingsNoSnapshot);
 
-            var report = automatedValidator.Validate(instance, identifierBsn);
+            var report = validator.Validate(instance, identifierBsn);
             Assert.Contains("does not include a snapshot", report.ToString());
 
-            validationContext.GenerateSnapshot = true;
-            report = automatedValidator.Validate(instance, identifierBsn);
+            var settingsSnapshot = new ValidationSettings(settingsNoSnapshot) { GenerateSnapshot = true };
+            validator = new Validator(settingsSnapshot);
+            report = validator.Validate(instance, identifierBsn);
             Assert.DoesNotContain("does not include a snapshot", report.ToString());
 
             bool snapshotNeedCalled = false;
@@ -216,9 +217,9 @@ namespace Hl7.Fhir.Specification.Tests
             // to our local identifierBSN
             identifierBsn.Snapshot = null;
 
-            automatedValidator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
+            validator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
 
-            report = automatedValidator.Validate(instance, identifierBsn);
+            report = validator.Validate(instance, identifierBsn);
             Assert.True(snapshotNeedCalled);
             Assert.Contains("does not include a snapshot", report.ToString());
         }
