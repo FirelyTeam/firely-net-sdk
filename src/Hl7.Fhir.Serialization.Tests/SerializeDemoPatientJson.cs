@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = getJsonElement(json);
             var output = nav.ToJson();
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
-            var pretty = nav.ToJson(new FhirJsonWriterSettings { Pretty = true });
+            var pretty = nav.ToJson(new FhirJsonBuilderSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
 
             var p = (new FhirJsonParser()).Parse<Patient>(json);

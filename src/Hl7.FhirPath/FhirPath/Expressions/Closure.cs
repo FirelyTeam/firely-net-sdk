@@ -22,7 +22,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static Closure Root(IElementNavigator root, EvaluationContext ctx=null)
         {
-            var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.Default };
+            var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.CreateDefault() };
 
             var input = new[] { root };
             newContext.SetThis(input);

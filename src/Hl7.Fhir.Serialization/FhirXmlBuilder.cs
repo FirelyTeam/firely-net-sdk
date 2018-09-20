@@ -19,12 +19,12 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirXmlBuilder : IExceptionSource
     {
-        internal FhirXmlBuilder(FhirXmlWriterSettings settings = null)
+        internal FhirXmlBuilder(FhirXmlBuilderSettings settings = null)
         {
-            _settings = settings?.Clone() ?? new FhirXmlWriterSettings();
+            _settings = settings?.Clone() ?? new FhirXmlBuilderSettings();
         }
 
-        private FhirXmlWriterSettings _settings;
+        private FhirXmlBuilderSettings _settings;
         private bool _roundtripMode;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }

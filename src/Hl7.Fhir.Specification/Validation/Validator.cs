@@ -63,10 +63,10 @@ namespace Hl7.Fhir.Validation
 
         public Validator(ValidationSettings settings)
         {
-            Settings = settings;
+            Settings = settings.Clone();
         }
 
-        public Validator() : this(ValidationSettings.Default)
+        public Validator() : this(ValidationSettings.CreateDefault())
         {
         }
 
