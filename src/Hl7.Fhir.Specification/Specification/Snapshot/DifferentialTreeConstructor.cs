@@ -8,53 +8,15 @@
  
 // #define DUMPOUTPUT
 
-// EXPERIMENTAL
-//
-// #define CGNAMING
-//
-// Handle Chris Grenz element naming system
-// Name children of slices: [sliceName].[elementName]
-// Example:
-//   Path                       Name        Description
-//   -------------------------------------------------------------
-//   Patient.identifier                     slicing intro
-//   Patient.identifier         bsn         first slice
-//   Patient.identifier.use     bsn.use     child of first slice
-//   Patient.identifier         bsn/1       first reslice
-//   Patient.identifier.use     bsn/1.use   child of first reslice
-
-
-// * spec: slices MUST have names - but don't expect this for extensions
-//   => Reject non-extension slices without a name; emit OperationOutcome issue
-//
-// * Reslicing: name = "slice/reslice"
-//   => "/" is illegal character in slice name!
-//   No other special rules on names, so e.g. "." is allowed and has no special meaning...
-//
-// * Sibling
-//   - If name equals previous element name (also both empty) => error! duplicate constraint => remove, emit OperationOutcome issue
-//   - If no match, then this represents a new (re)slice; we already ensured that the previous sibling element has a parent => no action
-// * Direct child
-//   - Parent already exists, by definition => no action
-//   - If the child has a name, then it represents a nested slice => no special action necessary
-// * Otherwise we are moving to a grand child or into a separate disjoint subtree
-//   - Usual rules apply, cf. direct child
-//   - Compare parent path with previous element; if match, then no action; otherwise emit parent
-//
-// * change exceptions to operation issues...?
-
-using System;
-using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
-using System.Diagnostics;
 using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    // [WMR 20161012] Note: internal scope for unit testing
-
     /// <summary>
     /// Differential structures may contain paths that "skip" over parents. For our profile expansion logic,
     /// it's easier to have the skipped parents present. This class will insert these missing parents.
@@ -62,12 +24,23 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// slicing or ElementDefn information associated with them, so they should not have any 
     /// influence on the final snapshot form.
     /// </summary>
-    public class DifferentialTreeConstructor
+    public static class DifferentialTreeConstructor
     {
+        // [WMR 20180816] NEW: Expose public extension method on DifferentialComponent
+        // Suggested by Brendan Kowitz (https://github.com/brendankowitz)
+
         /// <summary>Create a valid tree structure from a sparse differential element list by adding missing parent element definitions.</summary>
-        /// <returns>A tree structure representing the differential component.</returns>
+        /// <returns>A list of <see cref="ElementDefinition"/> instances that represent a tree structure.</returns>
         /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
-        public List<ElementDefinition> MakeTree(List<ElementDefinition> elements)
+        public static List<ElementDefinition> MakeTree(this StructureDefinition.DifferentialComponent diff)
+        {
+            return MakeTree(diff.Element);
+        }
+
+        /// <summary>Create a valid tree structure from a sparse differential element list by adding missing parent element definitions.</summary>
+        /// <returns>A list of <see cref="ElementDefinition"/> instances that represent a tree structure.</returns>
+        /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
+        public static List<ElementDefinition> MakeTree(List<ElementDefinition> elements)
         {
             var diff = new List<ElementDefinition>(elements.DeepCopy());   // We're going to modify the differential
 
@@ -97,59 +70,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Note: don't catch here, let the Snapshot Generator handle this
                     Debug.WriteLineIf(index > 0 && diff[index].Name != null && diff[index].Name == diff[index - 1].Name && diff[index - 1].Slicing == null, $"Warning! Duplicate constraint at index {index}: '{thisPath}'");
 
-#if CGNAMING
-                    // Handle Chris Grenz naming, e.g.
-                    // - Patient.name.use : "officialName.use"
-                    // - Patient.name.use : "maidenName.use"
-                    // => Belongs to a different slice "maidenName", not present => add parent slice
-                    var thisNameComponents = ParsedSliceName.Parse(diff[index]);
-                    var prevNameComponents = ParsedSliceName.Parse(index > 0 ? diff[index - 1] : null);
-                    if (thisNameComponents.ElementName != null && thisNameComponents.SliceName != prevNameComponents.SliceName)
-                    {
-                        var parentElement = new ElementDefinition()
-                        {
-                            Path = ElementDefinitionNavigator.GetParentPath(thisPath),
-                            Name = thisNameComponents.SliceName
-                        };
-                        diff.Insert(index, parentElement);
-                    }
-                    else
-                    {
-                        index++;
-                    }
-#else
                     // So we have already ensured that the parent node exists while processing the previous element
                     // OK, proceed to the next element
                     index++;
-#endif
                 }
                 else if (ElementDefinitionNavigator.IsDirectChildPath(prevPath, thisPath))
                 {
-#if CGNAMING
-                    // Handle Chris Grenz naming, e.g.
-                    // - Patient.identifier : "mrn"
-                    // - Patient.identifier.use : "mrn/officialMRN.use"
-                    // => Belongs to a different (re-)slice "mrn/officialMRN", not present => add parent (re)slice
-                    var parentName = getSliceParentName(diff[index].Name);
-                    var prevName = index > 0 ? diff[index - 1].Name : null;
-                    if (parentName != null && parentName != prevName)
-                    {
-                        var parentElement = new ElementDefinition()
-                        {
-                            Path = prevPath, // ElementDefinitionNavigator.GetParentPath(thisPath),
-                            Name = parentName
-                        };
-                        diff.Insert(index, parentElement);
-                    }
-                    else
-                    {
-                        index++;
-                    }
-#else
                     // The previous element is our parent
                     // OK, proceed to the next element
                     index++;
-#endif
                 }
                 else
                 {
@@ -192,46 +121,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return diff;
         }
-
-#if CGNAMING
-        static string getSliceParentName(string name)
-        {
-            if (!string.IsNullOrEmpty(name))
-            {
-                var slashPos = name.LastIndexOf("/");
-                var dotPos = name.LastIndexOf(".");
-                if (dotPos > slashPos)
-                {
-                    return name.Substring(0, dotPos);
-                }
-            }
-            return null;
-        }
-
-        struct ParsedSliceName {
-            public ParsedSliceName(string sliceName, string elementName) { this.SliceName = sliceName; this.ElementName = elementName; }
-            // public readonly string BaseSliceName; // before "/"
-            public readonly string SliceName;
-            public readonly string ElementName;
-            public static ParsedSliceName Parse(ElementDefinition element)
-            {
-                var name = element.Name;
-                if (!string.IsNullOrEmpty(name))
-                {
-                    var last = ElementDefinitionNavigator.GetLastPathComponent(element.Path);
-                    if (name.EndsWith("." + last))
-                    {
-                        return new ParsedSliceName(
-                            name.Substring(0, name.Length - last.Length - 1),
-                            name.Substring(name.Length - last.Length)
-                        );
-                    }
-                }
-                return new ParsedSliceName(name, null);
-            }
-        }
-
-#endif
 
     }     
 }
