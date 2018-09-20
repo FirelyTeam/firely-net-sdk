@@ -785,6 +785,11 @@ namespace Hl7.Fhir.Specification.Source
             var uniqueArtifacts = ResolveDuplicateFilenames(files, settings.FormatPreference);
             var summaries = harvestSummaries(uniqueArtifacts);
 
+#if false
+            // [WMR 20180914] OBSOLETE
+            // Conflict will prevent clients from retrieving list of summaries...
+            // Instead, throw in Resolve methods
+
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
             var duplicates =
@@ -800,6 +805,7 @@ namespace Hl7.Fhir.Specification.Source
                 // [WMR 20171023] TODO: Allow configuration, e.g. optional callback delegate
                 throw new CanonicalUrlConflictException(duplicates.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
+#endif
 
             return summaries;
         }
