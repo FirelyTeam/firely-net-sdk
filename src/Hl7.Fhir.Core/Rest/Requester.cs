@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Rest
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
             PreferredReturn = Rest.Prefer.ReturnRepresentation;
             PreferredParameterHandling = null;
-            ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
+            ParserSettings = ParserSettings.CreateDefault();
         }
 
 
