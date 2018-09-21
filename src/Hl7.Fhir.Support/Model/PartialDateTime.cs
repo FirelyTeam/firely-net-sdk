@@ -142,6 +142,7 @@ namespace Hl7.Fhir.Model.Primitives
             return new PartialDateTime { _value = PrimitiveTypeConverter.ConvertTo<string>(dto) };
         }
 
+        [Obsolete("Use FromDateTime(DateTimeOffset dto) instead")]
         public static PartialDateTime FromDateTime(DateTime dt)
         {
             return new PartialDateTime { _value = PrimitiveTypeConverter.ConvertTo<string>(dt) };

@@ -175,7 +175,8 @@ namespace Hl7.Fhir.Specification.Summary
                     {
                         properties.SetOrigin(origin);
                         properties.SetFileSize(fi.Length);
-                        properties.SetLastModified(fi.LastWriteTimeUtc);
+                        // implicit conversion to DateTimeOffet. This is allowed, because LastWriteTimeUtc is of DateTimeKind.Utc
+                        properties.SetLastModified(fi.LastWriteTimeUtc); 
                         properties.SetSerializationFormat(format);
                     }
 

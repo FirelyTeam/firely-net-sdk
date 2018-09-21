@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Specification.Source
                         T newData = _onCacheMiss(identifier);
 
                         // Add new entry or update existing entry
-                        cache[identifier] = new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration));
+                        cache[identifier] = new CacheEntry<T>(newData, identifier, DateTimeOffset.UtcNow.AddSeconds(_duration));
 
                         return newData;
                     }
@@ -247,9 +247,9 @@ namespace Hl7.Fhir.Specification.Source
         {
             public readonly T Data;
             public readonly string Identifier;
-            public readonly DateTime Expires;
+            public readonly DateTimeOffset Expires;
 
-            public CacheEntry(T data, string identifier, DateTime expires)
+            public CacheEntry(T data, string identifier, DateTimeOffset expires)
             {
                 Data = data;
                 Identifier = identifier;
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             /// <summary>Returns a boolean value that indicates if the cache entry is expired.</summary>
-            public bool IsExpired => DateTime.Now > Expires;
+            public bool IsExpired => DateTimeOffset.UtcNow > Expires;
         }
     }
 }

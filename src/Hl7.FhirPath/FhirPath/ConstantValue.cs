@@ -34,8 +34,6 @@ namespace Hl7.FhirPath
                 Value = Convert.ToDecimal(value);
             else if (value is DateTimeOffset)
                 Value = PartialDateTime.FromDateTime((DateTimeOffset)value);
-            else if (value is DateTime)
-                Value = PartialDateTime.FromDateTime((DateTime)value);
             else if (value is PartialDateTime)
                 Value = value;
             else if (value is PartialTime)
