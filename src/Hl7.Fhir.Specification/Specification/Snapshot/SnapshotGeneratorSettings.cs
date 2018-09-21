@@ -15,20 +15,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
     public sealed class SnapshotGeneratorSettings
-        : ICloneable
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-        [Obsolete("Use the CreateDefault() method")]
+        [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings();
-        //{
-        //    GenerateSnapshotForExternalProfiles = true,
-        //    ForceRegenerateSnapshots = false,           // Only enable this when using a cached source...!
-        //    GenerateExtensionsOnConstraints = false,    // Enabled by Simplifier (not used...)
-        //    GenerateAnnotationsOnConstraints = false,   // For snapshot rendering
-        //    GenerateElementIds = false                  // for STU3
-        //    // MergeTypeProfiles = true
-        //};
 
         /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> instance with default property values.</summary>
         public static SnapshotGeneratorSettings CreateDefault() => new SnapshotGeneratorSettings();
@@ -49,9 +40,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
         public SnapshotGeneratorSettings Clone() => new SnapshotGeneratorSettings(this);
-
-        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
-        object ICloneable.Clone() => Clone();
 
         /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="SnapshotGeneratorSettings"/> instance.</param>

@@ -206,14 +206,4 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
     }
-
-
-    public class ValueSetExpanderSettings
-    {
-        public static ValueSetExpanderSettings Default = new ValueSetExpanderSettings();
-
-        public IResourceResolver ValueSetSource { get; set; }
-
-        public int MaxExpansionSize { get; set; } = 500;
-    }
 }

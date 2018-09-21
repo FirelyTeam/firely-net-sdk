@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
 
                 sw.Stop();
-                Debug.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
+                Console.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
                 Assert.IsTrue(sw.ElapsedMilliseconds < maxDuration);
             }
         }
