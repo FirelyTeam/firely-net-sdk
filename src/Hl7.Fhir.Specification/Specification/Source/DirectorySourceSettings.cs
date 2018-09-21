@@ -16,34 +16,13 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    // cf. SnapshotGeneratorSettings, ValidationSettings
-
-    // Global design choices for API settings:
-    // * Configuration setting classes are read/write
-    //   This allows consumers to use (default) ctor and object initializer syntax
-    //   Note: Read-only classes are not serializable, mutation is clumsy (via custom clone ctor)
-    // * public default (parameterless) ctor creates instance with default settings
-    // * public static CreateDefault() also returns a new instance with default settings
-    // * Preferably, design properties such that default values are equal to false/null/0 etc.
-    // * Deprecate old syntax using Obsolete & DebuggerHidden attributes
-    // * Support cloning:
-    //   - clone ctor T(T other)     = create new instance from existing instance
-    //   - public T Clone()          = public method with strongly typed return value
-    //   - object ICloneable.Clone() = explicit ICloneable interface implementation (DOTNETFW only)
-    // * Christiaan: ASP.NET provides ctors with lambda argument to change internal config settings
-    //   This way, caller does not obtain "ownership" of settings instance.
-
-
     /// <summary>Configuration settings for the <see cref="DirectorySource"/> class.</summary>
     public sealed class DirectorySourceSettings
-#if DOTNETFW
-        : ICloneable
-#endif
     {
         /// <summary>Default value of the <see cref="FormatPreference"/> configuration setting.</summary>
         public const DirectorySource.DuplicateFilenameResolution DefaultFormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml;
 
-        /// <summary>Default value of the <see cref="Masks"/> configuration setting.</summary>
+        /// <summary>Default value of the <see cref="Masks"/> configuration setting (*.*)</summary>
         public readonly static string[] DefaultMasks = new[] { "*.*" };
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
@@ -80,11 +59,6 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         public DirectorySourceSettings Clone() => new DirectorySourceSettings(this);
-
-#if DOTNETFW
-        /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
-        object ICloneable.Clone() => Clone();
-#endif
 
         /// <summary>Returns the default content directory of the <see cref="DirectorySource"/>.</summary>
         public static string SpecificationDirectory
@@ -284,6 +258,24 @@ namespace Hl7.Fhir.Specification.Source
         /// </para>
         /// </remarks>
         public ArtifactSummaryHarvester[] SummaryDetailsHarvesters { get; set; }
+
+        // [WMR 20180813] NEW
+
+        /// <summary>
+        /// Determines the behavior of the internal <see cref="ArtifactSummaryGenerator"/>
+        /// for handling non-parseable (invalid or non-FHIR) content files.
+        /// <para>
+        /// By default (<c>false</c>), the source will generate summaries for all files
+        /// that exist in the specified content directory and match the specified mask,
+        /// including files that cannot be parsed (e.g. invalid or non-FHIR content).
+        /// </para>
+        /// <para>
+        /// If <c>true</c>, then the source will only generate summaries for valid
+        /// FHIR artifacts that exist in the specified content directory and match the
+        /// specified mask. Unparseable files are ignored and excluded from the result.
+        /// </para>
+        /// </summary>
+        public bool ExcludeSummariesForUnknownArtifacts { get; set; } // = false;
     }
 
 }

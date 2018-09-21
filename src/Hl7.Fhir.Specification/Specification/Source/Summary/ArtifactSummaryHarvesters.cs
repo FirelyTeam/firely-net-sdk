@@ -228,6 +228,7 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string KindKey = "StructureDefinition.kind";
         public static readonly string ConstrainedTypeKey = "StructureDefinition.constrainedType";
         public static readonly string ContextTypeKey = "StructureDefinition.contextType";
+        public static readonly string ContextKey = "StructureDefinition.context";
         public static readonly string BaseKey = "StructureDefinition.base";
 
         public static readonly string FmmExtensionUrl = @"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm";
@@ -256,6 +257,8 @@ namespace Hl7.Fhir.Specification.Source
                     nav.HarvestValue(properties, KindKey, "kind");
                     nav.HarvestValue(properties, ConstrainedTypeKey, "constrainedType");
                     nav.HarvestValue(properties, ContextTypeKey, "contextType");
+                    // [WMR 20180919] NEW: Extension Context
+                    nav.HarvestValues(properties, ContextKey, "context");
                     nav.HarvestValue(properties, BaseKey, "base");
 
                     // [WMR 20180725] Also harvest definition property from (first) root element in snapshot/differential
@@ -306,6 +309,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
         public static string GetStructureDefinitionContextType(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(ContextTypeKey);
+
+        /// <summary>Get the <c>StructureDefinition.context</c> property value from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
+        public static string[] GetStructureDefinitionContext(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string[]>(ContextKey);
 
         /// <summary>Get the <c>StructureDefinition.base</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>

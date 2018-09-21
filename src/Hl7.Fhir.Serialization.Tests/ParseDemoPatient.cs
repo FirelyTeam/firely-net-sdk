@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     throw Error.InvalidOperation("Fix unit test");
             }
 
-            var serializer = new FhirJsonBuilder(new FhirJsonWriterSettings {  });
+            var serializer = new FhirJsonBuilder(new FhirJsonBuilderSettings {  });
             string output = null;
 
             if (nav is ISourceNode isn2) output = isn2.ToJson();
