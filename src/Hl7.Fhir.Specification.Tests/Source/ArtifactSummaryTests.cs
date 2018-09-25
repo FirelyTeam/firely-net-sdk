@@ -68,6 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestValueSetXmlSummary()
         {
             const string path = @"TestData\validation\SectionTitles.valueset.xml";
+            const string url = @"http://example.org/ValueSet/SectionTitles";
             var summary = assertSummary(path);
 
             // Common properties
@@ -76,9 +77,33 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
-            Assert.AreEqual(@"http://example.org/ValueSet/SectionTitles", summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("MainBundle Section title codes", summary.GetConformanceName());
             Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+        }
+
+        [TestMethod]
+        public void TestExtensionDefinitionSummary()
+        {
+            const string path = @"TestData\snapshot-test\extensions\extension-patient-religion.xml";
+            const string url = @"http://hl7.org/fhir/StructureDefinition/patient-religion";
+            var summary = assertSummary(path);
+
+            // Common properties
+            Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
+            Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
+
+            // Conformance resource properties
+            Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual("religion", summary.GetConformanceName());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+
+            // StructureDefinition properties
+            var context = summary.GetStructureDefinitionContext();
+            Assert.IsNotNull(context);
+            Assert.AreEqual(1, context.Length);
+            Assert.AreEqual("Patient", context[0]);
         }
 
         [TestMethod]
