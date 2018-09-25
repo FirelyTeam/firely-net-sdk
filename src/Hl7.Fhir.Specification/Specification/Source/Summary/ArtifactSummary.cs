@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Specification.Source
         public long? FileSize => properties.GetFileSize();
 
         /// <summary>Gets the last modified date of the original artifact file.</summary>
-        public DateTime? LastModified => properties.GetLastModified();
+        public DateTimeOffset? LastModified => properties.GetLastModified();
 
         /// <summary>
         /// Get a string value that represents the artifact serialization format,

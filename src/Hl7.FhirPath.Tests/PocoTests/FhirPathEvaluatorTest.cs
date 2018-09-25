@@ -488,10 +488,10 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(PartialDateTime.Today(), fixture.TestInput.Scalar("today()"));
 
             // Check greater than
-            fixture.IsTrue("today() < @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(1)));
+            fixture.IsTrue("today() < @" + PartialDateTime.FromDateTime(DateTimeOffset.UtcNow.AddDays(1)));
 
             // Check less than
-            fixture.IsTrue("today() > @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(-1)));
+            fixture.IsTrue("today() > @" + PartialDateTime.FromDateTime(DateTimeOffset.UtcNow.AddDays(-1)));
 
             // Check ==
             fixture.IsTrue("today() = @" + PartialDateTime.Today());

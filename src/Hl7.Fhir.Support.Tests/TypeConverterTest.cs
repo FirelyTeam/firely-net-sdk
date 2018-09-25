@@ -122,9 +122,9 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 	    [TestMethod]
-	    public void TestStringToDateTime()
+	    public void TestStringToDateTimeOffset()
 	    {
-		    Assert.AreEqual(new DateTime(1976, 12, 12), PrimitiveTypeConverter.ConvertTo<DateTime>("1976-12-12"));
+		    Assert.AreEqual(new DateTimeOffset(1976, 12, 12, 0, 0, 0, TimeSpan.Zero), PrimitiveTypeConverter.ConvertTo<DateTimeOffset>("1976-12-12"));
 	    }
 
 	    [TestMethod]

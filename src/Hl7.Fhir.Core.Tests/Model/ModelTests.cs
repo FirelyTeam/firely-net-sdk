@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Tests.Model
             FhirDateTime dt = new FhirDateTime("2010-01-01");
             Assert.AreEqual("2010-01-01", dt.Value);
 
-            FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10);
+            FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
             Assert.AreNotEqual(dt2.Value, "1972-11-30T15:10");
 
@@ -64,6 +64,16 @@ namespace Hl7.Fhir.Tests.Model
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
             Assert.IsTrue(dt.Value.EndsWith("+00:00"));
+        }
+
+        [TestMethod]
+        public void TodayTests()
+        {
+            var todayLocal = Date.Today(); 
+            Assert.AreEqual(DateTimeOffset.Now.ToString("yyy-MM-dd"), todayLocal.Value);
+
+            var todayUtc = Date.UtcToday();
+            Assert.AreEqual(DateTimeOffset.UtcNow.ToString("yyy-MM-dd"), todayUtc.Value);
         }
 
         [TestMethod]
@@ -316,7 +326,7 @@ namespace Hl7.Fhir.Tests.Model
             sv.Value = "23:59:00";
             Assert.AreEqual(sv.Value, "23:59:00");
 
-            sv = new FhirDateTime(DateTime.Now);
+            sv = new FhirDateTime(DateTimeOffset.UtcNow);
             Assert.IsNotNull(sv);
             sv.Value = "20161201 23:59:00";
             Assert.AreEqual(sv.Value, "20161201 23:59:00");
