@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             Debug.WriteLine($"Scanning took {sw.ElapsedMilliseconds / 250} ms");
         }
 
-#if NET_COMPRESSION
+#if !NETSTANDARD1_1
 
         [TestMethod]
         public void NavigateZipStream()

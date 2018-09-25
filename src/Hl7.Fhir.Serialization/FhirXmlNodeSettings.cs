@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool PermissiveParsing;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         /// <summary>
         /// Validate narrative against the FHIR Xhtml schema.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Serialization
             other.DisallowSchemaLocation = DisallowSchemaLocation;
             other.PermissiveParsing = PermissiveParsing;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
             other.ValidateFhirXhtml = ValidateFhirXhtml;
 #endif
         }

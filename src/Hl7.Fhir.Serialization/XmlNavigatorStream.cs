@@ -15,7 +15,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
 using System.Collections;
 
-#if NET_FILESYSTEM
+#if !NETSTANDARD1_1
 
 namespace Hl7.Fhir.Serialization
 {
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Serialization
             initializeReader();
         }
 
-        #region IDisposable
+#region IDisposable
 
         bool _disposed;
 
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        #endregion
+#endregion
 
         /// <summary>The typename of the underlying resource (container).</summary>
         /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Serialization
 
         object IEnumerator.Current => this.Current;
 
-        #region Private helpers
+#region Private helpers
 
         static string getRootName(XmlReader reader)
         {
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Serialization
             if (_disposed) { throw new ObjectDisposedException(GetType().FullName); }
         }
 
-        #endregion
+#endregion
 
     }
 }

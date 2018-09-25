@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
 using System.Xml.Schema;
 #endif
 
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Utility
             return resultRE;
         }
 
-        //#if NET_FILESYSTEM
+        //#if !NETSTANDARD1_1
         //        public static void JoinFiles(string[] inputFilePaths, string outputFilePath)
         //        {
         //            using (var outputStream = File.Create(outputFilePath))
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Utility
         //        }
         //#endif
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         public static string[] RunFhirXhtmlSchemaValidation(string xmlText)
         {
             try
@@ -365,10 +365,10 @@ namespace Hl7.Fhir.Utility
 
 
 
-#if NET_REGEX_COMPILE
-        private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-#else
+#if NETSTANDARD1_1
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.CultureInvariant);
+#else
+        private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 #endif
         private static Dictionary<string, string> _xmlReplacements;
         private static Dictionary<string, string> getXmlReplacements()

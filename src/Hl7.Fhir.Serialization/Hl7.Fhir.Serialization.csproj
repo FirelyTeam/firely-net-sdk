@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;net40;netstandard1.1;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard1.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
 
@@ -17,21 +16,13 @@
     <AssemblyName>Hl7.Fhir.Serialization</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1'">
     <Compile Remove="Properties\Resources.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <Compile Remove="Properties\Resources.Designer.cs" />
-  </ItemGroup>
-    <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System" />
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

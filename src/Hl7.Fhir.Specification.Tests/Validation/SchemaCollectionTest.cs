@@ -22,7 +22,6 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-#if NET_XSD_SCHEMA
     [TestClass]
     public class SchemaCollectionTest
     {
@@ -67,5 +66,4 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
     }
-#endif
 }

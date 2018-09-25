@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.1;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard1.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   
-  <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
 
@@ -26,27 +25,16 @@
 
   <ItemGroup>    
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' and '$(TargetFramework)' != 'net40' ">
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.1" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net40' ">
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
+ 
   <ItemGroup>
     <None Include="Model\Source\expansions.xml" />
     <None Include="Model\Source\profiles-resources.xml" />

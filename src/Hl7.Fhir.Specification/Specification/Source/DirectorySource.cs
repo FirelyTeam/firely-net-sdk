@@ -9,8 +9,6 @@
 // [WMR 20171023] TODO
 // - Allow configuration of duplicate canonical url handling strategy
 
-#if NET_FILESYSTEM
-
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -32,14 +30,9 @@ namespace Hl7.Fhir.Specification.Source
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource
     {
-        // netstandard has no CurrentCultureIgnoreCase comparer
-#if DOTNETFW
         private static readonly StringComparer PathComparer = StringComparer.InvariantCultureIgnoreCase;
         private static readonly StringComparison PathComparison = StringComparison.InvariantCultureIgnoreCase;
-#else
-        private static readonly StringComparer PathComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringComparison PathComparison = StringComparison.OrdinalIgnoreCase;
-#endif
+
         // Files with following extensions are ALWAYS excluded from the result
         private static readonly string[] ExecutableExtensions = { ".exe", ".dll", ".cpl", ".scr" };
 
@@ -975,5 +968,3 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 }
-
-#endif
