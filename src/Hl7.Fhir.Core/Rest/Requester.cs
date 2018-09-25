@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Rest
             byte[] outBody;
             var request = interaction.ToHttpRequest(BaseUrl, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
-#if DOTNETFW
+#if !NETSTANDARD1_1
             request.Timeout = Timeout;
 #endif
 
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Rest
             {
                 byte[] body = null;
                 var respStream = response.GetResponseStream();
-#if !DOTNETFW
+#if NETSTANDARD1_1
                 var contentEncoding = response.Headers["Content-Encoding"];
 #else
                 var contentEncoding = response.ContentEncoding;

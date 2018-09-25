@@ -40,7 +40,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Model
 {
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
         string Code { get; }
     }
 
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [FhirType("codeOfT")]

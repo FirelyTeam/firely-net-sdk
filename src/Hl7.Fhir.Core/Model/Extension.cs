@@ -43,7 +43,7 @@ using Hl7.Fhir.Specification;
 //
 namespace Hl7.Fhir.Model
 {
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_Url}}")]

@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Base for all elements
     /// </summary>
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [DataContract]

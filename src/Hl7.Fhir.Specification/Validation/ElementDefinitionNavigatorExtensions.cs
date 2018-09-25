@@ -22,13 +22,6 @@ namespace Hl7.Fhir.Validation
         }
 
 
-//#if NETSTANDARD1_1
-//        public static int Count(this string s, Func<char, bool> predicate)
-//        {
-//            return s.ToCharArray().Where(predicate).Count();
-//        }
-//#endif
-
         public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
         {
             //TODO: There is something smarter for this in STU3

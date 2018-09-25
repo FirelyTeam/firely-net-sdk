@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Rest
 
             result.Response.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
 
-#if !DOTNETFW
+#if NETSTANDARD1_1
             if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
                     result.Response.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
 #else

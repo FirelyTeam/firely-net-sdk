@@ -10,7 +10,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.IO;
 
-#if NET_FILESYSTEM
+#if !NETSTANDARD1_1
 
 namespace Hl7.Fhir.Serialization
 {

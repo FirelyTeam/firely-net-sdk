@@ -19,11 +19,7 @@ namespace Hl7.Fhir.Validation
     {
         public static ValidationContext BuildContext(object value=null)
         {
-#if NET40
-            return new ValidationContext(value, null, null);
-#else
             return new ValidationContext(value);
-#endif
         }
 
         public static void Validate(object value, bool recurse = false, Func<string, Resource> resolver = null)

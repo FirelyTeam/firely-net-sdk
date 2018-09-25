@@ -40,7 +40,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [InvokeIValidatableObject]
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
                     dest.annotations.AddRange(annotations);
                 }
 
-#pragma warning disable 618,620            
+#pragma warning disable 618, 620
                 if (UserData != null) dest.UserData = new Dictionary<string, object>(UserData);
 #pragma warning restore 618
 
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             return Enumerable.Empty<ValidationResult>();
         }
 
-        #region << Annotations and UserData >>
+#region << Annotations and UserData >>
         private Dictionary<string, object> _userData = new Dictionary<string, object>();
 
         [NotMapped]
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
             annotations.RemoveOfType(type);
         }
 
-        #endregion
+#endregion
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(String property)

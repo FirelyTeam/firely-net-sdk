@@ -147,11 +147,7 @@ namespace Hl7.Fhir.Specification.Tests
                 tasks[i] = Tasks.Task.Run(
                     () =>
                     {
-#if DOTNETFW
                         var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-#else
-                        const int threadId = 0;
-#endif
                         var start = sw.Elapsed;
                         var resource = source.ResolveByCanonicalUri(uri);
                         var summary = source.ListSummaries().ResolveByUri(uri);

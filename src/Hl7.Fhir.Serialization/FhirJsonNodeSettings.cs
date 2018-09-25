@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool AllowJsonComments;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         /// <summary>
         /// Validate narrative against the FHIR Xhtml schema.
         /// </summary>
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization
             other.PermissiveParsing = PermissiveParsing;
             other.AllowJsonComments = AllowJsonComments;
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
             other.ValidateFhirXhtml = ValidateFhirXhtml;
 #endif
         }
