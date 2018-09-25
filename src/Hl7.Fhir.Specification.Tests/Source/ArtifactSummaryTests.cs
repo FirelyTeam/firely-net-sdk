@@ -80,9 +80,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("MainBundle Section title codes", summary.GetConformanceName());
             Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
-
-            // Valueset properties
-            Assert.IsNotNull(summary.GetValueSetSystem());
         }
 
         [TestMethod]
@@ -101,24 +98,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("religion", summary.GetConformanceName());
             Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
-        }
-
-        [TestMethod]
-        public void TestExtensionDefinitionSummary()
-        {
-            const string path = @"TestData\snapshot-test\extensions\extension-us-core-religion.xml";
-            const string url = @"http://hl7.org/fhir/StructureDefinition/us-core-religion";
-            var summary = assertSummary(path);
-
-            // Common properties
-            Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
-            Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
-
-            // Conformance resource properties
-            Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
-            Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
-            Assert.AreEqual("Patient's professed religious affiliation", summary.GetConformanceName());
-            Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
 
             // StructureDefinition properties
             var context = summary.GetStructureDefinitionContext();
