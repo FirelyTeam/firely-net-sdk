@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries().ToList();
             Assert.IsNotNull(summaries);
-            Assert.AreEqual(7670, summaries.Count);
+            Assert.AreEqual(7941, summaries.Count);
             Assert.AreEqual(581, summaries.OfResourceType(ResourceType.StructureDefinition).Count());
             Assert.IsTrue(!summaries.Errors().Any());
         }
