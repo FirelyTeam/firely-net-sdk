@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & CanonicalUrlConflictException
+        // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & ResolvingConflictException
         [TestMethod]
         public void TestCanonicalUrlConflicts()
         {
@@ -337,15 +337,15 @@ namespace Hl7.Fhir.Specification.Tests
                 var fa = new DirectorySource();
                 var res = fa.ResolveByCanonicalUri(url);
             }
-            catch (CanonicalUrlConflictException ex)
+            catch (ResolvingConflictException ex)
             {
                 Debug.WriteLine("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
                 Assert.IsNotNull(ex.Conflicts);
                 Assert.AreEqual(1, ex.Conflicts.Length);
                 var conflict = ex.Conflicts[0];
-                Assert.AreEqual(url, conflict.Url);
-                Assert.IsTrue(conflict.FilePaths.Contains(filePath));
-                Assert.IsTrue(conflict.FilePaths.Contains(filePath2));
+                Assert.AreEqual(url, conflict.Identifier);
+                Assert.IsTrue(conflict.Origins.Contains(filePath));
+                Assert.IsTrue(conflict.Origins.Contains(filePath2));
                 conflictException = true;
             }
             finally

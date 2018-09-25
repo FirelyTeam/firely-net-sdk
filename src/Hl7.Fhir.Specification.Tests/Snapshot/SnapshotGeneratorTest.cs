@@ -855,8 +855,7 @@ namespace Hl7.Fhir.Specification.Tests
         //	// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
         //	// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
         //};
-
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GenerateSnapshot()
         {
             var sw = new Stopwatch();
@@ -927,6 +926,23 @@ namespace Hl7.Fhir.Specification.Tests
 
         IEnumerable<StructureDefinition> findConstraintStrucDefs()
         {
+#if true
+            if (_source.Source is DirectorySource dirSource)
+            {
+                //var summaries = dirSource.ListSummaries(ResourceType.StructureDefinition);
+                //summaries = summaries.Where(s => Path.GetFileNameWithoutExtension(s.Origin) == "profiles-others");
+                var path = Path.GetFullPath(@"TestData\snapshot-test\WMR\profiles-others.xml");
+                var summaries = dirSource.ListSummaries(ResourceType.StructureDefinition).FromFile(path);
+                foreach (var summary in summaries)
+                {
+                    var canonical = summary.GetConformanceCanonicalUrl();
+                    if (canonical != null)
+                    {
+                        yield return _source.ResolveByCanonicalUri(canonical) as StructureDefinition;
+                    }
+                }
+            }
+#else
             var testSDs = _source.FindAll<StructureDefinition>();
 
             foreach (var testSD in testSDs)
@@ -946,6 +962,7 @@ namespace Hl7.Fhir.Specification.Tests
                         yield return testSD;
                 }
             }
+#endif
         }
 
         // Unit tests for DifferentialTreeConstructor
@@ -962,7 +979,7 @@ namespace Hl7.Fhir.Specification.Tests
             e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
             e.Add(new ElementDefinition() { Path = "A.D.F" });
 
-            var tree = (new DifferentialTreeConstructor()).MakeTree(e);
+            var tree = DifferentialTreeConstructor.MakeTree(e);
             Assert.IsNotNull(tree);
 
             var nav = new ElementDefinitionNavigator(tree);
@@ -996,7 +1013,7 @@ namespace Hl7.Fhir.Specification.Tests
             bool exceptionRaised = false;
             try
             {
-                var tree = (new DifferentialTreeConstructor()).MakeTree(elements);
+                var tree = DifferentialTreeConstructor.MakeTree(elements);
             }
             catch (InvalidOperationException ex)
             {
@@ -1021,7 +1038,7 @@ namespace Hl7.Fhir.Specification.Tests
             elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
             elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "C/1" });
 
-            var tree = (new DifferentialTreeConstructor()).MakeTree(elements);
+            var tree = DifferentialTreeConstructor.MakeTree(elements);
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
 
@@ -1046,7 +1063,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
             Assert.IsNotNull(sd);
-            var tree = (new DifferentialTreeConstructor()).MakeTree(sd.Differential.Element);
+            var tree = sd.Differential.MakeTree();
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
         }

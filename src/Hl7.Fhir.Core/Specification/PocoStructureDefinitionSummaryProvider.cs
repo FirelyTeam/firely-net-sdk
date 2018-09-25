@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Hl7.Fhir.Specification
 {
@@ -92,16 +93,27 @@ namespace Hl7.Fhir.Specification
     internal struct PocoElementSerializationInfo : IElementDefinitionSummary
     {
         private readonly PropertyMapping _pm;
-        private readonly Lazy<ITypeSerializationInfo[]> _types;
+
+        // [WMR 20180822] OPTIMIZE: use LazyInitializer.EnsureInitialized instead of Lazy<T>
+        // Lazy<T> introduces considerable performance degradation when running in debugger (F5) ?
+        //private readonly Lazy<ITypeSerializationInfo[]> _types;
+        private ITypeSerializationInfo[] _types;
 
         internal PocoElementSerializationInfo(PropertyMapping pm)
         {
             _pm = pm;
-            _types = new Lazy<ITypeSerializationInfo[]>(() => buildTypes(pm));
+
+            // [WMR 20180822] OPTIMIZE
+            // _types = new Lazy<ITypeSerializationInfo[]>(() => buildTypes(pm));
+            _types = null;
         }
 
-        private static ITypeSerializationInfo[] buildTypes(PropertyMapping pm)
+        // [WMR 20180822] OPTIMIZE
+        // private static ITypeSerializationInfo[] buildTypes(PropertyMapping pm)
+        private ITypeSerializationInfo[] buildTypes()
         {
+            var pm = _pm;
+
             if (pm.IsBackboneElement)
             {
                 var mapping = PocoStructureDefinitionSummaryProvider.GetMappingForType(pm.ImplementingType);
@@ -137,7 +149,18 @@ namespace Hl7.Fhir.Specification
 
         public int Order => _pm.Order;
 
-        public ITypeSerializationInfo[] Type => _types.Value;
+        // [WMR 20180822] OPTIMIZE
+        public ITypeSerializationInfo[] Type //=> _types.Value;
+        {
+            get
+            {
+                // [WMR 20180822] Optimize lazy initialization
+                // Multiple threads may execute buildTypes, first result is used & assigned
+                // Safe, because buildTypes is idempotent
+                LazyInitializer.EnsureInitialized(ref _types, buildTypes);
+                return _types;
+            }
+        }
 
         public string NonDefaultNamespace => null;
     }
