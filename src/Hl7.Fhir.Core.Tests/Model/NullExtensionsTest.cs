@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Model
         public void TestIsNullOrEmpty_Integer() => testIsNullOrEmpty_Primitive<Integer, int?>(42, 0);
 
         [TestMethod]
-        public void TestIsNullOrEmpty_FhirDateTime() => testIsNullOrEmpty_StringPrimitive<FhirDateTime>(XmlConvert.ToString(DateTime.Now, XmlDateTimeSerializationMode.RoundtripKind));
+        public void TestIsNullOrEmpty_FhirDateTime() => testIsNullOrEmpty_StringPrimitive<FhirDateTime>(XmlConvert.ToString(DateTimeOffset.UtcNow));
 
         [TestMethod]
         public void TestIsNullOrEmpty_FhirInstant() => testIsNullOrEmpty_Primitive<Instant, DateTimeOffset?>(DateTimeOffset.Now, new DateTimeOffset());

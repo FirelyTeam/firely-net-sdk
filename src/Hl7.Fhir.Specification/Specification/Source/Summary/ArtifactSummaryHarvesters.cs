@@ -74,10 +74,10 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the LastModified property value from the specified artifact summary property bag, if available.</summary>
-        public static DateTime? GetLastModified(this IArtifactSummaryPropertyBag properties)
-            => (DateTime?)properties.GetValueOrDefault(LastModifiedKey);
+        public static DateTimeOffset? GetLastModified(this IArtifactSummaryPropertyBag properties)
+            => (DateTimeOffset?)properties.GetValueOrDefault(LastModifiedKey);
 
-        internal static void SetLastModified(this ArtifactSummaryPropertyBag properties, DateTime value)
+        internal static void SetLastModified(this ArtifactSummaryPropertyBag properties, DateTimeOffset value)
         {
             properties[LastModifiedKey] = value;
         }

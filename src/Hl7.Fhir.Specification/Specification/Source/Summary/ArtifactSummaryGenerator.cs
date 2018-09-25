@@ -155,6 +155,7 @@ namespace Hl7.Fhir.Specification.Summary
                 {
                     properties.SetOrigin(filePath);
                     properties.SetFileSize(fi.Length);
+                    // implicit conversion to DateTimeOffet. This is allowed, because LastWriteTimeUtc is of DateTimeKind.Utc
                     properties.SetLastModified(fi.LastWriteTimeUtc);
                     switch (fi.Extension)
                     {
