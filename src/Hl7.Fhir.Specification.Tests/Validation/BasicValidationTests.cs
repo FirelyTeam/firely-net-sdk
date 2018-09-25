@@ -1,30 +1,28 @@
-﻿using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Validation;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
-using Hl7.Fhir.Rest;
-using System.Collections.Generic;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Utility;
-using Xunit;
-using Hl7.Fhir.Specification.Terminology;
-using System;
-using Hl7.Fhir.Validation;
-using System.Collections.Concurrent;
-using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using System.Xml.Linq;
+using Xunit;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     [Trait("Category", "Validation")]
     public class BasicValidationTests : IClassFixture<ValidationFixture>
     {
-        IResourceResolver _source;
-        Validator _validator;
+        private IResourceResolver _source;
+        private Validator _validator;
         private readonly Xunit.Abstractions.ITestOutputHelper output;
 
         public BasicValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
@@ -96,8 +94,8 @@ namespace Hl7.Fhir.Specification.Tests
                     SourceNode.Node("extension",
                         SourceNode.Valued("value", "4")),
                     SourceNode.Node("nonExistant")
-                        ).ToTypedElement(new PocoStructureDefinitionSummaryProvider(), type: "boolean", settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough});
-                    
+                        ).ToTypedElement(new PocoStructureDefinitionSummaryProvider(), type: "boolean", settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
+
             var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNode(data));
             Assert.Single(matches.UnmatchedInstanceElements);
             Assert.Equal(3, matches.Matches.Count());        // id, extension, value
@@ -830,18 +828,40 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, result.Errors);
         }
 
+        private Validator buildValidator(CachedResolver cr)
+        {
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = cr,
+                GenerateSnapshot = true,
+                EnableXsdValidation = true,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            return new Validator(ctx);
+        }
+
         /// <summary>
         /// Test for issue 556 (https://github.com/ewoutkramer/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
         public async System.Threading.Tasks.Task RunValueSetExpanderMultiThreaded()
         {
+            var cr = new CachedResolver(
+                    new MultiResolver(
+                    new BasicValidationTests.BundleExampleResolver(@"TestData\validation"),
+                    new DirectorySource(@"TestData\validation"),
+                    new TestProfileArtifactSource(),
+                    new ZipSource("specification.zip")));
+
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<OperationOutcome>();
             var buffer = new BufferBlock<XDocument>();
             var processor = new ActionBlock<XDocument>(d =>
                 {
-                    var outcome = _validator.Validate(d.CreateReader());
+                    var v = buildValidator(cr);
+                    var outcome = v.Validate(d.CreateReader());
                     results.Add(outcome);
                 }
                 ,
@@ -897,7 +917,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Verify aggregated element constraints
-        static void assertElementConstraints(List<ElementDefinition> patientElems)
+        private static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
             foreach (var elem in patientElems)
             {
@@ -919,9 +939,9 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        class ClearSnapshotResolver : IResourceResolver
+        private class ClearSnapshotResolver : IResourceResolver
         {
-            IResourceResolver _resolver;
+            private IResourceResolver _resolver;
             public ClearSnapshotResolver(IResourceResolver resolver)
             {
                 _resolver = resolver;
@@ -951,9 +971,9 @@ namespace Hl7.Fhir.Specification.Tests
 
     }
 
-    class InMemoryResourceResolver : IResourceResolver
+    internal class InMemoryResourceResolver : IResourceResolver
     {
-        readonly ILookup<string, Resource> _resources;
+        private readonly ILookup<string, Resource> _resources;
 
         public InMemoryResourceResolver(IEnumerable<Resource> profiles)
         {
@@ -967,7 +987,7 @@ namespace Hl7.Fhir.Specification.Tests
         public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
 
         // cf. ResourceStreamScanner.StreamResources
-        static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+        private static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
     }
 
 
