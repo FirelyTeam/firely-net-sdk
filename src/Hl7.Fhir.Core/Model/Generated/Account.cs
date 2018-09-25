@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CoverageComponent"; } }
             
             /// <summary>
-            /// The party(s) that are responsible for covering the payment of this account
+            /// The party(s), such as insurances, that may contribute to the payment of this account
             /// </summary>
             [FhirElement("coverage", InSummary=true, Order=40)]
             [CLSCompliant(false)]
@@ -462,14 +462,15 @@ namespace Hl7.Fhir.Model
         [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public List<Hl7.Fhir.Model.ResourceReference> Subject
         {
-            get { return _Subject; }
+            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
         /// Transaction window
@@ -592,7 +593,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Account.AccountStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
                 if(ServicePeriod != null) dest.ServicePeriod = (Hl7.Fhir.Model.Period)ServicePeriod.DeepCopy();
                 if(Coverage != null) dest.Coverage = new List<Hl7.Fhir.Model.Account.CoverageComponent>(Coverage.DeepCopy());
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
@@ -662,7 +663,7 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (Type != null) yield return Type;
 				if (NameElement != null) yield return NameElement;
-				if (Subject != null) yield return Subject;
+				foreach (var elem in Subject) { if (elem != null) yield return elem; }
 				if (ServicePeriod != null) yield return ServicePeriod;
 				foreach (var elem in Coverage) { if (elem != null) yield return elem; }
 				if (Owner != null) yield return Owner;
@@ -682,7 +683,7 @@ namespace Hl7.Fhir.Model
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Type != null) yield return new ElementValue("type", false, Type);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
                 if (ServicePeriod != null) yield return new ElementValue("servicePeriod", false, ServicePeriod);
                 foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", true, elem); }
                 if (Owner != null) yield return new ElementValue("owner", false, Owner);

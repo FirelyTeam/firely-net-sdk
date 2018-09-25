@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="cds-basecancer" />
   <meta>
@@ -52,9 +52,7 @@
       <path value="Condition.extension.extension.valueCodeableConcept" />
       <binding>
         <strength value="required" />
-        <valueSetReference>
-          <reference value="https://example.org/fhir/ValueSet/cds-cancerstagingtype" />
-        </valueSetReference>
+        <valueSet value="https://example.org/fhir/ValueSet/cds-cancerstagingtype" />
       </binding>
     </element>
     <!-- [WMR 20170424] ???

@@ -56,137 +56,131 @@
       <text>
         <status value="generated"/>
         <div xmlns="http://www.w3.org/1999/xhtml">
-
-
           <pre>
-            Comorbidity? YES
-            Cardial Comorbidity? YES
-            Angina? YES
-            MI? NO
-            Vascular Comorbidity?
-            (no answers)
+            1.Comorbidity?
+            1.1 Cardial Comorbidity
+            1.1.1 Angina?
+            1.1.2 MI?
+            1.2 Vascular Comorbidity?
             ...
             Histopathology
             Abdominal
-            pT category: 1a
+            pT category?
             ...
           </pre>
-
-
         </div>
       </text>
+      <url value="http://hl7.org/fhir/Questionnaire/3141"/>
+      <title value="Cancer Quality Forum Questionnaire 2012"/>
       <status value="draft"/>
-      <date value="2012-01"/>
       <subjectType value="Patient"/>
-      <group>
+      <date value="2012-01"/>
+      <item>
         <linkId value="1"/>
-        <title value="Cancer Quality Forum Questionnaire 2012"/>
-        <required value="true"/>
-        <group>
-          <!--     COMORBIDITY     -->
-          <!--     First main section of the form, questions about comorbidity     -->
+        <code>
+          <system value="http://example.org/system/code/sections"/>
+          <code value="COMORBIDITY"/>
+        </code>
+        <type value="group"/>
+        <item>
           <linkId value="1.1"/>
-          <concept>
-            <system value="http://example.org/system/code/sections"/>
-            <code value="COMORBIDITY"/>
-          </concept>
-          <!--     section contains one question: whether there is comorbidity     -->
-          <question>
+          <code>
+            <system value="http://example.org/system/code/questions"/>
+            <code value="COMORB"/>
+          </code>
+          <prefix value="1"/>
+          <type value="choice"/>
+          <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+          <item>
             <linkId value="1.1.1"/>
-            <concept>
-              <system value="http://example.org/system/code/questions"/>
-              <code value="COMORB"/>
-            </concept>
-            <type value="choice"/>
-            <options>
-              <reference value="#yesno"/>
-            </options>
-            <group>
-              <!--     COMORBIDITY/CARDIAL     -->
-              <!--     Subsection about specific comorbidity: cardial     -->
+            <code>
+              <system value="http://example.org/system/code/sections"/>
+              <code value="CARDIAL"/>
+            </code>
+            <type value="group"/>
+            <enableWhen>
+              <question value="1.1"/>
+              <operator value="="/>
+              <answerCoding>
+                <system value="http://hl7.org/fhir/v2/0136"/>
+                <code value="Y"/>
+              </answerCoding>
+            </enableWhen>
+            <item>
               <linkId value="1.1.1.1"/>
-              <concept>
-                <system value="http://example.org/system/code/sections"/>
-                <code value="CARDIAL"/>
-              </concept>
-              <question>
+              <code>
+                <system value="http://example.org/system/code/questions"/>
+                <code value="COMORBCAR"/>
+              </code>
+              <prefix value="1.1"/>
+              <type value="choice"/>
+              <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+              <item>
                 <linkId value="1.1.1.1.1"/>
-                <concept>
-                  <system value="http://example.org/system/code/questions"/>
-                  <code value="COMORBCAR"/>
-                </concept>
-                <type value="choice"/>
-                <options>
-                  <reference value="#yesno"/>
-                </options>
-              </question>
-              <question>
-                <!--     This answer carries both the questionnaire-specific name and an equivalent SNOMED
-             CT code     -->
-                <linkId value="1.1.1.1.2"/>
-                <concept>
+                <code>
                   <system value="http://example.org/system/code/questions"/>
                   <code value="COMCAR00"/>
                   <display value="Angina Pectoris"/>
-                </concept>
-                <concept>
+                </code>
+                <code>
                   <system value="http://snomed.info/sct"/>
                   <code value="194828000"/>
                   <display value="Angina (disorder)"/>
-                </concept>
+                </code>
+                <prefix value="1.1.1"/>
                 <type value="choice"/>
-                <options>
-                  <reference value="#yesno"/>
-                </options>
-              </question>
-              <question>
-                <linkId value="1.1.1.1.3"/>
-                <concept>
+                <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+              </item>
+              <item>
+                <linkId value="1.1.1.1.2"/>
+                <code>
                   <system value="http://snomed.info/sct"/>
                   <code value="22298006"/>
                   <display value="Myocardial infarction (disorder)"/>
-                </concept>
+                </code>
+                <prefix value="1.1.2"/>
                 <type value="choice"/>
-                <options>
-                  <reference value="#yesno"/>
-                </options>
-              </question>
-            </group>
-            <group>
-              <!--     COMORBIDITY/VASCULAR     -->
+                <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+              </item>
+            </item>
+            <item>
               <linkId value="1.1.1.2"/>
-              <concept>
-                <system value="http://example.org/system/code/sections"/>
-                <code value="VASCULAR"/>
-              </concept>
-            </group>
-          </question>
-        </group>
-        <!--     Todo: What's supposed to go here?     -->
-        <group>
-          <!--     HISTOPATHOLOGY     -->
-          <linkId value="1.2"/>
-          <concept>
-            <system value="http://example.org/system/code/sections"/>
-            <code value="HISTOPATHOLOGY"/>
-          </concept>
-          <group>
-            <linkId value="1.2.1"/>
-            <concept>
-              <system value="http://example.org/system/code/sections"/>
-              <code value="ABDOMINAL"/>
-            </concept>
-            <question>
-              <linkId value="1.2.1.2"/>
-              <concept>
+              <code>
                 <system value="http://example.org/system/code/questions"/>
-                <code value="STADPT"/>
-                <display value="pT category"/>
-              </concept>
-            </question>
-          </group>
-        </group>
-      </group>
+                <code value="COMORBVAS"/>
+              </code>
+              <prefix value="1.2"/>
+              <type value="choice"/>
+              <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+            </item>
+          </item>
+        </item>
+      </item>
+      <item>
+        <linkId value="2"/>
+        <code>
+          <system value="http://example.org/system/code/sections"/>
+          <code value="HISTOPATHOLOGY"/>
+        </code>
+        <type value="group"/>
+        <item>
+          <linkId value="2.1"/>
+          <code>
+            <system value="http://example.org/system/code/sections"/>
+            <code value="ABDOMINAL"/>
+          </code>
+          <type value="group"/>
+          <item>
+            <linkId value="2.1.2"/>
+            <code>
+              <system value="http://example.org/system/code/questions"/>
+              <code value="STADPT"/>
+              <display value="pT category"/>
+            </code>
+            <type value="choice"/>
+          </item>
+        </item>
+      </item>
     </Questionnaire>
   </contained>
   <identifier>

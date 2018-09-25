@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="ms-prescribing" />
   <meta>
@@ -70,9 +70,7 @@
       <binding>
         <strength value="required" />
         <description value="Angir bruk av et legemiddel, f.eks. om det benyttes fast eller gis ved behov (OID=9101)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/f552702d-e769-4c4b-9fa5-0512c9ffe66b" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/f552702d-e769-4c4b-9fa5-0512c9ffe66b" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />
@@ -154,9 +152,7 @@
       <binding>
         <strength value="required" />
         <description value="Angir bruksområde for legemiddel. Det overføres til M1 og blir med på utskrift på apoteketikett. Brukes i FEST og Eresept (OID=7488)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/c877187c-f362-4425-827b-db2192001969" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/c877187c-f362-4425-827b-db2192001969" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />
@@ -358,9 +354,7 @@
       <binding>
         <strength value="required" />
         <description value="Dette kodeverket inneholder benevning for tidsenheter. Skal benyttes for datatypen PQ når enhet skal være tidsenhet (OID=9088)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/91336a25-1f89-4f12-a185-08a6d06a1af5" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/91336a25-1f89-4f12-a185-08a6d06a1af5" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />
@@ -429,9 +423,7 @@
       <binding>
         <strength value="required" />
         <description value="Days of the week" />
-        <valueSetReference>
-          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.9.5.4--2015-04-01T00:00:00" />
-        </valueSetReference>
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.9.5.4--2015-04-01T00:00:00" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />
@@ -461,9 +453,7 @@
       <binding>
         <strength value="required" />
         <description value="Administrasjonsvei (OID=7477)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/7ab290d7-7e42-4ec2-a693-75440b0ea038" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/7ab290d7-7e42-4ec2-a693-75440b0ea038" />
       </binding>
     </element>
     <element>
@@ -481,9 +471,7 @@
       <binding>
         <strength value="required" />
         <description value="Enhet som skal inngå i doseringstekst som sendes i M1 og inngår på apotek-etiketten. Kodeverk til bruk i M30 fra versjon 2.4, og i M1 (OID=7480)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/7b326ba1-4fae-406f-a50a-35de49e172b1" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/7b326ba1-4fae-406f-a50a-35de49e172b1" />
       </binding>
     </element>
     <element>
@@ -510,9 +498,7 @@
       <binding>
         <strength value="required" />
         <description value="Dette kodeverket inneholder benevning for legemidlers styrke Skal benyttes for datatypen PQ når enhet skal være legemidlers styrke. Kodeverket oppdateres kun for verdier som inngår i nyeste versjon av FEST (OID=9090)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/7a86c026-005b-489c-86d5-c68dcf7c08c9" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/7a86c026-005b-489c-86d5-c68dcf7c08c9" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />
@@ -525,9 +511,7 @@
       <binding>
         <strength value="required" />
         <description value="Dette kodeverket inneholder benevning for tidsenheter. Skal benyttes for datatypen PQ når enhet skal være tidsenhet (OID=9088)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/91336a25-1f89-4f12-a185-08a6d06a1af5" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/91336a25-1f89-4f12-a185-08a6d06a1af5" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />
@@ -549,9 +533,7 @@
       <binding>
         <strength value="required" />
         <description value="Dette kodeverket inneholder benevning for legemidlers styrke Skal benyttes for datatypen PQ når enhet skal være legemidlers styrke. Kodeverket oppdateres kun for verdier som inngår i nyeste versjon av FEST (OID=9090)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/7a86c026-005b-489c-86d5-c68dcf7c08c9" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/7a86c026-005b-489c-86d5-c68dcf7c08c9" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />
@@ -565,9 +547,7 @@
       <binding>
         <strength value="required" />
         <description value="Dette kodeverket inneholder benevning for legemidlers styrke Skal benyttes for datatypen PQ når enhet skal være legemidlers styrke. Kodeverket oppdateres kun for verdier som inngår i nyeste versjon av FEST (OID=9090)." />
-        <valueSetReference>
-          <reference value="https://simplifier.net/api/fhir/ValueSet/7a86c026-005b-489c-86d5-c68dcf7c08c9" />
-        </valueSetReference>
+        <valueSet value="https://simplifier.net/api/fhir/ValueSet/7a86c026-005b-489c-86d5-c68dcf7c08c9" />
       </binding>
       <mapping>
         <identity value="ms-resept-map" />

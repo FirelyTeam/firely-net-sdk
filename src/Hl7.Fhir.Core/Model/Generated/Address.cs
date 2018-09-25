@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Address"; } }
         
         /// <summary>
-        /// The use of an address
+        /// The use of an address.
         /// (url: http://hl7.org/fhir/ValueSet/address-use)
         /// </summary>
         [FhirEnumeration("AddressUse")]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// The type of an address (physical / postal)
+        /// The type of an address (physical / postal).
         /// (url: http://hl7.org/fhir/ValueSet/address-type)
         /// </summary>
         [FhirEnumeration("AddressType")]

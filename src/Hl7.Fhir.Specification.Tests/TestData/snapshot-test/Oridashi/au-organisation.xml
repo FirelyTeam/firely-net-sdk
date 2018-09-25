@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="au-organisation" />
   <meta>
@@ -62,7 +62,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Organization.identifier:hpio.type.coding">
@@ -137,7 +137,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Organization.identifier:abn.type.text">
@@ -176,7 +176,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Organization.identifier:acn.type.text">
@@ -215,7 +215,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Organization.identifier:arbn.type.text">
@@ -251,7 +251,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Organization.identifier:paio.type.text">
@@ -325,7 +325,7 @@
       <min value="1" />
       <binding>
         <strength value="extensible" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-au-hl7v2-0203" />
       </binding>
     </element>
     <element id="Organization.identifier.csp.type.text">
@@ -378,7 +378,7 @@
         </extension>
         <strength value="required" />
         <description value="Used to categorize the organization type" />
-        <valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-anzsic-restricted" />
+        <valueSet value="http://hl7.org.au/fhir/ValueSet/valueset-anzsic-restricted" />
       </binding>
     </element>
   </differential>

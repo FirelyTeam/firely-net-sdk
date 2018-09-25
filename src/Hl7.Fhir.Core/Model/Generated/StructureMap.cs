@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "StructureMap"; } }
         
         /// <summary>
-        /// How the referenced structure is used in this mapping
+        /// How the referenced structure is used in this mapping.
         /// (url: http://hl7.org/fhir/ValueSet/map-model-mode)
         /// </summary>
         [FhirEnumeration("StructureMapModelMode")]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// If this is the default rule set to apply for the source type, or this combination of types
+        /// If this is the default rule set to apply for the source type, or this combination of types.
         /// (url: http://hl7.org/fhir/ValueSet/map-group-type-mode)
         /// </summary>
         [FhirEnumeration("StructureMapGroupTypeMode")]
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Mode for this instance of data
+        /// Mode for this instance of data.
         /// (url: http://hl7.org/fhir/ValueSet/map-input-mode)
         /// </summary>
         [FhirEnumeration("StructureMapInputMode")]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// If field is a list, how to manage the source
+        /// If field is a list, how to manage the source.
         /// (url: http://hl7.org/fhir/ValueSet/map-source-list-mode)
         /// </summary>
         [FhirEnumeration("StructureMapSourceListMode")]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// How to interpret the context
+        /// How to interpret the context.
         /// (url: http://hl7.org/fhir/ValueSet/map-context-type)
         /// </summary>
         [FhirEnumeration("StructureMapContextType")]
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// If field is a list, how to manage the production
+        /// If field is a list, how to manage the production.
         /// (url: http://hl7.org/fhir/ValueSet/map-target-list-mode)
         /// </summary>
         [FhirEnumeration("StructureMapTargetListMode")]
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// How data is copied/created
+        /// How data is copied/created.
         /// (url: http://hl7.org/fhir/ValueSet/map-transform)
         /// </summary>
         [FhirEnumeration("StructureMapTransform")]
@@ -1392,7 +1392,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("defaultValue", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(Expression),typeof(UsageContext),typeof(Dosage))]
             [DataMember]
             public Hl7.Fhir.Model.Element DefaultValue
             {
@@ -1562,6 +1562,38 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Message to put in log if source exists (FHIRPath)
+            /// </summary>
+            [FhirElement("logMessage", InSummary=true, Order=140)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString LogMessageElement
+            {
+                get { return _LogMessageElement; }
+                set { _LogMessageElement = value; OnPropertyChanged("LogMessageElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _LogMessageElement;
+            
+            /// <summary>
+            /// Message to put in log if source exists (FHIRPath)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string LogMessage
+            {
+                get { return LogMessageElement != null ? LogMessageElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        LogMessageElement = null; 
+                    else
+                        LogMessageElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("LogMessage");
+                }
+            }
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SourceComponent;
@@ -1579,6 +1611,7 @@ namespace Hl7.Fhir.Model
                     if(VariableElement != null) dest.VariableElement = (Hl7.Fhir.Model.Id)VariableElement.DeepCopy();
                     if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopy();
                     if(CheckElement != null) dest.CheckElement = (Hl7.Fhir.Model.FhirString)CheckElement.DeepCopy();
+                    if(LogMessageElement != null) dest.LogMessageElement = (Hl7.Fhir.Model.FhirString)LogMessageElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -1606,6 +1639,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(VariableElement, otherT.VariableElement)) return false;
                 if( !DeepComparable.Matches(ConditionElement, otherT.ConditionElement)) return false;
                 if( !DeepComparable.Matches(CheckElement, otherT.CheckElement)) return false;
+                if( !DeepComparable.Matches(LogMessageElement, otherT.LogMessageElement)) return false;
                 
                 return true;
             }
@@ -1626,6 +1660,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(VariableElement, otherT.VariableElement)) return false;
                 if( !DeepComparable.IsExactly(ConditionElement, otherT.ConditionElement)) return false;
                 if( !DeepComparable.IsExactly(CheckElement, otherT.CheckElement)) return false;
+                if( !DeepComparable.IsExactly(LogMessageElement, otherT.LogMessageElement)) return false;
                 
                 return true;
             }
@@ -1647,6 +1682,7 @@ namespace Hl7.Fhir.Model
                     if (VariableElement != null) yield return VariableElement;
                     if (ConditionElement != null) yield return ConditionElement;
                     if (CheckElement != null) yield return CheckElement;
+                    if (LogMessageElement != null) yield return LogMessageElement;
                 }
             }
 
@@ -1666,6 +1702,7 @@ namespace Hl7.Fhir.Model
                     if (VariableElement != null) yield return new ElementValue("variable", false, VariableElement);
                     if (ConditionElement != null) yield return new ElementValue("condition", false, ConditionElement);
                     if (CheckElement != null) yield return new ElementValue("check", false, CheckElement);
+                    if (LogMessageElement != null) yield return new ElementValue("logMessage", false, LogMessageElement);
                 }
             }
 
@@ -2669,6 +2706,15 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.StructureMap.GroupComponent> _Group;
         
 
+        public static ElementDefinition.ConstraintComponent StructureMap_SMP_0 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "smp-0",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+        };
+
         public static ElementDefinition.ConstraintComponent StructureMap_SMP_2 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "group.rule.target.all(context.exists() implies contextType.exists())",
@@ -2691,6 +2737,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(StructureMap_SMP_0);
             InvariantConstraints.Add(StructureMap_SMP_2);
             InvariantConstraints.Add(StructureMap_SMP_1);
         }

@@ -16,7 +16,7 @@
 		List<PropertyDetails> props = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement element in structDefElem.SelectNodes("fhir:differential/fhir:element", nsR))
 		{
-			PropertyDetails pd = PropertyDetails.Parse(resourceName, element, nsR, enums);
+			PropertyDetails pd = PropertyDetails.Parse(resourceName, resourceName, element, nsR, enums);
 			YieldChild(pd, indent, withName);
 		}
 	}

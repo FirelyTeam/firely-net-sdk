@@ -123,7 +123,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
     </element>
     <element>
@@ -263,9 +263,7 @@
       <isSummary value="true" />
       <binding>
         <strength value="required" />
-        <valueSetReference>
-          <reference value="http://example.org/fhir/ValueSet/group-type-human" />
-        </valueSetReference>
+        <valueSet value="http://example.org/fhir/ValueSet/group-type-human" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -959,9 +957,7 @@
       <max value="1" />
       <binding>
         <strength value="required" />
-        <valueSetReference>
-          <reference value="http://example.org/fhir/ValueSet/group-type-human" />
-        </valueSetReference>
+        <valueSet value="http://example.org/fhir/ValueSet/group-type-human" />
       </binding>
     </element>
     <element>

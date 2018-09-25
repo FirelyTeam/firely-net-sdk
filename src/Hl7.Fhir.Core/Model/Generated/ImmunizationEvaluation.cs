@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -190,15 +190,15 @@ namespace Hl7.Fhir.Model
         /// Evaluation target disease
         /// </summary>
         [FhirElement("targetDisease", InSummary=true, Order=140)]
-        [Cardinality(Min=1,Max=-1)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
+        public Hl7.Fhir.Model.CodeableConcept TargetDisease
         {
-            get { if(_TargetDisease==null) _TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetDisease; }
+            get { return _TargetDisease; }
             set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
+        private Hl7.Fhir.Model.CodeableConcept _TargetDisease;
         
         /// <summary>
         /// Immunization being evaluated
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
-                if(TargetDisease != null) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(TargetDisease.DeepCopy());
+                if(TargetDisease != null) dest.TargetDisease = (Hl7.Fhir.Model.CodeableConcept)TargetDisease.DeepCopy();
                 if(ImmunizationEvent != null) dest.ImmunizationEvent = (Hl7.Fhir.Model.ResourceReference)ImmunizationEvent.DeepCopy();
                 if(DoseStatus != null) dest.DoseStatus = (Hl7.Fhir.Model.CodeableConcept)DoseStatus.DeepCopy();
                 if(DoseStatusReason != null) dest.DoseStatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(DoseStatusReason.DeepCopy());
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
 				if (Patient != null) yield return Patient;
 				if (DateElement != null) yield return DateElement;
 				if (Authority != null) yield return Authority;
-				foreach (var elem in TargetDisease) { if (elem != null) yield return elem; }
+				if (TargetDisease != null) yield return TargetDisease;
 				if (ImmunizationEvent != null) yield return ImmunizationEvent;
 				if (DoseStatus != null) yield return DoseStatus;
 				foreach (var elem in DoseStatusReason) { if (elem != null) yield return elem; }
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
                 if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", true, elem); }
+                if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
                 if (ImmunizationEvent != null) yield return new ElementValue("immunizationEvent", false, ImmunizationEvent);
                 if (DoseStatus != null) yield return new ElementValue("doseStatus", false, DoseStatus);
                 foreach (var elem in DoseStatusReason) { if (elem != null) yield return new ElementValue("doseStatusReason", true, elem); }

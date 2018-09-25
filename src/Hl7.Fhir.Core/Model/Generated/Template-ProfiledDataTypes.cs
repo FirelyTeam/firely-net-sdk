@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Thu, 05 Apr 2018 21:37:12 GMT for FHIR v3.3.0
+// Model Generated on Mon, 20 Aug 2018 11:16:09 GMT for FHIR v3.5.0
 //
 // Generated Shared Enumeration: Use
 
@@ -9,6 +9,8 @@
 // Generated Shared Enumeration: OperationParameterUse
 	// Used in model class (type): ParameterDefinition.use
 
+// Generated Shared Enumeration: DeviceNameType
+
 // Generated Shared Enumeration: FilterOperator
 
 // Generated Shared Enumeration: ActionSelectionBehavior
@@ -16,6 +18,8 @@
 // Generated Shared Enumeration: RequestPriority
 
 // Generated Shared Enumeration: RequestIntent
+
+// Generated Shared Enumeration: MeasureImprovementNotation
 
 // Generated Shared Enumeration: AdministrativeGender
 
@@ -38,15 +42,25 @@
 
 // Generated Shared Enumeration: SearchParamType
 
+// Generated Shared Enumeration: MimeTypes
+	// Used in model class (type): Attachment.contentType
+	// Used in model class (type): ElementDefinition.mapping.language
+	// Used in model class (type): Signature.targetFormat
+	// Used in model class (type): Signature.sigFormat
+
 // Generated Shared Enumeration: FinancialResourceStatusCodes
 
 // Generated Shared Enumeration: ActionCardinalityBehavior
+
+// Generated Shared Enumeration: CapabilityStatementKind
 
 // Generated Shared Enumeration: ActionConditionKind
 
 // Generated Shared Enumeration: CompartmentType
 
 // Generated Shared Enumeration: ActionParticipantType
+
+// Generated Shared Enumeration: InvoicePriceComponentType
 
 // Generated Shared Enumeration: DaysOfWeek
 	// Used in model class (type): Timing.repeat.dayOfWeek
@@ -74,3 +88,4 @@
 // Generated helper templates
 // Generated items
 // Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs
+// Hl7.Fhir.Core\Model\Generated\MoneyQuantity.cs

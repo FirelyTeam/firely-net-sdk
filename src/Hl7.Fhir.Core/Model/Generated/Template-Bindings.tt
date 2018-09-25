@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
 						// WriteLine("//		VSU: " + n3.Value);
 						valuesetUrl = n3.Value;
                     }
-					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetCanonical/@value", nsR);
+					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSet/@value", nsR);
 					if (n4 != null)
                     {
 						// WriteLine("//		VSR: " + n4.Value);
@@ -112,9 +112,9 @@ namespace Hl7.Fhir.Model
                     }
 
 					var nodes = docResources.DocumentElement.SelectNodes(
-						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsR);
+						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsR);
 					var nodesTypes = docTypes.DocumentElement.SelectNodes(
-						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetCanonical/@value = '"+valuesetUrl+"']]]", nsT);
+						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsT);
 					if (nodes.Count + nodesTypes.Count < 2)
 						continue;
 
@@ -129,6 +129,8 @@ namespace Hl7.Fhir.Model
 					// reformat the name so that it is a valid .NET enumeration name
 					enumName = enumName.Replace(" ", "").Replace("-", "_");
 
+					if (enumName == "MimeTypes")
+						continue;
 					if (generatedSets.Contains(enumName))
 						continue;
 					generatedSets.Add(enumName);
@@ -211,6 +213,7 @@ namespace Hl7.Fhir.Model
 			result += bit.Substring(0, 1).ToUpper();
 			result += bit.Substring(1);
         }
+		result = result.Replace(".", "_");
 		int IsIntegerValue;
 		if (int.TryParse(result, out IsIntegerValue))
 			result = "N" + result;

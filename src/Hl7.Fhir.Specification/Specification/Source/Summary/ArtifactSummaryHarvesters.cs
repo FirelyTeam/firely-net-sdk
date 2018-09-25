@@ -390,12 +390,12 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     if (!nav.HarvestValue(properties, SourceKey, "sourceUri"))
                     {
-                        nav.HarvestValue(properties, SourceKey, "sourceReference", "reference");
+                        nav.HarvestValue(properties, SourceKey, "sourceCanonical");
                     }
 
                     if (!nav.HarvestValue(properties, TargetKey, "targetUri"))
                     {
-                        nav.HarvestValue(properties, TargetKey, "targetReference", "reference");
+                        nav.HarvestValue(properties, TargetKey, "targetCanonical");
                     }
                 }
                 return true;

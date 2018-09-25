@@ -35,12 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
 
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -122,15 +121,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(parent::f:contained and f:contained)"
         };
 
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "contained.text.empty()",
-            Key = "dom-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
-            Xpath = "not(parent::f:contained and f:text)"
-        };
-
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_4 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
@@ -142,11 +132,29 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "contained.all(('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists())",
+            Expression = "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()",
             Key = "dom-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
             Xpath = "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent DomainResource_DOM_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "text.div.exists()",
+            Key = "dom-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A resource should have narrative for robust management",
+            Xpath = "exists(f:text/h:div)"
+        };
+
+        public static ElementDefinition.ConstraintComponent DomainResource_DOM_5 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.security.empty()",
+            Key = "dom-5",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a security label",
+            Xpath = "not(exists(f:contained/*/f:meta/f:security))"
         };
 
         public override void AddDefaultConstraints()
@@ -154,9 +162,10 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(DomainResource_DOM_2);
-            InvariantConstraints.Add(DomainResource_DOM_1);
             InvariantConstraints.Add(DomainResource_DOM_4);
             InvariantConstraints.Add(DomainResource_DOM_3);
+            InvariantConstraints.Add(DomainResource_DOM_6);
+            InvariantConstraints.Add(DomainResource_DOM_5);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

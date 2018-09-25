@@ -10,12 +10,12 @@
 		<value value="123"/>
 	</identifier>
 	<status value="proposed" />
-	<type>
+	<serviceType>
 		<coding>
 			<code value="52"/>
 			<display value="General Discussion" />
 		</coding>
-	</type>
+	</serviceType>
 	<reason>
 		<text value="Clinical Review" />
 	</reason>

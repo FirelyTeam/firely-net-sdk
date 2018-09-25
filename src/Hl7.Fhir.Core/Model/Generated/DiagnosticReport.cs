@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
         
         /// <summary>
-        /// Observations - simple, or complex nested groups
+        /// Observations
         /// </summary>
         [FhirElement("result", Order=210)]
         [CLSCompliant(false)]
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DiagnosticReport.MediaComponent> _Media;
         
         /// <summary>
-        /// Clinical Interpretation of test results
+        /// Clinical conclusion (interpretation) of test results
         /// </summary>
         [FhirElement("conclusion", Order=240)]
         [DataMember]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _ConclusionElement;
         
         /// <summary>
-        /// Clinical Interpretation of test results
+        /// Clinical conclusion (interpretation) of test results
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -544,18 +544,18 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Codes for the conclusion
+        /// Codes for the clinical conclusion of test results
         /// </summary>
-        [FhirElement("codedDiagnosis", Order=250)]
+        [FhirElement("conclusionCode", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> CodedDiagnosis
+        public List<Hl7.Fhir.Model.CodeableConcept> ConclusionCode
         {
-            get { if(_CodedDiagnosis==null) _CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CodedDiagnosis; }
-            set { _CodedDiagnosis = value; OnPropertyChanged("CodedDiagnosis"); }
+            get { if(_ConclusionCode==null) _ConclusionCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ConclusionCode; }
+            set { _ConclusionCode = value; OnPropertyChanged("ConclusionCode"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _CodedDiagnosis;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ConclusionCode;
         
         /// <summary>
         /// Entire report as issued
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
                 if(ImagingStudy != null) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(ImagingStudy.DeepCopy());
                 if(Media != null) dest.Media = new List<Hl7.Fhir.Model.DiagnosticReport.MediaComponent>(Media.DeepCopy());
                 if(ConclusionElement != null) dest.ConclusionElement = (Hl7.Fhir.Model.FhirString)ConclusionElement.DeepCopy();
-                if(CodedDiagnosis != null) dest.CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(CodedDiagnosis.DeepCopy());
+                if(ConclusionCode != null) dest.ConclusionCode = new List<Hl7.Fhir.Model.CodeableConcept>(ConclusionCode.DeepCopy());
                 if(PresentedForm != null) dest.PresentedForm = new List<Hl7.Fhir.Model.Attachment>(PresentedForm.DeepCopy());
                 return dest;
             }
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ImagingStudy, otherT.ImagingStudy)) return false;
             if( !DeepComparable.Matches(Media, otherT.Media)) return false;
             if( !DeepComparable.Matches(ConclusionElement, otherT.ConclusionElement)) return false;
-            if( !DeepComparable.Matches(CodedDiagnosis, otherT.CodedDiagnosis)) return false;
+            if( !DeepComparable.Matches(ConclusionCode, otherT.ConclusionCode)) return false;
             if( !DeepComparable.Matches(PresentedForm, otherT.PresentedForm)) return false;
             
             return true;
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ImagingStudy, otherT.ImagingStudy)) return false;
             if( !DeepComparable.IsExactly(Media, otherT.Media)) return false;
             if( !DeepComparable.IsExactly(ConclusionElement, otherT.ConclusionElement)) return false;
-            if( !DeepComparable.IsExactly(CodedDiagnosis, otherT.CodedDiagnosis)) return false;
+            if( !DeepComparable.IsExactly(ConclusionCode, otherT.ConclusionCode)) return false;
             if( !DeepComparable.IsExactly(PresentedForm, otherT.PresentedForm)) return false;
             
             return true;
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in ImagingStudy) { if (elem != null) yield return elem; }
 				foreach (var elem in Media) { if (elem != null) yield return elem; }
 				if (ConclusionElement != null) yield return ConclusionElement;
-				foreach (var elem in CodedDiagnosis) { if (elem != null) yield return elem; }
+				foreach (var elem in ConclusionCode) { if (elem != null) yield return elem; }
 				foreach (var elem in PresentedForm) { if (elem != null) yield return elem; }
             }
         }
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ImagingStudy) { if (elem != null) yield return new ElementValue("imagingStudy", true, elem); }
                 foreach (var elem in Media) { if (elem != null) yield return new ElementValue("media", true, elem); }
                 if (ConclusionElement != null) yield return new ElementValue("conclusion", false, ConclusionElement);
-                foreach (var elem in CodedDiagnosis) { if (elem != null) yield return new ElementValue("codedDiagnosis", true, elem); }
+                foreach (var elem in ConclusionCode) { if (elem != null) yield return new ElementValue("conclusionCode", true, elem); }
                 foreach (var elem in PresentedForm) { if (elem != null) yield return new ElementValue("presentedForm", true, elem); }
             }
         }

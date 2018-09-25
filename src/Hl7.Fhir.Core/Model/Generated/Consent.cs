@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Consent"; } }
         
         /// <summary>
-        /// How a rule statement is applied, such as adding additional consent or removing consent
+        /// How a rule statement is applied, such as adding additional consent or removing consent.
         /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
         /// </summary>
         [FhirEnumeration("ConsentProvisionType")]
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// How a resource reference is interpreted when testing consent restrictions
+        /// How a resource reference is interpreted when testing consent restrictions.
         /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
         /// </summary>
         [FhirEnumeration("ConsentDataMeaning")]
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model
             Key = "ppc-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "IF Scope=adr, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr')))"
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_5 = new ElementDefinition.ConstraintComponent()
@@ -1181,7 +1181,7 @@ namespace Hl7.Fhir.Model
             Key = "ppc-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "IF Scope=treatment, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment')))"
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_2 = new ElementDefinition.ConstraintComponent()
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Model
             Key = "ppc-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "IF Scope=privacy, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy')))"
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_3 = new ElementDefinition.ConstraintComponent()
@@ -1199,7 +1199,7 @@ namespace Hl7.Fhir.Model
             Key = "ppc-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "IF Scope=research, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research')))"
+            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_1 = new ElementDefinition.ConstraintComponent()

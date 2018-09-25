@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ContactPoint"; } }
         
         /// <summary>
-        /// Telecommunications form for contact point
+        /// Telecommunications form for contact point.
         /// (url: http://hl7.org/fhir/ValueSet/contact-point-system)
         /// </summary>
         [FhirEnumeration("ContactPointSystem")]
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Use of contact point
+        /// Use of contact point.
         /// (url: http://hl7.org/fhir/ValueSet/contact-point-use)
         /// </summary>
         [FhirEnumeration("ContactPointUse")]

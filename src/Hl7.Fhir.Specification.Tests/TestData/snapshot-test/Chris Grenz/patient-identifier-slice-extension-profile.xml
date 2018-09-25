@@ -206,7 +206,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -1284,7 +1284,7 @@
       <binding>
         <strength value="required" />
         <description value="A code classifying a person's professed religion" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/v3-ReligiousAffiliation" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/v3-ReligiousAffiliation" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -2476,7 +2476,7 @@
       <binding>
         <strength value="required" />
         <description value="Identifies the purpose for this identifier, if known ." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -2518,7 +2518,7 @@
       <binding>
         <strength value="extensible" />
         <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-type" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-type" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -3122,7 +3122,7 @@
       </constraint>
       <binding>
         <strength value="required" />
-        <valueSetUri value="http://example.com/fhir/localsystems/patient-id-site" />
+        <valueSet value="http://example.com/fhir/localsystems/patient-id-site" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -3228,7 +3228,7 @@
       </constraint>
       <binding>
         <strength value="required" />
-        <valueSetUri value="http://example.com/fhir/localsystems/patient-id-site" />
+        <valueSet value="http://example.com/fhir/localsystems/patient-id-site" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -3268,7 +3268,7 @@
       <binding>
         <strength value="required" />
         <description value="Identifies the purpose for this identifier, if known ." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -3311,7 +3311,7 @@
       <binding>
         <strength value="extensible" />
         <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-type" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-type" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -3693,7 +3693,7 @@
       <binding>
         <strength value="required" />
         <description value="Identifies the purpose for this identifier, if known ." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -3736,7 +3736,7 @@
       <binding>
         <strength value="extensible" />
         <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-type" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-type" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -4351,7 +4351,7 @@
       </constraint>
       <binding>
         <strength value="required" />
-        <valueSetUri value="http://example.com/fhir/localsystems/patient-id-site" />
+        <valueSet value="http://example.com/fhir/localsystems/patient-id-site" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -4457,7 +4457,7 @@
       </constraint>
       <binding>
         <strength value="required" />
-        <valueSetUri value="http://example.com/fhir/localsystems/patient-id-site" />
+        <valueSet value="http://example.com/fhir/localsystems/patient-id-site" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -4497,7 +4497,7 @@
       <binding>
         <strength value="required" />
         <description value="Identifies the purpose for this identifier, if known ." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -4540,7 +4540,7 @@
       <binding>
         <strength value="extensible" />
         <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/identifier-type" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-type" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -5023,7 +5023,7 @@
       <binding>
         <strength value="required" />
         <description value="The use of a human name" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/name-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/name-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -5454,7 +5454,7 @@
       <binding>
         <strength value="required" />
         <description value="The use of a human name" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/name-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/name-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -5962,7 +5962,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-system" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -6053,7 +6053,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -6324,7 +6324,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-system" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -6415,7 +6415,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -6686,7 +6686,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-system" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -6777,7 +6777,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -7048,7 +7048,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-system" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -7139,7 +7139,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -7410,7 +7410,7 @@
       <binding>
         <strength value="required" />
         <description value="Telecommunications form for contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-system" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-system" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -7500,7 +7500,7 @@
       <binding>
         <strength value="required" />
         <description value="Use of contact point" />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/contact-point-use" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/contact-point-use" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -7638,7 +7638,7 @@
       <binding>
         <strength value="required" />
         <description value="The gender of a person used for administrative purposes." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/administrative-gender" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -7935,7 +7935,7 @@
       <binding>
         <strength value="required" />
         <description value="The domestic partnership status of a person." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/marital-status" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/marital-status" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -8248,7 +8248,7 @@
       <binding>
         <strength value="extensible" />
         <description value="The nature of the relationship between a patient and a contact person for that patient." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/patient-contact-relationship" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/patient-contact-relationship" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -8470,7 +8470,7 @@
       <binding>
         <strength value="required" />
         <description value="The gender of a person used for administrative purposes." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/administrative-gender" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -8771,7 +8771,7 @@
       <binding>
         <strength value="example" />
         <description value="The species of an animal." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/animal-species" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/animal-species" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -8829,7 +8829,7 @@
       <binding>
         <strength value="example" />
         <description value="The breed of an animal." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/animal-breeds" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/animal-breeds" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -8887,7 +8887,7 @@
       <binding>
         <strength value="example" />
         <description value="The state of the animal's reproductive organs." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/animal-genderstatus" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/animal-genderstatus" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -9093,7 +9093,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
       <mapping>
         <identity value="v2" />
@@ -9658,7 +9658,7 @@
       <binding>
         <strength value="required" />
         <description value="The type of link between this patient resource and another patient resource." />
-        <valueSetUri value="http://hl7.org/fhir/ValueSet/link-type" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/link-type" />
       </binding>
       <mapping>
         <identity value="rim" />

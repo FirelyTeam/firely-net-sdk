@@ -105,7 +105,7 @@
       <binding>
         <strength value="required" />
         <description value="A human language." />
-        <valueSetUri value="http://tools.ietf.org/html/bcp47" />
+        <valueSet value="http://tools.ietf.org/html/bcp47" />
       </binding>
     </element>
     <element>
@@ -259,9 +259,7 @@
       <binding>
         <strength value="required" />
         <description value="Indicates whether the location is still in use." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/location-status" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/location-status" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -333,9 +331,7 @@
       <binding>
         <strength value="required" />
         <description value="Indicates whether a resource instance represents a specific location or a class of locations." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/location-mode" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/location-mode" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -364,9 +360,7 @@
       <binding>
         <strength value="extensible" />
         <description value="Indicates the type of function performed at the location." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -436,9 +430,7 @@
       <binding>
         <strength value="example" />
         <description value="Physical form of the location" />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/location-physical-type" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/location-physical-type" />
       </binding>
       <mapping>
         <identity value="rim" />

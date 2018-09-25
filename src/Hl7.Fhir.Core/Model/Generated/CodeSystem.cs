@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "CodeSystem"; } }
         
         /// <summary>
-        /// The meaning of the hierarchy of concepts in a code system
+        /// The meaning of the hierarchy of concepts in a code system.
         /// (url: http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning)
         /// </summary>
         [FhirEnumeration("CodeSystemHierarchyMeaning")]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// How much of the content of the code system - the concepts and codes it defines - are represented in a code system resource
+        /// The extent of the content of the code system (the concepts and codes it defines) are represented in a code system resource.
         /// (url: http://hl7.org/fhir/ValueSet/codesystem-content-mode)
         /// </summary>
         [FhirEnumeration("CodeSystemContentMode")]
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// The type of a property value
+        /// The type of a property value.
         /// (url: http://hl7.org/fhir/ValueSet/concept-property-type)
         /// </summary>
         [FhirEnumeration("PropertyType")]
@@ -1176,14 +1176,15 @@ namespace Hl7.Fhir.Model
         /// Additional identifier for the code system
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Business version of the code system (Coding.version)
@@ -1588,7 +1589,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If code system defines a post-composition grammar
+        /// If code system defines a compositional grammar
         /// </summary>
         [FhirElement("compositional", InSummary=true, Order=270)]
         [DataMember]
@@ -1601,7 +1602,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _CompositionalElement;
         
         /// <summary>
-        /// If code system defines a post-composition grammar
+        /// If code system defines a compositional grammar
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1793,11 +1794,20 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent CodeSystem_CSD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(concept.code | descendants().concept.code).isDistinct()",
+            Expression = "concept.code.combine($this.descendants().concept.code).isDistinct()",
             Key = "csd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Within a code system definition, all the codes SHALL be unique",
             Xpath = "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
+        };
+
+        public static ElementDefinition.ConstraintComponent CodeSystem_CSD_0 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "csd-0",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
         public override void AddDefaultConstraints()
@@ -1805,6 +1815,7 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(CodeSystem_CSD_1);
+            InvariantConstraints.Add(CodeSystem_CSD_0);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1815,7 +1826,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -1930,7 +1941,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
 				if (TitleElement != null) yield return TitleElement;
@@ -1965,7 +1976,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
                 if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);

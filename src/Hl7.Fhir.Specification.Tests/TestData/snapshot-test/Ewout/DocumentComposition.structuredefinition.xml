@@ -69,9 +69,7 @@
       <min value="1" />
       <binding>
         <strength value="required" />
-        <valueSetReference>
-          <reference value="http://example.org/ValueSet/SectionTitles" />
-        </valueSetReference>
+        <valueSet value="http://example.org/ValueSet/SectionTitles" />
       </binding>
     </element>    
     <element>

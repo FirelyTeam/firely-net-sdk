@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,2092 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ImplementationGuide"; } }
         
         /// <summary>
-        /// A code that indicates how the page is generated
+        /// The license that applies to an Implementation Guide (using an SPDX license Identifiers, or 'not-open-source'). The binding is required but new SPDX license Identifiers are allowed to be used (https://spdx.org/licenses/).
+        /// (url: http://hl7.org/fhir/ValueSet/spdx-license)
+        /// </summary>
+        [FhirEnumeration("SPDXLicense")]
+        public enum SPDXLicense
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("not-open-source", "http://hl7.org/fhir/spdx-license"), Description("Not open source")]
+            NotOpenSource,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("0BSD", "http://hl7.org/fhir/spdx-license"), Description("BSD Zero Clause License")]
+            zeroBSD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AAL", "http://hl7.org/fhir/spdx-license"), Description("Attribution Assurance License")]
+            AAL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Abstyles", "http://hl7.org/fhir/spdx-license"), Description("Abstyles License")]
+            Abstyles,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Adobe-2006", "http://hl7.org/fhir/spdx-license"), Description("Adobe Systems Incorporated Source Code License Agreement")]
+            Adobe2006,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Adobe-Glyph", "http://hl7.org/fhir/spdx-license"), Description("Adobe Glyph List License")]
+            AdobeGlyph,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ADSL", "http://hl7.org/fhir/spdx-license"), Description("Amazon Digital Services License")]
+            ADSL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AFL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Academic Free License v1.1")]
+            AFL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AFL-1.2", "http://hl7.org/fhir/spdx-license"), Description("Academic Free License v1.2")]
+            AFL1_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AFL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Academic Free License v2.0")]
+            AFL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AFL-2.1", "http://hl7.org/fhir/spdx-license"), Description("Academic Free License v2.1")]
+            AFL2_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AFL-3.0", "http://hl7.org/fhir/spdx-license"), Description("Academic Free License v3.0")]
+            AFL3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Afmparse", "http://hl7.org/fhir/spdx-license"), Description("Afmparse License")]
+            Afmparse,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AGPL-1.0-only", "http://hl7.org/fhir/spdx-license"), Description("Affero General Public License v1.0 only")]
+            AGPL1_0Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AGPL-1.0-or-later", "http://hl7.org/fhir/spdx-license"), Description("Affero General Public License v1.0 or later")]
+            AGPL1_0OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AGPL-3.0-only", "http://hl7.org/fhir/spdx-license"), Description("GNU Affero General Public License v3.0 only")]
+            AGPL3_0Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AGPL-3.0-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU Affero General Public License v3.0 or later")]
+            AGPL3_0OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Aladdin", "http://hl7.org/fhir/spdx-license"), Description("Aladdin Free Public License")]
+            Aladdin,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AMDPLPA", "http://hl7.org/fhir/spdx-license"), Description("AMD's plpa_map.c License")]
+            AMDPLPA,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AML", "http://hl7.org/fhir/spdx-license"), Description("Apple MIT License")]
+            AML,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("AMPAS", "http://hl7.org/fhir/spdx-license"), Description("Academy of Motion Picture Arts and Sciences BSD")]
+            AMPAS,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ANTLR-PD", "http://hl7.org/fhir/spdx-license"), Description("ANTLR Software Rights Notice")]
+            ANTLRPD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Apache-1.0", "http://hl7.org/fhir/spdx-license"), Description("Apache License 1.0")]
+            Apache1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Apache-1.1", "http://hl7.org/fhir/spdx-license"), Description("Apache License 1.1")]
+            Apache1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Apache-2.0", "http://hl7.org/fhir/spdx-license"), Description("Apache License 2.0")]
+            Apache2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("APAFML", "http://hl7.org/fhir/spdx-license"), Description("Adobe Postscript AFM License")]
+            APAFML,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("APL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Adaptive Public License 1.0")]
+            APL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("APSL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Apple Public Source License 1.0")]
+            APSL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("APSL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Apple Public Source License 1.1")]
+            APSL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("APSL-1.2", "http://hl7.org/fhir/spdx-license"), Description("Apple Public Source License 1.2")]
+            APSL1_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("APSL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Apple Public Source License 2.0")]
+            APSL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Artistic-1.0-cl8", "http://hl7.org/fhir/spdx-license"), Description("Artistic License 1.0 w/clause 8")]
+            Artistic1_0Cl8,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Artistic-1.0-Perl", "http://hl7.org/fhir/spdx-license"), Description("Artistic License 1.0 (Perl)")]
+            Artistic1_0Perl,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Artistic-1.0", "http://hl7.org/fhir/spdx-license"), Description("Artistic License 1.0")]
+            Artistic1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Artistic-2.0", "http://hl7.org/fhir/spdx-license"), Description("Artistic License 2.0")]
+            Artistic2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Bahyph", "http://hl7.org/fhir/spdx-license"), Description("Bahyph License")]
+            Bahyph,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Barr", "http://hl7.org/fhir/spdx-license"), Description("Barr License")]
+            Barr,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Beerware", "http://hl7.org/fhir/spdx-license"), Description("Beerware License")]
+            Beerware,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BitTorrent-1.0", "http://hl7.org/fhir/spdx-license"), Description("BitTorrent Open Source License v1.0")]
+            BitTorrent1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BitTorrent-1.1", "http://hl7.org/fhir/spdx-license"), Description("BitTorrent Open Source License v1.1")]
+            BitTorrent1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Borceux", "http://hl7.org/fhir/spdx-license"), Description("Borceux license")]
+            Borceux,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-1-Clause", "http://hl7.org/fhir/spdx-license"), Description("BSD 1-Clause License")]
+            BSD1Clause,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-2-Clause-FreeBSD", "http://hl7.org/fhir/spdx-license"), Description("BSD 2-Clause FreeBSD License")]
+            BSD2ClauseFreeBSD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-2-Clause-NetBSD", "http://hl7.org/fhir/spdx-license"), Description("BSD 2-Clause NetBSD License")]
+            BSD2ClauseNetBSD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-2-Clause-Patent", "http://hl7.org/fhir/spdx-license"), Description("BSD-2-Clause Plus Patent License")]
+            BSD2ClausePatent,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-2-Clause", "http://hl7.org/fhir/spdx-license"), Description("BSD 2-Clause 'Simplified' License")]
+            BSD2Clause,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-3-Clause-Attribution", "http://hl7.org/fhir/spdx-license"), Description("BSD with attribution")]
+            BSD3ClauseAttribution,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-3-Clause-Clear", "http://hl7.org/fhir/spdx-license"), Description("BSD 3-Clause Clear License")]
+            BSD3ClauseClear,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-3-Clause-LBNL", "http://hl7.org/fhir/spdx-license"), Description("Lawrence Berkeley National Labs BSD variant license")]
+            BSD3ClauseLBNL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-3-Clause-No-Nuclear-License-2014", "http://hl7.org/fhir/spdx-license"), Description("BSD 3-Clause No Nuclear License 2014")]
+            BSD3ClauseNoNuclearLicense2014,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-3-Clause-No-Nuclear-License", "http://hl7.org/fhir/spdx-license"), Description("BSD 3-Clause No Nuclear License")]
+            BSD3ClauseNoNuclearLicense,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-3-Clause-No-Nuclear-Warranty", "http://hl7.org/fhir/spdx-license"), Description("BSD 3-Clause No Nuclear Warranty")]
+            BSD3ClauseNoNuclearWarranty,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-3-Clause", "http://hl7.org/fhir/spdx-license"), Description("BSD 3-Clause 'New' or 'Revised' License")]
+            BSD3Clause,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-4-Clause-UC", "http://hl7.org/fhir/spdx-license"), Description("BSD-4-Clause (University of California-Specific)")]
+            BSD4ClauseUC,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-4-Clause", "http://hl7.org/fhir/spdx-license"), Description("BSD 4-Clause 'Original' or 'Old' License")]
+            BSD4Clause,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-Protection", "http://hl7.org/fhir/spdx-license"), Description("BSD Protection License")]
+            BSDProtection,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSD-Source-Code", "http://hl7.org/fhir/spdx-license"), Description("BSD Source Code Attribution")]
+            BSDSourceCode,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("BSL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Boost Software License 1.0")]
+            BSL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("bzip2-1.0.5", "http://hl7.org/fhir/spdx-license"), Description("bzip2 and libbzip2 License v1.0.5")]
+            Bzip21_0_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("bzip2-1.0.6", "http://hl7.org/fhir/spdx-license"), Description("bzip2 and libbzip2 License v1.0.6")]
+            Bzip21_0_6,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Caldera", "http://hl7.org/fhir/spdx-license"), Description("Caldera License")]
+            Caldera,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CATOSL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Computer Associates Trusted Open Source License 1.1")]
+            CATOSL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-1.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution 1.0 Generic")]
+            CCBY1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-2.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution 2.0 Generic")]
+            CCBY2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-2.5", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution 2.5 Generic")]
+            CCBY2_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-3.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution 3.0 Unported")]
+            CCBY3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-4.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution 4.0 International")]
+            CCBY4_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-1.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial 1.0 Generic")]
+            CCBYNC1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-2.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial 2.0 Generic")]
+            CCBYNC2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-2.5", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial 2.5 Generic")]
+            CCBYNC2_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-3.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial 3.0 Unported")]
+            CCBYNC3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-4.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial 4.0 International")]
+            CCBYNC4_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-ND-1.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial No Derivatives 1.0 Generic")]
+            CCBYNCND1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-ND-2.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial No Derivatives 2.0 Generic")]
+            CCBYNCND2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-ND-2.5", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial No Derivatives 2.5 Generic")]
+            CCBYNCND2_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-ND-3.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial No Derivatives 3.0 Unported")]
+            CCBYNCND3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-ND-4.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial No Derivatives 4.0 International")]
+            CCBYNCND4_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-SA-1.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial Share Alike 1.0 Generic")]
+            CCBYNCSA1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-SA-2.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial Share Alike 2.0 Generic")]
+            CCBYNCSA2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-SA-2.5", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial Share Alike 2.5 Generic")]
+            CCBYNCSA2_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-SA-3.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial Share Alike 3.0 Unported")]
+            CCBYNCSA3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-NC-SA-4.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Non Commercial Share Alike 4.0 International")]
+            CCBYNCSA4_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-ND-1.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution No Derivatives 1.0 Generic")]
+            CCBYND1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-ND-2.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution No Derivatives 2.0 Generic")]
+            CCBYND2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-ND-2.5", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution No Derivatives 2.5 Generic")]
+            CCBYND2_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-ND-3.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution No Derivatives 3.0 Unported")]
+            CCBYND3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-ND-4.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution No Derivatives 4.0 International")]
+            CCBYND4_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-SA-1.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Share Alike 1.0 Generic")]
+            CCBYSA1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-SA-2.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Share Alike 2.0 Generic")]
+            CCBYSA2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-SA-2.5", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Share Alike 2.5 Generic")]
+            CCBYSA2_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-SA-3.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Share Alike 3.0 Unported")]
+            CCBYSA3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC-BY-SA-4.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Attribution Share Alike 4.0 International")]
+            CCBYSA4_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CC0-1.0", "http://hl7.org/fhir/spdx-license"), Description("Creative Commons Zero v1.0 Universal")]
+            CC01_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CDDL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Common Development and Distribution License 1.0")]
+            CDDL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CDDL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Common Development and Distribution License 1.1")]
+            CDDL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CDLA-Permissive-1.0", "http://hl7.org/fhir/spdx-license"), Description("Community Data License Agreement Permissive 1.0")]
+            CDLAPermissive1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CDLA-Sharing-1.0", "http://hl7.org/fhir/spdx-license"), Description("Community Data License Agreement Sharing 1.0")]
+            CDLASharing1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CECILL-1.0", "http://hl7.org/fhir/spdx-license"), Description("CeCILL Free Software License Agreement v1.0")]
+            CECILL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CECILL-1.1", "http://hl7.org/fhir/spdx-license"), Description("CeCILL Free Software License Agreement v1.1")]
+            CECILL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CECILL-2.0", "http://hl7.org/fhir/spdx-license"), Description("CeCILL Free Software License Agreement v2.0")]
+            CECILL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CECILL-2.1", "http://hl7.org/fhir/spdx-license"), Description("CeCILL Free Software License Agreement v2.1")]
+            CECILL2_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CECILL-B", "http://hl7.org/fhir/spdx-license"), Description("CeCILL-B Free Software License Agreement")]
+            CECILLB,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CECILL-C", "http://hl7.org/fhir/spdx-license"), Description("CeCILL-C Free Software License Agreement")]
+            CECILLC,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ClArtistic", "http://hl7.org/fhir/spdx-license"), Description("Clarified Artistic License")]
+            ClArtistic,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CNRI-Jython", "http://hl7.org/fhir/spdx-license"), Description("CNRI Jython License")]
+            CNRIJython,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CNRI-Python-GPL-Compatible", "http://hl7.org/fhir/spdx-license"), Description("CNRI Python Open Source GPL Compatible License Agreement")]
+            CNRIPythonGPLCompatible,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CNRI-Python", "http://hl7.org/fhir/spdx-license"), Description("CNRI Python License")]
+            CNRIPython,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Condor-1.1", "http://hl7.org/fhir/spdx-license"), Description("Condor Public License v1.1")]
+            Condor1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CPAL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Common Public Attribution License 1.0")]
+            CPAL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Common Public License 1.0")]
+            CPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CPOL-1.02", "http://hl7.org/fhir/spdx-license"), Description("Code Project Open License 1.02")]
+            CPOL1_02,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Crossword", "http://hl7.org/fhir/spdx-license"), Description("Crossword License")]
+            Crossword,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CrystalStacker", "http://hl7.org/fhir/spdx-license"), Description("CrystalStacker License")]
+            CrystalStacker,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("CUA-OPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("CUA Office Public License v1.0")]
+            CUAOPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Cube", "http://hl7.org/fhir/spdx-license"), Description("Cube License")]
+            Cube,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("curl", "http://hl7.org/fhir/spdx-license"), Description("curl License")]
+            Curl,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("D-FSL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Deutsche Freie Software Lizenz")]
+            DFSL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("diffmark", "http://hl7.org/fhir/spdx-license"), Description("diffmark license")]
+            Diffmark,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("DOC", "http://hl7.org/fhir/spdx-license"), Description("DOC License")]
+            DOC,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Dotseqn", "http://hl7.org/fhir/spdx-license"), Description("Dotseqn License")]
+            Dotseqn,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("DSDP", "http://hl7.org/fhir/spdx-license"), Description("DSDP License")]
+            DSDP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("dvipdfm", "http://hl7.org/fhir/spdx-license"), Description("dvipdfm License")]
+            Dvipdfm,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ECL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Educational Community License v1.0")]
+            ECL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ECL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Educational Community License v2.0")]
+            ECL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EFL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Eiffel Forum License v1.0")]
+            EFL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EFL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Eiffel Forum License v2.0")]
+            EFL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("eGenix", "http://hl7.org/fhir/spdx-license"), Description("eGenix.com Public License 1.1.0")]
+            EGenix,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Entessa", "http://hl7.org/fhir/spdx-license"), Description("Entessa Public License v1.0")]
+            Entessa,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Eclipse Public License 1.0")]
+            EPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EPL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Eclipse Public License 2.0")]
+            EPL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ErlPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Erlang Public License v1.1")]
+            ErlPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EUDatagrid", "http://hl7.org/fhir/spdx-license"), Description("EU DataGrid Software License")]
+            EUDatagrid,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EUPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("European Union Public License 1.0")]
+            EUPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EUPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("European Union Public License 1.1")]
+            EUPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("EUPL-1.2", "http://hl7.org/fhir/spdx-license"), Description("European Union Public License 1.2")]
+            EUPL1_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Eurosym", "http://hl7.org/fhir/spdx-license"), Description("Eurosym License")]
+            Eurosym,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Fair", "http://hl7.org/fhir/spdx-license"), Description("Fair License")]
+            Fair,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Frameworx-1.0", "http://hl7.org/fhir/spdx-license"), Description("Frameworx Open License 1.0")]
+            Frameworx1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("FreeImage", "http://hl7.org/fhir/spdx-license"), Description("FreeImage Public License v1.0")]
+            FreeImage,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("FSFAP", "http://hl7.org/fhir/spdx-license"), Description("FSF All Permissive License")]
+            FSFAP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("FSFUL", "http://hl7.org/fhir/spdx-license"), Description("FSF Unlimited License")]
+            FSFUL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("FSFULLR", "http://hl7.org/fhir/spdx-license"), Description("FSF Unlimited License (with License Retention)")]
+            FSFULLR,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("FTL", "http://hl7.org/fhir/spdx-license"), Description("Freetype Project License")]
+            FTL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GFDL-1.1-only", "http://hl7.org/fhir/spdx-license"), Description("GNU Free Documentation License v1.1 only")]
+            GFDL1_1Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GFDL-1.1-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU Free Documentation License v1.1 or later")]
+            GFDL1_1OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GFDL-1.2-only", "http://hl7.org/fhir/spdx-license"), Description("GNU Free Documentation License v1.2 only")]
+            GFDL1_2Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GFDL-1.2-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU Free Documentation License v1.2 or later")]
+            GFDL1_2OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GFDL-1.3-only", "http://hl7.org/fhir/spdx-license"), Description("GNU Free Documentation License v1.3 only")]
+            GFDL1_3Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GFDL-1.3-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU Free Documentation License v1.3 or later")]
+            GFDL1_3OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Giftware", "http://hl7.org/fhir/spdx-license"), Description("Giftware License")]
+            Giftware,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GL2PS", "http://hl7.org/fhir/spdx-license"), Description("GL2PS License")]
+            GL2PS,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Glide", "http://hl7.org/fhir/spdx-license"), Description("3dfx Glide License")]
+            Glide,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Glulxe", "http://hl7.org/fhir/spdx-license"), Description("Glulxe License")]
+            Glulxe,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("gnuplot", "http://hl7.org/fhir/spdx-license"), Description("gnuplot License")]
+            Gnuplot,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GPL-1.0-only", "http://hl7.org/fhir/spdx-license"), Description("GNU General Public License v1.0 only")]
+            GPL1_0Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GPL-1.0-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU General Public License v1.0 or later")]
+            GPL1_0OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GPL-2.0-only", "http://hl7.org/fhir/spdx-license"), Description("GNU General Public License v2.0 only")]
+            GPL2_0Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GPL-2.0-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU General Public License v2.0 or later")]
+            GPL2_0OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GPL-3.0-only", "http://hl7.org/fhir/spdx-license"), Description("GNU General Public License v3.0 only")]
+            GPL3_0Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("GPL-3.0-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU General Public License v3.0 or later")]
+            GPL3_0OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("gSOAP-1.3b", "http://hl7.org/fhir/spdx-license"), Description("gSOAP Public License v1.3b")]
+            GSOAP1_3b,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("HaskellReport", "http://hl7.org/fhir/spdx-license"), Description("Haskell Language Report License")]
+            HaskellReport,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("HPND", "http://hl7.org/fhir/spdx-license"), Description("Historical Permission Notice and Disclaimer")]
+            HPND,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("IBM-pibs", "http://hl7.org/fhir/spdx-license"), Description("IBM PowerPC Initialization and Boot Software")]
+            IBMPibs,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ICU", "http://hl7.org/fhir/spdx-license"), Description("ICU License")]
+            ICU,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("IJG", "http://hl7.org/fhir/spdx-license"), Description("Independent JPEG Group License")]
+            IJG,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ImageMagick", "http://hl7.org/fhir/spdx-license"), Description("ImageMagick License")]
+            ImageMagick,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("iMatix", "http://hl7.org/fhir/spdx-license"), Description("iMatix Standard Function Library Agreement")]
+            IMatix,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Imlib2", "http://hl7.org/fhir/spdx-license"), Description("Imlib2 License")]
+            Imlib2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Info-ZIP", "http://hl7.org/fhir/spdx-license"), Description("Info-ZIP License")]
+            InfoZIP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Intel-ACPI", "http://hl7.org/fhir/spdx-license"), Description("Intel ACPI Software License Agreement")]
+            IntelACPI,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Intel", "http://hl7.org/fhir/spdx-license"), Description("Intel Open Source License")]
+            Intel,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Interbase-1.0", "http://hl7.org/fhir/spdx-license"), Description("Interbase Public License v1.0")]
+            Interbase1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("IPA", "http://hl7.org/fhir/spdx-license"), Description("IPA Font License")]
+            IPA,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("IPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("IBM Public License v1.0")]
+            IPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ISC", "http://hl7.org/fhir/spdx-license"), Description("ISC License")]
+            ISC,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("JasPer-2.0", "http://hl7.org/fhir/spdx-license"), Description("JasPer License")]
+            JasPer2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("JSON", "http://hl7.org/fhir/spdx-license"), Description("JSON License")]
+            JSON,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LAL-1.2", "http://hl7.org/fhir/spdx-license"), Description("Licence Art Libre 1.2")]
+            LAL1_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LAL-1.3", "http://hl7.org/fhir/spdx-license"), Description("Licence Art Libre 1.3")]
+            LAL1_3,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Latex2e", "http://hl7.org/fhir/spdx-license"), Description("Latex2e License")]
+            Latex2e,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Leptonica", "http://hl7.org/fhir/spdx-license"), Description("Leptonica License")]
+            Leptonica,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LGPL-2.0-only", "http://hl7.org/fhir/spdx-license"), Description("GNU Library General Public License v2 only")]
+            LGPL2_0Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LGPL-2.0-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU Library General Public License v2 or later")]
+            LGPL2_0OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LGPL-2.1-only", "http://hl7.org/fhir/spdx-license"), Description("GNU Lesser General Public License v2.1 only")]
+            LGPL2_1Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LGPL-2.1-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU Lesser General Public License v2.1 or later")]
+            LGPL2_1OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LGPL-3.0-only", "http://hl7.org/fhir/spdx-license"), Description("GNU Lesser General Public License v3.0 only")]
+            LGPL3_0Only,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LGPL-3.0-or-later", "http://hl7.org/fhir/spdx-license"), Description("GNU Lesser General Public License v3.0 or later")]
+            LGPL3_0OrLater,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LGPLLR", "http://hl7.org/fhir/spdx-license"), Description("Lesser General Public License For Linguistic Resources")]
+            LGPLLR,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Libpng", "http://hl7.org/fhir/spdx-license"), Description("libpng License")]
+            Libpng,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("libtiff", "http://hl7.org/fhir/spdx-license"), Description("libtiff License")]
+            Libtiff,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LiLiQ-P-1.1", "http://hl7.org/fhir/spdx-license"), Description("Licence Libre du Québec – Permissive version 1.1")]
+            LiLiQP1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LiLiQ-R-1.1", "http://hl7.org/fhir/spdx-license"), Description("Licence Libre du Québec – Réciprocité version 1.1")]
+            LiLiQR1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LiLiQ-Rplus-1.1", "http://hl7.org/fhir/spdx-license"), Description("Licence Libre du Québec – Réciprocité forte version 1.1")]
+            LiLiQRplus1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Linux-OpenIB", "http://hl7.org/fhir/spdx-license"), Description("Linux Kernel Variant of OpenIB.org license")]
+            LinuxOpenIB,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Lucent Public License Version 1.0")]
+            LPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LPL-1.02", "http://hl7.org/fhir/spdx-license"), Description("Lucent Public License v1.02")]
+            LPL1_02,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LPPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("LaTeX Project Public License v1.0")]
+            LPPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LPPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("LaTeX Project Public License v1.1")]
+            LPPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LPPL-1.2", "http://hl7.org/fhir/spdx-license"), Description("LaTeX Project Public License v1.2")]
+            LPPL1_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LPPL-1.3a", "http://hl7.org/fhir/spdx-license"), Description("LaTeX Project Public License v1.3a")]
+            LPPL1_3a,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("LPPL-1.3c", "http://hl7.org/fhir/spdx-license"), Description("LaTeX Project Public License v1.3c")]
+            LPPL1_3c,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MakeIndex", "http://hl7.org/fhir/spdx-license"), Description("MakeIndex License")]
+            MakeIndex,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MirOS", "http://hl7.org/fhir/spdx-license"), Description("MirOS License")]
+            MirOS,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MIT-0", "http://hl7.org/fhir/spdx-license"), Description("MIT No Attribution")]
+            MIT0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MIT-advertising", "http://hl7.org/fhir/spdx-license"), Description("Enlightenment License (e16)")]
+            MITAdvertising,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MIT-CMU", "http://hl7.org/fhir/spdx-license"), Description("CMU License")]
+            MITCMU,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MIT-enna", "http://hl7.org/fhir/spdx-license"), Description("enna License")]
+            MITEnna,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MIT-feh", "http://hl7.org/fhir/spdx-license"), Description("feh License")]
+            MITFeh,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MIT", "http://hl7.org/fhir/spdx-license"), Description("MIT License")]
+            MIT,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MITNFA", "http://hl7.org/fhir/spdx-license"), Description("MIT +no-false-attribs license")]
+            MITNFA,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Motosoto", "http://hl7.org/fhir/spdx-license"), Description("Motosoto License")]
+            Motosoto,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("mpich2", "http://hl7.org/fhir/spdx-license"), Description("mpich2 License")]
+            Mpich2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Mozilla Public License 1.0")]
+            MPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Mozilla Public License 1.1")]
+            MPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MPL-2.0-no-copyleft-exception", "http://hl7.org/fhir/spdx-license"), Description("Mozilla Public License 2.0 (no copyleft exception)")]
+            MPL2_0NoCopyleftException,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MPL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Mozilla Public License 2.0")]
+            MPL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MS-PL", "http://hl7.org/fhir/spdx-license"), Description("Microsoft Public License")]
+            MSPL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MS-RL", "http://hl7.org/fhir/spdx-license"), Description("Microsoft Reciprocal License")]
+            MSRL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("MTLL", "http://hl7.org/fhir/spdx-license"), Description("Matrix Template Library License")]
+            MTLL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Multics", "http://hl7.org/fhir/spdx-license"), Description("Multics License")]
+            Multics,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Mup", "http://hl7.org/fhir/spdx-license"), Description("Mup License")]
+            Mup,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NASA-1.3", "http://hl7.org/fhir/spdx-license"), Description("NASA Open Source Agreement 1.3")]
+            NASA1_3,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Naumen", "http://hl7.org/fhir/spdx-license"), Description("Naumen Public License")]
+            Naumen,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NBPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Net Boolean Public License v1")]
+            NBPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NCSA", "http://hl7.org/fhir/spdx-license"), Description("University of Illinois/NCSA Open Source License")]
+            NCSA,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Net-SNMP", "http://hl7.org/fhir/spdx-license"), Description("Net-SNMP License")]
+            NetSNMP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NetCDF", "http://hl7.org/fhir/spdx-license"), Description("NetCDF license")]
+            NetCDF,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Newsletr", "http://hl7.org/fhir/spdx-license"), Description("Newsletr License")]
+            Newsletr,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NGPL", "http://hl7.org/fhir/spdx-license"), Description("Nethack General Public License")]
+            NGPL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NLOD-1.0", "http://hl7.org/fhir/spdx-license"), Description("Norwegian Licence for Open Government Data")]
+            NLOD1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NLPL", "http://hl7.org/fhir/spdx-license"), Description("No Limit Public License")]
+            NLPL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Nokia", "http://hl7.org/fhir/spdx-license"), Description("Nokia Open Source License")]
+            Nokia,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NOSL", "http://hl7.org/fhir/spdx-license"), Description("Netizen Open Source License")]
+            NOSL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Noweb", "http://hl7.org/fhir/spdx-license"), Description("Noweb License")]
+            Noweb,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Netscape Public License v1.0")]
+            NPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Netscape Public License v1.1")]
+            NPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NPOSL-3.0", "http://hl7.org/fhir/spdx-license"), Description("Non-Profit Open Software License 3.0")]
+            NPOSL3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NRL", "http://hl7.org/fhir/spdx-license"), Description("NRL License")]
+            NRL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("NTP", "http://hl7.org/fhir/spdx-license"), Description("NTP License")]
+            NTP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OCCT-PL", "http://hl7.org/fhir/spdx-license"), Description("Open CASCADE Technology Public License")]
+            OCCTPL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OCLC-2.0", "http://hl7.org/fhir/spdx-license"), Description("OCLC Research Public License 2.0")]
+            OCLC2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ODbL-1.0", "http://hl7.org/fhir/spdx-license"), Description("ODC Open Database License v1.0")]
+            ODbL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OFL-1.0", "http://hl7.org/fhir/spdx-license"), Description("SIL Open Font License 1.0")]
+            OFL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OFL-1.1", "http://hl7.org/fhir/spdx-license"), Description("SIL Open Font License 1.1")]
+            OFL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OGTSL", "http://hl7.org/fhir/spdx-license"), Description("Open Group Test Suite License")]
+            OGTSL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-1.1", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v1.1")]
+            OLDAP1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-1.2", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v1.2")]
+            OLDAP1_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-1.3", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v1.3")]
+            OLDAP1_3,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-1.4", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v1.4")]
+            OLDAP1_4,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.0.1", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.0.1")]
+            OLDAP2_0_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.0", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.0 (or possibly 2.0A and 2.0B)")]
+            OLDAP2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.1", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.1")]
+            OLDAP2_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.2.1", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.2.1")]
+            OLDAP2_2_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.2.2", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License 2.2.2")]
+            OLDAP2_2_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.2", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.2")]
+            OLDAP2_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.3", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.3")]
+            OLDAP2_3,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.4", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.4")]
+            OLDAP2_4,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.5", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.5")]
+            OLDAP2_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.6", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.6")]
+            OLDAP2_6,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.7", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.7")]
+            OLDAP2_7,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OLDAP-2.8", "http://hl7.org/fhir/spdx-license"), Description("Open LDAP Public License v2.8")]
+            OLDAP2_8,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OML", "http://hl7.org/fhir/spdx-license"), Description("Open Market License")]
+            OML,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OpenSSL", "http://hl7.org/fhir/spdx-license"), Description("OpenSSL License")]
+            OpenSSL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Open Public License v1.0")]
+            OPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OSET-PL-2.1", "http://hl7.org/fhir/spdx-license"), Description("OSET Public License version 2.1")]
+            OSETPL2_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OSL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Open Software License 1.0")]
+            OSL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OSL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Open Software License 1.1")]
+            OSL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OSL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Open Software License 2.0")]
+            OSL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OSL-2.1", "http://hl7.org/fhir/spdx-license"), Description("Open Software License 2.1")]
+            OSL2_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("OSL-3.0", "http://hl7.org/fhir/spdx-license"), Description("Open Software License 3.0")]
+            OSL3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("PDDL-1.0", "http://hl7.org/fhir/spdx-license"), Description("ODC Public Domain Dedication & License 1.0")]
+            PDDL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("PHP-3.0", "http://hl7.org/fhir/spdx-license"), Description("PHP License v3.0")]
+            PHP3_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("PHP-3.01", "http://hl7.org/fhir/spdx-license"), Description("PHP License v3.01")]
+            PHP3_01,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Plexus", "http://hl7.org/fhir/spdx-license"), Description("Plexus Classworlds License")]
+            Plexus,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("PostgreSQL", "http://hl7.org/fhir/spdx-license"), Description("PostgreSQL License")]
+            PostgreSQL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("psfrag", "http://hl7.org/fhir/spdx-license"), Description("psfrag License")]
+            Psfrag,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("psutils", "http://hl7.org/fhir/spdx-license"), Description("psutils License")]
+            Psutils,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Python-2.0", "http://hl7.org/fhir/spdx-license"), Description("Python License 2.0")]
+            Python2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Qhull", "http://hl7.org/fhir/spdx-license"), Description("Qhull License")]
+            Qhull,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("QPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Q Public License 1.0")]
+            QPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Rdisc", "http://hl7.org/fhir/spdx-license"), Description("Rdisc License")]
+            Rdisc,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("RHeCos-1.1", "http://hl7.org/fhir/spdx-license"), Description("Red Hat eCos Public License v1.1")]
+            RHeCos1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("RPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Reciprocal Public License 1.1")]
+            RPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("RPL-1.5", "http://hl7.org/fhir/spdx-license"), Description("Reciprocal Public License 1.5")]
+            RPL1_5,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("RPSL-1.0", "http://hl7.org/fhir/spdx-license"), Description("RealNetworks Public Source License v1.0")]
+            RPSL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("RSA-MD", "http://hl7.org/fhir/spdx-license"), Description("RSA Message-Digest License")]
+            RSAMD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("RSCPL", "http://hl7.org/fhir/spdx-license"), Description("Ricoh Source Code Public License")]
+            RSCPL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Ruby", "http://hl7.org/fhir/spdx-license"), Description("Ruby License")]
+            Ruby,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SAX-PD", "http://hl7.org/fhir/spdx-license"), Description("Sax Public Domain Notice")]
+            SAXPD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Saxpath", "http://hl7.org/fhir/spdx-license"), Description("Saxpath License")]
+            Saxpath,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SCEA", "http://hl7.org/fhir/spdx-license"), Description("SCEA Shared Source License")]
+            SCEA,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Sendmail", "http://hl7.org/fhir/spdx-license"), Description("Sendmail License")]
+            Sendmail,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SGI-B-1.0", "http://hl7.org/fhir/spdx-license"), Description("SGI Free Software License B v1.0")]
+            SGIB1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SGI-B-1.1", "http://hl7.org/fhir/spdx-license"), Description("SGI Free Software License B v1.1")]
+            SGIB1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SGI-B-2.0", "http://hl7.org/fhir/spdx-license"), Description("SGI Free Software License B v2.0")]
+            SGIB2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SimPL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Simple Public License 2.0")]
+            SimPL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SISSL-1.2", "http://hl7.org/fhir/spdx-license"), Description("Sun Industry Standards Source License v1.2")]
+            SISSL1_2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SISSL", "http://hl7.org/fhir/spdx-license"), Description("Sun Industry Standards Source License v1.1")]
+            SISSL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Sleepycat", "http://hl7.org/fhir/spdx-license"), Description("Sleepycat License")]
+            Sleepycat,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SMLNJ", "http://hl7.org/fhir/spdx-license"), Description("Standard ML of New Jersey License")]
+            SMLNJ,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SMPPL", "http://hl7.org/fhir/spdx-license"), Description("Secure Messaging Protocol Public License")]
+            SMPPL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SNIA", "http://hl7.org/fhir/spdx-license"), Description("SNIA Public License 1.1")]
+            SNIA,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Spencer-86", "http://hl7.org/fhir/spdx-license"), Description("Spencer License 86")]
+            Spencer86,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Spencer-94", "http://hl7.org/fhir/spdx-license"), Description("Spencer License 94")]
+            Spencer94,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Spencer-99", "http://hl7.org/fhir/spdx-license"), Description("Spencer License 99")]
+            Spencer99,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Sun Public License v1.0")]
+            SPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SugarCRM-1.1.3", "http://hl7.org/fhir/spdx-license"), Description("SugarCRM Public License v1.1.3")]
+            SugarCRM1_1_3,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("SWL", "http://hl7.org/fhir/spdx-license"), Description("Scheme Widget Library (SWL) Software License Agreement")]
+            SWL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("TCL", "http://hl7.org/fhir/spdx-license"), Description("TCL/TK License")]
+            TCL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("TCP-wrappers", "http://hl7.org/fhir/spdx-license"), Description("TCP Wrappers License")]
+            TCPWrappers,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("TMate", "http://hl7.org/fhir/spdx-license"), Description("TMate Open Source License")]
+            TMate,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("TORQUE-1.1", "http://hl7.org/fhir/spdx-license"), Description("TORQUE v2.5+ Software License v1.1")]
+            TORQUE1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("TOSL", "http://hl7.org/fhir/spdx-license"), Description("Trusster Open Source License")]
+            TOSL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Unicode-DFS-2015", "http://hl7.org/fhir/spdx-license"), Description("Unicode License Agreement - Data Files and Software (2015)")]
+            UnicodeDFS2015,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Unicode-DFS-2016", "http://hl7.org/fhir/spdx-license"), Description("Unicode License Agreement - Data Files and Software (2016)")]
+            UnicodeDFS2016,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Unicode-TOU", "http://hl7.org/fhir/spdx-license"), Description("Unicode Terms of Use")]
+            UnicodeTOU,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Unlicense", "http://hl7.org/fhir/spdx-license"), Description("The Unlicense")]
+            Unlicense,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("UPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Universal Permissive License v1.0")]
+            UPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Vim", "http://hl7.org/fhir/spdx-license"), Description("Vim License")]
+            Vim,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("VOSTROM", "http://hl7.org/fhir/spdx-license"), Description("VOSTROM Public License for Open Source")]
+            VOSTROM,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("VSL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Vovida Software License v1.0")]
+            VSL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("W3C-19980720", "http://hl7.org/fhir/spdx-license"), Description("W3C Software Notice and License (1998-07-20)")]
+            W3C19980720,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("W3C-20150513", "http://hl7.org/fhir/spdx-license"), Description("W3C Software Notice and Document License (2015-05-13)")]
+            W3C20150513,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("W3C", "http://hl7.org/fhir/spdx-license"), Description("W3C Software Notice and License (2002-12-31)")]
+            W3C,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Watcom-1.0", "http://hl7.org/fhir/spdx-license"), Description("Sybase Open Watcom Public License 1.0")]
+            Watcom1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Wsuipa", "http://hl7.org/fhir/spdx-license"), Description("Wsuipa License")]
+            Wsuipa,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("WTFPL", "http://hl7.org/fhir/spdx-license"), Description("Do What The F*ck You Want To Public License")]
+            WTFPL,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("X11", "http://hl7.org/fhir/spdx-license"), Description("X11 License")]
+            X11,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Xerox", "http://hl7.org/fhir/spdx-license"), Description("Xerox License")]
+            Xerox,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("XFree86-1.1", "http://hl7.org/fhir/spdx-license"), Description("XFree86 License 1.1")]
+            XFree861_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("xinetd", "http://hl7.org/fhir/spdx-license"), Description("xinetd License")]
+            Xinetd,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Xnet", "http://hl7.org/fhir/spdx-license"), Description("X.Net License")]
+            Xnet,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("xpp", "http://hl7.org/fhir/spdx-license"), Description("XPP License")]
+            Xpp,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("XSkat", "http://hl7.org/fhir/spdx-license"), Description("XSkat License")]
+            XSkat,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("YPL-1.0", "http://hl7.org/fhir/spdx-license"), Description("Yahoo! Public License v1.0")]
+            YPL1_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("YPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Yahoo! Public License v1.1")]
+            YPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Zed", "http://hl7.org/fhir/spdx-license"), Description("Zed License")]
+            Zed,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Zend-2.0", "http://hl7.org/fhir/spdx-license"), Description("Zend License v2.0")]
+            Zend2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Zimbra-1.3", "http://hl7.org/fhir/spdx-license"), Description("Zimbra Public License v1.3")]
+            Zimbra1_3,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Zimbra-1.4", "http://hl7.org/fhir/spdx-license"), Description("Zimbra Public License v1.4")]
+            Zimbra1_4,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("zlib-acknowledgement", "http://hl7.org/fhir/spdx-license"), Description("zlib/libpng License with Acknowledgement")]
+            ZlibAcknowledgement,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("Zlib", "http://hl7.org/fhir/spdx-license"), Description("zlib License")]
+            Zlib,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ZPL-1.1", "http://hl7.org/fhir/spdx-license"), Description("Zope Public License 1.1")]
+            ZPL1_1,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ZPL-2.0", "http://hl7.org/fhir/spdx-license"), Description("Zope Public License 2.0")]
+            ZPL2_0,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/spdx-license)
+            /// </summary>
+            [EnumLiteral("ZPL-2.1", "http://hl7.org/fhir/spdx-license"), Description("Zope Public License 2.1")]
+            ZPL2_1,
+        }
+
+        /// <summary>
+        /// A code that indicates how the page is generated.
         /// (url: http://hl7.org/fhir/ValueSet/guide-page-generation)
         /// </summary>
         [FhirEnumeration("GuidePageGeneration")]
@@ -89,7 +2174,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Code of parameter that is input to the guide
+        /// Code of parameter that is input to the guide.
         /// (url: http://hl7.org/fhir/ValueSet/guide-parameter-code)
         /// </summary>
         [FhirEnumeration("GuideParameterCode")]
@@ -129,8 +2214,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-parameter-code)
             /// </summary>
-            [EnumLiteral("expansion-profile", "http://hl7.org/fhir/guide-parameter-code"), Description("Expansion Profile")]
-            ExpansionProfile,
+            [EnumLiteral("expansion-parameter", "http://hl7.org/fhir/guide-parameter-code"), Description("Expansion Profile")]
+            ExpansionParameter,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-parameter-code)
@@ -204,9 +2289,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// NPM Package name for IG this depends on
+            /// </summary>
+            [FhirElement("packageId", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Id PackageIdElement
+            {
+                get { return _PackageIdElement; }
+                set { _PackageIdElement = value; OnPropertyChanged("PackageIdElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Id _PackageIdElement;
+            
+            /// <summary>
+            /// NPM Package name for IG this depends on
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string PackageId
+            {
+                get { return PackageIdElement != null ? PackageIdElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        PackageIdElement = null; 
+                    else
+                        PackageIdElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("PackageId");
+                }
+            }
+            
+            /// <summary>
             /// Version of the IG
             /// </summary>
-            [FhirElement("version", InSummary=true, Order=50)]
+            [FhirElement("version", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
             {
@@ -243,6 +2360,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.Canonical)UriElement.DeepCopy();
+                    if(PackageIdElement != null) dest.PackageIdElement = (Hl7.Fhir.Model.Id)PackageIdElement.DeepCopy();
                     if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                     return dest;
                 }
@@ -262,6 +2380,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UriElement, otherT.UriElement)) return false;
+                if( !DeepComparable.Matches(PackageIdElement, otherT.PackageIdElement)) return false;
                 if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
                 
                 return true;
@@ -274,6 +2393,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UriElement, otherT.UriElement)) return false;
+                if( !DeepComparable.IsExactly(PackageIdElement, otherT.PackageIdElement)) return false;
                 if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
                 
                 return true;
@@ -287,6 +2407,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (UriElement != null) yield return UriElement;
+                    if (PackageIdElement != null) yield return PackageIdElement;
                     if (VersionElement != null) yield return VersionElement;
                 }
             }
@@ -298,6 +2419,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
+                    if (PackageIdElement != null) yield return new ElementValue("packageId", false, PackageIdElement);
                     if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
                 }
             }
@@ -458,7 +2580,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DefinitionComponent"; } }
             
             /// <summary>
-            /// Group of resources as used in .page.package
+            /// Grouping used to present related resources in the IG
             /// </summary>
             [FhirElement("package", Order=40)]
             [Cardinality(Min=0,Max=-1)]
@@ -620,7 +2742,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PackageComponent"; } }
             
             /// <summary>
-            /// Name used .resource.package and .page.package
+            /// Descriptive name for the package
             /// </summary>
             [FhirElement("name", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -634,7 +2756,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Name used .resource.package and .page.package
+            /// Descriptive name for the package
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1167,7 +3289,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
-            /// apply-business-version | apply-jurisdiction | path-resource | path-pages | path-tx-cache | expansion-profile | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
+            /// apply-business-version | apply-jurisdiction | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
             /// </summary>
             [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -1181,7 +3303,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.ImplementationGuide.GuideParameterCode> _CodeElement;
             
             /// <summary>
-            /// apply-business-version | apply-jurisdiction | path-resource | path-pages | path-tx-cache | expansion-profile | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
+            /// apply-business-version | apply-jurisdiction | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2129,9 +4251,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Name for this implementation guide (human friendly)
+        /// </summary>
+        [FhirElement("title", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString TitleElement
+        {
+            get { return _TitleElement; }
+            set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _TitleElement;
+        
+        /// <summary>
+        /// Name for this implementation guide (human friendly)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Title
+        {
+            get { return TitleElement != null ? TitleElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  TitleElement = null; 
+                else
+                  TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Title");
+            }
+        }
+        
+        /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -2164,7 +4318,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=130)]
+        [FhirElement("experimental", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -2196,7 +4350,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=140)]
+        [FhirElement("date", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -2228,7 +4382,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=150)]
+        [FhirElement("publisher", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -2260,7 +4414,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=160)]
+        [FhirElement("contact", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -2274,7 +4428,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the implementation guide
         /// </summary>
-        [FhirElement("description", Order=170)]
+        [FhirElement("description", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -2287,7 +4441,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=180)]
+        [FhirElement("useContext", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -2301,7 +4455,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended jurisdiction for implementation guide (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=190)]
+        [FhirElement("jurisdiction", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2315,7 +4469,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=200)]
+        [FhirElement("copyright", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Copyright
         {
@@ -2326,9 +4480,73 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Copyright;
         
         /// <summary>
+        /// NPM Package name for IG
+        /// </summary>
+        [FhirElement("packageId", InSummary=true, Order=220)]
+        [DataMember]
+        public Hl7.Fhir.Model.Id PackageIdElement
+        {
+            get { return _PackageIdElement; }
+            set { _PackageIdElement = value; OnPropertyChanged("PackageIdElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Id _PackageIdElement;
+        
+        /// <summary>
+        /// NPM Package name for IG
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string PackageId
+        {
+            get { return PackageIdElement != null ? PackageIdElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  PackageIdElement = null; 
+                else
+                  PackageIdElement = new Hl7.Fhir.Model.Id(value);
+                OnPropertyChanged("PackageId");
+            }
+        }
+        
+        /// <summary>
+        /// SPDX license code for this IG (or not-open-source)
+        /// </summary>
+        [FhirElement("license", InSummary=true, Order=230)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense> LicenseElement
+        {
+            get { return _LicenseElement; }
+            set { _LicenseElement = value; OnPropertyChanged("LicenseElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense> _LicenseElement;
+        
+        /// <summary>
+        /// SPDX license code for this IG (or not-open-source)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.ImplementationGuide.SPDXLicense? License
+        {
+            get { return LicenseElement != null ? LicenseElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  LicenseElement = null; 
+                else
+                  LicenseElement = new Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense>(value);
+                OnPropertyChanged("License");
+            }
+        }
+        
+        /// <summary>
         /// FHIR Version this Implementation Guide targets
         /// </summary>
-        [FhirElement("fhirVersion", InSummary=true, Order=210)]
+        [FhirElement("fhirVersion", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.Id FhirVersionElement
         {
@@ -2360,7 +4578,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Another Implementation guide this depends on
         /// </summary>
-        [FhirElement("dependsOn", InSummary=true, Order=220)]
+        [FhirElement("dependsOn", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImplementationGuide.DependsOnComponent> DependsOn
@@ -2374,7 +4592,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Profiles that apply globally
         /// </summary>
-        [FhirElement("global", InSummary=true, Order=230)]
+        [FhirElement("global", InSummary=true, Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> Global
@@ -2388,7 +4606,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information needed to build the IG
         /// </summary>
-        [FhirElement("definition", Order=240)]
+        [FhirElement("definition", Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.ImplementationGuide.DefinitionComponent Definition
         {
@@ -2401,7 +4619,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about an assembled IG
         /// </summary>
-        [FhirElement("manifest", Order=250)]
+        [FhirElement("manifest", Order=280)]
         [DataMember]
         public Hl7.Fhir.Model.ImplementationGuide.ManifestComponent Manifest
         {
@@ -2412,10 +4630,20 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ImplementationGuide.ManifestComponent _Manifest;
         
 
+        public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_0 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "ig-0",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(ImplementationGuide_IG_0);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -2428,6 +4656,7 @@ namespace Hl7.Fhir.Model
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
@@ -2437,6 +4666,8 @@ namespace Hl7.Fhir.Model
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
+                if(PackageIdElement != null) dest.PackageIdElement = (Hl7.Fhir.Model.Id)PackageIdElement.DeepCopy();
+                if(LicenseElement != null) dest.LicenseElement = (Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense>)LicenseElement.DeepCopy();
                 if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
                 if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ImplementationGuide.DependsOnComponent>(DependsOn.DeepCopy());
                 if(Global != null) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(Global.DeepCopy());
@@ -2462,6 +4693,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
@@ -2471,6 +4703,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
+            if( !DeepComparable.Matches(PackageIdElement, otherT.PackageIdElement)) return false;
+            if( !DeepComparable.Matches(LicenseElement, otherT.LicenseElement)) return false;
             if( !DeepComparable.Matches(FhirVersionElement, otherT.FhirVersionElement)) return false;
             if( !DeepComparable.Matches(DependsOn, otherT.DependsOn)) return false;
             if( !DeepComparable.Matches(Global, otherT.Global)) return false;
@@ -2489,6 +4723,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
@@ -2498,6 +4733,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
+            if( !DeepComparable.IsExactly(PackageIdElement, otherT.PackageIdElement)) return false;
+            if( !DeepComparable.IsExactly(LicenseElement, otherT.LicenseElement)) return false;
             if( !DeepComparable.IsExactly(FhirVersionElement, otherT.FhirVersionElement)) return false;
             if( !DeepComparable.IsExactly(DependsOn, otherT.DependsOn)) return false;
             if( !DeepComparable.IsExactly(Global, otherT.Global)) return false;
@@ -2516,6 +4753,7 @@ namespace Hl7.Fhir.Model
 				if (UrlElement != null) yield return UrlElement;
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
+				if (TitleElement != null) yield return TitleElement;
 				if (StatusElement != null) yield return StatusElement;
 				if (ExperimentalElement != null) yield return ExperimentalElement;
 				if (DateElement != null) yield return DateElement;
@@ -2525,6 +4763,8 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
 				if (Copyright != null) yield return Copyright;
+				if (PackageIdElement != null) yield return PackageIdElement;
+				if (LicenseElement != null) yield return LicenseElement;
 				if (FhirVersionElement != null) yield return FhirVersionElement;
 				foreach (var elem in DependsOn) { if (elem != null) yield return elem; }
 				foreach (var elem in Global) { if (elem != null) yield return elem; }
@@ -2542,6 +4782,7 @@ namespace Hl7.Fhir.Model
                 if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
                 if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
@@ -2551,6 +4792,8 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
                 if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
+                if (PackageIdElement != null) yield return new ElementValue("packageId", false, PackageIdElement);
+                if (LicenseElement != null) yield return new ElementValue("license", false, LicenseElement);
                 if (FhirVersionElement != null) yield return new ElementValue("fhirVersion", false, FhirVersionElement);
                 foreach (var elem in DependsOn) { if (elem != null) yield return new ElementValue("dependsOn", true, elem); }
                 foreach (var elem in Global) { if (elem != null) yield return new ElementValue("global", true, elem); }

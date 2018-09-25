@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var summaries = fa.ListSummaries();
 
-            var summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            var summary = summaries.ResolveByCanonicalUri("http://terminology.hl7.org/ValueSet/v2-0292");
             Assert.IsNotNull(summary);
             var vs = fa.LoadBySummary(summary);
             Assert.IsTrue(vs is ValueSet);
@@ -75,14 +75,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(dt is StructureDefinition);
 
             // Try to find a core extension
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/valueset-history");
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/valueset-system");
             Assert.IsNotNull(summary);
             var ext = fa.LoadBySummary(summary);
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
 
             // Try to find an additional US profile (they are distributed with the spec for now)
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/cqif-questionnaire");
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
             Assert.IsNotNull(summary);
             var us = fa.LoadBySummary(summary);
             Assert.IsNotNull(us);
@@ -107,14 +107,14 @@ namespace Hl7.Fhir.Specification.Tests
             var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
             var vs = source.ListSummaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
-            var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            // var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
             var ns = source.ListSummaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
 
             var all = source.ListSummaries();
 
             Assert.AreEqual(sd.Count() + sm.Count() + cf.Count() + md.Count() + od.Count() +
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
-                        ep.Count() + ns.Count(), all.Count());
+                        /*ep.Count() +*/ ns.Count(), all.Count());
         }
 
         [TestMethod]

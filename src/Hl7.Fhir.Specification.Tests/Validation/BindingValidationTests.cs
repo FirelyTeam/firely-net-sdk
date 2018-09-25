@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Binding = new ElementDefinition.ElementDefinitionBindingComponent
                 {
                     Strength = BindingStrength.Required,
-                    ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason")
+                    ValueSet = "http://hl7.org/fhir/ValueSet/data-absent-reason"
                 }
             };
 
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
             var val = new BindingValidator(_termService, "Demo");
             var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
-                ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
+                ValueSet = "http://hl7.org/fhir/ValueSet/data-absent-reason",
                 Strength = BindingStrength.Required
             };
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Specification.Tests
             // But this won't, it's also a composition, but without expansion - the local term server won't help you here
             var binding2 = new ElementDefinition.ElementDefinitionBindingComponent
             {
-                ValueSet = new FhirUri("http://hl7.org/fhir/ValueSet/substance-code"),
+                ValueSet = "http://hl7.org/fhir/ValueSet/substance-code",
                 Strength = BindingStrength.Required
             };
 
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
-                ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
+                ValueSet = "http://hl7.org/fhir/ValueSet/data-absent-reason",
                 Strength = BindingStrength.Required
 
             };

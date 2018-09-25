@@ -93,7 +93,7 @@
               <code value="COMORB"/>
             </code>
             <type value="choice"/>
-            <options value="ValueSet/yesno" />
+            <answerValueset value="ValueSet/yesno" />
             <item>
               <!--     COMORBIDITY/CARDIAL     -->
               <!--     Subsection about specific comorbidity: cardial     -->
@@ -110,7 +110,7 @@
                   <code value="COMORBCAR"/>
                 </code>
                 <type value="choice"/>
-                <options value="ValueSet/yesno" />
+                <answerValueset value="ValueSet/yesno" />
               </item>
               <item>
                 <!--     This answer carries both the questionnaire-specific name and an equivalent SNOMED
@@ -127,7 +127,7 @@
                   <display value="Angina (disorder)"/>
                 </code>
                 <type value="choice"/>
-                <options value="ValueSet/yesno" />
+                <answerValueset value="ValueSet/yesno" />
               </item>
               <item>
                 <linkId value="1.1.1.1.3"/>
@@ -137,7 +137,7 @@
                   <display value="Myocardial infarction (disorder)"/>
                 </code>
                 <type value="choice"/>
-                <options value="ValueSet/yesno" />
+                <answerValueset value="ValueSet/yesno" />
               </item>
             </item>
             <item>

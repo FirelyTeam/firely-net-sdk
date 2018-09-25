@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ResearchStudy"; } }
         
         /// <summary>
-        /// Codes that convey the current status of the research study
+        /// Codes that convey the current status of the research study.
         /// (url: http://hl7.org/fhir/ValueSet/research-study-status)
         /// </summary>
         [FhirEnumeration("ResearchStudyStatus")]
@@ -583,17 +583,15 @@ namespace Hl7.Fhir.Model
         /// Condition being studied
         /// </summary>
         [FhirElement("condition", InSummary=true, Order=180)]
-        [CLSCompliant(false)]
-		[References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Condition
+        public List<Hl7.Fhir.Model.CodeableConcept> Condition
         {
-            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Condition; }
+            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Condition;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Condition;
         
         /// <summary>
         /// Contact details for the study
@@ -817,7 +815,7 @@ namespace Hl7.Fhir.Model
                 if(Phase != null) dest.Phase = (Hl7.Fhir.Model.CodeableConcept)Phase.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.CodeableConcept>(Focus.DeepCopy());
-                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.ResourceReference>(Condition.DeepCopy());
+                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.CodeableConcept>(Condition.DeepCopy());
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.CodeableConcept>(Keyword.DeepCopy());

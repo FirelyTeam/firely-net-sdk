@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,45 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "EntryDefinition"; } }
         
+        /// <summary>
+        /// The type of relations between entries.
+        /// (url: http://hl7.org/fhir/ValueSet/relation-type)
+        /// </summary>
+        [FhirEnumeration("EntryDefinitionRelationType")]
+        public enum EntryDefinitionRelationType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/relation-type)
+            /// </summary>
+            [EnumLiteral("has-input", "http://hl7.org/fhir/relation-type"), Description("Has Input")]
+            HasInput,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/relation-type)
+            /// </summary>
+            [EnumLiteral("has-output", "http://hl7.org/fhir/relation-type"), Description("Has Output")]
+            HasOutput,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/relation-type)
+            /// </summary>
+            [EnumLiteral("uses", "http://hl7.org/fhir/relation-type"), Description("Uses")]
+            Uses,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/relation-type)
+            /// </summary>
+            [EnumLiteral("triggers", "http://hl7.org/fhir/relation-type"), Description("Triggers")]
+            Triggers,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/relation-type)
+            /// </summary>
+            [EnumLiteral("is-replaced-by", "http://hl7.org/fhir/relation-type"), Description("Replaced By")]
+            IsReplacedBy,
+        }
+
         [FhirType("RelatedEntryComponent")]
         [DataContract]
         public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -63,23 +102,42 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "RelatedEntryComponent"; } }
             
             /// <summary>
-            /// The type of relation to the related item
+            /// has-input | has-output | uses | triggers | is-replaced-by
             /// </summary>
-            [FhirElement("relationtype", InSummary=true, Order=40)]
+            [FhirElement("relationtype", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Relationtype
+            public Code<Hl7.Fhir.Model.EntryDefinition.EntryDefinitionRelationType> RelationtypeElement
             {
-                get { return _Relationtype; }
-                set { _Relationtype = value; OnPropertyChanged("Relationtype"); }
+                get { return _RelationtypeElement; }
+                set { _RelationtypeElement = value; OnPropertyChanged("RelationtypeElement"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Relationtype;
+            private Code<Hl7.Fhir.Model.EntryDefinition.EntryDefinitionRelationType> _RelationtypeElement;
+            
+            /// <summary>
+            /// has-input | has-output | uses | triggers | is-replaced-by
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.EntryDefinition.EntryDefinitionRelationType? Relationtype
+            {
+                get { return RelationtypeElement != null ? RelationtypeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        RelationtypeElement = null; 
+                    else
+                        RelationtypeElement = new Code<Hl7.Fhir.Model.EntryDefinition.EntryDefinitionRelationType>(value);
+                    OnPropertyChanged("Relationtype");
+                }
+            }
             
             /// <summary>
             /// The reference to the related item
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=50)]
+            [FhirElement("item", Order=50)]
             [CLSCompliant(false)]
 			[References("EntryDefinition")]
             [Cardinality(Min=1,Max=1)]
@@ -99,7 +157,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Relationtype != null) dest.Relationtype = (Hl7.Fhir.Model.CodeableConcept)Relationtype.DeepCopy();
+                    if(RelationtypeElement != null) dest.RelationtypeElement = (Code<Hl7.Fhir.Model.EntryDefinition.EntryDefinitionRelationType>)RelationtypeElement.DeepCopy();
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
                     return dest;
                 }
@@ -118,7 +176,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Relationtype, otherT.Relationtype)) return false;
+                if( !DeepComparable.Matches(RelationtypeElement, otherT.RelationtypeElement)) return false;
                 if( !DeepComparable.Matches(Item, otherT.Item)) return false;
                 
                 return true;
@@ -130,7 +188,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Relationtype, otherT.Relationtype)) return false;
+                if( !DeepComparable.IsExactly(RelationtypeElement, otherT.RelationtypeElement)) return false;
                 if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 
                 return true;
@@ -143,7 +201,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Relationtype != null) yield return Relationtype;
+                    if (RelationtypeElement != null) yield return RelationtypeElement;
                     if (Item != null) yield return Item;
                 }
             }
@@ -154,7 +212,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Relationtype != null) yield return new ElementValue("relationtype", false, Relationtype);
+                    if (RelationtypeElement != null) yield return new ElementValue("relationtype", false, RelationtypeElement);
                     if (Item != null) yield return new ElementValue("item", false, Item);
                 }
             }
@@ -164,9 +222,23 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Unique identifier of the catalog item
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
         /// The type of item - medication, device, service, protocol or other
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=90)]
+        [FhirElement("type", Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -177,23 +249,42 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// Whether the entry represents an orderable item, or other
+        /// Whether the entry represents an orderable item
         /// </summary>
-        [FhirElement("purpose", InSummary=true, Order=100)]
+        [FhirElement("orderable", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Purpose
+        public Hl7.Fhir.Model.FhirBoolean OrderableElement
         {
-            get { return _Purpose; }
-            set { _Purpose = value; OnPropertyChanged("Purpose"); }
+            get { return _OrderableElement; }
+            set { _OrderableElement = value; OnPropertyChanged("OrderableElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Purpose;
+        private Hl7.Fhir.Model.FhirBoolean _OrderableElement;
         
         /// <summary>
-        /// The item itself
+        /// Whether the entry represents an orderable item
         /// </summary>
-        [FhirElement("referencedItem", InSummary=true, Order=110)]
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Orderable
+        {
+            get { return OrderableElement != null ? OrderableElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  OrderableElement = null; 
+                else
+                  OrderableElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Orderable");
+            }
+        }
+        
+        /// <summary>
+        /// The item that is being defined
+        /// </summary>
+        [FhirElement("referencedItem", InSummary=true, Order=120)]
         [CLSCompliant(false)]
 		[References("Medication","Device","Organization","Practitioner","HealthcareService","ActivityDefinition","PlanDefinition","SpecimenDefinition","ObservationDefinition","Binary")]
         [Cardinality(Min=1,Max=1)]
@@ -207,22 +298,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _ReferencedItem;
         
         /// <summary>
-        /// Unique identifier of the catalog item
-        /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
-        {
-            get { return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private Hl7.Fhir.Model.Identifier _Identifier;
-        
-        /// <summary>
         /// Any additional identifier(s) for the catalog item, in the same granularity or concept
         /// </summary>
-        [FhirElement("additionalIdentifier", InSummary=true, Order=130)]
+        [FhirElement("additionalIdentifier", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> AdditionalIdentifier
@@ -236,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Classification (category or class) of the item entry
         /// </summary>
-        [FhirElement("classification", InSummary=true, Order=140)]
+        [FhirElement("classification", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Classification
@@ -248,22 +326,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Classification;
         
         /// <summary>
-        /// The status of the item, e.g. active, approved, deleted…
+        /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=150)]
+        [FhirElement("status", Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Status
+        public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
         {
-            get { return _Status; }
-            set { _Status = value; OnPropertyChanged("Status"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Status;
+        private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
+        
+        /// <summary>
+        /// draft | active | retired | unknown
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.PublicationStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
         
         /// <summary>
         /// The time period in which this catalog entry is expected to be active
         /// </summary>
-        [FhirElement("validityPeriod", InSummary=true, Order=160)]
+        [FhirElement("validityPeriod", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Period ValidityPeriod
         {
@@ -276,7 +373,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When was this catalog last updated
         /// </summary>
-        [FhirElement("lastUpdated", InSummary=true, Order=170)]
+        [FhirElement("lastUpdated", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastUpdatedElement
         {
@@ -308,7 +405,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional characteristics of the catalog entry
         /// </summary>
-        [FhirElement("additionalCharacteristic", InSummary=true, Order=180)]
+        [FhirElement("additionalCharacteristic", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> AdditionalCharacteristic
@@ -322,7 +419,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional classification of the catalog entry
         /// </summary>
-        [FhirElement("additionalClassification", InSummary=true, Order=190)]
+        [FhirElement("additionalClassification", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> AdditionalClassification
@@ -336,7 +433,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An item that this catalog entry is related to
         /// </summary>
-        [FhirElement("relatedEntry", InSummary=true, Order=200)]
+        [FhirElement("relatedEntry", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EntryDefinition.RelatedEntryComponent> RelatedEntry
@@ -361,13 +458,13 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.CodeableConcept)Purpose.DeepCopy();
+                if(OrderableElement != null) dest.OrderableElement = (Hl7.Fhir.Model.FhirBoolean)OrderableElement.DeepCopy();
                 if(ReferencedItem != null) dest.ReferencedItem = (Hl7.Fhir.Model.ResourceReference)ReferencedItem.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(AdditionalIdentifier != null) dest.AdditionalIdentifier = new List<Hl7.Fhir.Model.Identifier>(AdditionalIdentifier.DeepCopy());
                 if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.CodeableConcept>(Classification.DeepCopy());
-                if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
                 if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.FhirDateTime)LastUpdatedElement.DeepCopy();
                 if(AdditionalCharacteristic != null) dest.AdditionalCharacteristic = new List<Hl7.Fhir.Model.CodeableConcept>(AdditionalCharacteristic.DeepCopy());
@@ -390,13 +487,13 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
-            if( !DeepComparable.Matches(ReferencedItem, otherT.ReferencedItem)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(OrderableElement, otherT.OrderableElement)) return false;
+            if( !DeepComparable.Matches(ReferencedItem, otherT.ReferencedItem)) return false;
             if( !DeepComparable.Matches(AdditionalIdentifier, otherT.AdditionalIdentifier)) return false;
             if( !DeepComparable.Matches(Classification, otherT.Classification)) return false;
-            if( !DeepComparable.Matches(Status, otherT.Status)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ValidityPeriod, otherT.ValidityPeriod)) return false;
             if( !DeepComparable.Matches(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
             if( !DeepComparable.Matches(AdditionalCharacteristic, otherT.AdditionalCharacteristic)) return false;
@@ -412,13 +509,13 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
-            if( !DeepComparable.IsExactly(ReferencedItem, otherT.ReferencedItem)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(OrderableElement, otherT.OrderableElement)) return false;
+            if( !DeepComparable.IsExactly(ReferencedItem, otherT.ReferencedItem)) return false;
             if( !DeepComparable.IsExactly(AdditionalIdentifier, otherT.AdditionalIdentifier)) return false;
             if( !DeepComparable.IsExactly(Classification, otherT.Classification)) return false;
-            if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ValidityPeriod, otherT.ValidityPeriod)) return false;
             if( !DeepComparable.IsExactly(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
             if( !DeepComparable.IsExactly(AdditionalCharacteristic, otherT.AdditionalCharacteristic)) return false;
@@ -434,13 +531,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Type != null) yield return Type;
-				if (Purpose != null) yield return Purpose;
+				if (OrderableElement != null) yield return OrderableElement;
 				if (ReferencedItem != null) yield return ReferencedItem;
-				if (Identifier != null) yield return Identifier;
 				foreach (var elem in AdditionalIdentifier) { if (elem != null) yield return elem; }
 				foreach (var elem in Classification) { if (elem != null) yield return elem; }
-				if (Status != null) yield return Status;
+				if (StatusElement != null) yield return StatusElement;
 				if (ValidityPeriod != null) yield return ValidityPeriod;
 				if (LastUpdatedElement != null) yield return LastUpdatedElement;
 				foreach (var elem in AdditionalCharacteristic) { if (elem != null) yield return elem; }
@@ -455,13 +552,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
+                if (OrderableElement != null) yield return new ElementValue("orderable", false, OrderableElement);
                 if (ReferencedItem != null) yield return new ElementValue("referencedItem", false, ReferencedItem);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                 foreach (var elem in AdditionalIdentifier) { if (elem != null) yield return new ElementValue("additionalIdentifier", true, elem); }
                 foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", true, elem); }
-                if (Status != null) yield return new ElementValue("status", false, Status);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", false, ValidityPeriod);
                 if (LastUpdatedElement != null) yield return new ElementValue("lastUpdated", false, LastUpdatedElement);
                 foreach (var elem in AdditionalCharacteristic) { if (elem != null) yield return new ElementValue("additionalCharacteristic", true, elem); }

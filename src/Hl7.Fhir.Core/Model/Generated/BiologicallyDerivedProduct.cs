@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.3.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "BiologicallyDerivedProduct"; } }
         
         /// <summary>
-        /// Biologically Derived Product Category
+        /// Biologically Derived Product Category.
         /// (url: http://hl7.org/fhir/ValueSet/product-category)
         /// </summary>
         [FhirEnumeration("BiologicallyDerivedProductCategory")]
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Biologically Derived Product Status
+        /// Biologically Derived Product Status.
         /// (url: http://hl7.org/fhir/ValueSet/product-status)
         /// </summary>
         [FhirEnumeration("BiologicallyDerivedProductStatus")]
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// BiologicallyDerived Product Storage Scale
+        /// BiologicallyDerived Product Storage Scale.
         /// (url: http://hl7.org/fhir/ValueSet/product-storage-scale)
         /// </summary>
         [FhirEnumeration("BiologicallyDerivedProductStorageScale")]

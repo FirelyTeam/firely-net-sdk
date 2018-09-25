@@ -15,9 +15,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
-        <name value="v3 map for ContactPointUse" />
+        <name value="v3.ContactPointUse" />
+        <title value="v3 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -30,10 +31,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
         <group>
           <source value="http://hl7.org/fhir/contact-point-use" />
-          <target value="http://hl7.org/fhir/v3/AddressUse" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
           <element>
             <code value="home" />
             <target>
@@ -91,9 +92,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
-        <name value="v2 map for ContactPointUse" />
+        <name value="v2.ContactPointUse" />
+        <title value="v2 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -106,10 +108,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/contact-point-use" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v2-0201" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0201" />
         <group>
           <source value="http://hl7.org/fhir/contact-point-use" />
-          <target value="http://hl7.org/fhir/v2/0201" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0201" />
           <element>
             <code value="home" />
             <target>
@@ -155,9 +157,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
-        <name value="v3 map for AddressType" />
+        <name value="v3.AddressType" />
+        <title value="v3 map for AddressType" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -170,10 +173,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/address-type" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
         <group>
           <source value="http://hl7.org/fhir/address-type" />
-          <target value="http://hl7.org/fhir/v3/AddressUse" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
           <element>
             <code value="postal" />
             <target>
@@ -204,9 +207,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
-        <name value="v2 map for NameUse" />
+        <name value="v2.NameUse" />
+        <title value="v2 map for NameUse" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -219,10 +223,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/name-use" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v2-0200" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0200" />
         <group>
           <source value="http://hl7.org/fhir/name-use" />
-          <target value="http://hl7.org/fhir/v2/0200" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0200" />
           <element>
             <code value="usual" />
             <target>
@@ -292,9 +296,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
-        <name value="v3 map for NameUse" />
+        <name value="v3.NameUse" />
+        <title value="v3 map for NameUse" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -307,10 +312,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/name-use" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-EntityNameUseR2" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-EntityNameUseR2" />
         <group>
           <source value="http://hl7.org/fhir/name-use" />
-          <target value="http://hl7.org/fhir/v3/EntityNameUseR2" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-EntityNameUseR2" />
           <element>
             <code value="usual" />
             <target>
@@ -376,9 +381,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3" />
-        <name value="v3 map for MedicationStatementStatus" />
+        <name value="v3.MedicationStatementStatus" />
+        <title value="v3 map for MedicationStatementStatus" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -391,10 +397,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/medication-statement-status" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
         <group>
           <source value="http://hl7.org/fhir/medication-statement-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
           <element>
             <code value="active" />
             <target>
@@ -446,9 +452,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
-        <name value="v3 map for AddressUse" />
+        <name value="v3.AddressUse" />
+        <title value="v3 map for AddressUse" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -461,10 +468,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/address-use" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
         <group>
           <source value="http://hl7.org/fhir/address-use" />
-          <target value="http://hl7.org/fhir/v3/AddressUse" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
           <element>
             <code value="home" />
             <target>
@@ -515,15 +522,16 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
-        <name value="v2 map for AdministrativeGender" />
+        <name value="v2.AdministrativeGender" />
+        <title value="v2 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v2-0001" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0001" />
         <group>
           <source value="http://hl7.org/fhir/administrative-gender" />
-          <target value="http://hl7.org/fhir/v2/0001" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0001" />
           <element>
             <code value="male" />
             <target>
@@ -572,9 +580,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3" />
-        <name value="v3 map for MedicationRequestStatus" />
+        <name value="v3.MedicationRequestStatus" />
+        <title value="v3 map for MedicationRequestStatus" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -587,10 +596,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/medication-request-status" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
         <group>
           <source value="http://hl7.org/fhir/medication-request-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
           <element>
             <code value="active" />
             <target>
@@ -656,15 +665,16 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
-        <name value="v3 map for AdministrativeGender" />
+        <name value="v3.AdministrativeGender" />
+        <title value="v3 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-AdministrativeGender" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AdministrativeGender" />
         <group>
           <source value="http://hl7.org/fhir/administrative-gender" />
-          <target value="http://hl7.org/fhir/v3/AdministrativeGender" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender" />
           <element>
             <code value="male" />
             <target>
@@ -709,15 +719,16 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
-        <name value="v3 map for DocumentReferenceStatus" />
+        <name value="v3.DocumentReferenceStatus" />
+        <title value="v3 map for DocumentReferenceStatus" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/document-reference-status" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
         <group>
           <source value="http://hl7.org/fhir/document-reference-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
           <element>
             <code value="current" />
             <target>
@@ -755,9 +766,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3" />
-        <name value="v3 map for MedicationAdministrationStatus" />
+        <name value="v3.MedicationAdministrationStatus" />
+        <title value="v3 map for MedicationAdministrationStatus" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -770,10 +782,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/medication-admin-status" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
         <group>
           <source value="http://hl7.org/fhir/medication-admin-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
           <element>
             <code value="in-progress" />
             <target>
@@ -825,9 +837,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
-        <name value="v2 map for AddressUse" />
+        <name value="v2.AddressUse" />
+        <title value="v2 map for AddressUse" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -840,10 +853,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/address-use" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v2-0190" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0190" />
         <group>
           <source value="http://hl7.org/fhir/address-use" />
-          <target value="http://hl7.org/fhir/v2/0190" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0190" />
           <element>
             <code value="home" />
             <target>
@@ -896,9 +909,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
-        <name value="v3 map for DetectedIssueSeverity" />
+        <name value="v3.DetectedIssueSeverity" />
+        <title value="v3 map for DetectedIssueSeverity" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -911,10 +925,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/detectedissue-severity" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-SeverityObservation" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-SeverityObservation" />
         <group>
           <source value="http://hl7.org/fhir/detectedissue-severity" />
-          <target value="http://hl7.org/fhir/v3/ObservationValue" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ObservationValue" />
           <element>
             <code value="high" />
             <target>
@@ -952,9 +966,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
-        <name value="v3 map for CompositionStatus" />
+        <name value="v3.CompositionStatus" />
+        <title value="v3 map for CompositionStatus" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -967,10 +982,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/composition-status" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
         <group>
           <source value="http://hl7.org/fhir/composition-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
           <element>
             <code value="preliminary" />
             <target>
@@ -1015,15 +1030,16 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
-        <name value="v3 map for DataAbsentReason" />
+        <name value="v3.DataAbsentReason" />
+        <title value="v3 map for DataAbsentReason" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-NullFlavor" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-NullFlavor" />
         <group>
-          <source value="http://hl7.org/fhir/data-absent-reason" />
-          <target value="http://hl7.org/fhir/v3/NullFlavor" />
+          <source value="http://terminology.hl7.org/CodeSystem/data-absent-reason" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-NullFlavor" />
           <element>
             <code value="unknown" />
             <target>
@@ -1103,9 +1119,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
-        <name value="v2 map for ContactPointSystem" />
+        <name value="v2.ContactPointSystem" />
+        <title value="v2 map for ContactPointSystem" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1118,10 +1135,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/contact-point-system" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v2-0202" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0202" />
         <group>
           <source value="http://hl7.org/fhir/contact-point-system" />
-          <target value="http://hl7.org/fhir/v2/0202" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0202" />
           <element>
             <code value="phone" />
             <target>
@@ -1175,9 +1192,10 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-dispense-status-v3" />
-        <name value="v3 map for MedicationDispenseStatus" />
+        <name value="v3.MedicationDispenseStatus" />
+        <title value="v3 map for MedicationDispenseStatus" />
         <status value="draft" />
-        <date value="2018-04-03T12:05:46+10:00" />
+        <date value="2018-08-20T00:00:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1190,10 +1208,10 @@
           </telecom>
         </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/medication-dispense-status" />
-        <targetCanonical value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
         <group>
           <source value="http://hl7.org/fhir/medication-dispense-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
           <element>
             <code value="in-progress" />
             <target>
@@ -1267,20 +1285,26 @@
         <description value="A mapping between the FHIR and HL7 v3 AddressUse Code systems" />
         <useContext>
           <code>
-            <system value="http://hl7.org/fhir/usage-context-type" />
+            <system value="http://terminology.hl7.org/CodeSystem/usage-context-type" />
             <code value="venue" />
           </code>
           <valueCodeableConcept>
-            <text value="for CDA Usage" />
+            <text value="for CCDA Usage" />
           </valueCodeableConcept>
         </useContext>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
         <purpose value="To help implementers map from HL7 v3/CDA to FHIR" />
         <copyright value="Creative Commons 0" />
         <sourceUri value="http://hl7.org/fhir/ValueSet/address-use" />
-        <targetUri value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
+        <targetUri value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
         <group>
           <source value="http://hl7.org/fhir/address-use" />
-          <target value="http://hl7.org/fhir/v3/AddressUse" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
           <element>
             <code value="home" />
             <display value="home" />
@@ -1424,10 +1448,10 @@
             <value value="http://www.phconnect.org/group/laboratorymessagingcommunityofpractice/forum/attachment/download?id=3649725%3AUploadedFile%3A145786" />
           </telecom>
         </contact>
-        <sourceCanonical value="http://hl7.org/fhir/ValueSet/v2-0487" />
+        <sourceCanonical value="http://terminology.hl7.org/ValueSet/v2-0487" />
         <targetCanonical value="http://snomed.info/id?fhir_vs" />
         <group>
-          <source value="http://hl7.org/fhir/v2/0487" />
+          <source value="http://terminology.hl7.org/CodeSystem/v2-0487" />
           <target value="http://snomed.info/sct" />
           <element>
             <code value="ACNE" />
@@ -4058,6 +4082,51 @@
             <mode value="other-map" />
             <url value="http://example.org/fhir/ConceptMap/map2" />
           </unmapped>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cdshooks-indicator" />
+    <resource>
+      <ConceptMap>
+        <id value="cdshooks-indicator" />
+        <!-- Removed Meta/LastModified -->
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://cds-hooks.hl7.org/ConceptMap/indicator-to-request-priority" />
+        <name value="IndicatorToRequestPriority" />
+        <status value="draft" />
+        <experimental value="false" />
+        <description value="This concept map defines a mapping from CDS Hooks indicator to request priority." />
+        <sourceCanonical value="http://cds-hooks.hl7.org/ValueSet/indicator" />
+        <targetCanonical value="http://hl7.org/fhir/ValueSet/request-priority" />
+        <group>
+          <element>
+            <code value="info" />
+            <target>
+              <code value="routine" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="warning" />
+            <target>
+              <code value="urgent" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="critical" />
+            <target>
+              <code value="stat" />
+              <equivalence value="equal" />
+            </target>
+          </element>
         </group>
       </ConceptMap>
     </resource>

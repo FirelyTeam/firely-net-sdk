@@ -39,7 +39,7 @@
       </code>
       <prefix value="1"/>
       <type value="choice"/>
-      <options value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+      <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
       <item>
         <linkId value="1.1.1"/>
         <code>
@@ -63,7 +63,7 @@
           </code>
           <prefix value="1.1"/>
           <type value="choice"/>
-          <options value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+          <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
           <item>
             <linkId value="1.1.1.1.1"/>
             <code>
@@ -78,7 +78,7 @@
             </code>
             <prefix value="1.1.1"/>
             <type value="choice"/>
-            <options value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+            <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
           </item>
           <item>
             <linkId value="1.1.1.1.2"/>
@@ -89,7 +89,7 @@
             </code>
             <prefix value="1.1.2"/>
             <type value="choice"/>
-            <options value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+            <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
           </item>
         </item>
         <item>
@@ -100,7 +100,7 @@
           </code>
           <prefix value="1.2"/>
           <type value="choice"/>
-          <options value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+          <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
         </item>
       </item>
     </item>

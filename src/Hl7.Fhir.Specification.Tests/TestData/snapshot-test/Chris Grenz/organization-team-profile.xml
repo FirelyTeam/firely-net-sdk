@@ -209,7 +209,7 @@
 			<binding>
 				<strength value="required" />
 				<description value="A human language." />
-				<valueSetUri value="http://tools.ietf.org/html/bcp47" />
+				<valueSet value="http://tools.ietf.org/html/bcp47" />
 			</binding>
 			<mapping>
 				<identity value="rim" />
@@ -489,7 +489,7 @@
 			<binding>
 				<strength value="example" />
 				<description value="Used to categorize the organization" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/organization-type" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/organization-type" />
 			</binding>
 			<mapping>
 				<identity value="v2" />
@@ -914,7 +914,7 @@
 			<binding>
 				<strength value="extensible" />
 				<description value="The purpose for which you would contact a contact party" />
-				<valueSetUri value="http://hl7.org/fhir/ValueSet/contactentity-type" />
+				<valueSet value="http://hl7.org/fhir/ValueSet/contactentity-type" />
 			</binding>
 			<mapping>
 				<identity value="rim" />
