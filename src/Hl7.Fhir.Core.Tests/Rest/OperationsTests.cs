@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeById()
+        public async Task InvokeValidateCodeById()
         {
             var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");

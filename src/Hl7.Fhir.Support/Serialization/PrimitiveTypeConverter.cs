@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization
             if (value is Char)
                 return XmlConvert.ToString((char)value);        // Not used in FHIR serialization
             if (value is DateTime)
-                return XmlConvert.ToString((DateTime)value, FMT_FULL);    // TODO: validate format, not used in model
+                return XmlConvert.ToString((DateTime)value, FMT_FULL);  // Obsolete: use DateTimeOffset instead!!
             if (value is Decimal)
                 return XmlConvert.ToString((decimal)value);
             if (value is Double)
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Serialization
             if (typeof(Char) == to)
                 return XmlConvert.ToChar(value);        // Not used in FHIR serialization
             if (typeof(DateTime) == to)
-                return ConvertToDatetimeOffset(value).UtcDateTime;
+                return ConvertToDatetimeOffset(value).UtcDateTime;  // Obsolete: use DateTimeOffset instead!!
             if (typeof(Decimal) == to)
                 return XmlConvert.ToDecimal(value);
             if (typeof(Double) == to)
@@ -180,7 +180,6 @@ namespace Hl7.Fhir.Serialization
 			if (type == typeof(Boolean)
 				|| type == typeof(Byte)
 				|| type == typeof(char)
-				|| type == typeof(DateTime)
 				|| type == typeof(Decimal)
 				|| type == typeof(double)
 				|| type == typeof(short)
