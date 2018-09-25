@@ -13,6 +13,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         public TimingSource(IConformanceSource source) { _source = source; }
 
+        public IConformanceSource Source => _source;
+
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
             => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
 

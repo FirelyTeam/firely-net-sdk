@@ -225,6 +225,7 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string KindKey = "StructureDefinition.kind";
         public static readonly string TypeKey = "StructureDefinition.type";
         public static readonly string ContextTypeKey = "StructureDefinition.contextType";
+        public static readonly string ContextKey = "StructureDefinition.context";
         public static readonly string BaseDefinitionKey = "StructureDefinition.baseDefinition";
         public static readonly string DerivationKey = "StructureDefinition.derivation";
 
@@ -255,8 +256,10 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     nav.HarvestValue(properties, FhirVersionKey, "fhirVersion");
                     nav.HarvestValue(properties, KindKey, "kind");
-                    nav.HarvestValue(properties, TypeKey, "type");
                     nav.HarvestValue(properties, ContextTypeKey, "contextType");
+                    // [WMR 20180919] NEW: Extension context
+                    nav.HarvestValues(properties, ContextKey, "context");
+                    nav.HarvestValue(properties, TypeKey, "type");
                     nav.HarvestValue(properties, BaseDefinitionKey, "baseDefinition");
                     nav.HarvestValue(properties, DerivationKey, "derivation");
 
@@ -309,15 +312,20 @@ namespace Hl7.Fhir.Specification.Source
         public static string GetStructureDefinitionKind(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(KindKey);
 
-        /// <summary>Get the <c>StructureDefinition.type</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
-        public static string GetStructureDefinitionType(this IArtifactSummaryPropertyBag properties)
-            => properties.GetValueOrDefault<string>(TypeKey);
-
         /// <summary>Get the <c>StructureDefinition.contextType</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
         public static string GetStructureDefinitionContextType(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(ContextTypeKey);
+
+        /// <summary>Get the <c>StructureDefinition.context</c> property value from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
+        public static string[] GetStructureDefinitionContext(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string[]>(ContextKey);
+
+        /// <summary>Get the <c>StructureDefinition.type</c> property value from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
+        public static string GetStructureDefinitionType(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(TypeKey);
 
         /// <summary>Get the <c>StructureDefinition.baseDefinition</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
