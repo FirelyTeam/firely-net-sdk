@@ -24,8 +24,8 @@ namespace Hl7.Fhir.Serialization
 
         public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
 
-        private FhirXmlNodeSettings buildNodeSettings(ParserSettings settings) =>
-                new FhirXmlNodeSettings
+        private FhirXmlParsingSettings buildNodeSettings(ParserSettings settings) =>
+                new FhirXmlParsingSettings
                 {
                     DisallowSchemaLocation = Settings.DisallowXsiAttributesOnRoot,
                 };

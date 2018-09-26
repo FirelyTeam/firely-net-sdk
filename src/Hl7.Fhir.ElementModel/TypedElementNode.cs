@@ -16,9 +16,9 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class TypedElement : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
+    internal class TypedElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
     {
-        public TypedElement(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedElementSettings settings = null)
+        public TypedElementNode(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedElementSettings settings = null)
         {
             if (element == null) throw Error.ArgumentNull(nameof(element));
 
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        private TypedElement(TypedElement parent, NavigatorPosition position, string prettyPath)
+        private TypedElementNode(TypedElementNode parent, NavigatorPosition position, string prettyPath)
         {
             Current = position;
             ShortPath = prettyPath;
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.ElementModel
             return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
         }
 
-        private IEnumerable<TypedElement> enumerateElements(ElementDefinitionSummaryCache dis, ISourceNode parent, string name)
+        private IEnumerable<TypedElementNode> enumerateElements(ElementDefinitionSummaryCache dis, ISourceNode parent, string name)
         {
             IEnumerable<ISourceNode> childSet = null;
 
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.ElementModel
                 var prettyPath =
                  hit && !info.IsCollection ? $"{ShortPath}.{match.Name}" : $"{ShortPath}.{match.Name}[{_nameIndex}]";
 
-                yield return new TypedElement(this, match, prettyPath);
+                yield return new TypedElementNode(this, match, prettyPath);
             }
         }
 
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(TypedElement) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
+            if (type == typeof(TypedElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 return new[] { this };
             else
                 return Current.Node.Annotations(type);

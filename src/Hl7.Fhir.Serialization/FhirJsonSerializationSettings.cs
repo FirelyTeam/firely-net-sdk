@@ -13,7 +13,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirJsonBuilderSettings
+    public class FhirJsonSerializationSettings
     {
         /// <summary>
         /// When encountering a member without type information, just skip it instead of reporting an error.
@@ -25,21 +25,21 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool Pretty;
 
-        /// <summary>Default constructor. Creates a new <see cref="FhirJsonBuilderSettings"/> instance with default property values.</summary>
-        public FhirJsonBuilderSettings() {  }
+        /// <summary>Default constructor. Creates a new <see cref="FhirJsonSerializationSettings"/> instance with default property values.</summary>
+        public FhirJsonSerializationSettings() {  }
 
-        /// <summary>Clone constructor. Generates a new <see cref="FhirJsonBuilderSettings"/> instance initialized from the state of the specified instance.</summary>
+        /// <summary>Clone constructor. Generates a new <see cref="FhirJsonSerializationSettings"/> instance initialized from the state of the specified instance.</summary>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public FhirJsonBuilderSettings(FhirJsonBuilderSettings other)
+        public FhirJsonSerializationSettings(FhirJsonSerializationSettings other)
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
             other.CopyTo(this);
         }
 
         /// <summary>Copy all configuration settings to another instance.</summary>
-        /// <param name="other">Another <see cref="FhirJsonBuilderSettings"/> instance.</param>
+        /// <param name="other">Another <see cref="FhirJsonSerializationSettings"/> instance.</param>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public void CopyTo(FhirJsonBuilderSettings other)
+        public void CopyTo(FhirJsonSerializationSettings other)
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
@@ -47,10 +47,10 @@ namespace Hl7.Fhir.Serialization
             other.Pretty = Pretty;
         }
 
-        /// <summary>Creates a new <see cref="FhirJsonBuilderSettings"/> object that is a copy of the current instance.</summary>
-        public FhirJsonBuilderSettings Clone() => new FhirJsonBuilderSettings(this);
+        /// <summary>Creates a new <see cref="FhirJsonSerializationSettings"/> object that is a copy of the current instance.</summary>
+        public FhirJsonSerializationSettings Clone() => new FhirJsonSerializationSettings(this);
 
-        /// <summary>Creates a new <see cref="FhirJsonBuilderSettings"/> instance with default property values.</summary>
-        public static FhirJsonBuilderSettings CreateDefault() => new FhirJsonBuilderSettings();
+        /// <summary>Creates a new <see cref="FhirJsonSerializationSettings"/> instance with default property values.</summary>
+        public static FhirJsonSerializationSettings CreateDefault() => new FhirJsonSerializationSettings();
     }
 }

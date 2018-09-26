@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public ITypedElement getJsonElement(string json, FhirJsonNodeSettings s = null) => 
+        public ITypedElement getJsonElement(string json, FhirJsonParsingSettings s = null) => 
             JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(@"TestData\test-empty-nodes.json");
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getJsonElement(tp, new FhirJsonNodeSettings { PermissiveParsing = true });
+            var nav = getJsonElement(tp, new FhirJsonParsingSettings { PermissiveParsing = true });
 
             var output = nav.ToJson();
             var doc = JObject.Parse(output);
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = getJsonElement(json);
             var output = nav.ToJson();
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
-            var pretty = nav.ToJson(new FhirJsonBuilderSettings { Pretty = true });
+            var pretty = nav.ToJson(new FhirJsonSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
 
             var p = (new FhirJsonParser()).Parse<Patient>(json);

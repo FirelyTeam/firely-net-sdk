@@ -21,8 +21,8 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        private FhirXmlBuilderSettings buildFhirXmlWriterSettings() =>
-            new FhirXmlBuilderSettings { Pretty = Settings.Pretty };
+        private FhirXmlSerializationSettings buildFhirXmlWriterSettings() =>
+            new FhirXmlSerializationSettings { Pretty = Settings.Pretty };
 
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null) => 
             MakeElementStack(instance, summary)

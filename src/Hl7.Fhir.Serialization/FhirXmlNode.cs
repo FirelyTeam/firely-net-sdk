@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Serialization
 {
     public partial class FhirXmlNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {  
-        internal FhirXmlNode(XObject node, FhirXmlNodeSettings settings) 
+        internal FhirXmlNode(XObject node, FhirXmlParsingSettings settings) 
         {
             Current = node;
             Location = Name;
-            _settings = settings?.Clone() ?? new FhirXmlNodeSettings();
+            _settings = settings?.Clone() ?? new FhirXmlParsingSettings();
             _atRoot = true;
         }
 
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         public readonly XObject Current;
-        private readonly FhirXmlNodeSettings _settings;
+        private readonly FhirXmlParsingSettings _settings;
         private readonly bool _atRoot = false;
 
         public XNamespace[] AllowedExternalNamespaces => _settings.AllowedExternalNamespaces;

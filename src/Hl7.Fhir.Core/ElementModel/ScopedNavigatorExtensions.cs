@@ -16,7 +16,7 @@ namespace Hl7.Fhir.ElementModel
         [Obsolete("Use Resolve<T>(this T nav, string reference, Func<string, T> externalResolver = null) where T : class, ITypedElement instead ")]
         public static T Resolve<T>(this T nav, string reference, Func<string, T> externalResolver = null) where T : class, IElementNavigator
         {
-            var node = nav.Annotation<ScopedNode>() ?? (ITypedElement)nav.Annotation<TypedElement>();
+            var node = nav.Annotation<ScopedNode>() ?? (ITypedElement)nav.Annotation<ITypedElement>();
 
             Func<string, ITypedElement> convertedExternalResolver = null;
             if (externalResolver != null)
