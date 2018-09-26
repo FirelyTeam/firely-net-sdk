@@ -148,6 +148,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
+#if !NETSTANDARD1_1
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -167,6 +168,7 @@ namespace Hl7.Fhir.Rest
             get { return _requester.CompressRequestBody; }
             set { _requester.CompressRequestBody = value; }
         }
+#endif
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
@@ -206,9 +208,9 @@ namespace Hl7.Fhir.Rest
             private set;
         }
 
-        #endregion
+#endregion
 
-        #region Read
+#region Read
 
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
@@ -301,9 +303,9 @@ namespace Hl7.Fhir.Rest
             return ReadAsync<TResource>(location, ifNoneMatch, ifModifiedSince).WaitResult();
         }
 
-        #endregion
+#endregion
 
-        #region Refresh
+#region Refresh
 
         /// <summary>
         /// Refreshes the data in the resource passed as an argument by re-reading it from the server
@@ -332,9 +334,9 @@ namespace Hl7.Fhir.Rest
             return RefreshAsync<TResource>(current).WaitResult();
         }
 
-        #endregion
+#endregion
 
-        #region Update
+#region Update
 
         /// <summary>
         /// Update (or create) a resource
@@ -425,9 +427,9 @@ namespace Hl7.Fhir.Rest
         {
             return internalUpdateAsync(resource, tx).WaitResult();
         }
-        #endregion
+#endregion
 
-        #region Delete
+#region Delete
 
         /// <summary>
         /// Delete a resource at the given endpoint.
@@ -523,9 +525,9 @@ namespace Hl7.Fhir.Rest
             DeleteAsync(resourceType, condition).WaitNoResult();
         }
 
-        #endregion
+#endregion
         
-        #region Create
+#region Create
         
         /// <summary>
         /// Create a resource on a FHIR endpoint
@@ -573,9 +575,9 @@ namespace Hl7.Fhir.Rest
             return CreateAsync(resource, condition).WaitResult();
         }
         
-        #endregion
+#endregion
         
-        #region Conformance
+#region Conformance
 
         /// <summary>
         /// Get a conformance statement for the system
@@ -605,9 +607,9 @@ namespace Hl7.Fhir.Rest
         {
             return CapabilityStatementAsync(summary).WaitResult();
         }
-        #endregion
+#endregion
 
-        #region History
+#region History
 
         /// <summary>
         /// Retrieve the version history for a specific resource type
@@ -764,9 +766,9 @@ namespace Hl7.Fhir.Rest
             return internalHistoryAsync(resourceType, id, since, pageSize, summary).WaitResult();
         }
 
-        #endregion
+#endregion
 
-        #region Transaction
+#region Transaction
 
         /// <summary>
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
@@ -792,9 +794,9 @@ namespace Hl7.Fhir.Rest
             return TransactionAsync(bundle).WaitResult();
         }
 
-        #endregion
+#endregion
         
-        #region Operation
+#region Operation
 
         public Task<Resource> WholeSystemOperationAsync(string operationName, Parameters parameters = null, bool useGet = false)
         {
@@ -916,9 +918,9 @@ namespace Hl7.Fhir.Rest
             return internalOperationAsync(operationName, type, id, vid, parameters, useGet).WaitResult();
         }
 
-        #endregion
+#endregion
         
-        #region Get
+#region Get
 
         /// <summary>
         /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
@@ -966,7 +968,7 @@ namespace Hl7.Fhir.Rest
             return GetAsync(new Uri(url, UriKind.RelativeOrAbsolute));
         }
 
-        #endregion
+#endregion
         
 
    
