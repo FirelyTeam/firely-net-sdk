@@ -10,7 +10,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SummaryTests
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlNodeSettings s = null) =>
+        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings s = null) =>
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
 
         [TestMethod]

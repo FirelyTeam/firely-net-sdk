@@ -15,7 +15,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public partial class SourceNode : ISourceNode, IAnnotated, IResourceTypeSupplier, IAnnotatable
+    public class SourceNode : ISourceNode, IAnnotated, IResourceTypeSupplier, IAnnotatable
     {
         public ISourceNode Parent { get; private set; }
 

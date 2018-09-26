@@ -18,14 +18,14 @@ using System.Numerics;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirJsonBuilder : IExceptionSource
+    internal class FhirJsonBuilder : IExceptionSource
     {
-        internal FhirJsonBuilder(FhirJsonBuilderSettings settings = null)
+        internal FhirJsonBuilder(FhirJsonSerializationSettings settings = null)
         {
-            _settings = settings?.Clone() ?? new FhirJsonBuilderSettings();
+            _settings = settings?.Clone() ?? new FhirJsonSerializationSettings();
         }
 
-        private FhirJsonBuilderSettings _settings;
+        private FhirJsonSerializationSettings _settings;
         private bool _roundtripMode = true;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }

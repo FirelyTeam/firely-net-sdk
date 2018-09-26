@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public ISourceNode getXmlUntyped(string xml, FhirXmlNodeSettings settings = null) =>
+        public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null) =>
             FhirXmlNode.Parse(xml, settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var nav = getXmlUntyped("<Patient xmlns='http://hl7.org/fhir' xmlns:q='http://example.org' q:myattr='dummy' " +
                 "anotherattr='nons' />",
-                new FhirXmlNodeSettings { AllowedExternalNamespaces = new[] { XNamespace.Get("http://example.org") } });
+                new FhirXmlParsingSettings { AllowedExternalNamespaces = new[] { XNamespace.Get("http://example.org") } });
 
             var navc = nav.Children().ToList();
             Assert.AreEqual(2, navc.Count);
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
-            var nav = FhirXmlNode.Read(reader, new FhirXmlNodeSettings { PermissiveParsing = true });
+            var nav = FhirXmlNode.Read(reader, new FhirXmlParsingSettings { PermissiveParsing = true });
 
             Assert.AreEqual("SomeResource", nav.Name);
 
@@ -228,12 +228,12 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(11, result.Count);
             Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlUntyped(tpXml, new FhirXmlNodeSettings() { DisallowSchemaLocation = true });
+            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true });
             result = patient.VisitAndCatch();
             Assert.IsTrue(result.Count == originalCount + 1);    // one extra error about schemaLocation being present
             Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlUntyped(tpXml, new FhirXmlNodeSettings() { PermissiveParsing = true });
+            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
             result = patient.VisitAndCatch();
             Assert.AreEqual(0, result.Count);
         }

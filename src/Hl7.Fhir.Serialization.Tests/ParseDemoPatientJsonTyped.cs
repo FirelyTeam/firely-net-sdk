@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonTyped
     {
-        public ITypedElement getJsonNode(string json, FhirJsonNodeSettings settings = null) 
+        public ITypedElement getJsonNode(string json, FhirJsonParsingSettings settings = null) 
             => JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void RoundtripJson()
         {
             ParseDemoPatient.RoundtripJson(jsonText =>
-                getJsonNode(jsonText, new FhirJsonNodeSettings { AllowJsonComments = true }));
+                getJsonNode(jsonText, new FhirJsonParsingSettings { AllowJsonComments = true }));
         }
 
         [TestMethod]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
             ITypedElement getValidatingJsonNav(string jsonText) =>
-                getJsonNode(jsonText, new FhirJsonNodeSettings { ValidateFhirXhtml = true });
+                getJsonNode(jsonText, new FhirJsonParsingSettings { ValidateFhirXhtml = true });
         }
 
         [TestMethod]

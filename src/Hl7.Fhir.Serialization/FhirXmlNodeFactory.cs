@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial class FhirXmlNode
     {
-        public static ISourceNode Read(XmlReader reader, FhirXmlNodeSettings settings = null)
+        public static ISourceNode Read(XmlReader reader, FhirXmlParsingSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
 
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
             return new FhirXmlNode(doc.Root, settings);
         }
 
-        public static ISourceNode Parse(string xml, FhirXmlNodeSettings settings = null)
+        public static ISourceNode Parse(string xml, FhirXmlParsingSettings settings = null)
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
 
@@ -35,9 +35,9 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static ISourceNode Create(XElement root, FhirXmlNodeSettings settings = null) => new FhirXmlNode(root, settings);
+        public static ISourceNode Create(XElement root, FhirXmlParsingSettings settings = null) => new FhirXmlNode(root, settings);
 
-        public static ISourceNode Create(XDocument root, FhirXmlNodeSettings settings = null) => Create(root.Root, settings);
+        public static ISourceNode Create(XDocument root, FhirXmlParsingSettings settings = null) => Create(root.Root, settings);
     }
 
     [Obsolete("Please use the equivalent functions on the FhirXmlNavigator factory class")]
