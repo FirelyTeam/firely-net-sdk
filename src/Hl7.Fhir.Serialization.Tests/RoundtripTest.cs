@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var json = File.ReadAllText(inputFile);
                 var nav = JsonParsingHelpers.ParseToTypedElement(json, provider, 
-                    settings: new FhirJsonNodeSettings { AllowJsonComments = true } );
+                    settings: new FhirJsonParsingSettings { AllowJsonComments = true } );
                 var xml = nav.ToXml();
                 File.WriteAllText(outputFile, xml);
             }

@@ -19,10 +19,10 @@ namespace Hl7.Fhir.ElementModel
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
+    [Obsolete("This class has been deprecated. Do not use this class directly, instead call " +
+            "ToElementNavigator() (for backwards compatibility) or the new ToTypedNode() on any resource or datatype")]
     public class PocoNavigator : BaseNodeToNavAdapter
     {
-        [Obsolete("This class has been deprecated. Do not use this class directly, instead call " +
-            "ToElementNavigator() (for backwards compatibility) or the new ToTypedNode() on any resource or datatype")]
         public PocoNavigator(Base model, string rootName = null)
         {
             if (model == null) throw Error.ArgumentNull(nameof(model));

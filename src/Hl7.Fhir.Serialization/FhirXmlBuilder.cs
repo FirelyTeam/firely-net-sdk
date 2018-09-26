@@ -17,14 +17,14 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlBuilder : IExceptionSource
+    internal class FhirXmlBuilder : IExceptionSource
     {
-        internal FhirXmlBuilder(FhirXmlBuilderSettings settings = null)
+        internal FhirXmlBuilder(FhirXmlSerializationSettings settings = null)
         {
-            _settings = settings?.Clone() ?? new FhirXmlBuilderSettings();
+            _settings = settings?.Clone() ?? new FhirXmlSerializationSettings();
         }
 
-        private FhirXmlBuilderSettings _settings;
+        private FhirXmlSerializationSettings _settings;
         private bool _roundtripMode;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }

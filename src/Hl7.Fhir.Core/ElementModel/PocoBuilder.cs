@@ -14,7 +14,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class PocoBuilder : IExceptionSource
+    internal class PocoBuilder : IExceptionSource
     {
         public PocoBuilder(PocoBuilderSettings settings = null)
         {

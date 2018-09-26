@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonUntyped
     {
-        public ISourceNode getJsonNodeU(string json, FhirJsonNodeSettings settings=null) => 
+        public ISourceNode getJsonNodeU(string json, FhirJsonParsingSettings settings=null) => 
             FhirJsonNode.Parse(json, settings:settings);
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void RoundtripJsonUntyped()
         {
             ParseDemoPatient.RoundtripJson(jsonText => 
-                getJsonNodeU(jsonText, new FhirJsonNodeSettings { AllowJsonComments = true }));
+                getJsonNodeU(jsonText, new FhirJsonParsingSettings { AllowJsonComments = true }));
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CanReadEdgeCases()
         {
             var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
-            var patient = getJsonNodeU(tpJson, new FhirJsonNodeSettings { AllowJsonComments = true });
+            var patient = getJsonNodeU(tpJson, new FhirJsonParsingSettings { AllowJsonComments = true });
 
             Assert.AreEqual("Patient", patient.Name);
             Assert.AreEqual("Patient", patient.GetResourceTypeIndicator());

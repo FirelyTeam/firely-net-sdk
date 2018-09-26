@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial class FhirJsonNode
     {
-        public static ISourceNode Read(JsonReader reader, string rootName = null, FhirJsonNodeSettings settings = null)
+        public static ISourceNode Read(JsonReader reader, string rootName = null, FhirJsonParsingSettings settings = null)
         {
             if (reader == null) throw Error.ArgumentNull(nameof(reader));
 
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
             return new FhirJsonNode(doc, rootName, settings);
         }
 
-        public static ISourceNode Parse(string json, string rootName = null, FhirJsonNodeSettings settings = null)
+        public static ISourceNode Parse(string json, string rootName = null, FhirJsonParsingSettings settings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
 
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public static ISourceNode Create(JObject root, string rootName = null, FhirJsonNodeSettings settings = null) => 
+        public static ISourceNode Create(JObject root, string rootName = null, FhirJsonParsingSettings settings = null) => 
             new FhirJsonNode(root, rootName, settings);
     }
 
