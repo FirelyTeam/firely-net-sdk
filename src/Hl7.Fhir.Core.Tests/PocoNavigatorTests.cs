@@ -167,7 +167,7 @@ namespace Hl7.Fhir
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
             var pocoP = (new FhirJsonParser()).Parse<Patient>(json).ToTypedElement();
-            var jsonP = FhirJsonNode.Parse(json, settings: new FhirJsonNodeSettings { AllowJsonComments = true })
+            var jsonP = FhirJsonNode.Parse(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true })
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
             var xmlP = FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
