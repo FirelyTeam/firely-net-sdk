@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,19 +63,19 @@ namespace Hl7.Fhir.Model
         public enum FlagStatus
         {
             /// <summary>
-            /// A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
             [EnumLiteral("active", "http://hl7.org/fhir/flag-status"), Description("Active")]
             Active,
             /// <summary>
-            /// The flag does not need to be displayed any more.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
             [EnumLiteral("inactive", "http://hl7.org/fhir/flag-status"), Description("Inactive")]
             Inactive,
             /// <summary>
-            /// The flag was added in error, and should no longer be displayed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
             [EnumLiteral("entered-in-error", "http://hl7.org/fhir/flag-status"), Description("Entered in Error")]
@@ -96,22 +97,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Clinical, administrative, etc.
-        /// </summary>
-        [FhirElement("category", InSummary=true, Order=100)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
-        {
-            get { return _Category; }
-            set { _Category = value; OnPropertyChanged("Category"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Category;
-        
-        /// <summary>
         /// active | inactive | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Flag.FlagStatus> StatusElement
@@ -142,24 +130,38 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Time period when flag is active
+        /// Clinical, administrative, etc.
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=120)]
+        [FhirElement("category", InSummary=true, Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.Period Period
+        public Hl7.Fhir.Model.CodeableConcept Category
         {
-            get { return _Period; }
-            set { _Period = value; OnPropertyChanged("Period"); }
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
         }
         
-        private Hl7.Fhir.Model.Period _Period;
+        private Hl7.Fhir.Model.CodeableConcept _Category;
+        
+        /// <summary>
+        /// Coded or textual message to display to user
+        /// </summary>
+        [FhirElement("code", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Code
+        {
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// Who/What is flag about?
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("Patient","Location","Group","Organization","Practitioner")]
+		[References("Patient","Location","Group","Organization","Practitioner","PlanDefinition","Medication","Procedure")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -171,9 +173,22 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
+        /// Time period when flag is active
+        /// </summary>
+        [FhirElement("period", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        
+        private Hl7.Fhir.Model.Period _Period;
+        
+        /// <summary>
         /// Alert relevant during encounter
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=140)]
+        [FhirElement("encounter", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("Encounter")]
         [DataMember]
@@ -188,7 +203,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Flag creator
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=150)]
+        [FhirElement("author", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Device","Organization","Patient","Practitioner")]
         [DataMember]
@@ -199,20 +214,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.ResourceReference _Author;
-        
-        /// <summary>
-        /// Partially deaf, Requires easy open caps, No permanent address, etc.
-        /// </summary>
-        [FhirElement("code", InSummary=true, Order=160)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Code
-        {
-            get { return _Code; }
-            set { _Code = value; OnPropertyChanged("Code"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Code;
         
 
         public override void AddDefaultConstraints()
@@ -229,13 +230,13 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Flag.FlagStatus>)StatusElement.DeepCopy();
-                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 return dest;
             }
             else
@@ -254,13 +255,13 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
-            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             
             return true;
         }
@@ -272,13 +273,13 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
-            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             
             return true;
         }
@@ -290,13 +291,13 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (Category != null) yield return Category;
 				if (StatusElement != null) yield return StatusElement;
-				if (Period != null) yield return Period;
+				if (Category != null) yield return Category;
+				if (Code != null) yield return Code;
 				if (Subject != null) yield return Subject;
+				if (Period != null) yield return Period;
 				if (Encounter != null) yield return Encounter;
 				if (Author != null) yield return Author;
-				if (Code != null) yield return Code;
             }
         }
 
@@ -307,13 +308,13 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (Category != null) yield return new ElementValue("category", Category);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (Period != null) yield return new ElementValue("period", Period);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Code != null) yield return new ElementValue("code", Code);
                 if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Period != null) yield return new ElementValue("period", Period);
                 if (Encounter != null) yield return new ElementValue("encounter", Encounter);
                 if (Author != null) yield return new ElementValue("author", Author);
-                if (Code != null) yield return new ElementValue("code", Code);
             }
         }
 

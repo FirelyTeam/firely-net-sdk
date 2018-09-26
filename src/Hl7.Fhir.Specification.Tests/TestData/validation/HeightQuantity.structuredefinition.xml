@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-10-05T18:16:38.432+02:00" />
@@ -9,10 +9,11 @@
   <name value="HeightQuantity" />
   <status value="draft" />
   <fhirVersion value="1.0.2" />
-  <kind value="datatype" />
-  <constrainedType value="Quantity" />
+  <kind value="primitive-type" />
+  <type value="Quantity" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Quantity" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Quantity" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Quantity" />

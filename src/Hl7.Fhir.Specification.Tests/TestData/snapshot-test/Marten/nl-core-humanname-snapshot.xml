@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="nl-core-humanname" />
   <meta>
@@ -21,18 +21,19 @@
     <identity value="BRP" />
     <uri value="https://nl.wikipedia.org/wiki/Basisregistratie_Personen" />
     <name value="Basisregistratie Personen" />
-    <comments value="Voorheen GBA - Gemeentelijke basisregistratie" />
+    <comment value="Voorheen GBA - Gemeentelijke basisregistratie" />
   </mapping>
-  <kind value="datatype" />
-  <constrainedType value="HumanName" />
+  <kind value="primitive-type" />
+  <type value="HumanName" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/HumanName" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/HumanName" />
+  <derivation value="constraint" />
   <snapshot>
     <element>
       <path value="HumanName" />
       <short value="Name of a human - parts and usage" />
       <definition value="A human's name with the ability to identify parts and usage." />
-      <comments value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.&#xD;&#xA;&#xD;&#xA;A Dutch HumanName is a proper FHIR HumanName. Systems that do not understand any of the extensions, will be able to render and work with a Dutch name. Dutch names make certain name parts seaprately communicable. These parts are required for use in true Dutch systems when dealing with Dutch names, but may not have value for international systems when information gets sent abroad.&#xD;&#xA;&#xD;&#xA;To have true compatibility an implementer SHOULD use the core HumanName parts as intended. To have names work for Dutch context, the implementer SHOULD in addition use the extension elements.&#xD;&#xA;&#xD;&#xA;The extension elements cover birth name (NL: eigennaam / geslachtsnaam) and partner/spouse name. Both may have a prefix (NL: voorvoegsel). When a person marries, he or she may keep their own name, assume the partner name, append the partner name to their own name, or the other way around.&#xD;&#xA;&#xD;&#xA;For this reason, there are extensions for marking each part for what it is. &#xD;&#xA;&#xD;&#xA;Example: miss Irma Jongeneel marries mister de Haas and assumes the name Irma Jongeneel-de Haas&#xD;&#xA;family = &quot;Jongeneel-de Haas&quot;&#xD;&#xA;given = &quot;Irma&quot;&#xD;&#xA;humanname-own-name = &quot;Jongeneel&quot;&#xD;&#xA;humanname-partners-prefix = &quot;de &quot;&#xD;&#xA;humanname-partners-name = &quot;Haas&quot;" />
+      <comment value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.&#xD;&#xA;&#xD;&#xA;A Dutch HumanName is a proper FHIR HumanName. Systems that do not understand any of the extensions, will be able to render and work with a Dutch name. Dutch names make certain name parts seaprately communicable. These parts are required for use in true Dutch systems when dealing with Dutch names, but may not have value for international systems when information gets sent abroad.&#xD;&#xA;&#xD;&#xA;To have true compatibility an implementer SHOULD use the core HumanName parts as intended. To have names work for Dutch context, the implementer SHOULD in addition use the extension elements.&#xD;&#xA;&#xD;&#xA;The extension elements cover birth name (NL: eigennaam / geslachtsnaam) and partner/spouse name. Both may have a prefix (NL: voorvoegsel). When a person marries, he or she may keep their own name, assume the partner name, append the partner name to their own name, or the other way around.&#xD;&#xA;&#xD;&#xA;For this reason, there are extensions for marking each part for what it is. &#xD;&#xA;&#xD;&#xA;Example: miss Irma Jongeneel marries mister de Haas and assumes the name Irma Jongeneel-de Haas&#xD;&#xA;family = &quot;Jongeneel-de Haas&quot;&#xD;&#xA;given = &quot;Irma&quot;&#xD;&#xA;humanname-own-name = &quot;Jongeneel&quot;&#xD;&#xA;humanname-partners-prefix = &quot;de &quot;&#xD;&#xA;humanname-partners-name = &quot;Haas&quot;" />
       <min value="0" />
       <max value="*" />
       <base>
@@ -43,7 +44,7 @@
       <type>
         <code value="HumanName" />
       </type>
-      <exampleHumanName>
+      <example><valueHumanName>
         <extension url="http://hl7.org/fhir/StructureDefinition/humanname-assembly-order">
           <valueCode value="NL4" />
         </extension>
@@ -69,7 +70,7 @@
             <valueCode value="IN" />
           </extension>
         </given>
-      </exampleHumanName>
+      </valueHumanName></example>
       <condition value="ele-1" />
       <constraint>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -122,7 +123,7 @@
       <path value="HumanName.id" />
       <short value="xml:id (or equivalent in JSON)" />
       <definition value="unique id for the element within a resource (for internal references)." />
-      <comments value="RFC 4122" />
+      <comment value="RFC 4122" />
       <min value="0" />
       <max value="1" />
       <base>
@@ -151,12 +152,12 @@
     <element>
       <path value="HumanName.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -190,10 +191,10 @@
     </element>
     <element>
       <path value="HumanName.extension" />
-      <name value="humanname-assembly-order" />
+      <sliceName value="humanname-assembly-order" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -230,7 +231,7 @@
       <path value="HumanName.use" />
       <short value="usual | official | temp | nickname | anonymous | old | maiden" />
       <definition value="Identifies the purpose for this name." />
-      <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc.for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old." />
+      <comment value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc.for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old." />
       <requirements value="Allows the appropriate name for a particular context of use to be selected from among a set of names." />
       <min value="0" />
       <max value="1" />
@@ -282,7 +283,7 @@
       <path value="HumanName.text" />
       <short value="Text representation of the full name" />
       <definition value="A full text representation of the name." />
-      <comments value="Can provide both a text representation and structured parts." />
+      <comment value="Can provide both a text representation and structured parts." />
       <requirements value="A renderable, unencoded form." />
       <min value="0" />
       <max value="1" />
@@ -322,7 +323,7 @@
       <path value="HumanName.family" />
       <short value="Family name" />
       <definition value="The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father." />
-      <comments value="For family name, hyphenated names such as &quot;Smith-Jones&quot; are a single name, but names with spaces such as &quot;Smith Jones&quot; are broken into multiple parts." />
+      <comment value="For family name, hyphenated names such as &quot;Smith-Jones&quot; are a single name, but names with spaces such as &quot;Smith Jones&quot; are broken into multiple parts." />
       <alias value="surname" />
       <min value="0" />
       <max value="1" />
@@ -366,7 +367,7 @@
       <path value="HumanName.family.id" />
       <short value="xml:id (or equivalent in JSON)" />
       <definition value="unique id for the element within a resource (for internal references)." />
-      <comments value="RFC 4122" />
+      <comment value="RFC 4122" />
       <min value="0" />
       <max value="1" />
       <base>
@@ -395,12 +396,12 @@
     <element>
       <path value="HumanName.family.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -434,10 +435,10 @@
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-own-prefix" />
+      <sliceName value="humanname-own-prefix" />
       <short value="Voorvoegsel derived from person's own surname" />
       <definition value="The prefix portion (e.g. voorvoegsel) of the family name that is derived from the person&amp;#39;s own surname, as distinguished from any portion that is derived from the surname of the person&amp;#39;s partner or spouse." />
-      <comments value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to specify it as a separate sub-component." />
+      <comment value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to specify it as a separate sub-component." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -472,10 +473,10 @@
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-own-name" />
+      <sliceName value="humanname-own-name" />
       <short value="Portion derived from person's own surname" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -510,10 +511,10 @@
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-partners-prefix" />
+      <sliceName value="humanname-partners-prefix" />
       <short value="Voorvoegsel derived from person's partner's surname" />
       <definition value="Voorvoegsel derived from person's partner's surname" />
-      <comments value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to identify it as a separate sub-component." />
+      <comment value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to identify it as a separate sub-component." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -548,10 +549,10 @@
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-partners-name" />
+      <sliceName value="humanname-partners-name" />
       <short value="Portion derived from person's partner's surname" />
       <definition value="The portion of the family name that is derived from the person&amp;#39;s partner&amp;#39;s surname, as distinguished from any portion that is derived from the surname of the person&amp;#39;s own name." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -612,7 +613,7 @@
       <path value="HumanName.given" />
       <short value="Given names (not always 'first'). Includes middle names" />
       <definition value="Note that in order to mark the type of a given name, that you use the FHIR standard extension for ISO 21090 EN Qualifiers. Examples include call me name (Dutch: roepnaam) and initials. Each initial is expected to be delimited by a dot." />
-      <comments value="If only initials are recorded, they may be used in place of the full name.  Not called &quot;first name&quot; since given names do not always come first." />
+      <comment value="If only initials are recorded, they may be used in place of the full name.  Not called &quot;first name&quot; since given names do not always come first." />
       <alias value="first name" />
       <alias value="middle name" />
       <alias value="voornaam" />
@@ -667,7 +668,7 @@
       <path value="HumanName.given.id" />
       <short value="xml:id (or equivalent in JSON)" />
       <definition value="unique id for the element within a resource (for internal references)." />
-      <comments value="RFC 4122" />
+      <comment value="RFC 4122" />
       <min value="0" />
       <max value="1" />
       <base>
@@ -696,12 +697,12 @@
     <element>
       <path value="HumanName.given.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -735,10 +736,10 @@
     </element>
     <element>
       <path value="HumanName.given.extension" />
-      <name value="iso21090-EN-qualifier" />
+      <sliceName value="iso21090-EN-qualifier" />
       <short value="LS | AC | NB | PR | HON | BR | AD | SP | MID | CL | IN | VV" />
       <definition value="A set of codes each of which specifies a certain subcategory of the name part in addition to the main name part type." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -799,7 +800,7 @@
       <path value="HumanName.prefix" />
       <short value="Parts that come before the name" />
       <definition value="Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the start of the name." />
-      <comments value="Note that FHIR strings may not exceed 1MB in size" />
+      <comment value="Note that FHIR strings may not exceed 1MB in size" />
       <min value="0" />
       <max value="*" />
       <base>
@@ -842,7 +843,7 @@
       <path value="HumanName.suffix" />
       <short value="Parts that come after the name" />
       <definition value="Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the end of the name." />
-      <comments value="Note that FHIR strings may not exceed 1MB in size" />
+      <comment value="Note that FHIR strings may not exceed 1MB in size" />
       <min value="0" />
       <max value="*" />
       <base>
@@ -881,7 +882,7 @@
       <path value="HumanName.period" />
       <short value="Time period when name was/is in use" />
       <definition value="Indicates the period of time when this name was valid for the named person." />
-      <comments value="This is not a duration - that's a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
+      <comment value="This is not a duration - that's a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
       <requirements value="Allows names to be placed in historical context." />
       <min value="0" />
       <max value="1" />
@@ -942,7 +943,7 @@
       <path value="HumanName.period.id" />
       <short value="xml:id (or equivalent in JSON)" />
       <definition value="unique id for the element within a resource (for internal references)." />
-      <comments value="RFC 4122" />
+      <comment value="RFC 4122" />
       <min value="0" />
       <max value="1" />
       <base>
@@ -972,7 +973,7 @@
       <path value="HumanName.period.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1008,7 +1009,7 @@
       <path value="HumanName.period.start" />
       <short value="Starting time with inclusive boundary" />
       <definition value="The start of the period. The boundary is inclusive." />
-      <comments value="If the low element is missing, the meaning is that the low boundary is not known." />
+      <comment value="If the low element is missing, the meaning is that the low boundary is not known." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1048,7 +1049,7 @@
       <path value="HumanName.period.end" />
       <short value="End time with inclusive boundary, if not ongoing" />
       <definition value="The end of the period. If the end of the period is missing, it means that the period is ongoing. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time." />
-      <comments value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03." />
+      <comment value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1089,11 +1090,11 @@
   <differential>
     <element>
       <path value="HumanName" />
-      <comments value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.&#xD;&#xA;&#xD;&#xA;A Dutch HumanName is a proper FHIR HumanName. Systems that do not understand any of the extensions, will be able to render and work with a Dutch name. Dutch names make certain name parts seaprately communicable. These parts are required for use in true Dutch systems when dealing with Dutch names, but may not have value for international systems when information gets sent abroad.&#xD;&#xA;&#xD;&#xA;To have true compatibility an implementer SHOULD use the core HumanName parts as intended. To have names work for Dutch context, the implementer SHOULD in addition use the extension elements.&#xD;&#xA;&#xD;&#xA;The extension elements cover birth name (NL: eigennaam / geslachtsnaam) and partner/spouse name. Both may have a prefix (NL: voorvoegsel). When a person marries, he or she may keep their own name, assume the partner name, append the partner name to their own name, or the other way around.&#xD;&#xA;&#xD;&#xA;For this reason, there are extensions for marking each part for what it is. &#xD;&#xA;&#xD;&#xA;Example: miss Irma Jongeneel marries mister de Haas and assumes the name Irma Jongeneel-de Haas&#xD;&#xA;family = &quot;Jongeneel-de Haas&quot;&#xD;&#xA;given = &quot;Irma&quot;&#xD;&#xA;humanname-own-name = &quot;Jongeneel&quot;&#xD;&#xA;humanname-partners-prefix = &quot;de &quot;&#xD;&#xA;humanname-partners-name = &quot;Haas&quot;" />
+      <comment value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.&#xD;&#xA;&#xD;&#xA;A Dutch HumanName is a proper FHIR HumanName. Systems that do not understand any of the extensions, will be able to render and work with a Dutch name. Dutch names make certain name parts seaprately communicable. These parts are required for use in true Dutch systems when dealing with Dutch names, but may not have value for international systems when information gets sent abroad.&#xD;&#xA;&#xD;&#xA;To have true compatibility an implementer SHOULD use the core HumanName parts as intended. To have names work for Dutch context, the implementer SHOULD in addition use the extension elements.&#xD;&#xA;&#xD;&#xA;The extension elements cover birth name (NL: eigennaam / geslachtsnaam) and partner/spouse name. Both may have a prefix (NL: voorvoegsel). When a person marries, he or she may keep their own name, assume the partner name, append the partner name to their own name, or the other way around.&#xD;&#xA;&#xD;&#xA;For this reason, there are extensions for marking each part for what it is. &#xD;&#xA;&#xD;&#xA;Example: miss Irma Jongeneel marries mister de Haas and assumes the name Irma Jongeneel-de Haas&#xD;&#xA;family = &quot;Jongeneel-de Haas&quot;&#xD;&#xA;given = &quot;Irma&quot;&#xD;&#xA;humanname-own-name = &quot;Jongeneel&quot;&#xD;&#xA;humanname-partners-prefix = &quot;de &quot;&#xD;&#xA;humanname-partners-name = &quot;Haas&quot;" />
       <type>
         <code value="HumanName" />
       </type>
-      <exampleHumanName>
+      <example><valueHumanName>
         <extension url="http://hl7.org/fhir/StructureDefinition/humanname-assembly-order">
           <valueCode value="NL4" />
         </extension>
@@ -1119,7 +1120,7 @@
             <valueCode value="IN" />
           </extension>
         </given>
-      </exampleHumanName>
+      </valueHumanName></example>
       <constraint>
         <key value="nl-core-humanname-1" />
         <severity value="error" />
@@ -1144,13 +1145,13 @@
     <element>
       <path value="HumanName.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="HumanName.extension" />
-      <name value="humanname-assembly-order" />
+      <sliceName value="humanname-assembly-order" />
       <max value="1" />
       <type>
         <code value="Extension" />
@@ -1165,16 +1166,16 @@
     <element>
       <path value="HumanName.family.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-own-prefix" />
+      <sliceName value="humanname-own-prefix" />
       <short value="Voorvoegsel derived from person's own surname" />
       <definition value="The prefix portion (e.g. voorvoegsel) of the family name that is derived from the person&amp;#39;s own surname, as distinguished from any portion that is derived from the surname of the person&amp;#39;s partner or spouse." />
-      <comments value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to specify it as a separate sub-component." />
+      <comment value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to specify it as a separate sub-component." />
       <max value="1" />
       <type>
         <code value="Extension" />
@@ -1183,7 +1184,7 @@
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-own-name" />
+      <sliceName value="humanname-own-name" />
       <short value="Portion derived from person's own surname" />
       <max value="1" />
       <type>
@@ -1193,10 +1194,10 @@
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-partners-prefix" />
+      <sliceName value="humanname-partners-prefix" />
       <short value="Voorvoegsel derived from person's partner's surname" />
       <definition value="Voorvoegsel derived from person's partner's surname" />
-      <comments value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to identify it as a separate sub-component." />
+      <comment value="An example of a voorvoegsel is the &amp;quot;van&amp;quot; in &amp;quot;Ludwig van Beethoven&amp;quot;. Since the voorvoegsel doesn&amp;#39;t sort completely alphabetically, it is reasonable to identify it as a separate sub-component." />
       <max value="1" />
       <type>
         <code value="Extension" />
@@ -1205,7 +1206,7 @@
     </element>
     <element>
       <path value="HumanName.family.extension" />
-      <name value="humanname-partners-name" />
+      <sliceName value="humanname-partners-name" />
       <short value="Portion derived from person's partner's surname" />
       <definition value="The portion of the family name that is derived from the person&amp;#39;s partner&amp;#39;s surname, as distinguished from any portion that is derived from the surname of the person&amp;#39;s own name." />
       <max value="1" />
@@ -1231,13 +1232,13 @@
     <element>
       <path value="HumanName.given.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="HumanName.given.extension" />
-      <name value="iso21090-EN-qualifier" />
+      <sliceName value="iso21090-EN-qualifier" />
       <short value="LS | AC | NB | PR | HON | BR | AD | SP | MID | CL | IN | VV" />
       <definition value="A set of codes each of which specifies a certain subcategory of the name part in addition to the main name part type." />
       <max value="1" />

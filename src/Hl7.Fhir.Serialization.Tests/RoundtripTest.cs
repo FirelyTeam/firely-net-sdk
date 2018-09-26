@@ -156,10 +156,9 @@ namespace Hl7.Fhir.Serialization.Tests
 
             foreach (string file in files)
             {
-                if (file.Contains(".profile"))
+                if (!isRelevant(file))
                     continue;
-                if (file.Contains(".schema"))
-                    continue;
+
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string ext = Path.GetExtension(file);
                 var toExt = ext == ".xml" ? ".json" : ".xml";
@@ -181,16 +180,24 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
 
+        private static bool isRelevant(string filename)
+        {
+            if (filename.Contains(".profile")) return false;
+            if (filename.Contains(".schema")) return false;
+            if (filename.Contains(".diff")) return false;
+
+            return true;
+        }
+
         private static void compareFiles(string expectedPath, string actualPath)
         {
             var files = Directory.EnumerateFiles(expectedPath);
 
             foreach (string file in files)
             {
-                if (file.Contains(".profile"))
+                if (!isRelevant(file))
                     continue;
-                if (file.Contains(".schema"))
-                    continue;
+
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string extension = Path.GetExtension(file);
                 string actualFile = Path.Combine(actualPath, exampleName) + extension;

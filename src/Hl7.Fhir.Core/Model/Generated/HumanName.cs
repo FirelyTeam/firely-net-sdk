@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,46 +61,46 @@ namespace Hl7.Fhir.Model
         public enum NameUse
         {
             /// <summary>
-            /// Known as/conventional/the one you normally use
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
             [EnumLiteral("usual", "http://hl7.org/fhir/name-use"), Description("Usual")]
             Usual,
             /// <summary>
-            /// The formal name as registered in an official (government) registry, but which name might not be commonly used. May be called "legal name".
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
             [EnumLiteral("official", "http://hl7.org/fhir/name-use"), Description("Official")]
             Official,
             /// <summary>
-            /// A temporary name. Name.period can provide more detailed information. This may also be used for temporary names assigned at birth or in emergency situations.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
             [EnumLiteral("temp", "http://hl7.org/fhir/name-use"), Description("Temp")]
             Temp,
             /// <summary>
-            /// A name that is used to address the person in an informal manner, but is not part of their formal or usual name
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
             [EnumLiteral("nickname", "http://hl7.org/fhir/name-use"), Description("Nickname")]
             Nickname,
             /// <summary>
-            /// Anonymous assigned name, alias, or pseudonym (used to protect a person's identity for privacy reasons)
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
             [EnumLiteral("anonymous", "http://hl7.org/fhir/name-use"), Description("Anonymous")]
             Anonymous,
             /// <summary>
-            /// This name is no longer in use (or was never correct, but retained for records)
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
             [EnumLiteral("old", "http://hl7.org/fhir/name-use"), Description("Old")]
             Old,
             /// <summary>
-            /// A name used prior to marriage. Marriage naming customs vary greatly around the world. This name use is for use by applications that collect and store "maiden" names. Though the concept of maiden name is often gender specific, the use of this term is not gender specific. The use of this term does not imply any particular history for a person's name, nor should the maiden name be determined algorithmically.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("maiden", "http://hl7.org/fhir/name-use"), Description("Maiden")]
+            [EnumLiteral("maiden", "http://hl7.org/fhir/name-use"), Description("Name changed for Marriage")]
             Maiden,
         }
 
@@ -172,15 +172,14 @@ namespace Hl7.Fhir.Model
         /// Family name (often called 'Surname')
         /// </summary>
         [FhirElement("family", InSummary=true, Order=50)]
-        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> FamilyElement
+        public Hl7.Fhir.Model.FhirString FamilyElement
         {
-            get { if(_FamilyElement==null) _FamilyElement = new List<Hl7.Fhir.Model.FhirString>(); return _FamilyElement; }
+            get { return _FamilyElement; }
             set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _FamilyElement;
+        private Hl7.Fhir.Model.FhirString _FamilyElement;
         
         /// <summary>
         /// Family name (often called 'Surname')
@@ -188,15 +187,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Family
+        public string Family
         {
-            get { return FamilyElement != null ? FamilyElement.Select(elem => elem.Value) : null; }
+            get { return FamilyElement != null ? FamilyElement.Value : null; }
             set
             {
                 if (value == null)
                   FamilyElement = null; 
                 else
-                  FamilyElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                  FamilyElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Family");
             }
         }
@@ -323,7 +322,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>)UseElement.DeepCopy();
                 if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                if(FamilyElement != null) dest.FamilyElement = new List<Hl7.Fhir.Model.FhirString>(FamilyElement.DeepCopy());
+                if(FamilyElement != null) dest.FamilyElement = (Hl7.Fhir.Model.FhirString)FamilyElement.DeepCopy();
                 if(GivenElement != null) dest.GivenElement = new List<Hl7.Fhir.Model.FhirString>(GivenElement.DeepCopy());
                 if(PrefixElement != null) dest.PrefixElement = new List<Hl7.Fhir.Model.FhirString>(PrefixElement.DeepCopy());
                 if(SuffixElement != null) dest.SuffixElement = new List<Hl7.Fhir.Model.FhirString>(SuffixElement.DeepCopy());
@@ -381,7 +380,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
                 if (UseElement != null) yield return UseElement;
                 if (TextElement != null) yield return TextElement;
-                foreach (var elem in FamilyElement) { if (elem != null) yield return elem; }
+                if (FamilyElement != null) yield return FamilyElement;
                 foreach (var elem in GivenElement) { if (elem != null) yield return elem; }
                 foreach (var elem in PrefixElement) { if (elem != null) yield return elem; }
                 foreach (var elem in SuffixElement) { if (elem != null) yield return elem; }
@@ -397,7 +396,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item; 
                 if (UseElement != null) yield return new ElementValue("use", UseElement);
                 if (TextElement != null) yield return new ElementValue("text", TextElement);
-                foreach (var elem in FamilyElement) { if (elem != null) yield return new ElementValue("family", elem); }
+                if (FamilyElement != null) yield return new ElementValue("family", FamilyElement);
                 foreach (var elem in GivenElement) { if (elem != null) yield return new ElementValue("given", elem); }
                 foreach (var elem in PrefixElement) { if (elem != null) yield return new ElementValue("prefix", elem); }
                 foreach (var elem in SuffixElement) { if (elem != null) yield return new ElementValue("suffix", elem); }

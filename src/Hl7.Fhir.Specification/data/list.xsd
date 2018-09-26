@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,6 +54,16 @@
               <xs:documentation xml:lang="en">Identifier for the List assigned for business purposes outside the context of FHIR.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="ListStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the current state of this list.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="mode" minOccurs="1" maxOccurs="1" type="ListMode">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">How this list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">A label for the list assigned by the author.</xs:documentation>
@@ -69,19 +79,9 @@
               <xs:documentation xml:lang="en">The common subject (or patient) of the resources that are in the list, if there is one.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="source" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The entity responsible for deciding what the contents of the list were. Where the list was created by a human, this is the same as the author of the list.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The encounter that is the context in which this list was created.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="ListStatus">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the current state of this list.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -89,17 +89,17 @@
               <xs:documentation xml:lang="en">The date that the list was prepared.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="source" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The entity responsible for deciding what the contents of the list were. Where the list was created by a human, this is the same as the author of the list.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="orderedBy" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">What order applies to the items in the list.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="mode" minOccurs="1" maxOccurs="1" type="ListMode">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">How this list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="note" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
               <xs:documentation xml:lang="en">Comments that apply to the overall list.</xs:documentation>
            </xs:annotation>
@@ -150,20 +150,20 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="ListStatus-list">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="code-primitive">
       <xs:enumeration value="current">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The list is considered to be an active part of the patient's record.</xs:documentation>
+          <xs:documentation xml:lang="en">Current</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="retired">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The list is &quot;old&quot; and should no longer be considered accurate or relevant.</xs:documentation>
+          <xs:documentation xml:lang="en">Retired</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The list was never accurate.  It is retained for medico-legal purposes only.</xs:documentation>
+          <xs:documentation xml:lang="en">Entered In Error</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -176,36 +176,6 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="ListStatus-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="ListMode-list">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="working">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="snapshot">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">This list was prepared as a snapshot. It should not be assumed to be current</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="changes">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">A list that indicates where changes have been made or recommended</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ListMode">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The processing mode that applies to this list</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ListMode-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

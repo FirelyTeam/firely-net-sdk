@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-01-10T00:57:50.907+01:00" />
@@ -9,9 +9,10 @@
   <date value="2017-01-04T19:13:35.4169804+01:00" />
   <description value="StructureDefinition for Custom Observation Resource" />
   <kind value="resource" />
-  <constrainedType value="Observation" />
+  <type value="Observation" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Observation" />
@@ -19,13 +20,13 @@
     <element>
       <path value="Observation.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Observation.extension" />
-      <name value="label" />
+      <sliceName value="label" />
       <!-- Explicitly constrain min -->
       <min value="1" />
       <!-- max=1 is inherited from ObservationLabelExtension.Extension root element -->
@@ -53,7 +54,7 @@
     </element>
     <element>
       <path value="Observation.extension" />
-      <name value="location" />
+      <sliceName value="location" />
       <!-- Explicitly constrain max -->
       <max value="1" />
       <type>
@@ -64,13 +65,13 @@
     <element>
       <path value="Observation.extension.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Observation.extension.extension" />
-      <name value="X" />
+      <sliceName value="X" />
       <min value="1" />
       <max value="1" />
     </element>
@@ -87,7 +88,7 @@
     </element>
     <element>
       <path value="Observation.extension.extension" />
-      <name value="Y" />
+      <sliceName value="Y" />
       <min value="1" />
       <max value="1" />
     </element>
@@ -120,7 +121,7 @@
     </element>
     <element>
       <path value="Observation.extension" />
-      <name value="other" />
+      <sliceName value="other" />
       <!-- Explicitly constrain min -->
       <min value="1" />
       <type>

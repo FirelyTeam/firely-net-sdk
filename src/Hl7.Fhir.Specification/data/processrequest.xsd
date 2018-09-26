@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,29 +49,19 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="action" minOccurs="1" maxOccurs="1" type="ActionList">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The type of processing action being requested, for example Reversal, Readjudication, StatusRequest,PendedRequest.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">The ProcessRequest business identifier.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="ruleset" minOccurs="0" maxOccurs="1" type="Coding">
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="FinancialResourceStatusCodes">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the style of resource contents. This should be mapped to the allowable profiles for this and supporting resources.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of the resource instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="originalRuleset" minOccurs="0" maxOccurs="1" type="Coding">
+          <xs:element name="action" minOccurs="0" maxOccurs="1" type="ActionList">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The style (standard) and version of the original material which was converted into this resource.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date when this resource was created.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of processing action being requested, for example Reversal, Readjudication, StatusRequest,PendedRequest.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="target" minOccurs="0" maxOccurs="1" type="Reference">
@@ -79,14 +69,19 @@
               <xs:documentation xml:lang="en">The organization which is the target of the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date when this resource was created.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="provider" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The practitioner who is responsible for the action specified in thise request.</xs:documentation>
+              <xs:documentation xml:lang="en">The practitioner who is responsible for the action specified in this request.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="organization" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The organization which is responsible for the action speccified in thise request.</xs:documentation>
+              <xs:documentation xml:lang="en">The organization which is responsible for the action speccified in this request.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="request" minOccurs="0" maxOccurs="1" type="Reference">
@@ -150,25 +145,25 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="ActionList-list">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="code-primitive">
       <xs:enumeration value="cancel">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Cancel, reverse or nullify the target resource.</xs:documentation>
+          <xs:documentation xml:lang="en">Cancel, Reverse or Nullify</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="poll">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Check for previously un-read/ not-retrieved resources.</xs:documentation>
+          <xs:documentation xml:lang="en">Poll</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="reprocess">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Re-process the target resource.</xs:documentation>
+          <xs:documentation xml:lang="en">Re-Process</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="status">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Retrieve the processing status of the target resource.</xs:documentation>
+          <xs:documentation xml:lang="en">Status Check</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

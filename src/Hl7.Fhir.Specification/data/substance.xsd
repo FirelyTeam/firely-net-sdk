@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -52,6 +52,11 @@
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">Unique identifier for the substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="FHIRSubstanceStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A code to indicate if the substance is actively used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -100,7 +105,7 @@
               <xs:documentation xml:lang="en">When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
+          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The amount of the substance.</xs:documentation>
            </xs:annotation>
@@ -121,12 +126,44 @@
               <xs:documentation xml:lang="en">The amount of the ingredient in the substance - a concentration ratio.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="substance" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">Another substance that is a component of this substance.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+            </xs:annotation>
+            <xs:element name="substanceCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="substanceReference" type="Reference"/>
+          </xs:choice>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="FHIRSubstanceStatus-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="active">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Active</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="inactive">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Inactive</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="FHIRSubstanceStatus">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A code to indicate if the substance is actively used</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="FHIRSubstanceStatus-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

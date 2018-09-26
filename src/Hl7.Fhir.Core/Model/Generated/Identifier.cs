@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,25 +61,25 @@ namespace Hl7.Fhir.Model
         public enum IdentifierUse
         {
             /// <summary>
-            /// The identifier recommended for display and use in real-world interactions.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
             [EnumLiteral("usual", "http://hl7.org/fhir/identifier-use"), Description("Usual")]
             Usual,
             /// <summary>
-            /// The identifier considered to be most trusted for the identification of this item.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
             [EnumLiteral("official", "http://hl7.org/fhir/identifier-use"), Description("Official")]
             Official,
             /// <summary>
-            /// A temporary identifier.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
             [EnumLiteral("temp", "http://hl7.org/fhir/identifier-use"), Description("Temp")]
             Temp,
             /// <summary>
-            /// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
             [EnumLiteral("secondary", "http://hl7.org/fhir/identifier-use"), Description("Secondary")]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// The namespace for the identifier
+        /// The namespace for the identifier value
         /// </summary>
         [FhirElement("system", InSummary=true, Order=50)]
         [DataMember]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _SystemElement;
         
         /// <summary>
-        /// The namespace for the identifier
+        /// The namespace for the identifier value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

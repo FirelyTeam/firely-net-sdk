@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,9 +49,14 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the patient whose record the detected issue is associated with.</xs:documentation>
+              <xs:documentation xml:lang="en">Business identifier associated with the detected issue record.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="ObservationStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the status of the detected issue.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -64,14 +69,9 @@
               <xs:documentation xml:lang="en">Indicates the degree of importance associated with the identified issue based on the potential impact on the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="implicated" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the resource representing the current activity or proposed activity that is potentially problematic.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="detail" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A textual explanation of the detected issue.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the patient whose record the detected issue is associated with.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -84,9 +84,14 @@
               <xs:documentation xml:lang="en">Individual or device responsible for the issue being raised.  For example, a decision support application or a pharmacist conducting a medication review.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="implicated" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Business identifier associated with the detected issue record.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the resource representing the current activity or proposed activity that is potentially problematic.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="detail" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A textual explanation of the detected issue.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reference" minOccurs="0" maxOccurs="1" type="uri">
@@ -129,21 +134,76 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:simpleType name="ObservationStatus-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="registered">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Registered</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="preliminary">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Preliminary</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="final">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Final</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="amended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Amended</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="corrected">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Corrected</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancelled">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Cancelled</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ObservationStatus">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Indicates the status of the identified issue</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ObservationStatus-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:simpleType name="DetectedIssueSeverity-list">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="code-primitive">
       <xs:enumeration value="high">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Indicates the issue may be life-threatening or has the potential to cause permanent injury.</xs:documentation>
+          <xs:documentation xml:lang="en">High</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="moderate">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.</xs:documentation>
+          <xs:documentation xml:lang="en">Moderate</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="low">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.</xs:documentation>
+          <xs:documentation xml:lang="en">Low</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

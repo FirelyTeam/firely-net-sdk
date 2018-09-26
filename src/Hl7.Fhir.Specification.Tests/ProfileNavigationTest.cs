@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -64,10 +65,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext());  // 3rd A.B
             Assert.IsTrue(nav.MoveToNext());  // A.D
             Assert.IsFalse(nav.MoveToFirstChild());
-            Assert.IsFalse(nav.MoveToNext());            
-            Assert.AreEqual(8, nav.OrdinalPosition); 
+            Assert.IsFalse(nav.MoveToNext());
+            Assert.AreEqual(8, nav.OrdinalPosition);
             Assert.AreEqual("A.D", nav.Path);
-            
+
             Assert.IsTrue(nav.MoveToPrevious());        // A.B
             Assert.AreEqual(5, nav.OrdinalPosition);
             Assert.AreEqual("A.B", nav.Path);
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("C2"));
             Assert.IsFalse(nav.MoveToNext());
             Assert.AreEqual(3, nav.OrdinalPosition);
-            Assert.IsTrue(nav.MoveToParent());          
+            Assert.IsTrue(nav.MoveToParent());
             Assert.IsTrue(nav.MoveToChild("C2"));
             Assert.IsTrue(nav.MoveToParent());          // 1st A.B
             Assert.IsFalse(nav.MoveToNext("X"));
@@ -114,7 +115,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, nav.OrdinalPosition);
         }
 
-      
+
         [TestMethod]
         public void TestDeletions()
         {
@@ -169,7 +170,7 @@ namespace Hl7.Fhir.Specification.Tests
             var nav2 = new ElementDefinitionNavigator(nav);
 
             // Delete A.D in nav
-            Assert.IsTrue(nav.Delete()); 
+            Assert.IsTrue(nav.Delete());
 
             // Should still be there in nav2
             Assert.IsFalse(nav.JumpToFirst("A.D"));
@@ -201,7 +202,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(pos2, nav.OrdinalPosition);
             Assert.IsTrue(nav.IsAtBookmark(bm2));
         }
-      
+
 
         [TestMethod]
         public void TestAbsoluteMoves()
@@ -239,16 +240,16 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(2, res.Count());
 
             res = nav.Approach("A.B.C1.E");
-            Assert.AreEqual(2, res.Count()); 
+            Assert.AreEqual(2, res.Count());
             nav.ReturnToBookmark(res.First());
-            Assert.AreEqual(2, nav.OrdinalPosition);   
+            Assert.AreEqual(2, nav.OrdinalPosition);
             nav.ReturnToBookmark(res.Skip(1).First());
-            Assert.AreEqual(4, nav.OrdinalPosition);  
+            Assert.AreEqual(4, nav.OrdinalPosition);
 
             res = nav.Find("A.B.C1.E");
             Assert.AreEqual(0, res.Count());
 
-            res = nav.Approach("A.B.C1.D.X"); 
+            res = nav.Approach("A.B.C1.D.X");
             Assert.AreEqual(3, res.Count());
             nav.ReturnToBookmark(res.First());
             Assert.AreEqual(2, nav.OrdinalPosition);   // This one's still on the way
@@ -256,7 +257,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(4, nav.OrdinalPosition);   // Via the one but last entry, this one approaches via A.B.C1.D
             nav.ReturnToBookmark(res.Skip(2).First());
             Assert.AreEqual(7, nav.OrdinalPosition);   // Via the one but last entry, this one approaches via A.B.C1.D
-            
+
             res = nav.Find("A.B.C1.D.X");
             Assert.AreEqual(0, res.Count());
 
@@ -318,7 +319,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.Delete());    // delete new "C" node we just created
-            Assert.AreEqual(8, nav.OrdinalPosition); 
+            Assert.AreEqual(8, nav.OrdinalPosition);
             Assert.AreEqual(9, nav.Count);
 
             Assert.IsTrue(nav.InsertAfter(newCNode));
@@ -348,27 +349,27 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(nav.JumpToFirst("A.B.C1.D"));
             Assert.IsTrue(nav.InsertFirstChild(newENode));
-            Assert.AreEqual(8,nav.OrdinalPosition);
+            Assert.AreEqual(8, nav.OrdinalPosition);
             Assert.IsTrue(nav.MoveToParent());
             Assert.AreEqual("A.B.C1.D", nav.Path);
             Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.IsTrue(nav.Delete());   
+            Assert.IsTrue(nav.Delete());
             Assert.AreEqual("A.B.C1.D", nav.Path);  // should have moved back to parent (single child deleted)
 
             Assert.IsTrue(nav.JumpToFirst("A.D"));
             Assert.IsTrue(nav.InsertFirstChild(newENode));
-            Assert.AreEqual(9,nav.OrdinalPosition);
+            Assert.AreEqual(9, nav.OrdinalPosition);
             Assert.IsTrue(nav.MoveToParent());
             Assert.AreEqual("A.D", nav.Path);
             Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.IsTrue(nav.Delete());   
+            Assert.IsTrue(nav.Delete());
             Assert.AreEqual("A.D", nav.Path);  // should have moved back to parent (single child deleted)
 
             nav.Reset();
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.MoveToFirstChild()); // A.B
             Assert.IsTrue(nav.AppendChild(newC3Node));
-            Assert.AreEqual("A.B.C3",nav.Path);
+            Assert.AreEqual("A.B.C3", nav.Path);
             Assert.AreEqual(4, nav.OrdinalPosition);
 
             Assert.IsTrue(nav.Delete());
@@ -425,7 +426,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var nav = createTestNav();
             nav.JumpToFirst("A.B.C1.D");
-            nav.Current.Name = "A-Named-Constraint";
+            nav.Current.ContentReference = "A-Named-Constraint";
 
             nav.Reset();
             Assert.IsTrue(nav.JumpToNameReference("A-Named-Constraint"));
@@ -445,9 +446,9 @@ namespace Hl7.Fhir.Specification.Tests
             var pos = nav.OrdinalPosition;
             var bm = nav.Bookmark();
             nav.Duplicate();
-            
+
             Assert.AreEqual(count + 3, nav.Count);
-            Assert.AreEqual(pos, nav.OrdinalPosition-3);
+            Assert.AreEqual(pos, nav.OrdinalPosition - 3);
 
             // Check original
             nav.ReturnToBookmark(bm);
@@ -617,19 +618,19 @@ namespace Hl7.Fhir.Specification.Tests
 
             e.Add(new ElementDefinition() { Path = "A" });
             e.Add(new ElementDefinition() { Path = "A.B", Slicing = new ElementDefinition.SlicingComponent() { } });
-            e.Add(new ElementDefinition() { Path = "A.B", Name = "1" });
-            e.Add(new ElementDefinition() { Path = "A.B", Name = "2", Slicing = new ElementDefinition.SlicingComponent() { } });
-            e.Add(new ElementDefinition() { Path = "A.B", Name = "2/1" });
-            e.Add(new ElementDefinition() { Path = "A.B", Name = "2/2" });
-            e.Add(new ElementDefinition() { Path = "A.B", Name = "3" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "1" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2/1" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2/2" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "3" });
             e.Add(new ElementDefinition() { Path = "A.C", Slicing = new ElementDefinition.SlicingComponent() { } });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1", Slicing = new ElementDefinition.SlicingComponent() { } });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1", Slicing = new ElementDefinition.SlicingComponent() { } });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1/1" });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1/2" });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/2" });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/3" });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "2" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1/1" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1/2" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/2" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/3" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "2" });
             e.Add(new ElementDefinition() { Path = "A.D" });
 
             var nav = new ElementDefinitionNavigator(struc);
@@ -637,43 +638,64 @@ namespace Hl7.Fhir.Specification.Tests
             nav.MoveToFirstChild();     // A
             Assert.IsTrue(nav.MoveToChild("B"));
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "1");
+            Assert.AreEqual(nav.Current.SliceName, "1");
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "2");
+            Assert.AreEqual(nav.Current.SliceName, "2");
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "3");
+            Assert.AreEqual(nav.Current.SliceName, "3");
             Assert.IsFalse(nav.MoveToNextSlice());
             Assert.IsTrue(nav.MoveToPreviousSlice());
-            Assert.AreEqual(nav.Current.Name, "2");
+            Assert.AreEqual(nav.Current.SliceName, "2");
 
             Assert.IsTrue(nav.MoveToNext("C"));
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "1");
+            Assert.AreEqual(nav.Current.SliceName, "1");
             // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nav.Current.Name, "1/1");
+            Assert.AreEqual(nav.Current.SliceName, "1/1");
 
             var bm = nav.Bookmark();
             // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nav.Current.Name, "1/1/1");
+            Assert.AreEqual(nav.Current.SliceName, "1/1/1");
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "1/1/2");
+            Assert.AreEqual(nav.Current.SliceName, "1/1/2");
             Assert.IsFalse(nav.MoveToNextSlice());
             Assert.IsTrue(nav.MoveToPreviousSlice());
-            Assert.AreEqual(nav.Current.Name, "1/1/1");
+            Assert.AreEqual(nav.Current.SliceName, "1/1/1");
             // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.IsTrue(nav.ReturnToBookmark(bm));
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "1/2");
+            Assert.AreEqual(nav.Current.SliceName, "1/2");
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "1/3");
+            Assert.AreEqual(nav.Current.SliceName, "1/3");
             Assert.IsFalse(nav.MoveToNextSlice());
             Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
-            Assert.AreEqual(nav.Current.Name, "2");
+            Assert.AreEqual(nav.Current.SliceName, "2");
 
             Assert.IsTrue(nav.MoveToNext("D"));
             Assert.IsFalse(nav.MoveToNext());
+        }
+
+        [TestMethod]
+        public void TestDistinctTypeCode()
+        {
+            var elem = new ElementDefinition();
+            Assert.AreEqual(null, elem.CommonTypeCode());
+
+            var patientTypeCode = FHIRAllTypes.Patient.GetLiteral();
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = @"http://example.org/fhir/StructureDefinition/MyPatient1" });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = @"http://example.org/fhir/StructureDefinition/MyPatient2" });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            // Invalid, type constraint without type code (required!)
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Profile = @"http://example.org/fhir/StructureDefinition/MyPatient3" });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Observation.GetLiteral(), Profile = @"http://example.org/fhir/StructureDefinition/MyObservation" });
+            Assert.IsNull(elem.CommonTypeCode());
         }
 
 

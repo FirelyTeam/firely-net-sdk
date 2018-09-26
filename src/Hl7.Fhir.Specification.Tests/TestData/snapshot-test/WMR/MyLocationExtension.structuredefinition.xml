@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-08-11T14:49:32.23+02:00" />
@@ -7,12 +7,13 @@
   <name value="MyLocationExtension" />
   <status value="draft" />
   <description value="Base StructureDefinition for Extension Type" />
-  <requirements value="The ability to add extensions in a structured way is what keeps FHIR resources simple." />
+  <purpose value="The ability to add extensions in a structured way is what keeps FHIR resources simple." />
   <fhirVersion value="1.0.2" />
-  <kind value="datatype" />
-  <constrainedType value="Extension" />
+  <kind value="primitive-type" />
+  <type value="Extension" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Extension" />

@@ -79,35 +79,31 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("MainBundle Section title codes", summary.GetConformanceName());
-            Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
-
-            // Valueset properties
-            Assert.IsNotNull(summary.GetValueSetSystem());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
         }
+
 
         [TestMethod]
         public void TestExtensionDefinitionSummary()
         {
-            const string path = @"TestData\snapshot-test\extensions\extension-us-core-religion.xml";
-            const string url = @"http://hl7.org/fhir/StructureDefinition/us-core-religion";
+            const string path = @"TestData\snapshot-test\extensions\extension-patient-religion.xml";
+            const string url = @"http://hl7.org/fhir/StructureDefinition/patient-religion";
             var summary = assertSummary(path);
-
             // Common properties
             Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
             Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
-
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
-            Assert.AreEqual("Patient's professed religious affiliation", summary.GetConformanceName());
-            Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
-
+            Assert.AreEqual("religion", summary.GetConformanceName());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
             // StructureDefinition properties
             var context = summary.GetStructureDefinitionContext();
             Assert.IsNotNull(context);
             Assert.AreEqual(1, context.Length);
             Assert.AreEqual("Patient", context[0]);
         }
+
 
         [TestMethod]
         public void TestProfilesTypesJson()
@@ -136,22 +132,34 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
                 Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
                 Assert.IsNotNull(summary.GetConformanceName());
-                Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+                Assert.IsNotNull(summary.GetConformanceStatus());
+                Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
 
                 //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
                 // StructureDefinition properties
+
                 Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
                 Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
 
-                Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.GetStructureDefinitionKind());
-                // If this is a constraining StructDef, then Base should also be specified
-                Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
+                // For profiles-types, we expect Kind = ComplexType | PrimitiveType
+                Assert.IsNotNull(summary.GetStructureDefinitionKind());
+                Assert.IsTrue(
+                    summary.GetStructureDefinitionKind() == StructureDefinition.StructureDefinitionKind.ComplexType.GetLiteral()
+                    ||
+                    summary.GetStructureDefinitionKind() == StructureDefinition.StructureDefinitionKind.PrimitiveType.GetLiteral()
+                );
+
+                Assert.IsNotNull(summary.GetStructureDefinitionType());
+                // If this is a specializing StructDef, then BaseDefinition should also be specified
+                Assert.IsTrue(
+                    summary.GetStructureDefinitionDerivation() != StructureDefinition.TypeDerivationRule.Specialization.GetLiteral()
+                    || summary.GetStructureDefinitionBaseDefinition() != null);
+
 
                 // [WMR 20180725] Also harvest root element definition text
-                // [WMR 20180801] Disabled; included version of profiles-types.json does NOT contain definitions...
-                // var rootDefinition = summary.GetStructureDefinitionRootDefinition();
-                // Assert.IsNotNull(rootDefinition);
+                var rootDefinition = summary.GetStructureDefinitionRootDefinition();
+                Assert.IsNotNull(rootDefinition);
             }
         }
 
@@ -183,7 +191,9 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
                     Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
                     Assert.IsNotNull(summary.GetConformanceName());
-                    Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+                    Assert.IsNotNull(summary.GetConformanceStatus());
+                    Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+
 
                     //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
@@ -191,12 +201,32 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
                     Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
 
-                    Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Resource.GetLiteral(), summary.GetStructureDefinitionKind());
-                    // If this is a constraining StructDef, then Base should also be specified
-                    Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
+                    // For profiles-resources, we expect Kind = Resource | Logical
+                    var kind = summary.GetStructureDefinitionKind();
+                    Assert.IsNotNull(kind);
+                    Assert.IsTrue(
+                        kind == StructureDefinition.StructureDefinitionKind.Resource.GetLiteral()
+                        ||
+                        // e.g. for MetadataResource
+                        kind == StructureDefinition.StructureDefinitionKind.Logical.GetLiteral()
+                    );
 
-                    // [WMR 20171218] Maturity Level extension
-                    Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
+                    Assert.IsNotNull(summary.GetStructureDefinitionType());
+
+                    // If this is a specializing StructDef, then BaseDefinition should also be specified
+                    var derivation = summary.GetStructureDefinitionDerivation();
+                    if (derivation != null)
+                    {
+                        // Base definition should always be specified, except for root types such as Resource
+                        Assert.IsNotNull(summary.GetStructureDefinitionBaseDefinition());
+                    }
+
+                    // [WMR 20171219] Core extensions
+                    if (kind == StructureDefinition.StructureDefinitionKind.Resource.GetLiteral())
+                    {
+                        Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
+                        Assert.IsNotNull(summary.GetStructureDefinitionWorkingGroup());
+                    }
 
                     // [WMR 20180725] Also harvest root element definition text
                     var rootDefinition = summary.GetStructureDefinitionRootDefinition();
@@ -228,8 +258,8 @@ namespace Hl7.Fhir.Specification.Tests
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries().ToList();
             Assert.IsNotNull(summaries);
-            Assert.AreEqual(7155, summaries.FhirResources().Count());
-            Assert.AreEqual(552, summaries.OfResourceType(ResourceType.StructureDefinition).Count());
+            Assert.AreEqual(7941, summaries.Count);
+            Assert.AreEqual(581, summaries.OfResourceType(ResourceType.StructureDefinition).Count());
             Assert.IsTrue(!summaries.Errors().Any());
         }
 
@@ -241,7 +271,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries();
-            var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient);
+            var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
             var patientSummary = summaries.FindConformanceResources(patientUrl).FirstOrDefault();
             Assert.IsNotNull(patientSummary);
             Assert.AreEqual(ResourceType.StructureDefinition, patientSummary.ResourceType);
@@ -263,7 +293,7 @@ namespace Hl7.Fhir.Specification.Tests
             // JsonNavigatorStream cannot support zip streams; ctor needs to call Reset after scanning resourceType
 
             ArtifactSummary corePatientSummary;
-            var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient);
+            var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
             string zipEntryName = "profiles-resources.xml";
 
             // Generate summaries from core ZIP resource definitions (extract in memory)

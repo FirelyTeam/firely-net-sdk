@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void SimpleValueSupport()
         {
-            Conformance c = new Conformance();
+            CapabilityStatement c = new CapabilityStatement();
 
             Assert.IsNull(c.Experimental);
             c.Experimental = true;
@@ -275,10 +275,10 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestFhirTypeToFhirTypeName()
         {
-            var enumValues = Enum.GetValues(typeof(FHIRDefinedType));
+            var enumValues = Enum.GetValues(typeof(FHIRAllTypes));
             for (int i = 0; i < enumValues.Length; i++)
             {
-                var type = (FHIRDefinedType)i;
+                var type = (FHIRAllTypes)i;
                 var typeName = ModelInfo.FhirTypeToFhirTypeName(type);
                 var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
                 Assert.IsTrue(type2.HasValue);
@@ -335,96 +335,19 @@ namespace Hl7.Fhir.Tests.Model
 
 
         [TestMethod]
-        public void TestExpansionCheckForCode()
-        {
-            var vs = new ValueSet();
-            var sys1 = "http://example.org/system/system1";
-            var sys2 = "http://example.org/system/system2";
-
-            vs.Expansion = new ValueSet.ExpansionComponent();
-
-            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1" });
-            var sys1code2 = new ValueSet.ContainsComponent { System = sys1, Code = "code2" };
-            vs.Expansion.Contains.Add(sys1code2);
-            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code1" });
-
-            sys1code2.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1.1" });
-            sys1code2.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1.2" });
-
-            Assert.IsTrue(vs.CodeInExpansion("code1", sys1));
-            Assert.IsTrue(vs.CodeInExpansion("code1", sys2));
-            Assert.IsTrue(vs.CodeInExpansion("code1"));
-
-            Assert.IsFalse(vs.CodeInExpansion("code2", sys2));
-            Assert.IsTrue(vs.CodeInExpansion("code2"));
-
-            Assert.IsTrue(vs.CodeInExpansion("code1.2"));
-            Assert.IsTrue(vs.CodeInExpansion("code1.2", sys1));
-            Assert.IsFalse(vs.CodeInExpansion("code1.2", sys2));
-
-            Assert.AreEqual(5, vs.ExpansionSize());
-        }
-
-        [TestMethod]
-        public void TestImportExpansion()
-        {
-            var sys1 = "http://example.org/system/system1";
-            var sys2 = "http://example.org/system/system2";
-
-            var vs = new ValueSet();
-            vs.Expansion = new ValueSet.ExpansionComponent();
-            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1" });
-            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code1" });
-
-            var vs2 = new ValueSet();
-            vs2.Expansion = new ValueSet.ExpansionComponent();
-            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code3" });
-            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code4" });
-
-            vs.ImportExpansion(vs2);
-
-            Assert.AreEqual(4, vs.ExpansionSize());
-            Assert.AreEqual(4, vs.Expansion.Total);
-
-            Assert.IsTrue(vs.CodeInExpansion("code1", sys2));
-            Assert.IsTrue(vs.CodeInExpansion("code4", sys2));
-        }
-
-        public void TestImportExpansionInEmptyVs()
-        {
-            var sys1 = "http://example.org/system/system1";
-            var sys2 = "http://example.org/system/system2";
-
-            var vs = new ValueSet();
-            var vs2 = new ValueSet();
-            vs2.Expansion = new ValueSet.ExpansionComponent();
-            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code3" });
-            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code4" });
-
-            vs.ImportExpansion(vs2);
-
-            Assert.AreEqual(2, vs.ExpansionSize());
-            Assert.AreEqual(2, vs.Expansion.Total);
-
-            Assert.IsTrue(vs.CodeInExpansion("code3", sys1));
-            Assert.IsTrue(vs.CodeInExpansion("code4", sys2));
-        }
-
-
-        [TestMethod]
         public void TestSubclassInfo()
         {
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Patient, FHIRDefinedType.Patient));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Observation, FHIRDefinedType.Patient));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Bundle));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Bundle));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Resource, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.DomainResource, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Patient, FHIRAllTypes.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Observation, FHIRAllTypes.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Resource, FHIRAllTypes.Bundle));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.DomainResource, FHIRAllTypes.Bundle));
 
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.HumanName));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Oid));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.HumanName));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Oid));
         }
 
         [TestMethod]
@@ -505,12 +428,12 @@ namespace Hl7.Fhir.Tests.Model
                     new HumanName()
                     {
                         Given = new string[] { "John" },
-                        Family = new string[] { "Doe" }
+                        Family = "Doe"
                     },
                      new HumanName()
                     {
                         Given = new string[] { "Alias" },
-                        Family = new string[] { "Alternate" }
+                        Family = "Alternate"
                     }
                 },
                 Address =
@@ -566,7 +489,7 @@ namespace Hl7.Fhir.Tests.Model
                 // ===== HumanName elements =====
                 // name.UseElement,
                 // name.TextElement,
-                name.FamilyElement[0],
+                name.FamilyElement,
                 name.GivenElement[0],
                 // name.Period
             };
@@ -597,9 +520,9 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void ParseFhirTypeName()
         {
-            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
+            Assert.AreEqual(FHIRAllTypes.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
             Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
-            Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+            Assert.AreEqual(FHIRAllTypes.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
         }
 
     }

@@ -18,7 +18,10 @@ namespace Hl7.Fhir.Validation
     {
         public static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
-            return cc.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+            // This was required for 3.0.0, but was rectified in the 3.0.1 technical update
+            //if (cc.Key == "ele-1")
+            //    return "(children().count() > id.count()) | hasValue()";
+            return cc.Expression;
         }
 
 
@@ -33,7 +36,7 @@ namespace Hl7.Fhir.Validation
         internal static bool IsResourcePlaceholder(this ElementDefinition ed)
         {
             if (ed.Type == null) return false;
-            return ed.Type.Any(t => t.Code == FHIRDefinedType.Resource || t.Code == FHIRDefinedType.DomainResource);
+            return ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
         }
 
         public static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)

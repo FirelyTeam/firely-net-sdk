@@ -80,7 +80,7 @@
     }
 
 	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:base/@value = 'http://hl7.org/fhir/StructureDefinition/Quantity']", nsR))
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/Quantity']", nsR))
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -88,6 +88,7 @@
 			string resourceDescription = "";
 			string rawResourceName = resourceName;
 			string primitiveTypeName = null;
+			bool isConstraintProfile = ((e as System.Xml.XmlElement).SelectSingleNode("fhir:derivation[@value='constraint']", nsR) != null);
 
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
@@ -95,9 +96,9 @@
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
 			bool isPrimitive = false;
-			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null)
+			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
-				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value;
+				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
 				resourceBaseType = definedBaseType;
 				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
                 {
@@ -165,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// <#= resourceDescription.Replace("&", "&amp;") #>
     /// </summary>
 <# } 
-#>    [FhirType("Quantity"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? "" : "" #>)]
+#>    [FhirType("<#= isConstraintProfile ? "Quantity" : rawResourceName #>")]
     public partial class <#= resourceName #> : Quantity
     {
         [NotMapped]
