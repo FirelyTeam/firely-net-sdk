@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Terminology
             Settings = settings;
         }
 
-        public ValueSetExpander() : this(ValueSetExpanderSettings.Default)
+        public ValueSetExpander() : this(ValueSetExpanderSettings.CreateDefault())
         {
             // nothing
         }
