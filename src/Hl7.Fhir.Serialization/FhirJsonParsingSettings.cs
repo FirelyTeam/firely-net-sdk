@@ -12,7 +12,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirJsonNodeSettings
+    public class FhirJsonParsingSettings
     {
         /// <summary>
         /// Do not raise exceptions for recoverable errors.
@@ -32,21 +32,21 @@ namespace Hl7.Fhir.Serialization
         public bool ValidateFhirXhtml;
 #endif
 
-        /// <summary>Default constructor. Creates a new <see cref="FhirJsonNodeSettings"/> instance with default property values.</summary>
-        public FhirJsonNodeSettings() { }
+        /// <summary>Default constructor. Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
+        public FhirJsonParsingSettings() { }
 
-        /// <summary>Clone constructor. Generates a new <see cref="FhirJsonNodeSettings"/> instance initialized from the state of the specified instance.</summary>
+        /// <summary>Clone constructor. Generates a new <see cref="FhirJsonParsingSettings"/> instance initialized from the state of the specified instance.</summary>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public FhirJsonNodeSettings(FhirJsonNodeSettings other)
+        public FhirJsonParsingSettings(FhirJsonParsingSettings other)
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
             other.CopyTo(this);
         }
 
         /// <summary>Copy all configuration settings to another instance.</summary>
-        /// <param name="other">Another <see cref="FhirJsonNodeSettings"/> instance.</param>
+        /// <param name="other">Another <see cref="FhirJsonParsingSettings"/> instance.</param>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public void CopyTo(FhirJsonNodeSettings other)
+        public void CopyTo(FhirJsonParsingSettings other)
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
@@ -58,10 +58,10 @@ namespace Hl7.Fhir.Serialization
 #endif
         }
 
-        /// <summary>Creates a new <see cref="FhirJsonNodeSettings"/> object that is a copy of the current instance.</summary>
-        public FhirJsonNodeSettings Clone() => new FhirJsonNodeSettings(this);
+        /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> object that is a copy of the current instance.</summary>
+        public FhirJsonParsingSettings Clone() => new FhirJsonParsingSettings(this);
 
-        /// <summary>Creates a new <see cref="FhirJsonNodeSettings"/> instance with default property values.</summary>
-        public static FhirJsonNodeSettings CreateDefault() => new FhirJsonNodeSettings();
+        /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
+        public static FhirJsonParsingSettings CreateDefault() => new FhirJsonParsingSettings();
     }
 }

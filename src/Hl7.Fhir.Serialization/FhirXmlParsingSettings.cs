@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlNodeSettings
+    public class FhirXmlParsingSettings
     {
         /// <summary>
         /// A list of namespaces which are allowed in addition to the normal FHIR namespaces. 
@@ -37,21 +37,21 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Validation of xhtml is expensive, so turned off by default.</remarks>
         public bool ValidateFhirXhtml;
 #endif
-        /// <summary>Default constructor. Creates a new <see cref="FhirXmlNodeSettings"/> instance with default property values.</summary>
-        public FhirXmlNodeSettings() { }
+        /// <summary>Default constructor. Creates a new <see cref="FhirXmlParsingSettings"/> instance with default property values.</summary>
+        public FhirXmlParsingSettings() { }
 
-        /// <summary>Clone constructor. Generates a new <see cref="FhirXmlNodeSettings"/> instance initialized from the state of the specified instance.</summary>
+        /// <summary>Clone constructor. Generates a new <see cref="FhirXmlParsingSettings"/> instance initialized from the state of the specified instance.</summary>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public FhirXmlNodeSettings(FhirXmlNodeSettings other)
+        public FhirXmlParsingSettings(FhirXmlParsingSettings other)
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
             other.CopyTo(this);
         }
 
         /// <summary>Copy all configuration settings to another instance.</summary>
-        /// <param name="other">Another <see cref="FhirXmlNodeSettings"/> instance.</param>
+        /// <param name="other">Another <see cref="FhirXmlParsingSettings"/> instance.</param>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public void CopyTo(FhirXmlNodeSettings other)
+        public void CopyTo(FhirXmlParsingSettings other)
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
@@ -64,10 +64,10 @@ namespace Hl7.Fhir.Serialization
 #endif
         }
 
-        /// <summary>Creates a new <see cref="FhirXmlNodeSettings"/> object that is a copy of the current instance.</summary>
-        public FhirXmlNodeSettings Clone() => new FhirXmlNodeSettings(this);
+        /// <summary>Creates a new <see cref="FhirXmlParsingSettings"/> object that is a copy of the current instance.</summary>
+        public FhirXmlParsingSettings Clone() => new FhirXmlParsingSettings(this);
 
-        /// <summary>Creates a new <see cref="FhirJsonBuilderSettings"/> instance with default property values.</summary>
-        public static FhirXmlNodeSettings CreateDefault() => new FhirXmlNodeSettings();
+        /// <summary>Creates a new <see cref="FhirJsonSerializationSettings"/> instance with default property values.</summary>
+        public static FhirXmlParsingSettings CreateDefault() => new FhirXmlParsingSettings();
     }
 }

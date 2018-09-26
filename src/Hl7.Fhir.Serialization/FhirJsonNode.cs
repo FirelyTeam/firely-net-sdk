@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial class FhirJsonNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {
-        internal FhirJsonNode(JObject root, string nodeName, FhirJsonNodeSettings settings = null)
+        internal FhirJsonNode(JObject root, string nodeName, FhirJsonParsingSettings settings = null)
         {
             JsonObject = root ?? throw Error.ArgumentNull(nameof(root));
 
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
             JsonValue = null;           
             ArrayIndex = null;
             UsesShadow = false;
-            _settings = settings?.Clone() ?? new FhirJsonNodeSettings();
+            _settings = settings?.Clone() ?? new FhirJsonParsingSettings();
         }
 
 
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Serialization
             ExceptionHandler = parent.ExceptionHandler;
         }
 
-        private readonly FhirJsonNodeSettings _settings;
+        private readonly FhirJsonParsingSettings _settings;
         public readonly JValue JsonValue;
         public readonly JObject JsonObject;
         public readonly int? ArrayIndex;

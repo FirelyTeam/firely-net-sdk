@@ -19,9 +19,9 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializeDemoPatientXml
     {
-        public ITypedElement getXmlElement(string xml, FhirXmlNodeSettings s = null) =>
+        public ITypedElement getXmlElement(string xml, FhirXmlParsingSettings s = null) =>
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public ITypedElement getJsonElement(string json, FhirJsonNodeSettings s = null) =>
+        public ITypedElement getJsonElement(string json, FhirJsonParsingSettings s = null) =>
             JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(@"TestData\test-empty-nodes.xml");
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getXmlElement(tpXml, new FhirXmlNodeSettings { PermissiveParsing = true });
+            var nav = getXmlElement(tpXml, new FhirXmlParsingSettings { PermissiveParsing = true });
             var doc = nav.ToXDocument().Root;
             Assert.AreEqual(10, doc.DescendantNodesAndSelf().Count());  // only 8 nodes + 2 comments left after pruning
         }
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void TestElementReordering()
         {
             var tpXml = File.ReadAllText(@"TestData\patient-out-of-order.xml");
-            var nav = getXmlElement(tpXml, new FhirXmlNodeSettings { PermissiveParsing = true });  // since the order is incorrect
+            var nav = getXmlElement(tpXml, new FhirXmlParsingSettings { PermissiveParsing = true });  // since the order is incorrect
             var root = nav.ToXDocument().Root;
 
             var orderedNames = root.Elements().Select(e => e.Name.LocalName).ToList();
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = getXmlElement(xml);
             var output = nav.ToXml();
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
-            var pretty = nav.ToXml(new FhirXmlBuilderSettings { Pretty = true });
+            var pretty = nav.ToXml(new FhirXmlSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
 
             var p = (new FhirXmlParser()).Parse<Patient>(xml);
