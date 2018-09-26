@@ -6,13 +6,16 @@
     <Company>Firely (https://fire.ly)</Company>
     <Copyright>Copyright 2018 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ewoutkramer/fhir-net-api</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
     <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/develop/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>1.0.0-alpha1</FhirApiVersion>
-    <SupportApiVersion>1.0.0-alpha1</SupportApiVersion>
+    <FhirApiVersion>1.0.0-alpha2</FhirApiVersion>
+    <SupportApiVersion>1.0.0-alpha2</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Although netstandard1.1 support codegen using the Expression class, we need at least
