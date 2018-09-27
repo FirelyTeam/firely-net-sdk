@@ -181,7 +181,7 @@ namespace Hl7.FhirPath.Expressions
             table.AddVar(name, new ConstantValue(value));
         }
 
-        public static void AddVar(this SymbolTable table, string name, IElementNavigator value)
+        public static void AddVar(this SymbolTable table, string name, ITypedElement value)
         {
             table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
         }

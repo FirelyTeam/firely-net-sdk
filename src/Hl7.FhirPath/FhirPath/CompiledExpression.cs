@@ -1,22 +1,15 @@
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using Hl7.FhirPath.Functions;
+using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.FhirPath.Functions;
 
 namespace Hl7.FhirPath
 {
-    public delegate IEnumerable<IElementNavigator> CompiledExpression(IElementNavigator root, EvaluationContext ctx);
+    public delegate IEnumerable<ITypedElement> CompiledExpression(ITypedElement root, EvaluationContext ctx);
 
     public static class CompiledExpressionExtensions
     {
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator container)
-        {
-            return Scalar(evaluator, input, new EvaluationContext(container));
-        }
-
-        public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
+        public static object Scalar(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx);
             if (result.Any())
@@ -25,18 +18,8 @@ namespace Hl7.FhirPath
                 return null;
         }
 
-
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator container)
-        {
-            return Predicate(evaluator, input, new EvaluationContext(container));
-        }
-
-        public static bool Predicate(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
-            => Predicate(evaluator, input.ToElementNavigator(), ctx);
-
         // For predicates, Empty is considered true
-        public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
+        public static bool Predicate(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
 
@@ -46,13 +29,7 @@ namespace Hl7.FhirPath
                 return result.Value;
         }
 
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, IElementNavigator container)
-        {
-            return IsBoolean(evaluator, value, input, new EvaluationContext(container));
-        }
-
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, EvaluationContext ctx)
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, ITypedElement input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
 

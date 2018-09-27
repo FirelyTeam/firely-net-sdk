@@ -99,8 +99,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void CheckBundleEntryNavigation(ITypedElement node)
         {
-            var nav = node.ToElementNavigator();
-            var entryNav = nav.Select("entry.resource").First();
+            var entryNav = node.Select("entry.resource").First();
             var id = entryNav.Scalar("id");
             Assert.IsNotNull(id);
         }

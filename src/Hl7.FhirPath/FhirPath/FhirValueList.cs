@@ -14,17 +14,17 @@ namespace Hl7.FhirPath
 {
     public static class FhirValueList
     {
-        //todo: object can now be IElementNavigator? --mh
-        public static IEnumerable<IElementNavigator> Create(params object[] values)
+        //todo: object can now be ITypedElement? --mh
+        public static IEnumerable<ITypedElement> Create(params object[] values)
         {
             if (values != null)
             {
-                return values.Select(value => value == null ? null : value is IElementNavigator ? (IElementNavigator)value : new ConstantValue(value));
+                return values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : new ConstantValue(value));
             }
             else
                 return FhirValueList.Empty;
         }
 
-        public static readonly IEnumerable<IElementNavigator> Empty = Enumerable.Empty<IElementNavigator>();
+        public static readonly IEnumerable<ITypedElement> Empty = Enumerable.Empty<ITypedElement>();
     }
 }

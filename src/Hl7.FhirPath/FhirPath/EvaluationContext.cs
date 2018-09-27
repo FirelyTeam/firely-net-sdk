@@ -15,13 +15,11 @@ namespace Hl7.FhirPath
             // no defaults yet
         }
 
-        public EvaluationContext(IElementNavigator container)
+        public EvaluationContext(ITypedElement container)
         {
             Container = container;
         }
 
-        public IElementNavigator Container { get; set; }
+        public ITypedElement Container { get; set; }
     }
-
-
 }

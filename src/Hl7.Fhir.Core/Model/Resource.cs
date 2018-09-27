@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
         /// <param name="context">Describes the context in which a validation check is performed.</param>
         /// <returns></returns>
-        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, ITypedElement model, OperationOutcome result)
         {
             string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = this.ToElementNavigator();
+                var tree = this.ToTypedElement();
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(context,invariantRule, tree, result);
