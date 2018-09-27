@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization
 
             other.DisallowXsiAttributesOnRoot = DisallowXsiAttributesOnRoot;
             other.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
-            other.AcceptUnknownMembers = AllowUnrecognizedEnums;
+            other.AcceptUnknownMembers = AcceptUnknownMembers;
         }
 
         /// <summary>Creates a new <see cref="ParserSettings"/> object that is a copy of the current instance.</summary>
