@@ -30,15 +30,15 @@ namespace Hl7.FhirPath.Expressions
         //        VisitVariableRef((VariableRefExpression)expression);
         //}
 
-        public abstract T VisitConstant(ConstantExpression expression, SymbolTable scope);
+        public abstract T VisitConstant(ConstantExpression expression);
 
-        public abstract T VisitFunctionCall(FunctionCallExpression expression, SymbolTable scope);
+        public abstract T VisitFunctionCall(FunctionCallExpression expression);
 
         //public abstract T VisitLambda(LambdaExpression expression);
 
-        public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope);
+        public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression);
 
-        public abstract T VisitVariableRef(VariableRefExpression expression, SymbolTable scope);
+        public abstract T VisitVariableRef(VariableRefExpression expression);
 
         //public abstract T VisitTypeBinaryExpression(TypeBinaryExpression expression);
     }

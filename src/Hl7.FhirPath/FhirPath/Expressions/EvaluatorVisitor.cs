@@ -15,33 +15,40 @@ namespace Hl7.FhirPath.Expressions
 {
     internal class EvaluatorVisitor : FP.ExpressionVisitor<Invokee>
     {
-        public override Invokee VisitConstant(FP.ConstantExpression expression, SymbolTable scope)
+        public SymbolTable Symbols { get; private set; }
+
+        public EvaluatorVisitor(SymbolTable symbols)
+        {
+            Symbols = symbols;
+        }
+
+        public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
             return InvokeeFactory.Return(new ConstantValue(expression.Value));
         }
 
-        public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression, SymbolTable scope)
+        public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
         {
-            var focus = expression.Focus.ToEvaluator(scope);
+            var focus = expression.Focus.ToEvaluator(Symbols);
             var arguments = new List<Invokee>() { focus };
-            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(scope)));
+            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(Symbols)));
 
             // We have no real type information, so just pass object as the type
             var types = new List<Type>() { typeof(object) }; //   for the focus;
             types.AddRange(expression.Arguments.Select(a => typeof(object)));   // for the arguments
 
             // Now locate the function based on the types and name
-            Invokee boundFunction = resolve(scope, expression.FunctionName, types);
+            Invokee boundFunction = resolve(Symbols, expression.FunctionName, types);
 
             return InvokeeFactory.Invoke(expression.FunctionName, arguments, boundFunction);
         }
 
-        public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression, SymbolTable scope)
+        public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
             return InvokeeFactory.Return(FhirValueList.Empty);
         }
 
-        public override Invokee VisitVariableRef(FP.VariableRefExpression expression, SymbolTable scope)
+        public override Invokee VisitVariableRef(FP.VariableRefExpression expression)
         {
             // HACK, for now, $this is special, and we handle in run-time, not compile time...
             if(expression.Name == "builtin.this")
@@ -62,13 +69,13 @@ namespace Hl7.FhirPath.Expressions
 
             // Variables are still functions without arguments. For now variables are treated separately here,
             //Functions are handled elsewhere.
-            return resolve(scope, expression.Name, Enumerable.Empty<Type>());
+            return resolve(Symbols, expression.Name, Enumerable.Empty<Type>());
         }
 
-        private static Invokee resolve(SymbolTable scope, string name, IEnumerable<Type> argumentTypes)
+        private static Invokee resolve(SymbolTable symbols, string name, IEnumerable<Type> argumentTypes)
         {
             // For now, we don't have the types or the parameters statically, so we just match on name
-            var candidateTable = scope.Filter(name, argumentTypes.Count());
+            var candidateTable = symbols.Filter(name, argumentTypes.Count());
             var count = candidateTable.Count();
 
             if (count > 1)
@@ -100,10 +107,10 @@ namespace Hl7.FhirPath.Expressions
 
     internal static class EvaluatorExpressionExtensions
     {
-        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope)
+        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable symbols)
         {
-            var compiler = new EvaluatorVisitor();
-            return expr.Accept<Invokee>(compiler, scope);
+            var compiler = new EvaluatorVisitor(symbols);
+            return expr.Accept<Invokee>(compiler);
         }
     }
 

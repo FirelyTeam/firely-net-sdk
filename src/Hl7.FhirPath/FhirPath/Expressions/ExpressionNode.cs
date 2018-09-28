@@ -25,7 +25,7 @@ namespace Hl7.FhirPath.Expressions
         }
         public TypeInfo ExpressionType { get; protected set; }
 
-        public abstract T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope);
+        public abstract T Accept<T>(ExpressionVisitor<T> visitor);
 
         public override bool Equals(object obj)
         {
@@ -77,9 +77,9 @@ namespace Hl7.FhirPath.Expressions
 
         public object Value { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            return visitor.VisitConstant(this, scope);
+            return visitor.VisitConstant(this);
         }
 
         public override bool Equals(object obj)
@@ -121,9 +121,9 @@ namespace Hl7.FhirPath.Expressions
 
         public IEnumerable<Expression> Arguments { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            return visitor.VisitFunctionCall(this, scope);
+            return visitor.VisitFunctionCall(this);
         }
 
         public override bool Equals(object obj)
@@ -285,9 +285,9 @@ namespace Hl7.FhirPath.Expressions
 
         public IEnumerable<Expression> Contents { get; private set;  }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            return visitor.VisitNewNodeListInit(this, scope);
+            return visitor.VisitNewNodeListInit(this);
         }
         public override bool Equals(object obj)
         {
@@ -320,9 +320,9 @@ namespace Hl7.FhirPath.Expressions
 
         public string Name { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            return visitor.VisitVariableRef(this, scope);
+            return visitor.VisitVariableRef(this);
         }
         public override bool Equals(object obj)
         {
