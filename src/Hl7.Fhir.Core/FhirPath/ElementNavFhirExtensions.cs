@@ -66,7 +66,7 @@ namespace Hl7.Fhir.FhirPath
         {
             t.Add("hasValue", (ElementModel.IElementNavigator f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (ElementModel.IElementNavigator f, EvaluationContext ctx) => resolver(f,ctx), doNullProp: false);
-            t.Add("htmlchecks", (ElementModel.IElementNavigator f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlChecks", (ElementModel.IElementNavigator f) => f.HtmlChecks(), doNullProp: false);
 
             return t;
 
