@@ -53,7 +53,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(1L, new ConstantValue(true).ToDecimal());
             Assert.AreEqual(0L, new ConstantValue(false).ToDecimal());
             Assert.IsNull(new ConstantValue(2).ToDecimal());
-//            Assert.Null(new ConstantValue("2").ToDecimal());   Not clear according to spec
+            //            Assert.Null(new ConstantValue("2").ToDecimal());   Not clear according to spec
             Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToDecimal());
         }
 
@@ -61,8 +61,8 @@ namespace Hl7.FhirPath.Tests
         public void CheckTypeDetermination()
         {
             var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
-            
-            
+
+
             Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(Int64));
             Test.IsInstanceOfType(values.Item(1).Single().Value, typeof(Boolean));
             Test.IsInstanceOfType(values.Item(2).Single().Value, typeof(String));
@@ -106,6 +106,52 @@ namespace Hl7.FhirPath.Tests
             var result = nav.Select("Resource.meta.lastUpdated");
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+        }
+
+        [TestMethod]
+        public void TestFhirPathTrace()
+        {
+            var patient = new Hl7.Fhir.Model.Patient() { Id = "pat45", Active = false };
+            patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
+            var nav = new PocoNavigator(patient);
+
+            EvaluationContext ctx = new EvaluationContext();
+            var result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+
+            bool traced = false;
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IElementNavigator> results) =>
+            {
+                System.Diagnostics.Trace.WriteLine($"{name}");
+                Assert.AreEqual("log", name);
+                foreach (PocoNavigator item in results)
+                {
+                    System.Diagnostics.Trace.WriteLine($"--({item.FhirValue.GetType().Name}): {item.Value} {item.FhirValue}");
+                    Assert.AreEqual(patient.Meta, item.FhirValue);
+                    traced = true;
+                }
+            };
+            result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.IsTrue(traced);
+
+            traced = false;
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IElementNavigator> results) =>
+            {
+                System.Diagnostics.Trace.WriteLine($"{name}");
+                Assert.IsTrue(name == "id" || name == "log");
+                foreach (PocoNavigator item in results)
+                {
+                    System.Diagnostics.Trace.WriteLine($"--({item.FhirValue.GetType().Name}): {item.Value} {item.FhirValue}");
+                    traced = true;
+                }
+            };
+            result = nav.Select("Resource.trace('id', id).meta.trace('log', lastUpdated).lastUpdated", ctx);
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.IsTrue(traced);
         }
 
         //[TestMethod]

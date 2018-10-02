@@ -27,6 +27,8 @@ namespace Hl7.FhirPath
         }
 
         public IElementNavigator Container { get; set; }
+
+        public Action<string, IEnumerable<IElementNavigator>> Tracer { get; set; }
     }
 
 

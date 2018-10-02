@@ -24,7 +24,7 @@ namespace Hl7.FhirPath.Expressions
             t.Add("empty", (IEnumerable<object> f) => !f.Any());
             t.Add("exists", (IEnumerable<object> f) => f.Any());
             t.Add("count", (IEnumerable<object> f) => f.Count());
-            t.Add("trace", (IEnumerable<IElementNavigator> f, string name) => f.Trace(name));
+            t.Add("trace", (IEnumerable<IElementNavigator> f, string name, EvaluationContext ctx) => f.Trace(name, ctx));
 
             //   t.Add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.ConcatUnion(r));
             t.Add("binary.|", (object f, IEnumerable<IElementNavigator> l, IEnumerable<IElementNavigator> r) => l.DistinctUnion(r));
@@ -145,7 +145,8 @@ namespace Hl7.FhirPath.Expressions
             t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
             t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
             t.Add(new CallSignature("repeat", typeof(IEnumerable<IElementNavigator>), typeof(object), typeof(Invokee)), runRepeat);
-            
+
+            t.Add(new CallSignature("trace", typeof(IEnumerable<IElementNavigator>), typeof(string), typeof(object), typeof(Invokee)), Trace);
 
             t.AddVar("sct", "http://snomed.info/sct");
             t.AddVar("loinc", "http://loinc.org");
@@ -168,6 +169,21 @@ namespace Hl7.FhirPath.Expressions
             return "http://hl7.org/fhir/ValueSet/" + id;
         }
 
+        private static IEnumerable<IElementNavigator> Trace(Closure ctx, IEnumerable<Invokee> arguments)
+        {
+            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            string name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
+
+            List<Invokee> selectArgs = new List<Invokee>();
+            selectArgs.Add(arguments.First());
+            selectArgs.AddRange(arguments.Skip(2));
+            var selectResults = runSelect(ctx, selectArgs);
+            var tracer = ctx?.EvaluationContext?.Tracer;
+            if (tracer != null)
+                tracer(name, selectResults);
+
+            return focus;
+        }
 
         private static IEnumerable<IElementNavigator> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
         {
