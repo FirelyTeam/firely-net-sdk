@@ -154,6 +154,29 @@ namespace Hl7.FhirPath.Tests
             Assert.IsTrue(traced);
         }
 
+        [TestMethod]
+        public void TestFhirPathCombine()
+        {
+            var cs = new Hl7.Fhir.Model.CodeSystem() { Id = "pat45" };
+            cs.Concept.Add(new CodeSystem.ConceptDefinitionComponent()
+            {
+                Code = "5", Display = "Five"
+            });
+            var nav = new PocoNavigator(cs);
+
+            EvaluationContext ctx = new EvaluationContext();
+            var result = nav.Predicate("concept.code.combine($this.descendants().concept.code).isDistinct()", ctx);
+            Assert.IsTrue(result);
+
+            cs.Concept.Add(new CodeSystem.ConceptDefinitionComponent()
+            {
+                Code = "5",
+                Display = "Five"
+            });
+            result = nav.Predicate("concept.code.combine($this.descendants().concept.code).isDistinct()", ctx);
+            Assert.IsFalse(result);
+        }
+
         //[TestMethod]
         //public void TypeInfoAndNativeMatching()
         //{

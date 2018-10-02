@@ -26,7 +26,7 @@ namespace Hl7.FhirPath.Expressions
             t.Add("count", (IEnumerable<object> f) => f.Count());
             t.Add("trace", (IEnumerable<IElementNavigator> f, string name, EvaluationContext ctx) => f.Trace(name, ctx));
 
-            //   t.Add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.ConcatUnion(r));
+            t.Add("combine", (IEnumerable<IElementNavigator> l, IEnumerable<IElementNavigator> r) => l.Concat(r));
             t.Add("binary.|", (object f, IEnumerable<IElementNavigator> l, IEnumerable<IElementNavigator> r) => l.DistinctUnion(r));
             t.Add("binary.contains", (object f, IEnumerable<IElementNavigator> a, IElementNavigator b) => a.Contains(b));
             t.Add("binary.in", (object f, IElementNavigator a, IEnumerable<IElementNavigator> b) => b.Contains(a));
