@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -351,11 +352,11 @@ namespace Hl7.Fhir.Utility
         {
             XmlSchemaSet schemas = new XmlSchemaSet();
 
-            var schema = new StringReader(Serialization.Properties.Resources.xml);
-            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+            string location = typeof(SerializationUtil).GetTypeInfo().Assembly.Location;
+            var path = Path.GetDirectoryName(location);
+            schemas.Add(null, XmlReader.Create(Path.Combine(path, "xhtml", "xml.xsd")));   // null = use schema namespace as specified in schema file
 
-            schema = new StringReader(Serialization.Properties.Resources.fhir_xhtml);
-            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
+            schemas.Add(null, XmlReader.Create(Path.Combine(path, "xhtml", "fhir-xhtml.xsd")));   // null = use schema namespace as specified in schema file
 
             schemas.Compile();
 
