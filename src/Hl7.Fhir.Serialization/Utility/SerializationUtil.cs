@@ -352,8 +352,7 @@ namespace Hl7.Fhir.Utility
         {
             XmlSchemaSet schemas = new XmlSchemaSet();
 
-            string location = typeof(SerializationUtil).GetTypeInfo().Assembly.Location;
-            var path = Path.GetDirectoryName(location);
+            var path = AppDomain.CurrentDomain.BaseDirectory;
             schemas.Add(null, XmlReader.Create(Path.Combine(path, "xhtml", "xml.xsd")));   // null = use schema namespace as specified in schema file
 
             schemas.Add(null, XmlReader.Create(Path.Combine(path, "xhtml", "fhir-xhtml.xsd")));   // null = use schema namespace as specified in schema file
