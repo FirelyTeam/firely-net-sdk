@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -74,8 +74,11 @@ namespace Hl7.Fhir.Core.AsyncTests
                 foreach (var e in result1.Entry)
                 {
                     Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
+                    if (p.Name.Any())
+                    {
+                        Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    }
                 }
                 result1 = client.Continue(result1, PageDirection.Next);
             }
@@ -144,8 +147,11 @@ namespace Hl7.Fhir.Core.AsyncTests
                 foreach (var e in result1.Entry)
                 {
                     Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
+                    if (p.Name.Any())
+                    {
+                        Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    }
                 }
                 result1 = client.Continue(result1, PageDirection.Next);
             }
@@ -224,8 +230,11 @@ namespace Hl7.Fhir.Core.AsyncTests
                 foreach (var e in result1.Entry)
                 {
                     Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
+                    if (p.Name.Any())
+                    {
+                        Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    }
                 }
                 result1 = client.Continue(result1, PageDirection.Next);
             }
@@ -243,7 +252,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 ReturnFullResource = true
             };
 
-            var result1 = await client.SearchAsync<Patient>(new []{"family=clark"});
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" });
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -252,8 +261,11 @@ namespace Hl7.Fhir.Core.AsyncTests
                 foreach (var e in result1.Entry)
                 {
                     Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
+                    if (p.Name.Any())
+                    {
+                        Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    }
                 }
                 result1 = client.Continue(result1, PageDirection.Next);
             }
@@ -271,7 +283,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 ReturnFullResource = true
             };
 
-            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Chalmers" }, pageSize:5);
+            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Chalmers" }, pageSize: 5);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -280,8 +292,11 @@ namespace Hl7.Fhir.Core.AsyncTests
                 foreach (var e in result1.Entry)
                 {
                     Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
-                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    if (p.Name.Any())
+                    {
+                        Console.WriteLine(
+                            $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    }
                 }
                 result1 = client.Continue(result1, PageDirection.Next);
             }
@@ -299,7 +314,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 ReturnFullResource = true
             };
 
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" },null,1);
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" }, null, 1);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -308,8 +323,11 @@ namespace Hl7.Fhir.Core.AsyncTests
                 foreach (var e in result1.Entry)
                 {
                     Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
+                    if (p.Name.Any())
+                    {
+                        Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    }
                 }
                 Console.WriteLine("Fetching more results...");
                 result1 = await client.ContinueAsync(result1);
@@ -337,8 +355,11 @@ namespace Hl7.Fhir.Core.AsyncTests
                 foreach (var e in result1.Entry)
                 {
                     Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
+                    if (p.Name.Any())
+                    {
+                        Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                    }
                 }
                 Console.WriteLine("Fetching more results...");
                 result1 = await client.ContinueAsync(result1);
