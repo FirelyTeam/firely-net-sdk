@@ -130,6 +130,7 @@ namespace Hl7.FhirPath.Expressions
             t.Add("as", (IEnumerable<IElementNavigator> f, string name) => f.FilterType(name), doNullProp: true);
             t.Add("binary.is", (object f, IElementNavigator left, string name) => left.Is(name), doNullProp: true);
             t.Add("binary.as", (object f, IElementNavigator left, string name) => left.CastAs(name), doNullProp: true);
+            t.Add("binary.as", (object f, IEnumerable<IElementNavigator> left, string name) => left.FilterType(name), doNullProp: true);
 
             t.Add("extension", (IEnumerable<IElementNavigator> f, string url) => f.Extension(url), doNullProp: true);
 
