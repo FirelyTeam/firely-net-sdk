@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.IsPrimitive)
             {
                 var reader = new PrimitiveValueReader(_current);
-                return reader.Deserialize(prop.ImplementingType);
+                return reader.Deserialize(prop.ElementType);
             }
 
             // A Choice property that contains a choice of any resource
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             // Else use the actual return type of the property
             else
             {
-                mapping = _inspector.ImportType(prop.ImplementingType);
+                mapping = _inspector.ImportType(prop.ElementType);
             }
 
             if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument(nameof(existing), "Can only read complex elements into types that are Element or Resource");

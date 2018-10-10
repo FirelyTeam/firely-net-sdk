@@ -95,12 +95,12 @@ namespace Hl7.Fhir.Serialization
                     var reader = new DispatchingReader(memberData, Settings, arrayMode: false);
                     value = reader.Deserialize(mappedProperty, memberName, value);
 
-                    if (mappedProperty.RepresentsValueElement && mappedProperty.ImplementingType.IsEnum() && value is String)
+                    if (mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
                     {
                         if (!Settings.AllowUnrecognizedEnums)
                         {
-                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ImplementingType) == null)
-                                throw Error.Format("Literal '{0}' is not a valid value for enumeration '{1}'".FormatWith(value, mappedProperty.ImplementingType.Name), _current.Location);
+                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ElementType) == null)
+                                throw Error.Format("Literal '{0}' is not a valid value for enumeration '{1}'".FormatWith(value, mappedProperty.ElementType.Name), _current.Location);
                         }
 
                         ((Primitive)existing).ObjectValue = value;
