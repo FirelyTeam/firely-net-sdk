@@ -110,17 +110,19 @@ namespace Hl7.Fhir.Serialization.Tests
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             var sw = new Stopwatch();
             sw.Start();
-            convertFiles(examplePath, intermediate1Path, usingPoco, provider);
+            long processedFileCount = convertFiles(examplePath, intermediate1Path, usingPoco, provider);
             sw.Stop();
-            Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
+            var seconds = sw.ElapsedMilliseconds / 1000;
+            Trace.WriteLine($"Conversion of {processedFileCount} files took {seconds} seconds ({((double)processedFileCount)/ seconds:0.0} files/sec)");
             sw.Reset();
 
             var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
             sw.Start();
-            convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider);
+            processedFileCount = convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider);
             sw.Stop();
-            Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
+            seconds = sw.ElapsedMilliseconds / 1000;
+            Trace.WriteLine($"Conversion of {processedFileCount} files took {seconds} seconds ({((double)processedFileCount)/seconds:0.0} files/sec)");
             sw.Reset();
 
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
@@ -128,11 +130,12 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
 
-        private static void convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
+        private static long convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
             var files = Directory.EnumerateFiles(inputPath);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
+            int filesProcessed = 0;
             foreach (string file in files)
             {
                 if (file.Contains(".profile"))
@@ -153,10 +156,11 @@ namespace Hl7.Fhir.Serialization.Tests
                     convertResourcePoco(file, outputFile);
                 else
                     convertResourceNav(file, outputFile, provider);
-
+                filesProcessed++;
             }
 
             Debug.WriteLine("Done!");
+            return filesProcessed;
         }
 
 
