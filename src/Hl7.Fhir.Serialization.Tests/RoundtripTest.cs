@@ -91,27 +91,6 @@ namespace Hl7.Fhir.Serialization.Tests
             doRoundTrip(examples, baseTestPath, usingPoco, provider);
         }
 
-
-
-        //[TestMethod]
-        //public void CompareIntermediate2Xml()
-        //{
-        //    // You can use this method to compare just the input against intermediate2, much faster than
-        //    // unpacking and converting first. This only works AFTER a previous test has already converted
-        //    // xml -> json -> xml
-        //    compareFiles(@"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestXml\input", @"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestXml\intermediate2");
-        //}
-
-        //[TestMethod]
-        //public void CompareIntermediate2Json()
-        //{
-        //    // You can use this method to compare just the input against intermediate2, much faster than
-        //    // unpacking and converting first. This only works AFTER a previous test has already converted
-        //    // json -> xml -> json
-        //    compareFiles(@"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestJson\input", @"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestJson\intermediate2");
-        //}
-
-
         private static void createEmptyDir(string baseTestPath)
         {
             if (Directory.Exists(baseTestPath)) Directory.Delete(baseTestPath, true);
