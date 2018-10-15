@@ -6,20 +6,21 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using System;
-using System.IO.Compression;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class Requester
+    internal class Requester : IDisposable
     {
         public Uri BaseUrl { get; private set; }
+        public HttpClient Client { get; private set; }
 
         public bool UseFormatParameter { get; set; }
         public ResourceFormat PreferredFormat { get; set; }
@@ -32,6 +33,7 @@ namespace Hl7.Fhir.Rest
         /// 2. decompress any responses that have Content-Encoding: gzip (or deflate)
         /// </summary>
         public bool PreferCompressedResponses { get; set; }
+
         /// <summary>
         /// Compress any Request bodies 
         /// (warning, if a server does not handle compressed requests you will get a 415 response)
@@ -40,149 +42,76 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings { get; set; }
 
-        public Requester(Uri baseUrl)
+        public Action<HttpRequestMessage> BeforeRequest { get; set; }
+        public Action<HttpResponseMessage> AfterResponse { get; set; }
+
+        public Requester(Uri baseUrl, HttpMessageHandler messageHandler) : this(baseUrl, new HttpClient(messageHandler))
+        { }
+
+        public Requester(Uri baseUrl, HttpClient httpClient)
         {
             BaseUrl = baseUrl;
+            Client = httpClient;
+
+            Client.DefaultRequestHeaders.Add("User-Agent", ".NET FhirClient for FHIR " + Version);
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
-            Timeout = 100 * 1000;       // Default timeout is 100 seconds            
+            Client.Timeout = new TimeSpan(0, 0, 100);       // Default timeout is 100 seconds            
             Prefer = Rest.Prefer.ReturnRepresentation;
             ParserSettings = ParserSettings.CreateDefault();
         }
-
-
-        public Bundle.EntryComponent LastResult { get; private set; }
-        public HttpWebResponse LastResponse { get; private set; }
-        public HttpWebRequest LastRequest { get; private set; }
-        public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
-        public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
-
 
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
             return ExecuteAsync(interaction).WaitResult();
         }
+
         public async Task<Bundle.EntryComponent> ExecuteAsync(Bundle.EntryComponent interaction)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
-            bool compressRequestBody = false;
 
-            compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
-
-            byte[] outBody;
-            var request = interaction.ToHttpRequest(BaseUrl, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
-
-#if !NETSTANDARD1_1
-            request.Timeout = Timeout;
-#endif
-
-            if (PreferCompressedResponses)
+            using (var requestMessage = interaction.ToHttpRequestMessage(BaseUrl, Prefer, PreferredFormat, UseFormatParameter, CompressRequestBody))
             {
-                request.Headers["Accept-Encoding"] = "gzip, deflate";
-            }
-
-            LastRequest = request;
-            if (BeforeRequest != null) BeforeRequest(request, outBody);
-
-            // Write the body to the output
-            if (outBody != null)
-                request.WriteBody(compressRequestBody, outBody);
-
-            // Make sure the HttpResponse gets disposed!
-            using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)).ConfigureAwait(false))
-            //using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
-            {
-                try
+                if (PreferCompressedResponses)
                 {
-                    //Read body before we call the hook, so the hook cannot read the body before we do
-                    var inBody = readBody(webResponse);
+                    requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                    requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                }
 
-                    LastResponse = webResponse;
-                    if (AfterResponse != null) AfterResponse(webResponse,inBody);
+                BeforeRequest(requestMessage);
 
-                    // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
+                using (var response = await Client.SendAsync(requestMessage).ConfigureAwait(false))
+                {
+                    AfterResponse(response);
+                    var body = await response.Content.ReadAsByteArrayAsync();
+
                     try
                     {
-                        LastResult = null;
-
-                        if (webResponse.StatusCode.IsSuccessful())
+                        if (response.IsSuccessStatusCode)
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: true);
-                            return LastResult;
+                            return response.ToBundleEntry(body, ParserSettings, throwOnFormatException: true);
                         }
                         else
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: false);
-                            throw buildFhirOperationException(webResponse.StatusCode, LastResult.Resource);
+                            var bundle = response.ToBundleEntry(body, ParserSettings, throwOnFormatException: false);
+                            throw buildFhirOperationException(response.StatusCode, bundle.Resource);
                         }
                     }
-                    catch(UnsupportedBodyTypeException bte)
+                    catch (UnsupportedBodyTypeException bte)
                     {
-                        // The server responded with HTML code. Still build a FhirOperationException and set a LastResult.
-                        // Build a very minimal LastResult
-                        var errorResult = new Bundle.EntryComponent();
-                        errorResult.Response = new Bundle.ResponseComponent();
-                        errorResult.Response.Status = ((int)webResponse.StatusCode).ToString();
-
-                        OperationOutcome operationOutcome = OperationOutcome.ForException(bte, OperationOutcome.IssueType.Invalid);
-
-                        errorResult.Resource = operationOutcome;
-                        LastResult = errorResult;
-
-                        throw buildFhirOperationException(webResponse.StatusCode, operationOutcome);
+                        var operationOutcome = OperationOutcome.ForException(bte, OperationOutcome.IssueType.Invalid);
+                        throw buildFhirOperationException(response.StatusCode, operationOutcome);
                     }
-                }
-                catch (AggregateException ae)
-                {
-                    //EK: This code looks weird. Is this correct?
-                    if (ae.GetBaseException() is WebException)
-                    {
-                    }
-                    throw ae.GetBaseException();
                 }
             }
         }
 
-        private static byte[] readBody(HttpWebResponse response)
+        protected string Version => ModelInfo.Version;
+
+        protected Bundle.EntryComponent CreateBundleEntry(HttpResponseMessage response, byte[] body, bool throwOnFormatException)
         {
-            if (response.ContentLength != 0)
-            {
-                byte[] body = null;
-                var respStream = response.GetResponseStream();
-#if NETSTANDARD1_1
-                var contentEncoding = response.Headers["Content-Encoding"];
-#else
-                var contentEncoding = response.ContentEncoding;
-#endif
-                if (contentEncoding == "gzip")
-                {
-                    using (var decompressed = new GZipStream(respStream, CompressionMode.Decompress, true))
-                    {
-                        body = HttpUtil.ReadAllFromStream(decompressed);
-                    }
-                }
-                else if (contentEncoding == "deflate")
-                {
-                    using (var decompressed = new DeflateStream(respStream, CompressionMode.Decompress, true))
-                    {
-                        body = HttpUtil.ReadAllFromStream(decompressed);
-                    }
-                }
-                else
-                {
-                    body = HttpUtil.ReadAllFromStream(respStream);
-                }
-                respStream.Dispose();
-
-                if (body.Length > 0)
-                    return body;
-                else
-                    return null;
-            }
-            else
-                return null;
+            return response.ToBundleEntry( body, ParserSettings, throwOnFormatException);
         }
-
 
         private static Exception buildFhirOperationException(HttpStatusCode status, Resource body)
         {
@@ -203,6 +132,26 @@ namespace Hl7.Fhir.Rest
                 return new FhirOperationException($"{message}. Body contains a {body.TypeName}.", status);
             else
                 return new FhirOperationException($"{message}. Body has no content.", status);
+        }
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this.Client.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

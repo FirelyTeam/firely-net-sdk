@@ -6,31 +6,28 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using System;
-using System.Net;
-using System.Reflection;
-using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, Uri baseUrl,
-            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
+        public static HttpRequestMessage ToHttpRequestMessage(this Bundle.EntryComponent entry, Uri baseUrl,
+            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
             var interaction = entry.Request;
-            body = null;
 
             if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
 
-            // Create an absolute uri when the interaction.Url is relative.
             var uri = new Uri(interaction.Url, UriKind.RelativeOrAbsolute);
             if (!uri.IsAbsoluteUri)
             {
@@ -41,99 +38,70 @@ namespace Hl7.Fhir.Rest
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
 
-            var request = (HttpWebRequest)HttpWebRequest.Create(location.Uri);
-            request.Method = interaction.Method.ToString();
-            setAgent(request, ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
+            var request = new HttpRequestMessage(getMethod(interaction.Method), location.Uri);
 
             if (!useFormatParameter)
-                request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(ContentType.BuildContentType(format, forBundle: false)));
 
-            if (interaction.IfMatch != null) request.Headers["If-Match"] = interaction.IfMatch;
-            if (interaction.IfNoneMatch != null) request.Headers["If-None-Match"] = interaction.IfNoneMatch;
-#if NETSTANDARD1_1
-            if (interaction.IfModifiedSince != null) request.Headers["If-Modified-Since"] = interaction.IfModifiedSince.Value.UtcDateTime.ToString();
-#else
-            if (interaction.IfModifiedSince != null) request.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
-            
-#endif
-            if (interaction.IfNoneExist != null) request.Headers["If-None-Exist"] = interaction.IfNoneExist;
+            if (interaction.IfMatch != null) request.Headers.Add("If-Match", interaction.IfMatch);
+            if (interaction.IfNoneMatch != null) request.Headers.Add("If-None-Match", interaction.IfNoneMatch);
+            if (interaction.IfModifiedSince != null) request.Headers.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
+            if (interaction.IfNoneExist != null) request.Headers.Add("If-None-Exist", interaction.IfNoneExist);
 
             if (interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT)
             {
-                request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
+                request.Headers.Add("Prefer", bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation" );
             }
-            
+
             if (entry.Resource != null)
             {
                 bool searchUsingPost =
-                    interaction.Method == Bundle.HTTPVerb.POST
-                    && (entry.HasAnnotation<TransactionBuilder.InteractionType>()
-                    && entry.Annotation<TransactionBuilder.InteractionType>() == TransactionBuilder.InteractionType.Search)
-                    && entry.Resource is Parameters;
-
-                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, searchUsingPost, out body);
+                   interaction.Method == Bundle.HTTPVerb.POST
+                   && (entry.HasAnnotation<TransactionBuilder.InteractionType>()
+                   && entry.Annotation<TransactionBuilder.InteractionType>() == TransactionBuilder.InteractionType.Search)
+                   && entry.Resource is Parameters;
+                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, searchUsingPost);
             }
-            // PCL doesn't support setting the length (and in this case will be empty anyway)
-#if !NETSTANDARD1_1
-            else
-                request.ContentLength = 0;
-#endif
+
+
             return request;
         }
 
-
         /// <summary>
-        /// Flag to control the setting of the User Agent string (different platforms have different abilities)
+        /// Converts bundle http verb to corresponding <see cref="HttpMethod"/>.
         /// </summary>
-        public static bool SetUserAgentUsingReflection = true;
-        public static bool SetUserAgentUsingDirectHeaderManipulation = true;
-
-        private static void setAgent(HttpWebRequest request, string agent)
+        /// <param name="verb"><see cref="Bundle.HTTPVerb"/> specified by input bundle.</param>
+        /// <returns><see cref="HttpMethod"/> corresponding to verb specified in input bundle.</returns>
+        private static HttpMethod getMethod(Bundle.HTTPVerb? verb)
         {
-            bool userAgentSet = false;
-            if (SetUserAgentUsingReflection)
+            switch (verb)
             {
-                try
-                {
-					System.Reflection.PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
-
-                    if (prop != null)
-                        prop.SetValue(request, agent, null);
-                    userAgentSet = true;
-                }
-                catch (Exception)
-                {
-                    // This approach doesn't work on this platform, so don't try it again.
-                    SetUserAgentUsingReflection = false;
-                }
+                case Bundle.HTTPVerb.GET:
+                    return HttpMethod.Get;
+                case Bundle.HTTPVerb.POST:
+                    return HttpMethod.Post;
+                case Bundle.HTTPVerb.PUT:
+                    return HttpMethod.Put;
+                case Bundle.HTTPVerb.DELETE:
+                    return HttpMethod.Delete;
             }
-            if (!userAgentSet && SetUserAgentUsingDirectHeaderManipulation)
-            {
-                // platform does not support UserAgent property...too bad
-                try
-                {
-                    request.Headers[HttpRequestHeader.UserAgent] = agent;
-                }
-                catch (ArgumentException)
-                {
-                    SetUserAgentUsingDirectHeaderManipulation = false;
-                }
-            }
+            throw new HttpRequestException($"Valid HttpVerb could not be found for verb type: [{verb}]");
         }
 
-
-        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, bool searchUsingPost, out byte[] body)
+        private static void setBodyAndContentType(HttpRequestMessage request, Resource data, ResourceFormat format, bool CompressRequestBody, bool searchUsingPost)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
-            if (data is Binary)
+            byte[] body;
+            string contentType;
+
+            if (data is Binary bin)
             {
-                var bin = (Binary)data;
                 body = bin.Content;
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, bin.Content);
-                request.ContentType = bin.ContentType;
+                contentType = bin.ContentType;
             }
             else if (searchUsingPost)
             {
@@ -152,7 +120,7 @@ namespace Hl7.Fhir.Rest
                     body = null;
                 }
 
-                request.ContentType = "application/x-www-form-urlencoded";
+                contentType = "application/x-www-form-urlencoded";
             }
             else
             {
@@ -163,10 +131,12 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                contentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
             }
-        }
 
-      
+            request.Content = new ByteArrayContent(body);
+
+            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
+        }
     }
 }

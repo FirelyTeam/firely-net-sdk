@@ -13,12 +13,6 @@ namespace Hl7.Fhir.Rest
         bool CompressRequestBody { get; set; }
 #endif
         Uri Endpoint { get; }
-        byte[] LastBody { get; }
-        Resource LastBodyAsResource { get; }
-        string LastBodyAsText { get; }
-        HttpWebRequest LastRequest { get; }
-        HttpWebResponse LastResponse { get; }
-        Bundle.ResponseComponent LastResult { get; }
         ParserSettings ParserSettings { get; set; }
         ResourceFormat PreferredFormat { get; set; }
         bool ReturnFullResource { get; set; }

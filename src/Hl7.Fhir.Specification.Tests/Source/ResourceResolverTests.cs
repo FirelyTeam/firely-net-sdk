@@ -18,6 +18,7 @@ using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
 using Hl7.Fhir.Utility;
+using System.Net.Http;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -93,16 +94,16 @@ namespace Hl7.Fhir.Specification.Tests
 
             public TestFhirClient(Uri endpoint) : base(endpoint) { Status = 1; }
 
-            protected override void BeforeRequest(HttpWebRequest rawRequest, byte[] body)
+            protected override void BeforeRequest(HttpRequestMessage request)
             {
                 Status = 2;
-                base.BeforeRequest(rawRequest, body);
+                base.BeforeRequest(request);
             }
 
-            protected override void AfterResponse(HttpWebResponse webResponse, byte[] body)
+            protected override void AfterResponse(HttpResponseMessage response)
             {
                 Status = 3;
-                base.AfterResponse(webResponse, body);
+                base.AfterResponse(response);
             }
         }
 
