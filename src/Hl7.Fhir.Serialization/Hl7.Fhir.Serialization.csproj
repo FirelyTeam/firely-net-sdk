@@ -22,6 +22,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="xhtml\fhir-xhtml.xsd" />
+    <None Remove="xhtml\xml.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xhtml\fhir-xhtml.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xhtml\xml.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
