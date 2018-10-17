@@ -6,17 +6,12 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.FhirPath.Parser;
-using Hl7.FhirPath;
-using Hl7.FhirPath.Expressions;
-using Sprache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
-using Hl7.FhirPath.Functions;
+using Hl7.FhirPath;
+using Sprache;
 
 namespace Hl7.FhirPath
 {
@@ -29,7 +24,7 @@ namespace Hl7.FhirPath
 
         private static CompiledExpression getCompiledExpression(string expression)
         {
-            lock(_cacheLock)
+            lock (_cacheLock)
             {
                 bool success = _cache.TryGetValue(expression, out CompiledExpression ce);
 
@@ -38,7 +33,7 @@ namespace Hl7.FhirPath
                     var compiler = new FhirPathCompiler();
                     ce = compiler.Compile(expression);
 
-                    if(_cache.Count >= MAX_FP_EXPRESSION_CACHE_SIZE)
+                    if (_cache.Count >= MAX_FP_EXPRESSION_CACHE_SIZE)
                     {
                         var lruExpression = _mruList.First();
                         _cache.Remove(lruExpression);
@@ -50,61 +45,59 @@ namespace Hl7.FhirPath
 
                 _mruList.Remove(expression);
                 _mruList.Add(expression);
-                
+
                 return ce;
             }
         }
 
 
-        public static IEnumerable<IElementNavigator> Select(this IElementNavigator input, string expression, EvaluationContext ctx=null)
+        public static IEnumerable<ITypedElement> Select(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
         }
 
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static IEnumerable<IElementNavigator> Select(this IElementNavigator input, string expression, IElementNavigator resource)
+        [Obsolete("Use Select(this ITypedElement input) instead")]
+        public static IEnumerable<IElementNavigator> Select(this IElementNavigator input, string expression, EvaluationContext ctx = null)
         {
-            return input.Select(expression, new EvaluationContext(resource));
+            return Select(input.ToTypedElement(), expression, ctx).Select(t => t.ToElementNavigator());
         }
 
-
-        public static object Scalar(this IElementNavigator input, string expression, EvaluationContext ctx = null)
+        public static object Scalar(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.Scalar(input, ctx ?? EvaluationContext.CreateDefault());
         }
 
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static object Scalar(this IElementNavigator input, string expression, IElementNavigator resource)
+        [Obsolete("Use Scalar(this ITypedElement input) instead")]
+        public static object Scalar(this IElementNavigator input, string expression, EvaluationContext ctx = null)
         {
-            return input.Scalar(expression, new EvaluationContext(resource));
+            return Scalar(input.ToTypedElement(), expression, ctx);
         }
 
-        public static bool Predicate(this IElementNavigator input, string expression, EvaluationContext ctx = null)
+        public static bool Predicate(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.Predicate(input, ctx ?? EvaluationContext.CreateDefault());
         }
 
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static bool Predicate(this IElementNavigator input, string expression, IElementNavigator resource)
+        [Obsolete("Use Predicate(this ITypedElement input) instead")]
+        public static bool Predicate(this IElementNavigator input, string expression, EvaluationContext ctx = null)
         {
-            return input.Predicate(expression, new EvaluationContext(resource));
+            return Predicate(input.ToTypedElement(), expression, ctx);
         }
 
 
-        public static bool IsBoolean(this IElementNavigator input, string expression, bool value, EvaluationContext ctx = null)
+        public static bool IsBoolean(this ITypedElement input, string expression, bool value, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.IsBoolean(value, input, ctx ?? EvaluationContext.CreateDefault());
         }
 
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static bool IsBoolean(this IElementNavigator input, string expression, bool value, IElementNavigator resource)
+        [Obsolete("Use IsBoolean(this ITypedElement input) instead")]
+        public static bool IsBoolean(this IElementNavigator input, string expression, bool value, EvaluationContext ctx = null)
         {
-            return input.IsBoolean(expression, value, new EvaluationContext(resource));
+            return IsBoolean(input.ToTypedElement(), expression, value, ctx);
         }
-
     }
 }

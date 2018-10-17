@@ -15,7 +15,7 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class CollectionOperators
     {
-        public static bool? BooleanEval(this IEnumerable<IElementNavigator> focus)
+        public static bool? BooleanEval(this IEnumerable<ITypedElement> focus)
         {
             if (!focus.Any()) return null;
 
@@ -30,12 +30,12 @@ namespace Hl7.FhirPath.Functions
         }
 
 
-        public static bool Not(this IEnumerable<IElementNavigator> focus)
+        public static bool Not(this IEnumerable<ITypedElement> focus)
         {
             return !(focus.BooleanEval().Value);
         }
 
-        public static IEnumerable<IElementNavigator> DistinctUnion(this IEnumerable<IElementNavigator> a, IEnumerable<IElementNavigator> b)
+        public static IEnumerable<ITypedElement> DistinctUnion(this IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b)
         {
             var result = a.Union(b, new EqualityOperators.ValueProviderEqualityComparer());
             return result;
@@ -47,47 +47,47 @@ namespace Hl7.FhirPath.Functions
         //}
 
 
-        public static IEnumerable<IElementNavigator> Item(this IEnumerable<IElementNavigator> focus, int index)
+        public static IEnumerable<ITypedElement> Item(this IEnumerable<ITypedElement> focus, int index)
         {
             return focus.Skip(index).Take(1);
         }
 
-        public static IElementNavigator Last(this IEnumerable<IElementNavigator> focus)
+        public static ITypedElement Last(this IEnumerable<ITypedElement> focus)
         {
             return focus.Reverse().First();
         }
 
-        public static IEnumerable<IElementNavigator> Tail(this IEnumerable<IElementNavigator> focus)
+        public static IEnumerable<ITypedElement> Tail(this IEnumerable<ITypedElement> focus)
         {
             return focus.Skip(1);
         }
 
-        public static bool Contains(this IEnumerable<IElementNavigator> focus, IElementNavigator value)
+        public static bool Contains(this IEnumerable<ITypedElement> focus, ITypedElement value)
         {
             return focus.Contains(value, new EqualityOperators.ValueProviderEqualityComparer());
         }
 
-        public static IEnumerable<IElementNavigator> Distinct(this IEnumerable<IElementNavigator> focus)
+        public static IEnumerable<ITypedElement> Distinct(this IEnumerable<ITypedElement> focus)
         {
             return focus.Distinct(new EqualityOperators.ValueProviderEqualityComparer());
         }
 
-        public static bool IsDistinct(this IEnumerable<IElementNavigator> focus)
+        public static bool IsDistinct(this IEnumerable<ITypedElement> focus)
         {
             return focus.Distinct(new EqualityOperators.ValueProviderEqualityComparer()).Count() == focus.Count();
         }
 
-        public static bool SubsetOf(this IEnumerable<IElementNavigator> focus, IEnumerable<IElementNavigator> other)
+        public static bool SubsetOf(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
         {
             return focus.All(fitem => other.Contains(fitem));
         }
 
-        public static IEnumerable<IElementNavigator> Navigate(this IEnumerable<IElementNavigator> elements, string name)
+        public static IEnumerable<ITypedElement> Navigate(this IEnumerable<ITypedElement> elements, string name)
         {
             return elements.SelectMany(e => e.Navigate(name));
         }
 
-        public static IEnumerable<IElementNavigator> Navigate(this IElementNavigator nav, string name)
+        public static IEnumerable<ITypedElement> Navigate(this ITypedElement nav, string name)
         {
             if (char.IsUpper(name[0]))
             {
@@ -99,13 +99,13 @@ namespace Hl7.FhirPath.Functions
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")   
                 // Also we do some poor polymorphism here: Resource.meta.lastUpdated is also allowed.
                 var baseClasses = new[] { "Resource", "DomainResource" };
-                if (nav.Type == name || baseClasses.Contains(name))
+                if (nav.InstanceType == name || baseClasses.Contains(name))
                 {
-                    return new List<IElementNavigator>() { nav };
+                    return new List<ITypedElement>() { nav };
                 }
                 else
                 {
-                    return Enumerable.Empty<IElementNavigator>();
+                    return Enumerable.Empty<ITypedElement>();
                 }
             }
             else

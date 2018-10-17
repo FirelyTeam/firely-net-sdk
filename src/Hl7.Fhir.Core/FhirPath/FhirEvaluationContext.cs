@@ -18,26 +18,23 @@ namespace Hl7.Fhir.FhirPath
         [Obsolete("Please use CreateDefault() instead of this member, which may cause raise conditions.")]
         new public static readonly FhirEvaluationContext Default = new FhirEvaluationContext();
 
-        public static FhirEvaluationContext CreateDefault() => new FhirEvaluationContext();
+        public static new FhirEvaluationContext CreateDefault() => new FhirEvaluationContext();
 
         public FhirEvaluationContext() : base()
         {
         }
 
-        public FhirEvaluationContext(Resource context) : base(context?.ToElementNavigator())
+        public FhirEvaluationContext(Resource context) : base(context?.ToTypedElement())
         {
         }
 
-        [Obsolete("Use FhirEvaluationContext(ITypedElement context) instead")]
-        public FhirEvaluationContext(IElementNavigator context) : base(context)
+        public FhirEvaluationContext(ITypedElement context) : base(context)
         {
         }
 
-        public FhirEvaluationContext(ITypedElement context) : base(context.ToElementNavigator())
-        {
-        }
-
+#pragma warning disable CS0618 // Type or member is obsolete
         private Func<string, IElementNavigator> _resolver;
+#pragma warning restore CS0618 // Type or member is obsolete
 
         [Obsolete("Use property ElementResolver instead")]
         public Func<string, IElementNavigator> Resolver
@@ -64,7 +61,9 @@ namespace Hl7.Fhir.FhirPath
                 if (value == null)
                     _resolver = null;
                 else
+#pragma warning disable CS0618 // Type or member is obsolete
                     _resolver = (s) => value(s).ToElementNavigator();
+#pragma warning restore CS0618 // Type or member is obsolete
             }
         }
     }

@@ -168,7 +168,7 @@ namespace Hl7.Fhir.ElementModel
             new PocoNavigator(@base, rootName);
 
         public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
-            new PocoNavigator(@base, rootName).ToTypedElement();
+            new PocoElementNode(@base, new PocoStructureDefinitionSummaryProvider(), rootName: rootName);
 
 #pragma warning restore 612, 618
     }

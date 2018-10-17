@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
 
-            var settings = expanderSettings ?? ValueSetExpanderSettings.Default;
+            var settings = expanderSettings ?? ValueSetExpanderSettings.CreateDefault();
             if (settings.ValueSetSource == null) settings.ValueSetSource = resolver;
 
             _expander = new ValueSetExpander(settings);

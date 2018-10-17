@@ -99,11 +99,25 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestFhirPathPolymporphism()
         {
-            var patient = new Hl7.Fhir.Model.Patient() { Active = false };
+            var patient = new Patient() { Active = false };
+            patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
+            var nav = patient.ToTypedElement();
+
+            var result = nav.Select("Resource.meta.lastUpdated");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+        }
+
+        [TestMethod]
+        public void TestFhirPathPolymporphismNavigator()
+        {
+            var patient = new Patient() { Active = false };
             patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
             var nav = patient.ToElementNavigator();
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = nav.Select("Resource.meta.lastUpdated");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
         }

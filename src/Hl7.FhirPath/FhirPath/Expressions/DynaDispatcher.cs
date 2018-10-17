@@ -26,9 +26,9 @@ namespace Hl7.FhirPath.Expressions
         private string _name;
         private SymbolTable _scope;
 
-        public IEnumerable<IElementNavigator> Dispatcher(Closure context, IEnumerable<Invokee> args)
+        public IEnumerable<ITypedElement> Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
-            var actualArgs = new List<IEnumerable<IElementNavigator>>();
+            var actualArgs = new List<IEnumerable<ITypedElement>>();
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
             if (!focus.Any()) return FhirValueList.Empty;
