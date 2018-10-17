@@ -348,18 +348,41 @@ namespace Hl7.Fhir.Utility
 
         private static Lazy<XmlSchemaSet> _xhtmlSchemaSet = new Lazy<XmlSchemaSet>(compileXhtmlSchema, true);
 
+        private const string XML_XSD_RESOURCENAME = "Hl7.Fhir.Serialization.xhtml.xml.xsd";
+        private const string FHIRXHTML_XSD_RESOURCENAME = "Hl7.Fhir.Serialization.xhtml.fhir-xhtml.xsd";
+
+        private static Lazy<string> XmlXsdData = new Lazy<string>(() => readResource(XML_XSD_RESOURCENAME));
+        private static Lazy<string> FhirXhtmlXsdData = new Lazy<string>(() => readResource(FHIRXHTML_XSD_RESOURCENAME));
+
         private static XmlSchemaSet compileXhtmlSchema()
         {
             XmlSchemaSet schemas = new XmlSchemaSet();
 
-            var path = AppDomain.CurrentDomain.BaseDirectory;
-            schemas.Add(null, XmlReader.Create(Path.Combine(path, "xhtml", "xml.xsd")));   // null = use schema namespace as specified in schema file
+            var schema = new StringReader(XmlXsdData.Value);
+            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
 
-            schemas.Add(null, XmlReader.Create(Path.Combine(path, "xhtml", "fhir-xhtml.xsd")));   // null = use schema namespace as specified in schema file
+            schema = new StringReader(FhirXhtmlXsdData.Value);
+            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
 
             schemas.Compile();
 
             return schemas;
+        }
+
+        private static string readResource(string resourceName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream == null)
+                {
+                    throw new Exception($"Resource {resourceName} not found in {assembly.FullName}.  Valid resources are: {String.Join(", ", assembly.GetManifestResourceNames())}.");
+                }
+                using (var reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
 #endif
 
