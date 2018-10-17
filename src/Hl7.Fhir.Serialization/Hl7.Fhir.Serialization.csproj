@@ -7,7 +7,6 @@
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
-    <Version>$(SupportApiVersion)</Version>
     <PackageId>Hl7.Fhir.Serialization</PackageId>
     <Title>HL7 FHIR serialization functionality</Title>
     <Summary>Version-independent parsering and serialization functionality</Summary>

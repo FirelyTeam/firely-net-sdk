@@ -8,7 +8,6 @@
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
-    <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.Specification.DSTU2</PackageId>
     <Title>HL7 FHIR Specification support API for DSTU2</Title>
     <Summary>Support for working with FHIR metadata and validation. Supports FHIR DSTU2 (1.0).</Summary>
