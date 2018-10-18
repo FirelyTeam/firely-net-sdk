@@ -10,10 +10,10 @@ namespace Hl7.Fhir.Support
     /// The exception that is throw when the artifact resolver encounters conflicting conformance resources with identical canonical urls.
     /// <para>
     /// Obsolete. The FHIR API no longer throws this exception.
-    /// Clients should catch the new <see cref="ResolvingConflictException"/> instead.
+    /// Clients should catch the new <see cref="T:Hl7.Fhir.Support.ResolvingConflictException"/> instead.
     /// </para>
     /// </summary>
-    /// <seealso cref="ResolvingConflictException"/>
+    /// <seealso cref="T:Hl7.Fhir.Support.ResolvingConflictException"/>
     [Obsolete("This exception is obsolete and has been replaced by the more generic UrlConflictException. The FHIR API longer throws this exception. New clients should catch the UrlConflictException instead.")]
     public class CanonicalUrlConflictException : Exception
     {

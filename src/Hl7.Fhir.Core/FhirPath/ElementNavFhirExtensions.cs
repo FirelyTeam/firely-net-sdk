@@ -97,21 +97,13 @@ namespace Hl7.Fhir.FhirPath
                 if (r == null)
                     return null;
 
-                if (r is PocoElementNode pnav && pnav.FhirValue != null)
+                var fhirValue = r.Annotation<IFhirValueProvider>();
+                if (fhirValue != null)
                 {
-                    return pnav.FhirValue;
+                    return fhirValue.FhirValue;
                 }
 
-                object result;
-
-                if (r.Value is ConstantValue)
-                {
-                    result = (r.Value as ConstantValue).Value;
-                }
-                else
-                {
-                    result = r.Value;
-                }
+                object result = r.Value;
 
                 if (result is bool)
                 {
@@ -165,5 +157,46 @@ namespace Hl7.Fhir.FhirPath
             var inputNav = input.ToTypedElement();
             return inputNav.IsBoolean(expression, value, ctx ?? FhirEvaluationContext.CreateDefault());
         }
+
+        #region Obsolete members
+        [Obsolete("Use HasValue(this ITypedElement focus) instead. Obsolete since 2018-10-17")]
+        public static bool HasValue(this IElementNavigator focus)
+            => focus.ToTypedElement().HasValue();
+
+        [Obsolete("Use HtmlChecks(this ITypedElement focus) instead. Obsolete since 2018-10-17")]
+        public static bool HtmlChecks(this IElementNavigator focus) 
+            => focus.ToTypedElement().HtmlChecks();
+
+        [Obsolete("Use ToFhirValues(this IEnumerable<ITypedElement> results) instead. Obsolete since 2018-10-17")]
+        public static IEnumerable<Base> ToFhirValues(this IEnumerable<IElementNavigator> results)
+        {
+            return ToFhirValues(results.Select(r => r.ToTypedElement()));
+        }
+
+        [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter. Obsolete since 2018-10-17")]
+        public static IEnumerable<Base> Select(this Base input, string expression, Resource resource)
+        {
+            return Select(input, expression, new FhirEvaluationContext(resource));
+        }
+
+        [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter. Obsolete since 2018-10-17")]
+        public static object Scalar(this Base input, string expression, Resource resource)
+        {
+            return Scalar(input, expression, new FhirEvaluationContext(resource));
+        }
+
+        [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter. Obsolete since 2018-10-17")]
+        public static bool Predicate(this Base input, string expression, Resource resource)
+        {
+            return Predicate(input, expression, new FhirEvaluationContext(resource));
+        }
+
+        [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter")]
+        public static bool IsBoolean(this Base input, string expression, bool value, Resource resource)
+        {
+            return IsBoolean(input, expression, value, new FhirEvaluationContext(resource));
+        }
+        #endregion
+
     }
 }

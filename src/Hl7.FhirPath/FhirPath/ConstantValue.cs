@@ -17,7 +17,7 @@ using System.Linq;
 
 namespace Hl7.FhirPath
 {
-    public class ConstantValue : ITypedElement
+    internal class ConstantValue : ITypedElement
     {
         public static object ToFhirPathValue(object value)
         {

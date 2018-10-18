@@ -13,7 +13,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Functions
 {
-    public static class ConversionOperators
+    internal static class ConversionOperators
     {
         private static T getValue<T>(this ITypedElement val, string name)
         {

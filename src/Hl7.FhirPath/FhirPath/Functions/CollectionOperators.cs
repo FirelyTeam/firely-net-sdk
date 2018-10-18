@@ -87,21 +87,21 @@ namespace Hl7.FhirPath.Functions
             return elements.SelectMany(e => e.Navigate(name));
         }
 
-        public static IEnumerable<ITypedElement> Navigate(this ITypedElement nav, string name)
+        public static IEnumerable<ITypedElement> Navigate(this ITypedElement element, string name)
         {
             if (char.IsUpper(name[0]))
             {
 
-                if (!char.IsUpper(nav.Name[0]))
+                if (!char.IsUpper(element.Name[0]))
                     throw Error.InvalidOperation("Resource type name may only appear at the root of a document");
 
                 // If we are at a resource, we should match a path that is possibly not rooted in the resource
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")   
                 // Also we do some poor polymorphism here: Resource.meta.lastUpdated is also allowed.
                 var baseClasses = new[] { "Resource", "DomainResource" };
-                if (nav.InstanceType == name || baseClasses.Contains(name))
+                if (element.InstanceType == name || baseClasses.Contains(name))
                 {
-                    return new List<ITypedElement>() { nav };
+                    return new List<ITypedElement>() { element };
                 }
                 else
                 {
@@ -110,7 +110,7 @@ namespace Hl7.FhirPath.Functions
             }
             else
             {
-                return nav.Children(name);
+                return element.Children(name);
             }
         }
     }

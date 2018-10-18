@@ -22,13 +22,6 @@ namespace Hl7.FhirPath
             return focus.OfType<ITypedElement>();
         }
 
-        [Obsolete("Use JustElements(this IEnumerable<ITypedElement> focus) instead")]
-        public static IEnumerable<IElementNavigator> JustElements(this IEnumerable<IElementNavigator> focus)
-        {
-            // todo: this is a tautology now --mh
-            return focus.OfType<IElementNavigator>();
-        }
-
         public static IEnumerable<ITypedElement> Children(this IEnumerable<ITypedElement> focus)
         {
             // todo: this is now a tautology --mh
@@ -36,21 +29,7 @@ namespace Hl7.FhirPath
             return focus.SelectMany(node => node.Children());
         }
 
-        [Obsolete("Use Children(this IEnumerable<ITypedElement> focus) instead")]
-        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> focus)
-        {
-            // todo: this is now a tautology --mh
-            // return focus.JustElements().SelectMany(node => node.Children());
-            return focus.SelectMany(node => node.Children());
-        }
-
         public static IEnumerable<ITypedElement> Descendants(this IEnumerable<ITypedElement> focus)
-        {
-            return focus.JustElements().SelectMany(node => node.Descendants());
-        }
-
-        [Obsolete("Use Descendants(this IEnumerable<ITypedElement> focus) instead")]
-        public static IEnumerable<IElementNavigator> Descendants(this IEnumerable<IElementNavigator> focus)
         {
             return focus.JustElements().SelectMany(node => node.Descendants());
         }

@@ -37,13 +37,17 @@ namespace Hl7.Fhir
                 return FhirValueList.Create(new object[] { "?" });
             });
 
-            Patient p = new Patient();
-            p.Active = true;
+            Patient p = new Patient
+            {
+                Active = true
+            };
             p.ActiveElement.ElementId = "314";
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
-            p.Telecom = new List<ContactPoint>();
-            p.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Phone, null, "555-phone"));
+            p.Telecom = new List<ContactPoint>
+            {
+                new ContactPoint(ContactPoint.ContactPointSystem.Phone, null, "555-phone")
+            };
             p.Telecom[0].Rank = 1;
 
             Assert.IsTrue(new FhirString("Patient.active").IsExactly(p.Select("descendants().shortpathname()").FirstOrDefault()));
@@ -105,9 +109,10 @@ namespace Hl7.Fhir
         [TestMethod]
         public void PocoExtensionTest()
         {
-            Patient p = new Patient();
-
-            p.Active = true;
+            Patient p = new Patient
+            {
+                Active = true
+            };
             p.ActiveElement.ElementId = "314";
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
@@ -227,7 +232,9 @@ namespace Hl7.Fhir
         {
             var xml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var cs = (new FhirXmlParser()).Parse<Patient>(xml);
+#pragma warning disable CS0618 // Type or member is obsolete
             var nav = cs.ToElementNavigator();
+#pragma warning restore CS0618 // Type or member is obsolete
 
             ElementNavPerformance(nav);
         }

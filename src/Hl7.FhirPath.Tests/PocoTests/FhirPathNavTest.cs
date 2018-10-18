@@ -13,6 +13,7 @@ using System.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.FhirPath.Functions;
 using Xunit;
 
@@ -23,12 +24,7 @@ namespace Hl7.FhirPath.Tests
         public ITypedElement getTestData()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            // var tree = TreeConstructor.FromXml(tpXml);
-            // var navigator = new TreeNavigator(tree);
-            // return navigator;
-
-            var patient = (new FhirXmlParser()).Parse<Patient>(tpXml);
-            return patient.ToTypedElement();
+            return FhirXmlNode.Parse(tpXml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
         }
 
         [Fact]
