@@ -18,6 +18,22 @@
     <SupportApiVersion>1.0.0-alpha3</SupportApiVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>$(DefineConstants);NET_FW</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD1_1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <DefineConstants>$(DefineConstants);NETCORE2_1</DefineConstants>
+  </PropertyGroup>
+
   <!-- Although netstandard1.1 support codegen using the Expression class, we need at least
   one version of our library that does not require it, since iOS does not have support for it.
   Considering netstd1.1 is our lowest common denominator, I've chosen that version to not use
