@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // [WMR 20161208] Handle missing differential
-                var location = differential.Element.Count > 0 ? differential.Element[0].ToNamedNode() : null;
+                var location = differential.Element.Count > 0 ? differential.Element[0].Path : null;
                 if (!ensureSnapshot(baseStructure, structure.BaseDefinition, location))
                 {
                     // Fatal error...
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var typeNav = ElementDefinitionNavigator.ForSnapshot(typeStructure);
                 if (!typeNav.MoveToFirstChild())
                 {
-                    addIssueProfileHasNoSnapshot(nav.Current.ToNamedNode(), typeStructure.Url);
+                    addIssueProfileHasNoSnapshot(nav.Current.Path, typeStructure.Url);
                 }
                 // [WMR 20170208] NEW - Move common logic to separate method, also used by mergeTypeProfiles
 
@@ -632,8 +632,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Create a new resource element without a base element definition (for core type & resource profiles)
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
-            StructureDefinition typeStructure = null;
-            ElementDefinition baseElement = getBaseElementForElementType(diff.Current, out typeStructure);
+            ElementDefinition baseElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
             if (baseElement != null)
             {
                 var newElement = (ElementDefinition)baseElement.DeepCopy();
@@ -925,7 +924,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //    return false;
                 //}
 
-                var diffNode = diff.Current.ToNamedNode();
+                var diffNode = diff.Current.Path;
 
                 // [WMR 20171004] NEW
                 if (typeStructure == null)
@@ -1601,18 +1600,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(elementDef != null);
             // Debug.Assert(elementDef.Type.Count > 0);
             var primaryType = elementDef.PrimaryType(); // Ignore any other types
-            if (primaryType != null)
-            {
-                return getStructureForTypeRef(elementDef, primaryType, ensureSnapshot);
-            }
-            return null;
+            return primaryType != null ? getStructureForTypeRef(elementDef, primaryType, ensureSnapshot) : null;
         }
 
         // Resolve StructureDefinition for the specified typeRef component
         // Expand snapshot and generate ElementDefinition.Base components if necessary
         StructureDefinition getStructureForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef, bool ensureSnapshot)
         {
-            var location = elementDef.ToNamedNode();
+            var location = elementDef.Path;
             StructureDefinition baseStructure = null;
 
             // [WMR 20160720] Handle custom type profiles (GForge #9791)
@@ -1639,7 +1634,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
-                isValidProfile = (IsEqualPath(typeName, location.Location)) ||
+                isValidProfile = (IsEqualPath(typeName, location)) ||
                     (
                         ensureSnapshot
                         ? this.ensureSnapshot(baseStructure, typeName, location)
@@ -1659,7 +1654,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(nav.Current != null);
 
             var elementDef = nav.Current;
-            var location = elementDef.ToNamedNode();
+            var location = elementDef.Path;
 
             var contentReference = elementDef.ContentReference; // e.g. "#Questionnaire.item"
 
@@ -1681,7 +1676,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 #endif
 
-        bool verifyStructure(StructureDefinition sd, string profileUrl, IElementNavigator location = null)
+        bool verifyStructure(StructureDefinition sd, string profileUrl, string location = null)
         {
             if (sd == null)
             {
@@ -1696,7 +1691,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // - the specified StructureDef is not null
         // - the snapshot component is not empty (expand on demand if necessary)
         // - The ElementDefinition.Base components are propertly initialized (regenerate if necessary)
-        bool ensureSnapshot(StructureDefinition sd, string profileUri, IElementNavigator location = null)
+        bool ensureSnapshot(StructureDefinition sd, string profileUri, string location = null)
         {
             if (!verifyStructure(sd, profileUri, location)) { return false; }
             profileUri = sd.Url;
@@ -1704,7 +1699,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Detect infinite recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             // Special case: when recursing on Element, simply return true and continue; otherwise throw an exception
-            var path = location != null ? location.Location : null;
+            var path = location ?? null;
             _stack.OnBeforeExpandTypeProfile(profileUri, path);
 
             try
@@ -1760,29 +1755,21 @@ namespace Hl7.Fhir.Specification.Snapshot
             typeProfile = null;
             // Debug.Assert(elementDef.Type.Count > 0);
             var primaryType = elementDef.PrimaryType(); // Ignore any other types
-            if (primaryType != null)
-            {
-                return getBaseElementForTypeRef(elementDef, primaryType, out typeProfile);
-            }
-            return null;
+            return primaryType != null ? getBaseElementForTypeRef(elementDef, primaryType, out typeProfile) : null;
         }
 
         // Resolve the base element definition for the specified element type = the snapshot root element of the associated type profile
         ElementDefinition getBaseElementForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef, out StructureDefinition typeProfile)
         {
             typeProfile = getStructureForTypeRef(elementDef, typeRef, false);
-            if (typeProfile != null)
-            {
-                return getSnapshotRootElement(typeProfile, typeProfile.Url, elementDef.ToNamedNode());
-            }
-            return null;
+            return typeProfile != null ? getSnapshotRootElement(typeProfile, typeProfile.Url, elementDef.Path) : null;
         }
 
         // Returns the snapshot root element of the specified profile
         // Try to resolve from existing snapshot, if it exists and is valid
         // Try to resolve from partial snapshot, if it is currently being generated (higher up on the stack)
         // Otherwise recursively resolve the associated base profile root element definition (if it exists) and merge with differential root
-        ElementDefinition getSnapshotRootElement(StructureDefinition sd, string profileUri, IElementNavigator location)
+        ElementDefinition getSnapshotRootElement(StructureDefinition sd, string profileUri, string location)
         {
             // Debug.Print("[SnapshotGenerator.getSnapshotRootElement] profileUri = '{0}' - resolving root element definition...", profileUri);
             if (!verifyStructure(sd, profileUri, location)) { return null; }
@@ -1865,7 +1852,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
             var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
             // [WMR 20180108] diffRoot may be null (sparse differential w/o root)
-            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, diffRoot?.ToNamedNode()); // Recursion!
+            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, diffRoot?.Path); // Recursion!
 
             if (baseRoot == null)
             {

@@ -126,29 +126,28 @@ namespace Hl7.Fhir.Tests.Model
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = resource.ToElementNavigator();
-            var navigator = resource.ToElementNavigator();
+            var resourceModel = resource.ToTypedElement();
 
             try
             {
-                var results = resourceModel.Select(index.Expression, new EvaluationContext(navigator));
+                var results = resourceModel.Select(index.Expression, new EvaluationContext(resourceModel));
                 if (results.Count() > 0)
                 {
                     foreach (var t2 in results)
                     {
                         if (t2 != null)
                         {
-                            if (t2 is PocoNavigator && (t2 as PocoNavigator).FhirValue != null)
+                            if (t2 is PocoElementNode && (t2 as PocoElementNode).FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
-                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
+                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                                //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
                                 exampleSearchValues[key]++;
                             }
                             else if (t2.Value is Hl7.FhirPath.ConstantValue)
                             {
-                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
+                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                                //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
                                 exampleSearchValues[key]++;
                             }
                             else if (t2.Value is bool)

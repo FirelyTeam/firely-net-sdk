@@ -31,8 +31,8 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Active = true
             };
-            _location = p.ToElementNavigator();
-            _location.MoveToFirstChild();
+            var node = p.ToTypedElement();
+            _location = node.Children().First().Location;
 
             level1.AddIssue(Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING.ToIssueComponent("A test warning at level 1", _location));
 
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         private OperationOutcome _report;
-        private IElementNavigator _location;
+        private string _location;
 
         [TestMethod]
         public void IssueHierarchy()

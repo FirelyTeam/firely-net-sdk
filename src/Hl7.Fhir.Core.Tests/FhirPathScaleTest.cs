@@ -48,7 +48,7 @@ namespace Hl7.Fhir
                     return changedDate;
                 });
 
-            var v4 = new PocoNavigator(qr);
+            var v4 = qr.ToTypedElement();
             var v5 = v4.Select("item.where(linkId = 'Section-A').item.where(linkId = 'WorkerGivenNames').answer.value").FirstOrDefault() as PocoNavigator;
             Assert.AreEqual("QuestionnaireResponse.item.where(linkId='Section-A').item.where(linkId='WorkerGivenNames').answer[0].value", v5.CommonPath);
             Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value", v5.ShortPath);

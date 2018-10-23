@@ -217,11 +217,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static byte[] GetBody(this Bundle.ResponseComponent interaction)
-        {
-            var body = interaction.Annotation<Body>();
-            return body != null ? body.Data : null;
-        }
+        public static byte[] GetBody(this Bundle.ResponseComponent interaction) => interaction.Annotation<Body>()?.Data;
 
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {

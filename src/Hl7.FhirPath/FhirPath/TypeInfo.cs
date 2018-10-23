@@ -68,9 +68,9 @@ namespace Hl7.FhirPath
                 return TypeInfo.DateTime;
             else if (nativeType == typeof(PartialTime))
                 return TypeInfo.Time;
-            else if (nativeType == typeof(IEnumerable<IElementNavigator>))
+            else if (nativeType == typeof(IEnumerable<ITypedElement>))
                 return TypeInfo.Any;
-            else if (nativeType == typeof(IElementNavigator))
+            else if (nativeType == typeof(ITypedElement))
                 return TypeInfo.Any;
             else
                 throw Error.Argument("nativeType", "Native type '{0}' is not mappable to a FhirPath type".FormatWith(nativeType.Name));
