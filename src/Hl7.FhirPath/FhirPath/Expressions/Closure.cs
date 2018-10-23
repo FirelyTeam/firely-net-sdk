@@ -20,7 +20,7 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root(IElementNavigator root, EvaluationContext ctx=null)
+        public static Closure Root(ITypedElement root, EvaluationContext ctx=null)
         {
             var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.CreateDefault() };
 
@@ -33,9 +33,9 @@ namespace Hl7.FhirPath.Expressions
             return newContext;
         }
 
-        private Dictionary<string, IEnumerable<IElementNavigator>> _namedValues = new Dictionary<string, IEnumerable<IElementNavigator>>();
+        private Dictionary<string, IEnumerable<ITypedElement>> _namedValues = new Dictionary<string, IEnumerable<ITypedElement>>();
 
-        public virtual void SetValue(string name, IEnumerable<IElementNavigator> value)
+        public virtual void SetValue(string name, IEnumerable<ITypedElement> value)
         {
             _namedValues.Remove(name);
             _namedValues.Add(name, value);
@@ -54,10 +54,10 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        public virtual IEnumerable<IElementNavigator> ResolveValue(string name)
+        public virtual IEnumerable<ITypedElement> ResolveValue(string name)
         {
             // First, try to directly get "normal" values
-            IEnumerable<IElementNavigator> result = null;
+            IEnumerable<ITypedElement> result = null;
             _namedValues.TryGetValue(name, out result);
 
             if (result != null) return result;

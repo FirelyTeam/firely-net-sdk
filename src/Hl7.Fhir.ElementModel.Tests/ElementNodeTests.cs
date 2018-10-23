@@ -101,7 +101,9 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void CanNavigateOverNode()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var nav = patient.ToElementNavigator();
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.Equal("Patient", nav.Name);
             Assert.True(nav.MoveToFirstChild());
