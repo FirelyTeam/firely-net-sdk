@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -52,11 +52,6 @@
           <xs:element name="contentType" minOccurs="1" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">MimeType of the binary content represented as a standard MimeType (BCP 13).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="securityContext" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Treat this binary as if it was this other resource for access control purposes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="content" minOccurs="1" maxOccurs="1" type="base64Binary">

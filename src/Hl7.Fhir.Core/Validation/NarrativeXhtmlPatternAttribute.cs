@@ -6,10 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Validation
 {

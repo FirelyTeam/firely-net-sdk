@@ -20,14 +20,16 @@ namespace Hl7.Fhir.Validation
 {
     internal class SliceBucket : BaseBucket
     {
-        public SliceBucket(ElementDefinitionNavigator root, Validator validator, ElementDefinition.DiscriminatorComponent[] discriminator=null) : base(root.Current)
+        public SliceBucket(ElementDefinitionNavigator root, Validator validator, string[] discriminator=null) : base(root.Current)
         {
             // TODO: Should check whether the discriminator is a valid child path of root. Wait until we have the
             // definition walker, which would walk across references if necessary.
             foreach (var d in discriminator)
             {
-                if (d.Type != ElementDefinition.DiscriminatorType.Value)
-                    throw Error.NotImplemented($"Slicing with a discriminator of type '{d.Type}' is not yet supported by this validator.");
+                if(d.EndsWith("@type"))
+                    throw Error.NotImplemented($"Slicing with an '@type' discriminator is not yet supported by this validator.");
+                else if (d.EndsWith("@profile"))
+                    throw Error.NotImplemented($"Slicing with an '@profile' discriminator is not yet supported by this validator.");
             }
 
             Root = root.ShallowCopy();
@@ -39,7 +41,7 @@ namespace Hl7.Fhir.Validation
 
         public Validator Validator { get; private set; }
 
-        public ElementDefinition.DiscriminatorComponent[] Discriminator { get; private set; }
+        public string[] Discriminator { get; private set; }
 
         private List<OperationOutcome> _successes = new List<OperationOutcome>();
         private List<OperationOutcome> _failures = new List<OperationOutcome>();
@@ -65,7 +67,7 @@ namespace Hl7.Fhir.Validation
                 // remove all the [num] (from the instance path) and [x] (from the discriminator path) in one go,
                 // so a path looking like this remains as a discriminator:  Patient.deceased
                 // (note won't work if deceasedBoolean is allowed as a discriminator vlaue)
-                var discriminatorPaths = Discriminator.Select(d => strip(baseInstancePath + "." + d.Path)).ToArray();
+                var discriminatorPaths = Discriminator.Select(d => strip(baseInstancePath + "." + d)).ToArray();
 
                 if(errorOnDiscriminator(discriminatorPaths, report))
                 {

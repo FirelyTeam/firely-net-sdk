@@ -9,11 +9,7 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class UtilityOperators
     {
-#if WAY_TOO_MUCH_OUTPUT
         static Action<string> WriteLine = (string s) => Debug.WriteLine(s);
-#else
-        static Action<string> WriteLine = (string s) => { };
-#endif
 
         public static IEnumerable<ITypedElement> Extension(this IEnumerable<ITypedElement> focus, string url)
         {

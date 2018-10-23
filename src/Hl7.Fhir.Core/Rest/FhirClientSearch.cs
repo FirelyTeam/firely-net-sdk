@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Rest
             {
                 // Return a null bundle, can not return simply null because this is a task
                 Bundle nullValue = null;
-                return System.Threading.Tasks.Task.FromResult(nullValue);
+                return Task.FromResult(nullValue);
             }
         }
         /// <summary>

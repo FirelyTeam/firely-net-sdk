@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    /// <summary>Provides support for custom annotation types used by the <see cref="SnapshotGenerator"/>.</summary>
+    // Custom annotations for internal use by the SnapshotGenerator
+
     public static class SnapshotGeneratorAnnotations
     {
         #region Annotation: Created By Snapshot Generator

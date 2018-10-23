@@ -33,6 +33,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Clone constructor. Generates a new <see cref="DirectorySourceSettings"/> instance initialized from the state of the specified instance.</summary>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public DirectorySourceSettings(DirectorySourceSettings settings)
         {
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
@@ -41,6 +42,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="DirectorySourceSettings"/> instance.</param>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public void CopyTo(DirectorySourceSettings other)
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
@@ -235,7 +237,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// An array of <see cref="ArtifactSummaryHarvester"/> delegates for harvesting
-        /// summary information from an artifact.
+        /// summary details from an artifact.
         /// </summary>
         /// <remarks>
         /// Allows consumers to harvest custom summary properties,

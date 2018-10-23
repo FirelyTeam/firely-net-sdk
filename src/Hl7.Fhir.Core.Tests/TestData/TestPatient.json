@@ -19,7 +19,7 @@
       "name": [
         {
           "use": "official",
-          "family": "Everywoman",
+          "family": [ "Everywoman" ],
           "given": [ "Eve" ]
         }
       ],
@@ -52,7 +52,7 @@
   "name": [
     {
       "use": "official",
-      "family": "Donald",
+      "family": [ "Donald" ],
       "given": [ "Duck" ]
     }
   ],

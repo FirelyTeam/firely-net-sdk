@@ -51,13 +51,15 @@ namespace Hl7.Fhir.Specification.Source
             return resolver.FindStructureDefinition(url);
         }
 
-        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type)
+        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRDefinedType type)
         {
             return resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
         }
 
         /// <summary>
-        /// Find a ValueSet by canonical url
+        /// Tries to locate a valueset using a combined algorithm: first, the uri is used to find a valueset by system.
+        /// If that fails, the valueset is searched for by canonical url. Failing that, the function tries to locate the
+        /// valueset by resource url.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="uri"></param>
@@ -68,18 +70,6 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        /// <summary>
-        /// Find a CodeSystem by canonical url.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="uri"></param>
-        /// <returns></returns>
-        public static CodeSystem FindCodeSystem(this IResourceResolver source, string uri)
-        {
-            return source.ResolveByCanonicalUri(uri) as CodeSystem;
-        }
-
-
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T:Resource
         {
             var type = ModelInfo.GetFhirTypeNameForType(typeof(T));
@@ -87,14 +77,9 @@ namespace Hl7.Fhir.Specification.Source
             if (type != null)
             {
                 var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
-                var uris = source.ListResourceUris(resourceType);
-                // [WMR 20180914] OBSOLETE
-                // For some reason there is an issue with this StructureDefinition (needs fixing)
-                // .Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
-
-                // [WMR 20180824] FIXED
-                //return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
-                return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
+                // for some reason there is an issue with this StructureDefinition (needs fixing)
+                var uris = source.ListResourceUris(resourceType).Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
+                return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
             }
             else
                 return null;
@@ -104,13 +89,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
         /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
         /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
-        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IResourceResolver resolver, FhirUri typeCodeElement)
+        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IResourceResolver resolver, Code<FHIRDefinedType> typeCodeElement)
         {
             StructureDefinition sd = null;
             var typeCode = typeCodeElement.Value;
-            if (!string.IsNullOrEmpty(typeCode))
+            if (typeCode.HasValue)
             {
-                sd = resolver.FindStructureDefinitionForCoreType(typeCode);
+                sd = resolver.FindStructureDefinitionForCoreType(typeCode.Value);
             }
             else
             {
@@ -137,14 +122,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="resolver">A resource resolver instance.</param>
         /// <param name="type">A FHIR type.</param>
         /// <param name="profile">A StructureDefinition instance.</param>
-        public static bool IsValidTypeProfile(this IResourceResolver resolver, string type, StructureDefinition profile)
+        public static bool IsValidTypeProfile(this IResourceResolver resolver, FHIRDefinedType? type, StructureDefinition profile)
         {
             if (resolver == null) { throw new ArgumentNullException(nameof(resolver)); }
-
             return isValidTypeProfile(resolver, new HashSet<string>(), type, profile);
         }
 
-        private static bool isValidTypeProfile(this IResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
+        static bool isValidTypeProfile(this IResourceResolver resolver, HashSet<string> recursionStack, FHIRDefinedType? type, StructureDefinition profile)
         {
             // Recursively walk up the base profile hierarchy until we find a profile on baseType
             if (type == null) { return true; }
@@ -152,11 +136,12 @@ namespace Hl7.Fhir.Specification.Source
 
             // DSTU2: sd.ConstrainedType is empty for core definitions => resolve from sd.Name
             // STU3: sd.Type is always specified, including for core definitions
-            var sdType = profile.Type;
+            var sdType = profile.ConstrainedType ?? ModelInfo.FhirTypeNameToFhirType(profile?.Name);
+            if (sdType == null) { return false; }
 
             if (sdType == type) { return true; }
-            if (profile.BaseDefinition == null) { return false; }
-            var sdBase = resolver.FindStructureDefinition(profile.BaseDefinition);
+            if (profile.Base == null) { return false; }
+            var sdBase = resolver.FindStructureDefinition(profile.Base);
             if (sdBase == null) { return false; }
             if (sdBase.Url == null) { return false; } // Shouldn't happen...
 

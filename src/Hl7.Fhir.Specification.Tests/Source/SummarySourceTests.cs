@@ -96,26 +96,32 @@ namespace Hl7.Fhir.Specification.Tests
                 new DirectorySourceSettings { IncludeSubDirectories = true });
 
             var sd = source.ListSummaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
-            var sm = source.ListSummaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
+            //var sm = source.ListSummaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
             var de = source.ListSummaries(ResourceType.DataElement); Assert.IsFalse(de.Any());
-            var cf = source.ListSummaries(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
-            var md = source.ListSummaries(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
+
+            //var cf = source.ListSummaries(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
+            var cf = source.ListSummaries(ResourceType.Conformance); Assert.IsTrue(cf.Any());
+            //var md = source.ListSummaries(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
             var od = source.ListSummaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
             var sp = source.ListSummaries(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
-            var cd = source.ListSummaries(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+            //var cd = source.ListSummaries(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
             var ig = source.ListSummaries(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
 
-            var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
+            //var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
             var vs = source.ListSummaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
-            var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            //var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
             var ns = source.ListSummaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
 
             var all = source.ListSummaries();
 
-            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
-                        sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
-                        ep.Count() + ns.Count(), all.Count());
+            //Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
+            //            sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
+            //            ep.Count() + ns.Count(), all.Count());
+
+            Assert.AreEqual(sd.Count() + de.Count() + cf.Count() + od.Count() +
+                        sp.Count() + ig.Count() + vs.Count() + cm.Count() +
+                        ns.Count(), all.Count());
         }
 
         [TestMethod]

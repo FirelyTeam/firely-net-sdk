@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var ed = new ElementDefinition
             {
-                Binding = new ElementDefinition.ElementDefinitionBindingComponent
+                Binding = new ElementDefinition.BindingComponent
                 {
                     Strength = BindingStrength.Required,
                     ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason")
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestCodingValidation()
         {
             var val = new BindingValidator(_termService, "Demo");
-            var binding = new ElementDefinition.ElementDefinitionBindingComponent
+            var binding = new ElementDefinition.BindingComponent
             {
                 ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
                 Strength = BindingStrength.Required
@@ -107,9 +107,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(result.Success);
 
             // But this won't, it's also a composition, but without expansion - the local term server won't help you here
-            var binding2 = new ElementDefinition.ElementDefinitionBindingComponent
+            var binding2 = new ElementDefinition.BindingComponent
             {
-                ValueSet = new FhirUri("http://hl7.org/fhir/ValueSet/substance-code"),
+                ValueSet = new FhirUri("http://hl7.org/fhir/ValueSet/allergyintolerance-substance-code"),
                 Strength = BindingStrength.Required
             };
 
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var val = new BindingValidator(_termService, "Demo");
 
-            var binding = new ElementDefinition.ElementDefinitionBindingComponent
+            var binding = new ElementDefinition.BindingComponent
             {
                 ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
                 Strength = BindingStrength.Required

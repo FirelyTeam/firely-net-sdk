@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-02-13T15:50:01.983+01:00" />
@@ -8,10 +8,9 @@
   <status value="draft" />
   <date value="2017-02-13T15:45:05.4075449+01:00" />
   <kind value="resource" />
-  <type value="Organization" />
+  <constrainedType value="Organization" />
   <abstract value="false" />
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
-  <derivation value="constraint" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Organization" />
   <differential>
     <element>
       <path value="Organization" />
@@ -19,33 +18,33 @@
     <element>
       <path value="Organization.identifier" />
       <slicing>
-        <discriminator><type value="value" /><path value="type.coding.system" /></discriminator>
+        <discriminator value="type.coding.system" />
         <rules value="openAtEnd" />
       </slicing>
     </element>
     <element>
       <path value="Organization.identifier" />
-      <sliceName value="I1" />
+      <name value="I1" />
     </element>
     <element>
       <path value="Organization.identifier" />
-      <sliceName value="I2" />
+      <name value="I2" />
     </element>
     <element>
       <path value="Organization.type" />
       <slicing>
-        <discriminator><type value="value" /><path value="coding.system" /></discriminator>
+        <discriminator value="coding.system" />
         <rules value="openAtEnd" />
       </slicing>
       <min value="1" />
     </element>
     <element>
       <path value="Organization.type" />
-      <sliceName value="T1" />
+      <name value="T1" />
     </element>
     <element>
       <path value="Organization.type" />
-      <sliceName value="T2" />
+      <name value="T2" />
     </element>
   </differential>
 </StructureDefinition>

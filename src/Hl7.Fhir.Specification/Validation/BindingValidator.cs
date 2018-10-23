@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
             _path = path;
         }
 
-        public OperationOutcome ValidateBinding(Element bindable, ElementDefinition.ElementDefinitionBindingComponent binding)
+        public OperationOutcome ValidateBinding(Element bindable, ElementDefinition.BindingComponent binding)
         {
             // bindable should be code, Coding or CodeableConcept
 

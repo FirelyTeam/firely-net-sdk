@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,12 +51,7 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A unique identifier assigned to this observation.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A plan, proposal or order that is fulfilled in whole or in part by this event.</xs:documentation>
+              <xs:documentation xml:lang="en">A unique identifier for the simple observation instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ObservationStatus">
@@ -64,9 +59,9 @@
               <xs:documentation xml:lang="en">The status of the result value.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A code that classifies the general type of observation being made.</xs:documentation>
+              <xs:documentation xml:lang="en">A code that classifies the general type of observation being made.  This is used  for searching, sorting and display purposes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableConcept">
@@ -79,7 +74,7 @@
               <xs:documentation xml:lang="en">The patient, or group of patients, location, or device whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed.  Comments: Indirect characteristics may be those of a specimen, fetus, donor,  other observer (for example a relative or EMT), or any observation made about the subject.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The healthcare event  (e.g. a patient and healthcare provider interaction) during which this observation is made.</xs:documentation>
            </xs:annotation>
@@ -108,7 +103,6 @@
             <xs:element name="valueQuantity" type="Quantity"/>
             <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
             <xs:element name="valueString" type="string"/>
-            <xs:element name="valueBoolean" type="boolean"/>
             <xs:element name="valueRange" type="Range"/>
             <xs:element name="valueRatio" type="Ratio"/>
             <xs:element name="valueSampledData" type="SampledData"/>
@@ -127,7 +121,7 @@
               <xs:documentation xml:lang="en">The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="comments" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.</xs:documentation>
            </xs:annotation>
@@ -159,7 +153,7 @@
           </xs:element>
           <xs:element name="related" type="Observation.Related" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code.</xs:documentation>
+              <xs:documentation xml:lang="en">A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="component" type="Observation.Component" minOccurs="0" maxOccurs="unbounded">
@@ -178,24 +172,19 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="low" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:element name="low" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The value of the low bound of the reference range.  The low bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the low bound is omitted,  it is assumed to be meaningless (e.g. reference range is &lt;=2.3).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="high" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:element name="high" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The value of the high bound of the reference range.  The high bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the high bound is omitted,  it is assumed to be meaningless (e.g. reference range is &gt;= 2.3).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="meaning" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Codes to indicate the what part of the targeted reference population it applies to. For example, the normal or therapeutic range.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="appliesTo" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Codes to indicate the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex or race.</xs:documentation>
+              <xs:documentation xml:lang="en">Code for the meaning of the reference range.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="age" minOccurs="0" maxOccurs="1" type="Range">
@@ -265,11 +254,6 @@
               <xs:documentation xml:lang="en">Provides a reason why the expected value in the element Observation.value[x] is missing.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="interpretation" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="referenceRange" type="Observation.ReferenceRange" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Guidance on how to interpret the value by comparison to a normal or recommended range.</xs:documentation>
@@ -279,36 +263,86 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:simpleType name="ObservationStatus-list">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="registered">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The existence of the observation is registered, but there is no result yet available.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="preliminary">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This is an initial or interim observation: data may be incomplete or unverified.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="final">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The observation is complete and verified by an authorized person.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="amended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancelled">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The observation is unavailable because the measurement was not started or not completed (also sometimes called &quot;aborted&quot;).</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The observation has been withdrawn following previous final release.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The observation status is unknown.  Note that &quot;unknown&quot; is a value of last resort and every attempt should be made to provide a meaningful value other than &quot;unknown&quot;.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ObservationStatus">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Codes providing the status of an observation.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ObservationStatus-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:simpleType name="ObservationRelationshipType-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="has-member">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Has Member</xs:documentation>
+          <xs:documentation xml:lang="en">This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="derived-from">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Derived From</xs:documentation>
+          <xs:documentation xml:lang="en">The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  &quot;derived-from&quot; is only logical choice when referencing QuestionnaireResponse.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="sequel-to">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Sequel To</xs:documentation>
+          <xs:documentation xml:lang="en">This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="replaces">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Replaces</xs:documentation>
+          <xs:documentation xml:lang="en">This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="qualified-by">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Qualified By</xs:documentation>
+          <xs:documentation xml:lang="en">The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="interfered-by">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Interfered By</xs:documentation>
+          <xs:documentation xml:lang="en">The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

@@ -3,41 +3,40 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="elementdefinition-allowedUnits"/>
   <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-allowedUnits"/>
-  <name value="allowedUnits"/>
+  <name value="Units to use for measured value"/>
   <status value="draft"/>
-  <date value="2015-02-28"/>
   <publisher value="Health Level Seven, Inc. - FHIR Core WG"/>
   <contact>
     <telecom>
-      <system value="url"/>
+      <system value="other"/>
       <value value="http://hl7.org/special/committees/FHIR"/>
     </telecom>
   </contact>
+  <date value="2015-02-28"/>
   <description value="Identifies the units of measure in which the element should be captured or expressed."/>
-  <fhirVersion value="1.9.0"/>
+  <fhirVersion value="1.0.2"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
-    <name value="HL7 v2 Mapping"/>
+    <name value="HL7 v2"/>
   </mapping>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
-    <name value="RIM Mapping"/>
+    <name value="RIM"/>
   </mapping>
-  <kind value="complex-type"/>
+  <kind value="datatype"/>
+  <constrainedType value="Extension"/>
   <abstract value="false"/>
   <contextType value="datatype"/>
   <context value="ElementDefinition"/>
-  <type value="Extension"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-  <derivation value="constraint"/>
+  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
   <snapshot>
-    <element id="Extension:allowedunits">
+    <element>
       <path value="Extension"/>
       <short value="Units to use for measured value"/>
       <definition value="Identifies the units of measure in which the element should be captured or expressed."/>
-      <comment value="Use a value set if more than one unit of measure is possible.  Value sets will typically be short enough to display in a drop-down selection list."/>
+      <comments value="Use a value set if more than one unit of measure is possible.  Value sets will typically be short enough to display in a drop-down selection list."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -45,23 +44,9 @@
         <min value="0"/>
         <max value="*"/>
       </base>
-      <condition value="ele-1"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
-        <source value="Extension"/>
-      </constraint>
+      <type>
+        <code value="Extension"/>
+      </type>
       <mapping>
         <identity value="v2"/>
         <map value="OM2.2"/>
@@ -71,35 +56,35 @@
         <map value="N/A (MIF territory)"/>
       </mapping>
     </element>
-    <element id="Extension:allowedunits.id">
+    <element>
       <path value="Extension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <definition value="unique id for the element within a resource (for internal references)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="Element.id"/>
+        <path value="Extension.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="string"/>
+        <code value="id"/>
       </type>
       <mapping>
         <identity value="rim"/>
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Extension:allowedunits.extension:extension">
+    <element>
       <path value="Extension.extension"/>
-      <sliceName value="extension"/>
+      <name value="extension"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
       <max value="0"/>
       <base>
-        <path value="Element.extension"/>
+        <path value="Extension.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -107,12 +92,12 @@
         <code value="Extension"/>
       </type>
     </element>
-    <element id="Extension:allowedunits.url">
+    <element>
       <path value="Extension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
       <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -129,7 +114,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Extension:allowedunits.value[x]">
+    <element>
       <path value="Extension.value[x]"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
@@ -145,16 +130,13 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="Units"/>
-        </extension>
         <strength value="required"/>
         <description value="Units of measure allowed for an element"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/ucum-units"/>
+          <reference value="http://hl7.org/fhir/ValueSet/uslab-units"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -164,13 +146,16 @@
     </element>
   </snapshot>
   <differential>
-    <element id="Extension:allowedunits">
+    <element>
       <path value="Extension"/>
       <short value="Units to use for measured value"/>
       <definition value="Identifies the units of measure in which the element should be captured or expressed."/>
-      <comment value="Use a value set if more than one unit of measure is possible.  Value sets will typically be short enough to display in a drop-down selection list."/>
+      <comments value="Use a value set if more than one unit of measure is possible.  Value sets will typically be short enough to display in a drop-down selection list."/>
       <min value="0"/>
       <max value="1"/>
+      <type>
+        <code value="Extension"/>
+      </type>
       <mapping>
         <identity value="v2"/>
         <map value="OM2.2"/>
@@ -180,19 +165,19 @@
         <map value="N/A (MIF territory)"/>
       </mapping>
     </element>
-    <element id="Extension:allowedunits.extension:extension">
+    <element>
       <path value="Extension.extension"/>
-      <sliceName value="extension"/>
+      <name value="extension"/>
       <max value="0"/>
     </element>
-    <element id="Extension:allowedunits.url">
+    <element>
       <path value="Extension.url"/>
       <type>
         <code value="uri"/>
       </type>
       <fixedUri value="http://hl7.org/fhir/StructureDefinition/elementdefinition-allowedUnits"/>
     </element>
-    <element id="Extension:allowedunits.value[x]">
+    <element>
       <path value="Extension.value[x]"/>
       <min value="1"/>
       <type>
@@ -200,16 +185,13 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="Units"/>
-        </extension>
         <strength value="required"/>
         <description value="Units of measure allowed for an element"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/ucum-units"/>
+          <reference value="http://hl7.org/fhir/ValueSet/uslab-units"/>
         </valueSetReference>
       </binding>
     </element>

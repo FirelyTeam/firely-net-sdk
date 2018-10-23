@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,11 +54,6 @@
               <xs:documentation xml:lang="en">Identifier for a person within a particular scope.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this related person record is in active use.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="patient" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The patient this person is related to.</xs:documentation>
@@ -69,7 +64,7 @@
               <xs:documentation xml:lang="en">The nature of the relationship between a patient and the related person.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="name" minOccurs="0" maxOccurs="unbounded" type="HumanName">
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="HumanName">
             <xs:annotation>
               <xs:documentation xml:lang="en">A name associated with the person.</xs:documentation>
            </xs:annotation>
@@ -79,7 +74,7 @@
               <xs:documentation xml:lang="en">A contact detail for the person, e.g. a telephone number or an email address.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="AdministrativeGender">
+          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.</xs:documentation>
            </xs:annotation>
