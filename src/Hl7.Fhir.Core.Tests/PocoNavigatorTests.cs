@@ -187,7 +187,7 @@ namespace Hl7.Fhir
 
             Assert.IsNotNull(rest);
 
-            Assert.IsTrue(rest.Location.Contains("Conformance.rest[0]"));
+            Assert.IsTrue(rest.Location.Contains("CapabilityStatement.rest[0]"));
         }
 
 

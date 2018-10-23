@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Specification.Source
                 var child = nav.Children("valueCode").FirstOrDefault();
                 if (child != null)
                 {
-                    properties[WorkingGroupKey] = nav.Text;
+                    properties[WorkingGroupKey] = child.Text;
                 }
             }
         }
