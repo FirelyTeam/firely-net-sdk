@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Specification
             this._nav = nav;
         }
 
-        public string TypeName => _nav.Current.Type[0].Code.GetLiteral();
+        public string TypeName => _nav.Current.Type[0].Code;
 
         public bool IsAbstract => true;
 
@@ -168,10 +168,10 @@ namespace Hl7.Fhir.Specification
         {
             if (nav.Current.IsBackboneElement())
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(nav) };
-            else if (nav.Current.NameReference != null)
+            else if (nav.Current.ContentReference != null)
             {
                 var reference = nav.ShallowCopy();
-                var name = nav.Current.NameReference;
+                var name = nav.Current.ContentReference;
                 if (!reference.JumpToNameReference(name))
                     throw Error.InvalidOperation($"StructureDefinition '{nav?.StructureDefinition?.Url}' " +
                         $"has a namereference '{name}' on element '{nav.Current.Path}' that cannot be resolved.");
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Specification
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
             }
             else
-                return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code.GetLiteral())).Distinct().ToArray();
+                return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code)).Distinct().ToArray();
         }
 
         public string ElementName { get; private set; }
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Specification
         // TODO: This is actually not complete: the Type might be any subclass of Resource (including DomainResource), but this will
         // do for all current situations. I will regret doing this at some point in the future.
         private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 && 
-            (defn.Type[0].Code == FHIRDefinedType.Resource || defn.Type[0].Code == FHIRDefinedType.DomainResource);
+            (defn.Type[0].Code == "Resource" || defn.Type[0].Code == "DomainResource");
 
         public ITypeSerializationInfo[] Type => _types.Value;
 

@@ -37,11 +37,14 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Quantity")]
+    /// <summary>
+    /// A duration of time during which an organism (or a process) has existed
+    /// </summary>
+    [FhirType("Age")]
     public partial class Age : Quantity
     {
         [NotMapped]
@@ -53,6 +56,6 @@ namespace Hl7.Fhir.Model
         }
         
         // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive.
+        // * A duration of time during which an organism (or a process) has existed.
     }
 }

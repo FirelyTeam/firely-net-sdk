@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -98,24 +99,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Who created
-        /// </summary>
-        [FhirElement("author", InSummary=true, Order=120)]
-        [CLSCompliant(false)]
-		[References("Practitioner","Patient","RelatedPerson")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author
-        {
-            get { return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Author;
-        
-        /// <summary>
         /// When created
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=130)]
+        [FhirElement("created", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Date CreatedElement
         {
@@ -144,6 +130,21 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// Who created
+        /// </summary>
+        [FhirElement("author", InSummary=true, Order=130)]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Author
+        {
+            get { return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Author;
+        
 
         public override void AddDefaultConstraints()
         {
@@ -161,8 +162,8 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.Date)CreatedElement.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 return dest;
             }
             else
@@ -183,8 +184,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             
             return true;
         }
@@ -198,8 +199,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             
             return true;
         }
@@ -213,8 +214,8 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;
 				if (Subject != null) yield return Subject;
-				if (Author != null) yield return Author;
 				if (CreatedElement != null) yield return CreatedElement;
+				if (Author != null) yield return Author;
             }
         }
 
@@ -227,8 +228,8 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (Code != null) yield return new ElementValue("code", Code);
                 if (Subject != null) yield return new ElementValue("subject", Subject);
-                if (Author != null) yield return new ElementValue("author", Author);
                 if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Author != null) yield return new ElementValue("author", Author);
             }
         }
 

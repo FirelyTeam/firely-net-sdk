@@ -65,7 +65,6 @@ namespace Hl7.Fhir.Specification.Source
         /// collect the artifact summaries, while any other threads will block.
         /// </para>
         /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public DirectorySource(string contentDirectory)
         {
             ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
@@ -86,7 +85,6 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="contentDirectory">The file path of the target directory.</param>
         /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
-        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
         public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
         {
             ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
@@ -507,27 +505,40 @@ namespace Hl7.Fhir.Specification.Source
             return GetSummaries().OfResourceType(filter).Select(dsi => dsi.ResourceUri);
         }
 
-        /// <summary>Resolve the <see cref="ValueSet"/> resource with the specified codeSystem system.</summary>
-        public ValueSet FindValueSetBySystem(string system)
+        /// <summary>
+        /// Find a <see cref="CodeSystem"/> resource by a <see cref="ValueSet"/> canonical url that contains all codes from that codesystem.
+        /// </summary>
+        /// <param name="valueSetUri">The canonical uri of a <see cref="ValueSet"/> resource.</param>
+        /// <returns>A <see cref="CodeSystem"/> resource, or <c>null</c>.</returns>
+        /// <remarks>
+        /// It is very common for valuesets to represent all codes from a specific/smaller code system.
+        /// These are indicated by he CodeSystem.valueSet element, which is searched here.
+        /// </remarks>
+        public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
         {
-            // if (system == null) throw Error.ArgumentNull(nameof(system));
-            var summary = GetSummaries().ResolveValueSet(system);
-            // return summary != null ? getResourceFromScannedSource<ValueSet>(summary) : null;
-            return loadResourceInternal<ValueSet>(summary);
+            if (valueSetUri == null) throw Error.ArgumentNull(nameof(valueSetUri));
+            var summary = GetSummaries().ResolveCodeSystem(valueSetUri);
+            return loadResourceInternal<CodeSystem>(summary);
         }
 
-        /// <summary>Resolve <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
+        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
+        /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
+        /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
+        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
+        /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
             if (sourceUri == null && targetUri == null)
             {
-                throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
+                throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} cannot both be null.");
             }
             var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
             return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
         }
 
-        /// <summary>Resolve the <see cref="NamingSystem"/> resource with the specified uniqueId.</summary>
+        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
+        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
+        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
         public NamingSystem FindNamingSystem(string uniqueId)
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
@@ -572,7 +583,8 @@ namespace Hl7.Fhir.Specification.Source
 
         #region IResourceResolver
 
-        /// <summary>Resolve the resource with the specified uri.</summary>
+        /// <summary>Find a resource based on its relative or absolute uri.</summary>
+        /// <param name="uri">A resource uri.</param>
         public Resource ResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
@@ -580,7 +592,8 @@ namespace Hl7.Fhir.Specification.Source
             return loadResourceInternal<Resource>(summary);
         }
 
-        /// <summary>Resolve the conformance resource with the specified canonical url.</summary>
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
+        /// <param name="uri">The canonical url of a (conformance) resource.</param>
         public Resource ResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));

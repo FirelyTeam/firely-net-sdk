@@ -1,13 +1,14 @@
-﻿<StructureDefinition xmlns="http://hl7.org/fhir">
+<StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="Workflow.CriticalInformation.Flag" />
   <url value="http://helse-nord.no/FHIR/profiles/Workflow.CriticalInformation/Flag" />
   <name value="Workflow.CriticalInformation.Flag" />
   <status value="draft" />
   <description value="Structure definition for the Flag resource used by the Workflow.CriticalInformation service" />
   <kind value="resource" />
-  <constrainedType value="Flag" />
+  <type value="Flag" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Flag" /> 
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Flag" />
+  <derivation value="constraint" /> 
   <differential>
     <element>
       <path value="Flag" />

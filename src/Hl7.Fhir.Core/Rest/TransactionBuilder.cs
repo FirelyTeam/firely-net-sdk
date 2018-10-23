@@ -50,7 +50,8 @@ namespace Hl7.Fhir.Rest
             Capabilities,
             History,
             Operation,
-            Transaction
+            Transaction,
+            Patch
         }
 
         private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
@@ -196,7 +197,7 @@ namespace Hl7.Fhir.Rest
         }
 
         
-        public TransactionBuilder Conformance(SummaryType? summary)
+        public TransactionBuilder CapabilityStatement(SummaryType? summary)
         {
             var entry =  newEntry(Bundle.HTTPVerb.GET, InteractionType.Capabilities);
             var path = newRestUrl().AddPath(METADATA);

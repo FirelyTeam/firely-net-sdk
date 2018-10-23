@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="FHIRABENDSandbox-istNebenbetriebsstaette" />
   <meta>
@@ -17,15 +17,16 @@
     </telecom>
   </contact>
   <description value="Kennezichnet eine Betriebsstätte als Nebenbetriebsstätte. Die zugeordnete Hauptbetriebsstätte kann in der partOf-Referenz angegeben werden, sofern bekannt" />
-  <requirements value="The ability to add extensions in a structured way is what keeps FHIR resources simple." />
+  <purpose value="The ability to add extensions in a structured way is what keeps FHIR resources simple." />
   <copyright value="HL7 Deutschland e.V." />
   <fhirVersion value="1.0.2" />
-  <kind value="datatype" />
-  <constrainedType value="Extension" />
+  <kind value="primitive-type" />
+  <type value="Extension" />
   <abstract value="false" />
   <contextType value="resource" />
   <context value="Organization" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
   <snapshot>
     <element>
       <path value="Extension" />
@@ -66,7 +67,7 @@
       <path value="Extension.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -89,7 +90,7 @@
       <representation value="xmlAttr" />
       <short value="identifies the meaning of the extension" />
       <definition value="Source of the definition for the extension code - a logical name or a URL." />
-      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
+      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
       <min value="1" />
       <max value="1" />
       <base>
@@ -108,7 +109,7 @@
     </element>
     <element>
       <path value="Extension.valueBoolean" />
-      <name value="Kennzeichen Nebenbetriebsstätte (KVB)" />
+      <sliceName value="Kennzeichen Nebenbetriebsstätte (KVB)" />
       <short value="Value of extension" />
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)." />
       <min value="1" />
@@ -122,7 +123,7 @@
         <code value="boolean" />
       </type>
       <patternCode value="(H|N)" />
-      <exampleCode value="H=Hauptbetriebsstätte oder N=Nebenbetriebsstätte" />
+      <example><valueCode value="H=Hauptbetriebsstätte oder N=Nebenbetriebsstätte" /></example>
       <mapping>
         <identity value="rim" />
         <map value="N/A" />
@@ -141,7 +142,7 @@
     </element>
     <element>
       <path value="Extension.valueBoolean" />
-      <name value="Kennzeichen Nebenbetriebsstätte (KVB)" />
+      <sliceName value="Kennzeichen Nebenbetriebsstätte (KVB)" />
       <min value="1" />
       <type>
         <code value="boolean" />

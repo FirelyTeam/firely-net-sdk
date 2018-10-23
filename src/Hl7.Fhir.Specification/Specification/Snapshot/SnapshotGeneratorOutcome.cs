@@ -6,9 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-// [WMR 20170810] STU3 bug: SimpleQuantity root element introduces non-empty sliceName = "SliceName"
-// Detect and fix invalid non-null sliceNames on root elements
-#define FIX_SLICENAMES_ON_ROOT_ELEMENTS
+// #define FIX_SLICENAMES_ON_SPECIALIZATIONS
 
 using System;
 using System.Diagnostics;
@@ -18,6 +16,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+
+#pragma warning disable 1591 // suppress XML summary warnings
 
 #pragma warning disable 1591 // suppress XML summary warnings
 
@@ -42,6 +42,40 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Otherwise returns a descriptive <see cref="OperationOutcome"/> instance with a list of encountered issues.
         /// </summary>
         public OperationOutcome Outcome => _outcome;
+
+        // [WMR 20160905] TODO
+        // Temporary adapter for ElementDefinition to support INamedNode
+        // TODO: ElementDefinition should properly implement INamedNode
+        // INamedNode.Path should also return indices, e.g. root.elem[0].elem[1]
+        //internal sealed class ElementDefinitionNamedNode : IElementNavigator
+        //{
+        //    // [WMR 20161213] Don't save reference to ElementDefinition, don't keep instance alive
+        //    readonly string _path;
+        //    readonly string _name;
+
+        //    public ElementDefinitionNamedNode(ElementDefinition elementDef)
+        //    {
+        //        if (elementDef == null) { throw Error.ArgumentNull(nameof(elementDef)); }
+        //        _path = elementDef.Path;
+        //        _name = elementDef.SliceName;
+        //    }
+        //    public string Name => _name;
+        //    public string Location => _path;
+
+        //    public string Type => ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.ElementDefinition); // _elemDef.TypeName;
+
+        //    public object Value { get { throw new NotImplementedException(); } }
+
+        //    public IElementNavigator Clone() { throw new NotImplementedException(); }
+
+        //    public bool MoveToFirstChild(string nameFilter = null) { throw new NotImplementedException(); }
+
+        //    public bool MoveToNext(string nameFilter = null) { throw new NotImplementedException(); }
+
+        //    public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Location}'" : $"'{Location}' : '{Name}'";
+        //}
+
+        // static IElementNavigator ToNamedNode(ElementDefinition elementDef) => new ElementDefinitionNamedNode(elementDef);
 
         void clearIssues() { _outcome = null; }
 
@@ -79,6 +113,23 @@ namespace Hl7.Fhir.Specification.Snapshot
             );
         }
 
+
+        // [WMR 20170928] NEW
+        // Profile introduces constraint on choice type element ("value[x]")
+        // while base profile has constrained and renamed the element ("valueString")
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICETYPE_NAME = Issue.Create(10012, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+
+        internal static OperationOutcome.IssueComponent CreateIssueInvalidChoiceTypeName(ElementDefinition elementDef, string baseName)
+        {
+            Debug.Assert(ElementDefinitionNavigator.IsChoiceTypeElement(elementDef.Path));
+            Debug.Assert(baseName != null);
+            var location = elementDef.Path;
+            return PROFILE_ELEMENTDEF_INVALID_CHOICETYPE_NAME.ToIssueComponent(
+                $"Element {location} has an invalid name. The profile should specify the inherited element name '{baseName}'.", 
+                location
+            );
+        }
+
         // Snapshot's element turns out not to be expandable, so we can't move to the desired path
         // "Differential has nested constraints for node '{0}', but this is a leaf node in base"
         // Differential specifies constraint on child element of a leaf node in the base, i.e. node without child elements
@@ -99,7 +150,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         internal static OperationOutcome.IssueComponent CreateIssueInvalidNameReference(ElementDefinition elementDef)
         {
             var location = elementDef.Path;
-            var nameRef = elementDef.NameReference;
+            var nameRef = elementDef.ContentReference;
             return PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF.ToIssueComponent(
                 $"Element {location} has a nameReference to '{nameRef}', which cannot be found in the StructureDefinition.",
                 location
@@ -221,7 +272,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         public static readonly Issue PROFILE_ELEMENTDEF_TYPESLICE_WITHOUT_TYPE = Issue.Create(10007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
 
-        internal static OperationOutcome.IssueComponent CreateIssueTypeSliceWithoutType(ElementDefinition elementDef)
+        internal static OperationOutcome.IssueComponent createIssueTypeSliceWithoutType(ElementDefinition elementDef)
         {
             var location = elementDef.Path;
             return PROFILE_ELEMENTDEF_TYPESLICE_WITHOUT_TYPE.ToIssueComponent(
@@ -246,11 +297,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         // or if Identifier element type references a Location profile
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE = Issue.Create(10009, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        internal OperationOutcome.IssueComponent addIssueInvalidProfileType(ElementDefinition elementDef, StructureDefinition profile)
+        OperationOutcome.IssueComponent addIssueInvalidProfileType(ElementDefinition elementDef, StructureDefinition profile)
         {
             var location = elementDef.Path;
             var elemType = elementDef.PrimaryTypeCode();
-            var profileType = profile.ConstrainedType ?? ModelInfo.FhirTypeNameToFhirType(profile?.Name);
+            var profileType = profile.Type;
             return addIssue(
                 PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.ToIssueComponent(
                     $"Element {location} has an invalid type profile constraint '{profile.Url}'. The target represents a profile on '{profileType}' which is incompatible with the element type '{elemType}'.",
@@ -259,26 +310,41 @@ namespace Hl7.Fhir.Specification.Snapshot
             );
         }
 
-#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
         // [WMR 20170810] NEW - found a non-empty sliceName on root element
         // STU3 bug: SimpleQuantity root element definition has non-empty sliceName = "SimpleQuantity"
 
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT = Issue.Create(10010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        internal OperationOutcome.IssueComponent addIssueInvalidSliceNameOnRootElement(ElementDefinition elementDef, StructureDefinition profile)
+        OperationOutcome.IssueComponent addIssueInvalidSliceNameOnRootElement(ElementDefinition elementDef, StructureDefinition profile)
         {
-            Debug.Assert(!string.IsNullOrEmpty(elementDef.Name));
+            Debug.Assert(!string.IsNullOrEmpty(elementDef.SliceName));
             Debug.Assert(elementDef.IsRootElement());
             var location = elementDef.Path;
             return addIssue(
                 PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT.ToIssueComponent(
-                    $"Element {location} has an invalid non-empty sliceName '{elementDef.Name}'. Root element definitions cannot introduce slice names.",
+                    $"Element {location} has an invalid non-empty sliceName '{elementDef.SliceName}'. Root element definitions cannot introduce slice names.",
                     location
                 ),
                 profile.Url
             );
         }
+
+        // [WMR 20170810] NEW
+        // Found a non-empty sliceName on core resource or datatype definition
+#if FIX_SLICENAMES_ON_SPECIALIZATIONS
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_SPECIALIZATION = Issue.Create(10011, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+
+        OperationOutcome.IssueComponent addIssueInvalidSliceNameOnSpecialization(ElementDefinition elementDef)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(elementDef.SliceName));
+            var location = elementDef.ToNamedNode();
+            return addIssue(
+                PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_SPECIALIZATION.ToIssueComponent(
+                    $"Element {location} has an invalid non-empty sliceName '{elementDef.SliceName}'. Core resource and datatype definitions cannot introduce slice names.",
+                    location
+                )
+            );
+        }
 #endif
     }
-
 }

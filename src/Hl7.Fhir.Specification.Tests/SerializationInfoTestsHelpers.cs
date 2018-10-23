@@ -36,8 +36,9 @@ namespace Hl7.Fhir.Serialization.Tests
             tryGetType("string");
 
             // Try constrained quantities
+            tryGetType("Money", "Money");
+            tryGetType("Distance", "Distance");
             tryGetType("SimpleQuantity", "Quantity");
-            tryGetType("Distance", "Quantity");
 
             // The weird xhtml datatype
             tryGetType("xhtml");
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.Serialization.Tests
             checkType(p, "active", false, "boolean");
 
             // Element with multiple reference types
-            checkType(p, "careProvider", true, "Reference");
+            checkType(p, "generalPractitioner", true, "Reference");
 
             // Backbone element (repeating)
             var bbe = checkBBType(p, "contact", "BackboneElement", true);
@@ -96,9 +97,9 @@ namespace Hl7.Fhir.Serialization.Tests
 
             // Test types using nameReference
             var q = provider.Provide("Questionnaire");
-            var qgroup = checkBBType(q, "group", "BackboneElement", false);
+            var qgroup = checkBBType(q, "item", "BackboneElement", true);
             checkType(qgroup, "linkId", false, "string");
-            var qgroupgroup = checkBBType(qgroup, "group", "BackboneElement", true);
+            var qgroupgroup = checkBBType(qgroup, "item", "BackboneElement", true);
             checkType(qgroupgroup, "linkId", false, "string");
 
             // Backbone elements within datatypes
@@ -140,7 +141,7 @@ namespace Hl7.Fhir.Serialization.Tests
             checkType(div, "div", false, "xhtml");
 
             // Element.id
-            checkType(div, "id", false, "id");
+            checkType(div, "id", false, "string");
 
             var ext = provider.Provide("Extension");
 

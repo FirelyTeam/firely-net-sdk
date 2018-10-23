@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,36 +56,42 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Slot"; } }
         
         /// <summary>
-        /// The free/busy status of a slot.
+        /// The free/busy status of the slot.
         /// (url: http://hl7.org/fhir/ValueSet/slotstatus)
         /// </summary>
         [FhirEnumeration("SlotStatus")]
         public enum SlotStatus
         {
             /// <summary>
-            /// Indicates that the time interval is busy because one  or more events have been scheduled for that interval.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
             [EnumLiteral("busy", "http://hl7.org/fhir/slotstatus"), Description("Busy")]
             Busy,
             /// <summary>
-            /// Indicates that the time interval is free for scheduling.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
             [EnumLiteral("free", "http://hl7.org/fhir/slotstatus"), Description("Free")]
             Free,
             /// <summary>
-            /// Indicates that the time interval is busy and that the interval can not be scheduled.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
             [EnumLiteral("busy-unavailable", "http://hl7.org/fhir/slotstatus"), Description("Busy (Unavailable)")]
             BusyUnavailable,
             /// <summary>
-            /// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
             [EnumLiteral("busy-tentative", "http://hl7.org/fhir/slotstatus"), Description("Busy (Tentative)")]
             BusyTentative,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/slotstatus)
+            /// </summary>
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/slotstatus"), Description("Entered in error")]
+            EnteredInError,
         }
 
         /// <summary>
@@ -102,22 +109,63 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
+        /// A broad categorisation of the service that is to be performed during this appointment
         /// </summary>
-        [FhirElement("type", Order=100)]
+        [FhirElement("serviceCategory", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { return _ServiceCategory; }
+            set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private Hl7.Fhir.Model.CodeableConcept _ServiceCategory;
+        
+        /// <summary>
+        /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
+        /// </summary>
+        [FhirElement("serviceType", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
+        {
+            get { if(_ServiceType==null) _ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceType; }
+            set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ServiceType;
+        
+        /// <summary>
+        /// The specialty of a practitioner that would be required to perform the service requested in this appointment
+        /// </summary>
+        [FhirElement("specialty", InSummary=true, Order=120)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Specialty
+        {
+            get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+            set { _Specialty = value; OnPropertyChanged("Specialty"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+        
+        /// <summary>
+        /// The style of appointment or patient that may be booked in the slot (not service type)
+        /// </summary>
+        [FhirElement("appointmentType", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept AppointmentType
+        {
+            get { return _AppointmentType; }
+            set { _AppointmentType = value; OnPropertyChanged("AppointmentType"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _AppointmentType;
         
         /// <summary>
         /// The schedule resource that this slot defines an interval of status information
         /// </summary>
-        [FhirElement("schedule", InSummary=true, Order=110)]
+        [FhirElement("schedule", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("Schedule")]
         [Cardinality(Min=1,Max=1)]
@@ -131,42 +179,42 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Schedule;
         
         /// <summary>
-        /// busy | free | busy-unavailable | busy-tentative
+        /// busy | free | busy-unavailable | busy-tentative | entered-in-error
         /// </summary>
-        [FhirElement("freeBusyType", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Slot.SlotStatus> FreeBusyTypeElement
+        public Code<Hl7.Fhir.Model.Slot.SlotStatus> StatusElement
         {
-            get { return _FreeBusyTypeElement; }
-            set { _FreeBusyTypeElement = value; OnPropertyChanged("FreeBusyTypeElement"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Slot.SlotStatus> _FreeBusyTypeElement;
+        private Code<Hl7.Fhir.Model.Slot.SlotStatus> _StatusElement;
         
         /// <summary>
-        /// busy | free | busy-unavailable | busy-tentative
+        /// busy | free | busy-unavailable | busy-tentative | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Slot.SlotStatus? FreeBusyType
+        public Hl7.Fhir.Model.Slot.SlotStatus? Status
         {
-            get { return FreeBusyTypeElement != null ? FreeBusyTypeElement.Value : null; }
+            get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
                 if (!value.HasValue)
-                  FreeBusyTypeElement = null; 
+                  StatusElement = null; 
                 else
-                  FreeBusyTypeElement = new Code<Hl7.Fhir.Model.Slot.SlotStatus>(value);
-                OnPropertyChanged("FreeBusyType");
+                  StatusElement = new Code<Hl7.Fhir.Model.Slot.SlotStatus>(value);
+                OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
         /// Date/Time that the slot is to begin
         /// </summary>
-        [FhirElement("start", InSummary=true, Order=130)]
+        [FhirElement("start", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
@@ -199,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Time that the slot is to conclude
         /// </summary>
-        [FhirElement("end", InSummary=true, Order=140)]
+        [FhirElement("end", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
@@ -232,7 +280,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// This slot has already been overbooked, appointments are unlikely to be accepted for this time
         /// </summary>
-        [FhirElement("overbooked", Order=150)]
+        [FhirElement("overbooked", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean OverbookedElement
         {
@@ -264,7 +312,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments on the slot to describe any extended information. Such as custom constraints on the slot
         /// </summary>
-        [FhirElement("comment", Order=160)]
+        [FhirElement("comment", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -308,9 +356,12 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
+                if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopy());
+                if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
+                if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopy();
                 if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.ResourceReference)Schedule.DeepCopy();
-                if(FreeBusyTypeElement != null) dest.FreeBusyTypeElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>)FreeBusyTypeElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>)StatusElement.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(OverbookedElement != null) dest.OverbookedElement = (Hl7.Fhir.Model.FhirBoolean)OverbookedElement.DeepCopy();
@@ -333,9 +384,12 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
+            if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
+            if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
+            if( !DeepComparable.Matches(AppointmentType, otherT.AppointmentType)) return false;
             if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
-            if( !DeepComparable.Matches(FreeBusyTypeElement, otherT.FreeBusyTypeElement)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.Matches(OverbookedElement, otherT.OverbookedElement)) return false;
@@ -351,9 +405,12 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
+            if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;
+            if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
+            if( !DeepComparable.IsExactly(AppointmentType, otherT.AppointmentType)) return false;
             if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
-            if( !DeepComparable.IsExactly(FreeBusyTypeElement, otherT.FreeBusyTypeElement)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
             if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.IsExactly(OverbookedElement, otherT.OverbookedElement)) return false;
@@ -369,9 +426,12 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (Type != null) yield return Type;
+				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+				if (AppointmentType != null) yield return AppointmentType;
 				if (Schedule != null) yield return Schedule;
-				if (FreeBusyTypeElement != null) yield return FreeBusyTypeElement;
+				if (StatusElement != null) yield return StatusElement;
 				if (StartElement != null) yield return StartElement;
 				if (EndElement != null) yield return EndElement;
 				if (OverbookedElement != null) yield return OverbookedElement;
@@ -386,9 +446,12 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (Type != null) yield return new ElementValue("type", Type);
+                if (ServiceCategory != null) yield return new ElementValue("serviceCategory", ServiceCategory);
+                foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
+                if (AppointmentType != null) yield return new ElementValue("appointmentType", AppointmentType);
                 if (Schedule != null) yield return new ElementValue("schedule", Schedule);
-                if (FreeBusyTypeElement != null) yield return new ElementValue("freeBusyType", FreeBusyTypeElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (StartElement != null) yield return new ElementValue("start", StartElement);
                 if (EndElement != null) yield return new ElementValue("end", EndElement);
                 if (OverbookedElement != null) yield return new ElementValue("overbooked", OverbookedElement);

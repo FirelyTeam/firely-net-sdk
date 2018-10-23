@@ -99,21 +99,21 @@ namespace Hl7.Fhir.Specification.Tests
 
             var contact = children.Single(c => c.Name == "contact");
             var name = contact.ElementChildren().Single(c => c.Name == "name");
-            var familyNames = name.ElementChildren().Where(c => c.Name == "family");
+            var givenNames = name.ElementChildren().Where(c => c.Name == "given");
 
-            Assert.AreEqual(5, familyNames.Count());
+            Assert.AreEqual(3, givenNames.Count());
 
-            var firstFam = familyNames.First();
-            Assert.AreEqual(null, firstFam.PrimitivePropertyValue());
-            Assert.IsNotNull(((JObject)firstFam.Value)["extension"]);
+            var firstGiven = givenNames.First();
+            Assert.AreEqual("Bénédicte", firstGiven.PrimitivePropertyValue().Value);
+            Assert.IsNull(((JObject)firstGiven.Value)["extension"]);
 
-            var scndFam = familyNames.Skip(1).First();
-            Assert.AreEqual("du", scndFam.PrimitivePropertyValue().Value);
-            Assert.IsNotNull(((JObject)scndFam.Value)["extension"]);
+            var scndGiven = givenNames.Skip(1).First();
+            Assert.AreEqual("Denise", scndGiven.PrimitivePropertyValue().Value);
+            Assert.IsNotNull(((JObject)scndGiven.Value)["extension"]);
 
-            var fourthFam = familyNames.Skip(3).First();
-            Assert.AreEqual("Marché", fourthFam.PrimitivePropertyValue().Value);
-            Assert.IsNull(((JObject)fourthFam.Value)["extension"]);
+            var thirdGiven = givenNames.Skip(2).First();
+            Assert.AreEqual("Marie", thirdGiven.PrimitivePropertyValue().Value);
+            Assert.IsNull(((JObject)thirdGiven.Value)["extension"]);
         }
 
         [TestMethod]

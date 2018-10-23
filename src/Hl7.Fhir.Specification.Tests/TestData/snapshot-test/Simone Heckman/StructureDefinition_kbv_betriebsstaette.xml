@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="FHIRABENDSandbox-KBV-Betriebsstaette" />
   <meta>
@@ -20,9 +20,10 @@
   <copyright value="HL7 Deutschland e.V." />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <constrainedType value="Organization" />
+  <type value="Organization" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Organization" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Organization" />
@@ -33,16 +34,16 @@
     <element>
       <path value="Organization.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Organization.extension" />
-      <name value="Kennzeichen Nebenbetriebsstätte" />
+      <sliceName value="Kennzeichen Nebenbetriebsstätte" />
       <short value="Kennzeichen Nebenbetriebsstätte (KVB)" />
       <definition value="Optional Extensions Element - found in all resources." />
-      <comments value="Gilt als &quot;false&quot;, wenn nicht vorhanden. Nebenbetriebsstätten sollten in der partOf-Referenz auf die zugeordnete Hauptbetriebsstelle verweisen" />
+      <comment value="Gilt als &quot;false&quot;, wenn nicht vorhanden. Nebenbetriebsstätten sollten in der partOf-Referenz auf die zugeordnete Hauptbetriebsstelle verweisen" />
       <min value="0" />
       <max value="1" />
       <type>
@@ -53,14 +54,14 @@
     <element>
       <path value="Organization.identifier" />
       <slicing>
-        <discriminator value="system" />
+        <discriminator><type value="value" /><path value="system" /></discriminator>
         <description value="nach Indentifier.type" />
         <rules value="openAtEnd" />
       </slicing>
     </element>
     <element>
       <path value="Organization.identifier" />
-      <name value="BSNR" />
+      <sliceName value="BSNR" />
     </element>
     <element>
       <path value="Organization.identifier.use" />
@@ -80,16 +81,16 @@
     </element>
     <element>
       <path value="Organization.identifier.system" />
-      <name value="BSNR Namespace" />
+      <sliceName value="BSNR Namespace" />
       <min value="1" />
       <fixedUri value="http://kbv.de/BSNR" />
-      <exampleUri value="http://www.acme.com/identifiers/patient or urn:ietf:rfc:3986 if the Identifier.value itself is a full uri" />
+      <example><valueUri value="http://www.acme.com/identifiers/patient or urn:ietf:rfc:3986 if the Identifier.value itself is a full uri" /></example>
     </element>
     <element>
       <path value="Organization.identifier.value" />
-      <name value="Betriebsstättennummer der Organisation" />
+      <sliceName value="Betriebsstättennummer der Organisation" />
       <min value="1" />
-      <exampleString value="123456" />
+      <example><valueString value="123456" /></example>
     </element>
     <element>
       <path value="Organization.identifier.period" />
@@ -97,7 +98,7 @@
     </element>
     <element>
       <path value="Organization.identifier.assigner" />
-      <comments value="Verweis auf die zuständige KV (z.B. KVBW, KVNO...) entweder als Text oder mit Verweis auf die entsprechende Organization" />
+      <comment value="Verweis auf die zuständige KV (z.B. KVBW, KVNO...) entweder als Text oder mit Verweis auf die entsprechende Organization" />
     </element>
     <element>
       <path value="Organization.identifier.assigner.reference" />

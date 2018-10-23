@@ -1,16 +1,13 @@
 ﻿/* 
- * Copyright (c) 2016, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-#define BEFORE_EXPAND_ELEMENT_EVENT
-
 using System;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -98,7 +95,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Indicates if the <see cref="PrepareElement"/> event has any active subscribers.</summary>
         bool MustRaisePrepareElement => PrepareElement != null;
 
-
         // [WMR 20170105] NEW
 
         /// <summary>
@@ -131,7 +127,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// <summary>Event arguments for the <see cref="SnapshotConstraintHandler"/> event delegate.</summary>
     public sealed class SnapshotConstraintEventArgs : EventArgs
     {
-        public SnapshotConstraintEventArgs(Element element) : base() { Element = element; }
+        internal SnapshotConstraintEventArgs(Element element) : base() { Element = element; }
 
         /// <summary>Returns a reference to a constrained snapshot element definition or property.</summary>
         public Element Element { get; }
@@ -144,7 +140,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// <summary>Event arguments for the <see cref="SnapshotBaseProfileHandler"/> event delegate.</summary>
     public sealed class SnapshotBaseProfileEventArgs : EventArgs
     {
-        public SnapshotBaseProfileEventArgs(StructureDefinition profile, StructureDefinition baseProfile) : base()
+        internal SnapshotBaseProfileEventArgs(StructureDefinition profile, StructureDefinition baseProfile) : base()
         {
             Profile = profile;
             BaseProfile = baseProfile;
@@ -165,7 +161,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// <summary>Event arguments for the <see cref="SnapshotElementHandler"/> event delegate.</summary>
     public sealed class SnapshotElementEventArgs : EventArgs
     {
-        public SnapshotElementEventArgs(ElementDefinition element, StructureDefinition baseStructure, ElementDefinition baseElement) : base()
+        internal SnapshotElementEventArgs(ElementDefinition element, StructureDefinition baseStructure, ElementDefinition baseElement) : base()
         {
             Element = element;
             BaseElement = baseElement;
@@ -182,13 +178,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         public StructureDefinition BaseStructure { get; }
     }
 
+    /// <summary>A delegate type for hooking up <see cref="SnapshotGenerator.PrepareElement"/> events.</summary>
     public delegate void SnapshotElementHandler(object sender, SnapshotElementEventArgs e);
 
 
     /// <summary>Event arguments for the <see cref="SnapshotExpandElementHandler"/> event delegate.</summary>
     public sealed class SnapshotExpandElementEventArgs : EventArgs
     {
-        public SnapshotExpandElementEventArgs(ElementDefinition element, bool hasChildren, bool mustExpand) : base()
+        internal SnapshotExpandElementEventArgs(ElementDefinition element, bool hasChildren, bool mustExpand) : base()
         {
             Element = element;
             HasChildren = hasChildren;
