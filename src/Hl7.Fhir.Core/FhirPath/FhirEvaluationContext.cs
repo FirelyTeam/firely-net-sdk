@@ -18,7 +18,7 @@ namespace Hl7.Fhir.FhirPath
         [Obsolete("Please use CreateDefault() instead of this member, which may cause raise conditions.")]
         new public static readonly FhirEvaluationContext Default = new FhirEvaluationContext();
 
-        public static FhirEvaluationContext CreateDefault() => new FhirEvaluationContext();
+        public new static FhirEvaluationContext CreateDefault() => new FhirEvaluationContext();
 
         public FhirEvaluationContext() : base()
         {
