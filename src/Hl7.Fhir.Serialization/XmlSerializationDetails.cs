@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -46,6 +47,7 @@ namespace Hl7.Fhir.Serialization
         public static XmlSerializationDetails GetXmlSerializationDetails(this ITypedElement node) =>
                 node is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
 
+        [Obsolete("Use GetXmlSerializationDetails(this ITypedElement input) instead")]
         public static XmlSerializationDetails GetXmlSerializationDetails(this IElementNavigator navigator) =>
             navigator is IAnnotated ann ? ann.GetXmlSerializationDetails() : null;
     }

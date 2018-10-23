@@ -9,31 +9,22 @@
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Sprache;
-using Hl7.FhirPath;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.FhirPath.Functions;
 using Xunit;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Model.Primitives;
-using Hl7.Fhir.FhirPath;
 
 namespace Hl7.FhirPath.Tests
 {
     public class FhirPathNavTest
     {
-        public IElementNavigator getTestData()
+        public ITypedElement getTestData()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            // var tree = TreeConstructor.FromXml(tpXml);
-            // var navigator = new TreeNavigator(tree);
-            // return navigator;
-
-            var patient = (new FhirXmlParser()).Parse<Hl7.Fhir.Model.Patient>(tpXml);
-            return patient.ToElementNavigator();
+            return FhirXmlNode.Parse(tpXml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
         }
 
         [Fact]
@@ -44,7 +35,7 @@ namespace Hl7.FhirPath.Tests
             var r = values.Navigate("Patient");
 
             var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
-            Assert.Equal(3, result.Count()); 
+            Assert.Equal(3, result.Count());
             Assert.Equal("usual", result.First().Value);
         }
 

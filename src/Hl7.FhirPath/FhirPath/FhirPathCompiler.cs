@@ -63,7 +63,7 @@ namespace Hl7.FhirPath
         {
             Invokee inv = expression.ToEvaluator(Symbols);
 
-            return (IElementNavigator focus, EvaluationContext ctx) =>
+            return (ITypedElement focus, EvaluationContext ctx) =>
                 {
                     var closure = Closure.Root(focus, ctx);
                     return inv(closure, InvokeeFactory.EmptyArgs);

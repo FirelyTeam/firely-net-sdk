@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
                          ".resource.managingOrganization.resolve().id";
 
-            var result = _bundleElement.ToElementNavigator().Select(statement);
+            var result = _bundleElement.Select(statement);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual("orgY", result.First().Value);
 
@@ -56,10 +56,10 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var statement = "'http://example.org/doesntexist'.resolve().id";
             var called = false;
-            var result = _bundleElement.ToElementNavigator().Select(statement, new FhirEvaluationContext() { Resolver = resolver });
+            var result = _bundleElement.Select(statement, new FhirEvaluationContext() { ElementResolver = resolver });
             Assert.IsTrue(called);
 
-            IElementNavigator resolver(string url)
+            ITypedElement resolver(string url)
             {
                 called = true;
                 return null;

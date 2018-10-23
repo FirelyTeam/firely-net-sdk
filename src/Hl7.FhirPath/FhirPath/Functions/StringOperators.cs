@@ -30,7 +30,7 @@ namespace Hl7.FhirPath.Functions
             return me.Substring((int)start, (int)length);
         }
 
-        public static IElementNavigator FpIndexOf(this string me, string fragment)
+        public static ITypedElement FpIndexOf(this string me, string fragment)
         {
             var result = me.IndexOf(fragment);
 
