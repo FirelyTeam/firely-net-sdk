@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    return String.Format("Name=\"{0}\" Value=\"{1}\"", this.Name, this.Value);
+                    return String.Format("Name=\"{0}\" Value.Type={1}", this.Name, this.Value);
                 }
             }
         }

@@ -115,10 +115,12 @@ namespace FHIR.Server.Tests
             /*
                   <element>
                         <constraint>
+                          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                            <valueString value="codeSystem.empty() or (codeSystem.system != url)"/>
+                          </extension>
                           <key value="vsd-7"/>
                           <severity value="error"/>
                           <human value="A defined code system (if present) SHALL have a different url than the value set url"/>
-                          <expression value="codeSystem.empty() or (codeSystem.system != url)"/>
                           <xpath value="not(f:codeSystem/f:system/@value = f:url/@value)"/>
                         </constraint>
                   </element>
@@ -129,19 +131,19 @@ namespace FHIR.Server.Tests
             ns.AddNamespace("fhir", "http://hl7.org/fhir");
             foreach (XmlElement node in doc.SelectNodes("fhir:constraint"))
             {
-                string expression = node.SelectSingleNode("fhir:expression/@value").Value;
+                string expression = node.SelectSingleNode("fhir:extension[url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhirString/@value").Value;
                 string key = node.SelectSingleNode("fhir:key/@value").Value;
                 string severity = node.SelectSingleNode("fhir:severity/@value").Value;
                 string human = node.SelectSingleNode("fhir:human/@value").Value;
                 string xpath = node.SelectSingleNode("fhir:xpath/@value").Value;
                 var newConst = new ElementDefinition.ConstraintComponent()
                 {
-                    Expression = expression,
                     Key = key,
                     Severity = severity == "Error" ? ElementDefinition.ConstraintSeverity.Error : ElementDefinition.ConstraintSeverity.Warning,
                     Human = human,
                     Xpath = xpath
                 };
+                newConst.AddExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString(expression));
             }
         }
 

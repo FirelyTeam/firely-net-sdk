@@ -22,42 +22,40 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ExpansionOfWholeSystem()
+        public void ExpansionOfDefine()
         {
             var issueTypeVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/issue-type").DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
 
             // Wipe the version so we don't have to update our tests all the time
-            // issueTypeVs.CodeSystem.Version = null;
+            issueTypeVs.CodeSystem.Version = null;
 
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            var expander = new ValueSetExpander();
 
             expander.Expand(issueTypeVs);
 
             Assert.True(issueTypeVs.HasExpansion);
             var id = issueTypeVs.Expansion.Identifier;
             Assert.NotNull(id);
-
-            //TODO: Re-enable test after we fix merging expansiom parameters
-            //Assert.False(issueTypeVs.Expansion.Parameter.Any(c => c.Name == "version"));
+            Assert.DoesNotContain(issueTypeVs.Expansion.Parameter, c => c.Name == "version");
 
             Assert.True(issueTypeVs.CodeInExpansion("security", "http://hl7.org/fhir/issue-type"));
             Assert.True(issueTypeVs.CodeInExpansion("expired", "http://hl7.org/fhir/issue-type"));
-            Assert.Equal(29, issueTypeVs.Expansion.Contains.CountConcepts());
-            Assert.Equal(issueTypeVs.Expansion.Contains.CountConcepts(), issueTypeVs.Expansion.Total);
+            Assert.Equal(29, issueTypeVs.ExpansionSize());
+            Assert.Equal(issueTypeVs.ExpansionSize(), issueTypeVs.Expansion.Total);
 
             var trans = issueTypeVs.FindInExpansion("transient", "http://hl7.org/fhir/issue-type");
             Assert.NotNull(trans);
             Assert.NotNull(trans.FindCode("exception"));
 
             // Now, make this a versioned system
-            issueTypeVs.Version = "3.14";
+            issueTypeVs.CodeSystem.Version = "3.14";
             expander.Expand(issueTypeVs);
             Assert.NotEqual(id, issueTypeVs.Expansion.Identifier);
-            Assert.Equal(29, issueTypeVs.Expansion.Total);
+            Assert.Equal(29, issueTypeVs.ExpansionSize());
 
-            //var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
-            //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
+            var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
+            Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
         }
 
 
@@ -69,14 +67,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             expander.Expand(testVs);
-            Assert.Equal(11, testVs.Expansion.Total);
+            Assert.Equal(11, testVs.ExpansionSize());
         }
 
 
         [Fact]
         public void ExpansionOfComposeImport()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v3-ObservationMethod").DeepCopy() as ValueSet;
+            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/referencerange-meaning").DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
@@ -84,21 +82,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.Throws<ValueSetExpansionTooBigException>(() => expander.Expand(testVs));
 
-            expander.Settings.MaxExpansionSize = 500;
+            expander.Settings.MaxExpansionSize = 1000;
             expander.Expand(testVs);
-            Assert.Equal(304, testVs.Expansion.Total);
-        }
-
-        [Fact]
-        public void TestPropertyRetrieval()
-        {
-            var testCs = _resolver.FindCodeSystem("http://hl7.org/fhir/item-type");
-
-            var conceptGroup = testCs.Concept.Single(c => c.Code == "group");
-            var conceptQuestion = testCs.Concept.Single(c => c.Code == "question");
-
-            Assert.False(conceptGroup.ListConceptProperties(testCs, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).Any());
-            Assert.True(conceptQuestion.ListConceptProperties(testCs, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).Any());
+            Assert.Equal(937, testVs.ExpansionSize());
         }
 
 
@@ -184,7 +170,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void ExternalServiceValidateCodeTest()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
             var svc = new ExternalTerminologyService(client);
 
             // Do common tests for service
@@ -198,7 +184,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
             var external = new ExternalTerminologyService(client);
             var local = new LocalTerminologyService(_resolver);
             var svc = new FallbackTerminologyService(local, external);
@@ -213,7 +199,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTestWithVS()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
             var service = new ExternalTerminologyService(client);
             var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/substance-code");
             Assert.NotNull(vs);
@@ -244,4 +230,3 @@ namespace Hl7.Fhir.Specification.Tests
 
     }
 }
-

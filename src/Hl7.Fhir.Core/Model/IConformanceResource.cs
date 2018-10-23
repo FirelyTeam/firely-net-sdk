@@ -36,24 +36,34 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Model
 {
     public interface IConformanceResource
-    {       
-        string Url { get; set; }
-        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }        
+    {
         string Name { get; set; }
         FhirString NameElement { get; set; }
-        PublicationStatus? Status { get; set; }
+
+        string Url { get; set; }
+        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
+
         string Publisher { get; set; }
-        FhirString PublisherElement { get; set; }        
-        List<ContactDetail> Contact { get; set; }
-        Markdown Description { get; set; }
-        //FhirString DescriptionElement { get; set; }
-        List<UsageContext> UseContext { get; set; }
-        Markdown Purpose { get; set; }       
-        Code<Hl7.Fhir.Model.PublicationStatus> StatusElement { get; set; }
+        FhirString PublisherElement { get; set; }
+
+        string Description { get; set; }
+        FhirString DescriptionElement { get; set; }
+
+        ConformanceResourceStatus? Status { get; set; }
+        Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement { get; set; }
         bool? Experimental { get; set; }
         Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
         string Date { get; set; }
-        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }              
+        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
+
+        List<CodeableConcept> UseContext { get; set; }
+        //List<ContactPoint> Contact { get; set; }
+    }
+    public interface IConformanceResourceContact
+    {
+        Hl7.Fhir.Model.FhirString NameElement { get; set; }
+        string Name { get; set; }
+        List<Hl7.Fhir.Model.ContactPoint> Telecom { get; set; }
     }
 
     public interface IVersionableConformanceResource : IConformanceResource
@@ -65,112 +75,87 @@ namespace Hl7.Fhir.Model
 
     public partial class StructureDefinition : IVersionableConformanceResource
     {
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
+    }   
 
-    }
-    
     public partial class ValueSet : IVersionableConformanceResource
     {
-
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
     }
 
-    public partial class SearchParameter :IVersionableConformanceResource
+    public partial class OperationDefinition : IVersionableConformanceResource
     {
-
-    }
-
-    public partial class OperationDefinition :IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class CapabilityStatement : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class MessageDefinition : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class ImplementationGuide : IVersionableConformanceResource
-    {
-        //I think ImplementationGuide should have a purpose element.
+        //Should have UseContext too
         [NotMapped]
-        public Markdown Purpose
+        public List<CodeableConcept> UseContext
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
+
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
     }
 
-    public partial class CompartmentDefinition : IConformanceResource
+    public partial class SearchParameter : IConformanceResource
     {
-
-    }
-    public partial class StructureMap : IVersionableConformanceResource
-    {
-
-    }
-    public partial class GraphDefinition : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class CodeSystem : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class ConceptMap : IVersionableConformanceResource
-    {
-
-    }
-    public partial class TestScript : IVersionableConformanceResource
-    {
-
-    }
-
-
-    public partial class ExpansionProfile : IVersionableConformanceResource
-    {
-        public Markdown Purpose
+        //Should have UseContext too
+        [NotMapped]
+        public List<CodeableConcept> UseContext
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
+
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
     }
 
     public partial class DataElement : IConformanceResource
     {
         // I think DataElement should have Description too
         [NotMapped]
-        [Obsolete("This property is internal only, and doesn't actually exist in the FHIR object model")]
-        public Markdown Description
+        public string Description
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
 
         [NotMapped]
-        public Markdown Purpose
+        public FhirString DescriptionElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
+
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
     }
 
+    public partial class ConceptMap : IVersionableConformanceResource
+    {
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
+    }
+
+    public partial class Conformance : IVersionableConformanceResource
+    {
+        //Should have UseContext too
+        [NotMapped]
+        public List<CodeableConcept> UseContext
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
+    }
 
     public partial class NamingSystem : IConformanceResource
     {
         // I think NamingSystem should have Experimental too
-        [NotMapped]
-        public Markdown Purpose
-        {
-            get { return null; }
-            set { throw new NotImplementedException(); }
-        }
-
         [NotMapped]
         public bool? Experimental
         {
@@ -188,7 +173,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
         /// </summary>
-        [NotMapped]
+        [NotMapped]        
         public string Url
         {
             get
@@ -211,5 +196,20 @@ namespace Hl7.Fhir.Model
             }
             set { throw new NotImplementedException(); }
         }
+
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
+    }
+
+    public partial class ImplementationGuide : IVersionableConformanceResource
+    {
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
+    }
+
+    public partial class TestScript : IVersionableConformanceResource
+    {
+        public partial class ContactComponent : IConformanceResourceContact
+        { }
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    public static class IListExtensions
+    static class IListExtensions
     {
         public static int FindIndex<T>(this IList<T> list, Predicate<T> match)
         {
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var elem = elements[i];
                 Debug.Write(elem.Path);
-                Debug.WriteIf(elem.SliceName != null, " '" + elem.SliceName + "'");
+                Debug.WriteIf(elem.Name != null, " '" + elem.Name + "'");
                 if (elem.Slicing != null)
                 {
                     Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator));

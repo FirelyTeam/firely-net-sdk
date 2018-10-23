@@ -64,11 +64,14 @@ namespace Hl7.Fhir.Model
                         sb.Append(item);
                     }
                 }
-                if (this._FamilyElement != null && !string.IsNullOrEmpty(this._FamilyElement.Value))
+                if (this._FamilyElement != null)
                 {
-                    if (sb.Length > 0)
-                        sb.Append(" ");
-                    sb.Append(this._FamilyElement.Value);
+                    foreach (var item in this._FamilyElement)
+                    {
+                        if (sb.Length > 0)
+                            sb.Append(" ");
+                        sb.Append(item);
+                    }
                 }
                 if (this._PrefixElement != null)
                 {
@@ -99,11 +102,14 @@ namespace Hl7.Fhir.Model
                     sb.Append(item);
                 }
             }
-            if (this._FamilyElement != null && !string.IsNullOrEmpty(this._FamilyElement.Value))
+            if (this._FamilyElement != null)
             {
-                if (sb.Length > 0)
-                    sb.Append(" ");
-                sb.Append(this._FamilyElement.Value);
+                foreach (var item in this._FamilyElement)
+                {
+                    if (sb.Length > 0)
+                        sb.Append(" ");
+                    sb.Append(item);
+                }
             }
             return sb.ToString();
         }

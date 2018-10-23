@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,9 +54,9 @@
               <xs:documentation xml:lang="en">Logical identifier for the composition, assigned when created. This identifier stays constant as the composition is changed over time.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="CompositionStatus">
+          <xs:element name="date" minOccurs="1" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The workflow/clinical status of this composition. The status is a marker for the clinical standing of the document.</xs:documentation>
+              <xs:documentation xml:lang="en">The composition editing time, when the composition was last logically changed by the author.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
@@ -69,34 +69,29 @@
               <xs:documentation xml:lang="en">A categorization for the type of the composition - helps for indexing and searching. This may be implied by or derived from the code specified in the Composition Type.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Who or what the composition is about. The composition can be about a person, (patient or healthcare practitioner), a device (e.g. a machine) or even a group of subjects (such as a document about a herd of livestock, or a set of patients that share a common exposure).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Describes the clinical encounter or type of care this documentation is associated with.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="date" minOccurs="1" maxOccurs="1" type="dateTime">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The composition editing time, when the composition was last logically changed by the author.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="author" minOccurs="1" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies who is responsible for the information in the composition, not necessarily who typed it in.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="title" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Official human-readable label for the composition.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="confidentiality" minOccurs="0" maxOccurs="1" type="ConfidentialityClassification">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="CompositionStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The workflow/clinical status of this composition. The status is a marker for the clinical standing of the document.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="confidentiality" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">The code specifying the level of confidentiality of the Composition.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Who or what the composition is about. The composition can be about a person, (patient or healthcare practitioner), a device (e.g. a machine) or even a group of subjects (such as a document about a herd of livestock, or a set of patients that share a common exposure).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="author" minOccurs="1" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies who is responsible for the information in the composition, not necessarily who typed it in.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="attester" type="Composition.Attester" minOccurs="0" maxOccurs="unbounded">
@@ -109,14 +104,14 @@
               <xs:documentation xml:lang="en">Identifies the organization or group who is responsible for ongoing maintenance of and access to the composition/document information.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relatesTo" type="Composition.RelatesTo" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Relationships that this composition has with other compositions or documents that already exist.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="event" type="Composition.Event" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The clinical service, such as a colonoscopy or an appendectomy, being documented.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the clinical encounter or type of care this documentation is associated with.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="section" type="Composition.Section" minOccurs="0" maxOccurs="unbounded">
@@ -142,7 +137,7 @@
           </xs:element>
           <xs:element name="time" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">When the composition was attested by the party.</xs:documentation>
+              <xs:documentation xml:lang="en">When composition was attested by the party.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="party" minOccurs="0" maxOccurs="1" type="Reference">
@@ -150,29 +145,6 @@
               <xs:documentation xml:lang="en">Who attested the composition in the specified way.</xs:documentation>
            </xs:annotation>
           </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="Composition.RelatesTo">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A set of healthcare-related information that is assembled together into a single logical document that provides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard to who is making the statement. While a Composition defines the structure, it does not actually contain the content: rather the full content of a document is contained in a Bundle, of which the Composition is the first resource contained.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="code" minOccurs="1" maxOccurs="1" type="DocumentRelationshipType">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The type of relationship that this composition has with anther composition or document.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The target composition/document of this relationship.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="targetIdentifier" type="Identifier"/>
-            <xs:element name="targetReference" type="Reference"/>
-          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -225,7 +197,7 @@
               <xs:documentation xml:lang="en">A human-readable narrative that contains the attested content of the section, used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="mode" minOccurs="0" maxOccurs="1" type="ListMode">
+          <xs:element name="mode" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted.</xs:documentation>
            </xs:annotation>
@@ -255,25 +227,25 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="CompositionStatus-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="preliminary">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Preliminary</xs:documentation>
+          <xs:documentation xml:lang="en">This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="final">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Final</xs:documentation>
+          <xs:documentation xml:lang="en">This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="amended">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Amended</xs:documentation>
+          <xs:documentation xml:lang="en">The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as &quot;final&quot; and the composition is complete and verified by an authorized person.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+          <xs:documentation xml:lang="en">The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -289,106 +261,26 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConfidentialityClassification-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="U">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">unrestricted</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="L">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">low</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="M">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">moderate</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="N">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">normal</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="R">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">restricted</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="V">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">very restricted</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ConfidentialityClassification">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Codes specifying the level of confidentiality of the composition.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ConfidentialityClassification-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="DocumentRelationshipType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="replaces">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Replaces</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="transforms">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Transforms</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="signs">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Signs</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="appends">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Appends</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="DocumentRelationshipType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The type of relationship between documents.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="DocumentRelationshipType-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:simpleType name="CompositionAttestationMode-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="personal">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Personal</xs:documentation>
+          <xs:documentation xml:lang="en">The person authenticated the content in their personal capacity.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="professional">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Professional</xs:documentation>
+          <xs:documentation xml:lang="en">The person authenticated the content in their professional capacity.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="legal">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Legal</xs:documentation>
+          <xs:documentation xml:lang="en">The person authenticated the content and accepted legal responsibility for its content.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="official">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Official</xs:documentation>
+          <xs:documentation xml:lang="en">The organization authenticated the content as consistent with their policies and procedures.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -401,36 +293,6 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="CompositionAttestationMode-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="ListMode-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="working">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Working List</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="snapshot">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Snapshot List</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="changes">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Change List</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ListMode">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The processing mode that applies to this section.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ListMode-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

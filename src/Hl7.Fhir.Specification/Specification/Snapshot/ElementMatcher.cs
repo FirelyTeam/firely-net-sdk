@@ -154,10 +154,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Not found, maybe this is a type slice shorthand, look if we have a matching choice prefix in snap
-            var diffName = diffNav.PathName;
+            var typeSliceShorthand = diffNav.PathName;
 
             // Try to match nameXXXXX to name[x]
-            var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(xName, diffName));
+            var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(xName, typeSliceShorthand));
 
             if (matchingChoice != null)
             {
@@ -277,28 +277,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 BaseBookmark = snapNav.Bookmark(),
                 DiffBookmark = diffNav.Bookmark()
             };
-
-            // [WMR 20170928] Special case
-            // STU3:
-            // - A profile shall rename a choice type element if the element is constrained to a single type
-            // - A derived profile SHALL maintain the new name of inherited renamed elements
-            var diffName = diffNav.PathName;
-            if (ElementDefinitionNavigator.IsChoiceTypeElement(diffName))
-            {
-                // Profile specifies constraint on choice type element (name ending with "[x]")
-                // but there is no matching constraint in base profile for that path
-                // Detect if the base profile has renamed the choice type element
-                var candidate = findRenamedChoiceElement(snapNav, diffName);
-                if (candidate != null)
-                {
-                    // Generate warning that a profile further constraining a
-                    // renamed choice type element cannot refer to the original element name,
-                    // but should use the inherited element name.
-                    match.Issue = SnapshotGenerator.CreateIssueInvalidChoiceTypeName(diffNav.Current, candidate);
-                }
-            }
-
-
             snapNav.ReturnToBookmark(bm);
             return match;
         }
@@ -332,9 +310,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // if diffNav specifies a slice name, then advance snapNav to matching base slice
             // Otherwise remain at the current slice entry or unsliced element
-            if (diffNav.Current.SliceName != null)
+            if (diffNav.Current.Name != null)
             {
-                snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.SliceName);
+                snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.Name);
             }
 
             // Bookmark the initial slice base element
@@ -400,7 +378,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => if the element has type extension and a type profile, we assume it represents
                 // a concrete extension slice and not the extension slicing entry.
                 var elem = diffNav.Current;
-                if (elem.SliceName == null && !isExtensionSlice(elem))
+                if (elem.Name == null && !isExtensionSlice(elem))
                 {
                     // Generate match for constraint on existing slice entry
                     var match = new MatchInfo()
@@ -435,11 +413,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Match => Merge named slice in diff to existing named slice in snap
                 // No match => Add new named slice (after all existing slices in snap)
                 // Only try to match named slices; always add unnamed (extension) slices in-order
-                if (diffNav.Current.SliceName != null)
+                if (diffNav.Current.Name != null)
                 {
-                    while (snapNav.Current.SliceName != diffNav.Current.SliceName && snapNav.MoveToNextSlice())
+                    while (!StringComparer.Ordinal.Equals(snapNav.Current.Name, diffNav.Current.Name)
+                           && snapNav.MoveToNextSlice())
                     {
-                        //
+                        // Skip unconstrained base profile slice entry
                     }
                 }
 
@@ -482,24 +461,22 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         static bool isExtensionSlice(ElementDefinition.TypeRefComponent type)
             => type != null
-               && type.Code == FHIRAllTypes.Extension.GetLiteral()
+               && type.Code == FHIRDefinedType.Extension
                && type.Profile != null;
 
         // Match current snapshot and differential slice elements
         // Returns an initialized MatchInfo with action = Merge | Add
-        // defaultBase represents the base element for newly introduced slices
-        static void matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, 
-                    List<ElementDefinition.DiscriminatorComponent> discriminators, MatchInfo match)
+        static void matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, MatchInfo match)
         {
             Debug.Assert(match != null);                    // Caller should initialize match
             Debug.Assert(diffNav.Current.Slicing == null);  // Caller must handle reslicing
 
             // 1. If the diff slice has a name, than match base slice by name
-            var diffSliceName = diffNav.Current.SliceName;
+            var diffSliceName = diffNav.Current.Name;
             if (!string.IsNullOrEmpty(diffSliceName))
             {
                 // if (snapNav.PathName == diffSliceName)
-                if (StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffSliceName))
+                if (StringComparer.Ordinal.Equals(snapNav.Current.Name, diffSliceName))
                 {
                     match.BaseBookmark = snapNav.Bookmark();
                     match.Action = MatchAction.Merge;
@@ -523,7 +500,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return;
             }
 
-            else if (discriminators.Count == 1 && discriminators[0].Type == ElementDefinition.DiscriminatorType.Type)
+            if (discriminators.Count == 1 && isTypeDiscriminator(discriminators[0]))
             {
                 // Discriminator = @type => match on ElementDefinition.Type[0].Code
                 matchSliceByTypeCode(snapNav, diffNav, match);
@@ -544,13 +521,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Match current snapshot and differential extension slice elements on extension type profile
         // Returns an initialized MatchInfo with action = Merge | Add
-        // defaultBase represents the base element for newly introduced slices
-        static void matchExtensionSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, 
-            List<ElementDefinition.DiscriminatorComponent> discriminators, MatchInfo match)
+        static void matchExtensionSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, MatchInfo match)
         {
             // [WMR 20170110] Accept missing slicing component, e.g. to close the extension slice: Extension.extension { max = 0 }
             // if (discriminators == null || discriminators.Count > 1 || discriminators.FirstOrDefault() != "url")
-            if (discriminators != null && (discriminators.Count != 1 || !isUrlDiscriminator(discriminators.FirstOrDefault())))
+            if (discriminators != null && (discriminators.Count != 1 || discriminators.FirstOrDefault() != "url"))
             {
                 // Invalid extension discriminator; generate issue and ignore
                 Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");
@@ -583,7 +558,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchSliceByTypeCode)}] Error! Element '{diffNav.Path}' is part of a @type slice group, but the element itself has no type.");
 
                 match.Action = MatchAction.Invalid;
-                match.Issue = SnapshotGenerator.createIssueTypeSliceWithoutType(diffNav.Current);
+                match.Issue = SnapshotGenerator.CreateIssueTypeSliceWithoutType(diffNav.Current);
                 return;
             }
 
@@ -606,21 +581,22 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (match.Action == MatchAction.Merge)
             {
                 // We have a match on type code(s); match type profiles
-                var diffProfile = diffNav.Current.PrimaryTypeProfile();
-                var snapProfile = snapNav.Current.PrimaryTypeProfile();
+                var diffProfiles = diffNav.Current.PrimaryTypeProfiles().ToList();
+                var snapProfiles = snapNav.Current.PrimaryTypeProfiles().ToList();
 
                 // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
-                if (String.IsNullOrEmpty(diffProfile) && string.IsNullOrEmpty(snapProfile))
+                if (diffProfiles.IsNullOrEmpty() && snapProfiles.IsNullOrEmpty())
                 {
                     return;
                 }
 
+                var diffProfile = diffProfiles.FirstOrDefault();
                 var profileRef = ProfileReference.Parse(diffProfile);
                 var result = profileRef.IsComplex
                     // Match on element name (for complex extension elements)
-                    ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.ElementName)
+                    ? StringComparer.Ordinal.Equals(snapNav.Current.Name, profileRef.ElementName)
                     // Match on type profile(s)
-                    : snapProfile.SequenceEqual(diffProfile);
+                    : snapProfiles.SequenceEqual(diffProfiles);
 
                 if (!result)
                 {
@@ -636,43 +612,47 @@ namespace Hl7.Fhir.Specification.Snapshot
             var elemTypes = elem.Type;
             if (elemTypes.Count != 1) { return null; }
             var elemType = elemTypes.FirstOrDefault();
-            if (elemType.Code != FHIRAllTypes.Extension.GetLiteral()) { return null; }
-            return elemType.Profile;
+            if (elemType.Code != FHIRDefinedType.Extension) { return null; }
+            var profiles = elemType.Profile.ToList();
+            if (profiles.Count != 1) { return null; }
+            return profiles[0];
         }
+
+        /// <summary>Special predefined discriminator for slicing on element type.</summary>
+        static readonly string TypeDiscriminator = "@type";
+
+        /// <summary>Special predefined discriminator for slicing on element type profile.</summary>
+        static readonly string ProfileDiscriminator = "@profile";
+
+        /// <summary>Special predefined discriminator for slicing on element type and profile.</summary>
+        static readonly string TypeAndProfileDiscriminator = "type@profile";
 
         /// <summary>Fixed default discriminator for slicing extension elements.</summary>
         static readonly string UrlDiscriminator = "url";
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type profile.</summary>
-        static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Profile;
+        static bool isProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, ProfileDiscriminator);
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type.</summary>
-        static bool isTypeDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Type;
+        static bool isTypeDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeDiscriminator);
 
-        //EK: Commented out since this combination is not valid/has never been valid?  In any case we did not consider it
-        //when composing the new DiscriminatorType valueset.
-        ///// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type and profile.</summary>
-        //static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
+        /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type and profile.</summary>
+        static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
 
         /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
-        static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => StringComparer.Ordinal.Equals(discriminator?.Path, UrlDiscriminator);
+        static bool isUrlDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, UrlDiscriminator);
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on (type and) profile
-        static bool isTypeProfileDiscriminator(IEnumerable<ElementDefinition.DiscriminatorComponent> discriminators)
+        static bool isTypeProfileDiscriminator(IEnumerable<string> discriminators)
         {
-            // [WMR 20170411] TODO: update for STU3?
-
             if (discriminators != null)
             {
                 var ar = discriminators.ToArray();
                 if (ar.Length == 1)
                 {
                     // return isUrlDiscriminator(ar[0]) || isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
-                    //return isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
-                    //EK: isTypeAndProfileDescriminator can no longer appear since the new valueset for discriminator type
-                    //does not include that combination
-                    return isProfileDiscriminator(ar[0]);
+                    return isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
                 }
                 else if (ar.Length == 2)
                 {
@@ -683,51 +663,23 @@ namespace Hl7.Fhir.Specification.Snapshot
             return false;
         }
 
-        /// <summary>List names of all following choice type elements ('[x]').</summary>
-        static List<string> listChoiceElements(ElementDefinitionNavigator nav)
+        /// <summary>List all names of nodes in the current navigator that are choice ('[x]') elements.</summary>
+        static List<string> listChoiceElements(ElementDefinitionNavigator snapNav)
         {
-            var bm = nav.Bookmark();
+            var bm = snapNav.Bookmark();
             var result = new List<string>();
 
             do
             {
-                if (nav.Current != null && nav.Current.IsChoice())
+                if (snapNav.Current != null && snapNav.Current.IsChoice())
                 {
-                    result.Add(nav.PathName);
+                    result.Add(snapNav.PathName);
                 }
-            } while (nav.MoveToNext());
+            } while (snapNav.MoveToNext());
 
-            nav.ReturnToBookmark(bm);
+            snapNav.ReturnToBookmark(bm);
 
             return result;
-        }
-
-        /// <summary>Find name of child element that represent a rename of the specified choice type element name.</summary>
-        /// <param name="nav">An <see cref="ElementDefinitionNavigator "/> instance.</param>
-        /// <param name="choiceName">Original choice type element name ending with "[x]".</param>
-        static string findRenamedChoiceElement(ElementDefinitionNavigator nav, string choiceName)
-        {
-            var bm = nav.Bookmark();
-            var result = new List<string>();
-
-            if (nav.MoveToFirstChild())
-            {
-                do
-                {
-                    if (ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, nav.PathName))
-                    {
-                        // Found match
-                        // Renaming is only allowed for a single type constraint,
-                        // so we're not expecting other matches (...)
-                        return nav.PathName;
-                    }
-
-                } while (nav.MoveToNext());
-            }
-
-            nav.ReturnToBookmark(bm);
-
-            return null;
         }
 
         static string previousElementName(ElementDefinitionNavigator nav)
@@ -767,8 +719,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
 
                 // [WMR 20160719] Add name, if not null
-                if (snapNav.Current != null && snapNav.Current.SliceName != null) bPos += $" '{snapNav.Current.SliceName}'";
-                if (diffNav.Current != null && diffNav.Current.SliceName != null) dPos += $" '{diffNav.Current.SliceName}'";
+                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
+                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
 
                 Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
             }
@@ -792,8 +744,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
 
             // [WMR 20160719] Add name, if not null
-            if (snapNav.Current != null && snapNav.Current.SliceName != null) bPos += $" '{snapNav.Current.SliceName}'";
-            if (diffNav.Current != null && diffNav.Current.SliceName != null) dPos += $" '{diffNav.Current.SliceName}'";
+            if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
+            if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
 
             Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
 

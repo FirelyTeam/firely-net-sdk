@@ -5,11 +5,10 @@
 	<description value="Slice Patient.telecom by multiple discriminators - based on an example by Chris Grenz." />
 	<fhirVersion value="1.0.2" />
 	<kind value="resource" />
-	<type value="Patient" />
+	<constrainedType value="Patient" />
 	<abstract value="false" />
-	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
-  <derivation value="constraint" />
-  <differential>
+	<base value="http://hl7.org/fhir/StructureDefinition/Patient" />	
+	<differential>
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
@@ -24,7 +23,7 @@
 		<!-- First, slice into PHONE -->
 		<element>
 			<path value="Patient.telecom" />
-			<sliceName value="phone" />
+			<name value="phone" />
 			<min value="1" />
 			<max value="2" /> 			
 		</element>
@@ -38,10 +37,10 @@
 		<!-- Now, the emails. A slice with Email, re-sliced to account for use -->
 		<element>
 			<path value="Patient.telecom" />
-			<sliceName value="email" />
+			<name value="email" />
 			<slicing>
-				<discriminator><type value="value" /><path value="system" /></discriminator>
-				<discriminator><type value="value" /><path value="use" /></discriminator>				
+				<discriminator value="system" />
+				<discriminator value="use" />				
 				<rules value="closed" />				
 			</slicing>
 			<min value="0" />
@@ -56,7 +55,7 @@
 		<!-- A re-slice for Email + home -->
 		<element>
 			<path value="Patient.telecom" />
-			<sliceName value="email/home" />
+			<name value="email/home" />
 			<min value="0" />
 			<max value="1" /> 						
 		</element>
@@ -74,7 +73,7 @@
 		<!-- A re-slice for Email + work -->
 		<element>
 			<path value="Patient.telecom" />
-			<sliceName value="email/work" />
+			<name value="email/work" />
 			<min value="0" />
 			<max value="1" /> 									
 		</element>
@@ -93,10 +92,10 @@
 		<!-- Finally, other -->
 		<element>
 			<path value="Patient.telecom" />
-			<sliceName value="other" />
+			<name value="other" />
 			<slicing>
-				<discriminator><type value="value" /><path value="system" /></discriminator>
-				<discriminator><type value="value" /><path value="use" /></discriminator>
+				<discriminator value="system" />
+				<discriminator value="use" />
 				<rules value="open" />
 			</slicing>
 			<min value="0" />
@@ -111,7 +110,7 @@
 		<!-- A re-slice for other + home -->
 		<element>
 			<path value="Patient.telecom" />
-			<sliceName value="other/home" />
+			<name value="other/home" />
 			<min value="0" />
 			<max value="1" /> 						
 		</element>
@@ -129,7 +128,7 @@
 		<!-- A re-slice for other + work -->
 		<element>
 			<path value="Patient.telecom" />
-			<sliceName value="other/work" />
+			<name value="other/work" />
 			<min value="0" />
 			<max value="1" /> 						
 		</element>

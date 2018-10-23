@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -52,11 +52,6 @@
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">A unique business identifier for this group.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates whether the record for the group is available for use or is merely being retained for historical purposes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="GroupType">
@@ -160,35 +155,35 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="GroupType-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="person">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Person</xs:documentation>
+          <xs:documentation xml:lang="en">Group contains &quot;person&quot; Patient resources</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="animal">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Animal</xs:documentation>
+          <xs:documentation xml:lang="en">Group contains &quot;animal&quot; Patient resources</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="practitioner">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Practitioner</xs:documentation>
+          <xs:documentation xml:lang="en">Group contains healthcare practitioner resources</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="device">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Device</xs:documentation>
+          <xs:documentation xml:lang="en">Group contains Device resources</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="medication">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Medication</xs:documentation>
+          <xs:documentation xml:lang="en">Group contains Medication resources</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="substance">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Substance</xs:documentation>
+          <xs:documentation xml:lang="en">Group contains Substance resources</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

@@ -35,16 +35,15 @@ using Hl7.Fhir.Utility;
   
 
 */
-
-#pragma warning disable 1591 // suppress XML summary warnings 
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Diet, formula or nutritional supplement request
+    /// A request for a diet, formula or nutritional supplement
     /// </summary>
     [FhirType("NutritionOrder", IsResource=true)]
     [DataContract]
@@ -57,65 +56,59 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Codes specifying the state of the request. Describes the lifecycle of the nutrition order.
-        /// (url: http://hl7.org/fhir/ValueSet/nutrition-request-status)
+        /// (url: http://hl7.org/fhir/ValueSet/nutrition-order-status)
         /// </summary>
         [FhirEnumeration("NutritionOrderStatus")]
         public enum NutritionOrderStatus
         {
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// The request has been proposed.
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("proposed", "http://hl7.org/fhir/nutrition-request-status"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/nutrition-order-status"), Description("Proposed")]
             Proposed,
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// The request is in preliminary form prior to being sent.
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("draft", "http://hl7.org/fhir/nutrition-request-status"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/nutrition-order-status"), Description("Draft")]
             Draft,
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// The request has been planned.
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("planned", "http://hl7.org/fhir/nutrition-request-status"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/nutrition-order-status"), Description("Planned")]
             Planned,
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// The request has been placed.
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("requested", "http://hl7.org/fhir/nutrition-request-status"), Description("Requested")]
+            [EnumLiteral("requested", "http://hl7.org/fhir/nutrition-order-status"), Description("Requested")]
             Requested,
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// The request is 'actionable', but not all actions that are implied by it have occurred yet.
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/nutrition-request-status"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/nutrition-order-status"), Description("Active")]
             Active,
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// Actions implied by the request have been temporarily halted, but are expected to continue later. May also be called "suspended".
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("on-hold", "http://hl7.org/fhir/nutrition-request-status"), Description("On-Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/nutrition-order-status"), Description("On-Hold")]
             OnHold,
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// All actions that are implied by the order have occurred and no continuation is planned (this will rarely be made explicit).
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/nutrition-request-status"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/nutrition-order-status"), Description("Completed")]
             Completed,
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
+            /// The request has been withdrawn and is no longer actionable.
+            /// (system: http://hl7.org/fhir/nutrition-order-status)
             /// </summary>
-            [EnumLiteral("cancelled", "http://hl7.org/fhir/nutrition-request-status"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/nutrition-order-status"), Description("Cancelled")]
             Cancelled,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-request-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/nutrition-request-status"), Description("Entered in Error")]
-            EnteredInError,
         }
 
         [FhirType("OralDietComponent")]
@@ -1136,55 +1129,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Identifiers assigned to this order
-        /// </summary>
-        [FhirElement("identifier", Order=90)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier
-        {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Identifier> _Identifier;
-        
-        /// <summary>
-        /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
-        {
-            get { return _StatusElement; }
-            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> _StatusElement;
-        
-        /// <summary>
-        /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus? Status
-        {
-            get { return StatusElement != null ? StatusElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  StatusElement = null; 
-                else
-                  StatusElement = new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
-                OnPropertyChanged("Status");
-            }
-        }
-        
-        /// <summary>
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=110)]
+        [FhirElement("patient", InSummary=true, Order=90)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -1196,6 +1143,35 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.ResourceReference _Patient;
+        
+        /// <summary>
+        /// Who ordered the diet, formula or nutritional supplement
+        /// </summary>
+        [FhirElement("orderer", InSummary=true, Order=100)]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Orderer
+        {
+            get { return _Orderer; }
+            set { _Orderer = value; OnPropertyChanged("Orderer"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Orderer;
+        
+        /// <summary>
+        /// Identifiers assigned to this order
+        /// </summary>
+        [FhirElement("identifier", Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The encounter associated with this nutrition order
@@ -1246,19 +1222,36 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who ordered the diet, formula or nutritional supplement
+        /// proposed | draft | planned | requested | active | on-hold | completed | cancelled
         /// </summary>
-        [FhirElement("orderer", InSummary=true, Order=140)]
-        [CLSCompliant(false)]
-		[References("Practitioner")]
+        [FhirElement("status", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Orderer
+        public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
         {
-            get { return _Orderer; }
-            set { _Orderer = value; OnPropertyChanged("Orderer"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Orderer;
+        private Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> _StatusElement;
+        
+        /// <summary>
+        /// proposed | draft | planned | requested | active | on-hold | completed | cancelled
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
         
         /// <summary>
         /// List of the patient's food and nutrition-related allergies and intolerances
@@ -1347,7 +1340,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent NutritionOrder_NOR_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "oralDiet.exists() or supplement.exists() or enteralFormula.exists()",
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("oralDiet or supplement or enteralFormula"))},
             Key = "nor-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Nutrition Order SHALL contain either Oral Diet , Supplement, or Enteral Formula class",
@@ -1368,12 +1361,12 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>)StatusElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
-                if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>)StatusElement.DeepCopy();
                 if(AllergyIntolerance != null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopy());
                 if(FoodPreferenceModifier != null) dest.FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(FoodPreferenceModifier.DeepCopy());
                 if(ExcludeFoodModifier != null) dest.ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(ExcludeFoodModifier.DeepCopy());
@@ -1397,12 +1390,12 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
-            if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
             if( !DeepComparable.Matches(FoodPreferenceModifier, otherT.FoodPreferenceModifier)) return false;
             if( !DeepComparable.Matches(ExcludeFoodModifier, otherT.ExcludeFoodModifier)) return false;
@@ -1419,12 +1412,12 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
-            if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
             if( !DeepComparable.IsExactly(FoodPreferenceModifier, otherT.FoodPreferenceModifier)) return false;
             if( !DeepComparable.IsExactly(ExcludeFoodModifier, otherT.ExcludeFoodModifier)) return false;
@@ -1441,12 +1434,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (StatusElement != null) yield return StatusElement;
 				if (Patient != null) yield return Patient;
+				if (Orderer != null) yield return Orderer;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Encounter != null) yield return Encounter;
 				if (DateTimeElement != null) yield return DateTimeElement;
-				if (Orderer != null) yield return Orderer;
+				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in AllergyIntolerance) { if (elem != null) yield return elem; }
 				foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return elem; }
 				foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return elem; }
@@ -1462,12 +1455,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Orderer != null) yield return new ElementValue("orderer", Orderer);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (Encounter != null) yield return new ElementValue("encounter", Encounter);
                 if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
-                if (Orderer != null) yield return new ElementValue("orderer", Orderer);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", elem); }
                 foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return new ElementValue("foodPreferenceModifier", elem); }
                 foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return new ElementValue("excludeFoodModifier", elem); }

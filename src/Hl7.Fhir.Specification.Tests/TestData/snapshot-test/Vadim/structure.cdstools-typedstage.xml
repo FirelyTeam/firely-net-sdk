@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="cds-typedstage"/>
+  <meta>
+    <lastUpdated value="2017-04-06T09:12:19.570+02:00"/>
+  </meta>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+  
+      <p>An extension to allow the representation of multiple, different stagings on a Condition.</p>
+
+    </div>
+  </text>
+  <url value="https://example.org/fhir/StructureDefinition/cds-typedstage"/>
+  <name value="CDS Typed Stage"/>
+  <status value="draft"/>
+  <date value="2017-04-03T00:00:00+02:00"/>
+  <description value="Allows the representation of multiple, different stagings on a Condition."/>
+  <requirements value="To fulfil the need to represent multiple stagings on a cancer - STU3 only allows one stage per Condition. This extension mirrors the solution taken by the Patien WG in tracker #12943."/>
+  <fhirVersion value="1.0.2" />
+  <kind value="datatype"/>
+  <constrainedType value="Extension"/>
+  <abstract value="false"/>
+  <contextType value="resource"/>
+  <context value="Condition"/>
+  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <differential>
+    <element id="Element">
+      <path value="Extension"/>
+      <name value="Element"/>
+      <min value="0"/>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element>
+      <path value="Extension.extension"/>
+      <slicing>
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="0"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension"/>
+      <name value="stage"/>
+      <short value="Stage/grade, usually assessed formally"/>
+      <definition value="Clinical stage or grade of a condition. May include formal severity assessments."/>
+      <min value="0"/>
+      <maxLength value="0"/>
+      <constraint>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+          <valueString value="summary.exists() or assessment.exists()"/>
+        </extension>
+        <key value="con-1"/>
+        <severity value="error"/>
+        <human value="Stage SHALL have summary or assessment"/>
+        <xpath value="exists(f:summary) or exists(f:assessment)"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;stage/grade&quot;]"/>
+      </mapping>
+    </element>
+    <element>
+      <path value="Extension.extension.extension"/>
+      <slicing>
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="0"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension"/>
+      <name value="summary"/>
+      <short value="Simple summary (disease specific)"/>
+      <definition value="A simple summary of the stage such as &quot;Stage 3&quot;. The determination of the stage is disease-specific."/>
+      <min value="0"/>
+      <max value="1"/>
+      <maxLength value="0"/>
+      <condition value="con-1"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="example"/>
+        <description value="Codes describing condition stages (e.g. Cancer stages)."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/condition-stage"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 254291000 |Staging and scales|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PRB-14"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".value"/>
+      </mapping>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension.url"/>
+      <name value="Element"/>
+	  <!--
+      <min value="0"/>
+	  -->
+	  <min value="1"/>
+      <fixedUri value="summary"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension.valueCodeableConcept"/>
+      <name value="Element"/>
+      <min value="0"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension"/>
+      <name value="assessment"/>
+      <min value="0"/>
+      <maxLength value="0"/>
+      <condition value="con-1"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".self"/>
+      </mapping>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension.url"/>
+      <name value="Element"/>
+	  <!--
+      <min value="0"/>
+	  -->
+	  <min value="1"/>
+      <fixedUri value="assessment"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension.value[x]"/>
+      <name value="Element"/>
+      <min value="0"/>
+      <type>
+        <code value="Reference"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/ClinicalImpression"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+      </type>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension"/>
+      <name value="type"/>
+      <min value="0"/>
+      <max value="1"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension.url"/>
+      <name value="Element"/>
+	  <!--
+      <min value="0"/>
+	  -->
+	  <min value="1"/>
+      <fixedUri value="type"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension.valueCodeableConcept"/>
+      <name value="Element"/>
+      <min value="0"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="preferred"/>
+        <description value="Possible types of cancer stage assessment (e.g. clinical, pathological)"/>
+        <valueSetReference>
+          <reference value="https://example.org/fhir/ValueSet/cds-cancerstagingtype"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.extension.valueCodeableConcept.coding"/>
+      <name value="Element"/>
+      <min value="0"/>
+      <max value="1"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.url"/>
+      <name value="Element"/>
+	  <!--
+      <min value="0"/>
+	  -->
+	  <min value="1"/>
+      <fixedUri value="stage"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.extension.value[x]"/>
+      <name value="Element"/>
+      <min value="0"/>
+      <max value="0"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.url"/>
+      <name value="Element"/>
+	  <!--
+      <min value="0"/>
+	  -->
+	  <min value="1"/>
+      <fixedUri value="https://example.org/fhir/StructureDefinition/cds-typedstage"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Element">
+      <path value="Extension.value[x]"/>
+      <name value="Element"/>
+      <min value="0"/>
+      <max value="0"/>
+      <maxLength value="0"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+  </differential>
+</StructureDefinition>

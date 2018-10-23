@@ -3,36 +3,35 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="family-member-history-genetics-parent"/>
   <url value="http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-parent"/>
-  <name value="parent"/>
+  <name value="Mother(s) &amp; Father(s) - genetic &amp; other"/>
   <status value="draft"/>
-  <date value="2013-10-02"/>
   <publisher value="Health Level Seven International (Clinical Genomics)"/>
   <contact>
     <telecom>
-      <system value="url"/>
+      <system value="other"/>
       <value value="http://www.hl7.org/Special/committees/clingenomics"/>
     </telecom>
   </contact>
+  <date value="2013-10-02"/>
   <description value="Identifies a parent of the relative."/>
-  <fhirVersion value="1.9.0"/>
+  <fhirVersion value="1.0.2"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
-    <name value="RIM Mapping"/>
+    <name value="RIM"/>
   </mapping>
-  <kind value="complex-type"/>
+  <kind value="datatype"/>
+  <constrainedType value="Extension"/>
   <abstract value="false"/>
   <contextType value="resource"/>
   <context value="FamilyMemberHistory"/>
-  <type value="Extension"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-  <derivation value="constraint"/>
+  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
   <snapshot>
-    <element id="Extension:parent">
+    <element>
       <path value="Extension"/>
       <short value="Mother(s) &amp; Father(s) - genetic &amp; other"/>
       <definition value="Identifies a parent of the relative."/>
-      <comment value="Some individuals may have more than two parents (e.g. genetic vs. adoptive parents).  Even non-genetic relationships can be relevant in terms of genetic exposure."/>
+      <comments value="Some individuals may have more than two parents (e.g. genetic vs. adoptive parents).  Even non-genetic relationships can be relevant in terms of genetic exposure."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -40,81 +39,71 @@
         <min value="0"/>
         <max value="*"/>
       </base>
-      <condition value="ele-1"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
-        <source value="Extension"/>
-      </constraint>
+      <type>
+        <code value="Extension"/>
+      </type>
       <isModifier value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="player[classCode&lt;LIV, determinerCode=INSTANCE].scopesRole"/>
       </mapping>
     </element>
-    <element id="Extension:parent.id">
+    <element>
       <path value="Extension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <definition value="unique id for the element within a resource (for internal references)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="Element.id"/>
+        <path value="Extension.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="string"/>
+        <code value="id"/>
       </type>
       <mapping>
         <identity value="rim"/>
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension">
+    <element>
       <path value="Extension.extension"/>
-      <slicing id="415">
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
+      <slicing>
+        <discriminator value="url"/>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="Element.extension"/>
+        <path value="Extension.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Extension"/>
       </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
     </element>
-    <element id="Extension:parent.extension:type">
+    <element>
       <path value="Extension.extension"/>
-      <sliceName value="type"/>
+      <name value="type"/>
       <short value="mother | father | adoptive mother | etc."/>
       <definition value="Distinguishes between different types of parental relationships with varying granularity to support capturing the relationship &quot;to the degree known&quot;."/>
       <min value="1"/>
       <max value="1"/>
       <base>
-        <path value="Element.extension"/>
+        <path value="Extension.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -127,54 +116,48 @@
         <map value="code"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:type.id">
+    <element>
       <path value="Extension.extension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <definition value="unique id for the element within a resource (for internal references)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="Element.id"/>
+        <path value="Extension.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="string"/>
+        <code value="id"/>
       </type>
       <mapping>
         <identity value="rim"/>
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:type.extension">
+    <element>
       <path value="Extension.extension.extension"/>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <name value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="0"/>
       <base>
-        <path value="Element.extension"/>
+        <path value="Extension.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Extension"/>
       </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
     </element>
-    <element id="Extension:parent.extension:type.url">
+    <element>
       <path value="Extension.extension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
       <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -191,11 +174,11 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:type.valueCodeableConcept">
+    <element>
       <path value="Extension.extension.valueCodeableConcept"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
       <base>
         <path value="Extension.value[x]"/>
@@ -206,9 +189,6 @@
         <code value="CodeableConcept"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ParentRelationshipType"/>
-        </extension>
         <strength value="required"/>
         <description value="Parental relationship types"/>
         <valueSetReference>
@@ -220,15 +200,15 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:reference">
+    <element>
       <path value="Extension.extension"/>
-      <sliceName value="reference"/>
+      <name value="identifier"/>
       <short value="Link to parent relative(s)"/>
       <definition value="Points to the FamilyMemberHistory record of the relation who is the parent of this relation."/>
       <min value="1"/>
       <max value="1"/>
       <base>
-        <path value="Element.extension"/>
+        <path value="Extension.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -241,54 +221,48 @@
         <map value="player.id"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:reference.id">
+    <element>
       <path value="Extension.extension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <definition value="unique id for the element within a resource (for internal references)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="Element.id"/>
+        <path value="Extension.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="string"/>
+        <code value="id"/>
       </type>
       <mapping>
         <identity value="rim"/>
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:reference.extension">
+    <element>
       <path value="Extension.extension.extension"/>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <name value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="0"/>
       <base>
-        <path value="Element.extension"/>
+        <path value="Extension.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Extension"/>
       </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
     </element>
-    <element id="Extension:parent.extension:reference.url">
+    <element>
       <path value="Extension.extension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
       <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -299,17 +273,17 @@
       <type>
         <code value="uri"/>
       </type>
-      <fixedUri value="reference"/>
+      <fixedUri value="identifier"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:reference.valueReference">
+    <element>
       <path value="Extension.extension.valueReference"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
       <base>
         <path value="Extension.value[x]"/>
@@ -318,19 +292,19 @@
       </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory"/>
       </type>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Extension:parent.url">
+    <element>
       <path value="Extension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
       <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -347,7 +321,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Extension:parent.value[x]">
+    <element>
       <path value="Extension.value[x]"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
@@ -359,13 +333,25 @@
         <max value="1"/>
       </base>
       <type>
-        <code value="base64Binary"/>
-      </type>
-      <type>
         <code value="boolean"/>
       </type>
       <type>
-        <code value="code"/>
+        <code value="integer"/>
+      </type>
+      <type>
+        <code value="decimal"/>
+      </type>
+      <type>
+        <code value="base64Binary"/>
+      </type>
+      <type>
+        <code value="instant"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="uri"/>
       </type>
       <type>
         <code value="date"/>
@@ -374,43 +360,25 @@
         <code value="dateTime"/>
       </type>
       <type>
-        <code value="decimal"/>
+        <code value="time"/>
       </type>
       <type>
-        <code value="id"/>
-      </type>
-      <type>
-        <code value="instant"/>
-      </type>
-      <type>
-        <code value="integer"/>
-      </type>
-      <type>
-        <code value="markdown"/>
+        <code value="code"/>
       </type>
       <type>
         <code value="oid"/>
       </type>
       <type>
-        <code value="positiveInt"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="time"/>
+        <code value="id"/>
       </type>
       <type>
         <code value="unsignedInt"/>
       </type>
       <type>
-        <code value="uri"/>
+        <code value="positiveInt"/>
       </type>
       <type>
-        <code value="Address"/>
-      </type>
-      <type>
-        <code value="Age"/>
+        <code value="markdown"/>
       </type>
       <type>
         <code value="Annotation"/>
@@ -419,34 +387,13 @@
         <code value="Attachment"/>
       </type>
       <type>
+        <code value="Identifier"/>
+      </type>
+      <type>
         <code value="CodeableConcept"/>
       </type>
       <type>
         <code value="Coding"/>
-      </type>
-      <type>
-        <code value="ContactPoint"/>
-      </type>
-      <type>
-        <code value="Count"/>
-      </type>
-      <type>
-        <code value="Distance"/>
-      </type>
-      <type>
-        <code value="Duration"/>
-      </type>
-      <type>
-        <code value="HumanName"/>
-      </type>
-      <type>
-        <code value="Identifier"/>
-      </type>
-      <type>
-        <code value="Money"/>
-      </type>
-      <type>
-        <code value="Period"/>
       </type>
       <type>
         <code value="Quantity"/>
@@ -455,10 +402,10 @@
         <code value="Range"/>
       </type>
       <type>
-        <code value="Ratio"/>
+        <code value="Period"/>
       </type>
       <type>
-        <code value="Reference"/>
+        <code value="Ratio"/>
       </type>
       <type>
         <code value="SampledData"/>
@@ -467,7 +414,19 @@
         <code value="Signature"/>
       </type>
       <type>
+        <code value="HumanName"/>
+      </type>
+      <type>
+        <code value="Address"/>
+      </type>
+      <type>
+        <code value="ContactPoint"/>
+      </type>
+      <type>
         <code value="Timing"/>
+      </type>
+      <type>
+        <code value="Reference"/>
       </type>
       <type>
         <code value="Meta"/>
@@ -479,22 +438,25 @@
     </element>
   </snapshot>
   <differential>
-    <element id="Extension:parent">
+    <element>
       <path value="Extension"/>
       <short value="Mother(s) &amp; Father(s) - genetic &amp; other"/>
       <definition value="Identifies a parent of the relative."/>
-      <comment value="Some individuals may have more than two parents (e.g. genetic vs. adoptive parents).  Even non-genetic relationships can be relevant in terms of genetic exposure."/>
+      <comments value="Some individuals may have more than two parents (e.g. genetic vs. adoptive parents).  Even non-genetic relationships can be relevant in terms of genetic exposure."/>
       <min value="0"/>
       <max value="*"/>
+      <type>
+        <code value="Extension"/>
+      </type>
       <isModifier value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="player[classCode&lt;LIV, determinerCode=INSTANCE].scopesRole"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:type">
+    <element>
       <path value="Extension.extension"/>
-      <sliceName value="type"/>
+      <name value="type"/>
       <short value="mother | father | adoptive mother | etc."/>
       <definition value="Distinguishes between different types of parental relationships with varying granularity to support capturing the relationship &quot;to the degree known&quot;."/>
       <min value="1"/>
@@ -508,22 +470,25 @@
         <map value="code"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:type.url">
+    <element>
+      <path value="Extension.extension.extension"/>
+      <name value="extension"/>
+      <max value="0"/>
+    </element>
+    <element>
       <path value="Extension.extension.url"/>
       <type>
         <code value="uri"/>
       </type>
       <fixedUri value="type"/>
     </element>
-    <element id="Extension:parent.extension:type.valueCodeableConcept">
-      <path value="Extension.extension.valueCodeableConcept"/>
+    <element>
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
       <type>
         <code value="CodeableConcept"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ParentRelationshipType"/>
-        </extension>
         <strength value="required"/>
         <description value="Parental relationship types"/>
         <valueSetReference>
@@ -531,9 +496,9 @@
         </valueSetReference>
       </binding>
     </element>
-    <element id="Extension:parent.extension:reference">
+    <element>
       <path value="Extension.extension"/>
-      <sliceName value="reference"/>
+      <name value="identifier"/>
       <short value="Link to parent relative(s)"/>
       <definition value="Points to the FamilyMemberHistory record of the relation who is the parent of this relation."/>
       <min value="1"/>
@@ -547,28 +512,34 @@
         <map value="player.id"/>
       </mapping>
     </element>
-    <element id="Extension:parent.extension:reference.url">
+    <element>
+      <path value="Extension.extension.extension"/>
+      <name value="extension"/>
+      <max value="0"/>
+    </element>
+    <element>
       <path value="Extension.extension.url"/>
       <type>
         <code value="uri"/>
       </type>
-      <fixedUri value="reference"/>
+      <fixedUri value="identifier"/>
     </element>
-    <element id="Extension:parent.extension:reference.valueReference">
-      <path value="Extension.extension.valueReference"/>
+    <element>
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory"/>
       </type>
     </element>
-    <element id="Extension:parent.url">
+    <element>
       <path value="Extension.url"/>
       <type>
         <code value="uri"/>
       </type>
       <fixedUri value="http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-parent"/>
     </element>
-    <element id="Extension:parent.value[x]">
+    <element>
       <path value="Extension.value[x]"/>
       <min value="0"/>
       <max value="0"/>

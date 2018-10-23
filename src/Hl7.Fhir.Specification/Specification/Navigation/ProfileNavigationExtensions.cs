@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -107,46 +106,46 @@ namespace Hl7.Fhir.Specification.Navigation
             return defn.Type != null && defn.Type.Count > 0 ? defn.Type[0] : null;
         }
 
-        /// <summary>Returns the type profile reference of the primary element type, if it exists, or <c>null</c></summary>
-        public static string PrimaryTypeProfile(this ElementDefinition elem)
+        /// <summary>Enumerates the type profile references of the primary element type.</summary>
+        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition defn)
         {
-            if (elem.Type != null)
+            var primaryType = defn.PrimaryType();
+            if (primaryType != null)
             {
-                var primaryType = elem.Type.FirstOrDefault();
-                if (primaryType != null)
-                {
-                    return primaryType.Profile;
-                }
+                return primaryType.Profile;
             }
-            return null;
+            return Enumerable.Empty<string>();
+        }
+
+
+        /// <summary>Returns the first type profile reference of the primary element type, if it exists, or <c>null</c></summary>
+        public static string PrimaryTypeProfile(this ElementDefinition defn)
+        {
+            return defn.PrimaryTypeProfiles().FirstOrDefault();
         }
 
         /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
-        public static string GetTypeProfile(this ElementDefinition.TypeRefComponent elemType)
+        public static string TypeProfile(this ElementDefinition.TypeRefComponent elemType)
         {
             string profile = null;
             if (elemType != null)
             {
-                profile = elemType.Profile;
-                if (profile == null && elemType.Code != null)
+                profile = elemType.Profile.FirstOrDefault();
+                if (profile == null && elemType.Code.HasValue)
                 {
-                    profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code);
+                    profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code.Value);
                 }
             }
             return profile;
         }
 
         /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
-        public static FHIRAllTypes? PrimaryTypeCode(this ElementDefinition elem)
+        public static FHIRDefinedType? PrimaryTypeCode(this ElementDefinition defn)
         {
-            if (elem.Type != null)
+            var primaryType = defn.PrimaryType();
+            if (primaryType != null)
             {
-                var type = elem.Type.FirstOrDefault();
-                if (type != null && !string.IsNullOrEmpty(type.Code))
-                {
-                    return Utility.EnumUtility.ParseLiteral<FHIRAllTypes>(type.Code);
-                    // return (FHIRAllTypes)Enum.Parse(typeof(FHIRAllTypes), type.Code);
-                }
+                return primaryType.Code;
             }
             return null;
         }
@@ -157,8 +156,8 @@ namespace Hl7.Fhir.Specification.Navigation
         /// then return that common type code, otherwise return <c>null</c>.
         /// </summary>
         /// <param name="types">A list of element types.</param>
-        /// <returns>A type code.</returns>
-        public static string CommonTypeCode(this List<ElementDefinition.TypeRefComponent> types)
+        /// <returns>A type code, or <c>null</c>.</returns>
+        public static FHIRDefinedType? CommonTypeCode(this List<ElementDefinition.TypeRefComponent> types)
         {
             if (types != null)
             {
@@ -187,19 +186,19 @@ namespace Hl7.Fhir.Specification.Navigation
         /// then return that common type code, otherwise return <c>null</c>.
         /// </summary>
         /// <param name="elem">An element definition.</param>
-        /// <returns>A type code.</returns>
-        public static string CommonTypeCode(this ElementDefinition elem) => elem?.Type.CommonTypeCode();
+        /// <returns>A type code, or <c>null</c>.</returns>
+        public static FHIRDefinedType? CommonTypeCode(this ElementDefinition elem) => elem?.Type.CommonTypeCode();
 
         /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
         /// <param name="types">A list of element types.</param>
         /// <returns>A list of type code strings.</returns>
-        public static List<string> DistinctTypeCodes(this List<ElementDefinition.TypeRefComponent> types)
-            => types.Where(t => t.Code != null).Select(t => t.Code).Distinct().ToList();
+        public static List<FHIRDefinedType> DistinctTypeCodes(this List<ElementDefinition.TypeRefComponent> types)
+            => types.Where(t => t.Code != null).Select(t => t.Code.Value).Distinct().ToList();
 
         /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
         /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
         /// <returns>A list of type code strings.</returns>
-        public static List<string> DistinctTypeCodes(this ElementDefinition elem) => elem?.Type.DistinctTypeCodes();
+        public static List<FHIRDefinedType> DistinctTypeCodes(this ElementDefinition elem) => elem?.Type.DistinctTypeCodes();
 
         /// <summary>Returns <c>true</c> if the element represents an extension with a custom extension profile url, or <c>false</c> otherwise.</summary>
         public static bool IsMappedExtension(this ElementDefinition defn)
@@ -226,7 +225,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// within datatypes (of type Element).
         ///</remarks>
         public static bool IsBackboneElement(this ElementDefinition defn) => defn.Path.Contains('.') && defn.Type.Count == 1 && 
-            (defn.Type[0].Code == "BackboneElement" || defn.Type[0].Code == "Element");
+            (defn.Type[0].Code == FHIRDefinedType.BackboneElement || defn.Type[0].Code == FHIRDefinedType.Element);
 
 
         /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>
@@ -234,7 +233,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns><c>true</c> if the instance defines a reference, or <c>false</c> otherwise.</returns>
         public static bool IsReference(this ElementDefinition.TypeRefComponent typeRef)
         {
-            return !string.IsNullOrEmpty(typeRef.Code) && ModelInfo.IsReference(typeRef.Code);
+            return typeRef.Code.HasValue && ModelInfo.IsReference(typeRef.Code.Value);
         }
 
         /// <summary>Determines if the specified element definition represents a type choice element by verifying that the element name ends with "[x]".</summary>

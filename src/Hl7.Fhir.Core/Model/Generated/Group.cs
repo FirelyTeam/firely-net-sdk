@@ -35,11 +35,10 @@ using Hl7.Fhir.Utility;
   
 
 */
-
-#pragma warning disable 1591 // suppress XML summary warnings 
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,37 +62,37 @@ namespace Hl7.Fhir.Model
         public enum GroupType
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Group contains "person" Patient resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
             [EnumLiteral("person", "http://hl7.org/fhir/group-type"), Description("Person")]
             Person,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Group contains "animal" Patient resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
             [EnumLiteral("animal", "http://hl7.org/fhir/group-type"), Description("Animal")]
             Animal,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Group contains healthcare practitioner resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
             [EnumLiteral("practitioner", "http://hl7.org/fhir/group-type"), Description("Practitioner")]
             Practitioner,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Group contains Device resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
             [EnumLiteral("device", "http://hl7.org/fhir/group-type"), Description("Device")]
             Device,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Group contains Medication resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
             [EnumLiteral("medication", "http://hl7.org/fhir/group-type"), Description("Medication")]
             Medication,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Group contains Substance resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
             [EnumLiteral("substance", "http://hl7.org/fhir/group-type"), Description("Substance")]
@@ -423,41 +422,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Whether this group's record is in active use
-        /// </summary>
-        [FhirElement("active", InSummary=true, Order=100)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ActiveElement
-        {
-            get { return _ActiveElement; }
-            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
-        
-        /// <summary>
-        /// Whether this group's record is in active use
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Active
-        {
-            get { return ActiveElement != null ? ActiveElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  ActiveElement = null; 
-                else
-                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Active");
-            }
-        }
-        
-        /// <summary>
         /// person | animal | practitioner | device | medication | substance
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
+        [FhirElement("type", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
@@ -490,7 +457,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Descriptive or actual
         /// </summary>
-        [FhirElement("actual", InSummary=true, Order=120)]
+        [FhirElement("actual", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -523,7 +490,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of Group members
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=130)]
+        [FhirElement("code", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -536,7 +503,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Label for Group
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=140)]
+        [FhirElement("name", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -568,7 +535,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of members
         /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=150)]
+        [FhirElement("quantity", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt QuantityElement
         {
@@ -600,7 +567,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Trait of group members
         /// </summary>
-        [FhirElement("characteristic", Order=160)]
+        [FhirElement("characteristic", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
@@ -614,7 +581,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who or what is in group
         /// </summary>
-        [FhirElement("member", Order=170)]
+        [FhirElement("member", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.MemberComponent> Member
@@ -628,7 +595,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Group_GRP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "member.empty() or (actual = true)",
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("member.empty() or actual"))},
             Key = "grp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Can only have members if group is \"actual\"",
@@ -650,7 +617,6 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>)TypeElement.DeepCopy();
                 if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
@@ -676,7 +642,6 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(ActualElement, otherT.ActualElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -695,7 +660,6 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(ActualElement, otherT.ActualElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -714,7 +678,6 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (ActiveElement != null) yield return ActiveElement;
 				if (TypeElement != null) yield return TypeElement;
 				if (ActualElement != null) yield return ActualElement;
 				if (Code != null) yield return Code;
@@ -732,7 +695,6 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 if (ActualElement != null) yield return new ElementValue("actual", ActualElement);
                 if (Code != null) yield return new ElementValue("code", Code);

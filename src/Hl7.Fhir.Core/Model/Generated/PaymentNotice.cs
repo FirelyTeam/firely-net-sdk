@@ -35,11 +35,10 @@ using Hl7.Fhir.Utility;
   
 
 */
-
-#pragma warning disable 1591 // suppress XML summary warnings 
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -58,7 +57,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -70,103 +69,35 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | cancelled | draft | entered-in-error
+        /// Resource version
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("ruleset", InSummary=true, Order=100)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+        public Hl7.Fhir.Model.Coding Ruleset
         {
-            get { return _StatusElement; }
-            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+            get { return _Ruleset; }
+            set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
         }
         
-        private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+        private Hl7.Fhir.Model.Coding _Ruleset;
         
         /// <summary>
-        /// active | cancelled | draft | entered-in-error
+        /// Original version
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
-        {
-            get { return StatusElement != null ? StatusElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  StatusElement = null; 
-                else
-                  StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
-                OnPropertyChanged("Status");
-            }
-        }
-        
-        /// <summary>
-        /// Request reference
-        /// </summary>
-        [FhirElement("request", Order=110)]
-        [CLSCompliant(false)]
-		[References()]
+        [FhirElement("originalRuleset", InSummary=true, Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Request
+        public Hl7.Fhir.Model.Coding OriginalRuleset
         {
-            get { return _Request; }
-            set { _Request = value; OnPropertyChanged("Request"); }
+            get { return _OriginalRuleset; }
+            set { _OriginalRuleset = value; OnPropertyChanged("OriginalRuleset"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Request;
-        
-        /// <summary>
-        /// Response reference
-        /// </summary>
-        [FhirElement("response", Order=120)]
-        [CLSCompliant(false)]
-		[References()]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Response
-        {
-            get { return _Response; }
-            set { _Response = value; OnPropertyChanged("Response"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Response;
-        
-        /// <summary>
-        /// Payment or clearing date
-        /// </summary>
-        [FhirElement("statusDate", Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.Date StatusDateElement
-        {
-            get { return _StatusDateElement; }
-            set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Date _StatusDateElement;
-        
-        /// <summary>
-        /// Payment or clearing date
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string StatusDate
-        {
-            get { return StatusDateElement != null ? StatusDateElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  StatusDateElement = null; 
-                else
-                  StatusDateElement = new Hl7.Fhir.Model.Date(value);
-                OnPropertyChanged("StatusDate");
-            }
-        }
+        private Hl7.Fhir.Model.Coding _OriginalRuleset;
         
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=140)]
+        [FhirElement("created", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -198,7 +129,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer or Regulatory body
         /// </summary>
-        [FhirElement("target", Order=150)]
+        [FhirElement("target", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -213,7 +144,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", Order=160)]
+        [FhirElement("provider", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -228,7 +159,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", Order=170)]
+        [FhirElement("organization", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -241,17 +172,48 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
-        /// Whether payment has been sent or cleared
+        /// Request reference
         /// </summary>
-        [FhirElement("paymentStatus", Order=180)]
+        [FhirElement("request", InSummary=true, Order=160)]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept PaymentStatus
+        public Hl7.Fhir.Model.ResourceReference Request
+        {
+            get { return _Request; }
+            set { _Request = value; OnPropertyChanged("Request"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Request;
+        
+        /// <summary>
+        /// Response reference
+        /// </summary>
+        [FhirElement("response", InSummary=true, Order=170)]
+        [CLSCompliant(false)]
+		[References()]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Response
+        {
+            get { return _Response; }
+            set { _Response = value; OnPropertyChanged("Response"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Response;
+        
+        /// <summary>
+        /// Status of the payment
+        /// </summary>
+        [FhirElement("paymentStatus", InSummary=true, Order=180)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding PaymentStatus
         {
             get { return _PaymentStatus; }
             set { _PaymentStatus = value; OnPropertyChanged("PaymentStatus"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _PaymentStatus;
+        private Hl7.Fhir.Model.Coding _PaymentStatus;
         
 
         public override void AddDefaultConstraints()
@@ -268,15 +230,15 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
-                if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
-                if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopy();
-                if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopy();
+                if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
+                if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
-                if(PaymentStatus != null) dest.PaymentStatus = (Hl7.Fhir.Model.CodeableConcept)PaymentStatus.DeepCopy();
+                if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
+                if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopy();
+                if(PaymentStatus != null) dest.PaymentStatus = (Hl7.Fhir.Model.Coding)PaymentStatus.DeepCopy();
                 return dest;
             }
             else
@@ -295,14 +257,14 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Request, otherT.Request)) return false;
-            if( !DeepComparable.Matches(Response, otherT.Response)) return false;
-            if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
+            if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
+            if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
+            if( !DeepComparable.Matches(Request, otherT.Request)) return false;
+            if( !DeepComparable.Matches(Response, otherT.Response)) return false;
             if( !DeepComparable.Matches(PaymentStatus, otherT.PaymentStatus)) return false;
             
             return true;
@@ -315,14 +277,14 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
-            if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
-            if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
+            if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
+            if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
+            if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
+            if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
             if( !DeepComparable.IsExactly(PaymentStatus, otherT.PaymentStatus)) return false;
             
             return true;
@@ -335,14 +297,14 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (StatusElement != null) yield return StatusElement;
-				if (Request != null) yield return Request;
-				if (Response != null) yield return Response;
-				if (StatusDateElement != null) yield return StatusDateElement;
+				if (Ruleset != null) yield return Ruleset;
+				if (OriginalRuleset != null) yield return OriginalRuleset;
 				if (CreatedElement != null) yield return CreatedElement;
 				if (Target != null) yield return Target;
 				if (Provider != null) yield return Provider;
 				if (Organization != null) yield return Organization;
+				if (Request != null) yield return Request;
+				if (Response != null) yield return Response;
 				if (PaymentStatus != null) yield return PaymentStatus;
             }
         }
@@ -354,14 +316,14 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (Request != null) yield return new ElementValue("request", Request);
-                if (Response != null) yield return new ElementValue("response", Response);
-                if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
+                if (Ruleset != null) yield return new ElementValue("ruleset", Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", OriginalRuleset);
                 if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
                 if (Target != null) yield return new ElementValue("target", Target);
                 if (Provider != null) yield return new ElementValue("provider", Provider);
                 if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Response != null) yield return new ElementValue("response", Response);
                 if (PaymentStatus != null) yield return new ElementValue("paymentStatus", PaymentStatus);
             }
         }

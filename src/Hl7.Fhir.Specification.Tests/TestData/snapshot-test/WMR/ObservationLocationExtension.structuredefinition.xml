@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-01-04T19:30:41.413+01:00" />
@@ -8,29 +8,28 @@
   <status value="draft" />
   <date value="2017-01-04T19:29:05.959222+01:00" />
   <description value="StructureDefinition for Observation Location Extension Type" />
-  <kind value="primitive-type" />
-  <type value="Extension" />
+  <kind value="datatype" />
+  <constrainedType value="Extension" />
   <abstract value="false" />
   <contextType value="resource" />
   <context value="Observation" />
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
-  <derivation value="constraint" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Extension" />
   <differential>
     <element>
       <path value="Extension" />
       <!-- Inherited by referencing profile extension element -->
-      <comment value="ObservationLocationExtension" />
+      <comments value="ObservationLocationExtension" />
     </element>
     <element>
       <path value="Extension.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="url" /></discriminator>
+        <discriminator value="url" />
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Extension.extension" />
-      <sliceName value="X" />
+      <name value="X" />
       <max value="1" />
     </element>
     <element>
@@ -45,7 +44,7 @@
     </element>
     <element>
       <path value="Extension.extension" />
-      <sliceName value="Y" />
+      <name value="Y" />
       <max value="1" />
     </element>
     <element>

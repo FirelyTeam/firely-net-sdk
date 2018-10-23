@@ -39,13 +39,10 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Primitive Type unsignedInt
-    /// </summary>
     [FhirType("unsignedInt")]
     [DataContract]
     public partial class UnsignedInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged

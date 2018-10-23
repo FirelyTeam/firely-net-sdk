@@ -35,11 +35,10 @@ using Hl7.Fhir.Utility;
   
 
 */
-
-#pragma warning disable 1591 // suppress XML summary warnings 
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,122 +62,123 @@ namespace Hl7.Fhir.Model
         public enum ResponseType
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The message was accepted and processed without error.
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
             [EnumLiteral("ok", "http://hl7.org/fhir/response-code"), Description("OK")]
             Ok,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required.
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
             [EnumLiteral("transient-error", "http://hl7.org/fhir/response-code"), Description("Transient Error")]
             TransientError,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The message was rejected because of some content in it. There is no point in re-sending without change. The response narrative SHALL describe the issue.
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
             [EnumLiteral("fatal-error", "http://hl7.org/fhir/response-code"), Description("Fatal Error")]
             FatalError,
         }
 
-        [FhirType("MessageDestinationComponent")]
+        [FhirType("ResponseComponent")]
         [DataContract]
-        public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
-            public override string TypeName { get { return "MessageDestinationComponent"; } }
+            public override string TypeName { get { return "ResponseComponent"; } }
             
             /// <summary>
-            /// Name of system
+            /// Id of original message
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name of system
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Particular delivery destination within the destination
-            /// </summary>
-            [FhirElement("target", InSummary=true, Order=50)]
-            [CLSCompliant(false)]
-			[References("Device")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Target
-            {
-                get { return _Target; }
-                set { _Target = value; OnPropertyChanged("Target"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Target;
-            
-            /// <summary>
-            /// Actual destination address or id
-            /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=60)]
+            [FhirElement("identifier", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirUri EndpointElement
+            public Hl7.Fhir.Model.Id IdentifierElement
             {
-                get { return _EndpointElement; }
-                set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
+                get { return _IdentifierElement; }
+                set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirUri _EndpointElement;
+            private Hl7.Fhir.Model.Id _IdentifierElement;
             
             /// <summary>
-            /// Actual destination address or id
+            /// Id of original message
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Endpoint
+            public string Identifier
             {
-                get { return EndpointElement != null ? EndpointElement.Value : null; }
+                get { return IdentifierElement != null ? IdentifierElement.Value : null; }
                 set
                 {
                     if (value == null)
-                        EndpointElement = null; 
+                        IdentifierElement = null; 
                     else
-                        EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Endpoint");
+                        IdentifierElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("Identifier");
                 }
             }
+            
+            /// <summary>
+            /// ok | transient-error | fatal-error
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.MessageHeader.ResponseType> _CodeElement;
+            
+            /// <summary>
+            /// ok | transient-error | fatal-error
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
+            {
+                get { return CodeElement != null ? CodeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        CodeElement = null; 
+                    else
+                        CodeElement = new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
+                    OnPropertyChanged("Code");
+                }
+            }
+            
+            /// <summary>
+            /// Specific list of hints/warnings/errors
+            /// </summary>
+            [FhirElement("details", InSummary=true, Order=60)]
+            [CLSCompliant(false)]
+			[References("OperationOutcome")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Details
+            {
+                get { return _Details; }
+                set { _Details = value; OnPropertyChanged("Details"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Details;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MessageDestinationComponent;
+                var dest = other as ResponseComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
-                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
+                    if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.Id)IdentifierElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.MessageHeader.ResponseType>)CodeElement.DeepCopy();
+                    if(Details != null) dest.Details = (Hl7.Fhir.Model.ResourceReference)Details.DeepCopy();
                     return dest;
                 }
                 else
@@ -187,31 +187,31 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MessageDestinationComponent());
+                return CopyTo(new ResponseComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MessageDestinationComponent;
+                var otherT = other as ResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
-                if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
+                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(Details, otherT.Details)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MessageDestinationComponent;
+                var otherT = other as ResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
-                if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
+                if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(Details, otherT.Details)) return false;
                 
                 return true;
             }
@@ -223,9 +223,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (NameElement != null) yield return NameElement;
-                    if (Target != null) yield return Target;
-                    if (EndpointElement != null) yield return EndpointElement;
+                    if (IdentifierElement != null) yield return IdentifierElement;
+                    if (CodeElement != null) yield return CodeElement;
+                    if (Details != null) yield return Details;
                 }
             }
 
@@ -235,9 +235,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", NameElement);
-                    if (Target != null) yield return new ElementValue("target", Target);
-                    if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
+                    if (IdentifierElement != null) yield return new ElementValue("identifier", IdentifierElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (Details != null) yield return new ElementValue("details", Details);
                 }
             }
 
@@ -480,104 +480,103 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResponseComponent")]
+        [FhirType("MessageDestinationComponent")]
         [DataContract]
-        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
-            public override string TypeName { get { return "ResponseComponent"; } }
+            public override string TypeName { get { return "MessageDestinationComponent"; } }
             
             /// <summary>
-            /// Id of original message
+            /// Name of system
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Id IdentifierElement
+            public Hl7.Fhir.Model.FhirString NameElement
             {
-                get { return _IdentifierElement; }
-                set { _IdentifierElement = value; OnPropertyChanged("IdentifierElement"); }
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
-            private Hl7.Fhir.Model.Id _IdentifierElement;
+            private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Id of original message
+            /// Name of system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Identifier
+            public string Name
             {
-                get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+                get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
                     if (value == null)
-                        IdentifierElement = null; 
+                        NameElement = null; 
                     else
-                        IdentifierElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("Identifier");
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
                 }
             }
             
             /// <summary>
-            /// ok | transient-error | fatal-error
+            /// Particular delivery destination within the destination
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("target", InSummary=true, Order=50)]
+            [CLSCompliant(false)]
+			[References("Device")]
             [DataMember]
-            public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement
+            public Hl7.Fhir.Model.ResourceReference Target
             {
-                get { return _CodeElement; }
-                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
             }
             
-            private Code<Hl7.Fhir.Model.MessageHeader.ResponseType> _CodeElement;
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
-            /// ok | transient-error | fatal-error
+            /// Actual destination address or id
+            /// </summary>
+            [FhirElement("endpoint", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri EndpointElement
+            {
+                get { return _EndpointElement; }
+                set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _EndpointElement;
+            
+            /// <summary>
+            /// Actual destination address or id
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
+            public string Endpoint
             {
-                get { return CodeElement != null ? CodeElement.Value : null; }
+                get { return EndpointElement != null ? EndpointElement.Value : null; }
                 set
                 {
-                    if (!value.HasValue)
-                        CodeElement = null; 
+                    if (value == null)
+                        EndpointElement = null; 
                     else
-                        CodeElement = new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
-                    OnPropertyChanged("Code");
+                        EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Endpoint");
                 }
             }
             
-            /// <summary>
-            /// Specific list of hints/warnings/errors
-            /// </summary>
-            [FhirElement("details", InSummary=true, Order=60)]
-            [CLSCompliant(false)]
-			[References("OperationOutcome")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Details
-            {
-                get { return _Details; }
-                set { _Details = value; OnPropertyChanged("Details"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Details;
-            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ResponseComponent;
+                var dest = other as MessageDestinationComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.Id)IdentifierElement.DeepCopy();
-                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.MessageHeader.ResponseType>)CodeElement.DeepCopy();
-                    if(Details != null) dest.Details = (Hl7.Fhir.Model.ResourceReference)Details.DeepCopy();
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -586,31 +585,31 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ResponseComponent());
+                return CopyTo(new MessageDestinationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ResponseComponent;
+                var otherT = other as MessageDestinationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
-                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.Matches(Details, otherT.Details)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ResponseComponent;
+                var otherT = other as MessageDestinationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
-                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-                if( !DeepComparable.IsExactly(Details, otherT.Details)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
                 
                 return true;
             }
@@ -622,9 +621,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (IdentifierElement != null) yield return IdentifierElement;
-                    if (CodeElement != null) yield return CodeElement;
-                    if (Details != null) yield return Details;
+                    if (NameElement != null) yield return NameElement;
+                    if (Target != null) yield return Target;
+                    if (EndpointElement != null) yield return EndpointElement;
                 }
             }
 
@@ -634,9 +633,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IdentifierElement != null) yield return new ElementValue("identifier", IdentifierElement);
-                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
-                    if (Details != null) yield return new ElementValue("details", Details);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (Target != null) yield return new ElementValue("target", Target);
+                    if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
                 }
             }
 
@@ -645,67 +644,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Code for the event this message represents
-        /// </summary>
-        [FhirElement("event", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coding Event
-        {
-            get { return _Event; }
-            set { _Event = value; OnPropertyChanged("Event"); }
-        }
-        
-        private Hl7.Fhir.Model.Coding _Event;
-        
-        /// <summary>
-        /// Message destination application(s)
-        /// </summary>
-        [FhirElement("destination", InSummary=true, Order=100)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
-        {
-            get { if(_Destination==null) _Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(); return _Destination; }
-            set { _Destination = value; OnPropertyChanged("Destination"); }
-        }
-        
-        private List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> _Destination;
-        
-        /// <summary>
-        /// Intended "real-world" recipient for the data
-        /// </summary>
-        [FhirElement("receiver", InSummary=true, Order=110)]
-        [CLSCompliant(false)]
-		[References("Practitioner","Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Receiver
-        {
-            get { return _Receiver; }
-            set { _Receiver = value; OnPropertyChanged("Receiver"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Receiver;
-        
-        /// <summary>
-        /// Real world sender of the message
-        /// </summary>
-        [FhirElement("sender", InSummary=true, Order=120)]
-        [CLSCompliant(false)]
-		[References("Practitioner","Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Sender
-        {
-            get { return _Sender; }
-            set { _Sender = value; OnPropertyChanged("Sender"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Sender;
-        
-        /// <summary>
         /// Time that the message was sent
         /// </summary>
-        [FhirElement("timestamp", InSummary=true, Order=130)]
+        [FhirElement("timestamp", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant TimestampElement
@@ -734,6 +675,61 @@ namespace Hl7.Fhir.Model
                 OnPropertyChanged("Timestamp");
             }
         }
+        
+        /// <summary>
+        /// Code for the event this message represents
+        /// </summary>
+        [FhirElement("event", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding Event
+        {
+            get { return _Event; }
+            set { _Event = value; OnPropertyChanged("Event"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _Event;
+        
+        /// <summary>
+        /// If this is a reply to prior message
+        /// </summary>
+        [FhirElement("response", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.MessageHeader.ResponseComponent Response
+        {
+            get { return _Response; }
+            set { _Response = value; OnPropertyChanged("Response"); }
+        }
+        
+        private Hl7.Fhir.Model.MessageHeader.ResponseComponent _Response;
+        
+        /// <summary>
+        /// Message Source Application
+        /// </summary>
+        [FhirElement("source", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
+        {
+            get { return _Source; }
+            set { _Source = value; OnPropertyChanged("Source"); }
+        }
+        
+        private Hl7.Fhir.Model.MessageHeader.MessageSourceComponent _Source;
+        
+        /// <summary>
+        /// Message Destination Application(s)
+        /// </summary>
+        [FhirElement("destination", InSummary=true, Order=130)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
+        {
+            get { if(_Destination==null) _Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(); return _Destination; }
+            set { _Destination = value; OnPropertyChanged("Destination"); }
+        }
+        
+        private List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> _Destination;
         
         /// <summary>
         /// The source of the data entry
@@ -766,18 +762,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
-        /// Message source application
+        /// Intended "real-world" recipient for the data
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=160)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("receiver", InSummary=true, Order=160)]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
+        public Hl7.Fhir.Model.ResourceReference Receiver
         {
-            get { return _Source; }
-            set { _Source = value; OnPropertyChanged("Source"); }
+            get { return _Receiver; }
+            set { _Receiver = value; OnPropertyChanged("Receiver"); }
         }
         
-        private Hl7.Fhir.Model.MessageHeader.MessageSourceComponent _Source;
+        private Hl7.Fhir.Model.ResourceReference _Receiver;
         
         /// <summary>
         /// Final responsibility for event
@@ -808,33 +805,20 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Reason;
         
         /// <summary>
-        /// If this is a reply to prior message
-        /// </summary>
-        [FhirElement("response", InSummary=true, Order=190)]
-        [DataMember]
-        public Hl7.Fhir.Model.MessageHeader.ResponseComponent Response
-        {
-            get { return _Response; }
-            set { _Response = value; OnPropertyChanged("Response"); }
-        }
-        
-        private Hl7.Fhir.Model.MessageHeader.ResponseComponent _Response;
-        
-        /// <summary>
         /// The actual content of the message
         /// </summary>
-        [FhirElement("focus", InSummary=true, Order=200)]
+        [FhirElement("data", InSummary=true, Order=190)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Focus
+        public List<Hl7.Fhir.Model.ResourceReference> Data
         {
-            get { if(_Focus==null) _Focus = new List<Hl7.Fhir.Model.ResourceReference>(); return _Focus; }
-            set { _Focus = value; OnPropertyChanged("Focus"); }
+            get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.ResourceReference>(); return _Data; }
+            set { _Data = value; OnPropertyChanged("Data"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Focus;
+        private List<Hl7.Fhir.Model.ResourceReference> _Data;
         
 
         public override void AddDefaultConstraints()
@@ -850,18 +834,17 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
-                if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(Destination.DeepCopy());
-                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
-                if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
+                if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
+                if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.ResponseComponent)Response.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.MessageHeader.MessageSourceComponent)Source.DeepCopy();
+                if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(Destination.DeepCopy());
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.MessageHeader.MessageSourceComponent)Source.DeepCopy();
+                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
                 if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.ResourceReference)Responsible.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.ResponseComponent)Response.DeepCopy();
-                if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
+                if(Data != null) dest.Data = new List<Hl7.Fhir.Model.ResourceReference>(Data.DeepCopy());
                 return dest;
             }
             else
@@ -879,18 +862,17 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
-            if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
-            if( !DeepComparable.Matches(Receiver, otherT.Receiver)) return false;
-            if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
             if( !DeepComparable.Matches(TimestampElement, otherT.TimestampElement)) return false;
+            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
+            if( !DeepComparable.Matches(Response, otherT.Response)) return false;
+            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
             if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
-            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(Receiver, otherT.Receiver)) return false;
             if( !DeepComparable.Matches(Responsible, otherT.Responsible)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.Matches(Response, otherT.Response)) return false;
-            if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
+            if( !DeepComparable.Matches(Data, otherT.Data)) return false;
             
             return true;
         }
@@ -901,18 +883,17 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
-            if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
-            if( !DeepComparable.IsExactly(Receiver, otherT.Receiver)) return false;
-            if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
             if( !DeepComparable.IsExactly(TimestampElement, otherT.TimestampElement)) return false;
+            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
+            if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
+            if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+            if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
             if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
-            if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+            if( !DeepComparable.IsExactly(Receiver, otherT.Receiver)) return false;
             if( !DeepComparable.IsExactly(Responsible, otherT.Responsible)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
-            if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
+            if( !DeepComparable.IsExactly(Data, otherT.Data)) return false;
             
             return true;
         }
@@ -923,18 +904,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Event != null) yield return Event;
-				foreach (var elem in Destination) { if (elem != null) yield return elem; }
-				if (Receiver != null) yield return Receiver;
-				if (Sender != null) yield return Sender;
 				if (TimestampElement != null) yield return TimestampElement;
+				if (Event != null) yield return Event;
+				if (Response != null) yield return Response;
+				if (Source != null) yield return Source;
+				foreach (var elem in Destination) { if (elem != null) yield return elem; }
 				if (Enterer != null) yield return Enterer;
 				if (Author != null) yield return Author;
-				if (Source != null) yield return Source;
+				if (Receiver != null) yield return Receiver;
 				if (Responsible != null) yield return Responsible;
 				if (Reason != null) yield return Reason;
-				if (Response != null) yield return Response;
-				foreach (var elem in Focus) { if (elem != null) yield return elem; }
+				foreach (var elem in Data) { if (elem != null) yield return elem; }
             }
         }
 
@@ -944,18 +924,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Event != null) yield return new ElementValue("event", Event);
-                foreach (var elem in Destination) { if (elem != null) yield return new ElementValue("destination", elem); }
-                if (Receiver != null) yield return new ElementValue("receiver", Receiver);
-                if (Sender != null) yield return new ElementValue("sender", Sender);
                 if (TimestampElement != null) yield return new ElementValue("timestamp", TimestampElement);
+                if (Event != null) yield return new ElementValue("event", Event);
+                if (Response != null) yield return new ElementValue("response", Response);
+                if (Source != null) yield return new ElementValue("source", Source);
+                foreach (var elem in Destination) { if (elem != null) yield return new ElementValue("destination", elem); }
                 if (Enterer != null) yield return new ElementValue("enterer", Enterer);
                 if (Author != null) yield return new ElementValue("author", Author);
-                if (Source != null) yield return new ElementValue("source", Source);
+                if (Receiver != null) yield return new ElementValue("receiver", Receiver);
                 if (Responsible != null) yield return new ElementValue("responsible", Responsible);
                 if (Reason != null) yield return new ElementValue("reason", Reason);
-                if (Response != null) yield return new ElementValue("response", Response);
-                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
+                foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", elem); }
             }
         }
 

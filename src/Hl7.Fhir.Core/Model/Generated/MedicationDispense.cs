@@ -35,11 +35,10 @@ using Hl7.Fhir.Utility;
   
 
 */
-
-#pragma warning disable 1591 // suppress XML summary warnings 
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,97 +55,226 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "MedicationDispense"; } }
         
         /// <summary>
-        /// A coded concept specifying the state of the dispense event.
+        /// A code specifying the state of the dispense event.
+        /// Describes the lifecycle of the dispense.
         /// (url: http://hl7.org/fhir/ValueSet/medication-dispense-status)
         /// </summary>
         [FhirEnumeration("MedicationDispenseStatus")]
         public enum MedicationDispenseStatus
         {
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-dispense-status)
-            /// </summary>
-            [EnumLiteral("preparation", "http://hl7.org/fhir/medication-dispense-status"), Description("Preparation")]
-            Preparation,
-            /// <summary>
-            /// MISSING DESCRIPTION
+            /// The dispense has started but has not yet completed.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
             [EnumLiteral("in-progress", "http://hl7.org/fhir/medication-dispense-status"), Description("In Progress")]
             InProgress,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended"
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
             [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-dispense-status"), Description("On Hold")]
             OnHold,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// All actions that are implied by the dispense have occurred.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
             [EnumLiteral("completed", "http://hl7.org/fhir/medication-dispense-status"), Description("Completed")]
             Completed,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The dispense was entered in error and therefore nullified.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
             [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-dispense-status"), Description("Entered in-Error")]
             EnteredInError,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Actions implied by the dispense have been permanently halted, before all of them occurred.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
             [EnumLiteral("stopped", "http://hl7.org/fhir/medication-dispense-status"), Description("Stopped")]
             Stopped,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("DosageInstructionComponent")]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "DosageInstructionComponent"; } }
             
             /// <summary>
-            /// Individual who was performing
+            /// Dosage Instructions
             /// </summary>
-            [FhirElement("actor", Order=40)]
-            [CLSCompliant(false)]
-			[References("Practitioner","Organization","Patient","Device","RelatedPerson")]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("text", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Actor
+            public Hl7.Fhir.Model.FhirString TextElement
             {
-                get { return _Actor; }
-                set { _Actor = value; OnPropertyChanged("Actor"); }
+                get { return _TextElement; }
+                set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Actor;
+            private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
-            /// Organization organization was acting for
+            /// Dosage Instructions
             /// </summary>
-            [FhirElement("onBehalfOf", Order=50)]
-            [CLSCompliant(false)]
-			[References("Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Text
             {
-                get { return _OnBehalfOf; }
-                set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
+                get { return TextElement != null ? TextElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        TextElement = null; 
+                    else
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Text");
+                }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+            /// <summary>
+            /// E.g. "Take with food"
+            /// </summary>
+            [FhirElement("additionalInstructions", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept AdditionalInstructions
+            {
+                get { return _AdditionalInstructions; }
+                set { _AdditionalInstructions = value; OnPropertyChanged("AdditionalInstructions"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _AdditionalInstructions;
+            
+            /// <summary>
+            /// When medication should be administered
+            /// </summary>
+            [FhirElement("timing", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Timing Timing
+            {
+                get { return _Timing; }
+                set { _Timing = value; OnPropertyChanged("Timing"); }
+            }
+            
+            private Hl7.Fhir.Model.Timing _Timing;
+            
+            /// <summary>
+            /// Take "as needed" f(or x)
+            /// </summary>
+            [FhirElement("asNeeded", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element AsNeeded
+            {
+                get { return _AsNeeded; }
+                set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _AsNeeded;
+            
+            /// <summary>
+            /// Body site to administer to
+            /// </summary>
+            [FhirElement("site", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Site
+            {
+                get { return _Site; }
+                set { _Site = value; OnPropertyChanged("Site"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Site;
+            
+            /// <summary>
+            /// How drug should enter body
+            /// </summary>
+            [FhirElement("route", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Route
+            {
+                get { return _Route; }
+                set { _Route = value; OnPropertyChanged("Route"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Route;
+            
+            /// <summary>
+            /// Technique for administering medication
+            /// </summary>
+            [FhirElement("method", InSummary=true, Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Method
+            {
+                get { return _Method; }
+                set { _Method = value; OnPropertyChanged("Method"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Method;
+            
+            /// <summary>
+            /// Amount of medication per dose
+            /// </summary>
+            [FhirElement("dose", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Dose
+            {
+                get { return _Dose; }
+                set { _Dose = value; OnPropertyChanged("Dose"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Dose;
+            
+            /// <summary>
+            /// Amount of medication per unit of time
+            /// </summary>
+            [FhirElement("rate", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Rate
+            {
+                get { return _Rate; }
+                set { _Rate = value; OnPropertyChanged("Rate"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Rate;
+            
+            /// <summary>
+            /// Upper limit on medication per unit of time
+            /// </summary>
+            [FhirElement("maxDosePerPeriod", InSummary=true, Order=130)]
+            [DataMember]
+            public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
+            {
+                get { return _MaxDosePerPeriod; }
+                set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
+            }
+            
+            private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PerformerComponent;
+                var dest = other as DosageInstructionComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
+                    if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+                    if(AdditionalInstructions != null) dest.AdditionalInstructions = (Hl7.Fhir.Model.CodeableConcept)AdditionalInstructions.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
+                    if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
+                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
+                    if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
+                    if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
+                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
                     return dest;
                 }
                 else
@@ -155,29 +283,45 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PerformerComponent());
+                return CopyTo(new DosageInstructionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PerformerComponent;
+                var otherT = other as DosageInstructionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
-                if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.Matches(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
+                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
+                if( !DeepComparable.Matches(Site, otherT.Site)) return false;
+                if( !DeepComparable.Matches(Route, otherT.Route)) return false;
+                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                if( !DeepComparable.Matches(Dose, otherT.Dose)) return false;
+                if( !DeepComparable.Matches(Rate, otherT.Rate)) return false;
+                if( !DeepComparable.Matches(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PerformerComponent;
+                var otherT = other as DosageInstructionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
-                if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.IsExactly(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
+                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
+                if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
+                if( !DeepComparable.IsExactly(Site, otherT.Site)) return false;
+                if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
+                if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
+                if( !DeepComparable.IsExactly(Dose, otherT.Dose)) return false;
+                if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
+                if( !DeepComparable.IsExactly(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
                 
                 return true;
             }
@@ -189,8 +333,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Actor != null) yield return Actor;
-                    if (OnBehalfOf != null) yield return OnBehalfOf;
+                    if (TextElement != null) yield return TextElement;
+                    if (AdditionalInstructions != null) yield return AdditionalInstructions;
+                    if (Timing != null) yield return Timing;
+                    if (AsNeeded != null) yield return AsNeeded;
+                    if (Site != null) yield return Site;
+                    if (Route != null) yield return Route;
+                    if (Method != null) yield return Method;
+                    if (Dose != null) yield return Dose;
+                    if (Rate != null) yield return Rate;
+                    if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
                 }
             }
 
@@ -200,8 +352,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Actor != null) yield return new ElementValue("actor", Actor);
-                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    if (AdditionalInstructions != null) yield return new ElementValue("additionalInstructions", AdditionalInstructions);
+                    if (Timing != null) yield return new ElementValue("timing", Timing);
+                    if (AsNeeded != null) yield return new ElementValue("asNeeded", AsNeeded);
+                    if (Site != null) yield return new ElementValue("site", Site);
+                    if (Route != null) yield return new ElementValue("route", Route);
+                    if (Method != null) yield return new ElementValue("method", Method);
+                    if (Dose != null) yield return new ElementValue("dose", Dose);
+                    if (Rate != null) yield return new ElementValue("rate", Rate);
+                    if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", MaxDosePerPeriod);
                 }
             }
 
@@ -217,42 +377,10 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SubstitutionComponent"; } }
             
             /// <summary>
-            /// Whether a substitution was or was not performed on the dispense
+            /// Type of substitution
             /// </summary>
-            [FhirElement("wasSubstituted", Order=40)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean WasSubstitutedElement
-            {
-                get { return _WasSubstitutedElement; }
-                set { _WasSubstitutedElement = value; OnPropertyChanged("WasSubstitutedElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _WasSubstitutedElement;
-            
-            /// <summary>
-            /// Whether a substitution was or was not performed on the dispense
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? WasSubstituted
-            {
-                get { return WasSubstitutedElement != null ? WasSubstitutedElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        WasSubstitutedElement = null; 
-                    else
-                        WasSubstitutedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("WasSubstituted");
-                }
-            }
-            
-            /// <summary>
-            /// Code signifying whether a different drug was dispensed from what was prescribed
-            /// </summary>
-            [FhirElement("type", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -265,7 +393,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why was substitution made
             /// </summary>
-            [FhirElement("reason", Order=60)]
+            [FhirElement("reason", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -279,7 +407,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is responsible for the substitution
             /// </summary>
-            [FhirElement("responsibleParty", Order=70)]
+            [FhirElement("responsibleParty", InSummary=true, Order=60)]
             [CLSCompliant(false)]
 			[References("Practitioner")]
             [Cardinality(Min=0,Max=-1)]
@@ -299,7 +427,6 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(WasSubstitutedElement != null) dest.WasSubstitutedElement = (Hl7.Fhir.Model.FhirBoolean)WasSubstitutedElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                     if(ResponsibleParty != null) dest.ResponsibleParty = new List<Hl7.Fhir.Model.ResourceReference>(ResponsibleParty.DeepCopy());
@@ -320,7 +447,6 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(WasSubstitutedElement, otherT.WasSubstitutedElement)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.Matches(ResponsibleParty, otherT.ResponsibleParty)) return false;
@@ -334,7 +460,6 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(WasSubstitutedElement, otherT.WasSubstitutedElement)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.IsExactly(ResponsibleParty, otherT.ResponsibleParty)) return false;
@@ -349,7 +474,6 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (WasSubstitutedElement != null) yield return WasSubstitutedElement;
                     if (Type != null) yield return Type;
                     foreach (var elem in Reason) { if (elem != null) yield return elem; }
                     foreach (var elem in ResponsibleParty) { if (elem != null) yield return elem; }
@@ -362,7 +486,6 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (WasSubstitutedElement != null) yield return new ElementValue("wasSubstituted", WasSubstitutedElement);
                     if (Type != null) yield return new ElementValue("type", Type);
                     foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                     foreach (var elem in ResponsibleParty) { if (elem != null) yield return new ElementValue("responsibleParty", elem); }
@@ -376,37 +499,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Identifier> Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// Event that dispense is part of
+        /// in-progress | on-hold | completed | entered-in-error | stopped
         /// </summary>
-        [FhirElement("partOf", Order=100)]
-        [CLSCompliant(false)]
-		[References("Procedure")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> PartOf
-        {
-            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
-            set { _PartOf = value; OnPropertyChanged("PartOf"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
-        
-        /// <summary>
-        /// preparation | in-progress | on-hold | completed | entered-in-error | stopped
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> StatusElement
         {
@@ -417,7 +523,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> _StatusElement;
         
         /// <summary>
-        /// preparation | in-progress | on-hold | completed | entered-in-error | stopped
+        /// in-progress | on-hold | completed | entered-in-error | stopped
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -436,100 +542,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Type of medication dispense
-        /// </summary>
-        [FhirElement("category", Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
-        {
-            get { return _Category; }
-            set { _Category = value; OnPropertyChanged("Category"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Category;
-        
-        /// <summary>
-        /// What medication was supplied
-        /// </summary>
-        [FhirElement("medication", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Element Medication
-        {
-            get { return _Medication; }
-            set { _Medication = value; OnPropertyChanged("Medication"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _Medication;
-        
-        /// <summary>
         /// Who the dispense is for
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("patient", InSummary=true, Order=110)]
         [CLSCompliant(false)]
-		[References("Patient","Group")]
+		[References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// Encounter / Episode associated with event
+        /// Practitioner responsible for dispensing medication
         /// </summary>
-        [FhirElement("context", Order=150)]
+        [FhirElement("dispenser", InSummary=true, Order=120)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Dispenser
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Dispenser; }
+            set { _Dispenser = value; OnPropertyChanged("Dispenser"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
-        
-        /// <summary>
-        /// Information that supports the dispensing of the medication
-        /// </summary>
-        [FhirElement("supportingInformation", Order=160)]
-        [CLSCompliant(false)]
-		[References()]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
-        {
-            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
-            set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
-        
-        /// <summary>
-        /// Who performed event
-        /// </summary>
-        [FhirElement("performer", Order=170)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.MedicationDispense.PerformerComponent> Performer
-        {
-            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.MedicationDispense.PerformerComponent>(); return _Performer; }
-            set { _Performer = value; OnPropertyChanged("Performer"); }
-        }
-        
-        private List<Hl7.Fhir.Model.MedicationDispense.PerformerComponent> _Performer;
+        private Hl7.Fhir.Model.ResourceReference _Dispenser;
         
         /// <summary>
         /// Medication order that authorizes the dispense
         /// </summary>
-        [FhirElement("authorizingPrescription", Order=180)]
+        [FhirElement("authorizingPrescription", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("MedicationRequest")]
+		[References("MedicationOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> AuthorizingPrescription
@@ -543,7 +590,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Trial fill, partial fill, emergency fill, etc.
         /// </summary>
-        [FhirElement("type", Order=190)]
+        [FhirElement("type", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -556,7 +603,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount dispensed
         /// </summary>
-        [FhirElement("quantity", Order=200)]
+        [FhirElement("quantity", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Quantity
         {
@@ -567,9 +614,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.SimpleQuantity _Quantity;
         
         /// <summary>
-        /// Amount of medication expressed as a timing amount
+        /// Days Supply
         /// </summary>
-        [FhirElement("daysSupply", Order=210)]
+        [FhirElement("daysSupply", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity DaysSupply
         {
@@ -580,9 +627,25 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.SimpleQuantity _DaysSupply;
         
         /// <summary>
-        /// When product was packaged and reviewed
+        /// What medication was supplied
         /// </summary>
-        [FhirElement("whenPrepared", InSummary=true, Order=220)]
+        [FhirElement("medication", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Medication
+        {
+            get { return _Medication; }
+            set { _Medication = value; OnPropertyChanged("Medication"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Medication;
+        
+        /// <summary>
+        /// Dispense processing time
+        /// </summary>
+        [FhirElement("whenPrepared", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime WhenPreparedElement
         {
@@ -593,7 +656,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _WhenPreparedElement;
         
         /// <summary>
-        /// When product was packaged and reviewed
+        /// Dispense processing time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -614,7 +677,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When product was given out
         /// </summary>
-        [FhirElement("whenHandedOver", Order=230)]
+        [FhirElement("whenHandedOver", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime WhenHandedOverElement
         {
@@ -646,7 +709,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the medication was sent
         /// </summary>
-        [FhirElement("destination", Order=240)]
+        [FhirElement("destination", InSummary=true, Order=200)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -661,7 +724,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who collected the medication
         /// </summary>
-        [FhirElement("receiver", Order=250)]
+        [FhirElement("receiver", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[References("Patient","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
@@ -677,35 +740,53 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about the dispense
         /// </summary>
-        [FhirElement("note", Order=260)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("note", InSummary=true, Order=220)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Annotation> Note
+        public Hl7.Fhir.Model.FhirString NoteElement
         {
-            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
-            set { _Note = value; OnPropertyChanged("Note"); }
+            get { return _NoteElement; }
+            set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
         }
         
-        private List<Hl7.Fhir.Model.Annotation> _Note;
+        private Hl7.Fhir.Model.FhirString _NoteElement;
         
         /// <summary>
-        /// How the medication is to be used by the patient or administered by the caregiver
+        /// Information about the dispense
         /// </summary>
-        [FhirElement("dosageInstruction", Order=270)]
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Note
+        {
+            get { return NoteElement != null ? NoteElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  NoteElement = null; 
+                else
+                  NoteElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Note");
+            }
+        }
+        
+        /// <summary>
+        /// Medicine administration instructions to the patient/caregiver
+        /// </summary>
+        [FhirElement("dosageInstruction", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Dosage> DosageInstruction
+        public List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent> DosageInstruction
         {
-            get { if(_DosageInstruction==null) _DosageInstruction = new List<Dosage>(); return _DosageInstruction; }
+            get { if(_DosageInstruction==null) _DosageInstruction = new List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent>(); return _DosageInstruction; }
             set { _DosageInstruction = value; OnPropertyChanged("DosageInstruction"); }
         }
         
-        private List<Dosage> _DosageInstruction;
+        private List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent> _DosageInstruction;
         
         /// <summary>
-        /// Whether a substitution was performed on the dispense
+        /// Deals with substitution of one medicine for another
         /// </summary>
-        [FhirElement("substitution", Order=280)]
+        [FhirElement("substitution", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent Substitution
         {
@@ -715,89 +796,10 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent _Substitution;
         
-        /// <summary>
-        /// Clinical issue with action
-        /// </summary>
-        [FhirElement("detectedIssue", Order=290)]
-        [CLSCompliant(false)]
-		[References("DetectedIssue")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> DetectedIssue
-        {
-            get { if(_DetectedIssue==null) _DetectedIssue = new List<Hl7.Fhir.Model.ResourceReference>(); return _DetectedIssue; }
-            set { _DetectedIssue = value; OnPropertyChanged("DetectedIssue"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _DetectedIssue;
-        
-        /// <summary>
-        /// Whether the dispense was or was not performed
-        /// </summary>
-        [FhirElement("notDone", Order=300)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean NotDoneElement
-        {
-            get { return _NotDoneElement; }
-            set { _NotDoneElement = value; OnPropertyChanged("NotDoneElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _NotDoneElement;
-        
-        /// <summary>
-        /// Whether the dispense was or was not performed
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? NotDone
-        {
-            get { return NotDoneElement != null ? NotDoneElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  NotDoneElement = null; 
-                else
-                  NotDoneElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("NotDone");
-            }
-        }
-        
-        /// <summary>
-        /// Why a dispense was not performed
-        /// </summary>
-        [FhirElement("notDoneReason", Order=310, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-        [DataMember]
-        public Hl7.Fhir.Model.Element NotDoneReason
-        {
-            get { return _NotDoneReason; }
-            set { _NotDoneReason = value; OnPropertyChanged("NotDoneReason"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _NotDoneReason;
-        
-        /// <summary>
-        /// A list of releveant lifecycle events
-        /// </summary>
-        [FhirElement("eventHistory", Order=320)]
-        [CLSCompliant(false)]
-		[References("Provenance")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> EventHistory
-        {
-            get { if(_EventHistory==null) _EventHistory = new List<Hl7.Fhir.Model.ResourceReference>(); return _EventHistory; }
-            set { _EventHistory = value; OnPropertyChanged("EventHistory"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
-        
 
         public static ElementDefinition.ConstraintComponent MedicationDispense_MDD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared",
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared"))},
             Key = "mdd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "whenHandedOver cannot be before whenPrepared",
@@ -818,30 +820,22 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus>)StatusElement.DeepCopy();
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
-                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
-                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.MedicationDispense.PerformerComponent>(Performer.DeepCopy());
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Dispenser != null) dest.Dispenser = (Hl7.Fhir.Model.ResourceReference)Dispenser.DeepCopy();
                 if(AuthorizingPrescription != null) dest.AuthorizingPrescription = new List<Hl7.Fhir.Model.ResourceReference>(AuthorizingPrescription.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                 if(DaysSupply != null) dest.DaysSupply = (Hl7.Fhir.Model.SimpleQuantity)DaysSupply.DeepCopy();
+                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
                 if(WhenPreparedElement != null) dest.WhenPreparedElement = (Hl7.Fhir.Model.FhirDateTime)WhenPreparedElement.DeepCopy();
                 if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();
                 if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
                 if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
-                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(DosageInstruction != null) dest.DosageInstruction = new List<Dosage>(DosageInstruction.DeepCopy());
+                if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
+                if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent>(DosageInstruction.DeepCopy());
                 if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent)Substitution.DeepCopy();
-                if(DetectedIssue != null) dest.DetectedIssue = new List<Hl7.Fhir.Model.ResourceReference>(DetectedIssue.DeepCopy());
-                if(NotDoneElement != null) dest.NotDoneElement = (Hl7.Fhir.Model.FhirBoolean)NotDoneElement.DeepCopy();
-                if(NotDoneReason != null) dest.NotDoneReason = (Hl7.Fhir.Model.Element)NotDoneReason.DeepCopy();
-                if(EventHistory != null) dest.EventHistory = new List<Hl7.Fhir.Model.ResourceReference>(EventHistory.DeepCopy());
                 return dest;
             }
             else
@@ -860,29 +854,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-            if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
-            if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
-            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Dispenser, otherT.Dispenser)) return false;
             if( !DeepComparable.Matches(AuthorizingPrescription, otherT.AuthorizingPrescription)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.Matches(DaysSupply, otherT.DaysSupply)) return false;
+            if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
             if( !DeepComparable.Matches(WhenPreparedElement, otherT.WhenPreparedElement)) return false;
             if( !DeepComparable.Matches(WhenHandedOverElement, otherT.WhenHandedOverElement)) return false;
             if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
             if( !DeepComparable.Matches(Receiver, otherT.Receiver)) return false;
-            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.Matches(DosageInstruction, otherT.DosageInstruction)) return false;
             if( !DeepComparable.Matches(Substitution, otherT.Substitution)) return false;
-            if( !DeepComparable.Matches(DetectedIssue, otherT.DetectedIssue)) return false;
-            if( !DeepComparable.Matches(NotDoneElement, otherT.NotDoneElement)) return false;
-            if( !DeepComparable.Matches(NotDoneReason, otherT.NotDoneReason)) return false;
-            if( !DeepComparable.Matches(EventHistory, otherT.EventHistory)) return false;
             
             return true;
         }
@@ -894,29 +880,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-            if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
-            if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
-            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Dispenser, otherT.Dispenser)) return false;
             if( !DeepComparable.IsExactly(AuthorizingPrescription, otherT.AuthorizingPrescription)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.IsExactly(DaysSupply, otherT.DaysSupply)) return false;
+            if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
             if( !DeepComparable.IsExactly(WhenPreparedElement, otherT.WhenPreparedElement)) return false;
             if( !DeepComparable.IsExactly(WhenHandedOverElement, otherT.WhenHandedOverElement)) return false;
             if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
             if( !DeepComparable.IsExactly(Receiver, otherT.Receiver)) return false;
-            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
             if( !DeepComparable.IsExactly(DosageInstruction, otherT.DosageInstruction)) return false;
             if( !DeepComparable.IsExactly(Substitution, otherT.Substitution)) return false;
-            if( !DeepComparable.IsExactly(DetectedIssue, otherT.DetectedIssue)) return false;
-            if( !DeepComparable.IsExactly(NotDoneElement, otherT.NotDoneElement)) return false;
-            if( !DeepComparable.IsExactly(NotDoneReason, otherT.NotDoneReason)) return false;
-            if( !DeepComparable.IsExactly(EventHistory, otherT.EventHistory)) return false;
             
             return true;
         }
@@ -927,30 +905,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
+				if (Identifier != null) yield return Identifier;
 				if (StatusElement != null) yield return StatusElement;
-				if (Category != null) yield return Category;
-				if (Medication != null) yield return Medication;
-				if (Subject != null) yield return Subject;
-				if (Context != null) yield return Context;
-				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
-				foreach (var elem in Performer) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (Dispenser != null) yield return Dispenser;
 				foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return elem; }
 				if (Type != null) yield return Type;
 				if (Quantity != null) yield return Quantity;
 				if (DaysSupply != null) yield return DaysSupply;
+				if (Medication != null) yield return Medication;
 				if (WhenPreparedElement != null) yield return WhenPreparedElement;
 				if (WhenHandedOverElement != null) yield return WhenHandedOverElement;
 				if (Destination != null) yield return Destination;
 				foreach (var elem in Receiver) { if (elem != null) yield return elem; }
-				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (NoteElement != null) yield return NoteElement;
 				foreach (var elem in DosageInstruction) { if (elem != null) yield return elem; }
 				if (Substitution != null) yield return Substitution;
-				foreach (var elem in DetectedIssue) { if (elem != null) yield return elem; }
-				if (NotDoneElement != null) yield return NotDoneElement;
-				if (NotDoneReason != null) yield return NotDoneReason;
-				foreach (var elem in EventHistory) { if (elem != null) yield return elem; }
             }
         }
 
@@ -960,30 +930,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (Category != null) yield return new ElementValue("category", Category);
-                if (Medication != null) yield return new ElementValue("medication", Medication);
-                if (Subject != null) yield return new ElementValue("subject", Subject);
-                if (Context != null) yield return new ElementValue("context", Context);
-                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
-                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Dispenser != null) yield return new ElementValue("dispenser", Dispenser);
                 foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return new ElementValue("authorizingPrescription", elem); }
                 if (Type != null) yield return new ElementValue("type", Type);
                 if (Quantity != null) yield return new ElementValue("quantity", Quantity);
                 if (DaysSupply != null) yield return new ElementValue("daysSupply", DaysSupply);
+                if (Medication != null) yield return new ElementValue("medication", Medication);
                 if (WhenPreparedElement != null) yield return new ElementValue("whenPrepared", WhenPreparedElement);
                 if (WhenHandedOverElement != null) yield return new ElementValue("whenHandedOver", WhenHandedOverElement);
                 if (Destination != null) yield return new ElementValue("destination", Destination);
                 foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                if (NoteElement != null) yield return new ElementValue("note", NoteElement);
                 foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", elem); }
                 if (Substitution != null) yield return new ElementValue("substitution", Substitution);
-                foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", elem); }
-                if (NotDoneElement != null) yield return new ElementValue("notDone", NotDoneElement);
-                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", NotDoneReason);
-                foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
             }
         }
 

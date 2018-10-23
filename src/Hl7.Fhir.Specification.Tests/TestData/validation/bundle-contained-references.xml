@@ -9,7 +9,6 @@
       <Organization>
         <id value="23"/>
         <active value="true" />
-        <name value="Simplifier" />
       </Organization>
     </resource>
   </entry>
@@ -21,7 +20,6 @@
     <resource>
       <Organization>
         <active value="true" />
-        <name value="Furore" />
       </Organization>
     </resource>
   </entry>
@@ -91,19 +89,13 @@
         <contained>
           <Organization>
             <id value="orgX" />
-            <name value="Apex" />
           </Organization>
         </contained>
         <contained>
           <Organization>
             <id value="orgY" />
-            <name value="FlupFlap" />
           </Organization>
         </contained>
-        <generalPractitioner>
-          <!-- reference to the contained organization -->
-          <reference value="#orgX"/>
-        </generalPractitioner>        
         <managingOrganization>
           <!-- reference to the contained organization -->
           <reference value="#orgY"/>

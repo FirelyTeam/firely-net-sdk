@@ -122,10 +122,8 @@ namespace Hl7.Fhir.Tests
                     if (actS.Contains(".000+")) actS = actS.Replace(".000+", "+");
                     if (expS.Contains(".000Z")) expS = expS.Replace(".000Z", "Z");
                     if (actS.Contains(".000Z")) actS = actS.Replace(".000Z", "Z");
-                    actS = actS.Replace(" ", "");
                     actS = actS.Replace("\n", "");
                     actS = actS.Replace("\r", "");
-                    expS = expS.Replace(" ", "");
                     expS = expS.Replace("\n", "");
                     expS = expS.Replace("\r", "");
 

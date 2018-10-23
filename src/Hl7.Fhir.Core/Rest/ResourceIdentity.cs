@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static ResourceIdentity Core(FHIRAllTypes type)
+        public static ResourceIdentity Core(FHIRDefinedType type)
         {
             return ResourceIdentity.Core(type.GetLiteral());
         }

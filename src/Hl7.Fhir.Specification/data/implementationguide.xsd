@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="ImplementationGuide" type="ImplementationGuide">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of rules of how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.</xs:documentation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="ImplementationGuide">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of rules of how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.</xs:documentation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -51,32 +51,27 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URI that is used to identify this implementation guide when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this implementation guide is (or will be) published. The URL SHOULD include the major version of the implementation guide. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URL that is used to identify this implementation guide when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this implementation guide is (or will be) published.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the implementation guide when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the implementation guide author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions can be placed in a lexicographical sequence.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the Implementation Guide when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the Implementation Guide author manually.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A natural language name identifying the implementation guide. This name should be usable as an identifier for the module by machine processing applications such as code generation.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language name identifying the Implementation Guide.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="code">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of this implementation guide. Enables tracking the life-cycle of the content.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of the Implementation Guide.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A boolean value to indicate that this implementation guide is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date  (and optionally time) when the implementation guide was published. The date must change if and when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the implementation guide changes.</xs:documentation>
+              <xs:documentation xml:lang="en">This Implementation Guide was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
@@ -84,34 +79,34 @@
               <xs:documentation xml:lang="en">The name of the individual or organization that published the implementation guide.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
+          <xs:element name="contact" type="ImplementationGuide.Contact" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
+              <xs:documentation xml:lang="en">Contacts to assist a user in finding and communicating with the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
+          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the implementation guide from a consumer's perspective.</xs:documentation>
+              <xs:documentation xml:lang="en">The date this version of the implementation guide was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the implementation guide changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching for appropriate implementation guide instances.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the Implementation Guide and its use.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A legal or geographic region in which the implementation guide is intended to be used.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of implementation guides. The most common use of this element is to represent the country / jurisdiction for which this implementation guide was defined.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
+          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A copyright statement relating to the implementation guide and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the implementation guide.</xs:documentation>
+              <xs:documentation xml:lang="en">A copyright statement relating to the implementation guide and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the details of the constraints and mappings.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="fhirVersion" minOccurs="0" maxOccurs="1" type="id">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the FHIR specification on which this ImplementationGuide is based - this is the formal version of the specification, without the revision number, e.g. [publication].[major].[minor], which is 3.0.0 for this version.</xs:documentation>
+              <xs:documentation xml:lang="en">The version of the FHIR specification on which this ImplementationGuide is based - this is the formal version of the specification, without the revision number, e.g. [publication].[major].[minor], which is 1.0.2 for this version.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="dependency" type="ImplementationGuide.Dependency" minOccurs="0" maxOccurs="unbounded">
@@ -119,7 +114,7 @@
               <xs:documentation xml:lang="en">Another implementation guide that this implementation depends on. Typically, an implementation guide uses value sets, profiles etc.defined in other implementation guides.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="package" type="ImplementationGuide.Package" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="package" type="ImplementationGuide.Package" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">A logical group of resources. Logical groups can be used when building pages.</xs:documentation>
            </xs:annotation>
@@ -134,7 +129,7 @@
               <xs:documentation xml:lang="en">A binary file that is included in the  implementation guide when it is published.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="page" type="ImplementationGuide.Page" minOccurs="0" maxOccurs="1">
+          <xs:element name="page" type="ImplementationGuide.Page" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">A page / section in the implementation guide. The root page is the implementation guide home page.</xs:documentation>
            </xs:annotation>
@@ -143,9 +138,30 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="ImplementationGuide.Contact">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The name of an individual to contact regarding the implementation guide.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="telecom" minOccurs="0" maxOccurs="unbounded" type="ContactPoint">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Contact details for individual (if a name was provided) or the publisher.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="ImplementationGuide.Dependency">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of rules of how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.</xs:documentation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -166,7 +182,7 @@
   </xs:complexType>
   <xs:complexType name="ImplementationGuide.Package">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of rules of how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.</xs:documentation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -183,7 +199,7 @@
           </xs:element>
           <xs:element name="resource" type="ImplementationGuide.Resource" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A resource that is part of the implementation guide. Conformance resources (value set, structure definition, capability statements etc.) are obvious candidates for inclusion, but any kind of resource can be included as an example resource.</xs:documentation>
+              <xs:documentation xml:lang="en">A resource that is part of the implementation guide. Conformance resources (value set, structure definition, conformance statements etc.) are obvious candidates for inclusion, but any kind of resource can be included as an example resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -192,14 +208,14 @@
   </xs:complexType>
   <xs:complexType name="ImplementationGuide.Resource">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of rules of how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.</xs:documentation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="example" minOccurs="1" maxOccurs="1" type="boolean">
+          <xs:element name="purpose" minOccurs="1" maxOccurs="1" type="GuideResourcePurpose">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether a resource is included in the guide as part of the rules defined by the guide, or just as an example of a resource that conforms to the rules and/or help implementers understand the intent of the guide.</xs:documentation>
+              <xs:documentation xml:lang="en">Why the resource is included in the guide.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
@@ -235,12 +251,12 @@
   </xs:complexType>
   <xs:complexType name="ImplementationGuide.Global">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of rules of how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.</xs:documentation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="ResourceType">
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of resource that all instances must conform to.</xs:documentation>
            </xs:annotation>
@@ -256,7 +272,7 @@
   </xs:complexType>
   <xs:complexType name="ImplementationGuide.Page">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of rules of how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.</xs:documentation>
+      <xs:documentation xml:lang="en">A set of rules or how FHIR is used to solve a particular problem. This resource is used to gather all the parts of an implementation guide into a logical whole, and to publish a computable definition of all the parts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -266,9 +282,9 @@
               <xs:documentation xml:lang="en">The source address for the page.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="title" minOccurs="1" maxOccurs="1" type="string">
+          <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A short title used to represent this page in navigational structures such as table of contents, bread crumbs, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">A short name used to represent this page in navigational structures such as table of contents, bread crumbs, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="kind" minOccurs="1" maxOccurs="1" type="GuidePageKind">
@@ -276,7 +292,7 @@
               <xs:documentation xml:lang="en">The kind of page that this is. Some pages are autogenerated (list, example), and other kinds are of interest so that tools can navigate the user to the page of interest.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="ResourceType">
+          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">For constructed pages, what kind of resources to include in the list.</xs:documentation>
            </xs:annotation>
@@ -301,15 +317,15 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="GuideDependencyType-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="reference">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Reference</xs:documentation>
+          <xs:documentation xml:lang="en">The guide is referred to by URL.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="inclusion">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Inclusion</xs:documentation>
+          <xs:documentation xml:lang="en">The guide is embedded in this guide when published.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -325,46 +341,91 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="GuidePageKind-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="page">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Page</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
+  <xs:simpleType name="GuideResourcePurpose-list">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="example">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Example</xs:documentation>
+          <xs:documentation xml:lang="en">The resource is intended as an example.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="list">
+      <xs:enumeration value="terminology">
         <xs:annotation>
-          <xs:documentation xml:lang="en">List</xs:documentation>
+          <xs:documentation xml:lang="en">The resource defines a value set or concept map used in the implementation guide.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="include">
+      <xs:enumeration value="profile">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Include</xs:documentation>
+          <xs:documentation xml:lang="en">The resource defines a profile (StructureDefinition) that is used in the implementation guide.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="directory">
+      <xs:enumeration value="extension">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Directory</xs:documentation>
+          <xs:documentation xml:lang="en">The resource defines an extension (StructureDefinition) that is used in the implementation guide.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="dictionary">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Dictionary</xs:documentation>
+          <xs:documentation xml:lang="en">The resource contains a dictionary that is part of the implementation guide.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="logical">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The resource defines a logical model (in a StructureDefinition) that is used in the implementation guide.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="GuideResourcePurpose">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Why a resource is included in the guide.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="GuideResourcePurpose-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="GuidePageKind-list">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="page">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This is a page of content that is included in the implementation guide. It has no particular function.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="example">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This is a page that represents a human readable rendering of an example.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="list">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This is a page that represents a list of resources of one or more types.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="include">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This is a page showing where an included guide is injected.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="directory">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dictionary">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This is a page that creates the listed resources as a dictionary.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="toc">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Table Of Contents</xs:documentation>
+          <xs:documentation xml:lang="en">This is a generated page that contains the table of contents.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="resource">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Resource</xs:documentation>
+          <xs:documentation xml:lang="en">This is a page that represents a presented resource. This is typically used for generated conformance resource presentations.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

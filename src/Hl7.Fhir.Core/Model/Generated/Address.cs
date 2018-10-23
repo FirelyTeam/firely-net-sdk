@@ -39,12 +39,12 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An address expressed using postal conventions (as opposed to GPS or other location definition formats)
+    /// A postal address
     /// </summary>
     [FhirType("Address")]
     [DataContract]
@@ -55,31 +55,32 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The use of an address
+        /// The use of an address (home / work / etc.).
         /// (url: http://hl7.org/fhir/ValueSet/address-use)
         /// </summary>
         [FhirEnumeration("AddressUse")]
         public enum AddressUse
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// A communication address at a home.
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("home", "http://hl7.org/fhir/address-use"), Description("Home")]
             Home,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// An office address. First choice for business related contacts during business hours.
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("work", "http://hl7.org/fhir/address-use"), Description("Work")]
             Work,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// A temporary address. The period can provide more detailed information.
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("temp", "http://hl7.org/fhir/address-use"), Description("Temporary")]
             Temp,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// This address is no longer in use (or was never correct, but retained for records).
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("old", "http://hl7.org/fhir/address-use"), Description("Old / Incorrect")]
@@ -88,25 +89,26 @@ namespace Hl7.Fhir.Model
 
         /// <summary>
         /// The type of an address (physical / postal)
+        /// The type of an address (physical / postal).
         /// (url: http://hl7.org/fhir/ValueSet/address-type)
         /// </summary>
         [FhirEnumeration("AddressType")]
         public enum AddressType
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Mailing addresses - PO Boxes and care-of addresses.
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
             [EnumLiteral("postal", "http://hl7.org/fhir/address-type"), Description("Postal")]
             Postal,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// A physical address that can be visited.
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
             [EnumLiteral("physical", "http://hl7.org/fhir/address-type"), Description("Physical")]
             Physical,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// An address that is both physical and postal.
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
             [EnumLiteral("both", "http://hl7.org/fhir/address-type"), Description("Postal & Physical")]
@@ -371,7 +373,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Country (e.g. can be ISO 3166 2 or 3 letter code)
+        /// Country (can be ISO 3166 3 letter code)
         /// </summary>
         [FhirElement("country", InSummary=true, Order=110)]
         [DataMember]
@@ -384,7 +386,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CountryElement;
         
         /// <summary>
-        /// Country (e.g. can be ISO 3166 2 or 3 letter code)
+        /// Country (can be ISO 3166 3 letter code)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

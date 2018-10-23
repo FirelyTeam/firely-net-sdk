@@ -17,14 +17,26 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefExtensions
     {
-        public static string ReadableName(this StructureDefinition sd) => sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint ? sd.Url : sd.Id;
+        public static FHIRDefinedType BaseType(this StructureDefinition sd)
+        {
+            var result = sd.ConstrainedType ?? EnumUtility.ParseLiteral<FHIRDefinedType>(sd.Id);
+
+            if (result == null)
+                throw Error.NotSupported($"Encountered profile '{sd.Url}', for which the declaring core type cannot be determined");
+
+            return result.Value;
+        }
+
+        public static string ReadableName(this StructureDefinition sd) => sd.ConstrainedType != null ? sd.Url : sd.Id;
 
         public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
         {
-            if (!System.String.IsNullOrEmpty(typeRef.Profile))
-                return typeRef.Profile;
-            else if (!string.IsNullOrEmpty(typeRef.Code))
-                return ModelInfo.CanonicalUriForFhirCoreType(typeRef.Code);
+            if (typeRef.Profile.Any())
+            {
+                return typeRef.Profile.First();     // Take the first, this will disappear in STU3 anyway
+            }
+            else if (typeRef.Code.HasValue)
+                return ModelInfo.CanonicalUriForFhirCoreType(typeRef.Code.Value);
             else
                 return null;
         }
@@ -35,9 +47,9 @@ namespace Hl7.Fhir.Validation
             return definition.Type.Where(tr => tr.Code != null).Distinct().Count() > 1;
         }
 
-        public static List<FHIRAllTypes> ChoiceTypes(this ElementDefinition definition)
+        public static List<FHIRDefinedType> ChoiceTypes(this ElementDefinition definition)
         {
-            return definition.Type.Where(tr => tr.Code != null).Select(tr => EnumUtility.ParseLiteral<FHIRAllTypes>(tr.Code).Value).Distinct().ToList();
+            return definition.Type.Where(tr => tr.Code != null).Select(tr => tr.Code.Value).Distinct().ToList();
         }
     }
 }

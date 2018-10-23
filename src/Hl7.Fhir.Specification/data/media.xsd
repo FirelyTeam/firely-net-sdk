@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,16 +49,6 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifiers associated with the image - these may include identifiers for the image itself, identifiers for the context of its collection (e.g. series ids) and context ids such as accession numbers or other workflow identifiers.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A procedure that is fulfilled in whole or in part by the creation of this media.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="DigitalMediaType">
             <xs:annotation>
               <xs:documentation xml:lang="en">Whether the media is a photo (still image), an audio recording, or a video recording.</xs:documentation>
@@ -69,9 +59,9 @@
               <xs:documentation xml:lang="en">Details of the type of the media - usually, how it was acquired (what type of device). If images sourced from a DICOM system, are wrapped in a Media resource, then this is the modality.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="view" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the imaging view e.g. Lateral or Antero-posterior (AP).</xs:documentation>
+              <xs:documentation xml:lang="en">Identifiers associated with the image - these may include identifiers for the image itself, identifiers for the context of its collection (e.g. series ids) and context ids such as accession numbers or other workflow identifiers.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
@@ -79,36 +69,19 @@
               <xs:documentation xml:lang="en">Who/What this Media is a record of.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The encounter or episode of care that establishes the context for this media.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date and time(s) at which the media was collected.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="occurrenceDateTime" type="dateTime"/>
-            <xs:element name="occurrencePeriod" type="Period"/>
-          </xs:choice>
           <xs:element name="operator" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The person who administered the collection of the image.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="view" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Describes why the event occurred in coded or textual form.</xs:documentation>
+              <xs:documentation xml:lang="en">The name of the imaging view e.g. Lateral or Antero-posterior (AP).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="deviceName" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the site on the subject's body where the media was collected (i.e. the target site).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="device" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The device used to collect the media.</xs:documentation>
+              <xs:documentation xml:lang="en">The name of the device / manufacturer of the device  that was used to make the recording.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="height" minOccurs="0" maxOccurs="1" type="positiveInt">
@@ -136,37 +109,32 @@
               <xs:documentation xml:lang="en">The actual content of the media - inline or by direct reference to the media source file.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Comments made about the media by the performer, subject or other participants.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="DigitalMediaType-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="photo">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Photo</xs:documentation>
+          <xs:documentation xml:lang="en">The media consists of one or more unmoving images, including photographs, computer-generated graphs and charts, and scanned documents</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="video">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Video</xs:documentation>
+          <xs:documentation xml:lang="en">The media consists of a series of frames that capture a moving image</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="audio">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Audio</xs:documentation>
+          <xs:documentation xml:lang="en">The media consists of a sound recording</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="DigitalMediaType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Whether the media is a photo, video, or audio</xs:documentation>
+      <xs:documentation xml:lang="en">Whether the Media is a photo, video, or audio</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
