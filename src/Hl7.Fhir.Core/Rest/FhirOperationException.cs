@@ -1,46 +1,4 @@
-﻿// [WMR 20181022] NEW
-// Exception.GetObjectData override requires SecurityCritical attribute, not supported in low-trust environments
-//
-// MSDN suggests to hook Exception.SerializeObjectState event instead
-// https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.isafeserializationdata?redirectedfrom=MSDN&view=netframework-4.7.2
-//
-// Problem: in netcore, Exception.SerializeObjectState event throws NotSupportedException
-// See source code in coreclr repo:
-// https://github.com/dotnet/coreclr/blob/3b807944d8822b44eb5085d6b95b130b4a91808f/src/System.Private.CoreLib/src/System/Exception.cs#L421
-//
-// protected event EventHandler<SafeSerializationEventArgs> SerializeObjectState
-// {
-// 	 add { throw new PlatformNotSupportedException(SR.PlatformNotSupported_SecureBinarySerialization); }
-// 	 remove { throw new PlatformNotSupportedException(SR.PlatformNotSupported_SecureBinarySerialization); }
-// }
-// 
-// * dotnetframework
-//   Method Exception.GetObjectData in runtime is decorated with SecurityCritical attribute
-//   => Overriding method in derived class must also declare SecurityCritical attribute
-//   => incompatible with partial trust environment...
-//   Workaround: Custom exceptions can hook the SerializeObjectState event
-//   => compatible with partial trust environment
-//   => NOT supported by JSON.NET, Orleans...
-//
-// * dotnetcore 2.0+
-//   Method Exception.GetObjectData in runtime is NOT decorated with SecurityCritical attribute
-//   Custom exceptions can override method Exception.GetObjectData
-//   No need to specify SecurityCritical attribute
-//   => compatible with partial trust environment
-//   => Supported by JSON.NET, Orleans
-//
-// * dotnetcore 1.0
-//   Exceptions are not serializable
-
-#if NET_FW
-#define SAFE_SERIALIZATION
-#endif
-
-#if !NETSTANDARD1_1 && !NET_FW
-#define UNSAFE_SERIALIZATION
-#endif
-
-/* 
+﻿/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -48,47 +6,43 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Runtime.Serialization;
-using System.Security;
+
+// [WMR 20181024] Issue #737
+// Removed serialization support from FhirOperationException (cf. all other custom exceptions)
+// Problems:
+// - NetFramework: Exception.GetObjectData override requires SecurityCritical attribute
+//    => incompatible with partial-trust environments, e.g. dotNetFiddle
+//    Alternative ISafeSerializationInfo interface is not widely supported and obsolete in netCore
+// - NetCore 1.1 : no support for serialiation
+// - NetCore 2.0 : reintroduces limited support for serialiation
+// No clear picture of use cases that depend on exception serialization; remove for now
+// If necessary, we can re-introduce serialization support in a future release (by customer demand)
+
+// #if !NETSTANDARD1_1
+// #define SERIALIZABLE
+// #endif
 
 using Hl7.Fhir.Model;
+using System;
 using System.Net;
-using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Security;
 
 namespace Hl7.Fhir.Rest
 {
     /// <summary>
     /// Represents HL7 FHIR errors that occur during application execution.
     /// </summary>
-#if !NETSTANDARD1_1
+#if SERIALIZABLE
     [Serializable]
 #endif
     public class FhirOperationException : Exception
     {
-#if NET_FW && SAFE_SERIALIZATION
-        FhirOperationExceptionData _state;
-
-        /// <summary>Gets the outcome of the operation <see cref="OperationOutcome"/>.</summary>
-        public OperationOutcome Outcome
-        {
-            get => _state.Outcome;
-            private set => _state.Outcome = value;
-        }
-
-        /// <summary>Gets the HTTP Status Code that resulted in this Exception.</summary>
-        public HttpStatusCode Status
-        {
-            get => _state.Status;
-            private set => _state.Status = value;
-        }
-#else
         /// <summary>Gets or sets the outcome of the operation <see cref="OperationOutcome"/>.</summary>
         public OperationOutcome Outcome { get; private set; }
 
         /// <summary>The HTTP Status Code that resulted in this Exception.</summary>
         public HttpStatusCode Status { get; private set; }
-#endif
 
         /// <summary>Initializes a new instance of the <see cref="FhirOperationException"/> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>
@@ -128,55 +82,8 @@ namespace Hl7.Fhir.Rest
         {
             Outcome = outcome;
             Status = status;
-
-// --- DEBUGGING ---
-//#if NETSTANDARD1_1
-//            Debug.WriteLine("NETSTANDARD1_1");
-//#endif
-//#if NETSTANDARD2_0
-//            Debug.WriteLine("NETSTANDARD2_0");
-//#endif
-//#if NET_FW
-//            Debug.WriteLine("NET_FW");
-//#endif
-
-#if NET_FW && SAFE_SERIALIZATION
-            RegisterSerializeObjectState();
-#endif
         }
 
-#if NET_FW && SAFE_SERIALIZATION
-        void RegisterSerializeObjectState()
-        {
-            // Custom serialization
-            SerializeObjectState += OnSerializeObjectState;
-        }
-
-        // In response to SerializeObjectState, we need to provide any state to serialize with the exception.
-        // In this case, since our state is already stored in an ISafeSerializationData implementation, we can just provide that.
-        void OnSerializeObjectState(object exception, SafeSerializationEventArgs eventArgs)
-        {
-            eventArgs.AddSerializedState(_state);
-        }
-
-        struct FhirOperationExceptionData : ISafeSerializationData
-        {
-            public OperationOutcome Outcome;
-            public HttpStatusCode Status;
-
-            // This method is called when deserialization of the exception is complete.
-            void ISafeSerializationData.CompleteDeserialization(object obj)
-            {
-                // Since the exception simply contains an instance of the exception state object, we can repopulate it 
-                // here by just setting its instance field to be equal to this deserialized state instance.
-                if (obj is FhirOperationException foe)
-                {
-                    foe.RegisterSerializeObjectState();
-                    foe._state = this;
-                }
-            }
-        }
-#endif // NET_FW && SAFE_SERIALIZATION
 
         // [WMR 20181022] https://github.com/ewoutkramer/fhir-net-api/issues/737
         // Problem: low-trust environments ignore SecurityCritical attribute => assembly load error
@@ -189,7 +96,7 @@ namespace Hl7.Fhir.Rest
         // * dotNetCore 2: Exception.GetObjectData is NOT decorated with SecurityCritical attribute
         //   => no need to declare attribute in derived class
 
-#if UNSAFE_SERIALIZATION
+#if SERIALIZABLE
 
         /// <summary>
         /// When overridden in a derived class, sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with information about the exception.
@@ -197,7 +104,6 @@ namespace Hl7.Fhir.Rest
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown. </param><param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination. </param><exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is a null reference (Nothing in Visual Basic). </exception><filterpriority>2</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Read="*AllFiles*" PathDiscovery="*AllFiles*"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="SerializationFormatter"/></PermissionSet>
 #if NET_FW
         [SecurityCritical]
-        // [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -221,7 +127,6 @@ namespace Hl7.Fhir.Rest
         /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
 #if NET_FW
         [SecurityCritical]
-        // [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
 #endif
         public FhirOperationException(SerializationInfo info, StreamingContext context)
             : base(info, context)
@@ -238,7 +143,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-#endif // UNSAFE_SERIALIZATION
+#endif
 
     }
 
