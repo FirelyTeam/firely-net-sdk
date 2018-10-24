@@ -88,81 +88,33 @@ namespace Hl7.Fhir.Specification.Navigation
         public StructureDefinition StructureDefinition { get; private set; }
 
 
-        public bool AtRoot { get { return OrdinalPosition == null; } }
+        public bool AtRoot => OrdinalPosition == null;
 
         /// <summary>
         /// Get the name of the current node, based on the last part of the part
         /// </summary>
         /// <returns>The name or String.Empty if the navigator is not located on a node</returns>
-        public string PathName
-        {
-            get { return Current != null ? Current.GetNameFromPath() : String.Empty; }
-        }
+        public string PathName => Current?.GetNameFromPath() ?? String.Empty;
 
         /// <summary>
         /// Get the parent path of the current node
         /// </summary>
         /// <returns>The name or String.Empty if the navigator is not located on a node</returns>
-        public string ParentPath
-        {
-            get { return Current != null ? Current.GetParentNameFromPath() : String.Empty; }
-        }
-
+        public string ParentPath => Current?.GetParentNameFromPath() ?? String.Empty; 
 
         /// <summary>
         /// Get the full path of the current node
         /// </summary>
         /// <returns>The path or String.Empty if the navigator is not located on a node</returns>
-        public string Path
-        {
-            get { return Current != null ? Current.Path : String.Empty; }
-        }
-
+        public string Path => Current?.Path ?? String.Empty;
 
         internal int? OrdinalPosition { get; private set; }
 
         public IList<ElementDefinition> Elements { get; private set; }
 
-        public ElementDefinition Current
-        {
-            get { return OrdinalPosition != null ? Elements[OrdinalPosition.Value] : null; }
-        }
+        public ElementDefinition Current => OrdinalPosition != null ? Elements[OrdinalPosition.Value] : null;
 
-        public int Count
-        {
-            get { return Elements.Count; }
-        }
-
-
-
-
-        //IElementNavigator INavigator<IElementNavigator>.Clone()
-        //{
-        //    return this.ShallowCopy();
-        //}
-
-        //string INamedNode.Name
-        //{
-        //    get
-        //    {
-        //        return this.PathName;
-        //    }
-        //}
-
-        //object IValueProvider.Value
-        //{
-        //    get
-        //    {
-        //        return Current;
-        //    }
-        //}
-
-
-        //string ITypeNameProvider.TypeName
-        //{
-        //    get { return "ElementDefinition";  }
-        //}
-
+        public int Count => Elements.Count;
 
         //----------------------------------
         //
@@ -323,11 +275,8 @@ namespace Hl7.Fhir.Specification.Navigation
         public bool IsAtBookmark(Bookmark bookmark)
         {
             var elem = bookmark.data as ElementDefinition;
-            if (elem == null)
-            {
-                return OrdinalPosition == null;
-            }
-            return object.ReferenceEquals(Current, elem);
+
+            return elem == null ? OrdinalPosition == null : object.ReferenceEquals(Current, elem);
         }
 
         public bool ReturnToBookmark(Bookmark bookmark)

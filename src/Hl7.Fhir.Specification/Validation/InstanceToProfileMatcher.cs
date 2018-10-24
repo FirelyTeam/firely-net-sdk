@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Validation
 {
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.Validation
                 }
                 else
                 {
-                    var definitionPath = ProfileNavigationExtensions.GetNameFromPath(definitionElement.Current?.Base?.Path ?? definitionElement.Path);
+                    var definitionPath = ElementDefinitionUtilities.GetNameFromPath(definitionElement.Current?.Base?.Path ?? definitionElement.Path);
                     var found = elementsToMatch.Where(ie => NameMatches(definitionPath, ie)).ToList();
 
                     match.InstanceElements.AddRange(found);
@@ -94,7 +95,7 @@ namespace Hl7.Fhir.Validation
 
             // match where definition path is a choice (suffix '[x]'), in this case
             // match the path without the suffix against the name
-            if(definedName.EndsWith("[x]"))
+            if(ElementDefinitionUtilities.HasChoiceSuffix(definedName))
             {
                 if (definedName.Substring(0, definedName.Length - 3) == instance.Name) return true;
             }

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.Specification.Navigation.FhirPath
 {
     public class DiscriminatorFormatException : FormatException
     {

@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Specification.Source
                     if (elementNode != null)
                     {
                         var childNode = elementNode.Children("element").FirstOrDefault();
-                        if(childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
+                        if(childNode != null && ElementDefinitionUtilities.IsRootPath(childNode.Name))
                         {
                             childNode.HarvestValue(properties, RootDefinitionKey, "definition");
                         }

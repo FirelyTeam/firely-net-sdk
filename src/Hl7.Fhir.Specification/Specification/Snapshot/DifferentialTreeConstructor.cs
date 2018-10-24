@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var thisPath = diff[index].Path;
                 var prevPath = index > 0 ? diff[index - 1].Path : String.Empty;
 
-                if (ElementDefinitionNavigator.IsRootPath(thisPath))
+                if (ElementDefinitionUtilities.IsRootPath(thisPath))
                 {
                     // Root node must be the first element
                     if (index != 0)

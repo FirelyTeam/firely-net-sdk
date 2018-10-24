@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // paths can be changed under one circumstance: the snap is a choice[x] element, and diff limits the type choices
                 // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
-                if (snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
+                if (snap.Path != diff.Path && snap.HasChoiceSuffix() && diff.Type.Count() == 1)
                 {
                     // [WMR 20160906] WRONG! Must also handle snap.Path="Extension.value[x]" vs. diff.Path="Extension.extension.value[x]
                     // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)

@@ -275,10 +275,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR primitive data type.</summary>
-        public static bool IsPrimitive(FHIRDefinedType type)
-        {
-            return IsPrimitive(FhirTypeToFhirTypeName(type));
-        }
+        public static bool IsPrimitive(FHIRDefinedType type) => IsPrimitive(FhirTypeToFhirTypeName(type));
 
         /// <summary>Determines if the specified value represents the name of a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(string name)
@@ -297,31 +294,19 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR complex data type (NOT including resources and primitives).</summary>
-        public static bool IsDataType(FHIRDefinedType type)
-        {
-            return IsDataType(FhirTypeToFhirTypeName(type));
-        }
+        public static bool IsDataType(FHIRDefinedType type) => IsDataType(FhirTypeToFhirTypeName(type));
 
         // [WMR 20160421] Dynamically resolve FHIR type name 'Reference'
         private static readonly string _referenceTypeName = FHIRDefinedType.Reference.GetLiteral();
 
         /// <summary>Determines if the specified value represents the type name of a FHIR Reference, i.e. equals "Reference".</summary>
-        public static bool IsReference(string name)
-        {
-            return name == _referenceTypeName; // "Reference";
-        }
+        public static bool IsReference(string name) => name == _referenceTypeName; // "Reference";
 
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR Reference type.</summary>
-        public static bool IsReference(Type type)
-        {
-            return IsReference(type.Name);
-        }
+        public static bool IsReference(Type type) => IsReference(type.Name);
 
         /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR Reference type.</summary>
-        public static bool IsReference(FHIRDefinedType type)
-        {
-            return type == FHIRDefinedType.Reference;
-        }
+        public static bool IsReference(FHIRDefinedType type) => type == FHIRDefinedType.Reference;
 
         /// <summary>
         /// Determines if the specified <see cref="Type"/> instance represents a FHIR conformance resource type,

@@ -27,15 +27,10 @@ namespace Hl7.FhirPath.Expressions
 
         public abstract T Accept<T>(ExpressionVisitor<T> visitor);
 
-        public override bool Equals(object obj)
-        {
-            if (obj is Expression && obj != null)
-            {
-                return ((Expression)obj).ExpressionType == ExpressionType;
-            }
-            else
-                return false;
-        }
+        public override bool Equals(object obj) => 
+            obj is Expression && obj != null ? 
+            ((Expression)obj).ExpressionType == ExpressionType 
+            : false;
 
         public override int GetHashCode()
         {
@@ -107,13 +102,10 @@ namespace Hl7.FhirPath.Expressions
 
         public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments) : base(type)
         {
-            if (focus == null) throw Error.ArgumentNull("focus");
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
-            if (arguments == null) throw Error.ArgumentNull("arguments");
-
-            Focus = focus;
+            Focus = focus ?? throw Error.ArgumentNull("focus");
             FunctionName = name;
-            Arguments = arguments;
+            Arguments = arguments ?? throw Error.ArgumentNull("arguments");
         }
 
         public Expression Focus { get; private set; }
@@ -278,9 +270,7 @@ namespace Hl7.FhirPath.Expressions
     {
         public NewNodeListInitExpression(IEnumerable<Expression> contents) : base(TypeInfo.Any)
         {
-            if (contents == null) throw Error.ArgumentNull("contents");
-
-            Contents = contents;
+            Contents = contents ?? throw Error.ArgumentNull("contents");
         }
 
         public IEnumerable<Expression> Contents { get; private set;  }
@@ -313,9 +303,7 @@ namespace Hl7.FhirPath.Expressions
     {
         public VariableRefExpression(string name) : base(TypeInfo.Any)
         {
-            if (name == null) throw Error.ArgumentNull("name");
-
-            Name = name;
+            Name = name ?? throw Error.ArgumentNull("name");
         }
 
         public string Name { get; private set; }

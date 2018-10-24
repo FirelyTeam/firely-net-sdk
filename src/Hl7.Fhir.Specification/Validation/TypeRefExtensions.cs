@@ -40,16 +40,5 @@ namespace Hl7.Fhir.Validation
             else
                 return null;
         }
-
-
-        public static bool IsChoice(this ElementDefinition definition)
-        {
-            return definition.Type.Where(tr => tr.Code != null).Distinct().Count() > 1;
-        }
-
-        public static List<FHIRDefinedType> ChoiceTypes(this ElementDefinition definition)
-        {
-            return definition.Type.Where(tr => tr.Code != null).Select(tr => tr.Code.Value).Distinct().ToList();
-        }
     }
 }

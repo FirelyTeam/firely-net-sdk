@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Validation
                     "Test an organization with Name containing regex", FHIRDefinedType.Organization);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Organization").OfType(FHIRDefinedType.Organization));
+            cons.Add(new ElementDefinition("Organization").Type(FHIRDefinedType.Organization));
 
             var nameDef = new ElementDefinition("Organization.name");
             nameDef.SetStringExtension("http://hl7.org/fhir/StructureDefinition/regex", "[A-Z].*");
@@ -60,9 +60,9 @@ namespace Hl7.Fhir.Validation
                     "Test an organization with Name containing regex", FHIRDefinedType.Organization);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Organization").OfType(FHIRDefinedType.Organization));
+            cons.Add(new ElementDefinition("Organization").Type(FHIRDefinedType.Organization));
 
-            var nameDef = new ElementDefinition("Organization.name.value").OfType(FHIRDefinedType.String);
+            var nameDef = new ElementDefinition("Organization.name.value").Type(FHIRDefinedType.String);
             nameDef.Type.Single().SetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-regex", "[A-Z].*");
             nameDef.Type.Single().Code = null;
             cons.Add(nameDef);
@@ -86,10 +86,10 @@ namespace Hl7.Fhir.Validation
                     "Test Patient which requires an Identifier with either BSN or drivers license", FHIRDefinedType.Patient);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Patient").OfType(FHIRDefinedType.Patient));
+            cons.Add(new ElementDefinition("Patient").Type(FHIRDefinedType.Patient));
             cons.Add(new ElementDefinition("Patient.identifier").Required(max: "*")
-                        .OfType(FHIRDefinedType.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN")
-                        .OrType(FHIRDefinedType.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL"));
+                        .Type(FHIRDefinedType.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN")
+                        .Type(FHIRDefinedType.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL"));
 
             return result;
         }
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Validation
                     "Test Identifier which requires a BSN oid", FHIRDefinedType.Identifier);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Identifier").OfType(FHIRDefinedType.Identifier));
+            cons.Add(new ElementDefinition("Identifier").Type(FHIRDefinedType.Identifier));
             cons.Add(new ElementDefinition("Identifier.system").Required().Value(fix: new FhirUri("urn:oid:2.16.840.1.113883.2.4.6.3")));
             cons.Add(new ElementDefinition("Identifier.period").Prohibited());
             cons.Add(new ElementDefinition("Identifier.assigner").Prohibited());
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Validation
                     "Test Identifier which requires a drivers license oid", FHIRDefinedType.Identifier);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Identifier").OfType(FHIRDefinedType.Identifier));
+            cons.Add(new ElementDefinition("Identifier").Type(FHIRDefinedType.Identifier));
             cons.Add(new ElementDefinition("Identifier.system").Required().Value(fix: new FhirUri("urn:oid:2.16.840.1.113883.2.4.6.12")));
 
             return result;
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Validation
                     "Questionnaire with a fixed question type of 'decimal'", FHIRDefinedType.Questionnaire);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Questionnaire").OfType(FHIRDefinedType.Questionnaire));
+            cons.Add(new ElementDefinition("Questionnaire").Type(FHIRDefinedType.Questionnaire));
             cons.Add(new ElementDefinition("Questionnaire.group.question.type").Value(fix: new Code("decimal")));
 
             return result;
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Validation
 
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Quantity").OfType(FHIRDefinedType.Quantity));
+            cons.Add(new ElementDefinition("Quantity").Type(FHIRDefinedType.Quantity));
             cons.Add(new ElementDefinition("Quantity.unit").Required().Value(fix: new FhirString("kg")));
             cons.Add(new ElementDefinition("Quantity.system").Required().Value(fix: new FhirUri("http://unitsofmeasure.org")));
             cons.Add(new ElementDefinition("Quantity.code").Required().Value(fix: new Code("kg")));
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Validation
 
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Quantity").OfType(FHIRDefinedType.Quantity));
+            cons.Add(new ElementDefinition("Quantity").Type(FHIRDefinedType.Quantity));
             cons.Add(new ElementDefinition("Quantity.unit").Required().Value(fix: new FhirString("cm")));
             cons.Add(new ElementDefinition("Quantity.system").Required().Value(fix: new FhirUri("http://unitsofmeasure.org")));
             cons.Add(new ElementDefinition("Quantity.code").Required().Value(fix: new Code("cm")));
@@ -170,11 +170,11 @@ namespace Hl7.Fhir.Validation
 
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Observation").OfType(FHIRDefinedType.Observation));
+            cons.Add(new ElementDefinition("Observation").Type(FHIRDefinedType.Observation));
             cons.Add(new ElementDefinition("Observation.value[x]")
-                .OfType(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/WeightQuantity")
-                .OrType(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
-                .OrType(FHIRDefinedType.String));
+                .Type(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/WeightQuantity")
+                .Type(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
+                .Type(FHIRDefinedType.String));
 
             Debug.WriteLine(new FhirXmlSerializer().SerializeToString(result));
             return result;
@@ -188,10 +188,10 @@ namespace Hl7.Fhir.Validation
 
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Bundle").OfType(FHIRDefinedType.Bundle));
+            cons.Add(new ElementDefinition("Bundle").Type(FHIRDefinedType.Bundle));
             cons.Add(new ElementDefinition("Bundle.entry.resource")
-                .OfType(FHIRDefinedType.Organization)
-                .OrType(FHIRDefinedType.Patient, $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization"));
+                .Type(FHIRDefinedType.Organization)
+                .Type(FHIRDefinedType.Patient, $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization"));
 
             return result;
         }
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Validation
 
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Bundle").OfType(FHIRDefinedType.Bundle));
+            cons.Add(new ElementDefinition("Bundle").Type(FHIRDefinedType.Bundle));
             cons.Add(new ElementDefinition("Bundle.entry.resource.meta").Required());
 
             return result;
@@ -218,9 +218,9 @@ namespace Hl7.Fhir.Validation
 
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Patient").OfType(FHIRDefinedType.Patient));
+            cons.Add(new ElementDefinition("Patient").Type(FHIRDefinedType.Patient));
             cons.Add(new ElementDefinition("Patient.managingOrganization")
-                .OfType(FHIRDefinedType.Reference, ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Organization), aggregation));
+                .Reference(ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Organization), aggregation));
 
             return result;
         }
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Validation
                     "Parameters resource where the parameter.value[x] is bound to a valueset", FHIRDefinedType.Parameters);
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Parameters").OfType(FHIRDefinedType.Parameters));
+            cons.Add(new ElementDefinition("Parameters").Type(FHIRDefinedType.Parameters));
             cons.Add(new ElementDefinition("Parameters.parameter.value[x]")
                     .WithBinding("http://hl7.org/fhir/ValueSet/data-absent-reason", BindingStrength.Required));
 

@@ -157,10 +157,7 @@ namespace Hl7.Fhir.Specification
 
             string noChoiceSuffix(string n)
             {
-                if (n.EndsWith("[x]"))
-                    return n.Substring(0, n.Length - 3);
-                else
-                    return n;
+                return ElementDefinitionUtilities.HasChoiceSuffix(n) ? n.Substring(0, n.Length - 3) : n;
             }
         }
 
@@ -205,7 +202,7 @@ namespace Hl7.Fhir.Specification
             }
         }
 
-        public bool IsChoiceElement => _definition.IsChoice();
+        public bool IsChoiceElement => _definition.HasChoiceSuffix();
 
         public int Order { get; private set; }
 

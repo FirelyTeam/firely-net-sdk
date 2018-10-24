@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // [WMR 20180725] NEW; backported from STU3 branch
             var diffTypes = diff.Current.Type;
-            var distinctTypeCodeCnt = diffTypes.DistinctTypeCodes().Count;
+            var distinctTypeCodeCnt = diffTypes.DistinctTypeCodes().Count();
             if (distinctTypeCodeCnt == 0)
             {
                 // Element has no type constraints, nothing to merge

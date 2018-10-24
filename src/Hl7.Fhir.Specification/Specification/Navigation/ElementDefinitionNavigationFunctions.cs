@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using System;
 using System.Linq;
 
@@ -34,9 +35,6 @@ namespace Hl7.Fhir.Specification.Navigation
             var dot = child.LastIndexOf(".");
             return dot != -1 ? child.Substring(0, dot) : String.Empty;
         }
-
-        /// <summary>Determines if the specified element path represents a root element.</summary>
-        public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains(".");
 
         /// <summary>Determines if the specified element path represents a (modifier) extension element.</summary>
         /// <returns><c>true</c> if <paramref name="path"/> ends with <c>.extension</c> or <c>.modifierExtension</c>, or <c>false</c> otherwise.</returns>
@@ -79,13 +77,6 @@ namespace Hl7.Fhir.Specification.Navigation
             return pos > -1 ? path.Substring(pos + 1) : path;
         }
 
-        /// <summary>Determines if the specified element path represents a choice type element.</summary>
-        /// <returns><c>true</c> if <paramref name="path"/> ends with <c>[x]</c>, or <c>false</c> otherwise.</returns>
-        public static bool IsChoiceTypeElement(string path)
-        {
-            return path != null && path.EndsWith("[x]");
-        }
-
         /// <summary>Determines if an element name matches a choice element name in the base profile.</summary>
         /// <param name="choiceName">A choice type element name that ends with <c>[x]</c>.</param>
         /// <param name="otherName">An element name.</param>
@@ -93,7 +84,7 @@ namespace Hl7.Fhir.Specification.Navigation
         public static bool IsRenamedChoiceTypeElement(string choiceName, string otherName)
         {
             return otherName != null
-                && IsChoiceTypeElement(choiceName)
+                && ElementDefinitionUtilities.HasChoiceSuffix(choiceName)
                 && otherName.Length > (choiceName.Length - 3)
                 && String.Compare(choiceName, 0, otherName, 0, choiceName.Length - 3) == 0;
         }

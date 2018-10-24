@@ -935,14 +935,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestDifferentialTree()
         {
-            var e = new List<ElementDefinition>();
-
-            e.Add(new ElementDefinition() { Path = "A.B.C1" });
-            e.Add(new ElementDefinition() { Path = "A.B.C1", Name = "C1-A" }); // First slice of A.B.C1
-            e.Add(new ElementDefinition() { Path = "A.B.C2" });
-            e.Add(new ElementDefinition() { Path = "A.B", Name = "B-A" }); // First slice of A.B
-            e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
-            e.Add(new ElementDefinition() { Path = "A.D.F" });
+            var e = new List<ElementDefinition>
+            {
+                new ElementDefinition() { Path = "A.B.C1" },
+                new ElementDefinition() { Path = "A.B.C1", Name = "C1-A" }, // First slice of A.B.C1
+                new ElementDefinition() { Path = "A.B.C2" },
+                new ElementDefinition() { Path = "A.B", Name = "B-A" }, // First slice of A.B
+                new ElementDefinition() { Path = "A.B.C1.D" },
+                new ElementDefinition() { Path = "A.D.F" }
+            };
 
             var tree = DifferentialTreeConstructor.MakeTree(e);
             Assert.IsNotNull(tree);
@@ -2486,7 +2487,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Assert.IsTrue(nav.MoveToFirstChild());  // Patient
 
-            if (ElementDefinitionNavigator.IsRootPath(nav.Path))
+            if (ElementDefinitionUtilities.IsRootPath(nav.Path))
             {
                 Assert.IsTrue(nav.MoveToChild("telecom"));
             }
@@ -2819,9 +2820,8 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            StructureDefinition expanded = null;
 
-            generateSnapshotAndCompare(profile, out expanded);
+            generateSnapshotAndCompare(profile, out StructureDefinition expanded);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
