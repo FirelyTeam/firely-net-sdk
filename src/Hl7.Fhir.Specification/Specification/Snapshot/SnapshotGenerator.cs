@@ -816,7 +816,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
                 // e.g. if the differential specifies explicit core type profile url
                 // Example: Patient.identifier type = { Code : Identifier, Profile : "http://hl7.org/fhir/StructureDefinition/Identifier" } }
-                var primarySnapTypeProfile = primarySnapType.TypeProfile();
+                var primarySnapTypeProfile = getTypeProfile(primarySnapType);
 
                 if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
 
@@ -986,6 +986,23 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return true;
         }
+
+        /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
+        private static string getTypeProfile(ElementDefinition.TypeRefComponent elemType)
+        {
+            string profile = null;
+            if (elemType != null)
+            {
+                profile = elemType.Profile.FirstOrDefault();
+                if (profile == null && elemType.Code.HasValue)
+                {
+                    profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code.Value);
+                }
+            }
+            return profile;
+        }
+
+
 
         // [WMR 20170209] HACK
         // Problem: DomainResource.extension defines some default values for Short, Definition & Comments:

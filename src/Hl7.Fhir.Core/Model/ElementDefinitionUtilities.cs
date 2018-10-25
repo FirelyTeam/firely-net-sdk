@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace Hl7.Fhir.Model
         /// <param name="fix"></param>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        public static ElementDefinition Value(this ElementDefinition ed, Element fix=null, Element pattern=null )
+        public static ElementDefinition Value(this ElementDefinition ed, Element fix = null, Element pattern = null)
         {
             ed.Fixed = fix;
             ed.Pattern = pattern;
@@ -178,15 +179,44 @@ namespace Hl7.Fhir.Model
         public static FHIRDefinedType[] DistinctTypeCodes(this IEnumerable<ElementDefinition.TypeRefComponent> types)
             => types.Where(t => t.Code != null).Select(t => t.Code.Value).Distinct().ToArray();
 
+        /// <summary>Returns a list of distinct types supported by the specified element definition.</summary>
+        /// <param name="types">A list of element types.</param>
+        /// <returns>A list of type code strings.</returns>
+        public static string[] DistinctTypes(this IEnumerable<ElementDefinition.TypeRefComponent> types)
+            => types.Where(t => t.Code != null).Select(t => t.Code.Value).Distinct().Select(c => c.GetLiteral()).ToArray();
+
+        /// <summary>Returns a list of distinct types supported by the specified element definition.</summary>
+        /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
+        /// <returns>A list of type code strings.</returns>
+        public static string[] DistinctTypes(this ElementDefinition elem) => elem.Type.DistinctTypes();
+
         /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
         /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
         /// <returns>A list of type code strings.</returns>
         public static FHIRDefinedType[] DistinctTypeCodes(this ElementDefinition elem) => elem.Type.DistinctTypeCodes();
 
+        /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
+        public static string GetTypeProfile(this ElementDefinition.TypeRefComponent elemType)
+        {
+            // In DSTU2, it is not possible to profile a ResourceReference, since .profile doubles
+            // as .targetProfile
+            if (elemType.IsReference()) return ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Reference);
+
+            return elemType?.Profile.FirstOrDefault() ??
+                (elemType.Code.HasValue ?
+                    ModelInfo.CanonicalUriForFhirCoreType(elemType.Code.Value) : null);
+        }
+
+        // In DSTU2, this is Name, later it became SliceName
+        public static string SliceName(this ElementDefinition def) => def.Name;
+
+        public static string GetTargetProfile(this ElementDefinition.TypeRefComponent elemType) => 
+            elemType.IsReference() ? (string)elemType?.Profile.FirstOrDefault() : (string)null;
+
         /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>
         /// <param name="typeRef">A <see cref="ElementDefinition.TypeRefComponent"/> instance.</param>
         /// <returns><c>true</c> if the instance defines a reference, or <c>false</c> otherwise.</returns>
-        public static bool IsReference(this ElementDefinition.TypeRefComponent typeRef) 
+        public static bool IsReference(this ElementDefinition.TypeRefComponent typeRef)
             => typeRef.Code.HasValue && ModelInfo.IsReference(typeRef.Code.Value);
 
         public const string CHOICE_ELEMENT_SUFFIX = "[x]";
@@ -198,10 +228,9 @@ namespace Hl7.Fhir.Model
         public static bool HasChoiceSuffix(string path) => path.EndsWith("[x]");
 
         /// <summary>
-        /// Determines whether an element is a choice element
+        /// Determines whether an element was originally a choice element, even if now constrained to a single type.
         /// </summary>
         /// <param name="definition"></param>
-        /// <remarks>Note that this determines whether the element is choice, regardless of whether it has been constrained to allow only a single type.</remarks>
         public static bool IsChoiceElement(this ElementDefinition definition)
         {
             // If in a constrained element, the suffix [x] has been replaced by an actual type, it's still originally a choice element.
@@ -230,7 +259,7 @@ namespace Hl7.Fhir.Model
             if (namePart == suffixedName) return true;
 
             // Match a constrained choice type name, by looking at the original name of the element
-            if(def.Base != null)
+            if (def.Base != null)
             {
                 var baseNamePart = GetNameFromPath(def.Base.Path);
                 if (baseNamePart == suffixedName) return true;

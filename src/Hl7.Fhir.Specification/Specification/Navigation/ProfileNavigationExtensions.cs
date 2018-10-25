@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -101,22 +101,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return defn.PrimaryTypeProfiles().FirstOrDefault();
         }
 
-        /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
-        public static string TypeProfile(this ElementDefinition.TypeRefComponent elemType)
-        {
-            string profile = null;
-            if (elemType != null)
-            {
-                profile = elemType.Profile.FirstOrDefault();
-                if (profile == null && elemType.Code.HasValue)
-                {
-                    profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code.Value);
-                }
-            }
-            return profile;
-        }
-
-        /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
+              /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
         public static FHIRDefinedType? PrimaryTypeCode(this ElementDefinition defn)
         {
             var primaryType = defn.PrimaryType();

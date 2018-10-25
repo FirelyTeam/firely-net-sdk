@@ -20,9 +20,9 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
     /// walk the definition tree based on the discriminator tree visited.</remarks>
     internal class DiscriminatorInterpreter : ExpressionVisitor<StructureDefinitionSchemaWalker>
     {
-        public DiscriminatorInterpreter(StructureDefinitionSchemaWalker root)
+        public DiscriminatorInterpreter(in StructureDefinitionSchemaWalker root)
         {
-            Root = root ?? throw Error.ArgumentNull(nameof(root));
+            Root = root;
         }
 
         public override StructureDefinitionSchemaWalker VisitConstant(ConstantExpression expression) =>
