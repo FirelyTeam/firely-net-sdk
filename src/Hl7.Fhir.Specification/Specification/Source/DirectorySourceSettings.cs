@@ -53,6 +53,7 @@ namespace Hl7.Fhir.Specification.Source
             other.FormatPreference = this.FormatPreference;
             other.MultiThreaded = this.MultiThreaded;
             other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
+            other.ExcludeSummariesForUnknownArtifacts = this.ExcludeSummariesForUnknownArtifacts;
         }
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
