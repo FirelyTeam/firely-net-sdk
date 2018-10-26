@@ -15,6 +15,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -465,6 +467,30 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Directory.Delete(tmpFolderPath, true);
             }
+        }
+
+        [TestMethod]
+        public void TestParserSettings()
+        {
+            // Create an invalid patient resource on disk
+            var obs = new Observation()
+            {
+                Id = "1",
+                Comments = " "
+            };
+            var nav = obs.ToTypedElement();
+            var xml = nav.ToXml();
+
+            var folderPath = Path.Combine(Path.GetTempPath(), "TestDirectorySource");
+            var filePath = Path.Combine(folderPath, "TestPatient.xml");
+
+            File.WriteAllText(filePath, xml);
+
+            // Try to access using DirectorySource with default settings
+            var src = new DirectorySource(folderPath);
+
+            var result = src.ResolveByUri("1");
+            Assert.IsNotNull(result);
         }
     }
 }

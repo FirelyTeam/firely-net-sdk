@@ -12,6 +12,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Parser configuration settings for the <see cref="FhirJsonNode"/> class.</summary>
     public class FhirJsonParsingSettings
     {
         /// <summary>

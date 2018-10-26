@@ -12,6 +12,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Parser configuration settings for the <see cref="FhirXmlNode"/> class.</summary>
     public class FhirXmlParsingSettings
     {
         /// <summary>
