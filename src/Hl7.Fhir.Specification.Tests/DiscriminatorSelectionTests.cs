@@ -17,7 +17,9 @@ namespace Hl7.Fhir.Specification.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
-            _source = ZipSource.CreateValidationSource();
+            var f = new ValidationFixture();
+
+            _source = f.Resolver;
         }
 
         private static IResourceResolver _source = null;

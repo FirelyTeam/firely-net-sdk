@@ -13,31 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-/* 
- * Navigating to a child
- * 
- * - Set has a single entry -> clear how to navigate deeper into that single type (or profile on type)
- * - Multiple entries:
- *      - All of a single type (differ in profile), move deeper into unprofiled type
- *      - Different types, move deeper into common base class
- * 
- * resolve()
- * - Only possible when all types are References
- * - Results in 1 or more (root) types/profiles in the Set.
- * 
- * ofType()
- * - always possible
- * - filter Set on the type or supertype (e.g. DomainResource, Resource), replace supertype with given type.* 
- * 
- * ofProfile()
- * - always possible
- * - filter Set on the type of profile (may be core profile to match unprofiled types)
- */
-
-
 namespace Hl7.Fhir.Specification
 {
-
     public class StructureDefinitionSchemaWalker
     {
         public readonly IResourceResolver Resolver;
@@ -80,7 +57,7 @@ namespace Hl7.Fhir.Specification
             }
             catch (Exception e)
             {
-                return Stuck(new StructureDefinitionSchemaWalkerException($"Cannot retrieve StructureDefinition with canonical '{canonical}'", e));
+                return Stuck(new StructureDefinitionSchemaWalkerException($"Cannot retrieve StructureDefinition with canonical '{canonical}' at '{Current.UrlAndPath()}'", e));
             }
         }
 
@@ -99,21 +76,31 @@ namespace Hl7.Fhir.Specification
                 var results = new List<StructureDefinitionSchemaWalker>();
                 do
                 {
-                    // Fetch all matching child nodes, include slices too
+                    // Return the first matching child, for slices this would just be the original,
+                    // unsliced element.
                     if (scan.Current.MatchesName(childName))
-                        results.Add(new StructureDefinitionSchemaWalker(scan, Resolver));
+                        return single(new StructureDefinitionSchemaWalker(scan, Resolver));
                 }
                 while (scan.MoveToNext());
 
-                return results.Any()
-                    ? results
-                    : single(Stuck(
-                        new StructureDefinitionSchemaWalkerException($"Cannot walk into unknown child '{childName}' at path '{Current.Path}'")));
+                return single(Stuck(
+                        new StructureDefinitionSchemaWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.UrlAndPath()}'.")));
+            }
+            else if (scan.Current.NameReference != null)
+            {
+                var name = scan.Current.NameReference;
+                var reference = scan.ShallowCopy();
+
+                if (!reference.JumpToNameReference(name))
+                    single(Stuck(
+                        new StructureDefinitionSchemaWalkerException($"Found a namereference '{name}' on that cannot be resolved at '{Current.UrlAndPath()}'.")));
+
+                return single(new StructureDefinitionSchemaWalker(reference,Resolver));
             }
             else
             {
                 return scan.Current.Type
-                    .Select(t => t.GetTypeProfile())
+                    .Select(t => t.Canonical())
                     .Select(c => FromCanonical(c))
                     .SelectMany(result => result.Child(childName));
 
@@ -135,12 +122,12 @@ namespace Hl7.Fhir.Specification
             var count = Current.Current.Type.Count;
 
             if (count == 1)
-                return Current.Current.Type.Single().GetTypeProfile() == canonical ? single(this) : nothing();
+                return Current.Current.Type.Single().Canonical() == canonical ? single(this) : nothing();
             else if (count == 0)
                 return Enumerable.Empty<StructureDefinitionSchemaWalker>();
             else
                 return Current.Current.Type
-                    .Select(t => t.GetTypeProfile())
+                    .Select(t => t.Canonical())
                     .Select(c => FromCanonical(c))
                     .SelectMany(w => w.OfType(canonical));
         }
@@ -149,15 +136,37 @@ namespace Hl7.Fhir.Specification
         {
             if (WasStuck) return single(this);
 
+            if (!Current.Current.Type.Any(t => t.IsReference()))
+                return single(Stuck(new StructureDefinitionSchemaWalkerException("resolve() should only be called on elements of type Reference at '{Current.UrlAndPath()}'.")));
+
             return Current.Current.Type
                     .Where(t => t.IsReference())
-                    .Select(t => t.GetTargetProfile())
+                    .Select(t => t.TargetCanonical())
                     .Select(c => FromCanonical(c));
         }
 
-        public IEnumerable<StructureDefinitionSchemaWalker> Extension(string url) => throw new NotImplementedException();
+        public IEnumerable<StructureDefinitionSchemaWalker> Extension(string url) =>
+            single(FromCanonical(url));
 
         public IEnumerable<StructureDefinitionSchemaWalker> Slice(string name) =>
             Current.Current.SliceName() == name ? single(this) : nothing();
     };
+
+
+    public static class StructureDefinitionSchemaWalkerEnumerables
+    {
+        public static IEnumerable<StructureDefinitionSchemaWalker> Child(this IEnumerable<StructureDefinitionSchemaWalker> me, string childName) =>
+            me.SelectMany(w => w.Child(childName));
+
+        public static IEnumerable<StructureDefinitionSchemaWalker> WithCanonical(this IEnumerable<StructureDefinitionSchemaWalker> me, string canonical) =>
+            me.SelectMany(w => w.OfType(canonical));
+
+        public static IEnumerable<StructureDefinitionSchemaWalker> Resolve(this IEnumerable<StructureDefinitionSchemaWalker> me) =>
+            me.SelectMany(w => w.Resolve());
+        public static IEnumerable<StructureDefinitionSchemaWalker> Extension(this IEnumerable<StructureDefinitionSchemaWalker> me, string canonical) =>
+            me.SelectMany(w => w.Extension(canonical));
+
+        public static IEnumerable<StructureDefinitionSchemaWalker> Slice(this IEnumerable<StructureDefinitionSchemaWalker> me, string name) =>
+            me.SelectMany(w => w.Slice(name));
+    }
 }

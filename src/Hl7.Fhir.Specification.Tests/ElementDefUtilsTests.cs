@@ -8,8 +8,10 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using static Hl7.Fhir.Model.ElementDefinitionUtilities;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -17,10 +19,19 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ElementDefUtilsTests
     {
+        public static IResourceResolver CreateTestResolver()
+        {
+            return new CachedResolver(
+                new SnapshotSource(
+                new MultiResolver(
+                    new DirectorySource(@"TestData\validation"),
+                    new ZipSource("specification.zip"))));
+        }
+
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
-            _source = ZipSource.CreateValidationSource();
+            _source = CreateTestResolver();
 
             var obs = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation);
             _defs = new ElementDefinitionNavigator(obs);
@@ -73,15 +84,56 @@ namespace Hl7.Fhir.Specification.Tests
             var defs = getObsDef();
             Assert.IsTrue(defs.JumpToFirst("Observation.identifier"));
             CollectionAssert.AreEqual(new[] { FHIRDefinedType.Identifier }, defs.Current.DistinctTypeCodes());
+            CollectionAssert.AreEqual(new[] { "Identifier" }, defs.Current.DistinctTypes());
 
             Assert.IsTrue(defs.JumpToFirst("Observation.effective[x]"));
             CollectionAssert.AreEqual(new[] { FHIRDefinedType.DateTime, FHIRDefinedType.Period }, defs.Current.DistinctTypeCodes());
+            CollectionAssert.AreEqual(new[] { "dateTime", "Period" }, defs.Current.DistinctTypes());
 
             var def = new ElementDefinition().Type(FHIRDefinedType.HumanName, "http://fhir/profile1")
                     .Type(FHIRDefinedType.HumanName, "http://fhir/profile2")
                     .Type(FHIRDefinedType.Identifier);
 
             CollectionAssert.AreEqual(new[] { FHIRDefinedType.HumanName, FHIRDefinedType.Identifier }, def.DistinctTypeCodes());
+        }
+
+        [TestMethod]
+        public void TestSliceName()
+        {
+            var sd = _source.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            var nav = ElementDefinitionNavigator.ForSnapshot(sd);
+
+            Assert.IsTrue(nav.JumpToFirst("Patient.telecom"));
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("phone", nav.Current.SliceName());
+        }
+
+        [TestMethod]
+        public void TestCanonical()
+        {
+            var sd = _source.FindStructureDefinition("http://example.org/StructureDefinition/WeightHeightObservation");
+            var nav = ElementDefinitionNavigator.ForSnapshot(sd);
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+            var tr = nav.Current.Type[0];   // string, no type profile
+            Assert.AreEqual(ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.String), tr.Canonical());
+
+            tr = nav.Current.Type[1];   // Quantity, with type profile
+            Assert.AreEqual("http://example.org/StructureDefinition/WeightQuantity", tr.Canonical());
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.subject"));
+            tr = nav.Current.Type[0];   // Reference, with target profile but no type profile
+            Assert.AreEqual(ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Reference), tr.Canonical());
+        }
+
+        [TestMethod]
+        public void TestTargetCanonical()
+        {
+            var defs = getObsDef();
+            Assert.IsTrue(defs.JumpToFirst("Observation.specimen"));
+            var tr = defs.Current.Type[0];   // Reference(Specimen)
+            Assert.AreEqual(ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Reference), tr.Canonical());
+            Assert.AreEqual(ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Specimen), tr.TargetCanonical());
         }
 
         [TestMethod]

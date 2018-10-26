@@ -10,19 +10,20 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Navigation.FhirPath
 {
     public static class DiscriminatorInterpeterExtensions
     {
-        internal static StructureDefinitionSchemaWalker EvaluateDiscriminator(this StructureDefinitionSchemaWalker walker, Expression expr)
+        internal static IEnumerable<StructureDefinitionSchemaWalker> EvaluateDiscriminator(this StructureDefinitionSchemaWalker walker, Expression expr)
         {
             var interpeter = new DiscriminatorInterpreter(walker);
             interpeter.AssertSupportedRootExpression(expr);
             return expr.Accept(interpeter);
         }
 
-        public static StructureDefinitionSchemaWalker Walk(this StructureDefinitionSchemaWalker me, string discriminatorExpression)
+        public static IEnumerable<StructureDefinitionSchemaWalker> Walk(this StructureDefinitionSchemaWalker me, string discriminatorExpression)
         {
             if (discriminatorExpression == null) throw Error.ArgumentNull(nameof(discriminatorExpression));
 

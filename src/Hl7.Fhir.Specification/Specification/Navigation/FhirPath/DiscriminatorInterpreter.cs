@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Navigation.FhirPath
@@ -18,21 +19,21 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
     /// </summary>
     /// <remarks>Given a <see cref="StructureDefinitionSchemaWalker"/>, this interpreter will
     /// walk the definition tree based on the discriminator tree visited.</remarks>
-    internal class DiscriminatorInterpreter : ExpressionVisitor<StructureDefinitionSchemaWalker>
+    internal class DiscriminatorInterpreter : ExpressionVisitor<IEnumerable<StructureDefinitionSchemaWalker>>
     {
         public DiscriminatorInterpreter(in StructureDefinitionSchemaWalker root)
         {
             Root = root;
         }
 
-        public override StructureDefinitionSchemaWalker VisitConstant(ConstantExpression expression) =>
+        public override IEnumerable<StructureDefinitionSchemaWalker> VisitConstant(ConstantExpression expression) =>
             throw Error.InvalidOperation("Internal error: VisitConstant() should never be invoked while walking the AST for a discriminator expression.");
 
         /// <summary>
         /// Visit a function call appearing in a discriminator expression
         /// </summary>
         /// <remarks>May only be 'builtin.children', 'resolve' and 'extension'</remarks>
-        public override StructureDefinitionSchemaWalker VisitFunctionCall(FunctionCallExpression call)
+        public override IEnumerable<StructureDefinitionSchemaWalker> VisitFunctionCall(FunctionCallExpression call)
         {
             var parentSet = call.Focus.Accept(this);
 
@@ -49,7 +50,7 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
                     return parentSet.Extension(url);
                 case "ofType":
                     var type = getSingleStringParameter(call);
-                    return parentSet.OfType(type);
+                    return parentSet.WithCanonical(type);
                 case "slice":
                     var name = getSingleStringParameter(call);
                     return parentSet.Slice(name);
@@ -80,16 +81,16 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
             throw new DiscriminatorFormatException($"Function '{call.FunctionName}' should be invoked with a single parameter or type string");
         }
 
-        public override StructureDefinitionSchemaWalker VisitNewNodeListInit(NewNodeListInitExpression expression) =>
+        public override IEnumerable<StructureDefinitionSchemaWalker> VisitNewNodeListInit(NewNodeListInitExpression expression) =>
             throw new DiscriminatorFormatException("The empty set constructor '{}', is not supported in discriminators.");
 
         public StructureDefinitionSchemaWalker Root { get; private set; }
 
 
-        public override StructureDefinitionSchemaWalker VisitVariableRef(VariableRefExpression expression)
+        public override IEnumerable<StructureDefinitionSchemaWalker> VisitVariableRef(VariableRefExpression expression)
         {
             if (expression.Name == "builtin.that")
-                return Root;
+                return new[] { Root };
 
             throw new DiscriminatorFormatException($"Variable reference '{expression.Name}' is not supported in discriminators.");
         }

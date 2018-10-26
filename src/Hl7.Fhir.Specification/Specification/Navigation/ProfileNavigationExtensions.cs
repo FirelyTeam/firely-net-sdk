@@ -183,6 +183,9 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             return elements?.Element?.FirstOrDefault(e => e.IsRootElement());
         }
+
+        public static string UrlAndPath(this ElementDefinitionNavigator me) =>
+            (me.StructureDefinition?.Url ?? "") + (me.Current?.Path ?? "(root)");
     }
 }
 

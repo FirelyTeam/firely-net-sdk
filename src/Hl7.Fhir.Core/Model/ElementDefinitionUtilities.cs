@@ -195,8 +195,16 @@ namespace Hl7.Fhir.Model
         /// <returns>A list of type code strings.</returns>
         public static FHIRDefinedType[] DistinctTypeCodes(this ElementDefinition elem) => elem.Type.DistinctTypeCodes();
 
+        /// <summary>
+        /// Get the slicename of the given element constraint.
+        /// </summary>
+        /// <param name="def"></param>
+        /// <returns></returns>
+        /// <remarks>In DSTU2, this is Name, later it became SliceName</remarks>
+        public static string SliceName(this ElementDefinition def) => def.Name;
+
         /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
-        public static string GetTypeProfile(this ElementDefinition.TypeRefComponent elemType)
+        public static string Canonical(this ElementDefinition.TypeRefComponent elemType)
         {
             // In DSTU2, it is not possible to profile a ResourceReference, since .profile doubles
             // as .targetProfile
@@ -207,10 +215,7 @@ namespace Hl7.Fhir.Model
                     ModelInfo.CanonicalUriForFhirCoreType(elemType.Code.Value) : null);
         }
 
-        // In DSTU2, this is Name, later it became SliceName
-        public static string SliceName(this ElementDefinition def) => def.Name;
-
-        public static string GetTargetProfile(this ElementDefinition.TypeRefComponent elemType) => 
+        public static string TargetCanonical(this ElementDefinition.TypeRefComponent elemType) => 
             elemType.IsReference() ? (string)elemType?.Profile.FirstOrDefault() : (string)null;
 
         /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>
