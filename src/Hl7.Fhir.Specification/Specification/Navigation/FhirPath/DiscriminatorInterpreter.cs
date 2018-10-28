@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;
 using System.Collections.Generic;
@@ -50,10 +51,9 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
                     return parentSet.Extension(url);
                 case "ofType":
                     var type = getSingleStringParameter(call);
-                    return parentSet.WithCanonical(type);
-                case "slice":
-                    var name = getSingleStringParameter(call);
-                    return parentSet.Slice(name);
+                    if(!ModelInfo.IsCoreModelType(type))
+                        throw new DiscriminatorFormatException($"Type '{type}' passed to ofType() is not a known FHIR type.");
+                    return parentSet.OfType(ModelInfo.CanonicalUriForFhirCoreType(type));
                 default:
                     throw new DiscriminatorFormatException($"Invocation of function '{call.FunctionName}' is not supported in discriminators.");
             }
@@ -89,6 +89,8 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
 
         public override IEnumerable<StructureDefinitionSchemaWalker> VisitVariableRef(VariableRefExpression expression)
         {
+            if (expression.Name == "builtin.this")
+                return new[] { Root };
             if (expression.Name == "builtin.that")
                 return new[] { Root };
 

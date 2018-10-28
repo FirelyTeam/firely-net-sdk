@@ -99,8 +99,6 @@ namespace Hl7.Fhir.Specification
             return getElements(_nav);
         }
 
-        private static bool isPrimitiveValueConstraint(ElementDefinition ed) => ed.Path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
-
         internal static IEnumerable<IElementDefinitionSummary> getElements(ElementDefinitionNavigator nav)
         {
             string lastName = "";
@@ -114,7 +112,7 @@ namespace Hl7.Fhir.Specification
                 do
                 {
                     if (nav.PathName == lastName) continue;    // ignore slices
-                    if (isPrimitiveValueConstraint(nav.Current)) continue;      // ignore value attribute
+                    if (nav.Current.IsPrimitiveValueConstraint()) continue;      // ignore value attribute
                             
                     lastName = nav.PathName;
                     yield return new ElementDefinitionSerializationInfo(nav.ShallowCopy());
