@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Rest
 
         public bool UseFormatParameter { get; set; }
         public ResourceFormat PreferredFormat { get; set; }
-        public int Timeout { get; set; }           // In milliseconds
+        public int TimeOut { get; set; }           // In milliseconds
         public Prefer Prefer { get; set; }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Rest
             BaseUrl = baseUrl;
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
-            Timeout = DefaultTimeOut;
+            TimeOut = DefaultTimeOut;
             Prefer = Rest.Prefer.ReturnRepresentation;
             ParserSettings = ParserSettings.CreateDefault();
         }
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Rest
             var request = interaction.ToHttpRequest(BaseUrl, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
 #if !NETSTANDARD1_1
-            request.Timeout = Timeout;
+            request.Timeout = TimeOut;
 #endif
 
             if (PreferCompressedResponses)
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Rest
                 request.WriteBody(compressRequestBody, outBody);
 
             // Make sure the HttpResponse gets disposed!
-            using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)).ConfigureAwait(false))
+            using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, TimeOut)).ConfigureAwait(false))
             //using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
             {
                 try

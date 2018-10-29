@@ -105,17 +105,17 @@ namespace Hl7.Fhir.Rest
             set     { _requester.UseFormatParameter = value; }
         }
 
+        // [WMR 20181029] Inconsistent capitalization...
+        // FhirClient.Timeout <=> Requester.TimeOut, WebResolver.TimeOut
+
         /// <summary>
         /// The timeout (in milliseconds) to be used when making calls to the FHIR server
         /// </summary>
         public int Timeout
         {
-            get { return _requester.Timeout; }
-            set { _requester.Timeout = value; }
+            get { return _requester.TimeOut; }
+            set { _requester.TimeOut = value; }
         }
-
-
-        //private bool _returnFullResource = false;
 
         /// <summary>
         /// Should calls to Create, Update and transaction operations return the whole updated content?
