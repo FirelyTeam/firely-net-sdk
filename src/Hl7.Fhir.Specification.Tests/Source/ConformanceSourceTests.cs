@@ -507,6 +507,19 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(result);
                 Assert.IsInstanceOfType(result, typeof(Observation));
 
+                // Alternatively, hook the ExceptionHandler
+                src.XmlParserSettings.PermissiveParsing = false;
+                List<Exception> errors = new List<Exception>();
+                src.ExceptionHandler += (sender, args) => { errors.Add(args.Exception); };
+
+                // Expecting resolving to succeed
+                result = null;
+                result = src.ResolveByUri(uri);
+                Assert.IsNotNull(result);
+                Assert.IsInstanceOfType(result, typeof(Observation));
+                Assert.AreEqual(1, errors.Count);
+                Assert.IsInstanceOfType(errors[0], typeof(FormatException));
+
             }
             finally
             {

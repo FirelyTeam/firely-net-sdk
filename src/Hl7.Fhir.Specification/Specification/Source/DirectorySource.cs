@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource
+    public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource, IExceptionSource
     {
         private static readonly StringComparer PathComparer = StringComparer.InvariantCultureIgnoreCase;
         private static readonly StringComparison PathComparison = StringComparison.InvariantCultureIgnoreCase;
@@ -597,6 +597,13 @@ namespace Hl7.Fhir.Specification.Source
 
         #endregion
 
+        #region IExceptionSource
+
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
+        #endregion
+
         #region Private members
 
         /// <summary>
@@ -915,6 +922,7 @@ namespace Hl7.Fhir.Specification.Source
             };
 
             T result = null;
+            var handler = this.ExceptionHandler;
 
             using (var navStream = factory.Create(origin))
             {
@@ -930,7 +938,7 @@ namespace Hl7.Fhir.Specification.Source
                     if (nav != null)
                     {
                         // Parse target resource from navigator
-                        result = nav.ToPoco<T>(pocoSettings);
+                        result = nav.ToPoco<T>(pocoSettings, handler);
 
                         // Add origin annotation
                         result?.SetOrigin(origin);
