@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Specification.Tests
             var obs = new Observation()
             {
                 Id = "1",
-                Comments = " "
+                Comments = " " // Illegal empty value
             };
             var nav = obs.ToTypedElement();
             var xml = nav.ToXml();
@@ -499,13 +499,35 @@ namespace Hl7.Fhir.Specification.Tests
             var folderPath = Path.Combine(Path.GetTempPath(), "TestDirectorySource");
             var filePath = Path.Combine(folderPath, "TestPatient.xml");
 
-            File.WriteAllText(filePath, xml);
+            try
+            {
 
-            // Try to access using DirectorySource with default settings
-            var src = new DirectorySource(folderPath);
+                Directory.CreateDirectory(folderPath);
+                File.WriteAllText(filePath, xml);
 
-            var result = src.ResolveByUri("1");
-            Assert.IsNotNull(result);
+                // Try to access using DirectorySource with default settings
+                var src = new DirectorySource(folderPath);
+
+                var uri = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry(obs.TypeName, obs.Id);
+                Assert.AreEqual(@"http://example.org/Observation/1", uri);
+
+                // Expecting resolving to fail, because of illegal empty value
+                Assert.ThrowsException<FormatException>(() => { src.ResolveByUri(uri); });
+
+                // Bypass all verification; specifically, accept empty values
+                src.XmlParserSettings.PermissiveParsing = true;
+
+                // Expecting resolving to succeed
+                var result = src.ResolveByUri(uri);
+                Assert.IsNotNull(result);
+                Assert.IsInstanceOfType(result, typeof(Observation));
+
+            }
+            finally
+            {
+                // Clean up temporary files
+                Directory.Delete(folderPath, true);
+            }
         }
     }
 }
