@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization
                 if (rti == null)
                 {
                     ExceptionHandler.NotifyOrThrow(this,
-                     ExceptionNotification.Error(new StructuralTypeException($"No type indication on source to build POCO's for.")));
+                        ExceptionNotification.Error(new StructuralTypeException($"No type indication on source to build POCO's for.")));
                     return null;
                 }
                 else
