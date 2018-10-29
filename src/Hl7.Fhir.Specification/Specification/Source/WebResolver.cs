@@ -18,10 +18,10 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Fetches FHIR artifacts (Profiles, ValueSets, ...) from a FHIR server.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class WebResolver : IResourceResolver
+    public class WebResolver : IResourceResolver, IExceptionSource
     {
         /// <summary>Default request timeout in milliseconds.</summary>
-        public const int DefaultTimeOut = 5000;
+        public const int DefaultTimeOut = FhirClient.DefaultTimeOut;
 
         readonly Func<Uri, FhirClient> _clientFactory;
 
@@ -60,8 +60,14 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             var id = new ResourceIdentity(uri);
-            var client = _clientFactory?.Invoke(id.BaseUri)
-                         ?? new FhirClient(id.BaseUri) { Timeout = this.TimeOut };
+            var client = _clientFactory?.Invoke(id.BaseUri) ?? new FhirClient(id.BaseUri);
+            if (TimeOut != DefaultTimeOut)
+            {
+                client.Timeout = TimeOut;
+            }
+
+            var handler = ExceptionHandler;
+            if (handler != null) { client.ExceptionHandler += handler; }
 
             client.ParserSettings = this.ParserSettings;
 
@@ -72,15 +78,29 @@ namespace Hl7.Fhir.Specification.Source
                 LastError = null;
                 return resultResource;
             }
+            // Always catch FhirOperationException
             catch (FhirOperationException foe)
             {
                 LastError = foe;
+                if (handler != null)
+                {
+                    handler.Invoke(this, ExceptionNotification.Error(foe));
+                }
                 return null;
             }
+            // Always catch WebException
             catch (WebException we)
             {
                 LastError = we;
+                if (handler != null)
+                {
+                    handler.Invoke(this, ExceptionNotification.Error(we));
+                }
                 return null;
+            }
+            finally
+            {
+                if (handler != null) { client.ExceptionHandler -= handler; }
             }
             // Other runtime exceptions are fatal...
         }
@@ -89,6 +109,13 @@ namespace Hl7.Fhir.Specification.Source
         {
             return ResolveByUri(uri);
         }
+
+        #region IExceptionSource
+
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler { get;  set; }
+
+        #endregion
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

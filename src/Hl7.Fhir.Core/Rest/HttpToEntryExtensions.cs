@@ -29,9 +29,9 @@ namespace Hl7.Fhir.Rest
     public static class HttpToEntryExtensions
     {
         private const string USERDATA_BODY = "$body";
-        private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
+        private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
-        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException)
+        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException, ExceptionNotificationHandler exceptionHandler = null)
         {
             var result = new Bundle.EntryComponent();
 
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType, parserSettings, throwOnFormatException);
+                    var resource = parseResource(bodyText, contentType, parserSettings, throwOnFormatException, exceptionHandler, response);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -118,9 +118,9 @@ namespace Hl7.Fhir.Rest
                     result = Encoding.GetEncoding(charset);
             }
             return result;
-        }      
+        }
 
-        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
+        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException, ExceptionNotificationHandler exceptionHandler, object exceptionSource)
         {           
             Resource result= null;
 
@@ -142,13 +142,13 @@ namespace Hl7.Fhir.Rest
                 else
                     result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
             }
-            catch (FormatException fe) when (!throwOnFormatException)
+            catch (FormatException fe) when (exceptionHandler != null)
+            {
+                exceptionHandler.NotifyOrThrow(exceptionSource, ExceptionNotification.Error(fe));
+            }
+            catch (FormatException /* fe */) when (!throwOnFormatException)
             {
                 // if (throwOnFormatException) throw fe;
-
-                // [WMR 20181029] TODO...
-                // ExceptionHandler.NotifyOrThrow(...)_
-
                 return null;
             }
             return result;

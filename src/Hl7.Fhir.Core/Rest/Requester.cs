@@ -17,8 +17,11 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class Requester
+    internal class Requester : IExceptionSource
     {
+        /// <summary>Default request timeout in milliseconds (100 seconds).</summary>
+        public const int DefaultTimeOut = 100 * 1000;
+
         public Uri BaseUrl { get; private set; }
 
         public bool UseFormatParameter { get; set; }
@@ -40,12 +43,19 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings { get; set; }
 
+        #region IExceptionSource
+
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
+        #endregion
+
         public Requester(Uri baseUrl)
         {
             BaseUrl = baseUrl;
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
-            Timeout = 100 * 1000;       // Default timeout is 100 seconds            
+            Timeout = DefaultTimeOut;
             Prefer = Rest.Prefer.ReturnRepresentation;
             ParserSettings = ParserSettings.CreateDefault();
         }
@@ -107,12 +117,12 @@ namespace Hl7.Fhir.Rest
 
                         if (webResponse.StatusCode.IsSuccessful())
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: true);
+                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: true, ExceptionHandler);
                             return LastResult;
                         }
                         else
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: false);
+                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: false, ExceptionHandler);
                             throw buildFhirOperationException(webResponse.StatusCode, LastResult.Resource);
                         }
                     }

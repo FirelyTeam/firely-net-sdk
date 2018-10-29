@@ -20,9 +20,12 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient : IFhirClient
+    public partial class FhirClient : IFhirClient, IExceptionSource
     {
-        private Requester _requester;
+        /// <summary>Default request timeout in milliseconds (100 seconds).</summary>
+        public const int DefaultTimeOut = Requester.DefaultTimeOut;
+
+        private readonly Requester _requester;
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -77,6 +80,7 @@ namespace Hl7.Fhir.Rest
         }
 
         #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
+
         public bool VerifyFhirVersion
         {
             get;
@@ -156,7 +160,6 @@ namespace Hl7.Fhir.Rest
             set { _requester.ParserSettings = value;  }
         }
 
-
         public byte[] LastBody => LastResult?.GetBody();
         public string LastBodyAsText => LastResult?.GetBodyAsText();
         public Resource LastBodyAsResource => _requester.LastResult?.Resource;
@@ -183,9 +186,20 @@ namespace Hl7.Fhir.Rest
             private set;
         }
 
-#endregion
+        #endregion
 
-#region Read
+        #region IExceptionSource
+
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler
+        {
+            get => _requester.ExceptionHandler;
+            set => _requester.ExceptionHandler = value;
+        }
+
+        #endregion
+
+        #region Read
 
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
