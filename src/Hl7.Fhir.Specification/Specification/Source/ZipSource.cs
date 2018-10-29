@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
     /// <remarks>Extracts the ZIP archive to a temporary folder and delegates to the <see cref="DirectorySource"/>.</remarks>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource
+    public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource, IExceptionSource
     {
         public const string SpecificationZipFileName = "specification.zip";
 
@@ -39,6 +39,7 @@ namespace Hl7.Fhir.Specification.Source
         // [WMR 20171102] Use Lazy<T> for thread-safe initialization
         private readonly Lazy<DirectorySource> _lazySource;
         private readonly DirectorySourceSettings _settings;
+        private ExceptionNotificationHandler _exceptionHandler;
 
         /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="zipPath">File path to a ZIP archive.</param>
@@ -170,6 +171,24 @@ namespace Hl7.Fhir.Specification.Source
 
         #endregion
 
+        #region IExceptionSource
+
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler
+        {
+            get { return _exceptionHandler; }
+            set
+            {
+                _exceptionHandler = value;
+                if (_lazySource.IsValueCreated)
+                {
+                    _lazySource.Value.ExceptionHandler = value;
+                }
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Unpacks the zip-file and constructs a new FileArtifactSource on the unzipped directory
         /// </summary>
@@ -184,6 +203,12 @@ namespace Hl7.Fhir.Specification.Source
 
             var zc = new ZipCacher(ZipPath, GetCacheKey());
             var source = new DirectorySource(zc.GetContentDirectory(), _settings);
+
+            var handler = _exceptionHandler;
+            if (handler != null)
+            {
+                source.ExceptionHandler += handler;
+            }
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))
