@@ -600,7 +600,11 @@ namespace Hl7.Fhir.Specification.Source
         #region IExceptionSource
 
         /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        public ExceptionNotificationHandler ExceptionHandler
+        {
+            get => _settings.ExceptionHandler;
+            set => _settings.ExceptionHandler = value;
+        }
 
         #endregion
 

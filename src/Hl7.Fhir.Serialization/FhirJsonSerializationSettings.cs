@@ -13,17 +13,18 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Configuration settings for the <see cref="FhirJsonBuilder"/> class.</summary>
     public class FhirJsonSerializationSettings
     {
         /// <summary>
         /// When encountering a member without type information, just skip it instead of reporting an error.
         /// </summary>
-        public bool IgnoreUnknownElements;
+        public bool IgnoreUnknownElements { get; set; } // = false;
 
         /// <summary>
         /// Format the json output when converted to a string.
         /// </summary>
-        public bool Pretty;
+        public bool Pretty { get; set; } // = false;
 
         /// <summary>Default constructor. Creates a new <see cref="FhirJsonSerializationSettings"/> instance with default property values.</summary>
         public FhirJsonSerializationSettings() {  }

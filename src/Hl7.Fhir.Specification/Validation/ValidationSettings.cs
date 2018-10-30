@@ -14,11 +14,14 @@ using System;
 
 namespace Hl7.Fhir.Validation
 {
-
+    /// <summary>Configuration settings for the <see cref="Validator"/> class.</summary>
     public class ValidationSettings
     {
         [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         public static readonly ValidationSettings Default = new ValidationSettings();
+
+        // Instance fields
+        private SnapshotGeneratorSettings _generateSnapshotSettings = SnapshotGeneratorSettings.CreateDefault();
 
         /// <summary>
         /// The resolver to use when references to other resources are encountered in the instance.
@@ -35,18 +38,23 @@ namespace Hl7.Fhir.Validation
         /// without a snapshot is encountered, should the validator generate the snapshot from the differential
         /// present in the StructureDefinition? Default is 'false'.
         /// </summary>
-        public bool GenerateSnapshot { get; set; }
+        public bool GenerateSnapshot { get; set; } // = false
 
         /// <summary>
-        /// If GenerateSnapshot is set to 'true', these settings will allow the user to configure how
-        /// snapshot generation is done.
+        /// Configuration settings for the snapshot generator
+        /// (if the <see cref="GenerateSnapshot"/> property is enabled).
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
         /// </summary>
-        public SnapshotGeneratorSettings GenerateSnapshotSettings { get; set; }
+        public SnapshotGeneratorSettings GenerateSnapshotSettings
+        {
+            get => _generateSnapshotSettings;
+            set => _generateSnapshotSettings = value ?? SnapshotGeneratorSettings.CreateDefault();
+        }
 
         /// <summary>
         /// Include informational tracing information in the validation output. Useful for debugging purposes. Default is 'false'.
         /// </summary>
-        public bool Trace { get; set; }
+        public bool Trace { get; set; } // = false;
 
         // Options: validate extension urls
         // FP SymbolTable
@@ -56,7 +64,7 @@ namespace Hl7.Fhir.Validation
         /// be expresses using StructureDefinition alone. This validation can be turned off for performance or
         /// debugging purposes. Default is 'false'.
         /// </summary>
-        public bool SkipConstraintValidation { get; set; }
+        public bool SkipConstraintValidation { get; set; } // = false;
 
 
         /// <summary>
@@ -65,13 +73,13 @@ namespace Hl7.Fhir.Validation
         /// external reference. Note: References that refer to resources inside the current instance (i.e.
         /// contained resources, Bundle entries) will always be followed and validated.
         /// </summary>
-        public bool ResolveExteralReferences { get; set; }
+        public bool ResolveExteralReferences { get; set; } // = false;
 
         /// <summary>
         /// If set to true (and the XDocument specific overloads of validate() are used), the validator will run
         /// .NET XSD validation prior to running profile validation
         /// </summary>
-        public bool EnableXsdValidation { get; set; }
+        public bool EnableXsdValidation { get; set; } // = false;
 
         /// <summary>Default constructor. Creates a new <see cref="ValidationSettings"/> instance with default property values.</summary>
         public ValidationSettings() { }
@@ -91,14 +99,15 @@ namespace Hl7.Fhir.Validation
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
-            other.EnableXsdValidation = EnableXsdValidation;
+            other.ResourceResolver = ResourceResolver;
+            other.TerminologyService = TerminologyService;
             other.GenerateSnapshot = GenerateSnapshot;
             other.GenerateSnapshotSettings = GenerateSnapshotSettings?.Clone();
-            other.ResolveExteralReferences = ResolveExteralReferences;
-            other.ResourceResolver = ResourceResolver;
-            other.SkipConstraintValidation = SkipConstraintValidation;
-            other.TerminologyService = TerminologyService;
+            other.EnableXsdValidation = EnableXsdValidation;
             other.Trace = Trace;
+            other.SkipConstraintValidation = SkipConstraintValidation;
+            other.ResolveExteralReferences = ResolveExteralReferences;
+            other.EnableXsdValidation = EnableXsdValidation;
         }
 
         /// <summary>Creates a new <see cref="ValidationSettings"/> object that is a copy of the current instance.</summary>

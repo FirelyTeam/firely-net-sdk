@@ -28,6 +28,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
+        // Instance fields
+        ParserSettings _parserSettings = ParserSettings.CreateDefault();
+        FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
+        FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
+
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()
         {
@@ -55,7 +60,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
 
-            // [WMR 20181025] Clone array properties!
+            // [WMR 20181025] Clone state
             other.IncludeSubDirectories = this.IncludeSubDirectories;
             other.Masks = (string[])this.Masks.Clone();
             other.Includes = (string[])this.Includes?.Clone();
@@ -64,10 +69,11 @@ namespace Hl7.Fhir.Specification.Source
             other.MultiThreaded = this.MultiThreaded;
             other.SummaryDetailsHarvesters = (ArtifactSummaryHarvester[])this.SummaryDetailsHarvesters?.Clone();
             other.ExcludeSummariesForUnknownArtifacts = this.ExcludeSummariesForUnknownArtifacts;
-            // Note: Setting properties never return null
-            this.ParserSettings.CopyTo(other.ParserSettings);
-            this.XmlParserSettings.CopyTo(other.XmlParserSettings);
-            this.JsonParserSettings.CopyTo(other.JsonParserSettings);
+            other.ParserSettings = new ParserSettings(this.ParserSettings);
+            other.XmlParserSettings = new FhirXmlParsingSettings(this.XmlParserSettings);
+            other.JsonParserSettings = new FhirJsonParsingSettings(this.JsonParserSettings);
+            // No use cloning event handler...
+            other.ExceptionHandler = this.ExceptionHandler;
         }
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
@@ -286,19 +292,42 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public bool ExcludeSummariesForUnknownArtifacts { get; set; } // = false;
 
-        // [WMR 20181025] NEW
-        // Note: all settings properties are read-only; deliberately do NOT provide setter
-        // - Guarantees that the return value is not null; consumers cannot assign null value
-        // - Ensures that child settings are not reused by multiple owners (not thread-safe)
+        /// <summary>
+        /// Gets or sets the configuration settings that control the behavior of the PoCo parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="ParserSettings"/> instance.</value>
+        public ParserSettings ParserSettings
+        {
+            get => _parserSettings;
+            set => _parserSettings = value ?? ParserSettings.CreateDefault();
+        }
 
-        /// <summary>Gets the configuration settings that control the behavior of the PoCo parser.</summary>
-        public ParserSettings ParserSettings { get; } = ParserSettings.CreateDefault();
+        /// <summary>
+        /// Gets the configuration settings that control the behavior of the XML parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="FhirXmlParsingSettings"/> instance.</value>
+        public FhirXmlParsingSettings XmlParserSettings
+        {
+            get => _xmlParserSettings;
+            set => _xmlParserSettings = value ?? FhirXmlParsingSettings.CreateDefault();
+        }
 
-        /// <summary>Gets the configuration settings that control the behavior of the XML parser.</summary>
-        public FhirXmlParsingSettings XmlParserSettings { get; } = FhirXmlParsingSettings.CreateDefault();
 
-        /// <summary>Gets the configuration settings that control the behavior of the JSON parser.</summary>
-        public FhirJsonParsingSettings JsonParserSettings { get; } = FhirJsonParsingSettings.CreateDefault();
+        /// <summary>
+        /// Gets the configuration settings that control the behavior of the JSON parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="FhirJsonParsingSettings"/> instance.</value>
+        public FhirJsonParsingSettings JsonParserSettings
+        {
+            get => _jsonParserSettings;
+            set => _jsonParserSettings = value ?? FhirJsonParsingSettings.CreateDefault();
+        }
+
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
     }
 
