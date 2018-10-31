@@ -35,19 +35,20 @@ namespace Hl7.Fhir.Model
                 return null;
         }
     }
-    
-    //public static class ValueSetExtensionExtensions
-    //{
-    //    public const string EXT_DEPRECATED = "http://hl7.org/fhir/StructureDefinition/valueset-deprecated";
 
-    //    public static bool? GetDeprecated(this ValueSet.ConceptDefinitionComponent def)
-    //    {
-    //        return def.GetBoolExtension(EXT_DEPRECATED);
-    //    }
 
-    //    public static void SetDeprecated(this ValueSet.ConceptDefinitionComponent def, bool value)
-    //    {
-    //        def.SetBoolExtension(EXT_DEPRECATED, value);
-    //    }
-    //}
+    public static class ValueSetExtensionExtensions
+    {
+        public const string EXT_DEPRECATED = "http://hl7.org/fhir/StructureDefinition/valueset-deprecated";
+
+        public static bool? GetDeprecated(this ValueSet.ConceptDefinitionComponent def)
+        {
+            return def.GetBoolExtension(EXT_DEPRECATED);
+        }
+
+        public static void SetDeprecated(this ValueSet.ConceptDefinitionComponent def, bool value)
+        {
+            def.SetBoolExtension(EXT_DEPRECATED, value);
+        }
+    }
 }

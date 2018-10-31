@@ -58,7 +58,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// xml:id (or equivalent in JSON)
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=10, TypeRedirect = typeof(FhirString))]
+        [FhirElement("id", XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=10, TypeRedirect = typeof(Id))]
+        [IdPattern]
         [DataMember]
         public string ElementId
         {

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2011+, HL7, Inc.
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without modification, 
+  are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice, this 
+     list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
+     and/or other materials provided with the distribution.
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
+     prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+  POSSIBILITY OF SUCH DAMAGE.
+  
+
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+
+  Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
+  valid. Implementers will still need to be familiar with the content of the specification and with
+  any profiles that apply to the resources in order to make a conformant implementation.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="1.0">
+  <xs:include schemaLocation="fhir-base.xsd"/>
+  <xs:element name="DiagnosticOrder" type="DiagnosticOrder">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A record of a request for a diagnostic investigation service to be performed.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DiagnosticOrder">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A record of a request for a diagnostic investigation service to be performed.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DomainResource">
+        <xs:sequence>
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Who or what the investigation is to be performed on. This is usually a human patient, but diagnostic tests can also be requested on animals, groups of humans or animals, devices such as dialysis machines, or even locations (typically for environmental scans).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="orderer" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The practitioner that holds legal responsibility for ordering the investigation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifiers assigned to this order instance by the orderer and/or  the receiver and/or order fulfiller.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An encounter that provides additional information about the healthcare context in which this request is made.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An explanation or justification for why this diagnostic investigation is being requested.   This is often for billing purposes.  May relate to the resources referred to in supportingInformation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="supportingInformation" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Additional clinical information about the patient or specimen that may influence test interpretations.  This includes observations explicitly requested by the producer(filler) to provide context or supporting information needed to complete the order.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="specimen" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">One or more specimens that the diagnostic investigation is about.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="DiagnosticOrderStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of the order.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="priority" minOccurs="0" maxOccurs="1" type="DiagnosticOrderPriority">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The clinical priority associated with this order.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="event" type="DiagnosticOrder.Event" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A summary of the events of interest that have occurred as the request is processed; e.g. when the order was made, various processing steps (specimens received), when it was completed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="item" type="DiagnosticOrder.Item" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The specific diagnostic investigations that are requested as part of this request. Sometimes, there can only be one item per request, but in most contexts, more than one investigation can be requested.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Any other notes associated with this patient, specimen or order (e.g. &quot;patient hates needles&quot;).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DiagnosticOrder.Event">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A record of a request for a diagnostic investigation service to be performed.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="DiagnosticOrderStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status for the event.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Additional information about the event that occurred - e.g. if the status remained unchanged.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="dateTime" minOccurs="1" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date/time at which the event occurred.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="actor" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The person responsible for performing or recording the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DiagnosticOrder.Item">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A record of a request for a diagnostic investigation service to be performed.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A code that identifies a particular diagnostic investigation, or panel of investigations, that have been requested.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="specimen" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">If the item is related to a specific specimen.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Anatomical location where the request test should be performed.  This is the target site.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="DiagnosticOrderStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of this individual item within the order.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="event" type="DiagnosticOrder.Event" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A summary of the events of interest that have occurred as this item of the request is processed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="DiagnosticOrderStatus-list">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="proposed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The request has been proposed.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="draft">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The request is in preliminary form prior to being sent.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="planned">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The request has been planned.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="requested">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The request has been placed.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="received">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The receiving system has received the order, but not yet decided whether it will be performed.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="accepted">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The receiving system has accepted the order, but work has not yet commenced.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="in-progress">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The work to fulfill the order is happening.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="review">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The work is complete, and the outcomes are being reviewed for approval.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="completed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The work has been completed, the report(s) released, and no further work is planned.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancelled">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The request has been withdrawn.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="suspended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The request has been held by originating system/user request.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rejected">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The receiving system has declined to fulfill the request.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="failed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DiagnosticOrderStatus">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The status of a diagnostic order.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="DiagnosticOrderStatus-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="DiagnosticOrderPriority-list">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="routine">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The order has a normal priority .</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urgent">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The order should be urgently.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="stat">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The order is time-critical.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="asap">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The order should be acted on as soon as possible.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DiagnosticOrderPriority">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The clinical priority of a diagnostic order.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="DiagnosticOrderPriority-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

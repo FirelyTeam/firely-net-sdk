@@ -180,14 +180,14 @@ namespace Hl7.Fhir
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
             var xml = File.ReadAllText(@"TestData\issue-444-testdata.xml");
-            var cs = (new FhirXmlParser()).Parse<CapabilityStatement>(xml);
+            var cs = (new FhirXmlParser()).Parse<Conformance>(xml);
             var nav = cs.ToTypedElement();
 
             var rest = nav.Children().Where(c => c.Name == "rest").FirstOrDefault();
 
             Assert.IsNotNull(rest);
 
-            Assert.IsTrue(rest.Location.Contains("CapabilityStatement.rest[0]"));
+            Assert.IsTrue(rest.Location.Contains("Conformance.rest[0]"));
         }
 
 

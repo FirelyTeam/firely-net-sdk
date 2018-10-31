@@ -36,7 +36,7 @@
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
 
 	XmlNodeList nodeResources = docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
 
 	List<System.Xml.XmlElement> sortedResources = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeResources)
@@ -44,14 +44,14 @@
 	sortedResources.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlNodeList nodeTypes = docTypes.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
 
 	List<System.Xml.XmlElement> sortedTypes = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeTypes)
 		sortedTypes.Add(e);
 	sortedTypes.Sort((a, b)=> string.Compare(
-			(a as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null && (a as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, 
-			(b as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null && (b as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
+			(a as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null && (a as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, 
+			(b as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null && (b as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 	sortedTypes.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlElement elemConformance = docResources.DocumentElement.SelectSingleNode("/fhir:Bundle/fhir:entry/fhir:resource/fhir:Conformance", nsR) as XmlElement;
@@ -195,7 +195,6 @@ namespace Hl7.Fhir.Model
 #>
             };
         
-		// http://build.fhir.org/searchparameter-registry.html
         public static List<SearchParamDefinition> SearchParameters = 
             new List<SearchParamDefinition>
             {
@@ -216,10 +215,7 @@ namespace Hl7.Fhir.Model
 			foreach (XmlElement sp in sortedSPs)
             {
 				string name = sp.SelectSingleNode("fhir:name/@value", nsS).Value;
-				string url = sp.SelectSingleNode("fhir:url/@value", nsS).Value;
 				string description = sp.SelectSingleNode("fhir:description/@value", nsS).Value;
-				if (description.StartsWith("Multiple"))
-					description = "";
 				string searchType = sp.SelectSingleNode("fhir:type/@value", nsS).Value;
 				string outputType = "";
 				switch (searchType)
@@ -238,9 +234,9 @@ namespace Hl7.Fhir.Model
 				foreach(XmlAttribute et in sp.SelectNodes("fhir:xpath/@value", nsS))
                 {
 					xpath = et.Value;
-					string temp = et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]");
-					var split = temp.Split(new char[] {'|', ' '}, StringSplitOptions.RemoveEmptyEntries).Where(s => s.StartsWith(resourceName + "."));
-					path += "\"" + string.Join("\", \"", split) + "\", ";
+					string temp = "\"" + et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]") + "\"";
+					var split = temp.Split(new char[] {'|', ' '}, StringSplitOptions.RemoveEmptyEntries);
+					path += string.Join("\", \"", split) + ", ";
 				}
 				string target = ""; // "ResourceType.Patient, ";
 				string expression = "";
@@ -250,16 +246,19 @@ namespace Hl7.Fhir.Model
 					sc.Add("ResourceType." + et.Value);
 					target += "ResourceType." + et.Value + ", ";
 				}
-				var exprNode = sp.SelectSingleNode("fhir:expression/@value", nsR);
+				var exprNode = sp.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']/fhir:valueString/@value", nsR);
 				if (exprNode != null)
+                {
 					expression = exprNode.Value;
+					if(expression.EndsWith("[x]")) expression = expression.Substring(0, expression.Length-3);
+                }
 				if (!string.IsNullOrEmpty(target))
                 {
 					// target = ", Target = new ResourceType[] { " + target + "}";
 					target = ", Target = new ResourceType[] { " + string.Join(", ", sc) + ", }";
                 }
 				// string path = sp.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #><#= !string.IsNullOrEmpty(xpath) ? ", XPath = \"" + xpath + "\"" : "" #><#= !string.IsNullOrEmpty(expression) ? ", Expression = \"" + expression + "\"" : "" #>, Url = "<#= url #>" },
+#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #><#= !string.IsNullOrEmpty(xpath) ? ", XPath = \"" + xpath + "\"" : "" #><#= !string.IsNullOrEmpty(expression) ? ", Expression = \"" + expression + "\"" : "" #> },
 <#
             }
         }
@@ -303,7 +302,6 @@ namespace Hl7.Fhir.Model
 				case "Meta" : return "Hl7.Fhir.Model.Meta";
 				case "decimal" : return "Hl7.Fhir.Model.FhirDecimal"; 
 				case "markdown" : return "Hl7.Fhir.Model.Markdown";
-//				case "xhtml" : return "Hl7.Fhir.Model.Xhtml";
 				case "instant" : return "Hl7.Fhir.Model.Instant";
 				case "integer" : return "Hl7.Fhir.Model.Integer";
 				case "unsignedInt" : return "Hl7.Fhir.Model.UnsignedInt";

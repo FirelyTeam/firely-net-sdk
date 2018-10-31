@@ -37,14 +37,11 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// An amount of economic utility in some recognized currency
-    /// </summary>
-    [FhirType("Money")]
+    [FhirType("Quantity")]
     public partial class Money : Quantity
     {
         [NotMapped]
@@ -56,6 +53,6 @@ namespace Hl7.Fhir.Model
         }
         
         // TODO: Add code to enforce these constraints:
-        // * An amount of economic utility in some recognized currency.
+        // * There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = "urn:iso:std:iso:4217" - currency).
     }
 }

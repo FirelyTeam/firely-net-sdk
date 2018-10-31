@@ -45,7 +45,27 @@ namespace Hl7.Fhir.Model
     public partial class Questionnaire
     {
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-        public partial class ItemComponent
+        public partial class GroupComponent
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            [NotMapped]
+            internal string DebuggerDisplay
+            {
+                get
+                {
+                    StringBuilder sb = new StringBuilder();
+                    if (!string.IsNullOrEmpty(this.LinkId))
+                        sb.AppendFormat(" LinkId=\"{0}\"", LinkId);
+                    if (!string.IsNullOrEmpty(this.Title))
+                        sb.AppendFormat(" Title=\"{0}\"", Title);
+
+                    return sb.ToString();
+                }
+            }
+        }
+
+        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        public partial class QuestionComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             [NotMapped]
@@ -57,7 +77,7 @@ namespace Hl7.Fhir.Model
                     if (!string.IsNullOrEmpty(this.LinkId))
                         sb.AppendFormat(" LinkId=\"{0}\"", LinkId);
                     if (!string.IsNullOrEmpty(this.Text))
-                        sb.AppendFormat(" Title=\"{0}\"", Text);
+                        sb.AppendFormat(" Text=\"{0}\"", Text);
 
                     return sb.ToString();
                 }

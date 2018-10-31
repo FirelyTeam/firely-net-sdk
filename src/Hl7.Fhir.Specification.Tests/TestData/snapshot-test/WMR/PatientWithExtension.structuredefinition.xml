@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-02-07T14:35:04.21+01:00" />
@@ -9,10 +9,9 @@
   <date value="2017-02-07T14:31:18.7789807+01:00" />
   <description value="Example StructureDefinition for Patient Resource with an extension" />
   <kind value="resource" />
-  <type value="Patient" />
+  <constrainedType value="Patient" />
   <abstract value="false" />
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
-  <derivation value="constraint" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Patient" />
   <differential>
     <element>
       <path value="Patient" />
@@ -20,13 +19,13 @@
     <element>
       <path value="Patient.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="url" /></discriminator>
+        <discriminator value="url" />
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Patient.extension" />
-      <sliceName value="extension" />
+      <name value="extension" />
       <max value="1" />
       <!-- Override the extension definition root element property -->
       <definition value="Custom patient profile extension element" />

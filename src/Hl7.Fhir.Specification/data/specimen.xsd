@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,11 +54,6 @@
               <xs:documentation xml:lang="en">Id for specimen.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="accessionIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The identifier assigned by the lab when accessioning specimen(s). This is not necessarily the same as the specimen identifier, depending on local lab procedures.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="status" minOccurs="0" maxOccurs="1" type="SpecimenStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">The availability of the specimen.</xs:documentation>
@@ -69,9 +64,19 @@
               <xs:documentation xml:lang="en">The kind of material that forms the specimen.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="parent" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Reference to the parent (source) specimen which is used when the specimen was either derived from or a component of another specimen.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Where the specimen came from. This may be from the patient(s) or from the environment or a device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="accessionIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The identifier assigned by the lab when accessioning specimen(s). This is not necessarily the same as the specimen identifier, depending on local lab procedures.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="receivedTime" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -79,34 +84,19 @@
               <xs:documentation xml:lang="en">Time when specimen was received for processing or testing.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="parent" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Reference to the parent (source) specimen which is used when the specimen was either derived from or a component of another specimen.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="request" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Details concerning a test or procedure request that required a specimen to be collected.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="collection" type="Specimen.Collection" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Details concerning the specimen collection.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="processing" type="Specimen.Processing" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="treatment" type="Specimen.Treatment" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Details concerning processing and processing steps for the specimen.</xs:documentation>
+              <xs:documentation xml:lang="en">Details concerning treatment and processing steps for the specimen.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="container" type="Specimen.Container" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The container holding the specimen.  The recursive nature of containers; i.e. blood in tube in tray in rack is not addressed here.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">To communicate any details or issues about the specimen or during the specimen collection. (for example: broken vial, sent with patient, frozen).</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -125,6 +115,11 @@
               <xs:documentation xml:lang="en">Person who collected the specimen.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">To communicate any details or issues encountered during the specimen collection procedure.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">Time when specimen was collected from subject - the physiologically relevant time.</xs:documentation>
@@ -132,7 +127,7 @@
             <xs:element name="collectedDateTime" type="dateTime"/>
             <xs:element name="collectedPeriod" type="Period"/>
           </xs:choice>
-          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The quantity of specimen collected; for instance the volume of a blood sample, or the physical measurement of an anatomic pathology sample.</xs:documentation>
            </xs:annotation>
@@ -151,7 +146,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Specimen.Processing">
+  <xs:complexType name="Specimen.Treatment">
     <xs:annotation>
       <xs:documentation xml:lang="en">A sample to be used for analysis.</xs:documentation>
     </xs:annotation>
@@ -173,13 +168,6 @@
               <xs:documentation xml:lang="en">Material used in the processing step.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A record of the time or period when the specimen processing occurred.  For example the time of sample fixation or the period of time the sample was in formalin.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="timeDateTime" type="dateTime"/>
-            <xs:element name="timePeriod" type="Period"/>
-          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -206,12 +194,12 @@
               <xs:documentation xml:lang="en">The type of container associated with the specimen (e.g. slide, aliquot, etc.).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="capacity" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:element name="capacity" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The capacity (volume or other measure) the container may contain.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="specimenQuantity" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:element name="specimenQuantity" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The quantity of specimen in the container; may be volume, dimensions, or other appropriate measurements, depending on the specimen type.</xs:documentation>
            </xs:annotation>
@@ -228,25 +216,25 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="SpecimenStatus-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="available">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Available</xs:documentation>
+          <xs:documentation xml:lang="en">The physical specimen is present and in good condition.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="unavailable">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Unavailable</xs:documentation>
+          <xs:documentation xml:lang="en">There is no physical specimen because it is either lost, destroyed or consumed.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="unsatisfactory">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Unsatisfactory</xs:documentation>
+          <xs:documentation xml:lang="en">The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Entered-in-error</xs:documentation>
+          <xs:documentation xml:lang="en">The specimen was entered in error and therefore nullified.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

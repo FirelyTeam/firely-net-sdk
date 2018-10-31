@@ -35,11 +35,10 @@ using Hl7.Fhir.Utility;
   
 
 */
-
-#pragma warning disable 1591 // suppress XML summary warnings 
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,29 +62,23 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricOperationalStatus
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The DeviceMetric is operating and will generate DeviceObservations.
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
             [EnumLiteral("on", "http://hl7.org/fhir/metric-operational-status"), Description("On")]
             On,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The DeviceMetric is not operating.
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
             [EnumLiteral("off", "http://hl7.org/fhir/metric-operational-status"), Description("Off")]
             Off,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The DeviceMetric is operating, but will not generate any DeviceObservations.
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
             [EnumLiteral("standby", "http://hl7.org/fhir/metric-operational-status"), Description("Standby")]
             Standby,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/metric-operational-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/metric-operational-status"), Description("Entered In Error")]
-            EnteredInError,
         }
 
         /// <summary>
@@ -96,49 +89,49 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricColor
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - black.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("black", "http://hl7.org/fhir/metric-color"), Description("Color Black")]
             Black,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - red.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("red", "http://hl7.org/fhir/metric-color"), Description("Color Red")]
             Red,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - green.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("green", "http://hl7.org/fhir/metric-color"), Description("Color Green")]
             Green,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - yellow.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("yellow", "http://hl7.org/fhir/metric-color"), Description("Color Yellow")]
             Yellow,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - blue.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("blue", "http://hl7.org/fhir/metric-color"), Description("Color Blue")]
             Blue,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - magenta.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("magenta", "http://hl7.org/fhir/metric-color"), Description("Color Magenta")]
             Magenta,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - cyan.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("cyan", "http://hl7.org/fhir/metric-color"), Description("Color Cyan")]
             Cyan,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// Color for representation - white.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("white", "http://hl7.org/fhir/metric-color"), Description("Color White")]
@@ -153,25 +146,25 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricCategory
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// DeviceObservations generated for this DeviceMetric are measured.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("measurement", "http://hl7.org/fhir/metric-category"), Description("Measurement")]
             Measurement,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// DeviceObservations generated for this DeviceMetric is a setting that will influence the behavior of the Device.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("setting", "http://hl7.org/fhir/metric-category"), Description("Setting")]
             Setting,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// DeviceObservations generated for this DeviceMetric are calculated.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("calculation", "http://hl7.org/fhir/metric-category"), Description("Calculation")]
             Calculation,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The category of this DeviceMetric is unspecified.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("unspecified", "http://hl7.org/fhir/metric-category"), Description("Unspecified")]
@@ -186,25 +179,25 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricCalibrationType
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("unspecified", "http://hl7.org/fhir/metric-calibration-type"), Description("Unspecified")]
             Unspecified,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("offset", "http://hl7.org/fhir/metric-calibration-type"), Description("Offset")]
             Offset,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("gain", "http://hl7.org/fhir/metric-calibration-type"), Description("Gain")]
             Gain,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("two-point", "http://hl7.org/fhir/metric-calibration-type"), Description("Two Point")]
@@ -219,25 +212,25 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricCalibrationState
         {
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The metric has not been calibrated.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("not-calibrated", "http://hl7.org/fhir/metric-calibration-state"), Description("Not Calibrated")]
             NotCalibrated,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The metric needs to be calibrated.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("calibration-required", "http://hl7.org/fhir/metric-calibration-state"), Description("Calibration Required")]
             CalibrationRequired,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The metric has been calibrated.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("calibrated", "http://hl7.org/fhir/metric-calibration-state"), Description("Calibrated")]
             Calibrated,
             /// <summary>
-            /// MISSING DESCRIPTION
+            /// The state of calibration of this metric is unspecified.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("unspecified", "http://hl7.org/fhir/metric-calibration-state"), Description("Unspecified")]
@@ -424,23 +417,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Unique identifier of this DeviceMetric
+        /// Type of metric
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
-        {
-            get { return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private Hl7.Fhir.Model.Identifier _Identifier;
-        
-        /// <summary>
-        /// Identity of metric, for example Heart Rate or PEEP Setting
-        /// </summary>
-        [FhirElement("type", InSummary=true, Order=100)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -452,7 +431,21 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// Unit of Measure for the Metric
+        /// Unique identifier of this DeviceMetric
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
+        /// Unit of metric
         /// </summary>
         [FhirElement("unit", InSummary=true, Order=110)]
         [DataMember]
@@ -495,7 +488,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
-        /// on | off | standby | entered-in-error
+        /// on | off | standby
         /// </summary>
         [FhirElement("operationalStatus", InSummary=true, Order=140)]
         [DataMember]
@@ -508,7 +501,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> _OperationalStatusElement;
         
         /// <summary>
-        /// on | off | standby | entered-in-error
+        /// on | off | standby
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -632,8 +625,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
@@ -659,8 +652,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Unit, otherT.Unit)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
@@ -679,8 +672,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Unit, otherT.Unit)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
@@ -699,8 +692,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Identifier != null) yield return Identifier;
 				if (Type != null) yield return Type;
+				if (Identifier != null) yield return Identifier;
 				if (Unit != null) yield return Unit;
 				if (Source != null) yield return Source;
 				if (Parent != null) yield return Parent;
@@ -718,8 +711,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
                 if (Type != null) yield return new ElementValue("type", Type);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
                 if (Unit != null) yield return new ElementValue("unit", Unit);
                 if (Source != null) yield return new ElementValue("source", Source);
                 if (Parent != null) yield return new ElementValue("parent", Parent);

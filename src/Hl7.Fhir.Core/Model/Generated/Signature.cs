@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who signed
+        /// Who signed the signature
         /// </summary>
         [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
@@ -117,24 +117,10 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Who;
         
         /// <summary>
-        /// The party represented
-        /// </summary>
-        [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
-        [DataMember]
-        public Hl7.Fhir.Model.Element OnBehalfOf
-        {
-            get { return _OnBehalfOf; }
-            set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _OnBehalfOf;
-        
-        /// <summary>
         /// The technical format of the signature
         /// </summary>
-        [FhirElement("contentType", InSummary=true, Order=70)]
+        [FhirElement("contentType", InSummary=true, Order=60)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
         {
@@ -166,7 +152,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual signature content (XML DigSig. JWT, picture, etc.)
         /// </summary>
-        [FhirElement("blob", Order=80)]
+        [FhirElement("blob", InSummary=true, Order=70)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary BlobElement
         {
@@ -206,7 +193,6 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Coding>(Type.DeepCopy());
                 if(WhenElement != null) dest.WhenElement = (Hl7.Fhir.Model.Instant)WhenElement.DeepCopy();
                 if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
-                if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.Element)OnBehalfOf.DeepCopy();
                 if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                 if(BlobElement != null) dest.BlobElement = (Hl7.Fhir.Model.Base64Binary)BlobElement.DeepCopy();
                 return dest;
@@ -229,7 +215,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.Matches(Who, otherT.Who)) return false;
-            if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
             if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.Matches(BlobElement, otherT.BlobElement)) return false;
             
@@ -245,7 +230,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
-            if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
             if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.IsExactly(BlobElement, otherT.BlobElement)) return false;
             
@@ -261,7 +245,6 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Type) { if (elem != null) yield return elem; }
                 if (WhenElement != null) yield return WhenElement;
                 if (Who != null) yield return Who;
-                if (OnBehalfOf != null) yield return OnBehalfOf;
                 if (ContentTypeElement != null) yield return ContentTypeElement;
                 if (BlobElement != null) yield return BlobElement;
             }
@@ -276,7 +259,6 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
                 if (WhenElement != null) yield return new ElementValue("when", WhenElement);
                 if (Who != null) yield return new ElementValue("who", Who);
-                if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
                 if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
                 if (BlobElement != null) yield return new ElementValue("blob", BlobElement);
  

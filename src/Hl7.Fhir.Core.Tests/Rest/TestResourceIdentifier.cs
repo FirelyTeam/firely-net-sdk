@@ -107,10 +107,10 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestCoreIdentifiers()
         {
-            var patientId = ResourceIdentity.Core(FHIRAllTypes.Patient);
+            var patientId = ResourceIdentity.Core(FHIRDefinedType.Patient);
             Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/Patient", patientId.ToString());
 
-            var oidId = ResourceIdentity.Core(FHIRAllTypes.Oid);
+            var oidId = ResourceIdentity.Core(FHIRDefinedType.Oid);
             Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/oid", oidId.ToString());
 
             var observationId = ResourceIdentity.Core("Observation");

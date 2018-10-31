@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data inline, base64ed
         /// </summary>
-        [FhirElement("data", Order=50)]
+        [FhirElement("data", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary DataElement
         {

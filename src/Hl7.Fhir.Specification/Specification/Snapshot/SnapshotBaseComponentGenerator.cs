@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         void ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
         {
-            ensureBaseComponents(structureDef.Snapshot.Element, structureDef.BaseDefinition, force);
+            ensureBaseComponents(structureDef.Snapshot.Element, structureDef.Base, force);
         }
 
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             else
             {
                 // Drill down base profile
-                var baseUrl = baseNav.StructureDefinition.BaseDefinition;
+                var baseUrl = baseNav.StructureDefinition.Base;
                 if (baseUrl != null)
                 {
                     var baseDef = _resolver.FindStructureDefinition(baseUrl);
@@ -185,12 +186,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             return root == "Resource" || root == "Element";
         }
 
-        static ElementDefinition.BaseComponent createBaseComponent(FhirString maxElement, UnsignedInt minElement, FhirString pathElement)
+        static ElementDefinition.BaseComponent createBaseComponent(FhirString maxElement, Integer minElement, FhirString pathElement)
         {
             var result = new ElementDefinition.BaseComponent()
             {
                 MaxElement = (FhirString)maxElement?.DeepCopy(),
-                MinElement = (UnsignedInt)minElement?.DeepCopy(),
+                MinElement = (Integer)minElement?.DeepCopy(),
                 PathElement = (FhirString)pathElement?.DeepCopy()
             };
             result.SetCreatedBySnapshotGenerator();

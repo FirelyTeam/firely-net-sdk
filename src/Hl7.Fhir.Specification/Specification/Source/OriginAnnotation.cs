@@ -10,10 +10,12 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.ComponentModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
     [Obsolete("OriginInformation has been renamed to OriginAnnotation")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class OriginInformation
     {
         // Replaced by OriginAnnotation

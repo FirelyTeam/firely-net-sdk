@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -87,12 +87,7 @@
           </xs:element>
           <xs:element name="location" minOccurs="0" maxOccurs="unbounded" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">For resource issues, this will be a simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.  For HTTP errors, will be &quot;http.&quot; + the parameter name.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="expression" minOccurs="0" maxOccurs="unbounded" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A simple FHIRPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.</xs:documentation>
+              <xs:documentation xml:lang="en">A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -100,150 +95,150 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="IssueType-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="invalid">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Invalid Content</xs:documentation>
+          <xs:documentation xml:lang="en">Content invalid against the specification or a profile.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="structure">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Structural Issue</xs:documentation>
+          <xs:documentation xml:lang="en">A structural issue in the content such as wrong namespace, or unable to parse the content completely, or invalid json syntax.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="required">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Required element missing</xs:documentation>
+          <xs:documentation xml:lang="en">A required element is missing.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="value">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Element value invalid</xs:documentation>
+          <xs:documentation xml:lang="en">An element value is invalid.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="invariant">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Validation rule failed</xs:documentation>
+          <xs:documentation xml:lang="en">A content validation rule failed - e.g. a schematron rule.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="security">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Security Problem</xs:documentation>
+          <xs:documentation xml:lang="en">An authentication/authorization/permissions issue of some kind.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="login">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Login Required</xs:documentation>
+          <xs:documentation xml:lang="en">The client needs to initiate an authentication process.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="unknown">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Unknown User</xs:documentation>
+          <xs:documentation xml:lang="en">The user or system was not able to be authenticated (either there is no process, or the proferred token is unacceptable).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="expired">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Session Expired</xs:documentation>
+          <xs:documentation xml:lang="en">User session expired; a login may be required.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="forbidden">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Forbidden</xs:documentation>
+          <xs:documentation xml:lang="en">The user does not have the rights to perform this action.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="suppressed">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Information  Suppressed</xs:documentation>
+          <xs:documentation xml:lang="en">Some information was not or may not have been returned due to business rules, consent or privacy rules, or access permission constraints.  This information may be accessible through alternate processes.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="processing">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Processing Failure</xs:documentation>
+          <xs:documentation xml:lang="en">Processing issues. These are expected to be final e.g. there is no point resubmitting the same content unchanged.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="not-supported">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Content not supported</xs:documentation>
+          <xs:documentation xml:lang="en">The resource or profile is not supported.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="duplicate">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Duplicate</xs:documentation>
+          <xs:documentation xml:lang="en">An attempt was made to create a duplicate record.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="not-found">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Not Found</xs:documentation>
+          <xs:documentation xml:lang="en">The reference provided was not found. In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the content is not found further into the application architecture.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="too-long">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Content Too Long</xs:documentation>
+          <xs:documentation xml:lang="en">Provided content is too long (typically, this is a denial of service protection type of error).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="code-invalid">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Invalid Code</xs:documentation>
+          <xs:documentation xml:lang="en">The code or system could not be understood, or it was not valid in the context of a particular ValueSet.code.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="extension">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Unacceptable Extension</xs:documentation>
+          <xs:documentation xml:lang="en">An extension was found that was not acceptable, could not be resolved, or a modifierExtension was not recognized.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="too-costly">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Operation Too Costly</xs:documentation>
+          <xs:documentation xml:lang="en">The operation was stopped to protect server resources; e.g. a request for a value set expansion on all of SNOMED CT.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="business-rule">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Business Rule Violation</xs:documentation>
+          <xs:documentation xml:lang="en">The content/operation failed to pass some business rule, and so could not proceed.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="conflict">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Edit Version Conflict</xs:documentation>
+          <xs:documentation xml:lang="en">Content could not be accepted because of an edit conflict (i.e. version aware updates) (In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the conflict is discovered further into the application architecture.)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="incomplete">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Incomplete Results</xs:documentation>
+          <xs:documentation xml:lang="en">Not all data sources typically accessed could be reached, or responded in time, so the returned information may not be complete.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="transient">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Transient Issue</xs:documentation>
+          <xs:documentation xml:lang="en">Transient processing issues. The system receiving the error may be able to resubmit the same content once an underlying issue is resolved.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="lock-error">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Lock Error</xs:documentation>
+          <xs:documentation xml:lang="en">A resource/record locking failure (usually in an underlying database).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="no-store">
         <xs:annotation>
-          <xs:documentation xml:lang="en">No Store Available</xs:documentation>
+          <xs:documentation xml:lang="en">The persistent store is unavailable; e.g. the database is down for maintenance or similar action.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="exception">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Exception</xs:documentation>
+          <xs:documentation xml:lang="en">An unexpected internal error has occurred.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="timeout">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Timeout</xs:documentation>
+          <xs:documentation xml:lang="en">An internal timeout has occurred.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="throttled">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Throttled</xs:documentation>
+          <xs:documentation xml:lang="en">The system is not prepared to handle this request due to load management.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="informational">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Informational Note</xs:documentation>
+          <xs:documentation xml:lang="en">A message unrelated to the processing success of the completed operation (examples of the latter include things like reminders of password expiry, system maintenance times, etc.).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -260,25 +255,25 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="IssueSeverity-list">
-    <xs:restriction base="code-primitive">
+    <xs:restriction base="xs:string">
       <xs:enumeration value="fatal">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Fatal</xs:documentation>
+          <xs:documentation xml:lang="en">The issue caused the action to fail, and no further checking could be performed.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="error">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Error</xs:documentation>
+          <xs:documentation xml:lang="en">The issue is sufficiently important to cause the action to fail.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="warning">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Warning</xs:documentation>
+          <xs:documentation xml:lang="en">The issue is not important enough to cause the action to fail, but may cause it to be performed suboptimally or in a way that is not as desired.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="information">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Information</xs:documentation>
+          <xs:documentation xml:lang="en">The issue has no relation to the degree of success of the action.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

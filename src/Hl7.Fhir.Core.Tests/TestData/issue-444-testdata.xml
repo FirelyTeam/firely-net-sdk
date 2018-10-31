@@ -1,4 +1,4 @@
-﻿<CapabilityStatement xmlns="http://hl7.org/fhir">
+﻿<Conformance xmlns="http://hl7.org/fhir">
   <id value="ImoFhirTerminologyServer" />
   <name value="IMO FHIR Terminology Server" />
   <status value="draft" />
@@ -7,7 +7,7 @@
   <contact>
     <name value="Intelligent Medical Objects" />
     <telecom>
-      <system value="url" />
+      <system value="other" />
       <value value="http://www.e-imo.com" />
     </telecom>
   </contact>
@@ -51,4 +51,4 @@
       </definition>
     </operation>
   </rest>
-</CapabilityStatement>
+</Conformance>

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -64,14 +64,14 @@
               <xs:documentation xml:lang="en">Identifies the patient, practitioner, device or any other resource that is the &quot;focus&quot; of this resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="created" minOccurs="0" maxOccurs="1" type="date">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies when the resource was first created.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="author" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates who was responsible for creating the resource instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="created" minOccurs="0" maxOccurs="1" type="date">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies when the resource was first created.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

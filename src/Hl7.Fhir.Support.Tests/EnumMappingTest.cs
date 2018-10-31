@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
         [TestMethod]
         public void GetInfoFromEnumMember()
         {
-            var t = FHIRAllTypes.Markdown;
+            var t = FHIRDefinedType.Markdown;
 
             Assert.AreEqual("markdown", t.GetLiteral());
             Assert.AreEqual("markdown", t.GetDocumentation());

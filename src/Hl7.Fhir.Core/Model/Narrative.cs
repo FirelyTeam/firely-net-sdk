@@ -64,25 +64,25 @@ namespace Hl7.Fhir.Model
             /// The contents of the narrative are entirely generated from the structured data in the content.
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("generated"), Description("Generated")]
+            [EnumLiteral("generated", "http://hl7.org/fhir/narrative-status"), Description("Generated")]
             Generated,
             /// <summary>
             /// The contents of the narrative are entirely generated from the structured data in the content and some of the content is generated from extensions
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("extensions"), Description("Extensions")]
+            [EnumLiteral("extensions", "http://hl7.org/fhir/narrative-status"), Description("Extensions")]
             Extensions,
             /// <summary>
             /// The contents of the narrative contain additional information not found in the structured data
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("additional"), Description("Additional")]
+            [EnumLiteral("additional", "http://hl7.org/fhir/narrative-status"), Description("Additional")]
             Additional,
             /// <summary>
             /// The contents of the narrative are some equivalent of "No human-readable text provided in this case"
             /// (system: http://hl7.org/fhir/narrative-status)
             /// </summary>
-            [EnumLiteral("empty"), Description("Empty")]
+            [EnumLiteral("empty", "http://hl7.org/fhir/narrative-status"), Description("Empty")]
             Empty,
         }
 
@@ -183,7 +183,8 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                foreach (var item in base.Children) yield return item;
+                // Element elements
+                foreach (var p in Extension) { if (p != null) yield return p; }
                 // Narrative elements
                 if (StatusElement != null) yield return StatusElement;
                 // Div property does not implement Base...

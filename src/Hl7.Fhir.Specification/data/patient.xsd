@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -69,7 +69,7 @@
               <xs:documentation xml:lang="en">A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="AdministrativeGender">
+          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes.</xs:documentation>
            </xs:annotation>
@@ -98,7 +98,7 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates whether the patient is part of a multiple or indicates the actual birth order.</xs:documentation>
             </xs:annotation>
             <xs:element name="multipleBirthBoolean" type="boolean"/>
             <xs:element name="multipleBirthInteger" type="integer"/>
@@ -123,7 +123,7 @@
               <xs:documentation xml:lang="en">Languages which may be used to communicate with the patient about his or her health.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="generalPractitioner" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="careProvider" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Patient's nominated care provider.</xs:documentation>
            </xs:annotation>
@@ -169,7 +169,7 @@
               <xs:documentation xml:lang="en">Address for the contact person.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="AdministrativeGender">
+          <xs:element name="gender" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">Administrative Gender - the gender that the contact person is considered to have for administration and record keeping purposes.</xs:documentation>
            </xs:annotation>
@@ -257,27 +257,22 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="LinkType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="replaced-by">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="replace">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Replaced-by</xs:documentation>
+          <xs:documentation xml:lang="en">The patient resource containing this link must no longer be used. The link points forward to another patient resource that must be used in lieu of the patient resource that contains this link.</xs:documentation>
           <xs:documentation xml:lang="nl">vervangen</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="replaces">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Replaces</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="refer">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Refer</xs:documentation>
+          <xs:documentation xml:lang="en">The patient resource containing this link is in use and valid but not considered the main source of information about a patient. The link points forward to another patient resource that should be consulted to retrieve additional patient information.</xs:documentation>
           <xs:documentation xml:lang="nl">verwijzing</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="seealso">
         <xs:annotation>
-          <xs:documentation xml:lang="en">See also</xs:documentation>
+          <xs:documentation xml:lang="en">The patient resource containing this link is in use and valid, but points to another patient resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other patient resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.</xs:documentation>
           <xs:documentation xml:lang="nl">zie ook</xs:documentation>
         </xs:annotation>
       </xs:enumeration>

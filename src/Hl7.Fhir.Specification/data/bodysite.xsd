@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,14 +49,14 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
+          <xs:element name="patient" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The person to which the body site belongs.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifier for this instance of the anatomical location.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this body site is in active use.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -64,24 +64,19 @@
               <xs:documentation xml:lang="en">Named anatomical location - ideally coded where possible.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="qualifier" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="modifier" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Qualifier to refine the anatomical location.  These include qualifiers for laterality, relative location, directionality, number, and plane.</xs:documentation>
+              <xs:documentation xml:lang="en">Modifier to refine the anatomical location.  These include modifiers for laterality, relative location, directionality, number, and plane.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A summary, charactarization or explanation of the anatomic location.</xs:documentation>
+              <xs:documentation xml:lang="en">Description of anatomical location.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="image" minOccurs="0" maxOccurs="unbounded" type="Attachment">
             <xs:annotation>
               <xs:documentation xml:lang="en">Image or images used to identify a location.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="patient" minOccurs="1" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The person to which the body site belongs.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

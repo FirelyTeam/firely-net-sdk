@@ -2,9 +2,8 @@
 	<url value="http://example.com/fhir/SD/encounter-with-type-profile" />
 	<name value="encounter-with-type-profile" />
 	<status value="draft" />
-  <!-- [WMR 20170412 Fixed -->
-  <fhirVersion value="3.0.0" />
-  <mapping>
+	<fhirVersion value="1.0.2" />
+	<mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />
@@ -20,9 +19,9 @@
 		<name value="HL7 v2" />
 	</mapping>
 	<kind value="resource" />
-	<type value="Encounter" />
+	<constrainedType value="Encounter" />
 	<abstract value="false" />
-	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Encounter" />
+	<base value="http://hl7.org/fhir/StructureDefinition/Encounter" />
 	<snapshot>
 		<element>
 			<path value="Encounter" />
@@ -61,7 +60,7 @@
 				<key value="dom-3" />
 				<severity value="error" />
 				<human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource" />
-				<xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))" />
+				<xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))" />
 			</constraint>
 			<mapping>
 				<identity value="rim" />
@@ -84,7 +83,7 @@
 			<path value="Encounter.id" />
 			<short value="Logical id of this artifact" />
 			<definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." />
-			<comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
+			<comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -139,7 +138,7 @@
 			<path value="Encounter.implicitRules" />
 			<short value="A set of rules under which this content was created" />
 			<definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." />
-			<comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
+			<comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -168,7 +167,7 @@
 			<path value="Encounter.language" />
 			<short value="Language of the resource content" />
 			<definition value="The base language in which the resource is written." />
-			<comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
+			<comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -200,7 +199,7 @@
 			<path value="Encounter.text" />
 			<short value="Text summary of the resource, for human interpretation" />
 			<definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety." />
-			<comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative." />
+			<comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative." />
 			<alias value="narrative" />
 			<alias value="html" />
 			<alias value="xhtml" />
@@ -240,7 +239,7 @@
 			<path value="Encounter.contained" />
 			<short value="Contained, inline Resources" />
 			<definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope." />
-			<comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." />
+			<comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." />
 			<alias value="inline resources" />
 			<alias value="anonymous resources" />
 			<alias value="contained resources" />
@@ -267,7 +266,7 @@
 			<path value="Encounter.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -304,7 +303,7 @@
 			<path value="Encounter.modifierExtension" />
 			<short value="Extensions that cannot be ignored" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -393,7 +392,7 @@
 			<path value="Encounter.status" />
 			<short value="planned | arrived | in-progress | onleave | finished | cancelled" />
 			<definition value="planned | arrived | in-progress | onleave | finished | cancelled." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<min value="1" />
 			<max value="1" />
 			<base>
@@ -439,7 +438,7 @@
 			<path value="Encounter.statusHistory" />
 			<short value="List of past encounter statuses" />
 			<definition value="The status history permits the encounter resource to contain the status history without needing to read through the historical versions of the resource, or even have the server store them." />
-			<comment value="The current status is always found in the current version of the resource, not the status history." />
+			<comments value="The current status is always found in the current version of the resource, not the status history." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -471,7 +470,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -502,7 +501,7 @@
 			<path value="Encounter.statusHistory.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -539,7 +538,7 @@
 			<path value="Encounter.statusHistory.modifierExtension" />
 			<short value="Extensions that cannot be ignored" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<alias value="modifiers" />
@@ -578,7 +577,7 @@
 			<path value="Encounter.statusHistory.status" />
 			<short value="planned | arrived | in-progress | onleave | finished | cancelled" />
 			<definition value="planned | arrived | in-progress | onleave | finished | cancelled." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<min value="1" />
 			<max value="1" />
 			<base>
@@ -610,7 +609,7 @@
 			<path value="Encounter.statusHistory.period" />
 			<short value="The time that the episode was in the specified status" />
 			<definition value="The time that the episode was in the specified status." />
-			<comment value="This is not a duration - that's a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
+			<comments value="This is not a duration - that&#39;s a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
 			<min value="1" />
 			<max value="1" />
 			<base>
@@ -652,7 +651,7 @@
 			<path value="Encounter.class" />
 			<short value="inpatient | outpatient | ambulatory | emergency +" />
 			<definition value="inpatient | outpatient | ambulatory | emergency +." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -697,7 +696,7 @@
 			<path value="Encounter.type" />
 			<short value="Specific type of encounter" />
 			<definition value="Specific type of encounter (e.g. e-mail consultation, surgical day-care, skilled nursing, rehabilitation)." />
-			<comment value="Since there are many ways to further classify encounters, this element is 0..*." />
+			<comments value="Since there are many ways to further classify encounters, this element is 0..*." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -756,7 +755,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -787,7 +786,7 @@
 			<path value="Encounter.type.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -823,16 +822,12 @@
 		<element>
 			<path value="Encounter.type.coding" />
 			<slicing>
-        <!-- [WMR 20170412] Fixed -->
-        <discriminator>
-          <type value="value" />
-          <path value="system" />
-        </discriminator>
+				<discriminator value="system" />
 				<rules value="open" />
 			</slicing>
 			<short value="Code defined by a terminology system" />
 			<definition value="A reference to a code defined by a terminology system." />
-			<comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
+			<comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
 			<requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings." />
 			<min value="0" />
 			<max value="*" />
@@ -883,10 +878,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding" />
-			<sliceName value="LOINC" />
+			<name value="LOINC" />
 			<short value="Code defined by a terminology system" />
 			<definition value="A reference to a code defined by a terminology system." />
-			<comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
+			<comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
 			<requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings." />
 			<min value="0" />
 			<max value="*" />
@@ -938,10 +933,10 @@
 		<element>
 			<path value="Encounter.type.coding.id" />
 			<representation value="xmlAttr" />
-			<sliceName value="LOINC.id" />
+			<name value="LOINC.id" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -970,10 +965,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.extension" />
-			<sliceName value="LOINC.extension" />
+			<name value="LOINC.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -1008,10 +1003,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.system" />
-			<sliceName value="LOINC.system" />
+			<name value="LOINC.system" />
 			<short value="Identity of the terminology system" />
 			<definition value="The identification of the code system that defines the meaning of the symbol in the code." />
-			<comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+			<comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
 			<requirements value="Need to be unambiguous about the source of the definition of the symbol." />
 			<min value="1" />
 			<max value="1" />
@@ -1051,10 +1046,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.version" />
-			<sliceName value="LOINC.version" />
+			<name value="LOINC.version" />
 			<short value="Version of the system - if relevant" />
 			<definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged." />
-			<comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
+			<comments value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -1092,10 +1087,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.code" />
-			<sliceName value="LOINC.code" />
+			<name value="LOINC.code" />
 			<short value="Symbol in syntax defined by the system" />
 			<definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to refer to a particular code in the system." />
 			<min value="0" />
 			<max value="1" />
@@ -1134,10 +1129,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.display" />
-			<sliceName value="LOINC.display" />
+			<name value="LOINC.display" />
 			<short value="Representation defined by the system" />
 			<definition value="A representation of the meaning of the code in the system, following the rules of the system." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system." />
 			<min value="0" />
 			<max value="1" />
@@ -1176,10 +1171,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.userSelected" />
-			<sliceName value="LOINC.userSelected" />
+			<name value="LOINC.userSelected" />
 			<short value="If this coding was chosen directly by the user" />
 			<definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)." />
-			<comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly 'directly chosen' implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
+			<comments value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
 			<requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing." />
 			<min value="0" />
 			<max value="1" />
@@ -1218,10 +1213,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding" />
-			<sliceName value="SNOMED" />
+			<name value="SNOMED" />
 			<short value="Code defined by a terminology system" />
 			<definition value="A reference to a code defined by a terminology system." />
-			<comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
+			<comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
 			<requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings." />
 			<min value="0" />
 			<max value="*" />
@@ -1273,10 +1268,10 @@
 		<element>
 			<path value="Encounter.type.coding.id" />
 			<representation value="xmlAttr" />
-			<sliceName value="SNOMED.id" />
+			<name value="SNOMED.id" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -1305,10 +1300,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.extension" />
-			<sliceName value="SNOMED.extension" />
+			<name value="SNOMED.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -1343,10 +1338,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.system" />
-			<sliceName value="SNOMED.system" />
+			<name value="SNOMED.system" />
 			<short value="Identity of the terminology system" />
 			<definition value="The identification of the code system that defines the meaning of the symbol in the code." />
-			<comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+			<comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
 			<requirements value="Need to be unambiguous about the source of the definition of the symbol." />
 			<min value="1" />
 			<max value="1" />
@@ -1386,10 +1381,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.version" />
-			<sliceName value="SNOMED.version" />
+			<name value="SNOMED.version" />
 			<short value="Version of the system - if relevant" />
 			<definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged." />
-			<comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
+			<comments value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -1427,10 +1422,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.code" />
-			<sliceName value="SNOMED.code" />
+			<name value="SNOMED.code" />
 			<short value="Symbol in syntax defined by the system" />
 			<definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to refer to a particular code in the system." />
 			<min value="0" />
 			<max value="1" />
@@ -1469,10 +1464,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.display" />
-			<sliceName value="SNOMED.display" />
+			<name value="SNOMED.display" />
 			<short value="Representation defined by the system" />
 			<definition value="A representation of the meaning of the code in the system, following the rules of the system." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system." />
 			<min value="0" />
 			<max value="1" />
@@ -1511,10 +1506,10 @@
 		</element>
 		<element>
 			<path value="Encounter.type.coding.userSelected" />
-			<sliceName value="SNOMED.userSelected" />
+			<name value="SNOMED.userSelected" />
 			<short value="If this coding was chosen directly by the user" />
 			<definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)." />
-			<comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly 'directly chosen' implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
+			<comments value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
 			<requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing." />
 			<min value="0" />
 			<max value="1" />
@@ -1555,7 +1550,7 @@
 			<path value="Encounter.type.text" />
 			<short value="Plain text representation of the concept" />
 			<definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user." />
-			<comment value="Very often the text is the same as a displayName of one of the codings." />
+			<comments value="Very often the text is the same as a displayName of one of the codings." />
 			<requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source." />
 			<min value="0" />
 			<max value="1" />
@@ -1596,7 +1591,7 @@
 			<path value="Encounter.priority" />
 			<short value="Indicates the urgency of the encounter" />
 			<definition value="Indicates the urgency of the encounter." />
-			<comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
+			<comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -1655,7 +1650,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -1686,7 +1681,7 @@
 			<path value="Encounter.priority.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -1722,16 +1717,12 @@
 		<element>
 			<path value="Encounter.priority.coding" />
 			<slicing>
-        <!-- [WMR 20170412] Fixed -->
-        <discriminator>
-          <type value="value" />
-          <path value="system" />
-        </discriminator>
+				<discriminator value="system" />
 				<rules value="open" />
 			</slicing>
 			<short value="Code defined by a terminology system" />
 			<definition value="A reference to a code defined by a terminology system." />
-			<comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
+			<comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
 			<requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings." />
 			<min value="0" />
 			<max value="*" />
@@ -1782,10 +1773,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding" />
-			<sliceName value="LOINC" />
+			<name value="LOINC" />
 			<short value="Code defined by a terminology system" />
 			<definition value="A reference to a code defined by a terminology system." />
-			<comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
+			<comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
 			<requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings." />
 			<min value="0" />
 			<max value="*" />
@@ -1837,10 +1828,10 @@
 		<element>
 			<path value="Encounter.priority.coding.id" />
 			<representation value="xmlAttr" />
-			<sliceName value="LOINC.id" />
+			<name value="LOINC.id" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -1869,10 +1860,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.extension" />
-			<sliceName value="LOINC.extension" />
+			<name value="LOINC.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -1907,10 +1898,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.system" />
-			<sliceName value="LOINC.system" />
+			<name value="LOINC.system" />
 			<short value="Identity of the terminology system" />
 			<definition value="The identification of the code system that defines the meaning of the symbol in the code." />
-			<comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+			<comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
 			<requirements value="Need to be unambiguous about the source of the definition of the symbol." />
 			<min value="1" />
 			<max value="1" />
@@ -1950,10 +1941,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.version" />
-			<sliceName value="LOINC.version" />
+			<name value="LOINC.version" />
 			<short value="Version of the system - if relevant" />
 			<definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged." />
-			<comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
+			<comments value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -1991,10 +1982,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.code" />
-			<sliceName value="LOINC.code" />
+			<name value="LOINC.code" />
 			<short value="Symbol in syntax defined by the system" />
 			<definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to refer to a particular code in the system." />
 			<min value="0" />
 			<max value="1" />
@@ -2033,10 +2024,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.display" />
-			<sliceName value="LOINC.display" />
+			<name value="LOINC.display" />
 			<short value="Representation defined by the system" />
 			<definition value="A representation of the meaning of the code in the system, following the rules of the system." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system." />
 			<min value="0" />
 			<max value="1" />
@@ -2075,10 +2066,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.userSelected" />
-			<sliceName value="LOINC.userSelected" />
+			<name value="LOINC.userSelected" />
 			<short value="If this coding was chosen directly by the user" />
 			<definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)." />
-			<comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly 'directly chosen' implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
+			<comments value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
 			<requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing." />
 			<min value="0" />
 			<max value="1" />
@@ -2117,10 +2108,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding" />
-			<sliceName value="SNOMED" />
+			<name value="SNOMED" />
 			<short value="Code defined by a terminology system" />
 			<definition value="A reference to a code defined by a terminology system." />
-			<comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
+			<comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." />
 			<requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings." />
 			<min value="0" />
 			<max value="*" />
@@ -2172,10 +2163,10 @@
 		<element>
 			<path value="Encounter.priority.coding.id" />
 			<representation value="xmlAttr" />
-			<sliceName value="SNOMED.id" />
+			<name value="SNOMED.id" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -2204,10 +2195,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.extension" />
-			<sliceName value="SNOMED.extension" />
+			<name value="SNOMED.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -2242,10 +2233,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.system" />
-			<sliceName value="SNOMED.system" />
+			<name value="SNOMED.system" />
 			<short value="Identity of the terminology system" />
 			<definition value="The identification of the code system that defines the meaning of the symbol in the code." />
-			<comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+			<comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
 			<requirements value="Need to be unambiguous about the source of the definition of the symbol." />
 			<min value="1" />
 			<max value="1" />
@@ -2285,10 +2276,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.version" />
-			<sliceName value="SNOMED.version" />
+			<name value="SNOMED.version" />
 			<short value="Version of the system - if relevant" />
 			<definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged." />
-			<comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
+			<comments value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -2326,10 +2317,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.code" />
-			<sliceName value="SNOMED.code" />
+			<name value="SNOMED.code" />
 			<short value="Symbol in syntax defined by the system" />
 			<definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to refer to a particular code in the system." />
 			<min value="0" />
 			<max value="1" />
@@ -2368,10 +2359,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.display" />
-			<sliceName value="SNOMED.display" />
+			<name value="SNOMED.display" />
 			<short value="Representation defined by the system" />
 			<definition value="A representation of the meaning of the code in the system, following the rules of the system." />
-			<comment value="Note that FHIR strings may not exceed 1MB in size" />
+			<comments value="Note that FHIR strings may not exceed 1MB in size" />
 			<requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system." />
 			<min value="0" />
 			<max value="1" />
@@ -2410,10 +2401,10 @@
 		</element>
 		<element>
 			<path value="Encounter.priority.coding.userSelected" />
-			<sliceName value="SNOMED.userSelected" />
+			<name value="SNOMED.userSelected" />
 			<short value="If this coding was chosen directly by the user" />
 			<definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)." />
-			<comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly 'directly chosen' implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
+			<comments value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely." />
 			<requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing." />
 			<min value="0" />
 			<max value="1" />
@@ -2454,7 +2445,7 @@
 			<path value="Encounter.priority.text" />
 			<short value="Plain text representation of the concept" />
 			<definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user." />
-			<comment value="Very often the text is the same as a displayName of one of the codings." />
+			<comments value="Very often the text is the same as a displayName of one of the codings." />
 			<requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source." />
 			<min value="0" />
 			<max value="1" />
@@ -2495,7 +2486,7 @@
 			<path value="Encounter.patient" />
 			<short value="The patient present at the encounter" />
 			<definition value="The patient present at the encounter." />
-			<comment value="While the encounter is always about the patient, the patient may not actually be known in all contexts of use." />
+			<comments value="While the encounter is always about the patient, the patient may not actually be known in all contexts of use." />
 			<alias value="patient" />
 			<min value="0" />
 			<max value="1" />
@@ -2513,7 +2504,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -2563,7 +2554,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -2609,7 +2600,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -2671,7 +2662,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -2702,7 +2693,7 @@
 			<path value="Encounter.participant.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -2739,7 +2730,7 @@
 			<path value="Encounter.participant.modifierExtension" />
 			<short value="Extensions that cannot be ignored" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<alias value="modifiers" />
@@ -2778,7 +2769,7 @@
 			<path value="Encounter.participant.type" />
 			<short value="Role of participant in encounter" />
 			<definition value="Role of participant in encounter." />
-			<comment value="The participant type indicates how an individual partitipates in an encounter. It includes non-practitioner participants, and for practitioners this is to describe the action type in the context of this encounter (e.g. Admitting Dr, Attending Dr, Translator, Consulting Dr). This is different to the practitioner roles which are functional roles, derived from terms of employment, education, licensing, etc." />
+			<comments value="The participant type indicates how an individual partitipates in an encounter. It includes non-practitioner participants, and for practitioners this is to describe the action type in the context of this encounter (e.g. Admitting Dr, Attending Dr, Translator, Consulting Dr). This is different to the practitioner roles which are functional roles, derived from terms of employment, education, licensing, etc." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -2831,7 +2822,7 @@
 			<path value="Encounter.participant.period" />
 			<short value="Period of time during the encounter participant was present" />
 			<definition value="The period of time that the specified participant was present during the encounter. These can overlap or be sub-sets of the overall encounters period." />
-			<comment value="This is not a duration - that's a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
+			<comments value="This is not a duration - that&#39;s a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -2897,7 +2888,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -2947,7 +2938,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -2977,7 +2968,7 @@
 			<path value="Encounter.period" />
 			<short value="The start and end time of the encounter" />
 			<definition value="The start and end time of the encounter." />
-			<comment value="If not (yet) known, the end of the Period may be omitted." />
+			<comments value="If not (yet) known, the end of the Period may be omitted." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3031,7 +3022,7 @@
 			<path value="Encounter.length" />
 			<short value="Quantity of time the encounter lasted (less time absent)" />
 			<definition value="Quantity of time the encounter lasted. This excludes the time during leaves of absence." />
-			<comment value="May differ from the time the Encounter.period lasted because of leave of absence." />
+			<comments value="May differ from the time the Encounter.period lasted because of leave of absence." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3081,7 +3072,7 @@
 			<path value="Encounter.reason" />
 			<short value="Reason the encounter takes place (code)" />
 			<definition value="Reason the encounter takes place, expressed as a code. For admissions, this can be used for a coded admission diagnosis." />
-			<comment value="For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis)." />
+			<comments value="For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis)." />
 			<alias value="Indication" />
 			<alias value="Admission diagnosis" />
 			<min value="0" />
@@ -3140,7 +3131,7 @@
 			<path value="Encounter.indication" />
 			<short value="Reason the encounter takes place (resource)" />
 			<definition value="Reason the encounter takes place, as specified using information from another resource. For admissions, this is the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure." />
-			<comment value="For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis)." />
+			<comments value="For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis)." />
 			<alias value="Admission diagnosis" />
 			<min value="0" />
 			<max value="*" />
@@ -3162,7 +3153,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -3196,7 +3187,8 @@
 			<path value="Encounter.hospitalization" />
 			<short value="Details about the admission to a healthcare service" />
 			<definition value="Details about the admission to a healthcare service." />
-			<comment value="An Encounter may cover more than just the inpatient stay. Contexts such as outpatients, community clinics, and aged care facilities are also included.&#xD;&#xA;      The duration recorded in the period of this encounter covers the entire scope of this hospitalization record." />
+			<comments value="An Encounter may cover more than just the inpatient stay. Contexts such as outpatients, community clinics, and aged care facilities are also included.
+      The duration recorded in the period of this encounter covers the entire scope of this hospitalization record." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3232,7 +3224,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3263,7 +3255,7 @@
 			<path value="Encounter.hospitalization.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -3300,7 +3292,7 @@
 			<path value="Encounter.hospitalization.modifierExtension" />
 			<short value="Extensions that cannot be ignored" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<alias value="modifiers" />
@@ -3402,7 +3394,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -3428,7 +3420,7 @@
 			<path value="Encounter.hospitalization.admitSource" />
 			<short value="From where patient was admitted (physician referral, transfer)" />
 			<definition value="From where patient was admitted (physician referral, transfer)." />
-			<comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
+			<comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3497,7 +3489,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -3519,7 +3511,7 @@
 			<path value="Encounter.hospitalization.reAdmission" />
 			<short value="The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission" />
 			<definition value="Whether this hospitalization is a readmission and why if known." />
-			<comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
+			<comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3567,8 +3559,8 @@
 			<path value="Encounter.hospitalization.dietPreference" />
 			<short value="Diet preferences reported by the patient" />
 			<definition value="Diet preferences reported by the patient." />
-			<comment value="For example a patient may request both a dairy-free and nut-free diet preference (not mutually exclusive)." />
-			<requirements value="Used to track patient's diet restrictions and/or preference. For a complete description of the nutrition needs of a patient during their stay, one should use the nutritionOrder resource which links to Encounter." />
+			<comments value="For example a patient may request both a dairy-free and nut-free diet preference (not mutually exclusive)." />
+			<requirements value="Used to track patient&#39;s diet restrictions and/or preference. For a complete description of the nutrition needs of a patient during their stay, one should use the nutritionOrder resource which links to Encounter." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -3621,7 +3613,7 @@
 			<path value="Encounter.hospitalization.specialCourtesy" />
 			<short value="Special courtesies (VIP, board member)" />
 			<definition value="Special courtesies (VIP, board member)." />
-			<comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
+			<comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -3674,7 +3666,7 @@
 			<path value="Encounter.hospitalization.specialArrangement" />
 			<short value="Wheelchair, translator, stretcher, etc." />
 			<definition value="Wheelchair, translator, stretcher, etc." />
-			<comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
+			<comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -3743,7 +3735,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -3773,7 +3765,7 @@
 			<path value="Encounter.hospitalization.dischargeDisposition" />
 			<short value="Category or kind of location after discharge" />
 			<definition value="Category or kind of location after discharge." />
-			<comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
+			<comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3842,7 +3834,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -3868,7 +3860,7 @@
 			<path value="Encounter.location" />
 			<short value="List of locations where the patient has been" />
 			<definition value="List of locations where  the patient has been during this encounter." />
-			<comment value="Virtual encounters can be recorded in the Encounter by specifying a location reference to a location of type &quot;kind&quot; such as &quot;client's home&quot; and an encounter.class = &quot;virtual&quot;." />
+			<comments value="Virtual encounters can be recorded in the Encounter by specifying a location reference to a location of type &quot;kind&quot; such as &quot;client&#39;s home&quot; and an encounter.class = &quot;virtual&quot;." />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -3904,7 +3896,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comment value="RFC 4122" />
+			<comments value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -3935,7 +3927,7 @@
 			<path value="Encounter.location.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -3972,7 +3964,7 @@
 			<path value="Encounter.location.modifierExtension" />
 			<short value="Extensions that cannot be ignored" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<alias value="modifiers" />
@@ -4027,7 +4019,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -4060,8 +4052,8 @@
 		<element>
 			<path value="Encounter.location.status" />
 			<short value="planned | active | reserved | completed" />
-			<definition value="The status of the participants' presence at the specified location during the period specified. If the participant is is no longer at the location, then the period will have an end date/time." />
-			<comment value="When the patient is no longer active at a location, then the period end date is entered, and the status may be changed to completed." />
+			<definition value="The status of the participants&#39; presence at the specified location during the period specified. If the participant is is no longer at the location, then the period will have an end date/time." />
+			<comments value="When the patient is no longer active at a location, then the period end date is entered, and the status may be changed to completed." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -4093,7 +4085,7 @@
 			<path value="Encounter.location.period" />
 			<short value="Time period during which the patient was present at the location" />
 			<definition value="Time period during which the patient was present at the location." />
-			<comment value="This is not a duration - that's a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
+			<comments value="This is not a duration - that&#39;s a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -4138,7 +4130,7 @@
 		<element>
 			<path value="Encounter.serviceProvider" />
 			<short value="The custodian organization of this Encounter record" />
-			<definition value="An organization that is in charge of maintaining the information of this Encounter (e.g. who maintains the report or the master service catalog item, etc.). This MAY be the same as the organization on the Patient record, however it could be different. This MAY not be not the Service Delivery Location's Organization." />
+			<definition value="An organization that is in charge of maintaining the information of this Encounter (e.g. who maintains the report or the master service catalog item, etc.). This MAY be the same as the organization on the Patient record, however it could be different. This MAY not be not the Service Delivery Location&#39;s Organization." />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -4155,7 +4147,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />
@@ -4166,7 +4158,7 @@
 			<isSummary value="true" />
 			<mapping>
 				<identity value="v2" />
-				<map value="PV1-10 / PL.6  &amp; PL.1  (note: HL7 v2 definition is &quot;the treatment or type of surgery that the patient is scheduled to receive&quot;; seems slightly out of alignment with the concept name 'hospital service'. Would not trust that implementations apply this semantic by default)" />
+				<map value="PV1-10 / PL.6  &amp; PL.1  (note: HL7 v2 definition is &quot;the treatment or type of surgery that the patient is scheduled to receive&quot;; seems slightly out of alignment with the concept name &#39;hospital service&#39;. Would not trust that implementations apply this semantic by default)" />
 			</mapping>
 			<mapping>
 				<identity value="rim" />
@@ -4201,7 +4193,7 @@
 				<key value="ref-1" />
 				<severity value="error" />
 				<human value="SHALL have a local reference if the resource is provided inline" />
-				<xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+				<xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
 			</constraint>
 			<constraint>
 				<key value="ele-1" />

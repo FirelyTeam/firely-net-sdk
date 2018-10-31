@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AllergyIntolerance xmlns="http://hl7.org/fhir">
+    <meta>
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/bgz-AllergyIntolerance"/>
+    </meta>
+    <onset value="1996-04-08"/>
+    <patient>
+        <reference value="http://example.com/fhir/Patient/example"></reference>
+    </patient>
+    <substance>
+        <coding>
+            <system value="http://snomed.info/sct"></system>
+            <code value="372687004"/>
+            <display value="Amoxicillin (substance)"/>            
+        </coding>
+    </substance>
+    <status value="confirmed"/>
+    <criticality value="CRITH">
+        <extension url="http://nictiz.nl/fhir/StructureDefinition/code-specification">
+            <valueCodeableConcept>
+                <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="399166001"/>
+                    <display value="Fatal"/>
+                </coding>
+            </valueCodeableConcept>
+        </extension>
+    </criticality>
+    <category value="medication"/>
+    <lastOccurence value="1996-04-08"/>
+    <note>
+        <text value="Highly allergic to Amoxyvillin, please use other type of antibiotics"/>
+    </note>
+    <reaction>
+        <extension url="http://nictiz.nl/fhir/StructureDefinition/bgz-AdverseReactionDuration">
+            <valueQuantity>
+                <value value="5"/>
+                <unit value="min"/>
+                <system value="http://unitsofmeasure.org"/>
+                <code value="min"/>
+            </valueQuantity>        
+        </extension>
+        <substance>
+            <coding>
+                <system value="http://snomed.info/sct"></system>
+                <code value="372687004"/>
+                <display value="Amoxicillin (substance)"/>            
+            </coding>
+        </substance>
+        <certainty value="likely"/>
+        <manifestation>
+            <coding>
+                <system value="http://snomed.info/sct"/>
+                <code value="267036007"/>
+                <display value="Dyspnea"/>
+            </coding>
+        </manifestation>
+        <description value="Right after consuming Amoxycillin, the patient had difficulty breathing for 5 minutes, stopped the Amoxycillin cure immediatly "/>
+        <onset value="1996-04-08"/>
+        <severity value="severe"/>
+        <exposureRoute>
+            <coding>
+                <system value="http://snomed.info/sct"/>
+                <code value="26643006"/>
+                <display value="Oral route (qualifier value)"/>
+            </coding>
+        </exposureRoute>      
+    </reaction>
+</AllergyIntolerance>

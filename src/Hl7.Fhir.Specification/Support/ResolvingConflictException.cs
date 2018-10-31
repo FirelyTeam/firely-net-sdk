@@ -40,11 +40,11 @@ namespace Hl7.Fhir.Support
         public static ResolvingConflictException NamingSystemUniqueIdConflict(IEnumerable<ResolvingConflict> conflicts)
             => new ResolvingConflictException(NamingSystemUniqueIdConflictErrorMessage, conflicts);
 
-        readonly static string CodeSystemConflictErrorMessage = "Found multiple conflicting CodeSystem resources associated with the same ValueSet url.";
+        readonly static string ValueSetSystemConflictErrorMessage = "Found multiple conflicting ValueSet resources with the same unique system identifier.";
 
-        /// <summary>Generate a new <see cref="ResolvingConflictException"/> to report multiple conflicting CodeSystem resources with the same ValueSet url.</summary>
-        public static ResolvingConflictException CodeSystemConflict(IEnumerable<ResolvingConflict> conflicts)
-            => new ResolvingConflictException(CodeSystemConflictErrorMessage, conflicts);
+        /// <summary>Generate a new <see cref="ResolvingConflictException"/> to report multiple conflicting ValueSet resources with the same unique system identifier.</summary>
+        public static ResolvingConflictException ValueSetSystemConflict(IEnumerable<ResolvingConflict> conflicts)
+            => new ResolvingConflictException(ValueSetSystemConflictErrorMessage, conflicts);
 
         readonly static string ConceptMapUrlConflictErrorMessage = "Found multiple conflicting ConceptMap resources with the same source or target url.";
 
