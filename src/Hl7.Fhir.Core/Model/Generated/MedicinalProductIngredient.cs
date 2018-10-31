@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SpecifiedSubstanceComponent")]
         [DataContract]
-        public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SpecifiedSubstanceComponent"; } }
@@ -187,10 +187,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Group != null) yield return new ElementValue("group", false, Group);
-                    if (Confidentiality != null) yield return new ElementValue("confidentiality", false, Confidentiality);
-                    foreach (var elem in Strength) { if (elem != null) yield return new ElementValue("strength", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Group != null) yield return new ElementValue("group", Group);
+                    if (Confidentiality != null) yield return new ElementValue("confidentiality", Confidentiality);
+                    foreach (var elem in Strength) { if (elem != null) yield return new ElementValue("strength", elem); }
                 }
             }
 
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StrengthComponent")]
         [DataContract]
-        public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StrengthComponent"; } }
@@ -400,13 +400,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Presentation != null) yield return new ElementValue("presentation", false, Presentation);
-                    if (PresentationLowLimit != null) yield return new ElementValue("presentationLowLimit", false, PresentationLowLimit);
-                    if (Concentration != null) yield return new ElementValue("concentration", false, Concentration);
-                    if (ConcentrationLowLimit != null) yield return new ElementValue("concentrationLowLimit", false, ConcentrationLowLimit);
-                    if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", false, MeasurementPointElement);
-                    foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", true, elem); }
-                    foreach (var elem in ReferenceStrength) { if (elem != null) yield return new ElementValue("referenceStrength", true, elem); }
+                    if (Presentation != null) yield return new ElementValue("presentation", Presentation);
+                    if (PresentationLowLimit != null) yield return new ElementValue("presentationLowLimit", PresentationLowLimit);
+                    if (Concentration != null) yield return new ElementValue("concentration", Concentration);
+                    if (ConcentrationLowLimit != null) yield return new ElementValue("concentrationLowLimit", ConcentrationLowLimit);
+                    if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", MeasurementPointElement);
+                    foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
+                    foreach (var elem in ReferenceStrength) { if (elem != null) yield return new ElementValue("referenceStrength", elem); }
                 }
             }
 
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ReferenceStrengthComponent")]
         [DataContract]
-        public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceStrengthComponent"; } }
@@ -564,10 +564,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return new ElementValue("substance", false, Substance);
-                    if (Strength != null) yield return new ElementValue("strength", false, Strength);
-                    if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", false, MeasurementPointElement);
-                    foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", true, elem); }
+                    if (Substance != null) yield return new ElementValue("substance", Substance);
+                    if (Strength != null) yield return new ElementValue("strength", Strength);
+                    if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", MeasurementPointElement);
+                    foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
                 }
             }
 
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubstanceComponent")]
         [DataContract]
-        public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SubstanceComponent"; } }
@@ -672,8 +672,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    foreach (var elem in Strength) { if (elem != null) yield return new ElementValue("strength", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    foreach (var elem in Strength) { if (elem != null) yield return new ElementValue("strength", elem); }
                 }
             }
 
@@ -867,12 +867,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (Role != null) yield return new ElementValue("role", false, Role);
-                if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", false, AllergenicIndicatorElement);
-                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", true, elem); }
-                foreach (var elem in SpecifiedSubstance) { if (elem != null) yield return new ElementValue("specifiedSubstance", true, elem); }
-                if (Substance != null) yield return new ElementValue("substance", false, Substance);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (Role != null) yield return new ElementValue("role", Role);
+                if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", AllergenicIndicatorElement);
+                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+                foreach (var elem in SpecifiedSubstance) { if (elem != null) yield return new ElementValue("specifiedSubstance", elem); }
+                if (Substance != null) yield return new ElementValue("substance", Substance);
             }
         }
 

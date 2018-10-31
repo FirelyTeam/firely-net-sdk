@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MonomerSetComponent")]
         [DataContract]
-        public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MonomerSetComponent"; } }
@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RatioType != null) yield return new ElementValue("ratioType", false, RatioType);
-                    foreach (var elem in StartingMaterial) { if (elem != null) yield return new ElementValue("startingMaterial", true, elem); }
+                    if (RatioType != null) yield return new ElementValue("ratioType", RatioType);
+                    foreach (var elem in StartingMaterial) { if (elem != null) yield return new ElementValue("startingMaterial", elem); }
                 }
             }
 
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StartingMaterialComponent")]
         [DataContract]
-        public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StartingMaterialComponent"; } }
@@ -308,10 +308,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Material != null) yield return new ElementValue("material", false, Material);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (IsDefiningElement != null) yield return new ElementValue("isDefining", false, IsDefiningElement);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (Material != null) yield return new ElementValue("material", Material);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (IsDefiningElement != null) yield return new ElementValue("isDefining", IsDefiningElement);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepeatComponent")]
         [DataContract]
-        public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RepeatComponent"; } }
@@ -487,10 +487,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NumberOfUnitsElement != null) yield return new ElementValue("numberOfUnits", false, NumberOfUnitsElement);
-                    if (AverageMolecularFormulaElement != null) yield return new ElementValue("averageMolecularFormula", false, AverageMolecularFormulaElement);
-                    if (RepeatUnitAmountType != null) yield return new ElementValue("repeatUnitAmountType", false, RepeatUnitAmountType);
-                    foreach (var elem in RepeatUnit) { if (elem != null) yield return new ElementValue("repeatUnit", true, elem); }
+                    if (NumberOfUnitsElement != null) yield return new ElementValue("numberOfUnits", NumberOfUnitsElement);
+                    if (AverageMolecularFormulaElement != null) yield return new ElementValue("averageMolecularFormula", AverageMolecularFormulaElement);
+                    if (RepeatUnitAmountType != null) yield return new ElementValue("repeatUnitAmountType", RepeatUnitAmountType);
+                    foreach (var elem in RepeatUnit) { if (elem != null) yield return new ElementValue("repeatUnit", elem); }
                 }
             }
 
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepeatUnitComponent")]
         [DataContract]
-        public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RepeatUnitComponent"; } }
@@ -665,11 +665,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (OrientationOfPolymerisation != null) yield return new ElementValue("orientationOfPolymerisation", false, OrientationOfPolymerisation);
-                    if (RepeatUnitElement != null) yield return new ElementValue("repeatUnit", false, RepeatUnitElement);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
-                    foreach (var elem in DegreeOfPolymerisation) { if (elem != null) yield return new ElementValue("degreeOfPolymerisation", true, elem); }
-                    foreach (var elem in StructuralRepresentation) { if (elem != null) yield return new ElementValue("structuralRepresentation", true, elem); }
+                    if (OrientationOfPolymerisation != null) yield return new ElementValue("orientationOfPolymerisation", OrientationOfPolymerisation);
+                    if (RepeatUnitElement != null) yield return new ElementValue("repeatUnit", RepeatUnitElement);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
+                    foreach (var elem in DegreeOfPolymerisation) { if (elem != null) yield return new ElementValue("degreeOfPolymerisation", elem); }
+                    foreach (var elem in StructuralRepresentation) { if (elem != null) yield return new ElementValue("structuralRepresentation", elem); }
                 }
             }
 
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DegreeOfPolymerisationComponent")]
         [DataContract]
-        public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DegreeOfPolymerisationComponent"; } }
@@ -772,8 +772,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Degree != null) yield return new ElementValue("degree", false, Degree);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (Degree != null) yield return new ElementValue("degree", Degree);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StructuralRepresentationComponent")]
         [DataContract]
-        public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StructuralRepresentationComponent"; } }
@@ -912,9 +912,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (RepresentationElement != null) yield return new ElementValue("representation", false, RepresentationElement);
-                    if (Attachment != null) yield return new ElementValue("attachment", false, Attachment);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (RepresentationElement != null) yield return new ElementValue("representation", RepresentationElement);
+                    if (Attachment != null) yield return new ElementValue("attachment", Attachment);
                 }
             }
 
@@ -1107,12 +1107,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Class != null) yield return new ElementValue("class", false, Class);
-                if (Geometry != null) yield return new ElementValue("geometry", false, Geometry);
-                foreach (var elem in CopolymerConnectivity) { if (elem != null) yield return new ElementValue("copolymerConnectivity", true, elem); }
-                foreach (var elem in ModificationElement) { if (elem != null) yield return new ElementValue("modification", true, elem); }
-                foreach (var elem in MonomerSet) { if (elem != null) yield return new ElementValue("monomerSet", true, elem); }
-                foreach (var elem in Repeat) { if (elem != null) yield return new ElementValue("repeat", true, elem); }
+                if (Class != null) yield return new ElementValue("class", Class);
+                if (Geometry != null) yield return new ElementValue("geometry", Geometry);
+                foreach (var elem in CopolymerConnectivity) { if (elem != null) yield return new ElementValue("copolymerConnectivity", elem); }
+                foreach (var elem in ModificationElement) { if (elem != null) yield return new ElementValue("modification", elem); }
+                foreach (var elem in MonomerSet) { if (elem != null) yield return new ElementValue("monomerSet", elem); }
+                foreach (var elem in Repeat) { if (elem != null) yield return new ElementValue("repeat", elem); }
             }
         }
 

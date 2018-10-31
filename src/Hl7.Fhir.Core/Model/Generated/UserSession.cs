@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("StatusComponent")]
         [DataContract]
-        public partial class StatusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StatusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StatusComponent"; } }
@@ -250,8 +250,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (SourceElement != null) yield return new ElementValue("source", SourceElement);
                 }
             }
 
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContextComponent")]
         [DataContract]
-        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContextComponent"; } }
@@ -376,8 +376,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -626,14 +626,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (User != null) yield return new ElementValue("user", false, User);
-                if (Status != null) yield return new ElementValue("status", false, Status);
-                if (Workstation != null) yield return new ElementValue("workstation", false, Workstation);
-                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (ExpiresElement != null) yield return new ElementValue("expires", false, ExpiresElement);
-                foreach (var elem in Context) { if (elem != null) yield return new ElementValue("context", true, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (User != null) yield return new ElementValue("user", User);
+                if (Status != null) yield return new ElementValue("status", Status);
+                if (Workstation != null) yield return new ElementValue("workstation", Workstation);
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (ExpiresElement != null) yield return new ElementValue("expires", ExpiresElement);
+                foreach (var elem in Context) { if (elem != null) yield return new ElementValue("context", elem); }
             }
         }
 

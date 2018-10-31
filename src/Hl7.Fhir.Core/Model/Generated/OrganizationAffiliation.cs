@@ -358,18 +358,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                if (ParticipatingOrganization != null) yield return new ElementValue("participatingOrganization", false, ParticipatingOrganization);
-                foreach (var elem in Network) { if (elem != null) yield return new ElementValue("network", true, elem); }
-                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
-                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }
-                foreach (var elem in HealthcareService) { if (elem != null) yield return new ElementValue("healthcareService", true, elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (ParticipatingOrganization != null) yield return new ElementValue("participatingOrganization", ParticipatingOrganization);
+                foreach (var elem in Network) { if (elem != null) yield return new ElementValue("network", elem); }
+                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
+                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
+                foreach (var elem in HealthcareService) { if (elem != null) yield return new ElementValue("healthcareService", elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
             }
         }
 

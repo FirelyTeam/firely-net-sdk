@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("HoursOfOperationComponent")]
         [DataContract]
-        public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "HoursOfOperationComponent"; } }
@@ -490,10 +490,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", true, elem); }
-                    if (AllDayElement != null) yield return new ElementValue("allDay", false, AllDayElement);
-                    if (OpeningTimeElement != null) yield return new ElementValue("openingTime", false, OpeningTimeElement);
-                    if (ClosingTimeElement != null) yield return new ElementValue("closingTime", false, ClosingTimeElement);
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", elem); }
+                    if (AllDayElement != null) yield return new ElementValue("allDay", AllDayElement);
+                    if (OpeningTimeElement != null) yield return new ElementValue("openingTime", OpeningTimeElement);
+                    if (ClosingTimeElement != null) yield return new ElementValue("closingTime", ClosingTimeElement);
                 }
             }
 
@@ -976,25 +976,6 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (OperationalStatus != null) yield return new ElementValue("operationalStatus", false, OperationalStatus);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                if (Address != null) yield return new ElementValue("address", false, Address);
-                if (PhysicalType != null) yield return new ElementValue("physicalType", false, PhysicalType);
-                if (Position != null) yield return new ElementValue("position", false, Position);
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
-                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
-                foreach (var elem in HoursOfOperation) { if (elem != null) yield return new ElementValue("hoursOfOperation", true, elem); }
-                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", false, AvailabilityExceptionsElement);
-                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (OperationalStatus != null) yield return new ElementValue("operationalStatus", OperationalStatus);
@@ -1002,15 +983,16 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", elem); }
                 if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                 if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
-                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
                 foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
                 if (Address != null) yield return new ElementValue("address", Address);
                 if (PhysicalType != null) yield return new ElementValue("physicalType", PhysicalType);
                 if (Position != null) yield return new ElementValue("position", Position);
                 if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
                 if (PartOf != null) yield return new ElementValue("partOf", PartOf);
+                foreach (var elem in HoursOfOperation) { if (elem != null) yield return new ElementValue("hoursOfOperation", elem); }
+                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", AvailabilityExceptionsElement);
                 foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
->>>>>>> develop-stu3
             }
         }
 

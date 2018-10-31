@@ -12,6 +12,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Support.Model;
 using System.Numerics;
+using System.Globalization;
 
 namespace Hl7.Fhir.Serialization
 {

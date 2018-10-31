@@ -170,14 +170,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (Summary != null) yield return new ElementValue("summary", false, Summary);
-                    foreach (var elem in Assessment) { if (elem != null) yield return new ElementValue("assessment", true, elem); }
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-=======
                     if (Summary != null) yield return new ElementValue("summary", Summary);
                     foreach (var elem in Assessment) { if (elem != null) yield return new ElementValue("assessment", elem); }
->>>>>>> develop-stu3
+                    if (Type != null) yield return new ElementValue("type", Type);
                 }
             }
 
@@ -730,28 +725,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ClinicalStatus != null) yield return new ElementValue("clinicalStatus", false, ClinicalStatus);
-                if (VerificationStatus != null) yield return new ElementValue("verificationStatus", false, VerificationStatus);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Severity != null) yield return new ElementValue("severity", false, Severity);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (Onset != null) yield return new ElementValue("onset", false, Onset);
-                if (Abatement != null) yield return new ElementValue("abatement", false, Abatement);
-                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", false, RecordedDateElement);
-                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
-                if (Asserter != null) yield return new ElementValue("asserter", false, Asserter);
-                foreach (var elem in Stage) { if (elem != null) yield return new ElementValue("stage", true, elem); }
-                foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (ClinicalStatusElement != null) yield return new ElementValue("clinicalStatus", ClinicalStatusElement);
-                if (VerificationStatusElement != null) yield return new ElementValue("verificationStatus", VerificationStatusElement);
+                if (ClinicalStatus != null) yield return new ElementValue("clinicalStatus", ClinicalStatus);
+                if (VerificationStatus != null) yield return new ElementValue("verificationStatus", VerificationStatus);
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
                 if (Severity != null) yield return new ElementValue("severity", Severity);
                 if (Code != null) yield return new ElementValue("code", Code);
@@ -760,12 +736,12 @@ namespace Hl7.Fhir.Model
                 if (Context != null) yield return new ElementValue("context", Context);
                 if (Onset != null) yield return new ElementValue("onset", Onset);
                 if (Abatement != null) yield return new ElementValue("abatement", Abatement);
-                if (AssertedDateElement != null) yield return new ElementValue("assertedDate", AssertedDateElement);
+                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", RecordedDateElement);
+                if (Recorder != null) yield return new ElementValue("recorder", Recorder);
                 if (Asserter != null) yield return new ElementValue("asserter", Asserter);
-                if (Stage != null) yield return new ElementValue("stage", Stage);
+                foreach (var elem in Stage) { if (elem != null) yield return new ElementValue("stage", elem); }
                 foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
->>>>>>> develop-stu3
             }
         }
 

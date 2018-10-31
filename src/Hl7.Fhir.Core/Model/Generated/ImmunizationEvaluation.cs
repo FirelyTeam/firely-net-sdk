@@ -450,37 +450,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD:src/Hl7.Fhir.Core/Model/Generated/ImmunizationEvaluation.cs
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
-                if (ImmunizationEvent != null) yield return new ElementValue("immunizationEvent", false, ImmunizationEvent);
-                if (DoseStatus != null) yield return new ElementValue("doseStatus", false, DoseStatus);
-                foreach (var elem in DoseStatusReason) { if (elem != null) yield return new ElementValue("doseStatusReason", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
-                if (DoseNumber != null) yield return new ElementValue("doseNumber", false, DoseNumber);
-                if (SeriesDoses != null) yield return new ElementValue("seriesDoses", false, SeriesDoses);
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (Priority != null) yield return new ElementValue("priority", Priority);
                 if (Patient != null) yield return new ElementValue("patient", Patient);
-                if (Serviced != null) yield return new ElementValue("serviced", Serviced);
-                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
-                if (Enterer != null) yield return new ElementValue("enterer", Enterer);
-                if (Provider != null) yield return new ElementValue("provider", Provider);
-                if (Organization != null) yield return new ElementValue("organization", Organization);
-                if (Insurer != null) yield return new ElementValue("insurer", Insurer);
-                if (Facility != null) yield return new ElementValue("facility", Facility);
-                if (Coverage != null) yield return new ElementValue("coverage", Coverage);
-                if (BusinessArrangementElement != null) yield return new ElementValue("businessArrangement", BusinessArrangementElement);
-                if (BenefitCategory != null) yield return new ElementValue("benefitCategory", BenefitCategory);
-                if (BenefitSubCategory != null) yield return new ElementValue("benefitSubCategory", BenefitSubCategory);
->>>>>>> develop-stu3:src/Hl7.Fhir.Core/Model/Generated/EligibilityRequest.cs
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Authority != null) yield return new ElementValue("authority", Authority);
+                if (TargetDisease != null) yield return new ElementValue("targetDisease", TargetDisease);
+                if (ImmunizationEvent != null) yield return new ElementValue("immunizationEvent", ImmunizationEvent);
+                if (DoseStatus != null) yield return new ElementValue("doseStatus", DoseStatus);
+                foreach (var elem in DoseStatusReason) { if (elem != null) yield return new ElementValue("doseStatusReason", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
+                if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
+                if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
             }
         }
 

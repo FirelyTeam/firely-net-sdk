@@ -446,21 +446,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in ServiceCategory) { if (elem != null) yield return new ElementValue("serviceCategory", true, elem); }
-                foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", true, elem); }
-                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
-                if (AppointmentType != null) yield return new ElementValue("appointmentType", false, AppointmentType);
-                if (Schedule != null) yield return new ElementValue("schedule", false, Schedule);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
-                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
-                if (OverbookedElement != null) yield return new ElementValue("overbooked", false, OverbookedElement);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (ServiceCategory != null) yield return new ElementValue("serviceCategory", ServiceCategory);
+                foreach (var elem in ServiceCategory) { if (elem != null) yield return new ElementValue("serviceCategory", elem); }
                 foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
                 foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
                 if (AppointmentType != null) yield return new ElementValue("appointmentType", AppointmentType);
@@ -470,7 +457,6 @@ namespace Hl7.Fhir.Model
                 if (EndElement != null) yield return new ElementValue("end", EndElement);
                 if (OverbookedElement != null) yield return new ElementValue("overbooked", OverbookedElement);
                 if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
->>>>>>> develop-stu3
             }
         }
 

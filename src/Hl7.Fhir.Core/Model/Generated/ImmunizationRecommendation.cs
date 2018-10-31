@@ -373,30 +373,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    foreach (var elem in VaccineCode) { if (elem != null) yield return new ElementValue("vaccineCode", true, elem); }
-                    if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
-                    foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return new ElementValue("contraindicatedVaccineCode", true, elem); }
-                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", false, ForecastStatus);
-                    foreach (var elem in ForecastReason) { if (elem != null) yield return new ElementValue("forecastReason", true, elem); }
-                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", true, elem); }
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
-                    if (DoseNumber != null) yield return new ElementValue("doseNumber", false, DoseNumber);
-                    if (SeriesDoses != null) yield return new ElementValue("seriesDoses", false, SeriesDoses);
-                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", true, elem); }
-                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", true, elem); }
-=======
-                    if (DateElement != null) yield return new ElementValue("date", DateElement);
-                    if (VaccineCode != null) yield return new ElementValue("vaccineCode", VaccineCode);
+                    foreach (var elem in VaccineCode) { if (elem != null) yield return new ElementValue("vaccineCode", elem); }
                     if (TargetDisease != null) yield return new ElementValue("targetDisease", TargetDisease);
-                    if (DoseNumberElement != null) yield return new ElementValue("doseNumber", DoseNumberElement);
+                    foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return new ElementValue("contraindicatedVaccineCode", elem); }
                     if (ForecastStatus != null) yield return new ElementValue("forecastStatus", ForecastStatus);
+                    foreach (var elem in ForecastReason) { if (elem != null) yield return new ElementValue("forecastReason", elem); }
                     foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", elem); }
-                    if (Protocol != null) yield return new ElementValue("protocol", Protocol);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
+                    if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
+                    if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
                     foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", elem); }
                     foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", elem); }
->>>>>>> develop-stu3
                 }
             }
 
@@ -529,208 +517,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-<<<<<<< HEAD
-=======
-        [FhirType("ProtocolComponent")]
-        [DataContract]
-        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ProtocolComponent"; } }
-            
-            /// <summary>
-            /// Dose number within sequence
-            /// </summary>
-            [FhirElement("doseSequence", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.PositiveInt DoseSequenceElement
-            {
-                get { return _DoseSequenceElement; }
-                set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
-            }
-            
-            private Hl7.Fhir.Model.PositiveInt _DoseSequenceElement;
-            
-            /// <summary>
-            /// Dose number within sequence
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? DoseSequence
-            {
-                get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        DoseSequenceElement = null; 
-                    else
-                        DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
-                    OnPropertyChanged("DoseSequence");
-                }
-            }
-            
-            /// <summary>
-            /// Protocol details
-            /// </summary>
-            [FhirElement("description", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Protocol details
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        DescriptionElement = null; 
-                    else
-                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            /// <summary>
-            /// Who is responsible for protocol
-            /// </summary>
-            [FhirElement("authority", Order=60)]
-            [CLSCompliant(false)]
-			[References("Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Authority
-            {
-                get { return _Authority; }
-                set { _Authority = value; OnPropertyChanged("Authority"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Authority;
-            
-            /// <summary>
-            /// Name of vaccination series
-            /// </summary>
-            [FhirElement("series", Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SeriesElement
-            {
-                get { return _SeriesElement; }
-                set { _SeriesElement = value; OnPropertyChanged("SeriesElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SeriesElement;
-            
-            /// <summary>
-            /// Name of vaccination series
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Series
-            {
-                get { return SeriesElement != null ? SeriesElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SeriesElement = null; 
-                    else
-                        SeriesElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Series");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ProtocolComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt)DoseSequenceElement.DeepCopy();
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
-                    if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ProtocolComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ProtocolComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
-                if( !DeepComparable.Matches(SeriesElement, otherT.SeriesElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ProtocolComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
-                if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (DoseSequenceElement != null) yield return DoseSequenceElement;
-                    if (DescriptionElement != null) yield return DescriptionElement;
-                    if (Authority != null) yield return Authority;
-                    if (SeriesElement != null) yield return SeriesElement;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", DoseSequenceElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-                    if (Authority != null) yield return new ElementValue("authority", Authority);
-                    if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
-                }
-            }
-
-            
-        }
-        
-        
->>>>>>> develop-stu3
         /// <summary>
         /// Business identifier
         /// </summary>
@@ -913,17 +699,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Authority != null) yield return new ElementValue("authority", Authority);
                 foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", elem); }
->>>>>>> develop-stu3
             }
         }
 

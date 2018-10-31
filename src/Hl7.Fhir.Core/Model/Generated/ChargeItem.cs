@@ -108,11 +108,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PerformerComponent")]
         [DataContract]
-<<<<<<< HEAD
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-=======
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
->>>>>>> develop-stu3
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -208,13 +204,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (Function != null) yield return new ElementValue("function", false, Function);
-                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
-=======
-                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Function != null) yield return new ElementValue("function", Function);
                     if (Actor != null) yield return new ElementValue("actor", Actor);
->>>>>>> develop-stu3
                 }
             }
 
@@ -839,34 +830,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in DefinitionElement) { if (elem != null) yield return new ElementValue("definition", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
-                if (PerformingOrganization != null) yield return new ElementValue("performingOrganization", false, PerformingOrganization);
-                if (RequestingOrganization != null) yield return new ElementValue("requestingOrganization", false, RequestingOrganization);
-                if (CostCenter != null) yield return new ElementValue("costCenter", false, CostCenter);
-                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                foreach (var elem in Bodysite) { if (elem != null) yield return new ElementValue("bodysite", true, elem); }
-                if (FactorOverrideElement != null) yield return new ElementValue("factorOverride", false, FactorOverrideElement);
-                if (PriceOverride != null) yield return new ElementValue("priceOverride", false, PriceOverride);
-                if (OverrideReasonElement != null) yield return new ElementValue("overrideReason", false, OverrideReasonElement);
-                if (Enterer != null) yield return new ElementValue("enterer", false, Enterer);
-                if (EnteredDateElement != null) yield return new ElementValue("enteredDate", false, EnteredDateElement);
-                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
-                foreach (var elem in Service) { if (elem != null) yield return new ElementValue("service", true, elem); }
-                if (Product != null) yield return new ElementValue("product", false, Product);
-                foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
-=======
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 foreach (var elem in DefinitionElement) { if (elem != null) yield return new ElementValue("definition", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
@@ -874,9 +838,10 @@ namespace Hl7.Fhir.Model
                 if (Subject != null) yield return new ElementValue("subject", Subject);
                 if (Context != null) yield return new ElementValue("context", Context);
                 if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
-                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
                 if (PerformingOrganization != null) yield return new ElementValue("performingOrganization", PerformingOrganization);
                 if (RequestingOrganization != null) yield return new ElementValue("requestingOrganization", RequestingOrganization);
+                if (CostCenter != null) yield return new ElementValue("costCenter", CostCenter);
                 if (Quantity != null) yield return new ElementValue("quantity", Quantity);
                 foreach (var elem in Bodysite) { if (elem != null) yield return new ElementValue("bodysite", elem); }
                 if (FactorOverrideElement != null) yield return new ElementValue("factorOverride", FactorOverrideElement);
@@ -886,10 +851,10 @@ namespace Hl7.Fhir.Model
                 if (EnteredDateElement != null) yield return new ElementValue("enteredDate", EnteredDateElement);
                 foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 foreach (var elem in Service) { if (elem != null) yield return new ElementValue("service", elem); }
+                if (Product != null) yield return new ElementValue("product", Product);
                 foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
->>>>>>> develop-stu3
             }
         }
 

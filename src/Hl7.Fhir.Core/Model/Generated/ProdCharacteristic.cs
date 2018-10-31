@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -352,17 +354,17 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Height != null) yield return new ElementValue("height", false, Height);
-                if (Width != null) yield return new ElementValue("width", false, Width);
-                if (Depth != null) yield return new ElementValue("depth", false, Depth);
-                if (Weight != null) yield return new ElementValue("weight", false, Weight);
-                if (NominalVolume != null) yield return new ElementValue("nominalVolume", false, NominalVolume);
-                if (ExternalDiameter != null) yield return new ElementValue("externalDiameter", false, ExternalDiameter);
-                if (ShapeElement != null) yield return new ElementValue("shape", false, ShapeElement);
-                foreach (var elem in ColorElement) { if (elem != null) yield return new ElementValue("color", true, elem); }
-                foreach (var elem in ImprintElement) { if (elem != null) yield return new ElementValue("imprint", true, elem); }
-                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", true, elem); }
-                if (Scoring != null) yield return new ElementValue("scoring", false, Scoring);
+                if (Height != null) yield return new ElementValue("height", Height);
+                if (Width != null) yield return new ElementValue("width", Width);
+                if (Depth != null) yield return new ElementValue("depth", Depth);
+                if (Weight != null) yield return new ElementValue("weight", Weight);
+                if (NominalVolume != null) yield return new ElementValue("nominalVolume", NominalVolume);
+                if (ExternalDiameter != null) yield return new ElementValue("externalDiameter", ExternalDiameter);
+                if (ShapeElement != null) yield return new ElementValue("shape", ShapeElement);
+                foreach (var elem in ColorElement) { if (elem != null) yield return new ElementValue("color", elem); }
+                foreach (var elem in ImprintElement) { if (elem != null) yield return new ElementValue("imprint", elem); }
+                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
+                if (Scoring != null) yield return new ElementValue("scoring", Scoring);
  
             } 
         } 

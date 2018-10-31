@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OtherTherapyComponent")]
         [DataContract]
-        public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OtherTherapyComponent"; } }
@@ -154,8 +154,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TherapyRelationshipType != null) yield return new ElementValue("therapyRelationshipType", false, TherapyRelationshipType);
-                    if (Medication != null) yield return new ElementValue("medication", false, Medication);
+                    if (TherapyRelationshipType != null) yield return new ElementValue("therapyRelationshipType", TherapyRelationshipType);
+                    if (Medication != null) yield return new ElementValue("medication", Medication);
                 }
             }
 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PopulationComponent")]
         [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PopulationComponent"; } }
@@ -294,10 +294,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Age != null) yield return new ElementValue("age", false, Age);
-                    if (Gender != null) yield return new ElementValue("gender", false, Gender);
-                    if (Race != null) yield return new ElementValue("race", false, Race);
-                    if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", false, PhysiologicalCondition);
+                    if (Age != null) yield return new ElementValue("age", Age);
+                    if (Gender != null) yield return new ElementValue("gender", Gender);
+                    if (Race != null) yield return new ElementValue("race", Race);
+                    if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", PhysiologicalCondition);
                 }
             }
 
@@ -493,13 +493,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (Disease != null) yield return new ElementValue("disease", false, Disease);
-                if (DiseaseStatus != null) yield return new ElementValue("diseaseStatus", false, DiseaseStatus);
-                foreach (var elem in Comorbidity) { if (elem != null) yield return new ElementValue("comorbidity", true, elem); }
-                foreach (var elem in TherapeuticIndication) { if (elem != null) yield return new ElementValue("therapeuticIndication", true, elem); }
-                foreach (var elem in OtherTherapy) { if (elem != null) yield return new ElementValue("otherTherapy", true, elem); }
-                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (Disease != null) yield return new ElementValue("disease", Disease);
+                if (DiseaseStatus != null) yield return new ElementValue("diseaseStatus", DiseaseStatus);
+                foreach (var elem in Comorbidity) { if (elem != null) yield return new ElementValue("comorbidity", elem); }
+                foreach (var elem in TherapeuticIndication) { if (elem != null) yield return new ElementValue("therapeuticIndication", elem); }
+                foreach (var elem in OtherTherapy) { if (elem != null) yield return new ElementValue("otherTherapy", elem); }
+                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
             }
         }
 

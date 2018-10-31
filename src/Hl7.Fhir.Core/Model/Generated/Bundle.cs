@@ -1552,22 +1552,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (TimestampElement != null) yield return new ElementValue("timestamp", false, TimestampElement);
-                if (TotalElement != null) yield return new ElementValue("total", false, TotalElement);
-                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
-                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }
-                if (Signature != null) yield return new ElementValue("signature", false, Signature);
-=======
                 if (Identifier != null) yield return new ElementValue("identifier", Identifier);
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (TimestampElement != null) yield return new ElementValue("timestamp", TimestampElement);
                 if (TotalElement != null) yield return new ElementValue("total", TotalElement);
                 foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
                 foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
                 if (Signature != null) yield return new ElementValue("signature", Signature);
->>>>>>> develop-stu3
             }
         }
 

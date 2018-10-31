@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
         /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
         /// </summary>
         [FhirEnumeration("status")]
-        public enum status
+        public enum Status
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PrimarySourceComponent")]
         [DataContract]
-        public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PrimarySourceComponent"; } }
@@ -304,13 +304,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                    foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", true, elem); }
-                    if (ValidationStatus != null) yield return new ElementValue("validationStatus", false, ValidationStatus);
-                    if (ValidationDateElement != null) yield return new ElementValue("validationDate", false, ValidationDateElement);
-                    if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", false, CanPushUpdates);
-                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", true, elem); }
+                    if (Organization != null) yield return new ElementValue("organization", Organization);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", elem); }
+                    if (ValidationStatus != null) yield return new ElementValue("validationStatus", ValidationStatus);
+                    if (ValidationDateElement != null) yield return new ElementValue("validationDate", ValidationDateElement);
+                    if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", CanPushUpdates);
+                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", elem); }
                 }
             }
 
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AttestationComponent")]
         [DataContract]
-        public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AttestationComponent"; } }
@@ -580,14 +580,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Source != null) yield return new ElementValue("source", false, Source);
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", false, SourceIdentityCertificateElement);
-                    if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", false, ProxyIdentityCertificateElement);
-                    if (SignedProxyRight != null) yield return new ElementValue("signedProxyRight", false, SignedProxyRight);
-                    if (SignedSourceAttestation != null) yield return new ElementValue("signedSourceAttestation", false, SignedSourceAttestation);
+                    if (Source != null) yield return new ElementValue("source", Source);
+                    if (Organization != null) yield return new ElementValue("organization", Organization);
+                    if (Method != null) yield return new ElementValue("method", Method);
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", SourceIdentityCertificateElement);
+                    if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", ProxyIdentityCertificateElement);
+                    if (SignedProxyRight != null) yield return new ElementValue("signedProxyRight", SignedProxyRight);
+                    if (SignedSourceAttestation != null) yield return new ElementValue("signedSourceAttestation", SignedSourceAttestation);
                 }
             }
 
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ValidatorComponent")]
         [DataContract]
-        public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ValidatorComponent"; } }
@@ -731,9 +731,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", false, IdentityCertificateElement);
-                    if (SignedValidatorAttestation != null) yield return new ElementValue("signedValidatorAttestation", false, SignedValidatorAttestation);
+                    if (Organization != null) yield return new ElementValue("organization", Organization);
+                    if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", IdentityCertificateElement);
+                    if (SignedValidatorAttestation != null) yield return new ElementValue("signedValidatorAttestation", SignedValidatorAttestation);
                 }
             }
 
@@ -809,13 +809,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.VerificationResult.status> StatusElement
+        public Code<Hl7.Fhir.Model.VerificationResult.Status> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.VerificationResult.status> _StatusElement;
+        private Code<Hl7.Fhir.Model.VerificationResult.Status> _StatusElement;
         
         /// <summary>
         /// attested | validated | in-process | req-revalid | val-fail | reval-fail
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.VerificationResult.status? Status
+        public Hl7.Fhir.Model.VerificationResult.Status? ResultStatus
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.status>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.Status>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1043,7 +1043,7 @@ namespace Hl7.Fhir.Model
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(TargetLocationElement != null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopy());
                 if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.status>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.Status>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
                 if(ValidationType != null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)ValidationType.DeepCopy();
                 if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());
@@ -1142,20 +1142,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
-                foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", true, elem); }
-                if (Need != null) yield return new ElementValue("need", false, Need);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (StatusDateElement != null) yield return new ElementValue("statusDate", false, StatusDateElement);
-                if (ValidationType != null) yield return new ElementValue("validationType", false, ValidationType);
-                foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", true, elem); }
-                if (Frequency != null) yield return new ElementValue("frequency", false, Frequency);
-                if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", false, LastPerformedElement);
-                if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", false, NextScheduledElement);
-                if (FailureAction != null) yield return new ElementValue("failureAction", false, FailureAction);
-                foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", true, elem); }
-                if (Attestation != null) yield return new ElementValue("attestation", false, Attestation);
-                foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", true, elem); }
+                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
+                foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", elem); }
+                if (Need != null) yield return new ElementValue("need", Need);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
+                if (ValidationType != null) yield return new ElementValue("validationType", ValidationType);
+                foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", elem); }
+                if (Frequency != null) yield return new ElementValue("frequency", Frequency);
+                if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", LastPerformedElement);
+                if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", NextScheduledElement);
+                if (FailureAction != null) yield return new ElementValue("failureAction", FailureAction);
+                foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", elem); }
+                if (Attestation != null) yield return new ElementValue("attestation", Attestation);
+                foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", elem); }
             }
         }
 

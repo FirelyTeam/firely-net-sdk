@@ -288,20 +288,12 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                if (VersionIdElement != null) yield return new ElementValue("versionId", false, VersionIdElement);
-                if (LastUpdatedElement != null) yield return new ElementValue("lastUpdated", false, LastUpdatedElement);
-                if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
-                foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
-                foreach (var elem in Security) { if (elem != null) yield return new ElementValue("security", true, elem); }
-                foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", true, elem); }
-=======
                 if (VersionIdElement != null) yield return new ElementValue("versionId", VersionIdElement);
                 if (LastUpdatedElement != null) yield return new ElementValue("lastUpdated", LastUpdatedElement);
+                if (SourceElement != null) yield return new ElementValue("source", SourceElement);
                 foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", elem); }
                 foreach (var elem in Security) { if (elem != null) yield return new ElementValue("security", elem); }
                 foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", elem); }
->>>>>>> develop-stu3
  
             } 
         } 

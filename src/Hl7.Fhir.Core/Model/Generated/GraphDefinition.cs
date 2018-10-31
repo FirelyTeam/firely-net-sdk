@@ -587,18 +587,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (ParamsElement != null) yield return new ElementValue("params", false, ParamsElement);
-                    if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
-                    foreach (var elem in Compartment) { if (elem != null) yield return new ElementValue("compartment", true, elem); }
-                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
-=======
                     if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (ParamsElement != null) yield return new ElementValue("params", ParamsElement);
                     if (ProfileElement != null) yield return new ElementValue("profile", ProfileElement);
                     foreach (var elem in Compartment) { if (elem != null) yield return new ElementValue("compartment", elem); }
                     foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
->>>>>>> develop-stu3
                 }
             }
 
@@ -850,18 +843,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (UseElement != null) yield return new ElementValue("use", false, UseElement);
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (RuleElement != null) yield return new ElementValue("rule", false, RuleElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-=======
+                    if (UseElement != null) yield return new ElementValue("use", UseElement);
                     if (CodeElement != null) yield return new ElementValue("code", CodeElement);
                     if (RuleElement != null) yield return new ElementValue("rule", RuleElement);
                     if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
->>>>>>> develop-stu3
                 }
             }
 

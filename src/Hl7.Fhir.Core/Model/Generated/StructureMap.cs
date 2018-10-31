@@ -1692,19 +1692,6 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (ContextElement != null) yield return new ElementValue("context", false, ContextElement);
-                    if (MinElement != null) yield return new ElementValue("min", false, MinElement);
-                    if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (DefaultValue != null) yield return new ElementValue("defaultValue", false, DefaultValue);
-                    if (ElementElement != null) yield return new ElementValue("element", false, ElementElement);
-                    if (ListModeElement != null) yield return new ElementValue("listMode", false, ListModeElement);
-                    if (VariableElement != null) yield return new ElementValue("variable", false, VariableElement);
-                    if (ConditionElement != null) yield return new ElementValue("condition", false, ConditionElement);
-                    if (CheckElement != null) yield return new ElementValue("check", false, CheckElement);
-                    if (LogMessageElement != null) yield return new ElementValue("logMessage", false, LogMessageElement);
-=======
                     if (ContextElement != null) yield return new ElementValue("context", ContextElement);
                     if (MinElement != null) yield return new ElementValue("min", MinElement);
                     if (MaxElement != null) yield return new ElementValue("max", MaxElement);
@@ -1715,7 +1702,7 @@ namespace Hl7.Fhir.Model
                     if (VariableElement != null) yield return new ElementValue("variable", VariableElement);
                     if (ConditionElement != null) yield return new ElementValue("condition", ConditionElement);
                     if (CheckElement != null) yield return new ElementValue("check", CheckElement);
->>>>>>> develop-stu3
+                    if (LogMessageElement != null) yield return new ElementValue("logMessage", LogMessageElement);
                 }
             }
 

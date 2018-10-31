@@ -274,21 +274,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (Collector != null) yield return new ElementValue("collector", false, Collector);
-                    if (Collected != null) yield return new ElementValue("collected", false, Collected);
-                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
-                    if (FastingStatus != null) yield return new ElementValue("fastingStatus", false, FastingStatus);
-=======
                     if (Collector != null) yield return new ElementValue("collector", Collector);
                     if (Collected != null) yield return new ElementValue("collected", Collected);
+                    if (Duration != null) yield return new ElementValue("duration", Duration);
                     if (Quantity != null) yield return new ElementValue("quantity", Quantity);
                     if (Method != null) yield return new ElementValue("method", Method);
                     if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
->>>>>>> develop-stu3
+                    if (FastingStatus != null) yield return new ElementValue("fastingStatus", FastingStatus);
                 }
             }
 
@@ -990,21 +982,6 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (AccessionIdentifier != null) yield return new ElementValue("accessionIdentifier", false, AccessionIdentifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (ReceivedTimeElement != null) yield return new ElementValue("receivedTime", false, ReceivedTimeElement);
-                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
-                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", true, elem); }
-                if (Collection != null) yield return new ElementValue("collection", false, Collection);
-                foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", true, elem); }
-                foreach (var elem in Container) { if (elem != null) yield return new ElementValue("container", true, elem); }
-                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (AccessionIdentifier != null) yield return new ElementValue("accessionIdentifier", AccessionIdentifier);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
@@ -1016,8 +993,8 @@ namespace Hl7.Fhir.Model
                 if (Collection != null) yield return new ElementValue("collection", Collection);
                 foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", elem); }
                 foreach (var elem in Container) { if (elem != null) yield return new ElementValue("container", elem); }
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
->>>>>>> develop-stu3
             }
         }
 

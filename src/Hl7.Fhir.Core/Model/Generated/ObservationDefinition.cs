@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QuantitativeDetailsComponent")]
         [DataContract]
-        public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "QuantitativeDetailsComponent"; } }
@@ -222,10 +222,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CustomaryUnit != null) yield return new ElementValue("customaryUnit", false, CustomaryUnit);
-                    if (Unit != null) yield return new ElementValue("unit", false, Unit);
-                    if (ConversionFactorElement != null) yield return new ElementValue("conversionFactor", false, ConversionFactorElement);
-                    if (DecimalPrecisionElement != null) yield return new ElementValue("decimalPrecision", false, DecimalPrecisionElement);
+                    if (CustomaryUnit != null) yield return new ElementValue("customaryUnit", CustomaryUnit);
+                    if (Unit != null) yield return new ElementValue("unit", Unit);
+                    if (ConversionFactorElement != null) yield return new ElementValue("conversionFactor", ConversionFactorElement);
+                    if (DecimalPrecisionElement != null) yield return new ElementValue("decimalPrecision", DecimalPrecisionElement);
                 }
             }
 
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QualifiedIntervalComponent")]
         [DataContract]
-        public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "QualifiedIntervalComponent"; } }
@@ -433,13 +433,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Category != null) yield return new ElementValue("category", false, Category);
-                    if (Range != null) yield return new ElementValue("range", false, Range);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", true, elem); }
-                    if (Age != null) yield return new ElementValue("age", false, Age);
-                    if (GestationalAge != null) yield return new ElementValue("gestationalAge", false, GestationalAge);
-                    if (ConditionElement != null) yield return new ElementValue("condition", false, ConditionElement);
+                    if (Category != null) yield return new ElementValue("category", Category);
+                    if (Range != null) yield return new ElementValue("range", Range);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", elem); }
+                    if (Age != null) yield return new ElementValue("age", Age);
+                    if (GestationalAge != null) yield return new ElementValue("gestationalAge", GestationalAge);
+                    if (ConditionElement != null) yield return new ElementValue("condition", ConditionElement);
                 }
             }
 
@@ -828,18 +828,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in PermittedDataType) { if (elem != null) yield return new ElementValue("permittedDataType", true, elem); }
-                if (MultipleResultsAllowedElement != null) yield return new ElementValue("multipleResultsAllowed", false, MultipleResultsAllowedElement);
-                if (Method != null) yield return new ElementValue("method", false, Method);
-                if (PreferredReportNameElement != null) yield return new ElementValue("preferredReportName", false, PreferredReportNameElement);
-                if (QuantitativeDetails != null) yield return new ElementValue("quantitativeDetails", false, QuantitativeDetails);
-                foreach (var elem in QualifiedInterval) { if (elem != null) yield return new ElementValue("qualifiedInterval", true, elem); }
-                if (ValidCodedValueSetElement != null) yield return new ElementValue("validCodedValueSet", false, ValidCodedValueSetElement);
-                if (NormalCodedValueSetElement != null) yield return new ElementValue("normalCodedValueSet", false, NormalCodedValueSetElement);
-                if (AbnormalCodedValueSetElement != null) yield return new ElementValue("abnormalCodedValueSet", false, AbnormalCodedValueSetElement);
-                if (CriticalCodedValueSetElement != null) yield return new ElementValue("criticalCodedValueSet", false, CriticalCodedValueSetElement);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Code != null) yield return new ElementValue("code", Code);
+                foreach (var elem in PermittedDataType) { if (elem != null) yield return new ElementValue("permittedDataType", elem); }
+                if (MultipleResultsAllowedElement != null) yield return new ElementValue("multipleResultsAllowed", MultipleResultsAllowedElement);
+                if (Method != null) yield return new ElementValue("method", Method);
+                if (PreferredReportNameElement != null) yield return new ElementValue("preferredReportName", PreferredReportNameElement);
+                if (QuantitativeDetails != null) yield return new ElementValue("quantitativeDetails", QuantitativeDetails);
+                foreach (var elem in QualifiedInterval) { if (elem != null) yield return new ElementValue("qualifiedInterval", elem); }
+                if (ValidCodedValueSetElement != null) yield return new ElementValue("validCodedValueSet", ValidCodedValueSetElement);
+                if (NormalCodedValueSetElement != null) yield return new ElementValue("normalCodedValueSet", NormalCodedValueSetElement);
+                if (AbnormalCodedValueSetElement != null) yield return new ElementValue("abnormalCodedValueSet", AbnormalCodedValueSetElement);
+                if (CriticalCodedValueSetElement != null) yield return new ElementValue("criticalCodedValueSet", CriticalCodedValueSetElement);
             }
         }
 

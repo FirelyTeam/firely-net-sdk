@@ -1566,29 +1566,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", true, elem); }
-                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", true, elem); }
-                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (IntentElement != null) yield return new ElementValue("intent", false, IntentElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (DateTimeElement != null) yield return new ElementValue("dateTime", false, DateTimeElement);
-                if (Orderer != null) yield return new ElementValue("orderer", false, Orderer);
-                foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", true, elem); }
-                foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return new ElementValue("foodPreferenceModifier", true, elem); }
-                foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return new ElementValue("excludeFoodModifier", true, elem); }
-                if (OralDiet != null) yield return new ElementValue("oralDiet", false, OralDiet);
-                foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", true, elem); }
-                if (EnteralFormula != null) yield return new ElementValue("enteralFormula", false, EnteralFormula);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", elem); }
+                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", elem); }
+                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
                 if (Patient != null) yield return new ElementValue("patient", Patient);
-                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Context != null) yield return new ElementValue("context", Context);
                 if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
                 if (Orderer != null) yield return new ElementValue("orderer", Orderer);
                 foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", elem); }
@@ -1597,7 +1582,7 @@ namespace Hl7.Fhir.Model
                 if (OralDiet != null) yield return new ElementValue("oralDiet", OralDiet);
                 foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", elem); }
                 if (EnteralFormula != null) yield return new ElementValue("enteralFormula", EnteralFormula);
->>>>>>> develop-stu3
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

@@ -1027,17 +1027,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (PropertyElement != null) yield return new ElementValue("property", false, PropertyElement);
-                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                    if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
-=======
                     if (PropertyElement != null) yield return new ElementValue("property", PropertyElement);
                     if (SystemElement != null) yield return new ElementValue("system", SystemElement);
-                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                     if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
->>>>>>> develop-stu3
                 }
             }
 

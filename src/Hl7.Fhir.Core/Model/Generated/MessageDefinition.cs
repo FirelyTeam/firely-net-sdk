@@ -322,17 +322,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
-                    if (MinElement != null) yield return new ElementValue("min", false, MinElement);
-                    if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
-=======
                     if (CodeElement != null) yield return new ElementValue("code", CodeElement);
-                    if (Profile != null) yield return new ElementValue("profile", Profile);
+                    if (ProfileElement != null) yield return new ElementValue("profile", ProfileElement);
                     if (MinElement != null) yield return new ElementValue("min", MinElement);
                     if (MaxElement != null) yield return new ElementValue("max", MaxElement);
->>>>>>> develop-stu3
                 }
             }
 
@@ -455,13 +448,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (MessageElement != null) yield return new ElementValue("message", false, MessageElement);
-                    if (Situation != null) yield return new ElementValue("situation", false, Situation);
-=======
-                    if (Message != null) yield return new ElementValue("message", Message);
+                    if (MessageElement != null) yield return new ElementValue("message", MessageElement);
                     if (Situation != null) yield return new ElementValue("situation", Situation);
->>>>>>> develop-stu3
                 }
             }
 
@@ -1237,37 +1225,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                foreach (var elem in ReplacesElement) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
-                foreach (var elem in ParentElement) { if (elem != null) yield return new ElementValue("parent", true, elem); }
-                if (Event != null) yield return new ElementValue("event", false, Event);
-                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
-                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
-                if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", false, ResponseRequiredElement);
-                foreach (var elem in AllowedResponse) { if (elem != null) yield return new ElementValue("allowedResponse", true, elem); }
-                foreach (var elem in GraphElement) { if (elem != null) yield return new ElementValue("graph", true, elem); }
-=======
                 if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 if (NameElement != null) yield return new ElementValue("name", NameElement);
                 if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                foreach (var elem in ReplacesElement) { if (elem != null) yield return new ElementValue("replaces", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
                 if (DateElement != null) yield return new ElementValue("date", DateElement);
@@ -1278,15 +1241,14 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
                 if (Purpose != null) yield return new ElementValue("purpose", Purpose);
                 if (Copyright != null) yield return new ElementValue("copyright", Copyright);
-                if (Base != null) yield return new ElementValue("base", Base);
-                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", elem); }
-                foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", elem); }
+                if (BaseElement != null) yield return new ElementValue("base", BaseElement);
+                foreach (var elem in ParentElement) { if (elem != null) yield return new ElementValue("parent", elem); }
                 if (Event != null) yield return new ElementValue("event", Event);
                 if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
                 foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
                 if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", ResponseRequiredElement);
                 foreach (var elem in AllowedResponse) { if (elem != null) yield return new ElementValue("allowedResponse", elem); }
->>>>>>> develop-stu3
+                foreach (var elem in GraphElement) { if (elem != null) yield return new ElementValue("graph", elem); }
             }
         }
 

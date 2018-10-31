@@ -210,13 +210,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (Function != null) yield return new ElementValue("function", false, Function);
-                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
-=======
+                    if (Function != null) yield return new ElementValue("function", Function);
                     if (Actor != null) yield return new ElementValue("actor", Actor);
-                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
->>>>>>> develop-stu3
                 }
             }
 
@@ -959,32 +954,6 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
-                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return new ElementValue("authorizingPrescription", true, elem); }
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                if (DaysSupply != null) yield return new ElementValue("daysSupply", false, DaysSupply);
-                if (WhenPreparedElement != null) yield return new ElementValue("whenPrepared", false, WhenPreparedElement);
-                if (WhenHandedOverElement != null) yield return new ElementValue("whenHandedOver", false, WhenHandedOverElement);
-                if (Destination != null) yield return new ElementValue("destination", false, Destination);
-                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", true, elem); }
-                if (Substitution != null) yield return new ElementValue("substitution", false, Substitution);
-                foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", true, elem); }
-                if (StatusReason != null) yield return new ElementValue("statusReason", false, StatusReason);
-                foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
@@ -994,6 +963,7 @@ namespace Hl7.Fhir.Model
                 if (Context != null) yield return new ElementValue("context", Context);
                 foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
                 foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
+                if (Location != null) yield return new ElementValue("location", Location);
                 foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return new ElementValue("authorizingPrescription", elem); }
                 if (Type != null) yield return new ElementValue("type", Type);
                 if (Quantity != null) yield return new ElementValue("quantity", Quantity);
@@ -1006,10 +976,8 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", elem); }
                 if (Substitution != null) yield return new ElementValue("substitution", Substitution);
                 foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", elem); }
-                if (NotDoneElement != null) yield return new ElementValue("notDone", NotDoneElement);
-                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", NotDoneReason);
+                if (StatusReason != null) yield return new ElementValue("statusReason", StatusReason);
                 foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
->>>>>>> develop-stu3
             }
         }
 

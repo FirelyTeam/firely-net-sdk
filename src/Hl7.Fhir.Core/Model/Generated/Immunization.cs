@@ -84,11 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PerformerComponent")]
         [DataContract]
-<<<<<<< HEAD
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-=======
-        public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
->>>>>>> develop-stu3
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -184,13 +180,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (Function != null) yield return new ElementValue("function", false, Function);
-                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
-=======
-                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Function != null) yield return new ElementValue("function", Function);
                     if (Actor != null) yield return new ElementValue("actor", Actor);
->>>>>>> develop-stu3
                 }
             }
 
@@ -200,11 +191,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EducationComponent")]
         [DataContract]
-<<<<<<< HEAD
-        public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-=======
-        public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
->>>>>>> develop-stu3
+        public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EducationComponent"; } }
@@ -265,7 +252,6 @@ namespace Hl7.Fhir.Model
                 get { return ReferenceElement != null ? ReferenceElement.Value : null; }
                 set
                 {
-<<<<<<< HEAD
                     if (value == null)
                         ReferenceElement = null; 
                     else
@@ -273,24 +259,6 @@ namespace Hl7.Fhir.Model
                     OnPropertyChanged("Reference");
                 }
             }
-=======
-                    foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
-                    foreach (var elem in ReasonNotGiven) { if (elem != null) yield return new ElementValue("reasonNotGiven", elem); }
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("ReactionComponent")]
-        [DataContract]
-        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ReactionComponent"; } }
->>>>>>> develop-stu3
             
             /// <summary>
             /// Educational material publication date
@@ -426,16 +394,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (DocumentTypeElement != null) yield return new ElementValue("documentType", false, DocumentTypeElement);
-                    if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
-                    if (PublicationDateElement != null) yield return new ElementValue("publicationDate", false, PublicationDateElement);
-                    if (PresentationDateElement != null) yield return new ElementValue("presentationDate", false, PresentationDateElement);
-=======
-                    if (DateElement != null) yield return new ElementValue("date", DateElement);
-                    if (Detail != null) yield return new ElementValue("detail", Detail);
-                    if (ReportedElement != null) yield return new ElementValue("reported", ReportedElement);
->>>>>>> develop-stu3
+                    if (DocumentTypeElement != null) yield return new ElementValue("documentType", DocumentTypeElement);
+                    if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+                    if (PublicationDateElement != null) yield return new ElementValue("publicationDate", PublicationDateElement);
+                    if (PresentationDateElement != null) yield return new ElementValue("presentationDate", PresentationDateElement);
                 }
             }
 
@@ -445,11 +407,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProtocolAppliedComponent")]
         [DataContract]
-<<<<<<< HEAD
-        public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-=======
-        public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
->>>>>>> develop-stu3
+        public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProtocolAppliedComponent"; } }
@@ -601,21 +559,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
-                    if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                    if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
-                    if (DoseNumber != null) yield return new ElementValue("doseNumber", false, DoseNumber);
-=======
-                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", DoseSequenceElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-                    if (Authority != null) yield return new ElementValue("authority", Authority);
                     if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
-                    if (SeriesDosesElement != null) yield return new ElementValue("seriesDoses", SeriesDosesElement);
-                    foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", elem); }
-                    if (DoseStatus != null) yield return new ElementValue("doseStatus", DoseStatus);
-                    if (DoseStatusReason != null) yield return new ElementValue("doseStatusReason", DoseStatusReason);
->>>>>>> develop-stu3
+                    if (Authority != null) yield return new ElementValue("authority", Authority);
+                    if (TargetDisease != null) yield return new ElementValue("targetDisease", TargetDisease);
+                    if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
                 }
             }
 
@@ -1291,42 +1238,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (StatusReason != null) yield return new ElementValue("statusReason", false, StatusReason);
-                if (VaccineCode != null) yield return new ElementValue("vaccineCode", false, VaccineCode);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                if (RecordedElement != null) yield return new ElementValue("recorded", false, RecordedElement);
-                if (PrimarySourceElement != null) yield return new ElementValue("primarySource", false, PrimarySourceElement);
-                if (ReportOrigin != null) yield return new ElementValue("reportOrigin", false, ReportOrigin);
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
-                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
-                if (Site != null) yield return new ElementValue("site", false, Site);
-                if (Route != null) yield return new ElementValue("route", false, Route);
-                if (DoseQuantity != null) yield return new ElementValue("doseQuantity", false, DoseQuantity);
-                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                if (IsSubpotentElement != null) yield return new ElementValue("isSubpotent", false, IsSubpotentElement);
-                foreach (var elem in SubpotentReason) { if (elem != null) yield return new ElementValue("subpotentReason", true, elem); }
-                foreach (var elem in Education) { if (elem != null) yield return new ElementValue("education", true, elem); }
-                foreach (var elem in ProgramEligibility) { if (elem != null) yield return new ElementValue("programEligibility", true, elem); }
-                if (FundingSource != null) yield return new ElementValue("fundingSource", false, FundingSource);
-                foreach (var elem in ProtocolApplied) { if (elem != null) yield return new ElementValue("protocolApplied", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (NotGivenElement != null) yield return new ElementValue("notGiven", NotGivenElement);
+                if (StatusReason != null) yield return new ElementValue("statusReason", StatusReason);
                 if (VaccineCode != null) yield return new ElementValue("vaccineCode", VaccineCode);
                 if (Patient != null) yield return new ElementValue("patient", Patient);
                 if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
+                if (RecordedElement != null) yield return new ElementValue("recorded", RecordedElement);
                 if (PrimarySourceElement != null) yield return new ElementValue("primarySource", PrimarySourceElement);
                 if (ReportOrigin != null) yield return new ElementValue("reportOrigin", ReportOrigin);
                 if (Location != null) yield return new ElementValue("location", Location);
@@ -1336,12 +1255,16 @@ namespace Hl7.Fhir.Model
                 if (Site != null) yield return new ElementValue("site", Site);
                 if (Route != null) yield return new ElementValue("route", Route);
                 if (DoseQuantity != null) yield return new ElementValue("doseQuantity", DoseQuantity);
-                foreach (var elem in Practitioner) { if (elem != null) yield return new ElementValue("practitioner", elem); }
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-                if (Explanation != null) yield return new ElementValue("explanation", Explanation);
-                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", elem); }
-                foreach (var elem in VaccinationProtocol) { if (elem != null) yield return new ElementValue("vaccinationProtocol", elem); }
->>>>>>> develop-stu3
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                if (IsSubpotentElement != null) yield return new ElementValue("isSubpotent", IsSubpotentElement);
+                foreach (var elem in SubpotentReason) { if (elem != null) yield return new ElementValue("subpotentReason", elem); }
+                foreach (var elem in Education) { if (elem != null) yield return new ElementValue("education", elem); }
+                foreach (var elem in ProgramEligibility) { if (elem != null) yield return new ElementValue("programEligibility", elem); }
+                if (FundingSource != null) yield return new ElementValue("fundingSource", FundingSource);
+                foreach (var elem in ProtocolApplied) { if (elem != null) yield return new ElementValue("protocolApplied", elem); }
             }
         }
 

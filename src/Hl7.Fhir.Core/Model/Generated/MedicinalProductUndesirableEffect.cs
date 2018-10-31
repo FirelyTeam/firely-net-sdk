@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PopulationComponent")]
         [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PopulationComponent"; } }
@@ -186,10 +186,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Age != null) yield return new ElementValue("age", false, Age);
-                    if (Gender != null) yield return new ElementValue("gender", false, Gender);
-                    if (Race != null) yield return new ElementValue("race", false, Race);
-                    if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", false, PhysiologicalCondition);
+                    if (Age != null) yield return new ElementValue("age", Age);
+                    if (Gender != null) yield return new ElementValue("gender", Gender);
+                    if (Race != null) yield return new ElementValue("race", Race);
+                    if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", PhysiologicalCondition);
                 }
             }
 
@@ -346,11 +346,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (SymptomConditionEffect != null) yield return new ElementValue("symptomConditionEffect", false, SymptomConditionEffect);
-                if (Classification != null) yield return new ElementValue("classification", false, Classification);
-                if (FrequencyOfOccurrence != null) yield return new ElementValue("frequencyOfOccurrence", false, FrequencyOfOccurrence);
-                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (SymptomConditionEffect != null) yield return new ElementValue("symptomConditionEffect", SymptomConditionEffect);
+                if (Classification != null) yield return new ElementValue("classification", Classification);
+                if (FrequencyOfOccurrence != null) yield return new ElementValue("frequencyOfOccurrence", FrequencyOfOccurrence);
+                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
             }
         }
 

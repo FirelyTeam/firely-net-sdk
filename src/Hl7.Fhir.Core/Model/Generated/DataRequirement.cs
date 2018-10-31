@@ -260,18 +260,10 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (SearchParamElement != null) yield return new ElementValue("searchParam", false, SearchParamElement);
-                    if (ValueSetElement != null) yield return new ElementValue("valueSet", false, ValueSetElement);
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-=======
                     if (PathElement != null) yield return new ElementValue("path", PathElement);
-                    if (ValueSet != null) yield return new ElementValue("valueSet", ValueSet);
-                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return new ElementValue("valueCode", elem); }
-                    foreach (var elem in ValueCoding) { if (elem != null) yield return new ElementValue("valueCoding", elem); }
-                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return new ElementValue("valueCodeableConcept", elem); }
->>>>>>> develop-stu3
+                    if (SearchParamElement != null) yield return new ElementValue("searchParam", SearchParamElement);
+                    if (ValueSetElement != null) yield return new ElementValue("valueSet", ValueSetElement);
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
  
                 } 
             } 
@@ -428,14 +420,9 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (SearchParamElement != null) yield return new ElementValue("searchParam", false, SearchParamElement);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-=======
                     if (PathElement != null) yield return new ElementValue("path", PathElement);
+                    if (SearchParamElement != null) yield return new ElementValue("searchParam", SearchParamElement);
                     if (Value != null) yield return new ElementValue("value", Value);
->>>>>>> develop-stu3
  
                 } 
             } 
@@ -443,7 +430,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("SortComponent")]
         [DataContract]
-        public partial class SortComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class SortComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SortComponent"; } }
@@ -575,8 +562,8 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (DirectionElement != null) yield return new ElementValue("direction", false, DirectionElement);
+                    if (PathElement != null) yield return new ElementValue("path", PathElement);
+                    if (DirectionElement != null) yield return new ElementValue("direction", DirectionElement);
  
                 } 
             } 
@@ -856,22 +843,14 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                foreach (var elem in MustSupportElement) { if (elem != null) yield return new ElementValue("mustSupport", true, elem); }
-                foreach (var elem in CodeFilter) { if (elem != null) yield return new ElementValue("codeFilter", true, elem); }
-                foreach (var elem in DateFilter) { if (elem != null) yield return new ElementValue("dateFilter", true, elem); }
-                if (LimitElement != null) yield return new ElementValue("limit", false, LimitElement);
-                foreach (var elem in Sort) { if (elem != null) yield return new ElementValue("sort", true, elem); }
-=======
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
                 foreach (var elem in MustSupportElement) { if (elem != null) yield return new ElementValue("mustSupport", elem); }
                 foreach (var elem in CodeFilter) { if (elem != null) yield return new ElementValue("codeFilter", elem); }
                 foreach (var elem in DateFilter) { if (elem != null) yield return new ElementValue("dateFilter", elem); }
->>>>>>> develop-stu3
+                if (LimitElement != null) yield return new ElementValue("limit", LimitElement);
+                foreach (var elem in Sort) { if (elem != null) yield return new ElementValue("sort", elem); }
  
             } 
         } 

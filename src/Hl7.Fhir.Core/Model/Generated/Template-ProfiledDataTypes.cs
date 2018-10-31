@@ -1,10 +1,6 @@
 ﻿
 //
-<<<<<<< HEAD
-// Model Generated on Mon, 20 Aug 2018 11:16:09 GMT for FHIR v3.5.0
-=======
-// Model Generated on Tue, 18 Sep 2018 14:39:27 GMT for FHIR v3.0.1
->>>>>>> develop-stu3
+// Model Generated on Wed, 31 Oct 2018 17:00:33 GMT for FHIR v3.5.0
 //
 // Generated Shared Enumeration: Use
 

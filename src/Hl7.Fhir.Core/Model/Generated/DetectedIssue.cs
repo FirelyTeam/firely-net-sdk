@@ -578,20 +578,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                foreach (var elem in Implicated) { if (elem != null) yield return new ElementValue("implicated", true, elem); }
-                if (DetailElement != null) yield return new ElementValue("detail", false, DetailElement);
-                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
-                foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", true, elem); }
-=======
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Category != null) yield return new ElementValue("category", Category);
                 if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
@@ -602,7 +589,6 @@ namespace Hl7.Fhir.Model
                 if (DetailElement != null) yield return new ElementValue("detail", DetailElement);
                 if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
                 foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", elem); }
->>>>>>> develop-stu3
             }
         }
 

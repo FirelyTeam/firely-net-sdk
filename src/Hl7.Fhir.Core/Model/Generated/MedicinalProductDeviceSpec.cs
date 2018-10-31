@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MaterialComponent")]
         [DataContract]
-        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MaterialComponent"; } }
@@ -206,9 +206,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return new ElementValue("substance", false, Substance);
-                    if (AlternateElement != null) yield return new ElementValue("alternate", false, AlternateElement);
-                    if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", false, AllergenicIndicatorElement);
+                    if (Substance != null) yield return new ElementValue("substance", Substance);
+                    if (AlternateElement != null) yield return new ElementValue("alternate", AlternateElement);
+                    if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", AllergenicIndicatorElement);
                 }
             }
 
@@ -614,22 +614,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (TradeNameElement != null) yield return new ElementValue("tradeName", false, TradeNameElement);
-                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                if (ListingNumberElement != null) yield return new ElementValue("listingNumber", false, ListingNumberElement);
-                if (ModelNumberElement != null) yield return new ElementValue("modelNumber", false, ModelNumberElement);
-                if (SterilityIndicator != null) yield return new ElementValue("sterilityIndicator", false, SterilityIndicator);
-                if (SterilisationRequirement != null) yield return new ElementValue("sterilisationRequirement", false, SterilisationRequirement);
-                if (Usage != null) yield return new ElementValue("usage", false, Usage);
-                foreach (var elem in Nomenclature) { if (elem != null) yield return new ElementValue("nomenclature", true, elem); }
-                foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", true, elem); }
-                if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", false, PhysicalCharacteristics);
-                foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", true, elem); }
-                foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", true, elem); }
-                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", true, elem); }
-                foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", true, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (TradeNameElement != null) yield return new ElementValue("tradeName", TradeNameElement);
+                if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                if (ListingNumberElement != null) yield return new ElementValue("listingNumber", ListingNumberElement);
+                if (ModelNumberElement != null) yield return new ElementValue("modelNumber", ModelNumberElement);
+                if (SterilityIndicator != null) yield return new ElementValue("sterilityIndicator", SterilityIndicator);
+                if (SterilisationRequirement != null) yield return new ElementValue("sterilisationRequirement", SterilisationRequirement);
+                if (Usage != null) yield return new ElementValue("usage", Usage);
+                foreach (var elem in Nomenclature) { if (elem != null) yield return new ElementValue("nomenclature", elem); }
+                foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", elem); }
+                if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", PhysicalCharacteristics);
+                foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", elem); }
+                foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", elem); }
+                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+                foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", elem); }
             }
         }
 

@@ -410,13 +410,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-=======
-                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                     if (TextElement != null) yield return new ElementValue("text", TextElement);
->>>>>>> develop-stu3
                 }
             }
 
@@ -790,36 +785,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                if (Request != null) yield return new ElementValue("request", false, Request);
-                if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
-                if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
-                if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
-                foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", true, elem); }
-                if (Form != null) yield return new ElementValue("form", false, Form);
-                if (Total != null) yield return new ElementValue("total", false, Total);
-                foreach (var elem in ProcessNote) { if (elem != null) yield return new ElementValue("processNote", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Period != null) yield return new ElementValue("period", Period);
                 if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
                 if (Organization != null) yield return new ElementValue("organization", Organization);
                 if (Request != null) yield return new ElementValue("request", Request);
-                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                if (OutcomeElement != null) yield return new ElementValue("outcome", OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", RequestOrganization);
                 foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
                 if (Form != null) yield return new ElementValue("form", Form);
                 if (Total != null) yield return new ElementValue("total", Total);
                 foreach (var elem in ProcessNote) { if (elem != null) yield return new ElementValue("processNote", elem); }
->>>>>>> develop-stu3
             }
         }
 

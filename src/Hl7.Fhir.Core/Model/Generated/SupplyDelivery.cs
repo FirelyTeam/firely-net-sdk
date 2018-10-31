@@ -478,20 +478,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (SuppliedItem != null) yield return new ElementValue("suppliedItem", false, SuppliedItem);
-                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                if (Supplier != null) yield return new ElementValue("supplier", false, Supplier);
-                if (Destination != null) yield return new ElementValue("destination", false, Destination);
-                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, elem); }
-=======
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
@@ -502,7 +489,6 @@ namespace Hl7.Fhir.Model
                 if (Supplier != null) yield return new ElementValue("supplier", Supplier);
                 if (Destination != null) yield return new ElementValue("destination", Destination);
                 foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", elem); }
->>>>>>> develop-stu3
             }
         }
 

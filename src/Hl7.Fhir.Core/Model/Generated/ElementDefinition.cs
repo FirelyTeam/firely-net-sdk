@@ -993,19 +993,11 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
-                    foreach (var elem in TargetProfileElement) { if (elem != null) yield return new ElementValue("targetProfile", true, elem); }
-                    foreach (var elem in AggregationElement) { if (elem != null) yield return new ElementValue("aggregation", true, elem); }
-                    if (VersioningElement != null) yield return new ElementValue("versioning", false, VersioningElement);
-=======
                     if (CodeElement != null) yield return new ElementValue("code", CodeElement);
-                    if (ProfileElement != null) yield return new ElementValue("profile", ProfileElement);
-                    if (TargetProfileElement != null) yield return new ElementValue("targetProfile", TargetProfileElement);
+                    foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", elem); }
+                    foreach (var elem in TargetProfileElement) { if (elem != null) yield return new ElementValue("targetProfile", elem); }
                     foreach (var elem in AggregationElement) { if (elem != null) yield return new ElementValue("aggregation", elem); }
                     if (VersioningElement != null) yield return new ElementValue("versioning", VersioningElement);
->>>>>>> develop-stu3
  
                 } 
             } 
@@ -1631,15 +1623,9 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                    if (StrengthElement != null) yield return new ElementValue("strength", false, StrengthElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (ValueSetElement != null) yield return new ElementValue("valueSet", false, ValueSetElement);
-=======
                     if (StrengthElement != null) yield return new ElementValue("strength", StrengthElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-                    if (ValueSet != null) yield return new ElementValue("valueSet", ValueSet);
->>>>>>> develop-stu3
+                    if (ValueSetElement != null) yield return new ElementValue("valueSet", ValueSetElement);
  
                 } 
             } 
@@ -2910,45 +2896,10 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                foreach (var elem in RepresentationElement) { if (elem != null) yield return new ElementValue("representation", true, elem); }
-                if (SliceNameElement != null) yield return new ElementValue("sliceName", false, SliceNameElement);
-                if (SliceIsConstrainingElement != null) yield return new ElementValue("sliceIsConstraining", false, SliceIsConstrainingElement);
-                if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
-                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                if (Slicing != null) yield return new ElementValue("slicing", false, Slicing);
-                if (ShortElement != null) yield return new ElementValue("short", false, ShortElement);
-                if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
-                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
-                if (MinElement != null) yield return new ElementValue("min", false, MinElement);
-                if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
-                if (Base != null) yield return new ElementValue("base", false, Base);
-                if (ContentReferenceElement != null) yield return new ElementValue("contentReference", false, ContentReferenceElement);
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                if (DefaultValue != null) yield return new ElementValue("defaultValue", false, DefaultValue);
-                if (MeaningWhenMissingElement != null) yield return new ElementValue("meaningWhenMissing", false, MeaningWhenMissingElement);
-                if (OrderMeaningElement != null) yield return new ElementValue("orderMeaning", false, OrderMeaningElement);
-                if (Fixed != null) yield return new ElementValue("fixed", false, Fixed);
-                if (Pattern != null) yield return new ElementValue("pattern", false, Pattern);
-                foreach (var elem in Example) { if (elem != null) yield return new ElementValue("example", true, elem); }
-                if (MinValue != null) yield return new ElementValue("minValue", false, MinValue);
-                if (MaxValue != null) yield return new ElementValue("maxValue", false, MaxValue);
-                if (MaxLengthElement != null) yield return new ElementValue("maxLength", false, MaxLengthElement);
-                foreach (var elem in ConditionElement) { if (elem != null) yield return new ElementValue("condition", true, elem); }
-                foreach (var elem in Constraint) { if (elem != null) yield return new ElementValue("constraint", true, elem); }
-                if (MustSupportElement != null) yield return new ElementValue("mustSupport", false, MustSupportElement);
-                if (IsModifierElement != null) yield return new ElementValue("isModifier", false, IsModifierElement);
-                if (IsModifierReasonElement != null) yield return new ElementValue("isModifierReason", false, IsModifierReasonElement);
-                if (IsSummaryElement != null) yield return new ElementValue("isSummary", false, IsSummaryElement);
-                if (Binding != null) yield return new ElementValue("binding", false, Binding);
-                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", true, elem); }
-=======
                 if (PathElement != null) yield return new ElementValue("path", PathElement);
                 foreach (var elem in RepresentationElement) { if (elem != null) yield return new ElementValue("representation", elem); }
                 if (SliceNameElement != null) yield return new ElementValue("sliceName", SliceNameElement);
+                if (SliceIsConstrainingElement != null) yield return new ElementValue("sliceIsConstraining", SliceIsConstrainingElement);
                 if (LabelElement != null) yield return new ElementValue("label", LabelElement);
                 foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
                 if (Slicing != null) yield return new ElementValue("slicing", Slicing);
@@ -2975,10 +2926,10 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Constraint) { if (elem != null) yield return new ElementValue("constraint", elem); }
                 if (MustSupportElement != null) yield return new ElementValue("mustSupport", MustSupportElement);
                 if (IsModifierElement != null) yield return new ElementValue("isModifier", IsModifierElement);
+                if (IsModifierReasonElement != null) yield return new ElementValue("isModifierReason", IsModifierReasonElement);
                 if (IsSummaryElement != null) yield return new ElementValue("isSummary", IsSummaryElement);
                 if (Binding != null) yield return new ElementValue("binding", Binding);
                 foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", elem); }
->>>>>>> develop-stu3
  
             } 
         } 

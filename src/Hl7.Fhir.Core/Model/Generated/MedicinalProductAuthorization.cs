@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("JurisdictionalAuthorizationComponent")]
         [DataContract]
-        public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "JurisdictionalAuthorizationComponent"; } }
@@ -203,11 +203,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                    if (Country != null) yield return new ElementValue("country", false, Country);
-                    foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                    if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", false, LegalStatusOfSupply);
-                    if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", false, ValidityPeriod);
+                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                    if (Country != null) yield return new ElementValue("country", Country);
+                    foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                    if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", LegalStatusOfSupply);
+                    if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
                 }
             }
 
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProcedureComponent")]
         [DataContract]
-        public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProcedureComponent"; } }
@@ -348,10 +348,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Date != null) yield return new ElementValue("date", false, Date);
-                    foreach (var elem in Application) { if (elem != null) yield return new ElementValue("application", true, elem); }
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Date != null) yield return new ElementValue("date", Date);
+                    foreach (var elem in Application) { if (elem != null) yield return new ElementValue("application", elem); }
                 }
             }
 
@@ -794,23 +794,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", false, LegalStatusOfSupply);
-                if (Status != null) yield return new ElementValue("status", false, Status);
-                if (StatusDateElement != null) yield return new ElementValue("statusDate", false, StatusDateElement);
-                if (RestoreDateElement != null) yield return new ElementValue("restoreDate", false, RestoreDateElement);
-                if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", false, ValidityPeriod);
-                if (DataExclusivityPeriod != null) yield return new ElementValue("dataExclusivityPeriod", false, DataExclusivityPeriod);
-                if (DateOfFirstAuthorizationElement != null) yield return new ElementValue("dateOfFirstAuthorization", false, DateOfFirstAuthorizationElement);
-                if (InternationalBirthDateElement != null) yield return new ElementValue("internationalBirthDate", false, InternationalBirthDateElement);
-                if (LegalBasis != null) yield return new ElementValue("legalBasis", false, LegalBasis);
-                foreach (var elem in JurisdictionalAuthorization) { if (elem != null) yield return new ElementValue("jurisdictionalAuthorization", true, elem); }
-                if (Holder != null) yield return new ElementValue("holder", false, Holder);
-                if (Regulator != null) yield return new ElementValue("regulator", false, Regulator);
-                if (Procedure != null) yield return new ElementValue("procedure", false, Procedure);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", LegalStatusOfSupply);
+                if (Status != null) yield return new ElementValue("status", Status);
+                if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
+                if (RestoreDateElement != null) yield return new ElementValue("restoreDate", RestoreDateElement);
+                if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
+                if (DataExclusivityPeriod != null) yield return new ElementValue("dataExclusivityPeriod", DataExclusivityPeriod);
+                if (DateOfFirstAuthorizationElement != null) yield return new ElementValue("dateOfFirstAuthorization", DateOfFirstAuthorizationElement);
+                if (InternationalBirthDateElement != null) yield return new ElementValue("internationalBirthDate", InternationalBirthDateElement);
+                if (LegalBasis != null) yield return new ElementValue("legalBasis", LegalBasis);
+                foreach (var elem in JurisdictionalAuthorization) { if (elem != null) yield return new ElementValue("jurisdictionalAuthorization", elem); }
+                if (Holder != null) yield return new ElementValue("holder", Holder);
+                if (Regulator != null) yield return new ElementValue("regulator", Regulator);
+                if (Procedure != null) yield return new ElementValue("procedure", Procedure);
             }
         }
 

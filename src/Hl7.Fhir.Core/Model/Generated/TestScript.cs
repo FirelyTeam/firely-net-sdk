@@ -2351,23 +2351,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (RequiredElement != null) yield return new ElementValue("required", false, RequiredElement);
-                    if (ValidatedElement != null) yield return new ElementValue("validated", false, ValidatedElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    foreach (var elem in OriginElement) { if (elem != null) yield return new ElementValue("origin", true, elem); }
-                    if (DestinationElement != null) yield return new ElementValue("destination", false, DestinationElement);
-                    foreach (var elem in LinkElement) { if (elem != null) yield return new ElementValue("link", true, elem); }
-                    if (CapabilitiesElement != null) yield return new ElementValue("capabilities", false, CapabilitiesElement);
-=======
                     if (RequiredElement != null) yield return new ElementValue("required", RequiredElement);
                     if (ValidatedElement != null) yield return new ElementValue("validated", ValidatedElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                     foreach (var elem in OriginElement) { if (elem != null) yield return new ElementValue("origin", elem); }
                     if (DestinationElement != null) yield return new ElementValue("destination", DestinationElement);
                     foreach (var elem in LinkElement) { if (elem != null) yield return new ElementValue("link", elem); }
-                    if (Capabilities != null) yield return new ElementValue("capabilities", Capabilities);
->>>>>>> develop-stu3
+                    if (CapabilitiesElement != null) yield return new ElementValue("capabilities", CapabilitiesElement);
                 }
             }
 
@@ -4323,30 +4313,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (ResourceElement != null) yield return new ElementValue("resource", false, ResourceElement);
-                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (AcceptElement != null) yield return new ElementValue("accept", false, AcceptElement);
-                    if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
-                    if (DestinationElement != null) yield return new ElementValue("destination", false, DestinationElement);
-                    if (EncodeRequestUrlElement != null) yield return new ElementValue("encodeRequestUrl", false, EncodeRequestUrlElement);
-                    if (OriginElement != null) yield return new ElementValue("origin", false, OriginElement);
-                    if (ParamsElement != null) yield return new ElementValue("params", false, ParamsElement);
-                    foreach (var elem in RequestHeader) { if (elem != null) yield return new ElementValue("requestHeader", true, elem); }
-                    if (RequestIdElement != null) yield return new ElementValue("requestId", false, RequestIdElement);
-                    if (ResponseIdElement != null) yield return new ElementValue("responseId", false, ResponseIdElement);
-                    if (SourceIdElement != null) yield return new ElementValue("sourceId", false, SourceIdElement);
-                    if (TargetIdElement != null) yield return new ElementValue("targetId", false, TargetIdElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-=======
                     if (Type != null) yield return new ElementValue("type", Type);
                     if (ResourceElement != null) yield return new ElementValue("resource", ResourceElement);
                     if (LabelElement != null) yield return new ElementValue("label", LabelElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                     if (AcceptElement != null) yield return new ElementValue("accept", AcceptElement);
-                    if (ContentType_Element != null) yield return new ElementValue("contentType", ContentType_Element);
+                    if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
                     if (DestinationElement != null) yield return new ElementValue("destination", DestinationElement);
                     if (EncodeRequestUrlElement != null) yield return new ElementValue("encodeRequestUrl", EncodeRequestUrlElement);
                     if (OriginElement != null) yield return new ElementValue("origin", OriginElement);
@@ -4357,7 +4329,6 @@ namespace Hl7.Fhir.Model
                     if (SourceIdElement != null) yield return new ElementValue("sourceId", SourceIdElement);
                     if (TargetIdElement != null) yield return new ElementValue("targetId", TargetIdElement);
                     if (UrlElement != null) yield return new ElementValue("url", UrlElement);
->>>>>>> develop-stu3
                 }
             }
 
@@ -5397,39 +5368,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (DirectionElement != null) yield return new ElementValue("direction", false, DirectionElement);
-                    if (CompareToSourceIdElement != null) yield return new ElementValue("compareToSourceId", false, CompareToSourceIdElement);
-                    if (CompareToSourceExpressionElement != null) yield return new ElementValue("compareToSourceExpression", false, CompareToSourceExpressionElement);
-                    if (CompareToSourcePathElement != null) yield return new ElementValue("compareToSourcePath", false, CompareToSourcePathElement);
-                    if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
-                    if (HeaderFieldElement != null) yield return new ElementValue("headerField", false, HeaderFieldElement);
-                    if (MinimumIdElement != null) yield return new ElementValue("minimumId", false, MinimumIdElement);
-                    if (NavigationLinksElement != null) yield return new ElementValue("navigationLinks", false, NavigationLinksElement);
-                    if (OperatorElement != null) yield return new ElementValue("operator", false, OperatorElement);
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (RequestMethodElement != null) yield return new ElementValue("requestMethod", false, RequestMethodElement);
-                    if (RequestURLElement != null) yield return new ElementValue("requestURL", false, RequestURLElement);
-                    if (ResourceElement != null) yield return new ElementValue("resource", false, ResourceElement);
-                    if (ResponseElement != null) yield return new ElementValue("response", false, ResponseElement);
-                    if (ResponseCodeElement != null) yield return new ElementValue("responseCode", false, ResponseCodeElement);
-                    if (Rule != null) yield return new ElementValue("rule", false, Rule);
-                    if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
-                    if (SourceIdElement != null) yield return new ElementValue("sourceId", false, SourceIdElement);
-                    if (ValidateProfileIdElement != null) yield return new ElementValue("validateProfileId", false, ValidateProfileIdElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                    if (WarningOnlyElement != null) yield return new ElementValue("warningOnly", false, WarningOnlyElement);
-=======
                     if (LabelElement != null) yield return new ElementValue("label", LabelElement);
                     if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                     if (DirectionElement != null) yield return new ElementValue("direction", DirectionElement);
                     if (CompareToSourceIdElement != null) yield return new ElementValue("compareToSourceId", CompareToSourceIdElement);
                     if (CompareToSourceExpressionElement != null) yield return new ElementValue("compareToSourceExpression", CompareToSourceExpressionElement);
                     if (CompareToSourcePathElement != null) yield return new ElementValue("compareToSourcePath", CompareToSourcePathElement);
-                    if (ContentType_Element != null) yield return new ElementValue("contentType", ContentType_Element);
+                    if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
                     if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
                     if (HeaderFieldElement != null) yield return new ElementValue("headerField", HeaderFieldElement);
                     if (MinimumIdElement != null) yield return new ElementValue("minimumId", MinimumIdElement);
@@ -5447,7 +5392,6 @@ namespace Hl7.Fhir.Model
                     if (ValidateProfileIdElement != null) yield return new ElementValue("validateProfileId", ValidateProfileIdElement);
                     if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                     if (WarningOnlyElement != null) yield return new ElementValue("warningOnly", WarningOnlyElement);
->>>>>>> develop-stu3
                 }
             }
 

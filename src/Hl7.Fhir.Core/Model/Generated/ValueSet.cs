@@ -2289,26 +2289,6 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (ImmutableElement != null) yield return new ElementValue("immutable", false, ImmutableElement);
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (Compose != null) yield return new ElementValue("compose", false, Compose);
-                if (Expansion != null) yield return new ElementValue("expansion", false, Expansion);
-=======
                 if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (VersionElement != null) yield return new ElementValue("version", VersionElement);
@@ -2325,10 +2305,8 @@ namespace Hl7.Fhir.Model
                 if (ImmutableElement != null) yield return new ElementValue("immutable", ImmutableElement);
                 if (Purpose != null) yield return new ElementValue("purpose", Purpose);
                 if (Copyright != null) yield return new ElementValue("copyright", Copyright);
-                if (ExtensibleElement != null) yield return new ElementValue("extensible", ExtensibleElement);
                 if (Compose != null) yield return new ElementValue("compose", Compose);
                 if (Expansion != null) yield return new ElementValue("expansion", Expansion);
->>>>>>> develop-stu3
             }
         }
 

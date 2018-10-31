@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContextComponent")]
         [DataContract]
-        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContextComponent"; } }
@@ -488,8 +488,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
                 }
             }
 
@@ -1729,35 +1729,6 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                foreach (var elem in Keyword) { if (elem != null) yield return new ElementValue("keyword", true, elem); }
-                if (FhirVersionElement != null) yield return new ElementValue("fhirVersion", false, FhirVersionElement);
-                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", true, elem); }
-                if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
-                if (AbstractElement != null) yield return new ElementValue("abstract", false, AbstractElement);
-                foreach (var elem in Context) { if (elem != null) yield return new ElementValue("context", true, elem); }
-                foreach (var elem in ContextInvariantElement) { if (elem != null) yield return new ElementValue("contextInvariant", true, elem); }
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (BaseDefinitionElement != null) yield return new ElementValue("baseDefinition", false, BaseDefinitionElement);
-                if (DerivationElement != null) yield return new ElementValue("derivation", false, DerivationElement);
-                if (Snapshot != null) yield return new ElementValue("snapshot", false, Snapshot);
-                if (Differential != null) yield return new ElementValue("differential", false, Differential);
-=======
                 if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (VersionElement != null) yield return new ElementValue("version", VersionElement);
@@ -1778,15 +1749,13 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", elem); }
                 if (KindElement != null) yield return new ElementValue("kind", KindElement);
                 if (AbstractElement != null) yield return new ElementValue("abstract", AbstractElement);
-                if (ContextTypeElement != null) yield return new ElementValue("contextType", ContextTypeElement);
-                foreach (var elem in ContextElement) { if (elem != null) yield return new ElementValue("context", elem); }
+                foreach (var elem in Context) { if (elem != null) yield return new ElementValue("context", elem); }
                 foreach (var elem in ContextInvariantElement) { if (elem != null) yield return new ElementValue("contextInvariant", elem); }
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 if (BaseDefinitionElement != null) yield return new ElementValue("baseDefinition", BaseDefinitionElement);
                 if (DerivationElement != null) yield return new ElementValue("derivation", DerivationElement);
                 if (Snapshot != null) yield return new ElementValue("snapshot", Snapshot);
                 if (Differential != null) yield return new ElementValue("differential", Differential);
->>>>>>> develop-stu3
             }
         }
 

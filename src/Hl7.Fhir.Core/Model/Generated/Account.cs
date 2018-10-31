@@ -679,32 +679,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (ServicePeriod != null) yield return new ElementValue("servicePeriod", false, ServicePeriod);
-                foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", true, elem); }
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Guarantor) { if (elem != null) yield return new ElementValue("guarantor", true, elem); }
-                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Type != null) yield return new ElementValue("type", Type);
                 if (NameElement != null) yield return new ElementValue("name", NameElement);
-                if (Subject != null) yield return new ElementValue("subject", Subject);
-                if (Period != null) yield return new ElementValue("period", Period);
-                if (Active != null) yield return new ElementValue("active", Active);
-                if (Balance != null) yield return new ElementValue("balance", Balance);
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (ServicePeriod != null) yield return new ElementValue("servicePeriod", ServicePeriod);
                 foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", elem); }
                 if (Owner != null) yield return new ElementValue("owner", Owner);
                 if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                 foreach (var elem in Guarantor) { if (elem != null) yield return new ElementValue("guarantor", elem); }
->>>>>>> develop-stu3
+                if (PartOf != null) yield return new ElementValue("partOf", PartOf);
             }
         }
 

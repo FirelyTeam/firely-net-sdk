@@ -334,26 +334,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Request != null) yield return new ElementValue("request", false, Request);
-                if (OutcomeElement != null) yield return new ElementValue("outcome", false, OutcomeElement);
-                if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Request != null) yield return new ElementValue("request", Request);
-                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                if (OutcomeElement != null) yield return new ElementValue("outcome", OutcomeElement);
                 if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
                 if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
                 if (Organization != null) yield return new ElementValue("organization", Organization);
                 if (RequestProvider != null) yield return new ElementValue("requestProvider", RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", RequestOrganization);
->>>>>>> develop-stu3
             }
         }
 

@@ -718,19 +718,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Unit != null) yield return new ElementValue("unit", false, Unit);
-                if (Source != null) yield return new ElementValue("source", false, Source);
-                if (Parent != null) yield return new ElementValue("parent", false, Parent);
-                if (OperationalStatusElement != null) yield return new ElementValue("operationalStatus", false, OperationalStatusElement);
-                if (ColorElement != null) yield return new ElementValue("color", false, ColorElement);
-                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
-                if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", false, MeasurementPeriod);
-                foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", true, elem); }
-=======
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (Type != null) yield return new ElementValue("type", Type);
                 if (Unit != null) yield return new ElementValue("unit", Unit);
                 if (Source != null) yield return new ElementValue("source", Source);
@@ -740,7 +728,6 @@ namespace Hl7.Fhir.Model
                 if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
                 if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", MeasurementPeriod);
                 foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", elem); }
->>>>>>> develop-stu3
             }
         }
 

@@ -290,18 +290,11 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-<<<<<<< HEAD
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Timing != null) yield return new ElementValue("timing", false, Timing);
-                if (Data != null) yield return new ElementValue("data", false, Data);
-                if (Condition != null) yield return new ElementValue("condition", false, Condition);
-=======
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-                if (EventNameElement != null) yield return new ElementValue("eventName", EventNameElement);
-                if (EventTiming != null) yield return new ElementValue("eventTiming", EventTiming);
-                if (EventData != null) yield return new ElementValue("eventData", EventData);
->>>>>>> develop-stu3
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (Timing != null) yield return new ElementValue("timing", Timing);
+                if (Data != null) yield return new ElementValue("data", Data);
+                if (Condition != null) yield return new ElementValue("condition", Condition);
  
             } 
         } 

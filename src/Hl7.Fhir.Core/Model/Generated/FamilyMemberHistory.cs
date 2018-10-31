@@ -752,36 +752,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-<<<<<<< HEAD
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", true, elem); }
-                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
-                if (Gender != null) yield return new ElementValue("gender", false, Gender);
-                if (Born != null) yield return new ElementValue("born", false, Born);
-                if (Age != null) yield return new ElementValue("age", false, Age);
-                if (EstimatedAgeElement != null) yield return new ElementValue("estimatedAge", false, EstimatedAgeElement);
-                if (Deceased != null) yield return new ElementValue("deceased", false, Deceased);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
-=======
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
+                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", elem); }
+                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-                if (NotDoneElement != null) yield return new ElementValue("notDone", NotDoneElement);
-                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", NotDoneReason);
+                if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", DataAbsentReason);
                 if (Patient != null) yield return new ElementValue("patient", Patient);
                 if (DateElement != null) yield return new ElementValue("date", DateElement);
                 if (NameElement != null) yield return new ElementValue("name", NameElement);
                 if (Relationship != null) yield return new ElementValue("relationship", Relationship);
-                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                if (Gender != null) yield return new ElementValue("gender", Gender);
                 if (Born != null) yield return new ElementValue("born", Born);
                 if (Age != null) yield return new ElementValue("age", Age);
                 if (EstimatedAgeElement != null) yield return new ElementValue("estimatedAge", EstimatedAgeElement);
@@ -790,7 +770,6 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
->>>>>>> develop-stu3
             }
         }
 

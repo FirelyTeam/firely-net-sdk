@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("UdiDeviceIdentifierComponent")]
         [DataContract]
-        public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "UdiDeviceIdentifierComponent"; } }
@@ -227,9 +227,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", false, DeviceIdentifierElement);
-                    if (IssuerElement != null) yield return new ElementValue("issuer", false, IssuerElement);
-                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", false, JurisdictionElement);
+                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", DeviceIdentifierElement);
+                    if (IssuerElement != null) yield return new ElementValue("issuer", IssuerElement);
+                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", JurisdictionElement);
                 }
             }
 
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DeviceNameComponent")]
         [DataContract]
-        public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DeviceNameComponent"; } }
@@ -372,8 +372,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 }
             }
 
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SpecializationComponent")]
         [DataContract]
-        public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SpecializationComponent"; } }
@@ -515,8 +515,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SystemTypeElement != null) yield return new ElementValue("systemType", false, SystemTypeElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (SystemTypeElement != null) yield return new ElementValue("systemType", SystemTypeElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 }
             }
 
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CapabilityComponent")]
         [DataContract]
-        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CapabilityComponent"; } }
@@ -621,8 +621,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in Description) { if (elem != null) yield return new ElementValue("description", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in Description) { if (elem != null) yield return new ElementValue("description", elem); }
                 }
             }
 
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PropertyComponent")]
         [DataContract]
-        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PropertyComponent"; } }
@@ -745,9 +745,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in ValueQuanity) { if (elem != null) yield return new ElementValue("valueQuanity", true, elem); }
-                    foreach (var elem in ValueCode) { if (elem != null) yield return new ElementValue("valueCode", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in ValueQuanity) { if (elem != null) yield return new ElementValue("valueQuanity", elem); }
+                    foreach (var elem in ValueCode) { if (elem != null) yield return new ElementValue("valueCode", elem); }
                 }
             }
 
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MaterialComponent")]
         [DataContract]
-        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MaterialComponent"; } }
@@ -906,9 +906,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return new ElementValue("substance", false, Substance);
-                    if (AlternateElement != null) yield return new ElementValue("alternate", false, AlternateElement);
-                    if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", false, AllergenicIndicatorElement);
+                    if (Substance != null) yield return new ElementValue("substance", Substance);
+                    if (AlternateElement != null) yield return new ElementValue("alternate", AlternateElement);
+                    if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", AllergenicIndicatorElement);
                 }
             }
 
@@ -1445,28 +1445,28 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in UdiDeviceIdentifier) { if (elem != null) yield return new ElementValue("udiDeviceIdentifier", true, elem); }
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
-                foreach (var elem in DeviceName) { if (elem != null) yield return new ElementValue("deviceName", true, elem); }
-                if (ModelNumberElement != null) yield return new ElementValue("modelNumber", false, ModelNumberElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                foreach (var elem in Specialization) { if (elem != null) yield return new ElementValue("specialization", true, elem); }
-                foreach (var elem in VersionElement) { if (elem != null) yield return new ElementValue("version", true, elem); }
-                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", true, elem); }
-                foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", true, elem); }
-                if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", false, PhysicalCharacteristics);
-                foreach (var elem in LanguageCode) { if (elem != null) yield return new ElementValue("languageCode", true, elem); }
-                foreach (var elem in Capability) { if (elem != null) yield return new ElementValue("capability", true, elem); }
-                foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", true, elem); }
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (OnlineInformationElement != null) yield return new ElementValue("onlineInformation", false, OnlineInformationElement);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                if (ParentDevice != null) yield return new ElementValue("parentDevice", false, ParentDevice);
-                foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in UdiDeviceIdentifier) { if (elem != null) yield return new ElementValue("udiDeviceIdentifier", elem); }
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                foreach (var elem in DeviceName) { if (elem != null) yield return new ElementValue("deviceName", elem); }
+                if (ModelNumberElement != null) yield return new ElementValue("modelNumber", ModelNumberElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in Specialization) { if (elem != null) yield return new ElementValue("specialization", elem); }
+                foreach (var elem in VersionElement) { if (elem != null) yield return new ElementValue("version", elem); }
+                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", elem); }
+                foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", elem); }
+                if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", PhysicalCharacteristics);
+                foreach (var elem in LanguageCode) { if (elem != null) yield return new ElementValue("languageCode", elem); }
+                foreach (var elem in Capability) { if (elem != null) yield return new ElementValue("capability", elem); }
+                foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
+                if (Owner != null) yield return new ElementValue("owner", Owner);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (OnlineInformationElement != null) yield return new ElementValue("onlineInformation", OnlineInformationElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                if (ParentDevice != null) yield return new ElementValue("parentDevice", ParentDevice);
+                foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", elem); }
             }
         }
 

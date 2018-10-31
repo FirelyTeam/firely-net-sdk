@@ -6673,8 +6673,8 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = FHIRAllTypes.Reference.GetLiteral(),
-                                    Profile = ReferenceProfile.Url,
-                                    TargetProfile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.ImagingStudy)
+                                    ProfileElement = new List<Canonical> { new Canonical(ReferenceProfile.Url) },
+                                    TargetProfileElement = new List<Canonical> { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.ImagingStudy) }
                                 }
                             }
                         },
