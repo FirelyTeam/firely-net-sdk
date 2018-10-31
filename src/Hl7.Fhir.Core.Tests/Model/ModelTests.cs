@@ -602,5 +602,17 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
         }
 
+        // [WMR 20181025] Issue #746
+        [TestMethod]
+        public void TestIsCoreModelTypeUri()
+        {
+            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/Patient")));
+            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/string")));
+
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("http://example.org/fhir/StructureDefinition/Patient")));
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("/StructureDefinition/Patient", UriKind.Relative)));
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("Patient", UriKind.Relative)));
+        }
+
     }
 }
