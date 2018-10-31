@@ -63,11 +63,17 @@ namespace Hl7.Fhir.ElementModel
             Current = position;
             ShortPath = prettyPath;
             Provider = parent.Provider;
-            ExceptionHandler = parent.ExceptionHandler;
             _settings = parent._settings;
+            // [WMR 20181030] Obsolete, handler is now included in settings
+            //ExceptionHandler = parent.ExceptionHandler;
         }
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler // { get; set; }
+        {
+            get => _settings.ExceptionHandler;
+            set => _settings.ExceptionHandler = value;
+        }
 
         private void raiseTypeError(string message, object source, bool warning = false)
         {

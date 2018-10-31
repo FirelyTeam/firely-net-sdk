@@ -12,6 +12,7 @@ using System;
 
 namespace Hl7.Fhir.ElementModel
 {
+    /// <summary>Configuration settings for the <see cref="TypedElementNode"/> class.</summary>
     public class TypedElementSettings
     {
         /// <summary>
@@ -40,6 +41,9 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public TypeErrorMode ErrorMode { get; set; } // = TypeErrorMode.Report;
 
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
         /// <summary>Default constructor. Creates a new <see cref="TypedElementSettings"/> instance with default property values.</summary>
         public TypedElementSettings() { }
 
@@ -59,6 +63,7 @@ namespace Hl7.Fhir.ElementModel
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
             other.ErrorMode = ErrorMode;
+            other.ExceptionHandler = ExceptionHandler;
         }
 
         /// <summary>Creates a new <see cref="TypedElementSettings"/> object that is a copy of the current instance.</summary>

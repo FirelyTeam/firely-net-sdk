@@ -17,7 +17,7 @@ using System.Linq;
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Configuration settings for the <see cref="DirectorySource"/> class.</summary>
-    public sealed class DirectorySourceSettings
+    public sealed class DirectorySourceSettings // : IExceptionSource
     {
         /// <summary>Default value of the <see cref="FormatPreference"/> configuration setting.</summary>
         public const DirectorySource.DuplicateFilenameResolution DefaultFormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml;
@@ -40,6 +40,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Clone constructor. Generates a new <see cref="DirectorySourceSettings"/> instance initialized from the state of the specified instance.</summary>
+        /// <param name="settings"><see cref="DirectorySource"/> configuration settings.</param>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public DirectorySourceSettings(DirectorySourceSettings settings)
         {
@@ -72,7 +73,7 @@ namespace Hl7.Fhir.Specification.Source
             other.ParserSettings = new ParserSettings(this.ParserSettings);
             other.XmlParserSettings = new FhirXmlParsingSettings(this.XmlParserSettings);
             other.JsonParserSettings = new FhirJsonParsingSettings(this.JsonParserSettings);
-            // No use cloning event handler...
+            // No use cloning event handler; delegates are immutable
             other.ExceptionHandler = this.ExceptionHandler;
         }
 
@@ -326,8 +327,12 @@ namespace Hl7.Fhir.Specification.Source
             set => _jsonParserSettings = value ?? FhirJsonParsingSettings.CreateDefault();
         }
 
+        #region IExceptionSource
+
         /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
+        #endregion
 
     }
 

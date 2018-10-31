@@ -27,7 +27,12 @@ namespace Hl7.Fhir.Serialization
         private FhirXmlSerializationSettings _settings;
         private bool _roundtripMode;
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler // { get; set; }
+        {
+            get => _settings.ExceptionHandler;
+            set => _settings.ExceptionHandler = value;
+        }
 
         public XDocument Build(ITypedElement source) =>
             buildInternal(source);

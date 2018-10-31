@@ -18,12 +18,17 @@ namespace Hl7.Fhir.Serialization
     {
         public PocoBuilder(PocoBuilderSettings settings = null)
         {
-            _settings = settings?.Clone() ?? new PocoBuilderSettings();
+            _settings = settings?.Clone() ?? PocoBuilderSettings.CreateDefault();
         }
 
         private readonly PocoBuilderSettings _settings;
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler // { get; set; }
+        {
+            get => _settings.ExceptionHandler;
+            set => _settings.ExceptionHandler = value;
+        }
 
         public Base BuildFrom(ISourceNode source, Type dataType = null)
         {

@@ -82,6 +82,9 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public string[] ExcludeElements { get; set; }
 
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
         /// <summary>Default constructor. Creates a new <see cref="MaskingNodeSettings"/> instance with default property values.</summary>
         public MaskingNodeSettings() { }
 
@@ -107,8 +110,9 @@ namespace Hl7.Fhir.ElementModel
             other.ExcludeNarrative = this.ExcludeNarrative;
             other.ExcludeMarkdown = this.ExcludeMarkdown;
             other.IncludeAll = this.IncludeAll;
-            other.IncludeElements = this.IncludeElements?.ToArray();
-            other.ExcludeElements = this.ExcludeElements?.ToArray();
+            other.IncludeElements = (string[])this.IncludeElements?.Clone();
+            other.ExcludeElements = (string[])this.ExcludeElements?.Clone();
+            other.ExceptionHandler = this.ExceptionHandler;
         }
 
         /// <summary>Creates a new <see cref="MaskingNodeSettings"/> object that is a copy of the current instance.</summary>

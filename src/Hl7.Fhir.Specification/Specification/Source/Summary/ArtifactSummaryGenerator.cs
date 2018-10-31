@@ -10,6 +10,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,8 +67,13 @@ namespace Hl7.Fhir.Specification.Summary
         /// <summary>Singleton. Returns a global default instance.</summary>
         public static ArtifactSummaryGenerator Default { get; } = new ArtifactSummaryGenerator();
 
+        // [WMR 20181031] Use custom NavigatorStreamFactory to ignore unknown files (suppress parsing exceptions)
+        private FhirXmlParsingSettings _xmlParsingSettings; // = FhirXmlParsingSettings.CreateDefault();
+        private FhirJsonParsingSettings _jsonParsingSettings; // = FhirJsonParsingSettings.CreateDefault();
+        private readonly INavigatorStreamFactory _navigatorFactory;
+
         /// <summary>Default constructor. Creates a new instance of the <see cref="ArtifactSummaryGenerator"/>.</summary>
-        public ArtifactSummaryGenerator() { }
+        public ArtifactSummaryGenerator() : this(false, null) { }
 
         /// <summary>Constructor. Creates a new instance of the <see cref="ArtifactSummaryGenerator"/>.</summary>
         /// <param name="excludeSummariesForUnknownArtifacts">
@@ -75,9 +81,32 @@ namespace Hl7.Fhir.Specification.Summary
         /// content files and exclude the summary from the result.
         /// </param>
         public ArtifactSummaryGenerator(bool excludeSummariesForUnknownArtifacts)
+            : this(excludeSummariesForUnknownArtifacts, null) { }
+
+        /// <summary>Constructor. Creates a new instance of the <see cref="ArtifactSummaryGenerator"/>.</summary>
+        /// <param name="excludeSummariesForUnknownArtifacts">
+        /// If <c>true</c>, then the generator will ignore non-parseable (invalid or non-FHIR)
+        /// content files and exclude the summary from the result.
+        /// </param>
+        /// <param name="navigatorFactory">A custom <see cref="NavigatorStreamFactory"/> instance.</param>
+        public ArtifactSummaryGenerator(bool excludeSummariesForUnknownArtifacts, INavigatorStreamFactory navigatorFactory)
         {
             ExcludeSummariesForUnknownArtifacts = excludeSummariesForUnknownArtifacts;
+
+            // Ignore unknown file formats; suppress runtime exceptions
+            _navigatorFactory = navigatorFactory ?? new NavigatorStreamFactory(true);
+            //navigatorFactory.ThrowOnUnsupportedFormat = false;
         }
+
+#if false
+        // Not used
+        public ArtifactSummaryGenerator(bool excludeSummariesForUnknownArtifacts, FhirXmlParsingSettings xmlParserSettings, FhirJsonParsingSettings jsonParserSettings)
+        {
+            ExcludeSummariesForUnknownArtifacts = excludeSummariesForUnknownArtifacts;
+            _navigatorFactory = new NavigatorStreamFactory(xmlParserSettings, jsonParserSettings);
+            //navigatorFactory.ThrowOnUnsupportedFormat = false;
+        }
+#endif
 
         /// <summary>
         /// Determines wether the <see cref="ArtifactSummaryGenerator"/> should exclude
@@ -94,6 +123,28 @@ namespace Hl7.Fhir.Specification.Summary
         /// </para>
         /// </summary>
         public bool ExcludeSummariesForUnknownArtifacts { get; set; } // = false;
+
+        /// <summary>
+        /// Gets or sets the configuration settings that control the behavior of the XML parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="FhirXmlParsingSettings"/> instance.</value>
+        public FhirXmlParsingSettings XmlParsingSettings
+        {
+            get => _navigatorFactory.XmlParserSettings;
+            set => _navigatorFactory.XmlParserSettings = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the configuration settings that control the behavior of the JSON parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="FhirJsonParsingSettings"/> instance.</value>
+        public FhirJsonParsingSettings JsonParsingSettings
+        {
+            get => _navigatorFactory.JsonParserSettings;
+            set => _navigatorFactory.JsonParserSettings = value;
+        }
 
         /// <summary>
         /// Generate a list of artifact summary information for a resource file on disk,
@@ -170,7 +221,7 @@ namespace Hl7.Fhir.Specification.Summary
                 }
 
                 // Factory returns null for unknown file formats
-                navStream = DefaultNavigatorStreamFactory.Create(filePath);
+                navStream = _navigatorFactory.Create(filePath);
                 result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
             }
             catch (Exception ex)

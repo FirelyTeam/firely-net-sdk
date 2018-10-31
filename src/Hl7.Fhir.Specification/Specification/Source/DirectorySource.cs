@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Source
         // Instance fields
         private readonly DirectorySourceSettings _settings;
         private readonly ArtifactSummaryGenerator _summaryGenerator;
-        private readonly ConfigurableNavigatorStreamFactory _navigatorFactory;
+        private readonly NavigatorStreamFactory _navigatorFactory;
 
         // [WMR 20180813] NEW
         // Use Lazy<T> to synchronize collection (re-)loading (=> lock-free reading)
@@ -126,14 +126,26 @@ namespace Hl7.Fhir.Specification.Source
         {
             ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
             // [WMR 20171023] Clone specified settings to prevent shared state
-            _settings = settings != null 
-                ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
-                : DirectorySourceSettings.CreateDefault();
-            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
-            _navigatorFactory = new ConfigurableNavigatorStreamFactory(_settings.XmlParserSettings, _settings.JsonParserSettings)
+            //_settings = settings != null
+            //    ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
+            //    : DirectorySourceSettings.CreateDefault();
+
+            if (settings == null)
             {
-                ThrowOnUnsupportedFormat = false
-            };
+                settings = DirectorySourceSettings.CreateDefault();
+            }
+            else if (cloneSettings)
+            {
+                settings = new DirectorySourceSettings(settings);
+            }
+            _settings = settings;
+
+            var factory = _navigatorFactory = new NavigatorStreamFactory(settings.XmlParserSettings, settings.JsonParserSettings);
+            //{
+            //    ThrowOnUnsupportedFormat = false
+            //};
+            _summaryGenerator = new ArtifactSummaryGenerator(settings.ExcludeSummariesForUnknownArtifacts, factory);
+
             // Initialize Lazy
             Refresh();
         }
@@ -369,15 +381,43 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        /// <summary>Gets the configuration settings that the behavior of the PoCo parser.</summary>
-        public ParserSettings ParserSettings => _settings.ParserSettings;
+        /// <summary>Gets or sets the configuration settings that the behavior of the PoCo parser.</summary>
+        public ParserSettings ParserSettings
+        {
+            get => _settings.ParserSettings;
+            set => _settings.ParserSettings = value;
+        }
 
-        /// <summary>Gets the configuration settings that control the behavior of the XML parser.</summary>
-        public FhirXmlParsingSettings XmlParserSettings => _settings.XmlParserSettings;
+        /// <summary>Gets or sets the configuration settings that control the behavior of the XML parser.</summary>
+        public FhirXmlParsingSettings XmlParserSettings
+        {
+            get => _settings.XmlParserSettings;
+            set {
+                _settings.XmlParserSettings = value;
+                _navigatorFactory.XmlParserSettings = value;
+            }
+        }
 
-        /// <summary>Gets the configuration settings that control the behavior of the JSON parser.</summary>
-        public FhirJsonParsingSettings JsonParserSettings => _settings.JsonParserSettings;
+        /// <summary>Gets or sets the configuration settings that control the behavior of the JSON parser.</summary>
+        public FhirJsonParsingSettings JsonParserSettings
+        {
+            get => _settings.JsonParserSettings;
+            set {
+                _settings.JsonParserSettings = value;
+                _navigatorFactory.JsonParserSettings = value;
+            }
+        }
 
+        #region IExceptionSource
+
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler
+        {
+            get => _settings.ExceptionHandler;
+            set => _settings.ExceptionHandler = value;
+        }
+
+        #endregion
 
         #region Refresh
 
@@ -593,17 +633,6 @@ namespace Hl7.Fhir.Specification.Source
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri);
             return loadResourceInternal<Resource>(summary);
-        }
-
-        #endregion
-
-        #region IExceptionSource
-
-        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
-        public ExceptionNotificationHandler ExceptionHandler
-        {
-            get => _settings.ExceptionHandler;
-            set => _settings.ExceptionHandler = value;
         }
 
         #endregion
@@ -911,24 +940,19 @@ namespace Hl7.Fhir.Specification.Source
                 throw Error.Argument($"Unable to load resource from summary. The '{nameof(ArtifactSummary.Position)}' information is unavailable.");
             }
 
-            // Always use the current Xml/Json parser settings
-            var settings = _settings;
-            var factory = _navigatorFactory;
-            settings.XmlParserSettings.CopyTo(factory.XmlParsingSettings);
-            settings.JsonParserSettings.CopyTo(factory.JsonParsingSettings);
-
             // Also use the current PoCo parser settings
             var pocoSettings = new PocoBuilderSettings();
-            if (settings.ParserSettings != null)
+            var parserSettings = _settings.ParserSettings;
+            if (parserSettings != null)
             {
-                pocoSettings.AllowUnrecognizedEnums = settings.ParserSettings.AllowUnrecognizedEnums;
-                pocoSettings.IgnoreUnknownMembers = settings.ParserSettings.AllowUnrecognizedEnums;
+                pocoSettings.AllowUnrecognizedEnums = parserSettings.AllowUnrecognizedEnums;
+                pocoSettings.IgnoreUnknownMembers = parserSettings.AllowUnrecognizedEnums;
             };
 
-            T result = null;
             var handler = this.ExceptionHandler;
+            T result = null;
 
-            using (var navStream = factory.Create(origin))
+            using (var navStream = _navigatorFactory.Create(origin))
             {
                 // Handle exceptions & null return values?
                 // e.g. file may have been deleted/renamed since last scan

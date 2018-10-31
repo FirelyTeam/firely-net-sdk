@@ -24,6 +24,9 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool Pretty { get; set; } // = false;
 
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+
         /// <summary>Default constructor. Creates a new <see cref="FhirXmlSerializationSettings"/> instance with default property values.</summary>
         public FhirXmlSerializationSettings() { }
 
@@ -44,6 +47,7 @@ namespace Hl7.Fhir.Serialization
 
             other.SkipUnknownElements = SkipUnknownElements;
             other.Pretty = Pretty;
+            other.ExceptionHandler = ExceptionHandler;
         }
 
         /// <summary>Creates a new <see cref="FhirXmlSerializationSettings"/> object that is a copy of the current instance.</summary>

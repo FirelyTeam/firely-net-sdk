@@ -72,7 +72,12 @@ namespace Hl7.Fhir.ElementModel
 
         public ITypedElement Source { get; private set; }
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler // { get; set; }
+        {
+            get => _settings.ExceptionHandler;
+            set => _settings.ExceptionHandler = value;
+        }
 
         public string Name => Source.Name;
 

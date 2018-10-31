@@ -28,12 +28,12 @@ namespace Hl7.Fhir.Rest
         private readonly Requester _requester;
 
         /// <summary>
-        /// Creates a new client using a default endpoint
+        /// Creates a new client using a default endpoint.
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
         /// <param name="endpoint">
-        /// The URL of the server to connect to.<br/>
-        /// If the trailing '/' is not present, then it will be appended automatically
+        /// The URL of the server to connect to.
+        /// <para>If the trailing '/' is not present, then it will be appended automatically.</para>
         /// </param>
         /// <param name="verifyFhirVersion">
         /// If parameter is set to true the first time a request is made to the server a 
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Rest
 
 
         /// <summary>
-        /// Creates a new client using a default endpoint
+        /// Creates a new client using a default endpoint.
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
         /// <param name="endpoint">
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Rest
         public ParserSettings ParserSettings
         {
             get { return _requester.ParserSettings;  }
-            set { _requester.ParserSettings = value;  }
+            set { _requester.ParserSettings = value ?? ParserSettings.CreateDefault();  }
         }
 
         public byte[] LastBody => LastResult?.GetBody();

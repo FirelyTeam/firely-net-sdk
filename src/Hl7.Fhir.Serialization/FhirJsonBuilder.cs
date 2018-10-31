@@ -28,7 +28,12 @@ namespace Hl7.Fhir.Serialization
         private FhirJsonSerializationSettings _settings;
         private bool _roundtripMode = true;
 
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
+        /// <summary>Gets or sets an optional <see cref="ExceptionNotificationHandler"/> for custom error handling.</summary>
+        public ExceptionNotificationHandler ExceptionHandler // { get; set; }
+        {
+            get => _settings.ExceptionHandler;
+            set => _settings.ExceptionHandler = value;
+        }
 
         public JObject Build(ITypedElement source) => buildInternal(source);
 

@@ -38,9 +38,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             settings.CopyTo(this);
         }
 
-        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
-        public SnapshotGeneratorSettings Clone() => new SnapshotGeneratorSettings(this);
-
         /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="SnapshotGeneratorSettings"/> instance.</param>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
@@ -54,6 +51,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             other.GenerateElementIds = GenerateElementIds;
             // other.MergeTypeProfiles = MergeTypeProfiles;
         }
+
+        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
+        public SnapshotGeneratorSettings Clone() => new SnapshotGeneratorSettings(this);
 
         /// <summary>
         /// Determines if the <see cref="SnapshotGenerator"/> should automatically
