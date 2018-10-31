@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
@@ -205,8 +205,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Target != null) yield return new ElementValue("target", false, Target);
-                    if (AssuranceElement != null) yield return new ElementValue("assurance", false, AssuranceElement);
+                    if (Target != null) yield return new ElementValue("target", Target);
+                    if (AssuranceElement != null) yield return new ElementValue("assurance", AssuranceElement);
                 }
             }
 
@@ -508,16 +508,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
-                if (BirthDateElement != null) yield return new ElementValue("birthDate", false, BirthDateElement);
-                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
-                if (Photo != null) yield return new ElementValue("photo", false, Photo);
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", BirthDateElement);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
+                if (Photo != null) yield return new ElementValue("photo", Photo);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
             }
         }
 

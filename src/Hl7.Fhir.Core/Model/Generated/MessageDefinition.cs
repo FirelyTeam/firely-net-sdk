@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("FocusComponent")]
         [DataContract]
-        public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FocusComponent"; } }
@@ -322,10 +322,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
                     if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
                     if (MinElement != null) yield return new ElementValue("min", false, MinElement);
                     if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
+=======
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (Profile != null) yield return new ElementValue("profile", Profile);
+                    if (MinElement != null) yield return new ElementValue("min", MinElement);
+                    if (MaxElement != null) yield return new ElementValue("max", MaxElement);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -335,7 +342,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AllowedResponseComponent")]
         [DataContract]
-        public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AllowedResponseComponent"; } }
@@ -448,8 +455,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (MessageElement != null) yield return new ElementValue("message", false, MessageElement);
                     if (Situation != null) yield return new ElementValue("situation", false, Situation);
+=======
+                    if (Message != null) yield return new ElementValue("message", Message);
+                    if (Situation != null) yield return new ElementValue("situation", Situation);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -1225,6 +1237,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
@@ -1249,6 +1262,31 @@ namespace Hl7.Fhir.Model
                 if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", false, ResponseRequiredElement);
                 foreach (var elem in AllowedResponse) { if (elem != null) yield return new ElementValue("allowedResponse", true, elem); }
                 foreach (var elem in GraphElement) { if (elem != null) yield return new ElementValue("graph", true, elem); }
+=======
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+                if (Base != null) yield return new ElementValue("base", Base);
+                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", elem); }
+                foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", elem); }
+                if (Event != null) yield return new ElementValue("event", Event);
+                if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
+                if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", ResponseRequiredElement);
+                foreach (var elem in AllowedResponse) { if (elem != null) yield return new ElementValue("allowedResponse", elem); }
+>>>>>>> develop-stu3
             }
         }
 

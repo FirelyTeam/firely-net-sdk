@@ -442,6 +442,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
@@ -455,6 +456,19 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
                 if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (WhenUsed != null) yield return new ElementValue("whenUsed", WhenUsed);
+                if (Timing != null) yield return new ElementValue("timing", Timing);
+                if (RecordedOnElement != null) yield return new ElementValue("recordedOn", RecordedOnElement);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (Device != null) yield return new ElementValue("device", Device);
+                foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", elem); }
+                if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+>>>>>>> develop-stu3
             }
         }
 

@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ProcessNoteComponent")]
         [DataContract]
-        public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProcessNoteComponent"; } }
@@ -215,8 +215,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                     if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+=======
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -576,6 +581,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
@@ -588,6 +594,21 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ProcessNote) { if (elem != null) yield return new ElementValue("processNote", true, elem); }
                 foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, elem); }
                 foreach (var elem in CommunicationRequest) { if (elem != null) yield return new ElementValue("communicationRequest", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
+                if (RequestProvider != null) yield return new ElementValue("requestProvider", RequestProvider);
+                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", RequestOrganization);
+                if (Form != null) yield return new ElementValue("form", Form);
+                foreach (var elem in ProcessNote) { if (elem != null) yield return new ElementValue("processNote", elem); }
+                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", elem); }
+                foreach (var elem in CommunicationRequest) { if (elem != null) yield return new ElementValue("communicationRequest", elem); }
+>>>>>>> develop-stu3
             }
         }
 

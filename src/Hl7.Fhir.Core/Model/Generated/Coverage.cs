@@ -57,7 +57,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ClassComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "ClassComponent"; } }
@@ -313,8 +317,23 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Type != null) yield return new ElementValue("type", false, Type);
                     if (Value != null) yield return new ElementValue("value", false, Value);
+=======
+                    if (GroupElement != null) yield return new ElementValue("group", GroupElement);
+                    if (GroupDisplayElement != null) yield return new ElementValue("groupDisplay", GroupDisplayElement);
+                    if (SubGroupElement != null) yield return new ElementValue("subGroup", SubGroupElement);
+                    if (SubGroupDisplayElement != null) yield return new ElementValue("subGroupDisplay", SubGroupDisplayElement);
+                    if (PlanElement != null) yield return new ElementValue("plan", PlanElement);
+                    if (PlanDisplayElement != null) yield return new ElementValue("planDisplay", PlanDisplayElement);
+                    if (SubPlanElement != null) yield return new ElementValue("subPlan", SubPlanElement);
+                    if (SubPlanDisplayElement != null) yield return new ElementValue("subPlanDisplay", SubPlanDisplayElement);
+                    if (ClassElement != null) yield return new ElementValue("class", ClassElement);
+                    if (ClassDisplayElement != null) yield return new ElementValue("classDisplay", ClassDisplayElement);
+                    if (SubClassElement != null) yield return new ElementValue("subClass", SubClassElement);
+                    if (SubClassDisplayElement != null) yield return new ElementValue("subClassDisplay", SubClassDisplayElement);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -764,6 +783,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Type != null) yield return new ElementValue("type", false, Type);
@@ -780,6 +800,24 @@ namespace Hl7.Fhir.Model
                 if (NetworkElement != null) yield return new ElementValue("network", false, NetworkElement);
                 foreach (var elem in Copay) { if (elem != null) yield return new ElementValue("copay", true, elem); }
                 foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (PolicyHolder != null) yield return new ElementValue("policyHolder", PolicyHolder);
+                if (Subscriber != null) yield return new ElementValue("subscriber", Subscriber);
+                if (SubscriberIdElement != null) yield return new ElementValue("subscriberId", SubscriberIdElement);
+                if (Beneficiary != null) yield return new ElementValue("beneficiary", Beneficiary);
+                if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                if (Period != null) yield return new ElementValue("period", Period);
+                foreach (var elem in Payor) { if (elem != null) yield return new ElementValue("payor", elem); }
+                if (Grouping != null) yield return new ElementValue("grouping", Grouping);
+                if (DependentElement != null) yield return new ElementValue("dependent", DependentElement);
+                if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
+                if (OrderElement != null) yield return new ElementValue("order", OrderElement);
+                if (NetworkElement != null) yield return new ElementValue("network", NetworkElement);
+                foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", elem); }
+>>>>>>> develop-stu3
             }
         }
 

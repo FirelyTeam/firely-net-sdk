@@ -643,6 +643,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
@@ -665,6 +666,26 @@ namespace Hl7.Fhir.Model
                 if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
                 if (Content != null) yield return new ElementValue("content", false, Content);
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (Subtype != null) yield return new ElementValue("subtype", Subtype);
+                if (View != null) yield return new ElementValue("view", View);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
+                if (Operator != null) yield return new ElementValue("operator", Operator);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                if (Device != null) yield return new ElementValue("device", Device);
+                if (HeightElement != null) yield return new ElementValue("height", HeightElement);
+                if (WidthElement != null) yield return new ElementValue("width", WidthElement);
+                if (FramesElement != null) yield return new ElementValue("frames", FramesElement);
+                if (DurationElement != null) yield return new ElementValue("duration", DurationElement);
+                if (Content != null) yield return new ElementValue("content", Content);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+>>>>>>> develop-stu3
             }
         }
 

@@ -28,6 +28,8 @@
 
 */
 
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections;
@@ -46,7 +48,7 @@ namespace Hl7.Fhir.Introspection
         public FhirElementAttribute(string name)
         {
             this.name = name;
-            this.XmlSerialization = XmlSerializationHint.None;
+            this.XmlSerialization = XmlRepresentation.None;
             this.Choice = ChoiceType.None;
         }
 
@@ -59,11 +61,13 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsPrimitiveValue { get; set; }
 
-        public XmlSerializationHint XmlSerialization { get; set; }
+        public XmlRepresentation XmlSerialization { get; set; }
 
         public int Order { get; set; }
 
         public bool InSummary { get; set; }
+
+        public Type TypeRedirect { get; set; }
 
         // This attribute is a subclass of ValidationAttribute so that IsValid() is called on every 
         // FhirElement while validating. This allows us to extend validation into each FhirElement,

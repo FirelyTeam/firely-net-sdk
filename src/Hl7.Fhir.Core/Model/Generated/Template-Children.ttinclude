@@ -40,14 +40,14 @@
 			else if (pd.IsMultiCard())
 			{
 				if(withName)
-					WriteLine("{0}foreach (var elem in {1}) {{ if (elem != null) yield return new ElementValue(\"{2}\", true, elem); }}", indent, pd.Name, pd.FhirName);
+					WriteLine("{0}foreach (var elem in {1}) {{ if (elem != null) yield return new ElementValue(\"{2}\", elem); }}", indent, pd.Name, pd.FhirName);
 				else
 					WriteLine("{0}foreach (var elem in {1}) {{ if (elem != null) yield return elem; }}", indent, pd.Name);
 			}
 			else
 			{
 				if(withName)
-					WriteLine("{0}if ({1} != null) yield return new ElementValue(\"{2}\", false, {1});", indent, pd.Name, pd.FhirName);
+					WriteLine("{0}if ({1} != null) yield return new ElementValue(\"{2}\", {1});", indent, pd.Name, pd.FhirName);
 				else
 					WriteLine("{0}if ({1} != null) yield return {1};", indent, pd.Name);
 			}

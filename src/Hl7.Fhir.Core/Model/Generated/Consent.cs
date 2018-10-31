@@ -109,9 +109,141 @@ namespace Hl7.Fhir.Model
             Authoredby,
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary>
+        /// How an exception statement is applied, such as adding additional consent or removing consent
+        /// (url: http://hl7.org/fhir/ValueSet/consent-except-type)
+        /// </summary>
+        [FhirEnumeration("ConsentExceptType")]
+        public enum ConsentExceptType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-except-type)
+            /// </summary>
+            [EnumLiteral("deny", "http://hl7.org/fhir/consent-except-type"), Description("Opt Out")]
+            Deny,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-except-type)
+            /// </summary>
+            [EnumLiteral("permit", "http://hl7.org/fhir/consent-except-type"), Description("Opt In")]
+            Permit,
+        }
+
+        [FhirType("ActorComponent")]
+        [DataContract]
+        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ActorComponent"; } }
+            
+            /// <summary>
+            /// How the actor is involved
+            /// </summary>
+            [FhirElement("role", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Role
+            {
+                get { return _Role; }
+                set { _Role = value; OnPropertyChanged("Role"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Role;
+            
+            /// <summary>
+            /// Resource for the actor (or group, by role)
+            /// </summary>
+            [FhirElement("reference", Order=50)]
+            [CLSCompliant(false)]
+			[References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Reference
+            {
+                get { return _Reference; }
+                set { _Reference = value; OnPropertyChanged("Reference"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Reference;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ActorComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ActorComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ActorComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ActorComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Role != null) yield return Role;
+                    if (Reference != null) yield return Reference;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
+                }
+            }
+
+            
+        }
+        
+        
+>>>>>>> develop-stu3
         [FhirType("PolicyComponent")]
         [DataContract]
-        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PolicyComponent"; } }
@@ -242,8 +374,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (AuthorityElement != null) yield return new ElementValue("authority", false, AuthorityElement);
-                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
+                    if (AuthorityElement != null) yield return new ElementValue("authority", AuthorityElement);
+                    if (UriElement != null) yield return new ElementValue("uri", UriElement);
                 }
             }
 
@@ -253,7 +385,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VerificationComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "VerificationComponent"; } }
@@ -404,9 +540,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (VerifiedElement != null) yield return new ElementValue("verified", false, VerifiedElement);
                     if (VerifiedWith != null) yield return new ElementValue("verifiedWith", false, VerifiedWith);
                     if (VerificationDateElement != null) yield return new ElementValue("verificationDate", false, VerificationDateElement);
+=======
+                    if (MeaningElement != null) yield return new ElementValue("meaning", MeaningElement);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -416,7 +557,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("provisionComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "provisionComponent"; } }
@@ -689,6 +834,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                     if (Period != null) yield return new ElementValue("period", false, Period);
                     foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", true, elem); }
@@ -700,6 +846,18 @@ namespace Hl7.Fhir.Model
                     if (DataPeriod != null) yield return new ElementValue("dataPeriod", false, DataPeriod);
                     foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", true, elem); }
                     foreach (var elem in Provision) { if (elem != null) yield return new ElementValue("provision", true, elem); }
+=======
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
+                    foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
+                    foreach (var elem in Purpose) { if (elem != null) yield return new ElementValue("purpose", elem); }
+                    foreach (var elem in Class) { if (elem != null) yield return new ElementValue("class", elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    if (DataPeriod != null) yield return new ElementValue("dataPeriod", DataPeriod);
+                    foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -709,7 +867,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("provisionActorComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "provisionActorComponent"; } }
@@ -806,8 +968,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
                 }
             }
 
@@ -817,7 +979,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("provisionDataComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "provisionDataComponent"; } }
@@ -933,8 +1099,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MeaningElement != null) yield return new ElementValue("meaning", false, MeaningElement);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
+                    if (MeaningElement != null) yield return new ElementValue("meaning", MeaningElement);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
                 }
             }
 
@@ -1327,6 +1493,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Scope != null) yield return new ElementValue("scope", false, Scope);
@@ -1340,6 +1507,26 @@ namespace Hl7.Fhir.Model
                 if (PolicyRule != null) yield return new ElementValue("policyRule", false, PolicyRule);
                 foreach (var elem in Verification) { if (elem != null) yield return new ElementValue("verification", true, elem); }
                 if (Provision != null) yield return new ElementValue("provision", false, Provision);
+=======
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
+                foreach (var elem in ConsentingParty) { if (elem != null) yield return new ElementValue("consentingParty", elem); }
+                foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", elem); }
+                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
+                foreach (var elem in Organization) { if (elem != null) yield return new ElementValue("organization", elem); }
+                if (Source != null) yield return new ElementValue("source", Source);
+                foreach (var elem in Policy) { if (elem != null) yield return new ElementValue("policy", elem); }
+                if (PolicyRuleElement != null) yield return new ElementValue("policyRule", PolicyRuleElement);
+                foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
+                foreach (var elem in Purpose) { if (elem != null) yield return new ElementValue("purpose", elem); }
+                if (DataPeriod != null) yield return new ElementValue("dataPeriod", DataPeriod);
+                foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", elem); }
+                foreach (var elem in Except) { if (elem != null) yield return new ElementValue("except", elem); }
+>>>>>>> develop-stu3
             }
         }
 

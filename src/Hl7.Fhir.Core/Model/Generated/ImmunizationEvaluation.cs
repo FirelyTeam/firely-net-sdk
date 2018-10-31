@@ -450,6 +450,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD:src/Hl7.Fhir.Core/Model/Generated/ImmunizationEvaluation.cs
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
@@ -463,6 +464,23 @@ namespace Hl7.Fhir.Model
                 if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
                 if (DoseNumber != null) yield return new ElementValue("doseNumber", false, DoseNumber);
                 if (SeriesDoses != null) yield return new ElementValue("seriesDoses", false, SeriesDoses);
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Priority != null) yield return new ElementValue("priority", Priority);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Serviced != null) yield return new ElementValue("serviced", Serviced);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Enterer != null) yield return new ElementValue("enterer", Enterer);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (Insurer != null) yield return new ElementValue("insurer", Insurer);
+                if (Facility != null) yield return new ElementValue("facility", Facility);
+                if (Coverage != null) yield return new ElementValue("coverage", Coverage);
+                if (BusinessArrangementElement != null) yield return new ElementValue("businessArrangement", BusinessArrangementElement);
+                if (BenefitCategory != null) yield return new ElementValue("benefitCategory", BenefitCategory);
+                if (BenefitSubCategory != null) yield return new ElementValue("benefitSubCategory", BenefitSubCategory);
+>>>>>>> develop-stu3:src/Hl7.Fhir.Core/Model/Generated/EligibilityRequest.cs
             }
         }
 

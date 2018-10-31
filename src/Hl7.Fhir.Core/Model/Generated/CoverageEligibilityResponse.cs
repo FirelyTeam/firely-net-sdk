@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("InsuranceComponent")]
         [DataContract]
-        public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InsuranceComponent"; } }
@@ -241,10 +241,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD:src/Hl7.Fhir.Core/Model/Generated/CoverageEligibilityResponse.cs
                     if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
                     if (Contract != null) yield return new ElementValue("contract", false, Contract);
                     if (InforceElement != null) yield return new ElementValue("inforce", false, InforceElement);
                     foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
+=======
+                    if (Coverage != null) yield return new ElementValue("coverage", Coverage);
+                    if (Contract != null) yield return new ElementValue("contract", Contract);
+                    foreach (var elem in BenefitBalance) { if (elem != null) yield return new ElementValue("benefitBalance", elem); }
+>>>>>>> develop-stu3:src/Hl7.Fhir.Core/Model/Generated/EligibilityResponse.cs
                 }
             }
 
@@ -254,7 +260,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ItemsComponent")]
         [DataContract]
+<<<<<<< HEAD:src/Hl7.Fhir.Core/Model/Generated/CoverageEligibilityResponse.cs
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3:src/Hl7.Fhir.Core/Model/Generated/EligibilityResponse.cs
         {
             [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }
@@ -651,6 +661,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD:src/Hl7.Fhir.Core/Model/Generated/CoverageEligibilityResponse.cs
                     if (Category != null) yield return new ElementValue("category", false, Category);
                     if (Billcode != null) yield return new ElementValue("billcode", false, Billcode);
                     foreach (var elem in Modifier) { if (elem != null) yield return new ElementValue("modifier", true, elem); }
@@ -665,6 +676,17 @@ namespace Hl7.Fhir.Model
                     if (AuthorizationRequiredElement != null) yield return new ElementValue("authorizationRequired", false, AuthorizationRequiredElement);
                     foreach (var elem in AuthorizationSupporting) { if (elem != null) yield return new ElementValue("authorizationSupporting", true, elem); }
                     if (AuthorizationUrlElement != null) yield return new ElementValue("authorizationUrl", false, AuthorizationUrlElement);
+=======
+                    if (Category != null) yield return new ElementValue("category", Category);
+                    if (SubCategory != null) yield return new ElementValue("subCategory", SubCategory);
+                    if (ExcludedElement != null) yield return new ElementValue("excluded", ExcludedElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Network != null) yield return new ElementValue("network", Network);
+                    if (Unit != null) yield return new ElementValue("unit", Unit);
+                    if (Term != null) yield return new ElementValue("term", Term);
+                    foreach (var elem in Financial) { if (elem != null) yield return new ElementValue("financial", elem); }
+>>>>>>> develop-stu3:src/Hl7.Fhir.Core/Model/Generated/EligibilityResponse.cs
                 }
             }
 
@@ -674,7 +696,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BenefitComponent")]
         [DataContract]
-        public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BenefitComponent"; } }
@@ -789,9 +811,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Allowed != null) yield return new ElementValue("allowed", false, Allowed);
-                    if (Used != null) yield return new ElementValue("used", false, Used);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Allowed != null) yield return new ElementValue("allowed", Allowed);
+                    if (Used != null) yield return new ElementValue("used", Used);
                 }
             }
 
@@ -801,7 +823,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ErrorsComponent")]
         [DataContract]
-        public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ErrorsComponent"; } }
@@ -878,7 +900,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (Code != null) yield return new ElementValue("code", Code);
                 }
             }
 
@@ -1349,6 +1371,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD:src/Hl7.Fhir.Core/Model/Generated/CoverageEligibilityResponse.cs
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 foreach (var elem in PurposeElement) { if (elem != null) yield return new ElementValue("purpose", true, elem); }
@@ -1364,6 +1387,21 @@ namespace Hl7.Fhir.Model
                 if (PreAuthRefElement != null) yield return new ElementValue("preAuthRef", false, PreAuthRefElement);
                 if (Form != null) yield return new ElementValue("form", false, Form);
                 foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (RequestProvider != null) yield return new ElementValue("requestProvider", RequestProvider);
+                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", RequestOrganization);
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
+                if (Insurer != null) yield return new ElementValue("insurer", Insurer);
+                if (InforceElement != null) yield return new ElementValue("inforce", InforceElement);
+                foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", elem); }
+                if (Form != null) yield return new ElementValue("form", Form);
+                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", elem); }
+>>>>>>> develop-stu3:src/Hl7.Fhir.Core/Model/Generated/EligibilityResponse.cs
             }
         }
 

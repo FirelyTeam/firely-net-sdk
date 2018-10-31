@@ -79,7 +79,6 @@ namespace Hl7.Fhir.Tests.Rest
 
             var entry = client.CapabilityStatement();
 
-            Assert.IsNotNull(entry.Text);
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server

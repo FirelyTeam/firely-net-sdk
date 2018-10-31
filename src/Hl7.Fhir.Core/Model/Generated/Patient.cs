@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -291,13 +291,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", true, elem); }
-                    if (Name != null) yield return new ElementValue("name", false, Name);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                    if (Address != null) yield return new ElementValue("address", false, Address);
-                    if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", elem); }
+                    if (Name != null) yield return new ElementValue("name", Name);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                    if (Address != null) yield return new ElementValue("address", Address);
+                    if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                    if (Organization != null) yield return new ElementValue("organization", Organization);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -305,9 +305,135 @@ namespace Hl7.Fhir.Model
         }
         
         
+<<<<<<< HEAD
+=======
+        [FhirType("AnimalComponent")]
+        [DataContract]
+        public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "AnimalComponent"; } }
+            
+            /// <summary>
+            /// E.g. Dog, Cow
+            /// </summary>
+            [FhirElement("species", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Species
+            {
+                get { return _Species; }
+                set { _Species = value; OnPropertyChanged("Species"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Species;
+            
+            /// <summary>
+            /// E.g. Poodle, Angus
+            /// </summary>
+            [FhirElement("breed", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Breed
+            {
+                get { return _Breed; }
+                set { _Breed = value; OnPropertyChanged("Breed"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Breed;
+            
+            /// <summary>
+            /// E.g. Neutered, Intact
+            /// </summary>
+            [FhirElement("genderStatus", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept GenderStatus
+            {
+                get { return _GenderStatus; }
+                set { _GenderStatus = value; OnPropertyChanged("GenderStatus"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _GenderStatus;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as AnimalComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();
+                    if(Breed != null) dest.Breed = (Hl7.Fhir.Model.CodeableConcept)Breed.DeepCopy();
+                    if(GenderStatus != null) dest.GenderStatus = (Hl7.Fhir.Model.CodeableConcept)GenderStatus.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new AnimalComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as AnimalComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Species, otherT.Species)) return false;
+                if( !DeepComparable.Matches(Breed, otherT.Breed)) return false;
+                if( !DeepComparable.Matches(GenderStatus, otherT.GenderStatus)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AnimalComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Species, otherT.Species)) return false;
+                if( !DeepComparable.IsExactly(Breed, otherT.Breed)) return false;
+                if( !DeepComparable.IsExactly(GenderStatus, otherT.GenderStatus)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Species != null) yield return Species;
+                    if (Breed != null) yield return Breed;
+                    if (GenderStatus != null) yield return GenderStatus;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Species != null) yield return new ElementValue("species", Species);
+                    if (Breed != null) yield return new ElementValue("breed", Breed);
+                    if (GenderStatus != null) yield return new ElementValue("genderStatus", GenderStatus);
+                }
+            }
+
+            
+        }
+        
+        
+>>>>>>> develop-stu3
         [FhirType("CommunicationComponent")]
         [DataContract]
-        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CommunicationComponent"; } }
@@ -420,8 +546,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Language != null) yield return new ElementValue("language", false, Language);
-                    if (PreferredElement != null) yield return new ElementValue("preferred", false, PreferredElement);
+                    if (Language != null) yield return new ElementValue("language", Language);
+                    if (PreferredElement != null) yield return new ElementValue("preferred", PreferredElement);
                 }
             }
 
@@ -431,7 +557,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
@@ -547,8 +673,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Other != null) yield return new ElementValue("other", false, Other);
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (Other != null) yield return new ElementValue("other", Other);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 }
             }
 
@@ -972,6 +1098,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
                 foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
@@ -988,6 +1115,25 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in GeneralPractitioner) { if (elem != null) yield return new ElementValue("generalPractitioner", true, elem); }
                 if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
                 foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", BirthDateElement);
+                if (Deceased != null) yield return new ElementValue("deceased", Deceased);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
+                if (MaritalStatus != null) yield return new ElementValue("maritalStatus", MaritalStatus);
+                if (MultipleBirth != null) yield return new ElementValue("multipleBirth", MultipleBirth);
+                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Animal != null) yield return new ElementValue("animal", Animal);
+                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", elem); }
+                foreach (var elem in GeneralPractitioner) { if (elem != null) yield return new ElementValue("generalPractitioner", elem); }
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
+>>>>>>> develop-stu3
             }
         }
 

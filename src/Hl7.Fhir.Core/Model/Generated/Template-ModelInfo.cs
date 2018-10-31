@@ -36,7 +36,11 @@ using System.Runtime.Serialization;
 */
 
 //
+<<<<<<< HEAD
 // Generated on Mon, 20 Aug 2018 11:16:02 GMT for FHIR v3.5.0
+=======
+// Generated on Tue, 18 Sep 2018 14:39:19 GMT for FHIR v3.0.1
+>>>>>>> develop-stu3
 //
 
 using Hl7.Fhir.Model;
@@ -267,6 +271,7 @@ namespace Hl7.Fhir.Model
                 { "url", typeof(Hl7.Fhir.Model.FhirUrl) },
                 { "UsageContext", typeof(UsageContext) },
                 { "uuid", typeof(Hl7.Fhir.Model.Uuid) },
+                { "xhtml", typeof(Hl7.Fhir.Model.XHtml) },
 
                 { "Account", typeof(Hl7.Fhir.Model.Account) },
                 { "ActivityDefinition", typeof(Hl7.Fhir.Model.ActivityDefinition) },
@@ -480,6 +485,7 @@ namespace Hl7.Fhir.Model
                 { typeof(Hl7.Fhir.Model.FhirUrl), "url" },
                 { typeof(UsageContext), "UsageContext" },
                 { typeof(Hl7.Fhir.Model.Uuid), "uuid" },
+                { typeof(Hl7.Fhir.Model.XHtml), "xhtml" },
 
                 { typeof(Hl7.Fhir.Model.Account), "Account" },
                 { typeof(Hl7.Fhir.Model.ActivityDefinition), "ActivityDefinition" },

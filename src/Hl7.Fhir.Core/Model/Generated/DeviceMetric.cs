@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CalibrationComponent")]
         [DataContract]
-        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CalibrationComponent"; } }
@@ -413,9 +413,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (StateElement != null) yield return new ElementValue("state", false, StateElement);
-                    if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (StateElement != null) yield return new ElementValue("state", StateElement);
+                    if (TimeElement != null) yield return new ElementValue("time", TimeElement);
                 }
             }
 
@@ -718,6 +718,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (Type != null) yield return new ElementValue("type", false, Type);
                 if (Unit != null) yield return new ElementValue("unit", false, Unit);
@@ -728,6 +729,18 @@ namespace Hl7.Fhir.Model
                 if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
                 if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", false, MeasurementPeriod);
                 foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", true, elem); }
+=======
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Unit != null) yield return new ElementValue("unit", Unit);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (Parent != null) yield return new ElementValue("parent", Parent);
+                if (OperationalStatusElement != null) yield return new ElementValue("operationalStatus", OperationalStatusElement);
+                if (ColorElement != null) yield return new ElementValue("color", ColorElement);
+                if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
+                if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", MeasurementPeriod);
+                foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", elem); }
+>>>>>>> develop-stu3
             }
         }
 

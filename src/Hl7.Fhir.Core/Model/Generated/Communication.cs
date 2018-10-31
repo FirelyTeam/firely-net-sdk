@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PayloadComponent")]
         [DataContract]
-        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PayloadComponent"; } }
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", false, Content);
+                    if (Content != null) yield return new ElementValue("content", Content);
                 }
             }
 
@@ -742,6 +742,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", true, elem); }
                 foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", true, elem); }
@@ -765,6 +766,28 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
                 foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", true, elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (NotDoneElement != null) yield return new ElementValue("notDone", NotDoneElement);
+                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", NotDoneReason);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (SentElement != null) yield return new ElementValue("sent", SentElement);
+                if (ReceivedElement != null) yield return new ElementValue("received", ReceivedElement);
+                if (Sender != null) yield return new ElementValue("sender", Sender);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+>>>>>>> develop-stu3
             }
         }
 

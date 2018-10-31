@@ -18,13 +18,13 @@ namespace Hl7.Fhir.Validation
 {
     internal static class FixedPatternValidationExtensions
     {
-        public static OperationOutcome ValidateFixed(this Validator v, ElementDefinition definition, IElementNavigator instance)
+        public static OperationOutcome ValidateFixed(this Validator v, ElementDefinition definition, ITypedElement instance)
         {
             var outcome = new OperationOutcome();
 
             if (definition.Fixed != null)
             {
-                IElementNavigator fixedValueNav = new PocoNavigator(definition.Fixed);
+                ITypedElement fixedValueNav = definition.Fixed.ToTypedElement();
 
                 if (!instance.IsExactlyEqualTo(fixedValueNav))
                 {
@@ -36,13 +36,13 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        public static OperationOutcome ValidatePattern(this Validator v, ElementDefinition definition, IElementNavigator instance)
+        public static OperationOutcome ValidatePattern(this Validator v, ElementDefinition definition, ITypedElement instance)
         {
             var outcome = new OperationOutcome();
 
             if (definition.Pattern != null)
             {
-                IElementNavigator patternValueNav = new PocoNavigator(definition.Pattern);
+                ITypedElement patternValueNav = definition.Pattern.ToTypedElement();
 
                 if (!instance.Matches(patternValueNav))
                 {
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Validation
                 return new FhirJsonSerializer().SerializeToString(value);
         }
 
-        public static bool IsExactlyEqualTo(this IElementNavigator left, IElementNavigator right)
+        public static bool IsExactlyEqualTo(this ITypedElement left, ITypedElement right)
         {
             if (left == null && right == null) return true;
             if (left == null || right == null) return false;
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Validation
 
 
 
-        public static bool Matches(this IElementNavigator value, IElementNavigator pattern)
+        public static bool Matches(this ITypedElement value, ITypedElement pattern)
         {
             if (value == null && pattern == null) return true;
             if (value == null || pattern == null) return false;

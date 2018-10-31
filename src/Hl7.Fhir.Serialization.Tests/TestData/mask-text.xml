@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSystem xmlns="http://hl7.org/fhir">
+  <id value="group-type-human"/>
+  <meta>
+    <profile value="http://nu.nl" />
+    <profile value="http://toen.nl" />
+  </meta>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Just an example</div>
+  </text>
+  <url value="http://example.org/fhir/ValueSet/group-type-human"/>
+  <version value="1.0"/>
+  <name value="GroupTypeHuman"/>
+  <status value="draft"/>
+  <experimental value="false"/>
+  <date value="2015-11-04"/>
+  <publisher value="HL7 (FHIR Project)"/>
+  <contact>
+    <telecom>
+      <system value="other"/>
+      <value value="http://hl7.org/fhir"/>
+    </telecom>
+    <telecom>
+      <system value="email"/>
+      <value value="fhir@lists.hl7.org"/>
+    </telecom>
+  </contact>
+  <description value="Types of resources that are part of group"/>
+  <caseSensitive value="true"/>
+  <concept>
+    <code value="person"/>
+    <display value="Person"/>
+    <definition value="Group contains &quot;person&quot; Patient resources"/>
+  </concept>
+  <concept>
+    <code value="practitioner"/>
+    <display value="Practitioner"/>
+    <definition value="Group contains healthcare practitioner resources"/>
+  </concept>
+</CodeSystem>

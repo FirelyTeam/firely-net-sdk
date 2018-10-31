@@ -159,7 +159,11 @@ namespace Hl7.Fhir.Model
 
         [FhirType("DispenseRequestComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "DispenseRequestComponent"; } }
@@ -188,7 +192,89 @@ namespace Hl7.Fhir.Model
                 set { _DispenseInterval = value; OnPropertyChanged("DispenseInterval"); }
             }
             
+<<<<<<< HEAD
             private Duration _DispenseInterval;
+=======
+            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as RequesterComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Agent != null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)Agent.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new RequesterComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as RequesterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
+                if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as RequesterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
+                if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Agent != null) yield return Agent;
+                    if (OnBehalfOf != null) yield return OnBehalfOf;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Agent != null) yield return new ElementValue("agent", Agent);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("DispenseRequestComponent")]
+        [DataContract]
+        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DispenseRequestComponent"; } }
+>>>>>>> develop-stu3
             
             /// <summary>
             /// Time period supply is authorized for
@@ -358,6 +444,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (InitialFill != null) yield return new ElementValue("initialFill", false, InitialFill);
                     if (DispenseInterval != null) yield return new ElementValue("dispenseInterval", false, DispenseInterval);
                     if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", false, ValidityPeriod);
@@ -365,6 +452,13 @@ namespace Hl7.Fhir.Model
                     if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
                     if (ExpectedSupplyDuration != null) yield return new ElementValue("expectedSupplyDuration", false, ExpectedSupplyDuration);
                     if (Performer != null) yield return new ElementValue("performer", false, Performer);
+=======
+                    if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
+                    if (NumberOfRepeatsAllowedElement != null) yield return new ElementValue("numberOfRepeatsAllowed", NumberOfRepeatsAllowedElement);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (ExpectedSupplyDuration != null) yield return new ElementValue("expectedSupplyDuration", ExpectedSupplyDuration);
+                    if (Performer != null) yield return new ElementValue("performer", Performer);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -478,7 +572,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubstitutionComponent")]
         [DataContract]
-        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }
@@ -591,8 +685,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (AllowedElement != null) yield return new ElementValue("allowed", false, AllowedElement);
-                    if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                    if (AllowedElement != null) yield return new ElementValue("allowed", AllowedElement);
+                    if (Reason != null) yield return new ElementValue("reason", Reason);
                 }
             }
 
@@ -1326,6 +1420,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (IntentElement != null) yield return new ElementValue("intent", false, IntentElement);
@@ -1356,6 +1451,32 @@ namespace Hl7.Fhir.Model
                 if (PriorPrescription != null) yield return new ElementValue("priorPrescription", false, PriorPrescription);
                 foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", true, elem); }
                 foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+                if (Medication != null) yield return new ElementValue("medication", Medication);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
+                if (Requester != null) yield return new ElementValue("requester", Requester);
+                if (Recorder != null) yield return new ElementValue("recorder", Recorder);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", elem); }
+                if (DispenseRequest != null) yield return new ElementValue("dispenseRequest", DispenseRequest);
+                if (Substitution != null) yield return new ElementValue("substitution", Substitution);
+                if (PriorPrescription != null) yield return new ElementValue("priorPrescription", PriorPrescription);
+                foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", elem); }
+                foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
+>>>>>>> develop-stu3
             }
         }
 

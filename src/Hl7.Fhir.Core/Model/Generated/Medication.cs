@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("IngredientComponent")]
         [DataContract]
-        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "IngredientComponent"; } }
@@ -216,9 +216,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (IsActiveElement != null) yield return new ElementValue("isActive", false, IsActiveElement);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (IsActiveElement != null) yield return new ElementValue("isActive", IsActiveElement);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -226,9 +226,243 @@ namespace Hl7.Fhir.Model
         }
         
         
+<<<<<<< HEAD
+=======
+        [FhirType("PackageComponent")]
+        [DataContract]
+        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "PackageComponent"; } }
+            
+            /// <summary>
+            /// E.g. box, vial, blister-pack
+            /// </summary>
+            [FhirElement("container", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Container
+            {
+                get { return _Container; }
+                set { _Container = value; OnPropertyChanged("Container"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Container;
+            
+            /// <summary>
+            /// What is  in the package
+            /// </summary>
+            [FhirElement("content", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Medication.ContentComponent> Content
+            {
+                get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Medication.ContentComponent>(); return _Content; }
+                set { _Content = value; OnPropertyChanged("Content"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Medication.ContentComponent> _Content;
+            
+            /// <summary>
+            /// Identifies a single production run
+            /// </summary>
+            [FhirElement("batch", Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Medication.BatchComponent> Batch
+            {
+                get { if(_Batch==null) _Batch = new List<Hl7.Fhir.Model.Medication.BatchComponent>(); return _Batch; }
+                set { _Batch = value; OnPropertyChanged("Batch"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Medication.BatchComponent> _Batch;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PackageComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Container != null) dest.Container = (Hl7.Fhir.Model.CodeableConcept)Container.DeepCopy();
+                    if(Content != null) dest.Content = new List<Hl7.Fhir.Model.Medication.ContentComponent>(Content.DeepCopy());
+                    if(Batch != null) dest.Batch = new List<Hl7.Fhir.Model.Medication.BatchComponent>(Batch.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PackageComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PackageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Container, otherT.Container)) return false;
+                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+                if( !DeepComparable.Matches(Batch, otherT.Batch)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PackageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Container, otherT.Container)) return false;
+                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+                if( !DeepComparable.IsExactly(Batch, otherT.Batch)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Container != null) yield return Container;
+                    foreach (var elem in Content) { if (elem != null) yield return elem; }
+                    foreach (var elem in Batch) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Container != null) yield return new ElementValue("container", Container);
+                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", elem); }
+                    foreach (var elem in Batch) { if (elem != null) yield return new ElementValue("batch", elem); }
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("ContentComponent")]
+        [DataContract]
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ContentComponent"; } }
+            
+            /// <summary>
+            /// The item in the package
+            /// </summary>
+            [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Item
+            {
+                get { return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Item;
+            
+            /// <summary>
+            /// Quantity present in the package
+            /// </summary>
+            [FhirElement("amount", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.SimpleQuantity Amount
+            {
+                get { return _Amount; }
+                set { _Amount = value; OnPropertyChanged("Amount"); }
+            }
+            
+            private Hl7.Fhir.Model.SimpleQuantity _Amount;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ContentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ContentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ContentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Item != null) yield return Item;
+                    if (Amount != null) yield return Amount;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
+                }
+            }
+
+            
+        }
+        
+        
+>>>>>>> develop-stu3
         [FhirType("BatchComponent")]
         [DataContract]
-        public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BatchComponent"; } }
@@ -395,9 +629,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
                     if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
                     if (SerialNumberElement != null) yield return new ElementValue("serialNumber", false, SerialNumberElement);
+=======
+                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -606,6 +845,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
@@ -613,6 +853,17 @@ namespace Hl7.Fhir.Model
                 if (Amount != null) yield return new ElementValue("amount", false, Amount);
                 foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, elem); }
                 if (Batch != null) yield return new ElementValue("batch", false, Batch);
+=======
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (IsBrandElement != null) yield return new ElementValue("isBrand", IsBrandElement);
+                if (IsOverTheCounterElement != null) yield return new ElementValue("isOverTheCounter", IsOverTheCounterElement);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                if (Form != null) yield return new ElementValue("form", Form);
+                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                if (Package != null) yield return new ElementValue("package", Package);
+                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
+>>>>>>> develop-stu3
             }
         }
 

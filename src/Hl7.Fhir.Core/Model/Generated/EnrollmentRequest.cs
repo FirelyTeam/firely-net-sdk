@@ -281,6 +281,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
@@ -288,6 +289,16 @@ namespace Hl7.Fhir.Model
                 if (Provider != null) yield return new ElementValue("provider", false, Provider);
                 if (Candidate != null) yield return new ElementValue("candidate", false, Candidate);
                 if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Insurer != null) yield return new ElementValue("insurer", Insurer);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Coverage != null) yield return new ElementValue("coverage", Coverage);
+>>>>>>> develop-stu3
             }
         }
 

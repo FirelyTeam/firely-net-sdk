@@ -9,6 +9,7 @@
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.ElementModel;
+using System;
 
 #pragma warning disable 1591 // suppress XML summary warnings
 
@@ -32,6 +33,12 @@ namespace Hl7.Fhir.Support
             return new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
         }
 
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, ITypedElement location = null)
+        {
+            return ToIssueComponent(message, location?.Location);
+        }
+
+        [Obsolete("Use ToIssueComponent(string message, ITypedElement location = null) instead")]
         public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null)
         {
             return ToIssueComponent(message, location?.Location);
@@ -138,13 +145,20 @@ namespace Hl7.Fhir.Support
 
     public static class OperationOutcomeIssueExtensions
     {
-        public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, IElementNavigator location)
+        public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, ITypedElement location)
         {
             var outcome = new OperationOutcome();
             var issue = infoIssue.ToIssueComponent(message, location);
             outcome.AddIssue(issue);
             return outcome;
         }
+
+        [Obsolete("Use NewOutcomeWithIssue(this Issue infoIssue, string message, ITypedElement location) instead")]
+        public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, IElementNavigator location)
+        {
+            return NewOutcomeWithIssue(infoIssue, message, location.ToTypedElement());
+        }
+
         public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, string location = null)
         {
             var outcome = new OperationOutcome();
@@ -153,12 +167,19 @@ namespace Hl7.Fhir.Support
             return outcome;
         }
 
-        public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
+        public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, ITypedElement location)
         {
             var issue = infoIssue.ToIssueComponent(message, location);
             outcome.AddIssue(issue);
             return issue;
         }
+
+        [Obsolete("Use AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, ITypedElement location) instead")]
+        public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
+        {
+            return AddIssue(outcome, message, infoIssue, location.ToTypedElement());
+        }
+
 
         public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, string location = null)
         {

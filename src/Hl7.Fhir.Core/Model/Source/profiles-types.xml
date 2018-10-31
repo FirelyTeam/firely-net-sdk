@@ -551,7 +551,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -685,7 +687,7 @@
             <definition value="Primitive value for base64Binary" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="(\s*([0-9a-zA-Z\+/=]){4}\s*)+" />
@@ -715,7 +717,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -847,7 +851,7 @@
             <definition value="Primitive value for boolean" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="true|false" />
@@ -1041,7 +1045,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -1137,7 +1143,7 @@
               <min value="0" />
               <max value="1" />
             </base>
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[^\s]+(\s[^\s]+)*" />
@@ -1173,7 +1179,7 @@
             <definition value="Primitive value for code" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[^\s]+(\s[^\s]+)*" />
@@ -1203,7 +1209,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -1335,7 +1343,7 @@
             <definition value="Primitive value for date" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?" />
@@ -1365,7 +1373,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -1497,7 +1507,7 @@
             <definition value="Primitive value for dateTime" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?" />
@@ -1527,7 +1537,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -1661,7 +1673,7 @@
             <definition value="Primitive value for decimal" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?" />
@@ -1691,7 +1703,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -1788,7 +1802,7 @@
               <min value="0" />
               <max value="1" />
             </base>
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[A-Za-z0-9\-\.]{1,64}" />
@@ -1825,7 +1839,7 @@
             <definition value="Primitive value for id" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[A-Za-z0-9\-\.]{1,64}" />
@@ -1855,7 +1869,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -1989,7 +2005,7 @@
             <definition value="Primitive value for instant" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))" />
@@ -2019,7 +2035,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -2155,7 +2173,7 @@
             <definition value="Primitive value for integer" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="-?([0]|([1-9][0-9]*))" />
@@ -2187,7 +2205,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -2284,7 +2304,7 @@
               <min value="0" />
               <max value="1" />
             </base>
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[ \r\n\t\S]+" />
@@ -2321,7 +2341,7 @@
             <definition value="Primitive value for markdown" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[ \r\n\t\S]+" />
@@ -2351,7 +2371,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -2448,7 +2470,7 @@
               <min value="0" />
               <max value="1" />
             </base>
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:oid:[0-2](\.(0|[1-9][0-9]*))+" />
@@ -2485,7 +2507,7 @@
             <definition value="Primitive value for oid" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:oid:[0-2](\.(0|[1-9][0-9]*))+" />
@@ -2515,7 +2537,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -2611,7 +2635,7 @@
               <min value="0" />
               <max value="1" />
             </base>
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[1-9][0-9]*" />
@@ -2647,7 +2671,7 @@
             <definition value="Primitive value for positiveInt" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[1-9][0-9]*" />
@@ -2677,7 +2701,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -2812,7 +2838,7 @@
             <definition value="Primitive value for string" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[ \r\n\t\S]+" />
@@ -2843,7 +2869,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -2975,7 +3003,7 @@
             <definition value="Primitive value for time" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?" />
@@ -3005,7 +3033,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -3101,7 +3131,7 @@
               <min value="0" />
               <max value="1" />
             </base>
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[0]|([1-9][0-9]*)" />
@@ -3137,7 +3167,7 @@
             <definition value="Primitive value for unsignedInt" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[0]|([1-9][0-9]*)" />
@@ -3167,7 +3197,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -3301,7 +3333,7 @@
             <definition value="Primitive value for uri" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="\S*" />
@@ -3493,7 +3525,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -3590,7 +3624,7 @@
               <min value="0" />
               <max value="1" />
             </base>
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" />
@@ -3627,7 +3661,7 @@
             <definition value="Primitive value for uuid" />
             <min value="0" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" />
@@ -3657,7 +3691,9 @@
         <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueString value="Normative" />
@@ -3782,7 +3818,7 @@
             <definition value="Actual xhtml" />
             <min value="1" />
             <max value="1" />
-          <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <code>
                 <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
@@ -33295,14 +33331,7 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <h2>Data type SimpleQuantity</h2>
-            <p>A fixed quantity (no comparator)</p>
-            <h3>Rule</h3>
-            <p>The comparator is not used on a SimpleQuantity</p>
-            <p>XPath:</p>
-            <blockquote>
-              <pre>not(exists(f:comparator))</pre>
-            </blockquote>
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">

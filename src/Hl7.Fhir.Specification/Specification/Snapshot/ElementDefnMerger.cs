@@ -75,9 +75,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [EK 20170301] This used to be ambiguous, now (STU3) split in contentReference and sliceName
                 snap.SliceNameElement = mergePrimitiveAttribute(snap.SliceNameElement, diff.SliceNameElement);
-            
+
                 // Codes are cumulative based on the code value
-                snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
+                // [WMR 20180611] WRONG! Invalid elementComparer
+                // snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
+                snap.Code = mergeCollection(snap.Code, diff.Code, isEqualCoding);
 
                 // For extensions, the base definition is irrelevant since they describe infrastructure, and the diff should contain the real meaning for the elements
                 // In case the diff doesn't have these, give some generic defaults.
@@ -312,6 +314,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Don't merge elementId, e.g. for type profiles
                     return null;
                 }
+            }
+
+            // [WMR 20180611] NEW
+            static bool isEqualCoding(Coding c, Coding d)
+            {
+                // Compare codes, if specified
+                if (c.CodeElement != null || d.CodeElement != null)
+                {
+                    return c.System == d.System
+                        && c.Version == d.Version
+                        && c.Code == d.Code;
+                }
+                // Codes are empty or missing; compare display values instead
+                return c.Display == d.Display;
             }
 
         }

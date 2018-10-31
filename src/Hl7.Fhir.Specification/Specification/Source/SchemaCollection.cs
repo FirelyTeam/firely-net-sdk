@@ -16,7 +16,6 @@ using System.Xml.Schema;
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if NET_XSD_SCHEMA
     public class SchemaCollection
     {
 
@@ -52,5 +51,4 @@ namespace Hl7.Fhir.Specification.Source
             return schemas;
         }
     }
-#endif
 }

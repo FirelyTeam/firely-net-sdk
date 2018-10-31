@@ -368,6 +368,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
@@ -379,6 +380,19 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
                 foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, elem); }
                 if (Period != null) yield return new ElementValue("period", false, Period);
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", BirthDateElement);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
+                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", elem); }
+                if (Period != null) yield return new ElementValue("period", Period);
+>>>>>>> develop-stu3
             }
         }
 

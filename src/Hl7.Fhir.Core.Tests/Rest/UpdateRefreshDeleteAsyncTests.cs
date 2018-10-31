@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class UpdateRefreshDeleteAsyncTests
     {
-        private string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
 
         [TestMethod]
         [TestCategory("IntegrationTest")]

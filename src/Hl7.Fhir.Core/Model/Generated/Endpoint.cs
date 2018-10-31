@@ -452,17 +452,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ConnectionType != null) yield return new ElementValue("connectionType", false, ConnectionType);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                foreach (var elem in PayloadType) { if (elem != null) yield return new ElementValue("payloadType", true, elem); }
-                foreach (var elem in PayloadMimeTypeElement) { if (elem != null) yield return new ElementValue("payloadMimeType", true, elem); }
-                if (AddressElement != null) yield return new ElementValue("address", false, AddressElement);
-                foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ConnectionType != null) yield return new ElementValue("connectionType", ConnectionType);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Period != null) yield return new ElementValue("period", Period);
+                foreach (var elem in PayloadType) { if (elem != null) yield return new ElementValue("payloadType", elem); }
+                foreach (var elem in PayloadMimeTypeElement) { if (elem != null) yield return new ElementValue("payloadMimeType", elem); }
+                if (AddressElement != null) yield return new ElementValue("address", AddressElement);
+                foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", elem); }
             }
         }
 

@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
@@ -246,10 +246,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
                     if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
                     foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", true, elem); }
+=======
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
+                    if (MeasureScoreElement != null) yield return new ElementValue("measureScore", MeasureScoreElement);
+                    foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -259,7 +266,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PopulationComponent")]
         [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PopulationComponent"; } }
@@ -390,9 +397,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (CountElement != null) yield return new ElementValue("count", false, CountElement);
                     if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
+=======
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CountElement != null) yield return new ElementValue("count", CountElement);
+                    if (Patients != null) yield return new ElementValue("patients", Patients);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -402,7 +416,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierComponent")]
         [DataContract]
-        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StratifierComponent"; } }
@@ -496,8 +510,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", true, elem); }
+=======
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -507,7 +526,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierGroupComponent")]
         [DataContract]
-        public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StratifierGroupComponent"; } }
@@ -619,9 +638,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Value != null) yield return new ElementValue("value", false, Value);
                     foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
                     if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
+=======
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
+                    if (MeasureScoreElement != null) yield return new ElementValue("measureScore", MeasureScoreElement);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -631,7 +656,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierGroupPopulationComponent")]
         [DataContract]
-        public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StratifierGroupPopulationComponent"; } }
@@ -762,9 +787,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (CountElement != null) yield return new ElementValue("count", false, CountElement);
                     if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
+=======
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CountElement != null) yield return new ElementValue("count", CountElement);
+                    if (Patients != null) yield return new ElementValue("patients", Patients);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -1137,6 +1169,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
@@ -1148,6 +1181,18 @@ namespace Hl7.Fhir.Model
                 if (ImprovementNotationElement != null) yield return new ElementValue("improvementNotation", false, ImprovementNotationElement);
                 foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
                 foreach (var elem in EvaluatedResource) { if (elem != null) yield return new ElementValue("evaluatedResource", true, elem); }
+=======
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (Measure != null) yield return new ElementValue("measure", Measure);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (ReportingOrganization != null) yield return new ElementValue("reportingOrganization", ReportingOrganization);
+                if (Period != null) yield return new ElementValue("period", Period);
+                foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
+                if (EvaluatedResources != null) yield return new ElementValue("evaluatedResources", EvaluatedResources);
+>>>>>>> develop-stu3
             }
         }
 

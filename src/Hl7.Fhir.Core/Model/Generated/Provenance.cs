@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("AgentComponent")]
         [DataContract]
-        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AgentComponent"; } }
@@ -229,10 +229,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Type != null) yield return new ElementValue("type", false, Type);
                     foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", true, elem); }
                     if (Who != null) yield return new ElementValue("who", false, Who);
                     if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
+=======
+                    foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", elem); }
+                    if (Who != null) yield return new ElementValue("who", Who);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                    if (RelatedAgentType != null) yield return new ElementValue("relatedAgentType", RelatedAgentType);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -242,7 +249,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EntityComponent")]
         [DataContract]
-        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EntityComponent"; } }
@@ -376,9 +383,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RoleElement != null) yield return new ElementValue("role", false, RoleElement);
-                    if (What != null) yield return new ElementValue("what", false, What);
-                    foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", true, elem); }
+                    if (RoleElement != null) yield return new ElementValue("role", RoleElement);
+                    if (What != null) yield return new ElementValue("what", What);
+                    foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
                 }
             }
 
@@ -667,6 +674,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
                 if (Occurred != null) yield return new ElementValue("occurred", false, Occurred);
                 if (RecordedElement != null) yield return new ElementValue("recorded", false, RecordedElement);
@@ -677,6 +685,18 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", true, elem); }
                 foreach (var elem in Entity) { if (elem != null) yield return new ElementValue("entity", true, elem); }
                 foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", true, elem); }
+=======
+                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (RecordedElement != null) yield return new ElementValue("recorded", RecordedElement);
+                foreach (var elem in PolicyElement) { if (elem != null) yield return new ElementValue("policy", elem); }
+                if (Location != null) yield return new ElementValue("location", Location);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
+                if (Activity != null) yield return new ElementValue("activity", Activity);
+                foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
+                foreach (var elem in Entity) { if (elem != null) yield return new ElementValue("entity", elem); }
+                foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", elem); }
+>>>>>>> develop-stu3
             }
         }
 

@@ -136,12 +136,18 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// Distinguishes whether the task is a proposal, plan or full order.
         /// (url: http://hl7.org/fhir/ValueSet/task-intent)
         /// </summary>
         [FhirEnumeration("TaskIntent")]
         public enum TaskIntent
+=======
+        [FhirType("RequesterComponent")]
+        [DataContract]
+        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -153,6 +159,7 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/request-intent)
             /// </summary>
+<<<<<<< HEAD
             [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
             Proposal,
             /// <summary>
@@ -197,11 +204,93 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
             Option,
+=======
+            [FhirElement("onBehalfOf", Order=50)]
+            [CLSCompliant(false)]
+			[References("Organization")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+            {
+                get { return _OnBehalfOf; }
+                set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as RequesterComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Agent != null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)Agent.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new RequesterComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as RequesterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
+                if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as RequesterComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
+                if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Agent != null) yield return Agent;
+                    if (OnBehalfOf != null) yield return OnBehalfOf;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Agent != null) yield return new ElementValue("agent", Agent);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                }
+            }
+
+            
+>>>>>>> develop-stu3
         }
 
         [FhirType("RestrictionComponent")]
         [DataContract]
-        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RestrictionComponent"; } }
@@ -333,9 +422,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RepetitionsElement != null) yield return new ElementValue("repetitions", false, RepetitionsElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                    if (RepetitionsElement != null) yield return new ElementValue("repetitions", RepetitionsElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
                 }
             }
 
@@ -345,7 +434,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -442,8 +531,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -453,7 +542,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OutputComponent")]
         [DataContract]
-        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OutputComponent"; } }
@@ -550,8 +639,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -1341,6 +1430,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (InstantiatesCanonicalElement != null) yield return new ElementValue("instantiatesCanonical", false, InstantiatesCanonicalElement);
                 if (InstantiatesUriElement != null) yield return new ElementValue("instantiatesUri", false, InstantiatesUriElement);
@@ -1372,6 +1462,35 @@ namespace Hl7.Fhir.Model
                 if (Restriction != null) yield return new ElementValue("restriction", false, Restriction);
                 foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", true, elem); }
                 foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Definition != null) yield return new ElementValue("definition", Definition);
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (StatusReason != null) yield return new ElementValue("statusReason", StatusReason);
+                if (BusinessStatus != null) yield return new ElementValue("businessStatus", BusinessStatus);
+                if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
+                if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (Focus != null) yield return new ElementValue("focus", Focus);
+                if (For != null) yield return new ElementValue("for", For);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (ExecutionPeriod != null) yield return new ElementValue("executionPeriod", ExecutionPeriod);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
+                if (LastModifiedElement != null) yield return new ElementValue("lastModified", LastModifiedElement);
+                if (Requester != null) yield return new ElementValue("requester", Requester);
+                foreach (var elem in PerformerType) { if (elem != null) yield return new ElementValue("performerType", elem); }
+                if (Owner != null) yield return new ElementValue("owner", Owner);
+                if (Reason != null) yield return new ElementValue("reason", Reason);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", elem); }
+                if (Restriction != null) yield return new ElementValue("restriction", Restriction);
+                foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", elem); }
+                foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", elem); }
+>>>>>>> develop-stu3
             }
         }
 

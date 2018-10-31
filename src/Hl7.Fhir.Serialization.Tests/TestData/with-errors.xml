@@ -1,0 +1,28 @@
+﻿<SomeResource xmlns='http://hl7.org/fhir'
+              xmlns:cust='http://custom.org/some-ns'
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://contoso.com/People http://contoso.com/schemas/people.xsd">
+  <anElement value=' true ' cust:customAttribute='primitive' />
+  <anElementWithEmptyAttribute value='' other='' />
+  <anElementWithContained value='4'>
+    <Patient shouldnt='behere'></Patient>
+    <Practitioner>
+      <some value='dummy' />
+      <some value='' />
+      <!-- should have just one child -->
+    </Practitioner>
+  </anElementWithContained>
+  <anElement value='false' /> <!-- nasty, had anElement before, but not contiguous -->
+  <cust:illegalNamespace>
+    <some value='dummy' />
+  </cust:illegalNamespace>
+  <illegalContained>
+    <Patient />
+  </illegalContained>
+  <illegalContained2>
+    <cust:Patient>
+      <some value='dummy' />
+    </cust:Patient>
+  </illegalContained2>
+  <empty><!-- is not good --></empty>
+</SomeResource>

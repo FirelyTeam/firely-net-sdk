@@ -8,14 +8,11 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 
 namespace Hl7.Fhir.Introspection
@@ -32,22 +29,17 @@ namespace Hl7.Fhir.Introspection
         public bool InSummary { get; private set; }
         public bool IsMandatoryElement { get; private set; }
 
-        public Type ReturnType { get; private set; }
-        public Type ElementType { get; private set; }
+        public Type ImplementingType { get; private set; }
+        public bool IsBackboneElement { get; private set; }
 
         public int Order { get; private set; }
 
-        public XmlSerializationHint SerializationHint { get; set; }
+        public XmlRepresentation SerializationHint { get; private set; }
 
-        public ChoiceType Choice { get; set; }
+        public ChoiceType Choice { get; private set; }
+        public Type[] FhirType { get; private set; }        // may be multiple if this is a choice
 
-        public static PropertyMapping Create(PropertyInfo prop)
-        {
-            IEnumerable<Type> dummy;
-
-            return Create(prop, out dummy);
-        }
-
+        public static PropertyMapping Create(PropertyInfo prop) => Create(prop, out IEnumerable<Type> dummy);
         
         internal static PropertyMapping Create(PropertyInfo prop, out IEnumerable<Type> referredTypes)        
         {
@@ -59,42 +51,56 @@ namespace Hl7.Fhir.Introspection
 
             var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
             var cardinalityAttr = prop.GetCustomAttribute<Validation.CardinalityAttribute>();
+            var allowedTypes = prop.GetCustomAttribute<Validation.AllowedTypesAttribute>();
 
             result.Name = determinePropertyName(prop);
-            result.ReturnType = prop.PropertyType;
-            result.ElementType = result.ReturnType;
+            result.ImplementingType = prop.PropertyType;
 
-            result.InSummary = elementAttr != null ? elementAttr.InSummary : false;
+            result.InSummary = elementAttr?.InSummary ?? false;
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
-            result.Choice = elementAttr != null ? elementAttr.Choice : ChoiceType.None;
+            result.Choice = elementAttr?.Choice ?? ChoiceType.None;
 
             if (elementAttr != null)
             {
                 result.SerializationHint = elementAttr.XmlSerialization;
                 result.Order = elementAttr.Order;
             }
-
-            foundTypes.Add(result.ElementType);
-
+          
             result.IsCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
 
             // Get to the actual (native) type representing this element
-            if (result.IsCollection) result.ElementType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
-            if (ReflectionHelper.IsNullableType(result.ElementType)) result.ElementType = ReflectionHelper.GetNullableArgument(result.ElementType);
-            result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ElementType);
+            if (result.IsCollection) result.ImplementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
+            if (ReflectionHelper.IsNullableType(result.ImplementingType)) result.ImplementingType = ReflectionHelper.GetNullableArgument(result.ImplementingType);
+            result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ImplementingType);
+
+            result.IsBackboneElement = result.ImplementingType.CanBeTreatedAsType(typeof(IBackboneElement));
+            foundTypes.Add(result.ImplementingType);
+
+            // Derive the C# type that represents which types are allowed for this element.
+            // This may differ from the ImplementingType in several ways:
+            // * for a choice, ImplementingType = Any, but FhirType[] contains the possible choices
+            // * some elements (e.g. Extension.url) have ImplementingType = string, but FhirType = FhirUri, etc.
+            if (allowedTypes != null)
+                result.FhirType = allowedTypes.Types;
+            else if (elementAttr?.TypeRedirect != null)
+                result.FhirType = new[] { elementAttr.TypeRedirect };
+            else
+                result.FhirType = new[] { result.ImplementingType };
 
             // Check wether this property represents a native .NET type
             // marked to receive the class' primitive value in the fhir serialization
             // (e.g. the value from the Xml 'value' attribute or the Json primitive member value)
-            if(result.IsPrimitive) result.RepresentsValueElement = isPrimitiveValueElement(prop);
+            if (result.IsPrimitive) result.RepresentsValueElement = isPrimitiveValueElement(prop);
 
             referredTypes = foundTypes;
 
-            // May need to generate getters/setters using pre-compiled expression trees for performance.
-            // See http://weblogs.asp.net/marianor/archive/2009/04/10/using-expression-trees-to-get-property-getter-and-setters.aspx
+#if USE_CODE_GEN
+            result._getter = prop.GetValueGetter();
+            result._setter = prop.GetValueSetter();
+#else
             result._getter = instance => prop.GetValue(instance, null);
             result._setter = (instance,value) => prop.SetValue(instance, value, null);
-            
+#endif       
             return result;
         }
 

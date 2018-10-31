@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ReferenceRangeComponent")]
         [DataContract]
-        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceRangeComponent"; } }
@@ -238,12 +238,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Low != null) yield return new ElementValue("low", false, Low);
-                    if (High != null) yield return new ElementValue("high", false, High);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", true, elem); }
-                    if (Age != null) yield return new ElementValue("age", false, Age);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Low != null) yield return new ElementValue("low", Low);
+                    if (High != null) yield return new ElementValue("high", High);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", elem); }
+                    if (Age != null) yield return new ElementValue("age", Age);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
                 }
             }
 
@@ -251,9 +251,138 @@ namespace Hl7.Fhir.Model
         }
         
         
+<<<<<<< HEAD
+=======
+        [FhirType("RelatedComponent")]
+        [DataContract]
+        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "RelatedComponent"; } }
+            
+            /// <summary>
+            /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
+            /// </summary>
+            [FhirElement("type", Order=40)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> _TypeElement;
+            
+            /// <summary>
+            /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Observation.ObservationRelationshipType? Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        TypeElement = null; 
+                    else
+                        TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
+                    OnPropertyChanged("Type");
+                }
+            }
+            
+            /// <summary>
+            /// Resource that is related to this one
+            /// </summary>
+            [FhirElement("target", Order=50)]
+            [CLSCompliant(false)]
+			[References("Observation","QuestionnaireResponse","Sequence")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Target
+            {
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Target;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as RelatedComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>)TypeElement.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new RelatedComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as RelatedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as RelatedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (Target != null) yield return Target;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Target != null) yield return new ElementValue("target", Target);
+                }
+            }
+
+            
+        }
+        
+        
+>>>>>>> develop-stu3
         [FhirType("ComponentComponent")]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
@@ -402,11 +531,19 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     if (Value != null) yield return new ElementValue("value", false, Value);
                     if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
                     foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", true, elem); }
                     foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", true, elem); }
+=======
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", DataAbsentReason);
+                    if (Interpretation != null) yield return new ElementValue("interpretation", Interpretation);
+                    foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -1006,6 +1143,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
                 foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
@@ -1030,6 +1168,29 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in HasMember) { if (elem != null) yield return new ElementValue("hasMember", true, elem); }
                 foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", true, elem); }
                 foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (Effective != null) yield return new ElementValue("effective", Effective);
+                if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
+                if (Value != null) yield return new ElementValue("value", Value);
+                if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", DataAbsentReason);
+                if (Interpretation != null) yield return new ElementValue("interpretation", Interpretation);
+                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                if (Method != null) yield return new ElementValue("method", Method);
+                if (Specimen != null) yield return new ElementValue("specimen", Specimen);
+                if (Device != null) yield return new ElementValue("device", Device);
+                foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", elem); }
+                foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", elem); }
+                foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
+>>>>>>> develop-stu3
             }
         }
 

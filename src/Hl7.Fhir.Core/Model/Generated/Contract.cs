@@ -1475,7 +1475,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContractAssetComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "ContractAssetComponent"; } }
@@ -1878,6 +1882,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Scope != null) yield return new ElementValue("scope", false, Scope);
                     foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
                     foreach (var elem in TypeReference) { if (elem != null) yield return new ElementValue("typeReference", true, elem); }
@@ -1893,6 +1898,10 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
                     foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", true, elem); }
                     foreach (var elem in ValuedItem) { if (elem != null) yield return new ElementValue("valuedItem", true, elem); }
+=======
+                    if (Actor != null) yield return new ElementValue("actor", Actor);
+                    foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -1902,7 +1911,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AssetContextComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "AssetContextComponent"; } }
@@ -2034,9 +2047,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Reference != null) yield return new ElementValue("reference", false, Reference);
                     foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
                     if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+=======
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Party != null) yield return new ElementValue("party", Party);
+                    foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -2046,7 +2065,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ValuedItemComponent")]
         [DataContract]
-        public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ValuedItemComponent"; } }
@@ -2484,6 +2503,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Entity != null) yield return new ElementValue("entity", false, Entity);
                     if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                     if (EffectiveTimeElement != null) yield return new ElementValue("effectiveTime", false, EffectiveTimeElement);
@@ -2498,6 +2518,16 @@ namespace Hl7.Fhir.Model
                     if (Recipient != null) yield return new ElementValue("recipient", false, Recipient);
                     foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", true, elem); }
                     foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", true, elem); }
+=======
+                    if (Entity != null) yield return new ElementValue("entity", Entity);
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (EffectiveTimeElement != null) yield return new ElementValue("effectiveTime", EffectiveTimeElement);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (UnitPrice != null) yield return new ElementValue("unitPrice", UnitPrice);
+                    if (FactorElement != null) yield return new ElementValue("factor", FactorElement);
+                    if (PointsElement != null) yield return new ElementValue("points", PointsElement);
+                    if (Net != null) yield return new ElementValue("net", Net);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -2507,7 +2537,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ActionComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class TermComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "ActionComponent"; } }
@@ -3101,6 +3135,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", false, DoNotPerformElement);
                     if (Type != null) yield return new ElementValue("type", false, Type);
                     foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
@@ -3122,6 +3157,21 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ReasonLinkIdElement) { if (elem != null) yield return new ElementValue("reasonLinkId", true, elem); }
                     foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
                     foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", true, elem); }
+=======
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
+                    if (Applies != null) yield return new ElementValue("applies", Applies);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (SubType != null) yield return new ElementValue("subType", SubType);
+                    foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
+                    foreach (var elem in ActionReason) { if (elem != null) yield return new ElementValue("actionReason", elem); }
+                    foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
+                    foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    foreach (var elem in ValuedItem) { if (elem != null) yield return new ElementValue("valuedItem", elem); }
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -3131,7 +3181,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ActionSubjectComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class TermAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "ActionSubjectComponent"; } }
@@ -3227,8 +3281,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     foreach (var elem in Reference) { if (elem != null) yield return new ElementValue("reference", true, elem); }
                     if (Role != null) yield return new ElementValue("role", false, Role);
+=======
+                    if (Actor != null) yield return new ElementValue("actor", Actor);
+                    foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", elem); }
+>>>>>>> develop-stu3
                 }
             }
 
@@ -3238,7 +3297,11 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SignatoryComponent")]
         [DataContract]
+<<<<<<< HEAD
         public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+=======
+        public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+>>>>>>> develop-stu3
         {
             [NotMapped]
             public override string TypeName { get { return "SignatoryComponent"; } }
@@ -3353,9 +3416,20 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Type != null) yield return new ElementValue("type", false, Type);
                     if (Party != null) yield return new ElementValue("party", false, Party);
                     foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", true, elem); }
+=======
+                    if (Entity != null) yield return new ElementValue("entity", Entity);
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (EffectiveTimeElement != null) yield return new ElementValue("effectiveTime", EffectiveTimeElement);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (UnitPrice != null) yield return new ElementValue("unitPrice", UnitPrice);
+                    if (FactorElement != null) yield return new ElementValue("factor", FactorElement);
+                    if (PointsElement != null) yield return new ElementValue("points", PointsElement);
+                    if (Net != null) yield return new ElementValue("net", Net);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -3365,7 +3439,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FriendlyLanguageComponent")]
         [DataContract]
-        public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FriendlyLanguageComponent"; } }
@@ -3444,7 +3518,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", false, Content);
+                    if (Content != null) yield return new ElementValue("content", Content);
                 }
             }
 
@@ -3454,7 +3528,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LegalLanguageComponent")]
         [DataContract]
-        public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LegalLanguageComponent"; } }
@@ -3533,7 +3607,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", false, Content);
+                    if (Content != null) yield return new ElementValue("content", Content);
                 }
             }
 
@@ -3543,7 +3617,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ComputableLanguageComponent")]
         [DataContract]
-        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ComputableLanguageComponent"; } }
@@ -3622,6 +3696,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Content != null) yield return new ElementValue("content", false, Content);
                 }
             }
@@ -3673,6 +3748,10 @@ namespace Hl7.Fhir.Model
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
                 OnPropertyChanged("Url");
+=======
+                    if (Content != null) yield return new ElementValue("content", Content);
+                }
+>>>>>>> develop-stu3
             }
         }
         
@@ -4456,6 +4535,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
                 if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
@@ -4489,6 +4569,31 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Legal) { if (elem != null) yield return new ElementValue("legal", true, elem); }
                 foreach (var elem in Rule) { if (elem != null) yield return new ElementValue("rule", true, elem); }
                 if (LegallyBinding != null) yield return new ElementValue("legallyBinding", false, LegallyBinding);
+=======
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
+                if (Applies != null) yield return new ElementValue("applies", Applies);
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
+                foreach (var elem in Authority) { if (elem != null) yield return new ElementValue("authority", elem); }
+                foreach (var elem in Domain) { if (elem != null) yield return new ElementValue("domain", elem); }
+                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in SubType) { if (elem != null) yield return new ElementValue("subType", elem); }
+                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
+                foreach (var elem in ActionReason) { if (elem != null) yield return new ElementValue("actionReason", elem); }
+                if (DecisionType != null) yield return new ElementValue("decisionType", DecisionType);
+                if (ContentDerivative != null) yield return new ElementValue("contentDerivative", ContentDerivative);
+                foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
+                foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
+                foreach (var elem in Signer) { if (elem != null) yield return new ElementValue("signer", elem); }
+                foreach (var elem in ValuedItem) { if (elem != null) yield return new ElementValue("valuedItem", elem); }
+                foreach (var elem in Term) { if (elem != null) yield return new ElementValue("term", elem); }
+                if (Binding != null) yield return new ElementValue("binding", Binding);
+                foreach (var elem in Friendly) { if (elem != null) yield return new ElementValue("friendly", elem); }
+                foreach (var elem in Legal) { if (elem != null) yield return new ElementValue("legal", elem); }
+                foreach (var elem in Rule) { if (elem != null) yield return new ElementValue("rule", elem); }
+>>>>>>> develop-stu3
             }
         }
 

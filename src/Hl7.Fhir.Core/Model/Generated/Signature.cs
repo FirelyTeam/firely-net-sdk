@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -307,6 +309,7 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
+<<<<<<< HEAD
                 foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
                 if (WhenElement != null) yield return new ElementValue("when", false, WhenElement);
                 if (Who != null) yield return new ElementValue("who", false, Who);
@@ -314,6 +317,14 @@ namespace Hl7.Fhir.Model
                 if (TargetFormatElement != null) yield return new ElementValue("targetFormat", false, TargetFormatElement);
                 if (SigFormatElement != null) yield return new ElementValue("sigFormat", false, SigFormatElement);
                 if (DataElement != null) yield return new ElementValue("data", false, DataElement);
+=======
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                if (WhenElement != null) yield return new ElementValue("when", WhenElement);
+                if (Who != null) yield return new ElementValue("who", Who);
+                if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+                if (BlobElement != null) yield return new ElementValue("blob", BlobElement);
+>>>>>>> develop-stu3
  
             } 
         } 

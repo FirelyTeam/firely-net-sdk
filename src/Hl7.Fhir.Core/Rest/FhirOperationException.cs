@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Rest
     /// <summary>
     /// Represents HL7 FHIR errors that occur during application execution.
     /// </summary>
-#if DOTNETFW
+#if !NETSTANDARD1_1
     [SerializableAttribute]
 #endif
     public class FhirOperationException : Exception
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-#if DOTNETFW
+#if !NETSTANDARD1_1
         /// <summary>
         /// When overridden in a derived class, sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with information about the exception.
         /// </summary>

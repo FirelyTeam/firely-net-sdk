@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PerformerComponent")]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -172,9 +172,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                     if (Function != null) yield return new ElementValue("function", false, Function);
                     if (Actor != null) yield return new ElementValue("actor", false, Actor);
                     if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
+=======
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Actor != null) yield return new ElementValue("actor", Actor);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+>>>>>>> develop-stu3
                 }
             }
 
@@ -184,7 +190,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FocalDeviceComponent")]
         [DataContract]
-        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FocalDeviceComponent"; } }
@@ -280,8 +286,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Action != null) yield return new ElementValue("action", false, Action);
-                    if (Manipulated != null) yield return new ElementValue("manipulated", false, Manipulated);
+                    if (Action != null) yield return new ElementValue("action", Action);
+                    if (Manipulated != null) yield return new ElementValue("manipulated", Manipulated);
                 }
             }
 
@@ -925,6 +931,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+<<<<<<< HEAD
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", true, elem); }
                 foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", true, elem); }
@@ -953,6 +960,34 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in FocalDevice) { if (elem != null) yield return new ElementValue("focalDevice", true, elem); }
                 foreach (var elem in UsedReference) { if (elem != null) yield return new ElementValue("usedReference", true, elem); }
                 foreach (var elem in UsedCode) { if (elem != null) yield return new ElementValue("usedCode", true, elem); }
+=======
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (NotDoneElement != null) yield return new ElementValue("notDone", NotDoneElement);
+                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", NotDoneReason);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (Performed != null) yield return new ElementValue("performed", Performed);
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
+                if (Location != null) yield return new ElementValue("location", Location);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", elem); }
+                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                foreach (var elem in Report) { if (elem != null) yield return new ElementValue("report", elem); }
+                foreach (var elem in Complication) { if (elem != null) yield return new ElementValue("complication", elem); }
+                foreach (var elem in ComplicationDetail) { if (elem != null) yield return new ElementValue("complicationDetail", elem); }
+                foreach (var elem in FollowUp) { if (elem != null) yield return new ElementValue("followUp", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in FocalDevice) { if (elem != null) yield return new ElementValue("focalDevice", elem); }
+                foreach (var elem in UsedReference) { if (elem != null) yield return new ElementValue("usedReference", elem); }
+                foreach (var elem in UsedCode) { if (elem != null) yield return new ElementValue("usedCode", elem); }
+>>>>>>> develop-stu3
             }
         }
 
