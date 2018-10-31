@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="DocumentManifest" type="DocumentManifest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="DocumentManifest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -59,14 +59,9 @@
               <xs:documentation xml:lang="en">Other identifiers associated with the document manifest, including version independent  identifiers.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="DocumentReferenceStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Who or what the set of documents is about. The documents can be about a person, (patient or healthcare practitioner), a device (i.e. machine) or even a group of subjects (such as a document about a herd of farm animals, or a set of patients that share a common exposure). If the documents cross more than one subject, then more than one subject is allowed here (unusual use case).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="recipient" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A patient, practitioner, or organization for which this set of documents is intended.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of this document manifest.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -74,9 +69,9 @@
               <xs:documentation xml:lang="en">Specifies the kind of this set of documents (e.g. Patient Summary, Discharge Summary, Prescription, etc.). The type of a set of documents may be the same as one of the documents in it - especially if there is only one - but it may be wider.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="author" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies who is responsible for creating the manifest, and adding  documents to it.</xs:documentation>
+              <xs:documentation xml:lang="en">Who or what the set of documents is about. The documents can be about a person, (patient or healthcare practitioner), a device (i.e. machine) or even a group of subjects (such as a document about a herd of farm animals, or a set of patients that share a common exposure). If the documents cross more than one subject, then more than one subject is allowed here (unusual use case).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -84,14 +79,19 @@
               <xs:documentation xml:lang="en">When the document manifest was created for submission to the server (not necessarily the same thing as the actual resource last modified time, since it may be modified, replicated, etc.).</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="author" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies who is responsible for creating the manifest, and adding  documents to it.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="recipient" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A patient, practitioner, or organization for which this set of documents is intended.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="source" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the source system, application, or software that produced the document manifest.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The status of this document manifest.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
@@ -115,7 +115,7 @@
   </xs:complexType>
   <xs:complexType name="DocumentManifest.Content">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -133,7 +133,7 @@
   </xs:complexType>
   <xs:complexType name="DocumentManifest.Related">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -145,7 +145,7 @@
           </xs:element>
           <xs:element name="ref" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Related Resource to this DocumentManifest. For example, Order, DiagnosticOrder,  Procedure, EligibilityRequest, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">Related Resource to this DocumentManifest. For example, Order, ProcedureRequest,  Procedure, EligibilityRequest, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

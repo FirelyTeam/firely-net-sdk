@@ -64,9 +64,12 @@ namespace Hl7.Fhir.Specification
             _classMapping = classMapping;
         }
 
-        public string TypeName => !_classMapping.IsBackbone ? _classMapping.Name :
+        public string TypeName => !_classMapping.IsBackbone ? substituteQuantity(_classMapping.Name) :
             (_classMapping.NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
             "BackboneElement" : "Element");
+
+        private string substituteQuantity(string name) =>
+            ModelInfo.IsProfiledQuantity(name) ? "Quantity" : name;
 
         public bool IsAbstract => _classMapping.IsAbstract;
         public bool IsResource => _classMapping.IsResource;

@@ -83,7 +83,7 @@
 	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Address' or fhir:id/@value = 'Coding' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment']", nsR))
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:base/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown']", nsR))
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown']", nsR))
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -164,15 +164,16 @@
 				|| resourceName == "Xhtml"
 			//	|| resourceName == "ElementDefinition"
 				|| resourceName == "Narrative"
-				|| resourceName == "Extension")
+				|| resourceName == "Extension"
+				|| resourceName == "Xhtml")
 				continue;
 			manager.StartNewFile(resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
 			bool isPrimitive = false;
-			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null)
+			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
-				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value;
+				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
 				resourceBaseType = definedBaseType;
 				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
                 {
@@ -898,7 +899,7 @@ if (!abstractType){
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
 				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
+								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
 								if (typeProfile == null)
                                 {
 									// result.PropType = "Hl7.Fhir.Model.FhirString";
@@ -1092,7 +1093,7 @@ if (!abstractType){
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
 				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
+								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
 								if (typeProfile == null)
                                 {
 									// result.PropType = "Hl7.Fhir.Model.FhirString";
@@ -1140,7 +1141,7 @@ if (!abstractType){
 			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
             {
 				// Lets find the list of reference types that are permitted:
-				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:targetProfile/@value", nsR))
                 {
 					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
 					//	continue;
@@ -1281,6 +1282,8 @@ if (!abstractType){
 								break;
 				case "markdown" : result.PropType = "Hl7.Fhir.Model.Markdown";
 								break;
+//				case "xhtml" : result.PropType = "Hl7.Fhir.Model.Xhtml";
+//							   break;
 				case "HumanName" : result.PropType = "Hl7.Fhir.Model.HumanName"; 
 								break;
 				case "ContactPoint" : result.PropType = "Hl7.Fhir.Model.ContactPoint"; 
@@ -1348,7 +1351,7 @@ if (!abstractType){
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
 				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
+								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
 								if (typeProfile == null)
                                 {
 									// result.PropType = "Hl7.Fhir.Model.FhirString";
@@ -1375,7 +1378,7 @@ if (!abstractType){
 			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
             {
 				// Lets find the list of reference types that are permitted:
-				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:targetProfile/@value", nsR))
                 {
 					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
 					//	continue;

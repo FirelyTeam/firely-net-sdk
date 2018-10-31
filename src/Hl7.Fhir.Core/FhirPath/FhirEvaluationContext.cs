@@ -14,7 +14,9 @@ using System;
 namespace Hl7.Fhir.FhirPath
 {
     public class FhirEvaluationContext : EvaluationContext
-    {      
+    {
+       
+
         public static new FhirEvaluationContext CreateDefault() => new FhirEvaluationContext();
 
         public FhirEvaluationContext() : base()

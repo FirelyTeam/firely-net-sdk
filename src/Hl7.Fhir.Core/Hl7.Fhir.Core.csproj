@@ -8,12 +8,12 @@
 
    <PropertyGroup>
     <Version>$(FhirApiVersion)</Version>
-    <PackageId>Hl7.Fhir.DSTU2</PackageId>
-    <Title>HL7 FHIR Core support API for DSTU2</Title>	
-    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)</Summary>
+    <PackageId>Hl7.Fhir.STU3</PackageId>
+    <Title>HL7 FHIR Core support API for STU3</Title>	
+    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0)</Summary>
     <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
-    <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
+    <AssemblyName>Hl7.Fhir.STU3.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 

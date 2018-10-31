@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="ProcedureRequest" type="ProcedureRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A request for a procedure to be performed. May be a proposal or an order.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a request for diagnostic investigations, treatments, or operations to be performed.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="ProcedureRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A request for a procedure to be performed. May be a proposal or an order.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a request for diagnostic investigations, treatments, or operations to be performed.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -51,182 +51,216 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifiers assigned to this order by the order or by the receiver.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifiers assigned to this order instance by the orderer and/or the receiver and/or order fulfiller.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="definition" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The person, animal or group that should receive the procedure.</xs:documentation>
+              <xs:documentation xml:lang="en">Protocol or definition followed by this request.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The specific procedure that is ordered. Use text if the exact nature of the procedure cannot be coded.</xs:documentation>
+              <xs:documentation xml:lang="en">Plan/proposal/order fulfilled by this request.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="bodySite" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="replaces" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the sites on the subject's body where the procedure should be performed (I.e. the target sites).</xs:documentation>
+              <xs:documentation xml:lang="en">The request takes the place of the referenced completed or terminated request(s).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="requisition" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The reason why the procedure is being proposed or ordered. This procedure request may be motivated by a Condition for instance.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="reasonCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="reasonReference" type="Reference"/>
-          </xs:choice>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The timing schedule for the proposed or ordered procedure. The Schedule data type allows many different expressions.  E.g. &quot;Every 8 hours&quot;; &quot;Three times a day&quot;; &quot;1/2 an hour before breakfast for 10 days from 23-Dec 2011:&quot;; &quot;15 Oct 2013, 17 Oct 2013 and 1 Nov 2013&quot;.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="scheduledDateTime" type="dateTime"/>
-            <xs:element name="scheduledPeriod" type="Period"/>
-            <xs:element name="scheduledTiming" type="Timing"/>
-          </xs:choice>
-          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The encounter within which the procedure proposal or request was created.</xs:documentation>
+              <xs:documentation xml:lang="en">A shared identifier common to all procedure or diagnostic requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="performer" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">For example, the surgeon, anaethetist, endoscopist, etc.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="status" minOccurs="0" maxOccurs="1" type="ProcedureRequestStatus">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="RequestStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">The status of the order.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="notes" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+          <xs:element name="intent" minOccurs="1" maxOccurs="1" type="RequestIntent">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Any other notes associated with this proposal or order - e.g. provider instructions.</xs:documentation>
+              <xs:documentation xml:lang="en">Whether the request is a proposal, plan, an original order or a reflex order.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="priority" minOccurs="0" maxOccurs="1" type="RequestPriority">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates how quickly the ProcedureRequest should be addressed with respect to other requests.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="doNotPerform" minOccurs="0" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Set this to true if the record is saying that the procedure should NOT be performed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A code that classifies the procedure for searching, sorting and display purposes (e.g. &quot;Surgical Procedure&quot;).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A code that identifies a particular procedure, diagnostic investigation, or panel of investigations, that have been requested.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">On whom or what the procedure or diagnostic is to be performed. This is usually a human patient, but can also be requested on animals, groups of humans or animals, devices such as dialysis machines, or even locations (typically for environmental scans).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An encounter or episode of care that provides additional information about the healthcare context in which this request is made.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">If a CodeableConcept is present, it indicates the pre-condition for performing the procedure.</xs:documentation>
+              <xs:documentation xml:lang="en">The date/time at which the diagnostic testing should occur.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="occurrenceDateTime" type="dateTime"/>
+            <xs:element name="occurrencePeriod" type="Period"/>
+            <xs:element name="occurrenceTiming" type="Timing"/>
+          </xs:choice>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">If a CodeableConcept is present, it indicates the pre-condition for performing the procedure.  For example &quot;pain&quot;, &quot;on flare-up&quot;, etc.</xs:documentation>
             </xs:annotation>
             <xs:element name="asNeededBoolean" type="boolean"/>
             <xs:element name="asNeededCodeableConcept" type="CodeableConcept"/>
           </xs:choice>
-          <xs:element name="orderedOn" minOccurs="0" maxOccurs="1" type="dateTime">
+          <xs:element name="authoredOn" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The time when the request was made.</xs:documentation>
+              <xs:documentation xml:lang="en">When the request transitioned to being actionable.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="orderer" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="requester" type="ProcedureRequest.Requester" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The healthcare professional responsible for proposing or ordering the procedure.</xs:documentation>
+              <xs:documentation xml:lang="en">The individual who initiated the request and has responsibility for its activation.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="priority" minOccurs="0" maxOccurs="1" type="ProcedureRequestPriority">
+          <xs:element name="performerType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The clinical priority associated with this order.</xs:documentation>
+              <xs:documentation xml:lang="en">Desired type of performer for doing the diagnostic testing.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="performer" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The desired perfomer for doing the diagnostic testing.  For example, the surgeon, dermatopathologist, endoscopist, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An explanation or justification for why this diagnostic investigation is being requested in coded or textual form.   This is often for billing purposes.  May relate to the resources referred to in supportingInformation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates another resource that provides a justification for why this diagnostic investigation is being requested.   May relate to the resources referred to in supportingInformation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="supportingInfo" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Additional clinical information about the patient or specimen that may influence the procedure or diagnostics or their interpretations.     This information includes diagnosis, clinical findings and other observations.  In laboratory ordering these are typically referred to as &quot;ask at order entry questions (AOEs)&quot;.  This includes observations explicitly requested by the producer (filler) to provide context or supporting information needed to complete the order. For example,  reporting the amount of inspired oxygen for blood gas measurements.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="specimen" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">One or more specimens that the laboratory procedure will use.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="bodySite" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Anatomic location where the procedure should be performed. This is the target site.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Any other notes and comments made about the service request. For example, letting provider know that &quot;patient hates needles&quot; or other provider instructions.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="relevantHistory" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Key events in the history of the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ProcedureRequestPriority-list">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="routine">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">The request has a normal priority.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="urgent">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">The request should be done urgently.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="stat">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">The request is time-critical.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="asap">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">The request should be acted on as soon as possible.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ProcedureRequestPriority">
+  <xs:complexType name="ProcedureRequest.Requester">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The priority of the request.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a request for diagnostic investigations, treatments, or operations to be performed.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ProcedureRequestPriority-list" use="optional"/>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="agent" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The device, practitioner or organization who initiated the request.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="onBehalfOf" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The organization the device or practitioner was acting on behalf of.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ProcedureRequestStatus-list">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="proposed">
+  <xs:simpleType name="RequestIntent-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="proposal">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The request has been proposed.</xs:documentation>
+          <xs:documentation xml:lang="en">Proposal</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="draft">
+      <xs:enumeration value="plan">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The request is in preliminary form, prior to being requested.</xs:documentation>
+          <xs:documentation xml:lang="en">Plan</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="requested">
+      <xs:enumeration value="order">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The request has been placed.</xs:documentation>
+          <xs:documentation xml:lang="en">Order</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="received">
+      <xs:enumeration value="original-order">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The receiving system has received the request but not yet decided whether it will be performed.</xs:documentation>
+          <xs:documentation xml:lang="en">Original Order</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="accepted">
+      <xs:enumeration value="reflex-order">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The receiving system has accepted the request, but work has not yet commenced.</xs:documentation>
+          <xs:documentation xml:lang="en">Reflex Order</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="in-progress">
+      <xs:enumeration value="filler-order">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The work to fulfill the request is happening.</xs:documentation>
+          <xs:documentation xml:lang="en">Filler Order</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="completed">
+      <xs:enumeration value="instance-order">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The work has been completed, the report(s) released, and no further work is planned.</xs:documentation>
+          <xs:documentation xml:lang="en">Instance Order</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="suspended">
+      <xs:enumeration value="option">
         <xs:annotation>
-          <xs:documentation xml:lang="en">The request has been held by originating system/user request.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="rejected">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">The receiving system has declined to fulfill the request.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="aborted">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">The request was attempted, but due to some procedural error, it could not be completed.</xs:documentation>
+          <xs:documentation xml:lang="en">Option</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="ProcedureRequestStatus">
+  <xs:complexType name="RequestIntent">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The status of the request.</xs:documentation>
+      <xs:documentation xml:lang="en">The kind of procedure or diagnostic request</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ProcedureRequestStatus-list" use="optional"/>
+        <xs:attribute name="value" type="RequestIntent-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

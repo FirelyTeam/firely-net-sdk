@@ -35,10 +35,11 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +56,45 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Condition"; } }
         
         /// <summary>
+        /// Preferred value set for Condition Clinical Status.
+        /// (url: http://hl7.org/fhir/ValueSet/condition-clinical)
+        /// </summary>
+        [FhirEnumeration("ConditionClinicalStatusCodes")]
+        public enum ConditionClinicalStatusCodes
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("active", "http://hl7.org/fhir/condition-clinical"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("recurrence", "http://hl7.org/fhir/condition-clinical"), Description("Recurrence")]
+            Recurrence,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("inactive", "http://hl7.org/fhir/condition-clinical"), Description("Inactive")]
+            Inactive,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("remission", "http://hl7.org/fhir/condition-clinical"), Description("Remission")]
+            Remission,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("resolved", "http://hl7.org/fhir/condition-clinical"), Description("Resolved")]
+            Resolved,
+        }
+
+        /// <summary>
         /// The verification status to support or decline the clinical status of the condition or diagnosis.
         /// (url: http://hl7.org/fhir/ValueSet/condition-ver-status)
         /// </summary>
@@ -62,37 +102,37 @@ namespace Hl7.Fhir.Model
         public enum ConditionVerificationStatus
         {
             /// <summary>
-            /// This is a tentative diagnosis - still a candidate that is under consideration.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("provisional", "http://hl7.org/fhir/condition-ver-status"), Description("Provisional")]
             Provisional,
             /// <summary>
-            /// One of a set of potential (and typically mutually exclusive) diagnosis asserted to further guide the diagnostic process and preliminary treatment.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("differential", "http://hl7.org/fhir/condition-ver-status"), Description("Differential")]
             Differential,
             /// <summary>
-            /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("confirmed", "http://hl7.org/fhir/condition-ver-status"), Description("Confirmed")]
             Confirmed,
             /// <summary>
-            /// This condition has been ruled out by diagnostic and clinical evidence.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("refuted", "http://hl7.org/fhir/condition-ver-status"), Description("Refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and is not valid.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("entered-in-error", "http://hl7.org/fhir/condition-ver-status"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
-            /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("unknown", "http://hl7.org/fhir/condition-ver-status"), Description("Unknown")]
@@ -109,7 +149,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Simple summary (disease specific)
             /// </summary>
-            [FhirElement("summary", InSummary=true, Order=40)]
+            [FhirElement("summary", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Summary
             {
@@ -122,7 +162,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Formal record of assessment
             /// </summary>
-            [FhirElement("assessment", InSummary=true, Order=50)]
+            [FhirElement("assessment", Order=50)]
             [CLSCompliant(false)]
 			[References("ClinicalImpression","DiagnosticReport","Observation")]
             [Cardinality(Min=0,Max=-1)]
@@ -217,14 +257,15 @@ namespace Hl7.Fhir.Model
             /// Manifestation/symptom
             /// </summary>
             [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public List<Hl7.Fhir.Model.CodeableConcept> Code
             {
-                get { return _Code; }
+                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Code;
             
             /// <summary>
             /// Supporting information found elsewhere
@@ -249,7 +290,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
                     return dest;
                 }
@@ -293,7 +334,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Code != null) yield return Code;
+                    foreach (var elem in Code) { if (elem != null) yield return elem; }
                     foreach (var elem in Detail) { if (elem != null) yield return elem; }
                 }
             }
@@ -304,7 +345,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", Code);
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
                     foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
                 }
             }
@@ -328,138 +369,33 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Who has the condition?
+        /// active | recurrence | inactive | remission | resolved
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=100)]
-        [CLSCompliant(false)]
-		[References("Patient")]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("clinicalStatus", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
-        {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
-        /// Encounter when condition first asserted
-        /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=110)]
-        [CLSCompliant(false)]
-		[References("Encounter")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
-        {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
-        
-        /// <summary>
-        /// Person who asserts this condition
-        /// </summary>
-        [FhirElement("asserter", InSummary=true, Order=120)]
-        [CLSCompliant(false)]
-		[References("Practitioner","Patient")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Asserter
-        {
-            get { return _Asserter; }
-            set { _Asserter = value; OnPropertyChanged("Asserter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Asserter;
-        
-        /// <summary>
-        /// When first entered
-        /// </summary>
-        [FhirElement("dateRecorded", InSummary=true, Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.Date DateRecordedElement
-        {
-            get { return _DateRecordedElement; }
-            set { _DateRecordedElement = value; OnPropertyChanged("DateRecordedElement"); }
-        }
-        
-        private Hl7.Fhir.Model.Date _DateRecordedElement;
-        
-        /// <summary>
-        /// When first entered
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string DateRecorded
-        {
-            get { return DateRecordedElement != null ? DateRecordedElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DateRecordedElement = null; 
-                else
-                  DateRecordedElement = new Hl7.Fhir.Model.Date(value);
-                OnPropertyChanged("DateRecorded");
-            }
-        }
-        
-        /// <summary>
-        /// Identification of the condition, problem or diagnosis
-        /// </summary>
-        [FhirElement("code", InSummary=true, Order=140)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Code
-        {
-            get { return _Code; }
-            set { _Code = value; OnPropertyChanged("Code"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Code;
-        
-        /// <summary>
-        /// complaint | symptom | finding | diagnosis
-        /// </summary>
-        [FhirElement("category", InSummary=true, Order=150)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
-        {
-            get { return _Category; }
-            set { _Category = value; OnPropertyChanged("Category"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Category;
-        
-        /// <summary>
-        /// active | relapse | remission | resolved
-        /// </summary>
-        [FhirElement("clinicalStatus", InSummary=true, Order=160)]
-        [DataMember]
-        public Hl7.Fhir.Model.Code ClinicalStatusElement
+        public Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> ClinicalStatusElement
         {
             get { return _ClinicalStatusElement; }
             set { _ClinicalStatusElement = value; OnPropertyChanged("ClinicalStatusElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _ClinicalStatusElement;
+        private Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> _ClinicalStatusElement;
         
         /// <summary>
-        /// active | relapse | remission | resolved
+        /// active | recurrence | inactive | remission | resolved
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string ClinicalStatus
+        public Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes? ClinicalStatus
         {
             get { return ClinicalStatusElement != null ? ClinicalStatusElement.Value : null; }
             set
             {
-                if (value == null)
+                if (!value.HasValue)
                   ClinicalStatusElement = null; 
                 else
-                  ClinicalStatusElement = new Hl7.Fhir.Model.Code(value);
+                  ClinicalStatusElement = new Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>(value);
                 OnPropertyChanged("ClinicalStatus");
             }
         }
@@ -467,8 +403,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// provisional | differential | confirmed | refuted | entered-in-error | unknown
         /// </summary>
-        [FhirElement("verificationStatus", InSummary=true, Order=170)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("verificationStatus", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> VerificationStatusElement
         {
@@ -498,9 +433,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// problem-list-item | encounter-diagnosis
+        /// </summary>
+        [FhirElement("category", Order=120)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
+        {
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+        
+        /// <summary>
         /// Subjective severity of condition
         /// </summary>
-        [FhirElement("severity", InSummary=true, Order=180)]
+        [FhirElement("severity", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
         {
@@ -511,11 +460,69 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Severity;
         
         /// <summary>
+        /// Identification of the condition, problem or diagnosis
+        /// </summary>
+        [FhirElement("code", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Code
+        {
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Code;
+        
+        /// <summary>
+        /// Anatomical location, if relevant
+        /// </summary>
+        [FhirElement("bodySite", InSummary=true, Order=150)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
+        {
+            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
+            set { _BodySite = value; OnPropertyChanged("BodySite"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+        
+        /// <summary>
+        /// Who has the condition?
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=160)]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// Encounter or episode when condition first asserted
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=170)]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
         /// Estimated or actual date,  date-time, or age
         /// </summary>
-        [FhirElement("onset", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onset", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
         {
@@ -528,9 +535,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If/when in resolution/remission
         /// </summary>
-        [FhirElement("abatement", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("abatement", Order=190, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Abatement
         {
@@ -541,9 +548,56 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Abatement;
         
         /// <summary>
+        /// Date record was believed accurate
+        /// </summary>
+        [FhirElement("assertedDate", InSummary=true, Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime AssertedDateElement
+        {
+            get { return _AssertedDateElement; }
+            set { _AssertedDateElement = value; OnPropertyChanged("AssertedDateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _AssertedDateElement;
+        
+        /// <summary>
+        /// Date record was believed accurate
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string AssertedDate
+        {
+            get { return AssertedDateElement != null ? AssertedDateElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  AssertedDateElement = null; 
+                else
+                  AssertedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("AssertedDate");
+            }
+        }
+        
+        /// <summary>
+        /// Person who asserts this condition
+        /// </summary>
+        [FhirElement("asserter", InSummary=true, Order=210)]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Asserter
+        {
+            get { return _Asserter; }
+            set { _Asserter = value; OnPropertyChanged("Asserter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Asserter;
+        
+        /// <summary>
         /// Stage/grade, usually assessed formally
         /// </summary>
-        [FhirElement("stage", InSummary=true, Order=210)]
+        [FhirElement("stage", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Condition.StageComponent Stage
         {
@@ -556,7 +610,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supporting evidence
         /// </summary>
-        [FhirElement("evidence", InSummary=true, Order=220)]
+        [FhirElement("evidence", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Condition.EvidenceComponent> Evidence
@@ -568,55 +622,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Condition.EvidenceComponent> _Evidence;
         
         /// <summary>
-        /// Anatomical location, if relevant
+        /// Additional information about the Condition
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=230)]
+        [FhirElement("note", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
-            set { _BodySite = value; OnPropertyChanged("BodySite"); }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
-        /// <summary>
-        /// Additional information about the Condition
-        /// </summary>
-        [FhirElement("notes", InSummary=true, Order=240)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString NotesElement
+
+        public static ElementDefinition.ConstraintComponent Condition_CON_4 = new ElementDefinition.ConstraintComponent()
         {
-            get { return _NotesElement; }
-            set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _NotesElement;
-        
-        /// <summary>
-        /// Additional information about the Condition
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Notes
+            Expression = "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
+            Key = "con-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
+            Xpath = "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
         {
-            get { return NotesElement != null ? NotesElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  NotesElement = null; 
-                else
-                  NotesElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Notes");
-            }
-        }
-        
+            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
+            Key = "con-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
+            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+        };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("stage.all(summary or assessment)"))},
+            Expression = "stage.all(summary.exists() or assessment.exists())",
             Key = "con-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Stage SHALL have summary or assessment",
@@ -625,7 +665,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("evidence.all(code or detail)"))},
+            Expression = "evidence.all(code.exists() or detail.exists())",
             Key = "con-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "evidence SHALL have code or details",
@@ -636,6 +676,8 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(Condition_CON_4);
+            InvariantConstraints.Add(Condition_CON_3);
             InvariantConstraints.Add(Condition_CON_1);
             InvariantConstraints.Add(Condition_CON_2);
         }
@@ -648,21 +690,21 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
-                if(DateRecordedElement != null) dest.DateRecordedElement = (Hl7.Fhir.Model.Date)DateRecordedElement.DeepCopy();
-                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(ClinicalStatusElement != null) dest.ClinicalStatusElement = (Hl7.Fhir.Model.Code)ClinicalStatusElement.DeepCopy();
+                if(ClinicalStatusElement != null) dest.ClinicalStatusElement = (Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>)ClinicalStatusElement.DeepCopy();
                 if(VerificationStatusElement != null) dest.VerificationStatusElement = (Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>)VerificationStatusElement.DeepCopy();
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Severity != null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)Severity.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
                 if(Abatement != null) dest.Abatement = (Hl7.Fhir.Model.Element)Abatement.DeepCopy();
+                if(AssertedDateElement != null) dest.AssertedDateElement = (Hl7.Fhir.Model.FhirDateTime)AssertedDateElement.DeepCopy();
+                if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
                 if(Stage != null) dest.Stage = (Hl7.Fhir.Model.Condition.StageComponent)Stage.DeepCopy();
                 if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(Evidence.DeepCopy());
-                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
-                if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -681,21 +723,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.Matches(Asserter, otherT.Asserter)) return false;
-            if( !DeepComparable.Matches(DateRecordedElement, otherT.DateRecordedElement)) return false;
-            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(ClinicalStatusElement, otherT.ClinicalStatusElement)) return false;
             if( !DeepComparable.Matches(VerificationStatusElement, otherT.VerificationStatusElement)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Severity, otherT.Severity)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Onset, otherT.Onset)) return false;
             if( !DeepComparable.Matches(Abatement, otherT.Abatement)) return false;
+            if( !DeepComparable.Matches(AssertedDateElement, otherT.AssertedDateElement)) return false;
+            if( !DeepComparable.Matches(Asserter, otherT.Asserter)) return false;
             if( !DeepComparable.Matches(Stage, otherT.Stage)) return false;
             if( !DeepComparable.Matches(Evidence, otherT.Evidence)) return false;
-            if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -707,21 +749,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.IsExactly(Asserter, otherT.Asserter)) return false;
-            if( !DeepComparable.IsExactly(DateRecordedElement, otherT.DateRecordedElement)) return false;
-            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(ClinicalStatusElement, otherT.ClinicalStatusElement)) return false;
             if( !DeepComparable.IsExactly(VerificationStatusElement, otherT.VerificationStatusElement)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Severity, otherT.Severity)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Onset, otherT.Onset)) return false;
             if( !DeepComparable.IsExactly(Abatement, otherT.Abatement)) return false;
+            if( !DeepComparable.IsExactly(AssertedDateElement, otherT.AssertedDateElement)) return false;
+            if( !DeepComparable.IsExactly(Asserter, otherT.Asserter)) return false;
             if( !DeepComparable.IsExactly(Stage, otherT.Stage)) return false;
             if( !DeepComparable.IsExactly(Evidence, otherT.Evidence)) return false;
-            if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -733,21 +775,21 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (Patient != null) yield return Patient;
-				if (Encounter != null) yield return Encounter;
-				if (Asserter != null) yield return Asserter;
-				if (DateRecordedElement != null) yield return DateRecordedElement;
-				if (Code != null) yield return Code;
-				if (Category != null) yield return Category;
 				if (ClinicalStatusElement != null) yield return ClinicalStatusElement;
 				if (VerificationStatusElement != null) yield return VerificationStatusElement;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Severity != null) yield return Severity;
+				if (Code != null) yield return Code;
+				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (Context != null) yield return Context;
 				if (Onset != null) yield return Onset;
 				if (Abatement != null) yield return Abatement;
+				if (AssertedDateElement != null) yield return AssertedDateElement;
+				if (Asserter != null) yield return Asserter;
 				if (Stage != null) yield return Stage;
 				foreach (var elem in Evidence) { if (elem != null) yield return elem; }
-				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
-				if (NotesElement != null) yield return NotesElement;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
 
@@ -758,21 +800,21 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-                if (Patient != null) yield return new ElementValue("patient", Patient);
-                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
-                if (Asserter != null) yield return new ElementValue("asserter", Asserter);
-                if (DateRecordedElement != null) yield return new ElementValue("dateRecorded", DateRecordedElement);
-                if (Code != null) yield return new ElementValue("code", Code);
-                if (Category != null) yield return new ElementValue("category", Category);
                 if (ClinicalStatusElement != null) yield return new ElementValue("clinicalStatus", ClinicalStatusElement);
                 if (VerificationStatusElement != null) yield return new ElementValue("verificationStatus", VerificationStatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
                 if (Severity != null) yield return new ElementValue("severity", Severity);
+                if (Code != null) yield return new ElementValue("code", Code);
+                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
                 if (Onset != null) yield return new ElementValue("onset", Onset);
                 if (Abatement != null) yield return new ElementValue("abatement", Abatement);
+                if (AssertedDateElement != null) yield return new ElementValue("assertedDate", AssertedDateElement);
+                if (Asserter != null) yield return new ElementValue("asserter", Asserter);
                 if (Stage != null) yield return new ElementValue("stage", Stage);
                 foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", elem); }
-                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", elem); }
-                if (NotesElement != null) yield return new ElementValue("notes", NotesElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

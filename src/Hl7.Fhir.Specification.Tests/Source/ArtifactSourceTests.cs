@@ -22,6 +22,46 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSourceTests
     {
+        private static string _testPath;
+
+        [ClassInitialize]
+        public static void SetupExampleDir(TestContext context)
+        {
+            _testPath = prepareExampleDirectory(out int numFiles);
+        }
+
+        private static string prepareExampleDirectory(out int numFiles)
+        {
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
+            var zip = new ZipCacher(zipFile);
+            var zipPath = zip.GetContentDirectory();
+
+            var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(testPath);
+
+            copy(zipPath, "extension-definitions.xml", testPath);
+            copy(zipPath, "flag.xsd", testPath);
+            copy(zipPath, "patient.sch", testPath);
+            copy(@"TestData", "TestPatient.xml", testPath);
+            File.WriteAllText(Path.Combine(testPath, "bla.dll"), "This is text, acting as a dll");
+            File.WriteAllText(Path.Combine(testPath, "nonfhir.xml"), "<root>this is not a valid FHIR xml resource.</root>");
+            File.WriteAllText(Path.Combine(testPath, "invalid.xml"), "<root>this is invalid xml");
+
+            var subPath = Path.Combine(testPath, "sub");
+            Directory.CreateDirectory(subPath);
+            copy(@"TestData", "TestPatient.json", subPath);
+
+            // If you add or remove files, please correct the numFiles here below
+            numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
+
+            return testPath;
+        }
+
+        private static void copy(string dir, string file, string outputDir)
+        {
+            File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
+        }
+
         [TestMethod]
         public void ZipCacherShouldCache()
         {
@@ -75,48 +115,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(fa.IsActual());
         }
 
-        private void copy(string dir, string file, string outputDir)
-        {
-            File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
-        }
-
-        private (string path, int numFiles) prepareExampleDirectory()
-        {
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
-            var zip = new ZipCacher(zipFile);
-            var zipPath = zip.GetContentDirectory();
-
-            var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            Directory.CreateDirectory(testPath);
-
-            copy(zipPath, "extension-definitions.xml", testPath);
-            copy(zipPath, "flag.xsd", testPath);
-            copy(zipPath, "patient.sch", testPath);
-            copy(@"TestData", "TestPatient.xml", testPath);
-            File.WriteAllText(Path.Combine(testPath, "bla.dll"), "This is text, acting as a dll");
-            File.WriteAllText(Path.Combine(testPath, "nonfhir.xml"), "<root>this is not a valid FHIR xml resource.</root>");
-            File.WriteAllText(Path.Combine(testPath, "invalid.xml"), "<root>this is invalid xml");
-
-            var subPath = Path.Combine(testPath, "sub");
-            Directory.CreateDirectory(subPath);
-            copy(@"TestData", "TestPatient.json", subPath);
-
-            // If you add or remove files, please correct the numFiles here below
-            var numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
-
-            return (testPath, numFiles);
-        }
-
-
-        private string _testPath;
-        private int _numFiles;
-
-        [TestInitialize]
-        public void SetupExampleDir()
-        {
-            (_testPath, _numFiles) = prepareExampleDirectory();
-        }
-
         [TestMethod]
         public void UseFileArtifactSource()
         {
@@ -157,6 +155,24 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void ExcludeSubdirectory()
+        {
+            var fa = new DirectorySource(_testPath)
+            {
+                Includes = new[] { "*.json" },
+                IncludeSubDirectories = true
+            };
+
+            var names = fa.ListArtifactNames();
+            Assert.AreEqual(1, names.Count());
+
+            fa.Excludes = new[] { "/sub/" };
+
+            names = fa.ListArtifactNames();
+            Assert.AreEqual(0, names.Count());
+        }
+
+        [TestMethod]
         public void FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
@@ -172,7 +188,7 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.AreEqual(0, fa.Errors.Length);
 
             // Call a method on the IConformanceSource interface to trigger prepareResources
-            var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-discoveryDateTime");
+            var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();
@@ -193,8 +209,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ReadsSubdirectories()
         {
-            // var (testPath, numFiles) = prepareExampleDirectory();
-            var (testPath, numFiles) = (_testPath, _numFiles);
+            var testPath = prepareExampleDirectory(out int numFiles);
             var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
@@ -235,10 +250,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, artifacts.Length);
             Assert.AreEqual("profiles-types.xml", artifacts[0]);
 
-            var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToArray();
+            var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToList();
             Assert.IsNotNull(resourceIds);
-            Assert.IsTrue(resourceIds.Length > 0);
+            Assert.IsTrue(resourceIds.Count > 0);
             Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
+            //resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  // xhtml is not represented in the pocos
 
             // + total number of known FHIR core types
             // - total number of known (concrete) resources
@@ -253,15 +269,14 @@ namespace Hl7.Fhir.Specification.Tests
                                                             .Select(kvp => kvp.Value);
             var numCoreDataTypes = coreDataTypes.Count();
 
-            Assert.AreEqual(resourceIds.Length, numCoreDataTypes);
+            Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
 
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
             var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName)).ToArray();
             // Boths arrays should contains same urls, possibly in different order
-            Assert.AreEqual(coreTypeUris.Length, resourceIds.Length);
+            Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
             Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
             Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
-
         }
 
         // [WMR 20170817] NEW
@@ -273,8 +288,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void TestAccessPermissions()
         {
-            // var (testPath, numFiles) = prepareExampleDirectory();
-            var (testPath, numFiles) = (_testPath, _numFiles);
+            var testPath = prepareExampleDirectory(out int numFiles);
 
             // Additional temporary folder without read permissions
             var subPath2 = Path.Combine(testPath, "sub2");

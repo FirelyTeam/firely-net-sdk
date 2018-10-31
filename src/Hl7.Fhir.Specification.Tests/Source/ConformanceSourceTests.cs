@@ -14,7 +14,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+// Use alias to avoid conflict with Hl7.Fhir.Model.Task
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -36,86 +37,124 @@ namespace Hl7.Fhir.Specification.Tests
         public void FindConceptMaps()
         {
             var conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use");
-            Assert.AreEqual(2, conceptMaps.Count());
+            Assert.AreEqual(3, conceptMaps.Count());
             Assert.IsNotNull(conceptMaps.First().GetOrigin());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/v2-0190");
             Assert.AreEqual(1, conceptMaps.Count());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/v3-AddressUse");
-            Assert.AreEqual(1, conceptMaps.Count());
+            Assert.AreEqual(2, conceptMaps.Count());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/somethingelse");
             Assert.AreEqual(0, conceptMaps.Count());
         }
 
         [TestMethod]
-        public void FindValueSets()
+        public void FindCodeSystem()
         {
-            // A Fhir valueset
-            var vs = source.FindValueSetBySystem("http://hl7.org/fhir/contact-point-system");
+            // A Fhir codesystem
+            var vs = source.FindCodeSystem("http://hl7.org/fhir/contact-point-system");
             Assert.IsNotNull(vs);
             Assert.IsNotNull(vs.GetOrigin());
 
             // A non-HL7 valueset
-            vs = source.FindValueSetBySystem("http://nema.org/dicom/dicm");
+            vs = source.FindCodeSystem("http://dicom.nema.org/resources/ontology/DCM"); // http://nema.org/dicom/dicm");
             Assert.IsNotNull(vs);
 
             // One from v2-tables
-            vs = source.FindValueSetBySystem("http://hl7.org/fhir/v2/0145");
+            vs = source.FindCodeSystem("http://hl7.org/fhir/v2/0145");
             Assert.IsNotNull(vs);
 
             // One from v3-codesystems
-            vs = source.FindValueSetBySystem("http://hl7.org/fhir/v3/ActCode");
+            vs = source.FindCodeSystem("http://hl7.org/fhir/v3/ActCode");
             Assert.IsNotNull(vs);
 
             // Something non-existent
-            vs = source.FindValueSetBySystem("http://nema.org/dicom/dicmQQQQ");
+            vs = source.FindCodeSystem("http://nema.org/dicom/dicmQQQQ");
+            Assert.IsNull(vs);
+        }
+
+
+        [TestMethod]
+        public void FindValueSets()
+        {
+            // A Fhir valueset
+            var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
+            Assert.IsNotNull(vs);
+            Assert.IsNotNull(vs.GetOrigin());
+
+            //EK: These seem to be no longer part of the spec
+            //// A non-HL7 valueset
+            //vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/dicom-dcim");
+            //Assert.IsNotNull(vs);
+
+            // One from v2-tables
+            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/v2-0145");
+            Assert.IsNotNull(vs);
+
+            // One from v3-codesystems
+            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/v3-ActCode");
+            Assert.IsNotNull(vs);
+
+            // Something non-existent
+            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/crapQQQQ");
             Assert.IsNull(vs);
         }
 
         [TestMethod]
         public void FindNamingSystem()
         {
-            var ns = source.FindNamingSystem("2.16.840.1.113883.6.88");
+            var ns = source.FindNamingSystem("2.16.840.1.113883.4.1");
             Assert.IsNotNull(ns);
             Assert.IsNotNull(ns.GetOrigin());
 
-            ns = source.FindNamingSystem("http://www.nlm.nih.gov/research/umls/rxnorm");
+            ns = source.FindNamingSystem("http://hl7.org/fhir/sid/us-ssn");
             Assert.IsNotNull(ns);
-            Assert.AreEqual("RxNorm (US NLM)", ns.Name);
+            Assert.AreEqual("United States Social Security Number", ns.Name);
         }
-
-
+    
+        // Need to fix this for new conformance stuff in STU3
         [TestMethod]
         public void ListCanonicalUris()
         {
-            var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
-            var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
-            var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
             var sd = source.ListResourceUris(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
+            var sm = source.ListResourceUris(ResourceType.StructureMap); Assert.IsFalse(sm.Any());
             var de = source.ListResourceUris(ResourceType.DataElement); Assert.IsTrue(de.Any());
-            var cf = source.ListResourceUris(ResourceType.Conformance); Assert.IsTrue(cf.Any());
+            var cf = source.ListResourceUris(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
+            var md = source.ListResourceUris(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
             var od = source.ListResourceUris(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
             var sp = source.ListResourceUris(ResourceType.SearchParameter); Assert.IsTrue(sp.Any());
+            var cd = source.ListResourceUris(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+            var ig = source.ListResourceUris(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+
+            var cs = source.ListResourceUris(ResourceType.CodeSystem); Assert.IsTrue(cs.Any());
+            var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
+            var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
+            var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
+
             var all = source.ListResourceUris();
 
-            Assert.AreEqual(vs.Count() + cm.Count() + ns.Count() + sd.Count() + de.Count() + cf.Count() + od.Count() + sp.Count(), all.Count());
+            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
+                        sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
+                        ep.Count() + ns.Count(), all.Count());
 
-            Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
-            Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/v2-contact-point-use"));
-            Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/tx-rxnorm"));
             Assert.IsTrue(sd.Contains("http://hl7.org/fhir/StructureDefinition/shareablevalueset"));
             Assert.IsTrue(de.Contains("http://hl7.org/fhir/DataElement/Device.manufactureDate"));
-            Assert.IsTrue(sp.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
+            Assert.IsTrue(cf.Contains("http://hl7.org/fhir/CapabilityStatement/base"));
             Assert.IsTrue(od.Contains("http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code"));
-            Assert.IsTrue(cf.Contains("http://hl7.org/fhir/Conformance/base"));
+            Assert.IsTrue(sp.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
+            Assert.IsTrue(cs.Contains("http://hl7.org/fhir/CodeSystem/contact-point-system"));
+            Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
+            Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2"));
+            Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
         }
 
         [TestMethod]
         public void GetSomeArtifactsById()
         {
-            var fa = source;
+            var fa = ZipSource.CreateValidationSource();
 
             var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
@@ -144,12 +183,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(dt is StructureDefinition);
 
             // Try to find a core extension
-            var ext = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason");
+            var ext = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/valueset-history");
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
 
-            // Try to find an additional US profile (they are distributed with the spec for now)
-            var us = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/uslab-dr");
+            // Try to find an additional non-hl7 profile (they are distributed with the spec for now)
+            var us = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/cqif-questionnaire");
             Assert.IsNotNull(us);
             Assert.IsTrue(us is StructureDefinition);
         }
@@ -296,7 +335,7 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = false
                 });
 
-            var humanName = jsonSource.FindStructureDefinitionForCoreType(FHIRDefinedType.HumanName);
+            var humanName = jsonSource.FindStructureDefinitionForCoreType(FHIRAllTypes.HumanName);
             Assert.IsNotNull(humanName);
         }
 
@@ -312,10 +351,7 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = false
                 });
 
-            using (var stream = jsonSource.LoadArtifactByName("profiles-types.json"))
-            {
-                Assert.IsNotNull(stream);
-            }
+            Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
 
             var xmlSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
@@ -326,10 +362,7 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = false
                 });
 
-            using (var stream = xmlSource.LoadArtifactByName("profiles-types.xml"))
-            {
-                Assert.IsNotNull(stream);
-            }
+            Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
             var xmlSourceLarge = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
@@ -339,10 +372,7 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = true
                 });
 
-            using (var stream = xmlSourceLarge.LoadArtifactByName("profiles-types.xml"))
-            {
-                Assert.IsNotNull(stream);
-            }
+            Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
 
             runTest("profiles-types.json", jsonSource, false, 1000);
             runTest("profiles-types.xml", xmlSource, false, 500);
@@ -372,7 +402,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
         [TestMethod]
-        public async Task TestThreadSafety()
+        public async Tasks.Task TestThreadSafety()
         {
             // Verify thread safety by resolving same uri simultaneously from different threads
             // DirectorySource should synchronize access and only call prepare once.
@@ -383,7 +413,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings { IncludeSubDirectories = true });
 
-            var tasks = new Task[threadCount];
+            var tasks = new Tasks.Task[threadCount];
             var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
 
             var sw = new Stopwatch();
@@ -391,7 +421,7 @@ namespace Hl7.Fhir.Specification.Tests
             for (int i = 0; i < threadCount; i++)
             {
                 var idx = i;
-                tasks[i] = Task.Run(
+                tasks[i] = Tasks.Task.Run(
                     () =>
                     {
                         var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
@@ -404,7 +434,7 @@ namespace Hl7.Fhir.Specification.Tests
                 );
             }
 
-            await Task.WhenAll(tasks);
+            await Tasks.Task.WhenAll(tasks);
             sw.Stop();
 
             var first = results[0];

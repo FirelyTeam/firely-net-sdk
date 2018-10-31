@@ -39,10 +39,13 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Primitive Type code
+    /// </summary>
     [FhirType("code")]
     [DataContract]
     public partial class Code : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
@@ -50,8 +53,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "code"; } }
         
-        // Must conform to the pattern "[^\s]+([\s][^\s]+)*"
-        public const string PATTERN = @"[^\s]+([\s][^\s]+)*";
+        // Must conform to the pattern "[^\s]+([\s]?[^\s]+)*"
+        public const string PATTERN = @"[^\s]+([\s]?[^\s]+)*";
 
 		public Code(string value)
 		{

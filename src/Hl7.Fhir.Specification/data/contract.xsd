@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sat, Oct 24, 2015 07:41+1100 for FHIR v1.0.2 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,6 +54,11 @@
               <xs:documentation xml:lang="en">Unique identifier for this Contract.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="ContractResourceStatusCodes">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of the resource instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="issued" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
               <xs:documentation xml:lang="en">When this  Contract was issued.</xs:documentation>
@@ -66,7 +71,12 @@
           </xs:element>
           <xs:element name="subject" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Who and/or what this Contract is about: typically a Patient, Organization, or valued items such as goods and services.</xs:documentation>
+              <xs:documentation xml:lang="en">The target entity impacted by or of interest to parties to the agreement.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="topic" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The matter of concern in the context of this agreement.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="authority" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -99,19 +109,34 @@
               <xs:documentation xml:lang="en">Reason for action stipulated by this Contract.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="actor" type="Contract.Actor" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="decisionType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">List of Contract actors.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of decision made by a grantor with respect to an offer made by a grantee.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="contentDerivative" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The minimal content derived from the basal information source at a specific stage in its lifecycle.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="securityLabel" minOccurs="0" maxOccurs="unbounded" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A set of security labels that define which resources are controlled by this consent. If more than one label is specified, all resources must have all the specified labels.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="agent" type="Contract.Agent" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An actor taking a role in an activity for which it can be assigned some degree of responsibility for the activity taking place.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="signer" type="Contract.Signer" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Parties with legal standing in the Contract, including the principal parties, the grantor(s) and grantee(s), which are any person or organization bound by the contract, and any ancillary parties, which facilitate the execution of the contract such as a notary or witness.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="valuedItem" type="Contract.ValuedItem" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Contract Valued Item List.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="signer" type="Contract.Signer" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Party signing this Contract.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="term" type="Contract.Term" minOccurs="0" maxOccurs="unbounded">
@@ -145,21 +170,47 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Contract.Actor">
+  <xs:complexType name="Contract.Agent">
     <xs:annotation>
       <xs:documentation xml:lang="en">A formal agreement between parties regarding the conduct of business, exchange of information or other matters.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="entity" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="actor" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Who or what actors are assigned roles in this Contract.</xs:documentation>
+              <xs:documentation xml:lang="en">Who or what parties are assigned roles in this Contract.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="role" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Role type of actors assigned roles in this Contract.</xs:documentation>
+              <xs:documentation xml:lang="en">Role type of agent assigned roles in this Contract.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Contract.Signer">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A formal agreement between parties regarding the conduct of business, exchange of information or other matters.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Role of this Contract signer, e.g. notary, grantee.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="party" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Party which is a signator to this Contract.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="signature" minOccurs="1" maxOccurs="unbounded" type="Signature">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Legally binding Contract DSIG signature contents in Base64.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -190,7 +241,7 @@
               <xs:documentation xml:lang="en">Indicates the time during which this Contract ValuedItem information is effective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
+          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">Specifies the units by which the Contract Valued Item is measured or counted, and quantifies the countable or measurable Contract Valued Item instances.</xs:documentation>
            </xs:annotation>
@@ -213,32 +264,6 @@
           <xs:element name="net" minOccurs="0" maxOccurs="1" type="Money">
             <xs:annotation>
               <xs:documentation xml:lang="en">Expresses the product of the Contract Valued Item unitQuantity and the unitPriceAmt. For example, the formula: unit Quantity * unit Price (Cost per Point) * factor Number  * points = net Amount. Quantity, factor and points are assumed to be 1 if not supplied.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="Contract.Signer">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A formal agreement between parties regarding the conduct of business, exchange of information or other matters.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="Coding">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Role of this Contract signer, e.g. notary, grantee.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="party" minOccurs="1" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Party which is a signator to this Contract.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="signature" minOccurs="1" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Legally binding Contract DSIG signature contents in Base64.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -277,9 +302,9 @@
               <xs:documentation xml:lang="en">Subtype of this Contract Provision, e.g. life time maximum payment for a contract term for specific valued item, e.g. disability payment.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="topic" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Who or what this Contract Provision is about.</xs:documentation>
+              <xs:documentation xml:lang="en">The matter of concern in the context of this provision of the agrement.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="action" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -292,9 +317,14 @@
               <xs:documentation xml:lang="en">Reason or purpose for the action stipulated by this Contract Provision.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="actor" type="Contract.Actor1" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="securityLabel" minOccurs="0" maxOccurs="unbounded" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">List of actors participating in this Contract Provision.</xs:documentation>
+              <xs:documentation xml:lang="en">A set of security labels that define which terms are controlled by this condition.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="agent" type="Contract.Agent1" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An actor taking a role in an activity for which it can be assigned some degree of responsibility for the activity taking place.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="text" minOccurs="0" maxOccurs="1" type="string">
@@ -316,21 +346,21 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Contract.Actor1">
+  <xs:complexType name="Contract.Agent1">
     <xs:annotation>
       <xs:documentation xml:lang="en">A formal agreement between parties regarding the conduct of business, exchange of information or other matters.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="entity" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="actor" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The actor assigned a role in this Contract Provision.</xs:documentation>
+              <xs:documentation xml:lang="en">The agent assigned a role in this Contract Provision.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="role" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Role played by the actor assigned this role in this Contract Provision.</xs:documentation>
+              <xs:documentation xml:lang="en">Role played by the agent assigned this role in the execution of this Contract Provision.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -361,7 +391,7 @@
               <xs:documentation xml:lang="en">Indicates the time during which this Contract Term ValuedItem information is effective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="SimpleQuantity">
+          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">Specifies the units by which the Contract Provision Valued Item is measured or counted, and quantifies the countable or measurable Contract Term Valued Item instances.</xs:documentation>
            </xs:annotation>
@@ -441,6 +471,96 @@
             <xs:element name="contentReference" type="Reference"/>
           </xs:choice>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ContractResourceStatusCodes-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="amended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Amended</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="appended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Appended</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancelled">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Cancelled</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="disputed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Disputed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="executable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Executable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="executed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Executed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="negotiable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Negotiable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="offered">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Offered</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="policy">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Policy</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rejected">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Rejected</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="renewed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Renewed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="revoked">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Revoked</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="resolved">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Resolved</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="terminated">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Terminated</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ContractResourceStatusCodes">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A code specifying the state of the resource instance.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ContractResourceStatusCodes-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

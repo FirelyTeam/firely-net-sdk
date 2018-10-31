@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Specification.Summary
                 NamingSystemSummaryProperties.Harvest,
                 // Specific conformance resources first
                 StructureDefinitionSummaryProperties.Harvest,
-                ValueSetSummaryProperties.Harvest,
+                CodeSystemSummaryProperties.Harvest,
                 ConceptMapSummaryProperties.Harvest,
                 // Fall back for all other conformance resources
                 ConformanceSummaryProperties.Harvest

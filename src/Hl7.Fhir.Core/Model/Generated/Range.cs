@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -58,26 +58,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("low", InSummary=true, Order=30)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity Low
+        public Quantity Low
         {
             get { return _Low; }
             set { _Low = value; OnPropertyChanged("Low"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _Low;
+        private Quantity _Low;
         
         /// <summary>
         /// High limit
         /// </summary>
         [FhirElement("high", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity High
+        public Quantity High
         {
             get { return _High; }
             set { _High = value; OnPropertyChanged("High"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _High;
+        private Quantity _High;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -87,8 +87,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Low != null) dest.Low = (Hl7.Fhir.Model.SimpleQuantity)Low.DeepCopy();
-                if(High != null) dest.High = (Hl7.Fhir.Model.SimpleQuantity)High.DeepCopy();
+                if(Low != null) dest.Low = (Quantity)Low.DeepCopy();
+                if(High != null) dest.High = (Quantity)High.DeepCopy();
                 return dest;
             }
             else

@@ -31,6 +31,7 @@
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
 	// string fhirVersion = "1.0.2";
 #>
+
 //
 // Model Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
 //
@@ -76,7 +77,7 @@
     }
 
 	var sdNodes = docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Communication' or fhir:id/@value = 'Basic' or fhir:id/@value = 'Appointment' or fhir:id/@value = 'Patient']", nsR);
 	
 
@@ -95,9 +96,9 @@
 			manager.StartNewFile(resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
-			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null)
+			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
-				resourceBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value;
+				resourceBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
 				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Resource")
 					resourceBaseType = "Hl7.Fhir.Model.Resource";
 				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
@@ -151,7 +152,8 @@ using Hl7.Fhir.Utility;
   
 
 */
-#pragma warning disable 1591 // suppress XML summary warnings
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
 // Generated for FHIR v<#= fhirVersion #>
@@ -480,7 +482,7 @@ if(true) {
 		nPropNum += 10;
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
@@ -512,7 +514,7 @@ if(true) {
         {
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
@@ -539,12 +541,12 @@ if(true) {
         }
     }
 
-#><# if (resourceName != "DomainResource2") { #>
+#><# if (true) { #>
 
 <#
-            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
+            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
             {
-                string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
                 string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
                 if (parentPath.Contains("."))
                 {
@@ -557,7 +559,7 @@ if(true) {
                 string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
 #>        public static ElementDefinition.ConstraintComponent <#= resourceName + "_" + key.Replace("-", "_").ToUpper() #> = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("<#= expression.Replace("\"", "\\\"") #>"))},
+            Expression = "<#= expression.Replace("\"", "\\\"") #>",
             Key = "<#= key #>",
             Severity = <#= severity == "Error" ? "ElementDefinition.ConstraintSeverity.Error" : "ElementDefinition.ConstraintSeverity.Warning" #>,
             Human = "<#= human.Replace("\"", "\\\"") #>",
@@ -572,9 +574,9 @@ if(true) {
             base.AddDefaultConstraints();
 
 <#
-            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
+            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
             {
-                string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
                 string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
                 if (parentPath.Contains("."))
                 {
@@ -838,12 +840,12 @@ if(true) {
 			else
 				result.PropType = "BackboneElement";
 
-			// Check for a nameReference to another property
-			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:nameReference/@value", nsR) as XmlAttribute;
+			// Check for a contentReference to another property
+			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:contentReference/@value", nsR) as XmlAttribute;
 			if (attrNameRef != null)
             {
 				string nameRef = attrNameRef.Value;
-				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[fhir:name/@value = '"+nameRef+"']", nsR) as XmlElement;
+				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[@id = '"+nameRef.Replace("#", "")+"']", nsR) as XmlElement;
 				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
 				if (temp != null)
                 {
@@ -1038,7 +1040,7 @@ if(true) {
 			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
             {
 				// Lets find the list of reference types that are permitted:
-				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:targetProfile/@value", nsR))
                 {
 					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
 					//	continue;
@@ -1121,12 +1123,12 @@ if(true) {
                 }
 			}
 
-			// Check for a nameReference to another property
-			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:nameReference/@value", nsR) as XmlAttribute;
+			// Check for a contentReference to another property
+			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:contentReference/@value", nsR) as XmlAttribute;
 			if (attrNameRef != null)
             {
 				string nameRef = attrNameRef.Value;
-				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[fhir:name/@value = '"+nameRef+"']", nsR) as XmlElement;
+				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[@id = '"+nameRef.Replace("#", "")+"']", nsR) as XmlElement;
 				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
 				if (temp != null)
                 {
@@ -1274,7 +1276,7 @@ if(true) {
 			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
             {
 				// Lets find the list of reference types that are permitted:
-				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:targetProfile/@value", nsR))
                 {
 					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
 					//	continue;
@@ -1319,6 +1321,5 @@ if(true) {
 
 			return result;
         }
-
     }
 #>
