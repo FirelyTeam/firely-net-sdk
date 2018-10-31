@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="cds-typedstage" />
   <meta>
@@ -17,8 +17,10 @@
   <fhirVersion value="3.0.0" />
   <kind value="complex-type" />
   <abstract value="false" />
-  <contextType value="resource" />
-  <context value="Condition" />
+  <context>
+    <type value="fhirpath" />
+    <expression value="Condition" />
+  </context>
   <type value="Extension" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
   <differential>
@@ -59,9 +61,7 @@
       <binding>
         <strength value="example" />
         <description value="Codes describing condition stages (e.g. Cancer stages)." />
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/condition-stage" />
-        </valueSetReference>
+        <valueSet value="http://hl7.org/fhir/ValueSet/condition-stage" />
       </binding>
       <mapping>
         <identity value="sct-concept" />

@@ -13,9 +13,14 @@
   <kind value="primitive-type" />
   <type value="Extension" />
   <abstract value="false" />
-  <contextType value="datatype" />
-  <context value="Extension.extension" />
-  <context value="Extension" />
+  <context>
+    <type value="element" />
+    <expression value="Extension.extension" />
+  </context>
+  <context>
+    <type value="element" />
+    <expression value="Extension" />
+  </context>
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
   <derivation value="constraint" />
   <snapshot>

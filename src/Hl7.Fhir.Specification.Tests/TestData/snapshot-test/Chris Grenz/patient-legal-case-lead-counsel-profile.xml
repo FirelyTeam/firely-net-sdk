@@ -14,8 +14,10 @@
   <kind value="complex-type" />
 
   <abstract value="false" />
-  <contextType value="datatype" />
-  <context value="Extension.value[x]" />
+  <context>
+    <type value="element" />
+    <expression value="Extension.value[x]" />
+  </context>
 
   <type value="Extension" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
