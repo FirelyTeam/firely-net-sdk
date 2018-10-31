@@ -123,6 +123,20 @@ namespace Hl7.Fhir.Specification.Tests
             //elem = elem.Child("display");
             //Assert.AreEqual("Reference.display", elem.Current.Path);
         }
+
+        [TestMethod]
+        public void WalkAcrossReference()
+        {
+            throw new NotImplementedException();
+
+            // also test .resolve().ofType()
+        }
+
+        [TestMethod]
+        public void WalkToExtensionDefinition()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
