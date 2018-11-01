@@ -18,11 +18,12 @@ If ([string]::IsNullOrEmpty($newVersion))
 
 #Get the existing suffix
 [string] $oldSuffix = $xml.Project.PropertyGroup.VersionSuffix
+$oldSuffix = $oldSuffix.Trim()
 
 # when the suffix is not alpha (probably beta), it cannot be overriden by the parameter 
-if ($oldSuffix.Trim() -ne "alpha")
+if (!$oldSuffix.StartsWith("alpha"))
 {
-	$suffix = $oldSuffix.Trim()
+	$suffix = $oldSuffix
 }
 
 #Replacing the version and suffix
