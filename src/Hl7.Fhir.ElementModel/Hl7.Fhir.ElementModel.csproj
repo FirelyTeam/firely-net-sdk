@@ -7,7 +7,6 @@
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
-    <Version>$(SupportApiVersion)</Version>
     <PackageId>Hl7.Fhir.ElementModel</PackageId>
     <Title>HL7 FHIR library for the base ElementModel classes</Title>
     <Summary>Interfaces and classes to work with FHIR data without using POCOs.</Summary>
