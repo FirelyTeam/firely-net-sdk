@@ -45,10 +45,11 @@ namespace Hl7.Fhir.Model
         string Publisher { get; set; }
         FhirString PublisherElement { get; set; }        
         List<ContactDetail> Contact { get; set; }
-        Markdown Description { get; set; }
-        //FhirString DescriptionElement { get; set; }
+        string Description { get; set; }
+        Markdown DescriptionElement { get; set; }
         List<UsageContext> UseContext { get; set; }
-        Markdown Purpose { get; set; }       
+        string Purpose { get; set; }
+        Markdown PurposeElement { get; set; }
         Code<Hl7.Fhir.Model.PublicationStatus> StatusElement { get; set; }
         bool? Experimental { get; set; }
         Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
@@ -96,8 +97,16 @@ namespace Hl7.Fhir.Model
     public partial class ImplementationGuide : IVersionableConformanceResource
     {
         //I think ImplementationGuide should have a purpose element.
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
         [NotMapped]
-        public Markdown Purpose
+        public string Purpose
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
+        [NotMapped]
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
@@ -139,8 +148,16 @@ namespace Hl7.Fhir.Model
     public partial class NamingSystem : IConformanceResource
     {
         // I think NamingSystem should have Experimental too
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
         [NotMapped]
-        public Markdown Purpose
+        public string Purpose
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
+        [NotMapped]
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }

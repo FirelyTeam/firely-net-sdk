@@ -28,10 +28,10 @@
     nsT.AddNamespace("fhir", "http://hl7.org/fhir");
 
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
-	// string fhirVersion = "1.0.2";
+	// fhirVersion = "4.0.0";
 #>
 //
-// Model Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
+// Generated for FHIR v<#= fhirVersion #>
 //
 <#
 	Dictionary<string, string> enums = new Dictionary<string, string>();
@@ -759,7 +759,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
+// Generated for FHIR v<#= fhirVersion #>
 //
 
 using Hl7.Fhir.Model;
@@ -974,7 +974,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
+// Generated for FHIR v<#= fhirVersion #>
 //
 namespace Hl7.Fhir.Model
 {
