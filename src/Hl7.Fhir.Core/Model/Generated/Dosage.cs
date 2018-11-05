@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("dose", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
             [DataMember]
             public Hl7.Fhir.Model.Element Dose
             {
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("rate", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -384,26 +384,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("maxDosePerAdministration", InSummary=true, Order=200)]
         [DataMember]
-        public Quantity MaxDosePerAdministration
+        public Hl7.Fhir.Model.SimpleQuantity MaxDosePerAdministration
         {
             get { return _MaxDosePerAdministration; }
             set { _MaxDosePerAdministration = value; OnPropertyChanged("MaxDosePerAdministration"); }
         }
         
-        private Quantity _MaxDosePerAdministration;
+        private Hl7.Fhir.Model.SimpleQuantity _MaxDosePerAdministration;
         
         /// <summary>
         /// Upper limit on medication per lifetime of the patient
         /// </summary>
         [FhirElement("maxDosePerLifetime", InSummary=true, Order=210)]
         [DataMember]
-        public Quantity MaxDosePerLifetime
+        public Hl7.Fhir.Model.SimpleQuantity MaxDosePerLifetime
         {
             get { return _MaxDosePerLifetime; }
             set { _MaxDosePerLifetime = value; OnPropertyChanged("MaxDosePerLifetime"); }
         }
         
-        private Quantity _MaxDosePerLifetime;
+        private Hl7.Fhir.Model.SimpleQuantity _MaxDosePerLifetime;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -424,8 +424,8 @@ namespace Hl7.Fhir.Model
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(DoseAndRate != null) dest.DoseAndRate = new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>(DoseAndRate.DeepCopy());
                 if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
-                if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Quantity)MaxDosePerAdministration.DeepCopy();
-                if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Quantity)MaxDosePerLifetime.DeepCopy();
+                if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Hl7.Fhir.Model.SimpleQuantity)MaxDosePerAdministration.DeepCopy();
+                if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Hl7.Fhir.Model.SimpleQuantity)MaxDosePerLifetime.DeepCopy();
                 return dest;
             }
             else

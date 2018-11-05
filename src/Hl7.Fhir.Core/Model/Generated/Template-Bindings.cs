@@ -29,7 +29,7 @@
 */
 
 //
-// Generated on Tue, Sep 1, 2015 21:04+1000 for FHIR v1.0.0
+// Generated for FHIR v3.5.0
 //
 namespace Hl7.Fhir.Model
 {
