@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Validation
             result.Url = url;
             result.Name = name;
             result.Status = PublicationStatus.Draft;
-            result.Description = new Markdown(description);
+            result.Description = description;
             result.FhirVersion = ModelInfo.Version;
             result.Derivation = StructureDefinition.TypeDerivationRule.Constraint;
 
