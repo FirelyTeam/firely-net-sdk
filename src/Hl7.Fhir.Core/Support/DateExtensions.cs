@@ -17,12 +17,25 @@ namespace Hl7.Fhir.Support
 {
     public static class DateExtensions
     {
+        [Obsolete("Use ToFhirDate(this System.DateTimeOffset me) instead")]
         public static string ToFhirDate(this System.DateTime me) => me.ToString("yyyy-MM-dd");
 
+        [Obsolete("Use ToFhirDate(this System.DateTimeOffset? me) instead")]
         public static string ToFhirDate(this System.DateTime? me) => me.HasValue ? me.Value.ToString("yyyy-MM-dd") : null;
 
+        [Obsolete("Use ToFhirDateTime(this System.DateTimeOffset me) instead")]
         public static string ToFhirDateTime(this System.DateTime me) => PrimitiveTypeConverter.ConvertTo<string>(me);
 
+        [Obsolete("Use ToFhirDateTime(this System.DateTimeOffset? me) instead")]
         public static string ToFhirDateTime(this System.DateTime? me) => me.HasValue ? PrimitiveTypeConverter.ConvertTo<string>(me) : null;
+
+        public static string ToFhirDate(this System.DateTimeOffset me) => me.ToString("yyyy-MM-dd");
+
+        public static string ToFhirDate(this System.DateTimeOffset? me) => me.HasValue ? me.Value.ToString("yyyy-MM-dd") : null;
+
+        public static string ToFhirDateTime(this System.DateTimeOffset me) => PrimitiveTypeConverter.ConvertTo<string>(me);
+
+        public static string ToFhirDateTime(this System.DateTimeOffset? me) => me.HasValue ? PrimitiveTypeConverter.ConvertTo<string>(me) : null;
+
     }
 }

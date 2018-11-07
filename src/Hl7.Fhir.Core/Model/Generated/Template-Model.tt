@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
     /// <#= resourceDescription #>
     /// </summary>
 <# }
-if(!abstractType) {
+if(true) {
  #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
 <# }
 #>    [DataContract]
@@ -298,7 +298,7 @@ if(!abstractType) {
 #>
         [FhirType("<#= componentName #>")]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
@@ -739,6 +739,9 @@ if(!abstractType) {
 		public string BackboneComponentType;
 		public string CodeRequiredBinding;
 		public bool isXmlAttribute;
+		public bool IsChoice;
+		public bool IsContained;
+
 
 		public string PropTypeWithCard()
         {
@@ -1083,6 +1086,9 @@ if(!abstractType) {
 				result.NativeType = null;
             }
 
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
+
 			return result;
         }
 
@@ -1309,6 +1315,9 @@ if(!abstractType) {
 					result.NativeType = result.CodeRequiredBinding + "?";
                 }
             }
+
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 
 			return result;
         }

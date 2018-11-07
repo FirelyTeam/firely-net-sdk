@@ -18,28 +18,28 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Validation
 {
     /// <summary>
-    /// Add support for validating against Base subclasses (instead of IElementNavigator) to the Validator
+    /// Add support for validating against Base subclasses (instead of ITypedElement) to the Validator
     /// </summary>
     public static class PocoValidationExtensions
     {
         public static OperationOutcome Validate(this Validator me, Base instance)
         {
-            return me.Validate(new PocoNavigator(instance));
+            return me.Validate(instance.ToTypedElement());
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, params string[] definitionUri)
         {
-            return me.Validate(new PocoNavigator(instance), definitionUri);
+            return me.Validate(instance.ToTypedElement(), definitionUri);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, StructureDefinition structureDefinition)
         {
-            return me.Validate(new PocoNavigator(instance), structureDefinition);
+            return me.Validate(instance.ToTypedElement(), structureDefinition);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return me.Validate(new PocoNavigator(instance), structureDefinitions);
+            return me.Validate(instance.ToTypedElement(), structureDefinitions);
         }
     }
 }

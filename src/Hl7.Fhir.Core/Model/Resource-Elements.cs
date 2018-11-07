@@ -43,6 +43,7 @@ namespace Hl7.Fhir.Model
     /// Base Resource
     /// </summary>
     [DataContract]
+    [FhirType("Resource", IsResource = true)]
     public abstract partial class Resource : Base
     {
         [NotMapped]
@@ -244,10 +245,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (IdElement != null) yield return new ElementValue("id",false, IdElement);
-                if (Meta != null) yield return new ElementValue("meta",false,Meta);
-                if (ImplicitRulesElement != null) yield return new ElementValue("implicitRules",false,ImplicitRulesElement);
-                if (LanguageElement != null) yield return new ElementValue("language",false,LanguageElement);
+                if (IdElement != null) yield return new ElementValue("id",IdElement);
+                if (Meta != null) yield return new ElementValue("meta",Meta);
+                if (ImplicitRulesElement != null) yield return new ElementValue("implicitRules",ImplicitRulesElement);
+                if (LanguageElement != null) yield return new ElementValue("language",LanguageElement);
             }
         }
     }

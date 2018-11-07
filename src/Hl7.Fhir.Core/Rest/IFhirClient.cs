@@ -8,11 +8,10 @@ namespace Hl7.Fhir.Rest
 {
     public interface IFhirClient
     {
-#if NET_COMPRESSION
+#if !NETSTANDARD1_1
         bool PreferCompressedResponses { get; set; }
         bool CompressRequestBody { get; set; }
 #endif
-
         Uri Endpoint { get; }
         byte[] LastBody { get; }
         Resource LastBodyAsResource { get; }

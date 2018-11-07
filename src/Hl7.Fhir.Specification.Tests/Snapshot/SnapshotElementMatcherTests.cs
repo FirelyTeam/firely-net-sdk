@@ -465,6 +465,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(diffNav.MoveToNext());
         }
 
+#if false
         // [WMR 20180604] Disabled; no longer possible due to fix for issue #611
         // Does FHIR even allow this? Relevant discussion on Zulip:
         // https://chat.fhir.org/#narrow/stream/23-conformance/subject/Can.20a.20derived.20profile.20insert.20new.20named.20slices.3F
@@ -576,6 +577,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertMatch(matches[2], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "age"
             Assert.IsFalse(diffNav.MoveToNext());
         }
+#endif
 
         [TestMethod]
         public void TestElementMatcher_ComplexExtension_ConstrainChild()

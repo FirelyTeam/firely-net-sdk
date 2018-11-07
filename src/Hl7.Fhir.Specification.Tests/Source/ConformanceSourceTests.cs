@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(humanName);
         }
 
-        [TestMethod, Ignore]
+#if false
         public void TestSourceSpeedTest()
         {
             var jsonSource = new DirectorySource(
@@ -396,11 +396,11 @@ namespace Hl7.Fhir.Specification.Tests
                 }
 
                 sw.Stop();
-                Debug.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
+                Console.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
                 Assert.IsTrue(sw.ElapsedMilliseconds < maxDuration);
             }
         }
-
+#endif
         [TestMethod]
         public async Tasks.Task TestThreadSafety()
         {
@@ -424,11 +424,7 @@ namespace Hl7.Fhir.Specification.Tests
                 tasks[i] = Tasks.Task.Run(
                     () =>
                     {
-#if DOTNETFW
                         var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-#else
-                        const int threadId = 0;
-#endif
                         var start = sw.Elapsed;
                         var resource = source.ResolveByCanonicalUri(uri);
                         var summary = source.ListSummaries().ResolveByUri(uri);

@@ -110,6 +110,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var result = client.ValidateCode("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
             Assert.IsTrue(result.Result?.Value == true);
+            
         }
 
         [TestMethod]

@@ -23,8 +23,7 @@ namespace Hl7.FhirPath.Tests
             PartialDateTime.Parse("2012-03-04T12:34:34+02:00");
             PartialDateTime.Parse("2012-03-04T12:34:34Z");
 
-            PartialDateTime pd;
-            Assert.True(PartialDateTime.TryParse("2012-03", out pd));
+            Assert.True(PartialDateTime.TryParse("2012-03", out PartialDateTime pd));
             Assert.Equal(pd, PartialDateTime.Parse("2012-03"));
             Assert.Equal("2012-03", pd.ToString());
 
@@ -37,7 +36,7 @@ namespace Hl7.FhirPath.Tests
 
             Assert.True(PartialDateTime.Parse("2012-03-04") > PartialDateTime.Parse("2012-03-01"));
 
-            Assert.Equal(PartialDateTime.Today().ToString(), PartialDateTime.FromDateTime(DateTime.Today).ToString().Substring(0,10));
+            Assert.Equal(PartialDateTime.Today().ToString(), PartialDateTime.FromDateTime(DateTimeOffset.Now).ToString().Substring(0,10));
             Assert.Equal(PartialDateTime.Now().ToString().Substring(0, 19), PartialDateTime.FromDateTime(DateTimeOffset.Now).ToString().Substring(0, 19));
         }
 
@@ -48,8 +47,7 @@ namespace Hl7.FhirPath.Tests
             PartialTime.Parse("12:34:44");
             PartialTime.Parse("12:34:44Z");
 
-            PartialTime pd;
-            Assert.True(PartialTime.TryParse("12:34:44Z", out pd));
+            Assert.True(PartialTime.TryParse("12:34:44Z", out PartialTime pd));
             Assert.Equal(pd, PartialTime.Parse("12:34:44Z"));
             Assert.Equal("12:34:44Z", pd.ToString());
 

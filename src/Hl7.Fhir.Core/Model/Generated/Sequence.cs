@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ReferenceSeqComponent")]
         [DataContract]
-        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceSeqComponent"; } }
@@ -417,14 +417,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Chromosome != null) yield return new ElementValue("chromosome", false, Chromosome);
-                    if (GenomeBuildElement != null) yield return new ElementValue("genomeBuild", false, GenomeBuildElement);
-                    if (ReferenceSeqId != null) yield return new ElementValue("referenceSeqId", false, ReferenceSeqId);
-                    if (ReferenceSeqPointer != null) yield return new ElementValue("referenceSeqPointer", false, ReferenceSeqPointer);
-                    if (ReferenceSeqStringElement != null) yield return new ElementValue("referenceSeqString", false, ReferenceSeqStringElement);
-                    if (StrandElement != null) yield return new ElementValue("strand", false, StrandElement);
-                    if (WindowStartElement != null) yield return new ElementValue("windowStart", false, WindowStartElement);
-                    if (WindowEndElement != null) yield return new ElementValue("windowEnd", false, WindowEndElement);
+                    if (Chromosome != null) yield return new ElementValue("chromosome", Chromosome);
+                    if (GenomeBuildElement != null) yield return new ElementValue("genomeBuild", GenomeBuildElement);
+                    if (ReferenceSeqId != null) yield return new ElementValue("referenceSeqId", ReferenceSeqId);
+                    if (ReferenceSeqPointer != null) yield return new ElementValue("referenceSeqPointer", ReferenceSeqPointer);
+                    if (ReferenceSeqStringElement != null) yield return new ElementValue("referenceSeqString", ReferenceSeqStringElement);
+                    if (StrandElement != null) yield return new ElementValue("strand", StrandElement);
+                    if (WindowStartElement != null) yield return new ElementValue("windowStart", WindowStartElement);
+                    if (WindowEndElement != null) yield return new ElementValue("windowEnd", WindowEndElement);
                 }
             }
 
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VariantComponent")]
         [DataContract]
-        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "VariantComponent"; } }
@@ -692,12 +692,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StartElement != null) yield return new ElementValue("start", false, StartElement);
-                    if (EndElement != null) yield return new ElementValue("end", false, EndElement);
-                    if (ObservedAlleleElement != null) yield return new ElementValue("observedAllele", false, ObservedAlleleElement);
-                    if (ReferenceAlleleElement != null) yield return new ElementValue("referenceAllele", false, ReferenceAlleleElement);
-                    if (CigarElement != null) yield return new ElementValue("cigar", false, CigarElement);
-                    if (VariantPointer != null) yield return new ElementValue("variantPointer", false, VariantPointer);
+                    if (StartElement != null) yield return new ElementValue("start", StartElement);
+                    if (EndElement != null) yield return new ElementValue("end", EndElement);
+                    if (ObservedAlleleElement != null) yield return new ElementValue("observedAllele", ObservedAlleleElement);
+                    if (ReferenceAlleleElement != null) yield return new ElementValue("referenceAllele", ReferenceAlleleElement);
+                    if (CigarElement != null) yield return new ElementValue("cigar", CigarElement);
+                    if (VariantPointer != null) yield return new ElementValue("variantPointer", VariantPointer);
                 }
             }
 
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QualityComponent")]
         [DataContract]
-        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "QualityComponent"; } }
@@ -1214,20 +1214,20 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (StandardSequence != null) yield return new ElementValue("standardSequence", false, StandardSequence);
-                    if (StartElement != null) yield return new ElementValue("start", false, StartElement);
-                    if (EndElement != null) yield return new ElementValue("end", false, EndElement);
-                    if (Score != null) yield return new ElementValue("score", false, Score);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (TruthTPElement != null) yield return new ElementValue("truthTP", false, TruthTPElement);
-                    if (QueryTPElement != null) yield return new ElementValue("queryTP", false, QueryTPElement);
-                    if (TruthFNElement != null) yield return new ElementValue("truthFN", false, TruthFNElement);
-                    if (QueryFPElement != null) yield return new ElementValue("queryFP", false, QueryFPElement);
-                    if (GtFPElement != null) yield return new ElementValue("gtFP", false, GtFPElement);
-                    if (PrecisionElement != null) yield return new ElementValue("precision", false, PrecisionElement);
-                    if (RecallElement != null) yield return new ElementValue("recall", false, RecallElement);
-                    if (FScoreElement != null) yield return new ElementValue("fScore", false, FScoreElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (StandardSequence != null) yield return new ElementValue("standardSequence", StandardSequence);
+                    if (StartElement != null) yield return new ElementValue("start", StartElement);
+                    if (EndElement != null) yield return new ElementValue("end", EndElement);
+                    if (Score != null) yield return new ElementValue("score", Score);
+                    if (Method != null) yield return new ElementValue("method", Method);
+                    if (TruthTPElement != null) yield return new ElementValue("truthTP", TruthTPElement);
+                    if (QueryTPElement != null) yield return new ElementValue("queryTP", QueryTPElement);
+                    if (TruthFNElement != null) yield return new ElementValue("truthFN", TruthFNElement);
+                    if (QueryFPElement != null) yield return new ElementValue("queryFP", QueryFPElement);
+                    if (GtFPElement != null) yield return new ElementValue("gtFP", GtFPElement);
+                    if (PrecisionElement != null) yield return new ElementValue("precision", PrecisionElement);
+                    if (RecallElement != null) yield return new ElementValue("recall", RecallElement);
+                    if (FScoreElement != null) yield return new ElementValue("fScore", FScoreElement);
                 }
             }
 
@@ -1237,7 +1237,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepositoryComponent")]
         [DataContract]
-        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RepositoryComponent"; } }
@@ -1513,12 +1513,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (DatasetIdElement != null) yield return new ElementValue("datasetId", false, DatasetIdElement);
-                    if (VariantsetIdElement != null) yield return new ElementValue("variantsetId", false, VariantsetIdElement);
-                    if (ReadsetIdElement != null) yield return new ElementValue("readsetId", false, ReadsetIdElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DatasetIdElement != null) yield return new ElementValue("datasetId", DatasetIdElement);
+                    if (VariantsetIdElement != null) yield return new ElementValue("variantsetId", VariantsetIdElement);
+                    if (ReadsetIdElement != null) yield return new ElementValue("readsetId", ReadsetIdElement);
                 }
             }
 
@@ -1973,21 +1973,21 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (CoordinateSystemElement != null) yield return new ElementValue("coordinateSystem", false, CoordinateSystemElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Specimen != null) yield return new ElementValue("specimen", false, Specimen);
-                if (Device != null) yield return new ElementValue("device", false, Device);
-                if (Performer != null) yield return new ElementValue("performer", false, Performer);
-                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                if (ReferenceSeq != null) yield return new ElementValue("referenceSeq", false, ReferenceSeq);
-                foreach (var elem in Variant) { if (elem != null) yield return new ElementValue("variant", true, elem); }
-                if (ObservedSeqElement != null) yield return new ElementValue("observedSeq", false, ObservedSeqElement);
-                foreach (var elem in Quality) { if (elem != null) yield return new ElementValue("quality", true, elem); }
-                if (ReadCoverageElement != null) yield return new ElementValue("readCoverage", false, ReadCoverageElement);
-                foreach (var elem in Repository) { if (elem != null) yield return new ElementValue("repository", true, elem); }
-                foreach (var elem in Pointer) { if (elem != null) yield return new ElementValue("pointer", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (CoordinateSystemElement != null) yield return new ElementValue("coordinateSystem", CoordinateSystemElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Specimen != null) yield return new ElementValue("specimen", Specimen);
+                if (Device != null) yield return new ElementValue("device", Device);
+                if (Performer != null) yield return new ElementValue("performer", Performer);
+                if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                if (ReferenceSeq != null) yield return new ElementValue("referenceSeq", ReferenceSeq);
+                foreach (var elem in Variant) { if (elem != null) yield return new ElementValue("variant", elem); }
+                if (ObservedSeqElement != null) yield return new ElementValue("observedSeq", ObservedSeqElement);
+                foreach (var elem in Quality) { if (elem != null) yield return new ElementValue("quality", elem); }
+                if (ReadCoverageElement != null) yield return new ElementValue("readCoverage", ReadCoverageElement);
+                foreach (var elem in Repository) { if (elem != null) yield return new ElementValue("repository", elem); }
+                foreach (var elem in Pointer) { if (elem != null) yield return new ElementValue("pointer", elem); }
             }
         }
 

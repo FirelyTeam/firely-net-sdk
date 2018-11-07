@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PredictionComponent")]
         [DataContract]
-        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PredictionComponent"; } }
@@ -261,12 +261,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
-                    if (Probability != null) yield return new ElementValue("probability", false, Probability);
-                    if (QualitativeRisk != null) yield return new ElementValue("qualitativeRisk", false, QualitativeRisk);
-                    if (RelativeRiskElement != null) yield return new ElementValue("relativeRisk", false, RelativeRiskElement);
-                    if (When != null) yield return new ElementValue("when", false, When);
-                    if (RationaleElement != null) yield return new ElementValue("rationale", false, RationaleElement);
+                    if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                    if (Probability != null) yield return new ElementValue("probability", Probability);
+                    if (QualitativeRisk != null) yield return new ElementValue("qualitativeRisk", QualitativeRisk);
+                    if (RelativeRiskElement != null) yield return new ElementValue("relativeRisk", RelativeRiskElement);
+                    if (When != null) yield return new ElementValue("when", When);
+                    if (RationaleElement != null) yield return new ElementValue("rationale", RationaleElement);
                 }
             }
 
@@ -704,22 +704,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (BasedOn != null) yield return new ElementValue("basedOn", false, BasedOn);
-                if (Parent != null) yield return new ElementValue("parent", false, Parent);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Method != null) yield return new ElementValue("method", false, Method);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                if (Condition != null) yield return new ElementValue("condition", false, Condition);
-                if (Performer != null) yield return new ElementValue("performer", false, Performer);
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
-                foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", true, elem); }
-                foreach (var elem in Prediction) { if (elem != null) yield return new ElementValue("prediction", true, elem); }
-                if (MitigationElement != null) yield return new ElementValue("mitigation", false, MitigationElement);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (BasedOn != null) yield return new ElementValue("basedOn", BasedOn);
+                if (Parent != null) yield return new ElementValue("parent", Parent);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Method != null) yield return new ElementValue("method", Method);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
+                if (Condition != null) yield return new ElementValue("condition", Condition);
+                if (Performer != null) yield return new ElementValue("performer", Performer);
+                if (Reason != null) yield return new ElementValue("reason", Reason);
+                foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", elem); }
+                foreach (var elem in Prediction) { if (elem != null) yield return new ElementValue("prediction", elem); }
+                if (MitigationElement != null) yield return new ElementValue("mitigation", MitigationElement);
+                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
             }
         }
 

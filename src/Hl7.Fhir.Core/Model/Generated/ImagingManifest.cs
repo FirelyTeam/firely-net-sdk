@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StudyComponent")]
         [DataContract]
-        public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StudyComponent"; } }
@@ -210,10 +210,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
-                    if (ImagingStudy != null) yield return new ElementValue("imagingStudy", false, ImagingStudy);
-                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
-                    foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", true, elem); }
+                    if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                    if (ImagingStudy != null) yield return new ElementValue("imagingStudy", ImagingStudy);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
+                    foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", elem); }
                 }
             }
 
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SeriesComponent")]
         [DataContract]
-        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SeriesComponent"; } }
@@ -357,9 +357,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
-                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
-                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, elem); }
+                    if (UidElement != null) yield return new ElementValue("uid", UidElement);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
+                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
                 }
             }
 
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InstanceComponent")]
         [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }
@@ -502,8 +502,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SopClassElement != null) yield return new ElementValue("sopClass", false, SopClassElement);
-                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
+                    if (SopClassElement != null) yield return new ElementValue("sopClass", SopClassElement);
+                    if (UidElement != null) yield return new ElementValue("uid", UidElement);
                 }
             }
 
@@ -717,12 +717,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (AuthoringTimeElement != null) yield return new ElementValue("authoringTime", false, AuthoringTimeElement);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", true, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (AuthoringTimeElement != null) yield return new ElementValue("authoringTime", AuthoringTimeElement);
+                if (Author != null) yield return new ElementValue("author", Author);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", elem); }
             }
         }
 

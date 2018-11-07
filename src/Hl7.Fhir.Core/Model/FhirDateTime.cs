@@ -46,14 +46,22 @@ namespace Hl7.Fhir.Model
         {
         }
 
+        [Obsolete("Use FhirDateTime(DateTimeOffset dt) instead")]
         public FhirDateTime(DateTime dt) : this( new DateTimeOffset(dt) )
         {
         }
 
+        [Obsolete("Use FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset) instead")]
         public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
             : this(new DateTime(year,month,day,hr,min,sec,DateTimeKind.Local))
         {
         }
+
+        public FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset)
+            : this(new DateTimeOffset(year, month, day, hr, min, sec, offset))
+        {
+        }
+
 
         public FhirDateTime(int year, int month, int day)
             : this(String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEARMONTHDAY, year, month, day))
@@ -105,6 +113,7 @@ namespace Hl7.Fhir.Model
             return dto;
         }
 
+        [Obsolete("Use ToDateTimeOffset(TimeSpan? zone = null) instead")]
         public DateTime? ToDateTime()
         {
             if (this.Value == null) return null;
