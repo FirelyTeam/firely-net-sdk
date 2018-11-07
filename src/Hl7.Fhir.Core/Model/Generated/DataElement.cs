@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -214,8 +214,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
                 }
             }
 
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MappingComponent")]
         [DataContract]
-        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MappingComponent"; } }
@@ -429,10 +429,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IdentityElement != null) yield return new ElementValue("identity", false, IdentityElement);
-                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (CommentsElement != null) yield return new ElementValue("comments", false, CommentsElement);
+                    if (IdentityElement != null) yield return new ElementValue("identity", IdentityElement);
+                    if (UriElement != null) yield return new ElementValue("uri", UriElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (CommentsElement != null) yield return new ElementValue("comments", CommentsElement);
                 }
             }
 
@@ -935,20 +935,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                if (CopyrightElement != null) yield return new ElementValue("copyright", false, CopyrightElement);
-                if (StringencyElement != null) yield return new ElementValue("stringency", false, StringencyElement);
-                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", true, elem); }
-                foreach (var elem in Element) { if (elem != null) yield return new ElementValue("element", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
+                if (StringencyElement != null) yield return new ElementValue("stringency", StringencyElement);
+                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", elem); }
+                foreach (var elem in Element) { if (elem != null) yield return new ElementValue("element", elem); }
             }
         }
 

@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ReactionComponent")]
         [DataContract]
-        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
@@ -514,14 +514,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return new ElementValue("substance", false, Substance);
-                    if (CertaintyElement != null) yield return new ElementValue("certainty", false, CertaintyElement);
-                    foreach (var elem in Manifestation) { if (elem != null) yield return new ElementValue("manifestation", true, elem); }
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (OnsetElement != null) yield return new ElementValue("onset", false, OnsetElement);
-                    if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
-                    if (ExposureRoute != null) yield return new ElementValue("exposureRoute", false, ExposureRoute);
-                    if (Note != null) yield return new ElementValue("note", false, Note);
+                    if (Substance != null) yield return new ElementValue("substance", Substance);
+                    if (CertaintyElement != null) yield return new ElementValue("certainty", CertaintyElement);
+                    foreach (var elem in Manifestation) { if (elem != null) yield return new ElementValue("manifestation", elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (OnsetElement != null) yield return new ElementValue("onset", OnsetElement);
+                    if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
+                    if (ExposureRoute != null) yield return new ElementValue("exposureRoute", ExposureRoute);
+                    if (Note != null) yield return new ElementValue("note", Note);
                 }
             }
 
@@ -970,20 +970,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (OnsetElement != null) yield return new ElementValue("onset", false, OnsetElement);
-                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", false, RecordedDateElement);
-                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Reporter != null) yield return new ElementValue("reporter", false, Reporter);
-                if (Substance != null) yield return new ElementValue("substance", false, Substance);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (CriticalityElement != null) yield return new ElementValue("criticality", false, CriticalityElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
-                if (LastOccurenceElement != null) yield return new ElementValue("lastOccurence", false, LastOccurenceElement);
-                if (Note != null) yield return new ElementValue("note", false, Note);
-                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (OnsetElement != null) yield return new ElementValue("onset", OnsetElement);
+                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", RecordedDateElement);
+                if (Recorder != null) yield return new ElementValue("recorder", Recorder);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Reporter != null) yield return new ElementValue("reporter", Reporter);
+                if (Substance != null) yield return new ElementValue("substance", Substance);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (CriticalityElement != null) yield return new ElementValue("criticality", CriticalityElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
+                if (LastOccurenceElement != null) yield return new ElementValue("lastOccurence", LastOccurenceElement);
+                if (Note != null) yield return new ElementValue("note", Note);
+                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", elem); }
             }
         }
 

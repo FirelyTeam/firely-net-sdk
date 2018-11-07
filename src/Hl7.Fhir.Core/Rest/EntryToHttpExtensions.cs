@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, 
+        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, Uri baseUrl,
             Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
@@ -30,7 +30,13 @@ namespace Hl7.Fhir.Rest
             if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
 
-            var location = new RestUrl(interaction.Url);
+            // Create an absolute uri when the interaction.Url is relative.
+            var uri = new Uri(interaction.Url, UriKind.RelativeOrAbsolute);
+            if (!uri.IsAbsoluteUri)
+            {
+                uri = HttpUtil.MakeAbsoluteToBase(uri, baseUrl);
+            }
+            var location = new RestUrl(uri);
 
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
@@ -44,10 +50,11 @@ namespace Hl7.Fhir.Rest
 
             if (interaction.IfMatch != null) request.Headers["If-Match"] = interaction.IfMatch;
             if (interaction.IfNoneMatch != null) request.Headers["If-None-Match"] = interaction.IfNoneMatch;
-#if DOTNETFW
-            if (interaction.IfModifiedSince != null) request.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
-#else
+#if NETSTANDARD1_1
             if (interaction.IfModifiedSince != null) request.Headers["If-Modified-Since"] = interaction.IfModifiedSince.Value.UtcDateTime.ToString();
+#else
+            if (interaction.IfModifiedSince != null) request.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
+            
 #endif
             if (interaction.IfNoneExist != null) request.Headers["If-None-Exist"] = interaction.IfNoneExist;
 
@@ -67,7 +74,7 @@ namespace Hl7.Fhir.Rest
                 setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, searchUsingPost, out body);
             }
             // PCL doesn't support setting the length (and in this case will be empty anyway)
-#if DOTNETFW
+#if !NETSTANDARD1_1
             else
                 request.ContentLength = 0;
 #endif

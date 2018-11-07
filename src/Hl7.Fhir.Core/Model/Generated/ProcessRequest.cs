@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemsComponent")]
         [DataContract]
-        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SequenceLinkIdElement != null) yield return new ElementValue("sequenceLinkId", false, SequenceLinkIdElement);
+                    if (SequenceLinkIdElement != null) yield return new ElementValue("sequenceLinkId", SequenceLinkIdElement);
                 }
             }
 
@@ -654,22 +654,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ActionElement != null) yield return new ElementValue("action", false, ActionElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
-                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, OriginalRuleset);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Target != null) yield return new ElementValue("target", false, Target);
-                if (Provider != null) yield return new ElementValue("provider", false, Provider);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                if (Request != null) yield return new ElementValue("request", false, Request);
-                if (Response != null) yield return new ElementValue("response", false, Response);
-                if (NullifyElement != null) yield return new ElementValue("nullify", false, NullifyElement);
-                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
-                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
-                foreach (var elem in IncludeElement) { if (elem != null) yield return new ElementValue("include", true, elem); }
-                foreach (var elem in ExcludeElement) { if (elem != null) yield return new ElementValue("exclude", true, elem); }
-                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (ActionElement != null) yield return new ElementValue("action", ActionElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Ruleset != null) yield return new ElementValue("ruleset", Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Target != null) yield return new ElementValue("target", Target);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Response != null) yield return new ElementValue("response", Response);
+                if (NullifyElement != null) yield return new ElementValue("nullify", NullifyElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
+                foreach (var elem in IncludeElement) { if (elem != null) yield return new ElementValue("include", elem); }
+                foreach (var elem in ExcludeElement) { if (elem != null) yield return new ElementValue("exclude", elem); }
+                if (Period != null) yield return new ElementValue("period", Period);
             }
         }
 

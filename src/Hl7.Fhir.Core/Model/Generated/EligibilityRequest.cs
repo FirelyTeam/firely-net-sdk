@@ -259,13 +259,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
-                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, OriginalRuleset);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Target != null) yield return new ElementValue("target", false, Target);
-                if (Provider != null) yield return new ElementValue("provider", false, Provider);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Ruleset != null) yield return new ElementValue("ruleset", Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Target != null) yield return new ElementValue("target", Target);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
             }
         }
 

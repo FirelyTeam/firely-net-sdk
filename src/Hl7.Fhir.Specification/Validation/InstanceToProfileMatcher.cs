@@ -18,16 +18,16 @@ namespace Hl7.Fhir.Validation
 
     internal class ChildNameMatcher
     {
-        public static MatchResult Match(ElementDefinitionNavigator definitionParent, ScopedNavigator instanceParent)
+        public static MatchResult Match(ElementDefinitionNavigator definitionParent, ITypedElement instanceParent)
         {
             var definitionElements = harvestDefinitionNames(definitionParent);
-            var elementsToMatch = instanceParent.Children().Cast<ScopedNavigator>().ToList();
+            var elementsToMatch = instanceParent.Children().Cast<ScopedNode>().ToList();
 
             List<Match> matches = new List<Match>();
 
             foreach(var definitionElement in definitionElements)
             {
-                var match = new Match() { Definition = definitionElement, InstanceElements = new List<ScopedNavigator>() };
+                var match = new Match() { Definition = definitionElement, InstanceElements = new List<ITypedElement>() };
 
                 // Special case is the .value of a primitive fhir type, this is represented
                 // as the "Value" of the IValueProvider interface, not as a real child
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Validation
             return definitionElements;
         }
 
-        public static bool NameMatches(string name, IElementNavigator instance)
+        public static bool NameMatches(string name, ITypedElement instance)
         {
             var definedName = name;
             // simple direct match
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Validation
 
             // match where definition path includes a type suffix (typeslice shorthand)
             // example: path Patient.deceasedBoolean matches Patient.deceased (with type 'boolean')
-            if (definedName == instance.Name + instance.Type.Capitalize()) return true;
+            if (definedName == instance.Name + instance.InstanceType.Capitalize()) return true;
 
             // match where definition path is a choice (suffix '[x]'), in this case
             // match the path without the suffix against the name
@@ -106,13 +106,13 @@ namespace Hl7.Fhir.Validation
     internal class MatchResult
     {
         public List<Match> Matches;
-        public List<ScopedNavigator> UnmatchedInstanceElements;
+        public List<ScopedNode> UnmatchedInstanceElements;
     }
 
     [System.Diagnostics.DebuggerDisplay(@"\{{Definition.DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     internal class Match
     {
         public ElementDefinitionNavigator Definition;
-        public List<ScopedNavigator> InstanceElements;
+        public List<ITypedElement> InstanceElements;
     }
 }

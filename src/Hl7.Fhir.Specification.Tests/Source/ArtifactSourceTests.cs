@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Tests
             var fourthRun = sw.ElapsedMilliseconds;
             Assert.IsTrue(fourthRun > secondRun);
 
-            File.SetLastWriteTime(zipFile, DateTime.Now);
+            File.SetLastWriteTimeUtc(zipFile, DateTimeOffset.UtcNow.DateTime);
             Assert.IsFalse(fa.IsActual());
         }
 
@@ -244,14 +244,13 @@ namespace Hl7.Fhir.Specification.Tests
             // - total number of known (concrete) resources
             // - 1 for abstract type Resource
             // - 1 for abstract type DomainResource
-            // + 1 xhtml (not present as FhirCsType)
             // =======================================
             //   total number of known FHIR (complex & primitive) datatypes
             var coreDataTypes = ModelInfo.FhirCsTypeToString.Where(kvp => !ModelInfo.IsKnownResource(kvp.Key)
                                                                             && kvp.Value != "Resource"
                                                                             && kvp.Value != "DomainResource"
                                                                             )
-                                                            .Select(kvp => kvp.Value).Concat(new[] { "xhtml" });
+                                                            .Select(kvp => kvp.Value);
             var numCoreDataTypes = coreDataTypes.Count();
 
             Assert.AreEqual(resourceIds.Length, numCoreDataTypes);

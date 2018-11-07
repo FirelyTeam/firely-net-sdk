@@ -55,25 +55,6 @@ namespace Hl7.Fhir.Tests.Introspection
         }
 
 
-        [TestMethod,Ignore]
-        public void TypeDataTypeNameResolving()
-        {
-            var inspector = new ModelInspector();
-
-            inspector.ImportType(typeof(AnimalName));
-            inspector.ImportType(typeof(NewAnimalName));
-
-            var result = inspector.FindClassMappingForFhirDataType("animalname");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(result.NativeType, typeof(NewAnimalName));
-
-            // Validate a mapping for a type will return the newest registration
-            result = inspector.FindClassMappingByType(typeof(AnimalName));
-            Assert.IsNotNull(result);
-            Assert.AreEqual(typeof(NewAnimalName),result.NativeType);
-        }
-
-
         [TestMethod]
         public void TestAssemblyInspection()
         {
@@ -88,10 +69,9 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("code"));
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("boolean"));
 
-            // Should have skipped abstract classes
-            Assert.IsNull(inspector.FindClassMappingForResource("ComplexElement"));
-            Assert.IsNull(inspector.FindClassMappingForResource("Element"));
-            Assert.IsNull(inspector.FindClassMappingForResource("Resource"));
+            // Should also have found the abstract classes
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("Element"));
+            Assert.IsNotNull(inspector.FindClassMappingForResource("Resource"));
            
             // The open generic Code<> should not be there
             var codeOfT = inspector.FindClassMappingByType(typeof(Code<>));

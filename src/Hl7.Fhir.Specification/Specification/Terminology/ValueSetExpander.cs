@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Terminology
             Settings = settings;
         }
 
-        public ValueSetExpander() : this(ValueSetExpanderSettings.Default)
+        public ValueSetExpander() : this(ValueSetExpanderSettings.CreateDefault())
         {
             // nothing
         }
@@ -205,15 +205,5 @@ namespace Hl7.Fhir.Specification.Terminology
             return dest.RemoveAll(c => c.System == system && c.Code == code);
         }
 
-    }
-
-
-    public class ValueSetExpanderSettings
-    {
-        public static ValueSetExpanderSettings Default = new ValueSetExpanderSettings();
-
-        public IResourceResolver ValueSetSource { get; set; }
-
-        public int MaxExpansionSize { get; set; } = 500;
     }
 }

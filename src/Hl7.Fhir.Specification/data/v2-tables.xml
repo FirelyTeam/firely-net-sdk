@@ -61675,7 +61675,7 @@
             <extension url="http://hl7.org/fhir/StructureDefinition/valueset-deprecated">
               <valueBoolean value="true" />
             </extension>
-            <code value=" " />
+            <code value="X " />
             <display value="External Jugular" />
           </concept>
           <concept>

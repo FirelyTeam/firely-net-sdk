@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, true, membername: "Value");
         }
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         [TestMethod]    // XHtml validation not available in portable library
         public void TestXhtmlValidation()
         {

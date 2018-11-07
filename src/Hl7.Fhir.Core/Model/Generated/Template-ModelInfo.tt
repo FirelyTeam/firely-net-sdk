@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
 		if (e is System.Xml.XmlElement)
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
-			if(resourceName == "xhtml") continue;
+			//if(resourceName == "xhtml") continue;
 
 #>                { "<#= resourceName #>", typeof(<#= ConvertPropertyType(resourceName, e as XmlElement, nsR) #>) },
 <#
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
 		if (e is System.Xml.XmlElement)
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
-			if (resourceName == "xhtml") continue;
+			//if (resourceName == "xhtml") continue;
 
 #>                { typeof(<#= ConvertPropertyType(resourceName, e as XmlElement, nsR) #>), "<#= resourceName #>" },
 <#
@@ -308,6 +308,7 @@ namespace Hl7.Fhir.Model
 				case "positiveInt" : return "Hl7.Fhir.Model.PositiveInt"; 
 				case "Range" : return "Hl7.Fhir.Model.Range";
 				case "string" : return "Hl7.Fhir.Model.FhirString";
+				case "xhtml" : return "Hl7.Fhir.Model.XHtml";
 				case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;

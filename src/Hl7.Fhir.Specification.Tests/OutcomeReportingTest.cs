@@ -27,10 +27,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             OperationOutcome level1 = new OperationOutcome();
 
-            Patient p = new Patient();
-            p.Active = true;
-            _location = new PocoNavigator(p);
-            _location.MoveToFirstChild();
+            Patient p = new Patient
+            {
+                Active = true
+            };
+            var node = p.ToTypedElement();
+            _location = node.Children().First().Location;
 
             level1.AddIssue(Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING.ToIssueComponent("A test warning at level 1", _location));
 
@@ -49,7 +51,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         private OperationOutcome _report;
-        private IElementNavigator _location;
+        private string _location;
 
         [TestMethod]
         public void IssueHierarchy()

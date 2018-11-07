@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Cannot derive type"));
+                Assert.IsTrue(fe.Message.Contains("expected the HL7 FHIR namespace"));
             }
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("unsupported namespace"));
+                Assert.IsTrue(fe.Message.Contains("which is not allowed"));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void AcceptXsiStuffOnRoot()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
-                            "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'></Patient>";
+                            "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'><active value='true' /></Patient>";
             var parser = new FhirXmlParser();
 
             // By default, parser will accept xsi: elements
@@ -256,8 +256,7 @@ namespace Hl7.Fhir.Tests.Serialization
             File.WriteAllText(Path.Combine(tempPath, "edgecase.json"), json2);
 
             List<string> errors = new List<string>();
-            JsonAssert.AreSame("edgecase.json", json, json2, errors);
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content\r\n" + String.Join("\r\n", errors));
+            JsonAssert.AreSame(json, json2);
         }
 
         [TestMethod]

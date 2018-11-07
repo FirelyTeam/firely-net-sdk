@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ImageComponent")]
         [DataContract]
-        public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ImageComponent"; } }
@@ -222,8 +222,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-                    if (Link != null) yield return new ElementValue("link", false, Link);
+                    if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                    if (Link != null) yield return new ElementValue("link", Link);
                 }
             }
 
@@ -667,23 +667,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                if (IssuedElement != null) yield return new ElementValue("issued", false, IssuedElement);
-                if (Performer != null) yield return new ElementValue("performer", false, Performer);
-                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", true, elem); }
-                foreach (var elem in Specimen) { if (elem != null) yield return new ElementValue("specimen", true, elem); }
-                foreach (var elem in Result) { if (elem != null) yield return new ElementValue("result", true, elem); }
-                foreach (var elem in ImagingStudy) { if (elem != null) yield return new ElementValue("imagingStudy", true, elem); }
-                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", true, elem); }
-                if (ConclusionElement != null) yield return new ElementValue("conclusion", false, ConclusionElement);
-                foreach (var elem in CodedDiagnosis) { if (elem != null) yield return new ElementValue("codedDiagnosis", true, elem); }
-                foreach (var elem in PresentedForm) { if (elem != null) yield return new ElementValue("presentedForm", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Effective != null) yield return new ElementValue("effective", Effective);
+                if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
+                if (Performer != null) yield return new ElementValue("performer", Performer);
+                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", elem); }
+                foreach (var elem in Specimen) { if (elem != null) yield return new ElementValue("specimen", elem); }
+                foreach (var elem in Result) { if (elem != null) yield return new ElementValue("result", elem); }
+                foreach (var elem in ImagingStudy) { if (elem != null) yield return new ElementValue("imagingStudy", elem); }
+                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
+                if (ConclusionElement != null) yield return new ElementValue("conclusion", ConclusionElement);
+                foreach (var elem in CodedDiagnosis) { if (elem != null) yield return new ElementValue("codedDiagnosis", elem); }
+                foreach (var elem in PresentedForm) { if (elem != null) yield return new ElementValue("presentedForm", elem); }
             }
         }
 

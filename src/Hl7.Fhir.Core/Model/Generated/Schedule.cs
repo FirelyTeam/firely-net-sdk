@@ -223,11 +223,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                if (Actor != null) yield return new ElementValue("actor", false, Actor);
-                if (PlanningHorizon != null) yield return new ElementValue("planningHorizon", false, PlanningHorizon);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                if (Actor != null) yield return new ElementValue("actor", Actor);
+                if (PlanningHorizon != null) yield return new ElementValue("planningHorizon", PlanningHorizon);
+                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
             }
         }
 

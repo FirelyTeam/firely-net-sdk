@@ -455,20 +455,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Issuer != null) yield return new ElementValue("issuer", false, Issuer);
-                if (Bin != null) yield return new ElementValue("bin", false, Bin);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (SubscriberId != null) yield return new ElementValue("subscriberId", false, SubscriberId);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (GroupElement != null) yield return new ElementValue("group", false, GroupElement);
-                if (PlanElement != null) yield return new ElementValue("plan", false, PlanElement);
-                if (SubPlanElement != null) yield return new ElementValue("subPlan", false, SubPlanElement);
-                if (DependentElement != null) yield return new ElementValue("dependent", false, DependentElement);
-                if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
-                if (Subscriber != null) yield return new ElementValue("subscriber", false, Subscriber);
-                if (Network != null) yield return new ElementValue("network", false, Network);
-                foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", true, elem); }
+                if (Issuer != null) yield return new ElementValue("issuer", Issuer);
+                if (Bin != null) yield return new ElementValue("bin", Bin);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (SubscriberId != null) yield return new ElementValue("subscriberId", SubscriberId);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (GroupElement != null) yield return new ElementValue("group", GroupElement);
+                if (PlanElement != null) yield return new ElementValue("plan", PlanElement);
+                if (SubPlanElement != null) yield return new ElementValue("subPlan", SubPlanElement);
+                if (DependentElement != null) yield return new ElementValue("dependent", DependentElement);
+                if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
+                if (Subscriber != null) yield return new ElementValue("subscriber", Subscriber);
+                if (Network != null) yield return new ElementValue("network", Network);
+                foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", elem); }
             }
         }
 

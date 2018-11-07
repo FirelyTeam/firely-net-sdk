@@ -548,19 +548,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Device != null) yield return new ElementValue("device", false, Device);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", true, elem); }
-                foreach (var elem in NotesElement) { if (elem != null) yield return new ElementValue("notes", true, elem); }
-                foreach (var elem in PrnReason) { if (elem != null) yield return new ElementValue("prnReason", true, elem); }
-                if (OrderedOnElement != null) yield return new ElementValue("orderedOn", false, OrderedOnElement);
-                if (RecordedOnElement != null) yield return new ElementValue("recordedOn", false, RecordedOnElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Timing != null) yield return new ElementValue("timing", false, Timing);
-                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Device != null) yield return new ElementValue("device", Device);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", elem); }
+                foreach (var elem in NotesElement) { if (elem != null) yield return new ElementValue("notes", elem); }
+                foreach (var elem in PrnReason) { if (elem != null) yield return new ElementValue("prnReason", elem); }
+                if (OrderedOnElement != null) yield return new ElementValue("orderedOn", OrderedOnElement);
+                if (RecordedOnElement != null) yield return new ElementValue("recordedOn", RecordedOnElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Timing != null) yield return new ElementValue("timing", Timing);
+                if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
             }
         }
 

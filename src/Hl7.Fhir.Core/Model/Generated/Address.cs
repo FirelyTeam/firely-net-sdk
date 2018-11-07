@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -509,16 +511,16 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (UseElement != null) yield return new ElementValue("use", false, UseElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                foreach (var elem in LineElement) { if (elem != null) yield return new ElementValue("line", true, elem); }
-                if (CityElement != null) yield return new ElementValue("city", false, CityElement);
-                if (DistrictElement != null) yield return new ElementValue("district", false, DistrictElement);
-                if (StateElement != null) yield return new ElementValue("state", false, StateElement);
-                if (PostalCodeElement != null) yield return new ElementValue("postalCode", false, PostalCodeElement);
-                if (CountryElement != null) yield return new ElementValue("country", false, CountryElement);
-                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (UseElement != null) yield return new ElementValue("use", UseElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (TextElement != null) yield return new ElementValue("text", TextElement);
+                foreach (var elem in LineElement) { if (elem != null) yield return new ElementValue("line", elem); }
+                if (CityElement != null) yield return new ElementValue("city", CityElement);
+                if (DistrictElement != null) yield return new ElementValue("district", DistrictElement);
+                if (StateElement != null) yield return new ElementValue("state", StateElement);
+                if (PostalCodeElement != null) yield return new ElementValue("postalCode", PostalCodeElement);
+                if (CountryElement != null) yield return new ElementValue("country", CountryElement);
+                if (Period != null) yield return new ElementValue("period", Period);
  
             } 
         } 

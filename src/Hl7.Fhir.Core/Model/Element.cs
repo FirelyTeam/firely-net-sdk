@@ -4,6 +4,8 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,17 +38,18 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1 and then post-processed by hand
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Base for all elements
     /// </summary>
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [DataContract]
+    [FhirType("Element", IsResource=false)]
     public abstract partial class Element : Base, IExtendable
     {
         [NotMapped]
@@ -55,7 +58,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// xml:id (or equivalent in JSON)
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
+        [FhirElement("id", XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=10, TypeRedirect = typeof(Id))]
         [IdPattern]
         [DataMember]
         public string ElementId
@@ -69,7 +72,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional Content defined by implementations
         /// </summary>
-        [FhirElement("extension", InSummary=true, Order=20)]
+        [FhirElement("extension", InSummary=false, Order=20)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Extension
@@ -82,17 +85,15 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Element;
-            
-            if (dest != null)
+            if (other is Element dest)
             {
                 base.CopyTo(dest);
-                if(ElementId != null) dest.ElementId = ElementId;
-                if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
+                if (ElementId != null) dest.ElementId = ElementId;
+                if (Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override bool Matches(IDeepComparable other)
@@ -133,8 +134,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ElementId != null)  yield return new ElementValue("id", false, ElementId);
-                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",true, p); }
+                if (ElementId != null)  yield return new ElementValue("id", ElementId);
+                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",p); }
             }
         }
 

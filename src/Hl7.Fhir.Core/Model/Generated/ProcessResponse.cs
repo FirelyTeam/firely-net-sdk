@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NotesComponent")]
         [DataContract]
-        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NotesComponent"; } }
@@ -168,8 +168,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
                 }
             }
 
@@ -507,19 +507,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Request != null) yield return new ElementValue("request", false, Request);
-                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
-                if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
-                if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
-                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, OriginalRuleset);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
-                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
-                if (Form != null) yield return new ElementValue("form", false, Form);
-                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", true, elem); }
-                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
+                if (Ruleset != null) yield return new ElementValue("ruleset", Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                if (RequestProvider != null) yield return new ElementValue("requestProvider", RequestProvider);
+                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", RequestOrganization);
+                if (Form != null) yield return new ElementValue("form", Form);
+                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", elem); }
+                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", elem); }
             }
         }
 

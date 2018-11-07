@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
@@ -305,12 +305,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
-                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
-                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", true, elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", LinkIdElement);
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    if (Subject != null) yield return new ElementValue("subject", Subject);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
+                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", elem); }
                 }
             }
 
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QuestionComponent")]
         [DataContract]
-        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "QuestionComponent"; } }
@@ -469,9 +469,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", LinkIdElement);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", elem); }
                 }
             }
 
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnswerComponent")]
         [DataContract]
-        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AnswerComponent"; } }
@@ -577,8 +577,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
                 }
             }
 
@@ -858,15 +858,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (Questionnaire != null) yield return new ElementValue("questionnaire", false, Questionnaire);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (AuthoredElement != null) yield return new ElementValue("authored", false, AuthoredElement);
-                if (Source != null) yield return new ElementValue("source", false, Source);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Group != null) yield return new ElementValue("group", false, Group);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (Questionnaire != null) yield return new ElementValue("questionnaire", Questionnaire);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Author != null) yield return new ElementValue("author", Author);
+                if (AuthoredElement != null) yield return new ElementValue("authored", AuthoredElement);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Group != null) yield return new ElementValue("group", Group);
             }
         }
 

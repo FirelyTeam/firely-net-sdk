@@ -36,79 +36,48 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
-    public static class XHtml
+
+    /// <summary>
+    /// Primitive Type xhtml
+    /// </summary>
+    /// <remarks>
+    /// Note that this type is not actually used in the POCO model - it is just here to provide
+    /// reflectable metadata for the xhtml type, and as a home for XHTML validation.
+    /// </remarks>
+    [FhirType("xhtml")]
+    public class XHtml : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
     {
-        public static bool IsValidValue(string value)
-        {
-            try
-            {
-                // There is currently no validation in the portable .net
-#if NET_XSD_SCHEMA
-                var doc = SerializationUtil.XDocumentFromXmlText(value as string);
-                doc.Validate(_xhtmlSchemaSet.Value, validationEventHandler: null);
-#endif
+        [NotMapped]
+        public override string TypeName { get { return "xhtml"; } }
 
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+        public XHtml(string value)
+        {
+            Value = value;
         }
 
-#if NET_XSD_SCHEMA
-        private static Lazy<XmlSchemaSet> _xhtmlSchemaSet = new Lazy<XmlSchemaSet>(compileXhtmlSchema, true);
+        public XHtml() : this((string)null) { }
 
-        private static XmlSchemaSet compileXhtmlSchema()
+        /// <summary>
+        /// Primitive value of the element
+        /// </summary>
+        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
+        public string Value
         {
-            var assembly = typeof(XHtml).Assembly;
-            XmlSchemaSet schemas = new XmlSchemaSet();
-
-            var schema = new StringReader(Properties.Resources.xml);
-            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
-
-            schema = new StringReader(Properties.Resources.fhir_xhtml);
-            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
-
-            schemas.Compile();
-
-            return schemas;
+            get { return (string)ObjectValue; }
+            set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
 
-        /*
-         * // This code prevents some exceptions that can occur during debugging that things just proceed naturally afterwards.
-         * // it just interferes with debug flow when you are catching exceptions.
-        private class LocalXmlResolver : XmlUrlResolver
-        {
-            public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
-            {
-                if (absoluteUri.OriginalString.EndsWith("xml.xsd"))
-                    return Properties.Resources.xml;
-                return base.GetEntity(absoluteUri, role, ofObjectToReturn);
-            }
-        }
-
-        private static XmlSchemaSet compileXhtmlSchema()
-        {
-            var assembly = typeof(XHtml).Assembly;
-            XmlSchemaSet schemas = new XmlSchemaSet();
-            schemas.XmlResolver = new LocalXmlResolver();
-
-            var schema = new StringReader(Properties.Resources.xml);
-            schemas.Add("http://www.w3.org/XML/1998/namespace", XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
-            schema = new StringReader(Properties.Resources.fhir_xhtml);
-            schemas.Add(null, XmlReader.Create(schema));   // null = use schema namespace as specified in schema file
-
-            schemas.Compile();
-
-            return schemas;
-        }
-         */
+#if NETSTANDARD1_1
+        public static bool IsValidValue(string value) => true;
+#else
+        public static bool IsValidValue(string value) => !SerializationUtil.RunFhirXhtmlSchemaValidation(value).Any();
 #endif
 
     }

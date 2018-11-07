@@ -10,45 +10,46 @@
 // extern alias dstu2;
 
 using System;
-using System.Linq;
-using Hl7.FhirPath.Expressions;
 using System.Diagnostics;
-using Hl7.Fhir.Model;
-using System.Xml.Linq;
-using Xunit;
 using System.IO;
-using Xunit.Abstractions;
+using System.Linq;
+using System.Xml.Linq;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model.Primitives;
-using Hl7.Fhir.Utility;
 using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
+using Hl7.FhirPath.Expressions;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Hl7.FhirPath.Tests
 {
     public class PatientFixture : IDisposable
     {
-        public IElementNavigator TestInput;
-        public IElementNavigator Questionnaire;
-        public IElementNavigator UuidProfile;
+        public ITypedElement TestInput;
+        public ITypedElement Questionnaire;
+        public ITypedElement UuidProfile;
         public int Counter = 0;
         public XDocument Xdoc;
 
-    
+
         public PatientFixture()
         {
-            var parser = new Hl7.Fhir.Serialization.FhirXmlParser();
+            var parser = new FhirXmlParser();
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
             var patient = parser.Parse<Patient>(tpXml);
-            TestInput = new PocoNavigator(patient);
+            TestInput = patient.ToTypedElement();
 
             tpXml = TestData.ReadTextFile("questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
-            Questionnaire = new PocoNavigator(quest);
+            Questionnaire = quest.ToTypedElement();
 
             tpXml = TestData.ReadTextFile("uuid.profile.xml");
             var uuid = parser.Parse<StructureDefinition>(tpXml);
-            UuidProfile = new PocoNavigator(uuid);
+            UuidProfile = uuid.ToTypedElement();
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
@@ -83,7 +84,7 @@ namespace Hl7.FhirPath.Tests
             Assert.True(TestInput.IsBoolean(expr, true));
         }
 
-        public void IsTrue(string expr, IElementNavigator input)
+        public void IsTrue(string expr, ITypedElement input)
         {
             Assert.True(input.IsBoolean(expr, true));
         }
@@ -139,10 +140,13 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestDynaBinding()
         {
-            var input = (ElementNode.Node("root", 
-                    ElementNode.Valued("child", "Hello world!", "string"), ElementNode.Valued("child", 4L, "integer"))).ToNavigator();
+#pragma warning disable CS0618 // Type or member is internal
+            var input = SourceNode.Node("root",
+                    SourceNode.Valued("child", "Hello world!"),
+                    SourceNode.Valued("child", "4")).ToTypedElement();
+#pragma warning restore CS0618 // Type or member is internal
 
-            Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1])"));
+            Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
 
 
@@ -173,7 +177,7 @@ namespace Hl7.FhirPath.Tests
             }
             catch (InvalidOperationException io)
             {
-                Assert.True(io.Message.Contains("contains more than one element"));
+                Assert.Contains("contains more than one element", io.Message);
             }
         }
 
@@ -190,7 +194,7 @@ namespace Hl7.FhirPath.Tests
 
 
 
-        
+
 
         [Fact]
         public void TestMath()
@@ -270,7 +274,7 @@ namespace Hl7.FhirPath.Tests
         public void TestLogicalShortcut()
         {
             fixture.IsTrue(@"true or (1/0 = 0)");
-            fixture.IsTrue(@"(false and (1/0 = 0)) = false");            
+            fixture.IsTrue(@"(false and (1/0 = 0)) = false");
         }
 
 
@@ -295,7 +299,7 @@ namespace Hl7.FhirPath.Tests
 
             fixture.IsTrue(@"Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'");
 
-         //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
+            //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
         }
 
         [Fact]
@@ -371,13 +375,13 @@ namespace Hl7.FhirPath.Tests
             fixture.IsTrue("@T10:01:02Z !~ @T10:01:55+01:00");
         }
 
-        public static string ToString(IElementNavigator nav)
+        public static string ToString(ITypedElement nav)
         {
             var result = nav.Name;
 
-            if (nav.Type != null)
+            if (nav.InstanceType != null)
             {
-                result += ": " + nav.Type;
+                result += ": " + nav.InstanceType;
             }
 
             if (nav.Value != null) result += " = " + nav.Value;
@@ -385,21 +389,21 @@ namespace Hl7.FhirPath.Tests
             return result;
         }
 
-        public static void Render(IElementNavigator navigator, int nest = 0)
-        {
-            do
-            {
-                string indent = new string(' ', nest * 4);
-                Debug.WriteLine($"{indent}" + ToString(navigator));
+        //public static void Render(IElementNavigator navigator, int nest = 0)
+        //{
+        //    do
+        //    {
+        //        string indent = new string(' ', nest * 4);
+        //        Debug.WriteLine($"{indent}" + ToString(navigator));
 
-                var child = navigator.Clone();
-                if (child.MoveToFirstChild())
-                {
-                    Render(child, nest + 1);
-                }
-            }
-            while (navigator.MoveToNext());
-        }
+        //        var child = navigator.Clone();
+        //        if (child.MoveToFirstChild())
+        //        {
+        //            Render(child, nest + 1);
+        //        }
+        //    }
+        //    while (navigator.MoveToNext());
+        //}
 
 
         [Fact]
@@ -487,15 +491,19 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(PartialDateTime.Today(), fixture.TestInput.Scalar("today()"));
 
             // Check greater than
-            fixture.IsTrue("today() < @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(1)));
+            fixture.IsTrue("today() < @" + PartialDateTime.FromDateTime(DateTimeOffset.UtcNow.AddDays(1)));
 
             // Check less than
-            fixture.IsTrue("today() > @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(-1)));
+            fixture.IsTrue("today() > @" + PartialDateTime.FromDateTime(DateTimeOffset.UtcNow.AddDays(-1)));
 
             // Check ==
             fixture.IsTrue("today() = @" + PartialDateTime.Today());
 
-            fixture.IsTrue("now() > @" + PartialDateTime.Today());
+            // This unit-test will fail if you are working between midnight
+            // and start-of-day in GMT:
+            // e.g. 2018-08-10T01:00T+02:00 > 2018-08-10 will fail, which is then
+            // test on the next line
+            //fixture.IsTrue("now() > @" + PartialDateTime.Today());
             fixture.IsTrue("now() >= @" + PartialDateTime.Now());
         }
 

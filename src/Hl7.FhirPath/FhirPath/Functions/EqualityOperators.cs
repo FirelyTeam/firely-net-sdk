@@ -18,7 +18,7 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class EqualityOperators
     {
-        public static bool IsEqualTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right, bool compareNames = false)
+        public static bool IsEqualTo(this IEnumerable<ITypedElement> left, IEnumerable<ITypedElement> right, bool compareNames = false)
         {
             var r = right.GetEnumerator();
 
@@ -34,7 +34,7 @@ namespace Hl7.FhirPath.Functions
                 return true;
         }
 
-        public static bool IsEqualTo(this IElementNavigator left, IElementNavigator right, bool compareNames = false)
+        public static bool IsEqualTo(this ITypedElement left, ITypedElement right, bool compareNames = false)
         {
             if (compareNames && (left.Name != right.Name)) return false;
 
@@ -81,7 +81,7 @@ namespace Hl7.FhirPath.Functions
 
     
 
-        public static bool IsEquivalentTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right, bool compareNames = false)
+        public static bool IsEquivalentTo(this IEnumerable<ITypedElement> left, IEnumerable<ITypedElement> right, bool compareNames = false)
         {
             var r = right.ToList();
             int count = 0;
@@ -99,7 +99,7 @@ namespace Hl7.FhirPath.Functions
         }
 
 
-        public static bool IsEquivalentTo(this IElementNavigator left, IElementNavigator right, bool compareNames = false)
+        public static bool IsEquivalentTo(this ITypedElement left, ITypedElement right, bool compareNames = false)
         {
             if (compareNames && !namesAreEquivalent(left, right)) return false;
 
@@ -142,7 +142,7 @@ namespace Hl7.FhirPath.Functions
                 return false;
             }
 
-            bool namesAreEquivalent(IElementNavigator le, IElementNavigator ri)
+            bool namesAreEquivalent(ITypedElement le, ITypedElement ri)
             {
                 if (le.Name == "id" && ri.Name == "id") return true;      // don't compare 'id' elements for equivalence
                 if (le.Name != ri.Name) return false;
@@ -153,9 +153,9 @@ namespace Hl7.FhirPath.Functions
 
 
 
-        private static IEnumerable<IElementNavigator> childrenOrEmpty(this IElementNavigator focus)
+        private static IEnumerable<ITypedElement> childrenOrEmpty(this ITypedElement focus)
         {
-            return (focus is IElementNavigator ien) ? ien.Children() : FhirValueList.Empty;
+            return (focus is ITypedElement ien) ? ien.Children() : FhirValueList.Empty;
         }
 
         public static bool IsEquivalentTo(this string a, string b)
@@ -185,9 +185,9 @@ namespace Hl7.FhirPath.Functions
             return repr.Length - repr.IndexOf('.') - 1;
         }
 
-        internal class ValueProviderEqualityComparer : IEqualityComparer<IElementNavigator>
+        internal class ValueProviderEqualityComparer : IEqualityComparer<ITypedElement>
         {
-            public bool Equals(IElementNavigator x, IElementNavigator y)
+            public bool Equals(ITypedElement x, ITypedElement y)
             {
                 if (x == null && y == null) return true;
                 if (x == null || y == null) return false;
@@ -195,13 +195,13 @@ namespace Hl7.FhirPath.Functions
                 return x.IsEqualTo(y);
             }
 
-            public int GetHashCode(IElementNavigator element)
+            public int GetHashCode(ITypedElement element)
             {
                 var result = element.Value != null ? element.Value.GetHashCode() : 0;
 
-                if (element is IElementNavigator)
+                if (element is ITypedElement)
                 {
-                    var childnames = String.Concat(((IElementNavigator)element).Children().Select(c => c.Name));
+                    var childnames = String.Concat(((ITypedElement)element).Children().Select(c => c.Name));
                     if (!String.IsNullOrEmpty(childnames))
                         result ^= childnames.GetHashCode();
                 }
