@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
                     DisallowSchemaLocation = Settings.DisallowXsiAttributesOnRoot,
                 };
 
-        public Base Parse(string xml, Type dataType)
+        public Base Parse(string xml, Type dataType = null)
         {
             var xmlReader = FhirXmlNode.Parse(xml, buildNodeSettings(Settings));
             return Parse(xmlReader, dataType);
