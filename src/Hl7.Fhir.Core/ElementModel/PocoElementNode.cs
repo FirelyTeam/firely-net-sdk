@@ -6,13 +6,13 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.ElementModel
 
         public string Location { get; private set; }
 
-        public string ResourceType => InstanceType;
+        public string ResourceType => Current is Resource ? InstanceType : null;
 
         public IEnumerable<object> Annotations(Type type)
         {
