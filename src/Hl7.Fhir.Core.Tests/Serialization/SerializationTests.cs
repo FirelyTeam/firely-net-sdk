@@ -59,7 +59,6 @@ namespace Hl7.Fhir.Tests.Serialization
             string xmlPacientTest = TestDataHelper.ReadTestData("TestPatient.xml");
             
             var poco = new FhirXmlParser().Parse(xmlPacientTest);
-            var xml = new FhirXmlSerializer().SerializeToString(poco);
             
             Assert.AreEqual(((Patient)poco).Id, "pat1");
             Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
@@ -80,6 +79,18 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(metaJson, json);
         }
 
+        [TestMethod]
+        public void ParsePatientJsonNullType()
+        {
+            string jsonPatient = TestDataHelper.ReadTestData("TestPatient.json");
+
+            var poco = new FhirJsonParser().Parse(jsonPatient);
+
+            Assert.AreEqual(((Patient)poco).Id, "pat1");
+            Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
+            Assert.AreEqual(((Patient)poco).Name.First().Family.First(), "Donald");
+            Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
+        }
 
         [TestMethod]
         public void AvoidBOMUse()

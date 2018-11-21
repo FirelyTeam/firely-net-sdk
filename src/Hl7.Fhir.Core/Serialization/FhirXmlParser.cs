@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
             return Parse(xmlReader, dataType);
         }
 
-        public Base Parse(XmlReader reader, Type dataType)
+        public Base Parse(XmlReader reader, Type dataType = null)
         {
             var xmlReader = FhirXmlNode.Read(reader, buildNodeSettings(Settings));
             return Parse(xmlReader, dataType);
