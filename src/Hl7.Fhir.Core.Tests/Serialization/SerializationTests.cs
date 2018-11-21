@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Tests.Serialization
             
             Assert.AreEqual(((Patient)poco).Id, "pat1");
             Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
-            Assert.AreEqual(((Patient)poco).Name.First().Family.First(), "Donald");
+            Assert.AreEqual(((Patient)poco).Name.First().Family, "Donald");
             Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
         }
 
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.AreEqual(((Patient)poco).Id, "pat1");
             Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
-            Assert.AreEqual(((Patient)poco).Name.First().Family.First(), "Donald");
+            Assert.AreEqual(((Patient)poco).Name.First().Family, "Donald");
             Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
         }
 
