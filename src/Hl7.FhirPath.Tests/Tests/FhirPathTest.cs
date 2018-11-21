@@ -158,6 +158,28 @@ namespace Hl7.FhirPath.Tests
             Assert.IsTrue(traced);
         }
 
+        [TestMethod]
+        public void TestFhirPathCombine()
+        {
+            var cs = new Hl7.Fhir.Model.ValueSet() { Id = "pat45" };
+            cs.CodeSystem = new ValueSet.CodeSystemComponent();
+            cs.CodeSystem.Concept.Add(new ValueSet.ConceptDefinitionComponent()
+            {
+                Code = "5", Display = "Five"
+            });
+
+            var result = cs.Predicate("codeSystem.concept.code.combine($this.descendants().concept.code).isDistinct()");
+            Assert.IsTrue(result);
+
+            cs.CodeSystem.Concept.Add(new ValueSet.ConceptDefinitionComponent()
+            {
+                Code = "5",
+                Display = "Five"
+            });
+
+            result = cs.Predicate("codeSystem.concept.code.combine($this.descendants().concept.code).isDistinct()");
+            Assert.IsFalse(result);
+        }
 
         //[TestMethod]
         //public void TypeInfoAndNativeMatching()
