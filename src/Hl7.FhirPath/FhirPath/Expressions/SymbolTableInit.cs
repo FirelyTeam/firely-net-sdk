@@ -126,8 +126,11 @@ namespace Hl7.FhirPath.Expressions
             t.Add("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst), doNullProp: true);
             t.Add("length", (string f) => f.Length, doNullProp: true);
 
+            // The next two functions existed pre-normative, so we have kept them.
             t.Add("is", (ITypedElement f, string name) => f.Is(name), doNullProp: true);
             t.Add("as", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
+
+            t.Add("ofType", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
             t.Add("binary.is", (object f, ITypedElement left, string name) => left.Is(name), doNullProp: true);
             t.Add("binary.as", (object f, ITypedElement left, string name) => left.CastAs(name), doNullProp: true);
 
