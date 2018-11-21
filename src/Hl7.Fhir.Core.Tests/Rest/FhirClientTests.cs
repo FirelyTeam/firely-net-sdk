@@ -292,6 +292,14 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("gzip", e.RawResponse.Headers[HttpResponseHeader.ContentEncoding]);
         }
 
+        [TestMethod, TestCategory("FhirClient")]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SearchInvalidCriterie()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+            var result = client.Search<Patient>(new string[] { "test" });
+        }
+        
 #if NO_ASYNC_ANYMORE
         [TestMethod, TestCategory("FhirClient")]
         public void SearchAsync()
