@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Tests.Serialization
             };
             var elements = new[] { "photo" };
 
-            var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Elements, elements: elements);
+            var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));
 
