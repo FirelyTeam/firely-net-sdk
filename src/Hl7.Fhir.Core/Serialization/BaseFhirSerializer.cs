@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.ElementModel;
 using System.Linq;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -22,9 +23,12 @@ namespace Hl7.Fhir.Serialization
             Settings = settings?.Clone() ?? new SerializerSettings();
         }
 
-        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary)
+        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements)
         {
-            if (summary == SummaryType.False) return instance.ToTypedElement();
+            if (summary == SummaryType.False && elements == null) return instance.ToTypedElement();
+
+            if (elements != null && (summary != SummaryType.Elements && summary != SummaryType.False))
+                throw Error.Argument("elements", "Elements parameter is supported only when summary is SummaryType.Elements or summary is not specified at all.");
 
             var patchedInstance = (Base)instance.DeepCopy();
 
@@ -42,6 +46,9 @@ namespace Hl7.Fhir.Serialization
                     return MaskingNode.ForData(baseNav);
                 case SummaryType.Count:
                     return MaskingNode.ForCount(baseNav);
+                case SummaryType.Elements:
+                case SummaryType.False:
+                    return MaskingNode.ForElements(baseNav, elements);
                 default:
                     return baseNav;
             }
