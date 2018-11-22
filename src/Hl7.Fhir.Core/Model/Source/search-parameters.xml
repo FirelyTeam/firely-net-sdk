@@ -30748,7 +30748,7 @@
           <definition>
             <reference value="http://hl7.org/fhir/SearchParameter/Observation-value-date" />
           </definition>
-          <expression value="value.as(DateTime) | value.as(Period)" />
+          <expression value="value.as(dateTime) | value.as(Period)" />
         </component>
       </SearchParameter>
     </resource>
