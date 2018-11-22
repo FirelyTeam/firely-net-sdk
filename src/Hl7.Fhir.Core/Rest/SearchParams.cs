@@ -433,13 +433,7 @@ namespace Hl7.Fhir.Rest
         /// Return all parts of the resource(s)
         /// </summary>
         [EnumLiteral("false")]
-        False,
-
-        /// <summary>
-        /// Returns the requested elements, and any mandatory elements
-        /// </summary>
-        [EnumLiteral("elements")]
-        Elements,
+        False
     }
 
 

@@ -27,8 +27,8 @@ namespace Hl7.Fhir.Serialization
         {
             if (summary == SummaryType.False && elements == null) return instance.ToTypedElement();
 
-            if (elements != null && (summary != SummaryType.Elements && summary != SummaryType.False))
-                throw Error.Argument("elements", "Elements parameter is supported only when summary is SummaryType.Elements or summary is not specified at all.");
+            if (elements != null && summary != SummaryType.False)
+                throw Error.Argument("elements", "Elements parameter is supported only when summary is SummaryType.False or summary is not specified at all.");
 
             var patchedInstance = (Base)instance.DeepCopy();
 
@@ -46,7 +46,6 @@ namespace Hl7.Fhir.Serialization
                     return MaskingNode.ForData(baseNav);
                 case SummaryType.Count:
                     return MaskingNode.ForCount(baseNav);
-                case SummaryType.Elements:
                 case SummaryType.False:
                     return MaskingNode.ForElements(baseNav, elements);
                 default:
