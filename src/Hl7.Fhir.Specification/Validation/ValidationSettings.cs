@@ -31,6 +31,12 @@ namespace Hl7.Fhir.Validation
         public ITerminologyService TerminologyService { get; set; }
 
         /// <summary>
+        /// An instance of the FhirPath compiler to use when evaluating constraints
+        /// (provide this if you have custom functions included in the symbol table)
+        /// </summary>
+        public Hl7.FhirPath.FhirPathCompiler FhirPathCompiler { get; set; }
+
+        /// <summary>
         /// The validator needs StructureDefinitions to have a snapshot form to function. If a StructureDefinition
         /// without a snapshot is encountered, should the validator generate the snapshot from the differential
         /// present in the StructureDefinition? Default is 'false'.
@@ -99,6 +105,7 @@ namespace Hl7.Fhir.Validation
             other.SkipConstraintValidation = SkipConstraintValidation;
             other.TerminologyService = TerminologyService;
             other.Trace = Trace;
+            other.FhirPathCompiler = FhirPathCompiler;
         }
 
         /// <summary>Creates a new <see cref="ValidationSettings"/> object that is a copy of the current instance.</summary>
