@@ -214,6 +214,30 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void TestElements()
+        {
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
+            var elements = new[] { "photo" };
+
+            var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Elements, elements: elements);
+            Assert.IsFalse(summaryElements.Contains("<birthDate"));
+            Assert.IsTrue(summaryElements.Contains("<photo"));
+
+            var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, elements: elements);
+            Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
+            Assert.IsTrue(noSummarySpecified.Contains("<photo"));
+
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
+        }
+
+        [TestMethod]
         public void TestWithMetadata()
         {
             var p = new Patient
