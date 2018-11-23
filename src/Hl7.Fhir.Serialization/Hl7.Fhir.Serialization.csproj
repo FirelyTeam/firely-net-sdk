@@ -16,22 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="xhtml\fhir-xhtml.xsd" />
-    <EmbeddedResource Include="xhtml\xml.xsd" />
+    <EmbeddedResource Include="xhtml\fhir-xhtml.xsd">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="xhtml\xml.xsd">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="xhtml\fhir-xhtml.xsd" />
     <None Remove="xhtml\xml.xsd" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="xhtml\fhir-xhtml.xsd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xhtml\xml.xsd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
