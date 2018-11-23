@@ -120,6 +120,38 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
+        public void TestEmptyIllegalAndLegalCode()
+        {
+            var val = new BindingValidator(_termService, "Demo");
+
+            var binding = new ElementDefinition.BindingComponent
+            {
+                ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
+                Strength = BindingStrength.Required
+            };
+
+            var cc = new CodeableConcept();
+            cc.Coding.Add(new Coding(null,null,"Just some display text"));
+
+            // First, with no code at all in a CC
+            var result = val.ValidateBinding(cc, binding);
+            Assert.False(result.Success);
+            Assert.Contains("No code found in instance", result.ToString());
+
+            // Now with no code + illegal code
+            cc.Coding.Add(new Coding("urn:oid:1.2.3.4.5", "16", "Here's a code"));
+            result = val.ValidateBinding(cc, binding);
+            Assert.False(result.Success);
+            Assert.Contains("None of the Codings in the CodeableConcept were valid for the binding", result.ToString());
+
+            // Now, add a third valid code according to the binding.
+            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
+            result = val.ValidateBinding(cc, binding);
+            Assert.True(result.Success);
+        }
+
+
+        [Fact]
         public void TestCodeableConceptValidation()
         {
             var val = new BindingValidator(_termService, "Demo");
