@@ -110,8 +110,9 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private OperationOutcome validateCodeVS(ValueSet vs, string code, string system, string display, bool? abstractAllowed)
         {
-            if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-            
+            if(code == null)
+                return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE.NewOutcomeWithIssue($"No code supplied.");
+
             lock (vs.SyncLock)
             {
                 // We might have a cached or pre-expanded version brought to us by the _source
