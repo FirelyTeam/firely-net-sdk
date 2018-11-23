@@ -161,23 +161,15 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestFhirPathCombine()
         {
-            var cs = new Hl7.Fhir.Model.ValueSet() { Id = "pat45" };
-            cs.CodeSystem = new ValueSet.CodeSystemComponent();
-            cs.CodeSystem.Concept.Add(new ValueSet.ConceptDefinitionComponent()
-            {
-                Code = "5", Display = "Five"
-            });
+            var patient = new Patient();
 
-            var result = cs.Predicate("codeSystem.concept.code.combine($this.descendants().concept.code).isDistinct()");
+            patient.Identifier.Add(new Identifier("http://nu.nl", "id1"));
+            patient.Identifier.Add(new Identifier("http://nu.nl", "id2"));
+
+            var result = patient.Predicate("identifier[0].value.combine($this.identifier[1].value).isDistinct()");
             Assert.IsTrue(result);
 
-            cs.CodeSystem.Concept.Add(new ValueSet.ConceptDefinitionComponent()
-            {
-                Code = "5",
-                Display = "Five"
-            });
-
-            result = cs.Predicate("codeSystem.concept.code.combine($this.descendants().concept.code).isDistinct()");
+            result = patient.Predicate("identifier[0].value.combine($this.identifier[0].value).isDistinct()");
             Assert.IsFalse(result);
         }
 
