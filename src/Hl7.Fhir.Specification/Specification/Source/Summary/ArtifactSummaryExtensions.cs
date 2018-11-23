@@ -52,6 +52,9 @@ namespace Hl7.Fhir.Specification.Source
         public static IEnumerable<ArtifactSummary> FindConformanceResources(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
         {
             var values = canonicalUrl.Split('|');
+            if (values.Length > 2)
+                throw Error.Argument("Url is not valid. The pipe occures more than once.");
+
             var version = values.Length == 2 ? values[1] : string.Empty;
 
             return summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == values[0] && 
