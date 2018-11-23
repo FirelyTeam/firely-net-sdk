@@ -13,6 +13,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
     <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
     <PackageLicenseUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/develop/LICENSE</PackageLicenseUrl>
+    <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
 
   <!-- Although netstandard1.1 support codegen using the Expression class, we need at least
