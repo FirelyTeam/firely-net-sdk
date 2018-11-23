@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             c.Display = "Not a NumberX";
             result = val.ValidateBinding(c, binding);
-            Assert.False(result.Success);
+            Assert.True(result.Success);        // local terminology service treats incorrect displays as warnings (GH#624)
 
             // But this won't, it's also a composition, but without expansion - the local term server won't help you here
             var binding2 = new ElementDefinition.BindingComponent
