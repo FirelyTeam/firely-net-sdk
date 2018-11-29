@@ -151,14 +151,13 @@ namespace Hl7.Fhir.Rest
             System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
             return headerValue.MediaType.ToLowerInvariant();
 #else
-            
-            if (mediaHeaderValue.StartsWith("application/") && System.Text.RegularExpressions.Regex.IsMatch(mediaHeaderValue, @"^[a-z0-9/+; =-]+$"))
-            {
 
+            try
+            {  
                 var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
                 return ct.MediaType.ToLowerInvariant();
             }
-            else
+            catch (System.FormatException)
             {
                 return mediaHeaderValue;
             }
