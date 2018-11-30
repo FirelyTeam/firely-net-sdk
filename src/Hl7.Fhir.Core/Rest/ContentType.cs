@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Rest
 
         public static string GetMediaTypeFromHeaderValue(string mediaHeaderValue)
         {
-        #if NETSTANDARD1_1
+#if NETSTANDARD1_1
                 System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
                 if (headerValue != null)
                 {
@@ -157,9 +157,16 @@ namespace Hl7.Fhir.Rest
                 {
                     return mediaHeaderValue;
                 }
-        #else
+#else
+            try
+            {
                 var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
-                return ct.MediaType.ToLowerInvariant();       
+                return ct.MediaType.ToLowerInvariant();
+            }
+            catch (System.FormatException)
+            {
+                return mediaHeaderValue;
+            }
         #endif
         }
 
