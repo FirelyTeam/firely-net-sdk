@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var val = new BindingValidator(_termService, "Demo");
 
-            var binding = new ElementDefinition.BindingComponent
+            var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
                 ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
                 Strength = BindingStrength.Required
