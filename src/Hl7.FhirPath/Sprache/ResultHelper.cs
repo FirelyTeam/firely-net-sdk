@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sprache
+namespace Hl7.FhirPath.Sprache
 {
     internal static class ResultHelper
     {

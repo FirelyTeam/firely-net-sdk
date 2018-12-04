@@ -1,4 +1,4 @@
-﻿namespace Sprache
+﻿namespace Hl7.FhirPath.Sprache
 {
     using System;
     using System.Collections.Generic;
