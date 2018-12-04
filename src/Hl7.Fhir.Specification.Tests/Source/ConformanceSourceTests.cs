@@ -421,7 +421,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestRefresh()
+        public void TestRefreshAll() => TestRefresh(true);
+
+        [TestMethod]
+        public void TestRefreshFile() => TestRefresh(false);
+
+        void TestRefresh(bool refreshAll)
         {
             // Create a temporary folder with a single artifact file
             const string srcFileName = "TestPatient.xml";
@@ -439,24 +444,34 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(1, fileNames.Count);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
+                void Refresh(params string[] files)
+                {
+                    if (refreshAll)
+                    {
+                        source.Refresh();
+                    }
+                    else
+                        source.Refresh(files);
+                }
+
                 // Rename file and refresh source
                 const string newFileName = "New" + srcFileName;
                 var newFilePath = Path.Combine(tmpFolderPath, newFileName);
                 File.Move(tmpFilePath, newFilePath);
-                source.Refresh(tmpFilePath, newFilePath);
+                Refresh(tmpFilePath, newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
                 Assert.AreEqual(1, fileNames.Count);
                 Assert.AreEqual(newFileName, fileNames[0]);
 
                 // Delete file and refresh source
                 File.Delete(newFilePath);
-                source.Refresh(newFilePath);
+                Refresh(newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
                 Assert.AreEqual(0, fileNames.Count);
 
                 // Recreate file and refresh source
                 File.Copy(srcFilePath, tmpFilePath);
-                source.Refresh(tmpFilePath);
+                Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
                 Assert.AreEqual(1, fileNames.Count);
                 Assert.AreEqual(srcFileName, fileNames[0]);
