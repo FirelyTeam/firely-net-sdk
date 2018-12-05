@@ -238,6 +238,20 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FindContainedResourceExceptionExpected()
+        {
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient
+            {
+                Contained = new List<Resource> { cPat1, cPat2 }
+            };
+
+            pat.FindContainedResource((ResourceReference)null);
+        }
+
+        [TestMethod]
         public void TestListDeepCopy()
         {
             var x = new List<Patient>();

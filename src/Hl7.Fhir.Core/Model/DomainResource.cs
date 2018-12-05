@@ -34,6 +34,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
@@ -65,6 +66,8 @@ namespace Hl7.Fhir.Model
         /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
         public Resource FindContainedResource(ResourceReference reference)
         {
+            if (reference == null) throw Error.ArgumentNull(nameof(reference));
+
             if (!reference.IsContainedReference) return null;
 
             if (reference.Reference == "#") return this;
@@ -79,8 +82,13 @@ namespace Hl7.Fhir.Model
         /// <param name="reference">the reference to contained resource</param>
         /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
 
-        public Resource FindContainedResource(string reference) =>
-            FindContainedResource(new ResourceReference(reference));
+        public Resource FindContainedResource(string reference)
+        {
+            if (reference == null) throw Error.ArgumentNullOrEmpty(nameof(reference));
+
+            return FindContainedResource(new ResourceReference(reference));
+        }
+            
         
 
     }
