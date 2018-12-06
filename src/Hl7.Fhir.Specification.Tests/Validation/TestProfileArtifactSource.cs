@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Validation
             result.Name = name;
             result.Status = PublicationStatus.Draft;
             result.Description = description;
-            result.FhirVersion = ModelInfo.Version;
+            result.FhirVersion = (FHIRVersion)System.Enum.Parse(typeof(FHIRVersion), ModelInfo.Version);
             result.Derivation = StructureDefinition.TypeDerivationRule.Constraint;
 
             if (ModelInfo.IsKnownResource(constrainedType))
