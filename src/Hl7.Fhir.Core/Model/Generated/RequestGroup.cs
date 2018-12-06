@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("participant", Order=140)]
             [CLSCompliant(false)]
-			[References("Patient","Practitioner","RelatedPerson")]
+			[References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Participant
@@ -708,100 +708,17 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Natural language description of the condition
-            /// </summary>
-            [FhirElement("description", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Natural language description of the condition
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        DescriptionElement = null; 
-                    else
-                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            /// <summary>
-            /// Language of the expression
-            /// </summary>
-            [FhirElement("language", Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString LanguageElement
-            {
-                get { return _LanguageElement; }
-                set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _LanguageElement;
-            
-            /// <summary>
-            /// Language of the expression
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Language
-            {
-                get { return LanguageElement != null ? LanguageElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        LanguageElement = null; 
-                    else
-                        LanguageElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Language");
-                }
-            }
-            
-            /// <summary>
             /// Boolean-valued expression
             /// </summary>
-            [FhirElement("expression", Order=70)]
+            [FhirElement("expression", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString ExpressionElement
+            public Expression Expression
             {
-                get { return _ExpressionElement; }
-                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+                get { return _Expression; }
+                set { _Expression = value; OnPropertyChanged("Expression"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _ExpressionElement;
-            
-            /// <summary>
-            /// Boolean-valued expression
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Expression
-            {
-                get { return ExpressionElement != null ? ExpressionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ExpressionElement = null; 
-                    else
-                        ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Expression");
-                }
-            }
+            private Expression _Expression;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -811,9 +728,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ActionConditionKind>)KindElement.DeepCopy();
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.FhirString)LanguageElement.DeepCopy();
-                    if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
+                    if(Expression != null) dest.Expression = (Expression)Expression.DeepCopy();
                     return dest;
                 }
                 else
@@ -832,9 +747,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
-                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
+                if( !DeepComparable.Matches(Expression, otherT.Expression)) return false;
                 
                 return true;
             }
@@ -846,9 +759,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
-                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
+                if( !DeepComparable.IsExactly(Expression, otherT.Expression)) return false;
                 
                 return true;
             }
@@ -861,9 +772,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (KindElement != null) yield return KindElement;
-                    if (DescriptionElement != null) yield return DescriptionElement;
-                    if (LanguageElement != null) yield return LanguageElement;
-                    if (ExpressionElement != null) yield return ExpressionElement;
+                    if (Expression != null) yield return Expression;
                 }
             }
 
@@ -874,9 +783,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
+                    if (Expression != null) yield return new ElementValue("expression", false, Expression);
                 }
             }
 
@@ -1300,19 +1207,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Encounter or Episode for the request group
+        /// Created as part of
         /// </summary>
-        [FhirElement("context", Order=200)]
+        [FhirElement("encounter", Order=200)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// When the request group was authored
@@ -1351,7 +1258,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", Order=220)]
         [CLSCompliant(false)]
-		[References("Device","Practitioner")]
+		[References("Device","Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -1454,7 +1361,7 @@ namespace Hl7.Fhir.Model
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
@@ -1489,7 +1396,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
@@ -1517,7 +1424,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
@@ -1545,7 +1452,7 @@ namespace Hl7.Fhir.Model
 				if (PriorityElement != null) yield return PriorityElement;
 				if (Code != null) yield return Code;
 				if (Subject != null) yield return Subject;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (AuthoredOnElement != null) yield return AuthoredOnElement;
 				if (Author != null) yield return Author;
 				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
@@ -1572,7 +1479,7 @@ namespace Hl7.Fhir.Model
                 if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
                 if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
                 if (Author != null) yield return new ElementValue("author", false, Author);
                 foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }

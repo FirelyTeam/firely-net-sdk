@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -618,9 +618,24 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ResourceReference> _Author;
             
             /// <summary>
+            /// Who/what the section is about, when it is not about the subject of composition
+            /// </summary>
+            [FhirElement("focus", Order=70)]
+            [CLSCompliant(false)]
+			[References()]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Focus
+            {
+                get { return _Focus; }
+                set { _Focus = value; OnPropertyChanged("Focus"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Focus;
+            
+            /// <summary>
             /// Text summary of the section, for human interpretation
             /// </summary>
-            [FhirElement("text", Order=70)]
+            [FhirElement("text", Order=80)]
             [DataMember]
             public Narrative Text
             {
@@ -633,7 +648,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// working | snapshot | changes
             /// </summary>
-            [FhirElement("mode", Order=80)]
+            [FhirElement("mode", Order=90)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ListMode> ModeElement
             {
@@ -665,7 +680,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Order of section entries
             /// </summary>
-            [FhirElement("orderedBy", Order=90)]
+            [FhirElement("orderedBy", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept OrderedBy
             {
@@ -678,7 +693,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A reference to data that supports this section
             /// </summary>
-            [FhirElement("entry", Order=100)]
+            [FhirElement("entry", Order=110)]
             [CLSCompliant(false)]
 			[References()]
             [Cardinality(Min=0,Max=-1)]
@@ -694,7 +709,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why the section is empty
             /// </summary>
-            [FhirElement("emptyReason", Order=110)]
+            [FhirElement("emptyReason", Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept EmptyReason
             {
@@ -707,7 +722,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested Section
             /// </summary>
-            [FhirElement("section", Order=120)]
+            [FhirElement("section", Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -728,6 +743,7 @@ namespace Hl7.Fhir.Model
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
+                    if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopy();
                     if(Text != null) dest.Text = (Narrative)Text.DeepCopy();
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ListMode>)ModeElement.DeepCopy();
                     if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
@@ -754,6 +770,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+                if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
                 if( !DeepComparable.Matches(Text, otherT.Text)) return false;
                 if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
                 if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
@@ -773,6 +790,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+                if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
                 if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
                 if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
                 if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
@@ -793,6 +811,7 @@ namespace Hl7.Fhir.Model
                     if (TitleElement != null) yield return TitleElement;
                     if (Code != null) yield return Code;
                     foreach (var elem in Author) { if (elem != null) yield return elem; }
+                    if (Focus != null) yield return Focus;
                     if (Text != null) yield return Text;
                     if (ModeElement != null) yield return ModeElement;
                     if (OrderedBy != null) yield return OrderedBy;
@@ -811,6 +830,7 @@ namespace Hl7.Fhir.Model
                     if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
                     if (Code != null) yield return new ElementValue("code", false, Code);
                     foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
+                    if (Focus != null) yield return new ElementValue("focus", false, Focus);
                     if (Text != null) yield return new ElementValue("text", false, Text);
                     if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
                     if (OrderedBy != null) yield return new ElementValue("orderedBy", false, OrderedBy);

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -3604,34 +3604,34 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CapabilityStatement.ImplementationComponent _Implementation;
         
         /// <summary>
-        /// FHIR Version the system uses
+        /// FHIR Version the system supports
         /// </summary>
         [FhirElement("fhirVersion", InSummary=true, Order=280)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Id FhirVersionElement
+        public Code<Hl7.Fhir.Model.FHIRVersion> FhirVersionElement
         {
             get { return _FhirVersionElement; }
             set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
         }
         
-        private Hl7.Fhir.Model.Id _FhirVersionElement;
+        private Code<Hl7.Fhir.Model.FHIRVersion> _FhirVersionElement;
         
         /// <summary>
-        /// FHIR Version the system uses
+        /// FHIR Version the system supports
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string FhirVersion
+        public Hl7.Fhir.Model.FHIRVersion? FhirVersion
         {
             get { return FhirVersionElement != null ? FhirVersionElement.Value : null; }
             set
             {
-                if (value == null)
+                if (!value.HasValue)
                   FhirVersionElement = null; 
                 else
-                  FhirVersionElement = new Hl7.Fhir.Model.Id(value);
+                  FhirVersionElement = new Code<Hl7.Fhir.Model.FHIRVersion>(value);
                 OnPropertyChanged("FhirVersion");
             }
         }
@@ -3910,7 +3910,7 @@ namespace Hl7.Fhir.Model
                 if(ImportsElement != null) dest.ImportsElement = new List<Hl7.Fhir.Model.Canonical>(ImportsElement.DeepCopy());
                 if(Software != null) dest.Software = (Hl7.Fhir.Model.CapabilityStatement.SoftwareComponent)Software.DeepCopy();
                 if(Implementation != null) dest.Implementation = (Hl7.Fhir.Model.CapabilityStatement.ImplementationComponent)Implementation.DeepCopy();
-                if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
+                if(FhirVersionElement != null) dest.FhirVersionElement = (Code<Hl7.Fhir.Model.FHIRVersion>)FhirVersionElement.DeepCopy();
                 if(FormatElement != null) dest.FormatElement = new List<Hl7.Fhir.Model.Code>(FormatElement.DeepCopy());
                 if(PatchFormatElement != null) dest.PatchFormatElement = new List<Hl7.Fhir.Model.Code>(PatchFormatElement.DeepCopy());
                 if(ImplementationGuideElement != null) dest.ImplementationGuideElement = new List<Hl7.Fhir.Model.Canonical>(ImplementationGuideElement.DeepCopy());

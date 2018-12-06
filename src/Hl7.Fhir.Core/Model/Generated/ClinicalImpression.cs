@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ClinicalImpression"; } }
         
         /// <summary>
-        /// Codes identifying the lifecycle stage of a clinical impression
+        /// Codes that reflect the current state of a clinical impression within its overall lifecycle.
         /// (url: http://hl7.org/fhir/ValueSet/clinicalimpression-status)
         /// </summary>
         [FhirEnumeration("ClinicalImpressionStatus")]
@@ -455,19 +455,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Encounter or Episode created from
+        /// Encounter created as part of
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=150)]
+        [FhirElement("encounter", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Time of assessment
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("assessor", InSummary=true, Order=180)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Assessor
         {
@@ -735,7 +735,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Assessor != null) dest.Assessor = (Hl7.Fhir.Model.ResourceReference)Assessor.DeepCopy();
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Assessor, otherT.Assessor)) return false;
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Assessor, otherT.Assessor)) return false;
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
 				if (Code != null) yield return Code;
 				if (DescriptionElement != null) yield return DescriptionElement;
 				if (Subject != null) yield return Subject;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (Effective != null) yield return Effective;
 				if (DateElement != null) yield return DateElement;
 				if (Assessor != null) yield return Assessor;
@@ -861,7 +861,7 @@ namespace Hl7.Fhir.Model
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
                 if (Effective != null) yield return new ElementValue("effective", false, Effective);
                 if (DateElement != null) yield return new ElementValue("date", false, DateElement);
                 if (Assessor != null) yield return new ElementValue("assessor", false, Assessor);

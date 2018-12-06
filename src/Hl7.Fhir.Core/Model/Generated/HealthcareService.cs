@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,6 +54,129 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.HealthcareService; } }
         [NotMapped]
         public override string TypeName { get { return "HealthcareService"; } }
+        
+        [FhirType("EligibilityComponent")]
+        [DataContract]
+        public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "EligibilityComponent"; } }
+            
+            /// <summary>
+            /// Coded value for the eligibility
+            /// </summary>
+            [FhirElement("code", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Describes the eligibility conditions for the service
+            /// </summary>
+            [FhirElement("comment", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Markdown CommentElement
+            {
+                get { return _CommentElement; }
+                set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Markdown _CommentElement;
+            
+            /// <summary>
+            /// Describes the eligibility conditions for the service
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Comment
+            {
+                get { return CommentElement != null ? CommentElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        CommentElement = null; 
+                    else
+                        CommentElement = new Hl7.Fhir.Model.Markdown(value);
+                    OnPropertyChanged("Comment");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as EligibilityComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new EligibilityComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as EligibilityComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as EligibilityComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Code != null) yield return Code;
+                    if (CommentElement != null) yield return CommentElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                }
+            }
+
+            
+        }
+        
         
         [FhirType("AvailableTimeComponent")]
         [DataContract]
@@ -584,13 +707,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("extraDetails", Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString ExtraDetailsElement
+        public Hl7.Fhir.Model.Markdown ExtraDetailsElement
         {
             get { return _ExtraDetailsElement; }
             set { _ExtraDetailsElement = value; OnPropertyChanged("ExtraDetailsElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _ExtraDetailsElement;
+        private Hl7.Fhir.Model.Markdown _ExtraDetailsElement;
         
         /// <summary>
         /// Extra details about the service that can't be placed in the other fields
@@ -606,7 +729,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   ExtraDetailsElement = null; 
                 else
-                  ExtraDetailsElement = new Hl7.Fhir.Model.FhirString(value);
+                  ExtraDetailsElement = new Hl7.Fhir.Model.Markdown(value);
                 OnPropertyChanged("ExtraDetails");
             }
         }
@@ -672,84 +795,34 @@ namespace Hl7.Fhir.Model
         /// Specific eligibility requirements required to use the service
         /// </summary>
         [FhirElement("eligibility", Order=230)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Eligibility
+        public List<Hl7.Fhir.Model.HealthcareService.EligibilityComponent> Eligibility
         {
-            get { return _Eligibility; }
+            get { if(_Eligibility==null) _Eligibility = new List<Hl7.Fhir.Model.HealthcareService.EligibilityComponent>(); return _Eligibility; }
             set { _Eligibility = value; OnPropertyChanged("Eligibility"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Eligibility;
+        private List<Hl7.Fhir.Model.HealthcareService.EligibilityComponent> _Eligibility;
         
         /// <summary>
-        /// Describes the eligibility conditions for the service
+        /// Programs that this service is applicable to
         /// </summary>
-        [FhirElement("eligibilityNote", Order=240)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString EligibilityNoteElement
-        {
-            get { return _EligibilityNoteElement; }
-            set { _EligibilityNoteElement = value; OnPropertyChanged("EligibilityNoteElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _EligibilityNoteElement;
-        
-        /// <summary>
-        /// Describes the eligibility conditions for the service
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string EligibilityNote
-        {
-            get { return EligibilityNoteElement != null ? EligibilityNoteElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  EligibilityNoteElement = null; 
-                else
-                  EligibilityNoteElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("EligibilityNote");
-            }
-        }
-        
-        /// <summary>
-        /// Program Names that categorize the service
-        /// </summary>
-        [FhirElement("programName", Order=250)]
+        [FhirElement("program", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> ProgramNameElement
+        public List<Hl7.Fhir.Model.CodeableConcept> Program
         {
-            get { if(_ProgramNameElement==null) _ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(); return _ProgramNameElement; }
-            set { _ProgramNameElement = value; OnPropertyChanged("ProgramNameElement"); }
+            get { if(_Program==null) _Program = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Program; }
+            set { _Program = value; OnPropertyChanged("Program"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _ProgramNameElement;
-        
-        /// <summary>
-        /// Program Names that categorize the service
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IEnumerable<string> ProgramName
-        {
-            get { return ProgramNameElement != null ? ProgramNameElement.Select(elem => elem.Value) : null; }
-            set
-            {
-                if (value == null)
-                  ProgramNameElement = null; 
-                else
-                  ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                OnPropertyChanged("ProgramName");
-            }
-        }
+        private List<Hl7.Fhir.Model.CodeableConcept> _Program;
         
         /// <summary>
         /// Collection of characteristics (attributes)
         /// </summary>
-        [FhirElement("characteristic", Order=260)]
+        [FhirElement("characteristic", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
@@ -759,6 +832,20 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.CodeableConcept> _Characteristic;
+        
+        /// <summary>
+        /// The language that this service is offered in
+        /// </summary>
+        [FhirElement("communication", Order=260)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Communication
+        {
+            get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Communication; }
+            set { _Communication = value; OnPropertyChanged("Communication"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
         
         /// <summary>
         /// Ways that the service accepts referrals
@@ -867,7 +954,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Technical endpoints providing access to services operated for the location
+        /// Technical endpoints providing access to electronic services operated for the healthcare service
         /// </summary>
         [FhirElement("endpoint", Order=320)]
         [CLSCompliant(false)]
@@ -905,15 +992,15 @@ namespace Hl7.Fhir.Model
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.FhirString)ExtraDetailsElement.DeepCopy();
+                if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.Markdown)ExtraDetailsElement.DeepCopy();
                 if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopy());
                 if(ServiceProvisionCode != null) dest.ServiceProvisionCode = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceProvisionCode.DeepCopy());
-                if(Eligibility != null) dest.Eligibility = (Hl7.Fhir.Model.CodeableConcept)Eligibility.DeepCopy();
-                if(EligibilityNoteElement != null) dest.EligibilityNoteElement = (Hl7.Fhir.Model.FhirString)EligibilityNoteElement.DeepCopy();
-                if(ProgramNameElement != null) dest.ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(ProgramNameElement.DeepCopy());
+                if(Eligibility != null) dest.Eligibility = new List<Hl7.Fhir.Model.HealthcareService.EligibilityComponent>(Eligibility.DeepCopy());
+                if(Program != null) dest.Program = new List<Hl7.Fhir.Model.CodeableConcept>(Program.DeepCopy());
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.CodeableConcept>(Characteristic.DeepCopy());
+                if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.CodeableConcept>(Communication.DeepCopy());
                 if(ReferralMethod != null) dest.ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(ReferralMethod.DeepCopy());
                 if(AppointmentRequiredElement != null) dest.AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean)AppointmentRequiredElement.DeepCopy();
                 if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>(AvailableTime.DeepCopy());
@@ -952,9 +1039,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CoverageArea, otherT.CoverageArea)) return false;
             if( !DeepComparable.Matches(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
             if( !DeepComparable.Matches(Eligibility, otherT.Eligibility)) return false;
-            if( !DeepComparable.Matches(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
-            if( !DeepComparable.Matches(ProgramNameElement, otherT.ProgramNameElement)) return false;
+            if( !DeepComparable.Matches(Program, otherT.Program)) return false;
             if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
+            if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
             if( !DeepComparable.Matches(ReferralMethod, otherT.ReferralMethod)) return false;
             if( !DeepComparable.Matches(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
             if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
@@ -986,9 +1073,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CoverageArea, otherT.CoverageArea)) return false;
             if( !DeepComparable.IsExactly(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
             if( !DeepComparable.IsExactly(Eligibility, otherT.Eligibility)) return false;
-            if( !DeepComparable.IsExactly(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
-            if( !DeepComparable.IsExactly(ProgramNameElement, otherT.ProgramNameElement)) return false;
+            if( !DeepComparable.IsExactly(Program, otherT.Program)) return false;
             if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
+            if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
             if( !DeepComparable.IsExactly(ReferralMethod, otherT.ReferralMethod)) return false;
             if( !DeepComparable.IsExactly(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
             if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;
@@ -1019,10 +1106,10 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
 				foreach (var elem in CoverageArea) { if (elem != null) yield return elem; }
 				foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return elem; }
-				if (Eligibility != null) yield return Eligibility;
-				if (EligibilityNoteElement != null) yield return EligibilityNoteElement;
-				foreach (var elem in ProgramNameElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Eligibility) { if (elem != null) yield return elem; }
+				foreach (var elem in Program) { if (elem != null) yield return elem; }
 				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
+				foreach (var elem in Communication) { if (elem != null) yield return elem; }
 				foreach (var elem in ReferralMethod) { if (elem != null) yield return elem; }
 				if (AppointmentRequiredElement != null) yield return AppointmentRequiredElement;
 				foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
@@ -1052,10 +1139,10 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
                 foreach (var elem in CoverageArea) { if (elem != null) yield return new ElementValue("coverageArea", true, elem); }
                 foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return new ElementValue("serviceProvisionCode", true, elem); }
-                if (Eligibility != null) yield return new ElementValue("eligibility", false, Eligibility);
-                if (EligibilityNoteElement != null) yield return new ElementValue("eligibilityNote", false, EligibilityNoteElement);
-                foreach (var elem in ProgramNameElement) { if (elem != null) yield return new ElementValue("programName", true, elem); }
+                foreach (var elem in Eligibility) { if (elem != null) yield return new ElementValue("eligibility", true, elem); }
+                foreach (var elem in Program) { if (elem != null) yield return new ElementValue("program", true, elem); }
                 foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
+                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", true, elem); }
                 foreach (var elem in ReferralMethod) { if (elem != null) yield return new ElementValue("referralMethod", true, elem); }
                 if (AppointmentRequiredElement != null) yield return new ElementValue("appointmentRequired", false, AppointmentRequiredElement);
                 foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", true, elem); }

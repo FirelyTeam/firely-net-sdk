@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -142,9 +142,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Short label
+        /// </summary>
+        [FhirElement("label", InSummary=true, Order=40)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString LabelElement
+        {
+            get { return _LabelElement; }
+            set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _LabelElement;
+        
+        /// <summary>
+        /// Short label
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Label
+        {
+            get { return LabelElement != null ? LabelElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  LabelElement = null; 
+                else
+                  LabelElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Label");
+            }
+        }
+        
+        /// <summary>
         /// Brief description of the related artifact
         /// </summary>
-        [FhirElement("display", InSummary=true, Order=40)]
+        [FhirElement("display", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {
@@ -176,15 +208,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Bibliographic citation for the artifact
         /// </summary>
-        [FhirElement("citation", InSummary=true, Order=50)]
+        [FhirElement("citation", InSummary=true, Order=60)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString CitationElement
+        public Hl7.Fhir.Model.Markdown CitationElement
         {
             get { return _CitationElement; }
             set { _CitationElement = value; OnPropertyChanged("CitationElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _CitationElement;
+        private Hl7.Fhir.Model.Markdown _CitationElement;
         
         /// <summary>
         /// Bibliographic citation for the artifact
@@ -200,7 +232,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   CitationElement = null; 
                 else
-                  CitationElement = new Hl7.Fhir.Model.FhirString(value);
+                  CitationElement = new Hl7.Fhir.Model.Markdown(value);
                 OnPropertyChanged("Citation");
             }
         }
@@ -208,7 +240,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the artifact can be accessed
         /// </summary>
-        [FhirElement("url", InSummary=true, Order=60)]
+        [FhirElement("url", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUrl UrlElement
         {
@@ -240,7 +272,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What document is being referenced
         /// </summary>
-        [FhirElement("document", InSummary=true, Order=70)]
+        [FhirElement("document", InSummary=true, Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Document
         {
@@ -253,7 +285,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What resource is being referenced
         /// </summary>
-        [FhirElement("resource", InSummary=true, Order=80)]
+        [FhirElement("resource", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Canonical ResourceElement
         {
@@ -291,8 +323,9 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)TypeElement.DeepCopy();
+                if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)CitationElement.DeepCopy();
+                if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.Markdown)CitationElement.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopy();
                 if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
                 if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.Canonical)ResourceElement.DeepCopy();
@@ -314,6 +347,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
             if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
             if( !DeepComparable.Matches(CitationElement, otherT.CitationElement)) return false;
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
@@ -330,6 +364,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
             if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
             if( !DeepComparable.IsExactly(CitationElement, otherT.CitationElement)) return false;
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
@@ -346,6 +381,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
                 if (TypeElement != null) yield return TypeElement;
+                if (LabelElement != null) yield return LabelElement;
                 if (DisplayElement != null) yield return DisplayElement;
                 if (CitationElement != null) yield return CitationElement;
                 if (UrlElement != null) yield return UrlElement;
@@ -361,6 +397,7 @@ namespace Hl7.Fhir.Model
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
                 if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
                 if (CitationElement != null) yield return new ElementValue("citation", false, CitationElement);
                 if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);

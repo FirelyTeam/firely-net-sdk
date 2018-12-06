@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("source", "http://hl7.org/fhir/linkage-type"), Description("Source of truth")]
+            [EnumLiteral("source", "http://hl7.org/fhir/linkage-type"), Description("Source of Truth")]
             Source,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("alternate", "http://hl7.org/fhir/linkage-type"), Description("Alternate record")]
+            [EnumLiteral("alternate", "http://hl7.org/fhir/linkage-type"), Description("Alternate Record")]
             Alternate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("historical", "http://hl7.org/fhir/linkage-type"), Description("Historical/obsolete record")]
+            [EnumLiteral("historical", "http://hl7.org/fhir/linkage-type"), Description("Historical/Obsolete Record")]
             Historical,
         }
 
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", InSummary=true, Order=100)]
         [CLSCompliant(false)]
-		[References("Practitioner","Organization")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

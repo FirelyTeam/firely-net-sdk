@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -76,18 +76,17 @@ namespace Hl7.Fhir.Model
             Alternate,
         }
 
-        [FhirType("SpecimenToLabComponent")]
+        [FhirType("TypeTestedComponent")]
         [DataContract]
-        public partial class SpecimenToLabComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SpecimenToLabComponent"; } }
+            public override string TypeName { get { return "TypeTestedComponent"; } }
             
             /// <summary>
             /// Primary or secondary specimen
             /// </summary>
             [FhirElement("isDerived", Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean IsDerivedElement
             {
@@ -163,152 +162,22 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Container material
+            /// The specimen's container
             /// </summary>
-            [FhirElement("containerMaterial", Order=70)]
+            [FhirElement("container", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept ContainerMaterial
+            public Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent Container
             {
-                get { return _ContainerMaterial; }
-                set { _ContainerMaterial = value; OnPropertyChanged("ContainerMaterial"); }
+                get { return _Container; }
+                set { _Container = value; OnPropertyChanged("Container"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _ContainerMaterial;
-            
-            /// <summary>
-            /// Kind of container associated with the kind of specimen
-            /// </summary>
-            [FhirElement("containerType", Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept ContainerType
-            {
-                get { return _ContainerType; }
-                set { _ContainerType = value; OnPropertyChanged("ContainerType"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _ContainerType;
-            
-            /// <summary>
-            /// Color of container cap
-            /// </summary>
-            [FhirElement("containerCap", Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept ContainerCap
-            {
-                get { return _ContainerCap; }
-                set { _ContainerCap = value; OnPropertyChanged("ContainerCap"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _ContainerCap;
-            
-            /// <summary>
-            /// Container description
-            /// </summary>
-            [FhirElement("containerDescription", Order=100)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ContainerDescriptionElement
-            {
-                get { return _ContainerDescriptionElement; }
-                set { _ContainerDescriptionElement = value; OnPropertyChanged("ContainerDescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ContainerDescriptionElement;
-            
-            /// <summary>
-            /// Container description
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string ContainerDescription
-            {
-                get { return ContainerDescriptionElement != null ? ContainerDescriptionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ContainerDescriptionElement = null; 
-                    else
-                        ContainerDescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("ContainerDescription");
-                }
-            }
-            
-            /// <summary>
-            /// Container capacity
-            /// </summary>
-            [FhirElement("containerCapacity", Order=110)]
-            [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity ContainerCapacity
-            {
-                get { return _ContainerCapacity; }
-                set { _ContainerCapacity = value; OnPropertyChanged("ContainerCapacity"); }
-            }
-            
-            private Hl7.Fhir.Model.SimpleQuantity _ContainerCapacity;
-            
-            /// <summary>
-            /// Minimum volume
-            /// </summary>
-            [FhirElement("containerMinimumVolume", Order=120)]
-            [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity ContainerMinimumVolume
-            {
-                get { return _ContainerMinimumVolume; }
-                set { _ContainerMinimumVolume = value; OnPropertyChanged("ContainerMinimumVolume"); }
-            }
-            
-            private Hl7.Fhir.Model.SimpleQuantity _ContainerMinimumVolume;
-            
-            /// <summary>
-            /// Additive associated with container
-            /// </summary>
-            [FhirElement("containerAdditive", Order=130)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.SpecimenDefinition.ContainerAdditiveComponent> ContainerAdditive
-            {
-                get { if(_ContainerAdditive==null) _ContainerAdditive = new List<Hl7.Fhir.Model.SpecimenDefinition.ContainerAdditiveComponent>(); return _ContainerAdditive; }
-                set { _ContainerAdditive = value; OnPropertyChanged("ContainerAdditive"); }
-            }
-            
-            private List<Hl7.Fhir.Model.SpecimenDefinition.ContainerAdditiveComponent> _ContainerAdditive;
-            
-            /// <summary>
-            /// Specimen container preparation
-            /// </summary>
-            [FhirElement("containerPreparation", Order=140)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ContainerPreparationElement
-            {
-                get { return _ContainerPreparationElement; }
-                set { _ContainerPreparationElement = value; OnPropertyChanged("ContainerPreparationElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ContainerPreparationElement;
-            
-            /// <summary>
-            /// Specimen container preparation
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string ContainerPreparation
-            {
-                get { return ContainerPreparationElement != null ? ContainerPreparationElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ContainerPreparationElement = null; 
-                    else
-                        ContainerPreparationElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("ContainerPreparation");
-                }
-            }
+            private Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent _Container;
             
             /// <summary>
             /// Specimen requirements
             /// </summary>
-            [FhirElement("requirement", Order=150)]
+            [FhirElement("requirement", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RequirementElement
             {
@@ -340,7 +209,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specimen retention time
             /// </summary>
-            [FhirElement("retentionTime", Order=160)]
+            [FhirElement("retentionTime", Order=90)]
             [DataMember]
             public Duration RetentionTime
             {
@@ -353,7 +222,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Rejection criterion
             /// </summary>
-            [FhirElement("rejectionCriterion", Order=170)]
+            [FhirElement("rejectionCriterion", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
@@ -367,7 +236,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specimen handling before testing
             /// </summary>
-            [FhirElement("handling", Order=180)]
+            [FhirElement("handling", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent> Handling
@@ -380,7 +249,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SpecimenToLabComponent;
+                var dest = other as TypeTestedComponent;
                 
                 if (dest != null)
                 {
@@ -388,14 +257,7 @@ namespace Hl7.Fhir.Model
                     if(IsDerivedElement != null) dest.IsDerivedElement = (Hl7.Fhir.Model.FhirBoolean)IsDerivedElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(PreferenceElement != null) dest.PreferenceElement = (Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>)PreferenceElement.DeepCopy();
-                    if(ContainerMaterial != null) dest.ContainerMaterial = (Hl7.Fhir.Model.CodeableConcept)ContainerMaterial.DeepCopy();
-                    if(ContainerType != null) dest.ContainerType = (Hl7.Fhir.Model.CodeableConcept)ContainerType.DeepCopy();
-                    if(ContainerCap != null) dest.ContainerCap = (Hl7.Fhir.Model.CodeableConcept)ContainerCap.DeepCopy();
-                    if(ContainerDescriptionElement != null) dest.ContainerDescriptionElement = (Hl7.Fhir.Model.FhirString)ContainerDescriptionElement.DeepCopy();
-                    if(ContainerCapacity != null) dest.ContainerCapacity = (Hl7.Fhir.Model.SimpleQuantity)ContainerCapacity.DeepCopy();
-                    if(ContainerMinimumVolume != null) dest.ContainerMinimumVolume = (Hl7.Fhir.Model.SimpleQuantity)ContainerMinimumVolume.DeepCopy();
-                    if(ContainerAdditive != null) dest.ContainerAdditive = new List<Hl7.Fhir.Model.SpecimenDefinition.ContainerAdditiveComponent>(ContainerAdditive.DeepCopy());
-                    if(ContainerPreparationElement != null) dest.ContainerPreparationElement = (Hl7.Fhir.Model.FhirString)ContainerPreparationElement.DeepCopy();
+                    if(Container != null) dest.Container = (Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent)Container.DeepCopy();
                     if(RequirementElement != null) dest.RequirementElement = (Hl7.Fhir.Model.FhirString)RequirementElement.DeepCopy();
                     if(RetentionTime != null) dest.RetentionTime = (Duration)RetentionTime.DeepCopy();
                     if(RejectionCriterion != null) dest.RejectionCriterion = new List<Hl7.Fhir.Model.CodeableConcept>(RejectionCriterion.DeepCopy());
@@ -408,26 +270,19 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SpecimenToLabComponent());
+                return CopyTo(new TypeTestedComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SpecimenToLabComponent;
+                var otherT = other as TypeTestedComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(IsDerivedElement, otherT.IsDerivedElement)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(PreferenceElement, otherT.PreferenceElement)) return false;
-                if( !DeepComparable.Matches(ContainerMaterial, otherT.ContainerMaterial)) return false;
-                if( !DeepComparable.Matches(ContainerType, otherT.ContainerType)) return false;
-                if( !DeepComparable.Matches(ContainerCap, otherT.ContainerCap)) return false;
-                if( !DeepComparable.Matches(ContainerDescriptionElement, otherT.ContainerDescriptionElement)) return false;
-                if( !DeepComparable.Matches(ContainerCapacity, otherT.ContainerCapacity)) return false;
-                if( !DeepComparable.Matches(ContainerMinimumVolume, otherT.ContainerMinimumVolume)) return false;
-                if( !DeepComparable.Matches(ContainerAdditive, otherT.ContainerAdditive)) return false;
-                if( !DeepComparable.Matches(ContainerPreparationElement, otherT.ContainerPreparationElement)) return false;
+                if( !DeepComparable.Matches(Container, otherT.Container)) return false;
                 if( !DeepComparable.Matches(RequirementElement, otherT.RequirementElement)) return false;
                 if( !DeepComparable.Matches(RetentionTime, otherT.RetentionTime)) return false;
                 if( !DeepComparable.Matches(RejectionCriterion, otherT.RejectionCriterion)) return false;
@@ -438,21 +293,14 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SpecimenToLabComponent;
+                var otherT = other as TypeTestedComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(IsDerivedElement, otherT.IsDerivedElement)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(PreferenceElement, otherT.PreferenceElement)) return false;
-                if( !DeepComparable.IsExactly(ContainerMaterial, otherT.ContainerMaterial)) return false;
-                if( !DeepComparable.IsExactly(ContainerType, otherT.ContainerType)) return false;
-                if( !DeepComparable.IsExactly(ContainerCap, otherT.ContainerCap)) return false;
-                if( !DeepComparable.IsExactly(ContainerDescriptionElement, otherT.ContainerDescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(ContainerCapacity, otherT.ContainerCapacity)) return false;
-                if( !DeepComparable.IsExactly(ContainerMinimumVolume, otherT.ContainerMinimumVolume)) return false;
-                if( !DeepComparable.IsExactly(ContainerAdditive, otherT.ContainerAdditive)) return false;
-                if( !DeepComparable.IsExactly(ContainerPreparationElement, otherT.ContainerPreparationElement)) return false;
+                if( !DeepComparable.IsExactly(Container, otherT.Container)) return false;
                 if( !DeepComparable.IsExactly(RequirementElement, otherT.RequirementElement)) return false;
                 if( !DeepComparable.IsExactly(RetentionTime, otherT.RetentionTime)) return false;
                 if( !DeepComparable.IsExactly(RejectionCriterion, otherT.RejectionCriterion)) return false;
@@ -471,14 +319,7 @@ namespace Hl7.Fhir.Model
                     if (IsDerivedElement != null) yield return IsDerivedElement;
                     if (Type != null) yield return Type;
                     if (PreferenceElement != null) yield return PreferenceElement;
-                    if (ContainerMaterial != null) yield return ContainerMaterial;
-                    if (ContainerType != null) yield return ContainerType;
-                    if (ContainerCap != null) yield return ContainerCap;
-                    if (ContainerDescriptionElement != null) yield return ContainerDescriptionElement;
-                    if (ContainerCapacity != null) yield return ContainerCapacity;
-                    if (ContainerMinimumVolume != null) yield return ContainerMinimumVolume;
-                    foreach (var elem in ContainerAdditive) { if (elem != null) yield return elem; }
-                    if (ContainerPreparationElement != null) yield return ContainerPreparationElement;
+                    if (Container != null) yield return Container;
                     if (RequirementElement != null) yield return RequirementElement;
                     if (RetentionTime != null) yield return RetentionTime;
                     foreach (var elem in RejectionCriterion) { if (elem != null) yield return elem; }
@@ -495,14 +336,7 @@ namespace Hl7.Fhir.Model
                     if (IsDerivedElement != null) yield return new ElementValue("isDerived", false, IsDerivedElement);
                     if (Type != null) yield return new ElementValue("type", false, Type);
                     if (PreferenceElement != null) yield return new ElementValue("preference", false, PreferenceElement);
-                    if (ContainerMaterial != null) yield return new ElementValue("containerMaterial", false, ContainerMaterial);
-                    if (ContainerType != null) yield return new ElementValue("containerType", false, ContainerType);
-                    if (ContainerCap != null) yield return new ElementValue("containerCap", false, ContainerCap);
-                    if (ContainerDescriptionElement != null) yield return new ElementValue("containerDescription", false, ContainerDescriptionElement);
-                    if (ContainerCapacity != null) yield return new ElementValue("containerCapacity", false, ContainerCapacity);
-                    if (ContainerMinimumVolume != null) yield return new ElementValue("containerMinimumVolume", false, ContainerMinimumVolume);
-                    foreach (var elem in ContainerAdditive) { if (elem != null) yield return new ElementValue("containerAdditive", true, elem); }
-                    if (ContainerPreparationElement != null) yield return new ElementValue("containerPreparation", false, ContainerPreparationElement);
+                    if (Container != null) yield return new ElementValue("container", false, Container);
                     if (RequirementElement != null) yield return new ElementValue("requirement", false, RequirementElement);
                     if (RetentionTime != null) yield return new ElementValue("retentionTime", false, RetentionTime);
                     foreach (var elem in RejectionCriterion) { if (elem != null) yield return new ElementValue("rejectionCriterion", true, elem); }
@@ -514,12 +348,265 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainerAdditiveComponent")]
+        [FhirType("ContainerComponent")]
         [DataContract]
-        public partial class ContainerAdditiveComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ContainerAdditiveComponent"; } }
+            public override string TypeName { get { return "ContainerComponent"; } }
+            
+            /// <summary>
+            /// Container material
+            /// </summary>
+            [FhirElement("material", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Material
+            {
+                get { return _Material; }
+                set { _Material = value; OnPropertyChanged("Material"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Material;
+            
+            /// <summary>
+            /// Kind of container associated with the kind of specimen
+            /// </summary>
+            [FhirElement("type", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
+            /// Color of container cap
+            /// </summary>
+            [FhirElement("cap", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Cap
+            {
+                get { return _Cap; }
+                set { _Cap = value; OnPropertyChanged("Cap"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Cap;
+            
+            /// <summary>
+            /// Container description
+            /// </summary>
+            [FhirElement("description", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Container description
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DescriptionElement = null; 
+                    else
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Container capacity
+            /// </summary>
+            [FhirElement("capacity", Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.SimpleQuantity Capacity
+            {
+                get { return _Capacity; }
+                set { _Capacity = value; OnPropertyChanged("Capacity"); }
+            }
+            
+            private Hl7.Fhir.Model.SimpleQuantity _Capacity;
+            
+            /// <summary>
+            /// Minimum volume
+            /// </summary>
+            [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.FhirString))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element MinimumVolume
+            {
+                get { return _MinimumVolume; }
+                set { _MinimumVolume = value; OnPropertyChanged("MinimumVolume"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _MinimumVolume;
+            
+            /// <summary>
+            /// Additive associated with container
+            /// </summary>
+            [FhirElement("additive", Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent> Additive
+            {
+                get { if(_Additive==null) _Additive = new List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent>(); return _Additive; }
+                set { _Additive = value; OnPropertyChanged("Additive"); }
+            }
+            
+            private List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent> _Additive;
+            
+            /// <summary>
+            /// Specimen container preparation
+            /// </summary>
+            [FhirElement("preparation", Order=110)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString PreparationElement
+            {
+                get { return _PreparationElement; }
+                set { _PreparationElement = value; OnPropertyChanged("PreparationElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _PreparationElement;
+            
+            /// <summary>
+            /// Specimen container preparation
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Preparation
+            {
+                get { return PreparationElement != null ? PreparationElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        PreparationElement = null; 
+                    else
+                        PreparationElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Preparation");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ContainerComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Material != null) dest.Material = (Hl7.Fhir.Model.CodeableConcept)Material.DeepCopy();
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(Cap != null) dest.Cap = (Hl7.Fhir.Model.CodeableConcept)Cap.DeepCopy();
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.SimpleQuantity)Capacity.DeepCopy();
+                    if(MinimumVolume != null) dest.MinimumVolume = (Hl7.Fhir.Model.Element)MinimumVolume.DeepCopy();
+                    if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent>(Additive.DeepCopy());
+                    if(PreparationElement != null) dest.PreparationElement = (Hl7.Fhir.Model.FhirString)PreparationElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ContainerComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ContainerComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Material, otherT.Material)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Cap, otherT.Cap)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Capacity, otherT.Capacity)) return false;
+                if( !DeepComparable.Matches(MinimumVolume, otherT.MinimumVolume)) return false;
+                if( !DeepComparable.Matches(Additive, otherT.Additive)) return false;
+                if( !DeepComparable.Matches(PreparationElement, otherT.PreparationElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ContainerComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Material, otherT.Material)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Cap, otherT.Cap)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Capacity, otherT.Capacity)) return false;
+                if( !DeepComparable.IsExactly(MinimumVolume, otherT.MinimumVolume)) return false;
+                if( !DeepComparable.IsExactly(Additive, otherT.Additive)) return false;
+                if( !DeepComparable.IsExactly(PreparationElement, otherT.PreparationElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Material != null) yield return Material;
+                    if (Type != null) yield return Type;
+                    if (Cap != null) yield return Cap;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Capacity != null) yield return Capacity;
+                    if (MinimumVolume != null) yield return MinimumVolume;
+                    foreach (var elem in Additive) { if (elem != null) yield return elem; }
+                    if (PreparationElement != null) yield return PreparationElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Material != null) yield return new ElementValue("material", false, Material);
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (Cap != null) yield return new ElementValue("cap", false, Cap);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (Capacity != null) yield return new ElementValue("capacity", false, Capacity);
+                    if (MinimumVolume != null) yield return new ElementValue("minimumVolume", false, MinimumVolume);
+                    foreach (var elem in Additive) { if (elem != null) yield return new ElementValue("additive", true, elem); }
+                    if (PreparationElement != null) yield return new ElementValue("preparation", false, PreparationElement);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("AdditiveComponent")]
+        [DataContract]
+        public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "AdditiveComponent"; } }
             
             /// <summary>
             /// Additive associated with container
@@ -539,7 +626,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ContainerAdditiveComponent;
+                var dest = other as AdditiveComponent;
                 
                 if (dest != null)
                 {
@@ -553,12 +640,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ContainerAdditiveComponent());
+                return CopyTo(new AdditiveComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ContainerAdditiveComponent;
+                var otherT = other as AdditiveComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -569,7 +656,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ContainerAdditiveComponent;
+                var otherT = other as AdditiveComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -611,33 +698,33 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "HandlingComponent"; } }
             
             /// <summary>
-            /// Conservation condition set
+            /// Temperature qualifier
             /// </summary>
-            [FhirElement("conditionSet", Order=40)]
+            [FhirElement("temperatureQualifier", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept ConditionSet
+            public Hl7.Fhir.Model.CodeableConcept TemperatureQualifier
             {
-                get { return _ConditionSet; }
-                set { _ConditionSet = value; OnPropertyChanged("ConditionSet"); }
+                get { return _TemperatureQualifier; }
+                set { _TemperatureQualifier = value; OnPropertyChanged("TemperatureQualifier"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _ConditionSet;
+            private Hl7.Fhir.Model.CodeableConcept _TemperatureQualifier;
             
             /// <summary>
             /// Temperature range
             /// </summary>
-            [FhirElement("tempRange", Order=50)]
+            [FhirElement("temperatureRange", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Range TempRange
+            public Hl7.Fhir.Model.Range TemperatureRange
             {
-                get { return _TempRange; }
-                set { _TempRange = value; OnPropertyChanged("TempRange"); }
+                get { return _TemperatureRange; }
+                set { _TemperatureRange = value; OnPropertyChanged("TemperatureRange"); }
             }
             
-            private Hl7.Fhir.Model.Range _TempRange;
+            private Hl7.Fhir.Model.Range _TemperatureRange;
             
             /// <summary>
-            /// Maximum conservation time
+            /// Maximum preservation time
             /// </summary>
             [FhirElement("maxDuration", Order=60)]
             [DataMember]
@@ -650,41 +737,9 @@ namespace Hl7.Fhir.Model
             private Duration _MaxDuration;
             
             /// <summary>
-            /// Light exposure
+            /// Preservation instruction
             /// </summary>
-            [FhirElement("lightExposure", Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString LightExposureElement
-            {
-                get { return _LightExposureElement; }
-                set { _LightExposureElement = value; OnPropertyChanged("LightExposureElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _LightExposureElement;
-            
-            /// <summary>
-            /// Light exposure
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string LightExposure
-            {
-                get { return LightExposureElement != null ? LightExposureElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        LightExposureElement = null; 
-                    else
-                        LightExposureElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("LightExposure");
-                }
-            }
-            
-            /// <summary>
-            /// Conservation instruction
-            /// </summary>
-            [FhirElement("instruction", Order=80)]
+            [FhirElement("instruction", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString InstructionElement
             {
@@ -695,7 +750,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _InstructionElement;
             
             /// <summary>
-            /// Conservation instruction
+            /// Preservation instruction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -720,10 +775,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ConditionSet != null) dest.ConditionSet = (Hl7.Fhir.Model.CodeableConcept)ConditionSet.DeepCopy();
-                    if(TempRange != null) dest.TempRange = (Hl7.Fhir.Model.Range)TempRange.DeepCopy();
+                    if(TemperatureQualifier != null) dest.TemperatureQualifier = (Hl7.Fhir.Model.CodeableConcept)TemperatureQualifier.DeepCopy();
+                    if(TemperatureRange != null) dest.TemperatureRange = (Hl7.Fhir.Model.Range)TemperatureRange.DeepCopy();
                     if(MaxDuration != null) dest.MaxDuration = (Duration)MaxDuration.DeepCopy();
-                    if(LightExposureElement != null) dest.LightExposureElement = (Hl7.Fhir.Model.FhirString)LightExposureElement.DeepCopy();
                     if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
                     return dest;
                 }
@@ -742,10 +796,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(ConditionSet, otherT.ConditionSet)) return false;
-                if( !DeepComparable.Matches(TempRange, otherT.TempRange)) return false;
+                if( !DeepComparable.Matches(TemperatureQualifier, otherT.TemperatureQualifier)) return false;
+                if( !DeepComparable.Matches(TemperatureRange, otherT.TemperatureRange)) return false;
                 if( !DeepComparable.Matches(MaxDuration, otherT.MaxDuration)) return false;
-                if( !DeepComparable.Matches(LightExposureElement, otherT.LightExposureElement)) return false;
                 if( !DeepComparable.Matches(InstructionElement, otherT.InstructionElement)) return false;
                 
                 return true;
@@ -757,10 +810,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(ConditionSet, otherT.ConditionSet)) return false;
-                if( !DeepComparable.IsExactly(TempRange, otherT.TempRange)) return false;
+                if( !DeepComparable.IsExactly(TemperatureQualifier, otherT.TemperatureQualifier)) return false;
+                if( !DeepComparable.IsExactly(TemperatureRange, otherT.TemperatureRange)) return false;
                 if( !DeepComparable.IsExactly(MaxDuration, otherT.MaxDuration)) return false;
-                if( !DeepComparable.IsExactly(LightExposureElement, otherT.LightExposureElement)) return false;
                 if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
                 
                 return true;
@@ -773,10 +825,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (ConditionSet != null) yield return ConditionSet;
-                    if (TempRange != null) yield return TempRange;
+                    if (TemperatureQualifier != null) yield return TemperatureQualifier;
+                    if (TemperatureRange != null) yield return TemperatureRange;
                     if (MaxDuration != null) yield return MaxDuration;
-                    if (LightExposureElement != null) yield return LightExposureElement;
                     if (InstructionElement != null) yield return InstructionElement;
                 }
             }
@@ -787,10 +838,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ConditionSet != null) yield return new ElementValue("conditionSet", false, ConditionSet);
-                    if (TempRange != null) yield return new ElementValue("tempRange", false, TempRange);
+                    if (TemperatureQualifier != null) yield return new ElementValue("temperatureQualifier", false, TemperatureQualifier);
+                    if (TemperatureRange != null) yield return new ElementValue("temperatureRange", false, TemperatureRange);
                     if (MaxDuration != null) yield return new ElementValue("maxDuration", false, MaxDuration);
-                    if (LightExposureElement != null) yield return new ElementValue("lightExposure", false, LightExposureElement);
                     if (InstructionElement != null) yield return new ElementValue("instruction", false, InstructionElement);
                 }
             }
@@ -828,34 +878,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient preparation for collection
         /// </summary>
-        [FhirElement("patientPreparation", Order=110)]
+        [FhirElement("patientPreparation", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString PatientPreparationElement
+        public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
         {
-            get { return _PatientPreparationElement; }
-            set { _PatientPreparationElement = value; OnPropertyChanged("PatientPreparationElement"); }
+            get { if(_PatientPreparation==null) _PatientPreparation = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PatientPreparation; }
+            set { _PatientPreparation = value; OnPropertyChanged("PatientPreparation"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _PatientPreparationElement;
-        
-        /// <summary>
-        /// Patient preparation for collection
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string PatientPreparation
-        {
-            get { return PatientPreparationElement != null ? PatientPreparationElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  PatientPreparationElement = null; 
-                else
-                  PatientPreparationElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("PatientPreparation");
-            }
-        }
+        private List<Hl7.Fhir.Model.CodeableConcept> _PatientPreparation;
         
         /// <summary>
         /// Time aspect for collection
@@ -906,16 +938,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specimen in container intended for testing by lab
         /// </summary>
-        [FhirElement("specimenToLab", Order=140)]
+        [FhirElement("typeTested", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.SpecimenDefinition.SpecimenToLabComponent> SpecimenToLab
+        public List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> TypeTested
         {
-            get { if(_SpecimenToLab==null) _SpecimenToLab = new List<Hl7.Fhir.Model.SpecimenDefinition.SpecimenToLabComponent>(); return _SpecimenToLab; }
-            set { _SpecimenToLab = value; OnPropertyChanged("SpecimenToLab"); }
+            get { if(_TypeTested==null) _TypeTested = new List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent>(); return _TypeTested; }
+            set { _TypeTested = value; OnPropertyChanged("TypeTested"); }
         }
         
-        private List<Hl7.Fhir.Model.SpecimenDefinition.SpecimenToLabComponent> _SpecimenToLab;
+        private List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> _TypeTested;
         
 
         public override void AddDefaultConstraints()
@@ -933,10 +965,10 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(TypeCollected != null) dest.TypeCollected = (Hl7.Fhir.Model.CodeableConcept)TypeCollected.DeepCopy();
-                if(PatientPreparationElement != null) dest.PatientPreparationElement = (Hl7.Fhir.Model.FhirString)PatientPreparationElement.DeepCopy();
+                if(PatientPreparation != null) dest.PatientPreparation = new List<Hl7.Fhir.Model.CodeableConcept>(PatientPreparation.DeepCopy());
                 if(TimeAspectElement != null) dest.TimeAspectElement = (Hl7.Fhir.Model.FhirString)TimeAspectElement.DeepCopy();
                 if(Collection != null) dest.Collection = new List<Hl7.Fhir.Model.CodeableConcept>(Collection.DeepCopy());
-                if(SpecimenToLab != null) dest.SpecimenToLab = new List<Hl7.Fhir.Model.SpecimenDefinition.SpecimenToLabComponent>(SpecimenToLab.DeepCopy());
+                if(TypeTested != null) dest.TypeTested = new List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent>(TypeTested.DeepCopy());
                 return dest;
             }
             else
@@ -956,10 +988,10 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(TypeCollected, otherT.TypeCollected)) return false;
-            if( !DeepComparable.Matches(PatientPreparationElement, otherT.PatientPreparationElement)) return false;
+            if( !DeepComparable.Matches(PatientPreparation, otherT.PatientPreparation)) return false;
             if( !DeepComparable.Matches(TimeAspectElement, otherT.TimeAspectElement)) return false;
             if( !DeepComparable.Matches(Collection, otherT.Collection)) return false;
-            if( !DeepComparable.Matches(SpecimenToLab, otherT.SpecimenToLab)) return false;
+            if( !DeepComparable.Matches(TypeTested, otherT.TypeTested)) return false;
             
             return true;
         }
@@ -972,10 +1004,10 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(TypeCollected, otherT.TypeCollected)) return false;
-            if( !DeepComparable.IsExactly(PatientPreparationElement, otherT.PatientPreparationElement)) return false;
+            if( !DeepComparable.IsExactly(PatientPreparation, otherT.PatientPreparation)) return false;
             if( !DeepComparable.IsExactly(TimeAspectElement, otherT.TimeAspectElement)) return false;
             if( !DeepComparable.IsExactly(Collection, otherT.Collection)) return false;
-            if( !DeepComparable.IsExactly(SpecimenToLab, otherT.SpecimenToLab)) return false;
+            if( !DeepComparable.IsExactly(TypeTested, otherT.TypeTested)) return false;
             
             return true;
         }
@@ -988,10 +1020,10 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (TypeCollected != null) yield return TypeCollected;
-				if (PatientPreparationElement != null) yield return PatientPreparationElement;
+				foreach (var elem in PatientPreparation) { if (elem != null) yield return elem; }
 				if (TimeAspectElement != null) yield return TimeAspectElement;
 				foreach (var elem in Collection) { if (elem != null) yield return elem; }
-				foreach (var elem in SpecimenToLab) { if (elem != null) yield return elem; }
+				foreach (var elem in TypeTested) { if (elem != null) yield return elem; }
             }
         }
 
@@ -1003,10 +1035,10 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
                 if (TypeCollected != null) yield return new ElementValue("typeCollected", false, TypeCollected);
-                if (PatientPreparationElement != null) yield return new ElementValue("patientPreparation", false, PatientPreparationElement);
+                foreach (var elem in PatientPreparation) { if (elem != null) yield return new ElementValue("patientPreparation", true, elem); }
                 if (TimeAspectElement != null) yield return new ElementValue("timeAspect", false, TimeAspectElement);
                 foreach (var elem in Collection) { if (elem != null) yield return new ElementValue("collection", true, elem); }
-                foreach (var elem in SpecimenToLab) { if (elem != null) yield return new ElementValue("specimenToLab", true, elem); }
+                foreach (var elem in TypeTested) { if (elem != null) yield return new ElementValue("typeTested", true, elem); }
             }
         }
 

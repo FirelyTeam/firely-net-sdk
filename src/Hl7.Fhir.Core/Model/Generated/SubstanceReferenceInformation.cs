@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -449,263 +449,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelationshipComponent")]
-        [DataContract]
-        public partial class RelationshipComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RelationshipComponent"; } }
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("substance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Substance
-            {
-                get { return _Substance; }
-                set { _Substance = value; OnPropertyChanged("Substance"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Substance;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("relationship", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Relationship
-            {
-                get { return _Relationship; }
-                set { _Relationship = value; OnPropertyChanged("Relationship"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Relationship;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("interaction", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Interaction
-            {
-                get { return _Interaction; }
-                set { _Interaction = value; OnPropertyChanged("Interaction"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Interaction;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("isDefining", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean IsDefiningElement
-            {
-                get { return _IsDefiningElement; }
-                set { _IsDefiningElement = value; OnPropertyChanged("IsDefiningElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _IsDefiningElement;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? IsDefining
-            {
-                get { return IsDefiningElement != null ? IsDefiningElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        IsDefiningElement = null; 
-                    else
-                        IsDefiningElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("IsDefining");
-                }
-            }
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("amount", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Amount
-            {
-                get { return _Amount; }
-                set { _Amount = value; OnPropertyChanged("Amount"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Amount;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("amountType", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept AmountType
-            {
-                get { return _AmountType; }
-                set { _AmountType = value; OnPropertyChanged("AmountType"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _AmountType;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("amountText", InSummary=true, Order=100)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString AmountTextElement
-            {
-                get { return _AmountTextElement; }
-                set { _AmountTextElement = value; OnPropertyChanged("AmountTextElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _AmountTextElement;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string AmountText
-            {
-                get { return AmountTextElement != null ? AmountTextElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        AmountTextElement = null; 
-                    else
-                        AmountTextElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("AmountText");
-                }
-            }
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("source", InSummary=true, Order=110)]
-            [CLSCompliant(false)]
-			[References("DocumentReference")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Source
-            {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
-                set { _Source = value; OnPropertyChanged("Source"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Source;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RelationshipComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Element)Substance.DeepCopy();
-                    if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
-                    if(Interaction != null) dest.Interaction = (Hl7.Fhir.Model.CodeableConcept)Interaction.DeepCopy();
-                    if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
-                    if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
-                    if(AmountTextElement != null) dest.AmountTextElement = (Hl7.Fhir.Model.FhirString)AmountTextElement.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RelationshipComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RelationshipComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
-                if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
-                if( !DeepComparable.Matches(Interaction, otherT.Interaction)) return false;
-                if( !DeepComparable.Matches(IsDefiningElement, otherT.IsDefiningElement)) return false;
-                if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
-                if( !DeepComparable.Matches(AmountType, otherT.AmountType)) return false;
-                if( !DeepComparable.Matches(AmountTextElement, otherT.AmountTextElement)) return false;
-                if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RelationshipComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
-                if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
-                if( !DeepComparable.IsExactly(Interaction, otherT.Interaction)) return false;
-                if( !DeepComparable.IsExactly(IsDefiningElement, otherT.IsDefiningElement)) return false;
-                if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
-                if( !DeepComparable.IsExactly(AmountType, otherT.AmountType)) return false;
-                if( !DeepComparable.IsExactly(AmountTextElement, otherT.AmountTextElement)) return false;
-                if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Substance != null) yield return Substance;
-                    if (Relationship != null) yield return Relationship;
-                    if (Interaction != null) yield return Interaction;
-                    if (IsDefiningElement != null) yield return IsDefiningElement;
-                    if (Amount != null) yield return Amount;
-                    if (AmountType != null) yield return AmountType;
-                    if (AmountTextElement != null) yield return AmountTextElement;
-                    foreach (var elem in Source) { if (elem != null) yield return elem; }
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return new ElementValue("substance", false, Substance);
-                    if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
-                    if (Interaction != null) yield return new ElementValue("interaction", false, Interaction);
-                    if (IsDefiningElement != null) yield return new ElementValue("isDefining", false, IsDefiningElement);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
-                    if (AmountType != null) yield return new ElementValue("amountType", false, AmountType);
-                    if (AmountTextElement != null) yield return new ElementValue("amountText", false, AmountTextElement);
-                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", true, elem); }
-                }
-            }
-
-            
-        }
-        
-        
         [FhirType("TargetComponent")]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -781,23 +524,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("source", InSummary=true, Order=90)]
-            [CLSCompliant(false)]
-			[References("DocumentReference")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Source
-            {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
-                set { _Source = value; OnPropertyChanged("Source"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Source;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("amount", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("amount", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -812,7 +539,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amountType", InSummary=true, Order=110)]
+            [FhirElement("amountType", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept AmountType
             {
@@ -821,6 +548,22 @@ namespace Hl7.Fhir.Model
             }
             
             private Hl7.Fhir.Model.CodeableConcept _AmountType;
+            
+            /// <summary>
+            /// Todo
+            /// </summary>
+            [FhirElement("source", InSummary=true, Order=110)]
+            [CLSCompliant(false)]
+			[References("DocumentReference")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Source
+            {
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+                set { _Source = value; OnPropertyChanged("Source"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -834,9 +577,9 @@ namespace Hl7.Fhir.Model
                     if(Interaction != null) dest.Interaction = (Hl7.Fhir.Model.CodeableConcept)Interaction.DeepCopy();
                     if(Organism != null) dest.Organism = (Hl7.Fhir.Model.CodeableConcept)Organism.DeepCopy();
                     if(OrganismType != null) dest.OrganismType = (Hl7.Fhir.Model.CodeableConcept)OrganismType.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
                     if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -859,9 +602,9 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.Matches(Organism, otherT.Organism)) return false;
                 if( !DeepComparable.Matches(OrganismType, otherT.OrganismType)) return false;
-                if( !DeepComparable.Matches(Source, otherT.Source)) return false;
                 if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
                 if( !DeepComparable.Matches(AmountType, otherT.AmountType)) return false;
+                if( !DeepComparable.Matches(Source, otherT.Source)) return false;
                 
                 return true;
             }
@@ -877,9 +620,9 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.IsExactly(Organism, otherT.Organism)) return false;
                 if( !DeepComparable.IsExactly(OrganismType, otherT.OrganismType)) return false;
-                if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 if( !DeepComparable.IsExactly(AmountType, otherT.AmountType)) return false;
+                if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
                 
                 return true;
             }
@@ -896,9 +639,9 @@ namespace Hl7.Fhir.Model
                     if (Interaction != null) yield return Interaction;
                     if (Organism != null) yield return Organism;
                     if (OrganismType != null) yield return OrganismType;
-                    foreach (var elem in Source) { if (elem != null) yield return elem; }
                     if (Amount != null) yield return Amount;
                     if (AmountType != null) yield return AmountType;
+                    foreach (var elem in Source) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -913,9 +656,9 @@ namespace Hl7.Fhir.Model
                     if (Interaction != null) yield return new ElementValue("interaction", false, Interaction);
                     if (Organism != null) yield return new ElementValue("organism", false, Organism);
                     if (OrganismType != null) yield return new ElementValue("organismType", false, OrganismType);
-                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", true, elem); }
                     if (Amount != null) yield return new ElementValue("amount", false, Amount);
                     if (AmountType != null) yield return new ElementValue("amountType", false, AmountType);
+                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", true, elem); }
                 }
             }
 
@@ -1000,21 +743,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("relationship", InSummary=true, Order=130)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.SubstanceReferenceInformation.RelationshipComponent> Relationship
-        {
-            get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.RelationshipComponent>(); return _Relationship; }
-            set { _Relationship = value; OnPropertyChanged("Relationship"); }
-        }
-        
-        private List<Hl7.Fhir.Model.SubstanceReferenceInformation.RelationshipComponent> _Relationship;
-        
-        /// <summary>
-        /// Todo
-        /// </summary>
-        [FhirElement("target", InSummary=true, Order=140)]
+        [FhirElement("target", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent> Target
@@ -1043,7 +772,6 @@ namespace Hl7.Fhir.Model
                 if(Gene != null) dest.Gene = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent>(Gene.DeepCopy());
                 if(GeneElement != null) dest.GeneElement = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent>(GeneElement.DeepCopy());
                 if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.ClassificationComponent>(Classification.DeepCopy());
-                if(Relationship != null) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.RelationshipComponent>(Relationship.DeepCopy());
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent>(Target.DeepCopy());
                 return dest;
             }
@@ -1066,7 +794,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Gene, otherT.Gene)) return false;
             if( !DeepComparable.Matches(GeneElement, otherT.GeneElement)) return false;
             if( !DeepComparable.Matches(Classification, otherT.Classification)) return false;
-            if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             
             return true;
@@ -1082,7 +809,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Gene, otherT.Gene)) return false;
             if( !DeepComparable.IsExactly(GeneElement, otherT.GeneElement)) return false;
             if( !DeepComparable.IsExactly(Classification, otherT.Classification)) return false;
-            if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             
             return true;
@@ -1098,7 +824,6 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Gene) { if (elem != null) yield return elem; }
 				foreach (var elem in GeneElement) { if (elem != null) yield return elem; }
 				foreach (var elem in Classification) { if (elem != null) yield return elem; }
-				foreach (var elem in Relationship) { if (elem != null) yield return elem; }
 				foreach (var elem in Target) { if (elem != null) yield return elem; }
             }
         }
@@ -1113,7 +838,6 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Gene) { if (elem != null) yield return new ElementValue("gene", true, elem); }
                 foreach (var elem in GeneElement) { if (elem != null) yield return new ElementValue("geneElement", true, elem); }
                 foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", true, elem); }
-                foreach (var elem in Relationship) { if (elem != null) yield return new ElementValue("relationship", true, elem); }
                 foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
             }
         }

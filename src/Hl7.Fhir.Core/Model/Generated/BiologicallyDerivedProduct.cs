@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -150,11 +150,11 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CollectionComponent"; } }
             
             /// <summary>
-            /// HealthCare Professional performing collection
+            /// Individual performing collection
             /// </summary>
             [FhirElement("collector", Order=40)]
             [CLSCompliant(false)]
-			[References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
+			[References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Collector
             {
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Collector;
             
             /// <summary>
-            /// Person or entity providing product
+            /// Who is product from
             /// </summary>
             [FhirElement("source", Order=50)]
             [CLSCompliant(false)]
@@ -899,15 +899,16 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("parent", Order=150)]
         [CLSCompliant(false)]
-		[References()]
+		[References("BiologicallyDerivedProduct")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Parent
+        public List<Hl7.Fhir.Model.ResourceReference> Parent
         {
-            get { return _Parent; }
+            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Parent;
+        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
         /// How this product was collected
@@ -983,7 +984,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>)StatusElement.DeepCopy();
                 if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.Integer)QuantityElement.DeepCopy();
-                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
+                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
                 if(Collection != null) dest.Collection = (Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent)Collection.DeepCopy();
                 if(Processing != null) dest.Processing = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent>(Processing.DeepCopy());
                 if(Manipulation != null) dest.Manipulation = (Hl7.Fhir.Model.BiologicallyDerivedProduct.ManipulationComponent)Manipulation.DeepCopy();
@@ -1053,7 +1054,7 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in Request) { if (elem != null) yield return elem; }
 				if (QuantityElement != null) yield return QuantityElement;
-				if (Parent != null) yield return Parent;
+				foreach (var elem in Parent) { if (elem != null) yield return elem; }
 				if (Collection != null) yield return Collection;
 				foreach (var elem in Processing) { if (elem != null) yield return elem; }
 				if (Manipulation != null) yield return Manipulation;
@@ -1073,7 +1074,7 @@ namespace Hl7.Fhir.Model
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", true, elem); }
                 if (QuantityElement != null) yield return new ElementValue("quantity", false, QuantityElement);
-                if (Parent != null) yield return new ElementValue("parent", false, Parent);
+                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
                 if (Collection != null) yield return new ElementValue("collection", false, Collection);
                 foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", true, elem); }
                 if (Manipulation != null) yield return new ElementValue("manipulation", false, Manipulation);

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,108 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ObservationDefinition"; } }
         
+        /// <summary>
+        /// Permitted data type for observation value.
+        /// (url: http://hl7.org/fhir/ValueSet/permitted-data-type)
+        /// </summary>
+        [FhirEnumeration("ObservationDataType")]
+        public enum ObservationDataType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("Quantity", "http://hl7.org/fhir/permitted-data-type"), Description("Quantity")]
+            Quantity,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("CodeableConcept", "http://hl7.org/fhir/permitted-data-type"), Description("CodeableConcept")]
+            CodeableConcept,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("string", "http://hl7.org/fhir/permitted-data-type"), Description("string")]
+            String,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("boolean", "http://hl7.org/fhir/permitted-data-type"), Description("boolean")]
+            Boolean,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("integer", "http://hl7.org/fhir/permitted-data-type"), Description("integer")]
+            Integer,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("Range", "http://hl7.org/fhir/permitted-data-type"), Description("Range")]
+            Range,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("Ratio", "http://hl7.org/fhir/permitted-data-type"), Description("Ratio")]
+            Ratio,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("SampledData", "http://hl7.org/fhir/permitted-data-type"), Description("SampledData")]
+            SampledData,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("time", "http://hl7.org/fhir/permitted-data-type"), Description("time")]
+            Time,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("dateTime", "http://hl7.org/fhir/permitted-data-type"), Description("dateTime")]
+            DateTime,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/permitted-data-type)
+            /// </summary>
+            [EnumLiteral("Period", "http://hl7.org/fhir/permitted-data-type"), Description("Period")]
+            Period,
+        }
+
+        /// <summary>
+        /// Codes identifying the category of observation range.
+        /// (url: http://hl7.org/fhir/ValueSet/observation-range-category)
+        /// </summary>
+        [FhirEnumeration("ObservationRangeCategory")]
+        public enum ObservationRangeCategory
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/observation-range-category)
+            /// </summary>
+            [EnumLiteral("reference", "http://hl7.org/fhir/observation-range-category"), Description("reference range")]
+            Reference,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/observation-range-category)
+            /// </summary>
+            [EnumLiteral("critical", "http://hl7.org/fhir/observation-range-category"), Description("critical range")]
+            Critical,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/observation-range-category)
+            /// </summary>
+            [EnumLiteral("absolute", "http://hl7.org/fhir/observation-range-category"), Description("absolute range")]
+            Absolute,
+        }
+
         [FhirType("QuantitativeDetailsComponent")]
         [DataContract]
         public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -67,26 +169,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("customaryUnit", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding CustomaryUnit
+            public Hl7.Fhir.Model.CodeableConcept CustomaryUnit
             {
                 get { return _CustomaryUnit; }
                 set { _CustomaryUnit = value; OnPropertyChanged("CustomaryUnit"); }
             }
             
-            private Hl7.Fhir.Model.Coding _CustomaryUnit;
+            private Hl7.Fhir.Model.CodeableConcept _CustomaryUnit;
             
             /// <summary>
             /// SI unit for quantitative results
             /// </summary>
             [FhirElement("unit", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding Unit
+            public Hl7.Fhir.Model.CodeableConcept Unit
             {
                 get { return _Unit; }
                 set { _Unit = value; OnPropertyChanged("Unit"); }
             }
             
-            private Hl7.Fhir.Model.Coding _Unit;
+            private Hl7.Fhir.Model.CodeableConcept _Unit;
             
             /// <summary>
             /// SI to Customary unit conversion factor
@@ -159,8 +261,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(CustomaryUnit != null) dest.CustomaryUnit = (Hl7.Fhir.Model.Coding)CustomaryUnit.DeepCopy();
-                    if(Unit != null) dest.Unit = (Hl7.Fhir.Model.Coding)Unit.DeepCopy();
+                    if(CustomaryUnit != null) dest.CustomaryUnit = (Hl7.Fhir.Model.CodeableConcept)CustomaryUnit.DeepCopy();
+                    if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopy();
                     if(ConversionFactorElement != null) dest.ConversionFactorElement = (Hl7.Fhir.Model.FhirDecimal)ConversionFactorElement.DeepCopy();
                     if(DecimalPrecisionElement != null) dest.DecimalPrecisionElement = (Hl7.Fhir.Model.Integer)DecimalPrecisionElement.DeepCopy();
                     return dest;
@@ -241,20 +343,39 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "QualifiedIntervalComponent"; } }
             
             /// <summary>
-            /// The category or type of interval
+            /// reference | critical | absolute
             /// </summary>
             [FhirElement("category", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Category
+            public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> CategoryElement
             {
-                get { return _Category; }
-                set { _Category = value; OnPropertyChanged("Category"); }
+                get { return _CategoryElement; }
+                set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Category;
+            private Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> _CategoryElement;
             
             /// <summary>
-            /// Low bound of reference range, if relevant
+            /// reference | critical | absolute
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory? Category
+            {
+                get { return CategoryElement != null ? CategoryElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        CategoryElement = null; 
+                    else
+                        CategoryElement = new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>(value);
+                    OnPropertyChanged("Category");
+                }
+            }
+            
+            /// <summary>
+            /// The interval itself, for continuous or ordinal observations
             /// </summary>
             [FhirElement("range", Order=50)]
             [DataMember]
@@ -267,20 +388,20 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Range _Range;
             
             /// <summary>
-            /// Reference range qualifier
+            /// Range context qualifier
             /// </summary>
-            [FhirElement("type", Order=60)]
+            [FhirElement("context", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Type
+            public Hl7.Fhir.Model.CodeableConcept Context
             {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
+                get { return _Context; }
+                set { _Context = value; OnPropertyChanged("Context"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Type;
+            private Hl7.Fhir.Model.CodeableConcept _Context;
             
             /// <summary>
-            /// Reference range population
+            /// Targetted population of the range
             /// </summary>
             [FhirElement("appliesTo", Order=70)]
             [Cardinality(Min=0,Max=-1)]
@@ -294,9 +415,41 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _AppliesTo;
             
             /// <summary>
+            /// male | female | other | unknown
+            /// </summary>
+            [FhirElement("gender", Order=80)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
+            {
+                get { return _GenderElement; }
+                set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
+            
+            /// <summary>
+            /// male | female | other | unknown
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.AdministrativeGender? Gender
+            {
+                get { return GenderElement != null ? GenderElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        GenderElement = null; 
+                    else
+                        GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+                    OnPropertyChanged("Gender");
+                }
+            }
+            
+            /// <summary>
             /// Applicable age range, if relevant
             /// </summary>
-            [FhirElement("age", Order=80)]
+            [FhirElement("age", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Range Age
             {
@@ -309,7 +462,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Applicable gestational age range, if relevant
             /// </summary>
-            [FhirElement("gestationalAge", Order=90)]
+            [FhirElement("gestationalAge", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.Range GestationalAge
             {
@@ -322,7 +475,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Condition associated with the reference range
             /// </summary>
-            [FhirElement("condition", Order=100)]
+            [FhirElement("condition", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ConditionElement
             {
@@ -358,10 +511,11 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                    if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>)CategoryElement.DeepCopy();
                     if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopy();
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(Context != null) dest.Context = (Hl7.Fhir.Model.CodeableConcept)Context.DeepCopy();
                     if(AppliesTo != null) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopy());
+                    if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                     if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopy();
                     if(GestationalAge != null) dest.GestationalAge = (Hl7.Fhir.Model.Range)GestationalAge.DeepCopy();
                     if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopy();
@@ -382,10 +536,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+                if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
                 if( !DeepComparable.Matches(Range, otherT.Range)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Context, otherT.Context)) return false;
                 if( !DeepComparable.Matches(AppliesTo, otherT.AppliesTo)) return false;
+                if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
                 if( !DeepComparable.Matches(Age, otherT.Age)) return false;
                 if( !DeepComparable.Matches(GestationalAge, otherT.GestationalAge)) return false;
                 if( !DeepComparable.Matches(ConditionElement, otherT.ConditionElement)) return false;
@@ -399,10 +554,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+                if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
                 if( !DeepComparable.IsExactly(Range, otherT.Range)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
                 if( !DeepComparable.IsExactly(AppliesTo, otherT.AppliesTo)) return false;
+                if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
                 if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
                 if( !DeepComparable.IsExactly(GestationalAge, otherT.GestationalAge)) return false;
                 if( !DeepComparable.IsExactly(ConditionElement, otherT.ConditionElement)) return false;
@@ -417,10 +573,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Category != null) yield return Category;
+                    if (CategoryElement != null) yield return CategoryElement;
                     if (Range != null) yield return Range;
-                    if (Type != null) yield return Type;
+                    if (Context != null) yield return Context;
                     foreach (var elem in AppliesTo) { if (elem != null) yield return elem; }
+                    if (GenderElement != null) yield return GenderElement;
                     if (Age != null) yield return Age;
                     if (GestationalAge != null) yield return GestationalAge;
                     if (ConditionElement != null) yield return ConditionElement;
@@ -433,10 +590,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Category != null) yield return new ElementValue("category", false, Category);
+                    if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
                     if (Range != null) yield return new ElementValue("range", false, Range);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (Context != null) yield return new ElementValue("context", false, Context);
                     foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", true, elem); }
+                    if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
                     if (Age != null) yield return new ElementValue("age", false, Age);
                     if (GestationalAge != null) yield return new ElementValue("gestationalAge", false, GestationalAge);
                     if (ConditionElement != null) yield return new ElementValue("condition", false, ConditionElement);
@@ -451,14 +609,15 @@ namespace Hl7.Fhir.Model
         /// Category of observation
         /// </summary>
         [FhirElement("category", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Category
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
         {
-            get { return _Category; }
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
-        private Hl7.Fhir.Model.Coding _Category;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
         /// Type of observation (code / type)
@@ -466,32 +625,65 @@ namespace Hl7.Fhir.Model
         [FhirElement("code", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Code
+        public Hl7.Fhir.Model.CodeableConcept Code
         {
             get { return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.Coding _Code;
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
-        /// Permitted data type for observation value
+        /// Business identifier for this ObservationDefinition instance
         /// </summary>
-        [FhirElement("permittedDataType", Order=110)]
+        [FhirElement("identifier", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Coding> PermittedDataType
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_PermittedDataType==null) _PermittedDataType = new List<Hl7.Fhir.Model.Coding>(); return _PermittedDataType; }
-            set { _PermittedDataType = value; OnPropertyChanged("PermittedDataType"); }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.Coding> _PermittedDataType;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
+        /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
+        /// </summary>
+        [FhirElement("permittedDataType", Order=120)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
+        {
+            get { if(_PermittedDataTypeElement==null) _PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(); return _PermittedDataTypeElement; }
+            set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
+        }
+        
+        private List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> _PermittedDataTypeElement;
+        
+        /// <summary>
+        /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType?> PermittedDataType
+        {
+            get { return PermittedDataTypeElement != null ? PermittedDataTypeElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  PermittedDataTypeElement = null; 
+                else
+                  PermittedDataTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>(elem)));
+                OnPropertyChanged("PermittedDataType");
+            }
+        }
         
         /// <summary>
         /// Multiple results allowed
         /// </summary>
-        [FhirElement("multipleResultsAllowed", Order=120)]
+        [FhirElement("multipleResultsAllowed", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean MultipleResultsAllowedElement
         {
@@ -521,9 +713,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The method or technique used to perform the observation
+        /// Method used to produce the observation
         /// </summary>
-        [FhirElement("method", Order=130)]
+        [FhirElement("method", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
@@ -536,7 +728,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Preferred report name
         /// </summary>
-        [FhirElement("preferredReportName", Order=140)]
+        [FhirElement("preferredReportName", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PreferredReportNameElement
         {
@@ -568,7 +760,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Characteristics of quantitative results
         /// </summary>
-        [FhirElement("quantitativeDetails", Order=150)]
+        [FhirElement("quantitativeDetails", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent QuantitativeDetails
         {
@@ -579,9 +771,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent _QuantitativeDetails;
         
         /// <summary>
-        /// Reference range for observation result
+        /// Qualified range for continuous and ordinal observation results
         /// </summary>
-        [FhirElement("qualifiedInterval", Order=160)]
+        [FhirElement("qualifiedInterval", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent> QualifiedInterval
@@ -593,132 +785,64 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent> _QualifiedInterval;
         
         /// <summary>
-        /// Value set of valid coded values for the observation
+        /// Value set of valid coded values for the observations conforming to this ObservationDefinition
         /// </summary>
-        [FhirElement("validCodedValueSet", Order=170)]
+        [FhirElement("validCodedValueSet", Order=180)]
+        [CLSCompliant(false)]
+		[References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri ValidCodedValueSetElement
+        public Hl7.Fhir.Model.ResourceReference ValidCodedValueSet
         {
-            get { return _ValidCodedValueSetElement; }
-            set { _ValidCodedValueSetElement = value; OnPropertyChanged("ValidCodedValueSetElement"); }
+            get { return _ValidCodedValueSet; }
+            set { _ValidCodedValueSet = value; OnPropertyChanged("ValidCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _ValidCodedValueSetElement;
+        private Hl7.Fhir.Model.ResourceReference _ValidCodedValueSet;
         
         /// <summary>
-        /// Value set of valid coded values for the observation
+        /// Value set of normal coded values for the observations conforming to this ObservationDefinition
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string ValidCodedValueSet
-        {
-            get { return ValidCodedValueSetElement != null ? ValidCodedValueSetElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  ValidCodedValueSetElement = null; 
-                else
-                  ValidCodedValueSetElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("ValidCodedValueSet");
-            }
-        }
-        
-        /// <summary>
-        /// Value set of normal coded values for the observation
-        /// </summary>
-        [FhirElement("normalCodedValueSet", Order=180)]
+        [FhirElement("normalCodedValueSet", Order=190)]
+        [CLSCompliant(false)]
+		[References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri NormalCodedValueSetElement
+        public Hl7.Fhir.Model.ResourceReference NormalCodedValueSet
         {
-            get { return _NormalCodedValueSetElement; }
-            set { _NormalCodedValueSetElement = value; OnPropertyChanged("NormalCodedValueSetElement"); }
+            get { return _NormalCodedValueSet; }
+            set { _NormalCodedValueSet = value; OnPropertyChanged("NormalCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _NormalCodedValueSetElement;
+        private Hl7.Fhir.Model.ResourceReference _NormalCodedValueSet;
         
         /// <summary>
-        /// Value set of normal coded values for the observation
+        /// Value set of abnormal coded values for the observations conforming to this ObservationDefinition
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string NormalCodedValueSet
-        {
-            get { return NormalCodedValueSetElement != null ? NormalCodedValueSetElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  NormalCodedValueSetElement = null; 
-                else
-                  NormalCodedValueSetElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("NormalCodedValueSet");
-            }
-        }
-        
-        /// <summary>
-        /// Value set of abnormal coded values for the observation
-        /// </summary>
-        [FhirElement("abnormalCodedValueSet", Order=190)]
+        [FhirElement("abnormalCodedValueSet", Order=200)]
+        [CLSCompliant(false)]
+		[References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri AbnormalCodedValueSetElement
+        public Hl7.Fhir.Model.ResourceReference AbnormalCodedValueSet
         {
-            get { return _AbnormalCodedValueSetElement; }
-            set { _AbnormalCodedValueSetElement = value; OnPropertyChanged("AbnormalCodedValueSetElement"); }
+            get { return _AbnormalCodedValueSet; }
+            set { _AbnormalCodedValueSet = value; OnPropertyChanged("AbnormalCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _AbnormalCodedValueSetElement;
+        private Hl7.Fhir.Model.ResourceReference _AbnormalCodedValueSet;
         
         /// <summary>
-        /// Value set of abnormal coded values for the observation
+        /// Value set of critical coded values for the observations conforming to this ObservationDefinition
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string AbnormalCodedValueSet
-        {
-            get { return AbnormalCodedValueSetElement != null ? AbnormalCodedValueSetElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  AbnormalCodedValueSetElement = null; 
-                else
-                  AbnormalCodedValueSetElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("AbnormalCodedValueSet");
-            }
-        }
-        
-        /// <summary>
-        /// Value set of critical coded values for the observation
-        /// </summary>
-        [FhirElement("criticalCodedValueSet", Order=200)]
+        [FhirElement("criticalCodedValueSet", Order=210)]
+        [CLSCompliant(false)]
+		[References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.FhirUri CriticalCodedValueSetElement
+        public Hl7.Fhir.Model.ResourceReference CriticalCodedValueSet
         {
-            get { return _CriticalCodedValueSetElement; }
-            set { _CriticalCodedValueSetElement = value; OnPropertyChanged("CriticalCodedValueSetElement"); }
+            get { return _CriticalCodedValueSet; }
+            set { _CriticalCodedValueSet = value; OnPropertyChanged("CriticalCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.FhirUri _CriticalCodedValueSetElement;
-        
-        /// <summary>
-        /// Value set of critical coded values for the observation
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string CriticalCodedValueSet
-        {
-            get { return CriticalCodedValueSetElement != null ? CriticalCodedValueSetElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  CriticalCodedValueSetElement = null; 
-                else
-                  CriticalCodedValueSetElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("CriticalCodedValueSet");
-            }
-        }
+        private Hl7.Fhir.Model.ResourceReference _CriticalCodedValueSet;
         
 
         public override void AddDefaultConstraints()
@@ -734,18 +858,19 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.Coding)Category.DeepCopy();
-                if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
-                if(PermittedDataType != null) dest.PermittedDataType = new List<Hl7.Fhir.Model.Coding>(PermittedDataType.DeepCopy());
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(PermittedDataTypeElement != null) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>(PermittedDataTypeElement.DeepCopy());
                 if(MultipleResultsAllowedElement != null) dest.MultipleResultsAllowedElement = (Hl7.Fhir.Model.FhirBoolean)MultipleResultsAllowedElement.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(PreferredReportNameElement != null) dest.PreferredReportNameElement = (Hl7.Fhir.Model.FhirString)PreferredReportNameElement.DeepCopy();
                 if(QuantitativeDetails != null) dest.QuantitativeDetails = (Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent)QuantitativeDetails.DeepCopy();
                 if(QualifiedInterval != null) dest.QualifiedInterval = new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>(QualifiedInterval.DeepCopy());
-                if(ValidCodedValueSetElement != null) dest.ValidCodedValueSetElement = (Hl7.Fhir.Model.FhirUri)ValidCodedValueSetElement.DeepCopy();
-                if(NormalCodedValueSetElement != null) dest.NormalCodedValueSetElement = (Hl7.Fhir.Model.FhirUri)NormalCodedValueSetElement.DeepCopy();
-                if(AbnormalCodedValueSetElement != null) dest.AbnormalCodedValueSetElement = (Hl7.Fhir.Model.FhirUri)AbnormalCodedValueSetElement.DeepCopy();
-                if(CriticalCodedValueSetElement != null) dest.CriticalCodedValueSetElement = (Hl7.Fhir.Model.FhirUri)CriticalCodedValueSetElement.DeepCopy();
+                if(ValidCodedValueSet != null) dest.ValidCodedValueSet = (Hl7.Fhir.Model.ResourceReference)ValidCodedValueSet.DeepCopy();
+                if(NormalCodedValueSet != null) dest.NormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)NormalCodedValueSet.DeepCopy();
+                if(AbnormalCodedValueSet != null) dest.AbnormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)AbnormalCodedValueSet.DeepCopy();
+                if(CriticalCodedValueSet != null) dest.CriticalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)CriticalCodedValueSet.DeepCopy();
                 return dest;
             }
             else
@@ -765,16 +890,17 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-            if( !DeepComparable.Matches(PermittedDataType, otherT.PermittedDataType)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(PermittedDataTypeElement, otherT.PermittedDataTypeElement)) return false;
             if( !DeepComparable.Matches(MultipleResultsAllowedElement, otherT.MultipleResultsAllowedElement)) return false;
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(PreferredReportNameElement, otherT.PreferredReportNameElement)) return false;
             if( !DeepComparable.Matches(QuantitativeDetails, otherT.QuantitativeDetails)) return false;
             if( !DeepComparable.Matches(QualifiedInterval, otherT.QualifiedInterval)) return false;
-            if( !DeepComparable.Matches(ValidCodedValueSetElement, otherT.ValidCodedValueSetElement)) return false;
-            if( !DeepComparable.Matches(NormalCodedValueSetElement, otherT.NormalCodedValueSetElement)) return false;
-            if( !DeepComparable.Matches(AbnormalCodedValueSetElement, otherT.AbnormalCodedValueSetElement)) return false;
-            if( !DeepComparable.Matches(CriticalCodedValueSetElement, otherT.CriticalCodedValueSetElement)) return false;
+            if( !DeepComparable.Matches(ValidCodedValueSet, otherT.ValidCodedValueSet)) return false;
+            if( !DeepComparable.Matches(NormalCodedValueSet, otherT.NormalCodedValueSet)) return false;
+            if( !DeepComparable.Matches(AbnormalCodedValueSet, otherT.AbnormalCodedValueSet)) return false;
+            if( !DeepComparable.Matches(CriticalCodedValueSet, otherT.CriticalCodedValueSet)) return false;
             
             return true;
         }
@@ -787,16 +913,17 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-            if( !DeepComparable.IsExactly(PermittedDataType, otherT.PermittedDataType)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(PermittedDataTypeElement, otherT.PermittedDataTypeElement)) return false;
             if( !DeepComparable.IsExactly(MultipleResultsAllowedElement, otherT.MultipleResultsAllowedElement)) return false;
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(PreferredReportNameElement, otherT.PreferredReportNameElement)) return false;
             if( !DeepComparable.IsExactly(QuantitativeDetails, otherT.QuantitativeDetails)) return false;
             if( !DeepComparable.IsExactly(QualifiedInterval, otherT.QualifiedInterval)) return false;
-            if( !DeepComparable.IsExactly(ValidCodedValueSetElement, otherT.ValidCodedValueSetElement)) return false;
-            if( !DeepComparable.IsExactly(NormalCodedValueSetElement, otherT.NormalCodedValueSetElement)) return false;
-            if( !DeepComparable.IsExactly(AbnormalCodedValueSetElement, otherT.AbnormalCodedValueSetElement)) return false;
-            if( !DeepComparable.IsExactly(CriticalCodedValueSetElement, otherT.CriticalCodedValueSetElement)) return false;
+            if( !DeepComparable.IsExactly(ValidCodedValueSet, otherT.ValidCodedValueSet)) return false;
+            if( !DeepComparable.IsExactly(NormalCodedValueSet, otherT.NormalCodedValueSet)) return false;
+            if( !DeepComparable.IsExactly(AbnormalCodedValueSet, otherT.AbnormalCodedValueSet)) return false;
+            if( !DeepComparable.IsExactly(CriticalCodedValueSet, otherT.CriticalCodedValueSet)) return false;
             
             return true;
         }
@@ -807,18 +934,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Category != null) yield return Category;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;
-				foreach (var elem in PermittedDataType) { if (elem != null) yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in PermittedDataTypeElement) { if (elem != null) yield return elem; }
 				if (MultipleResultsAllowedElement != null) yield return MultipleResultsAllowedElement;
 				if (Method != null) yield return Method;
 				if (PreferredReportNameElement != null) yield return PreferredReportNameElement;
 				if (QuantitativeDetails != null) yield return QuantitativeDetails;
 				foreach (var elem in QualifiedInterval) { if (elem != null) yield return elem; }
-				if (ValidCodedValueSetElement != null) yield return ValidCodedValueSetElement;
-				if (NormalCodedValueSetElement != null) yield return NormalCodedValueSetElement;
-				if (AbnormalCodedValueSetElement != null) yield return AbnormalCodedValueSetElement;
-				if (CriticalCodedValueSetElement != null) yield return CriticalCodedValueSetElement;
+				if (ValidCodedValueSet != null) yield return ValidCodedValueSet;
+				if (NormalCodedValueSet != null) yield return NormalCodedValueSet;
+				if (AbnormalCodedValueSet != null) yield return AbnormalCodedValueSet;
+				if (CriticalCodedValueSet != null) yield return CriticalCodedValueSet;
             }
         }
 
@@ -828,18 +956,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Category != null) yield return new ElementValue("category", false, Category);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
                 if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in PermittedDataType) { if (elem != null) yield return new ElementValue("permittedDataType", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in PermittedDataTypeElement) { if (elem != null) yield return new ElementValue("permittedDataType", true, elem); }
                 if (MultipleResultsAllowedElement != null) yield return new ElementValue("multipleResultsAllowed", false, MultipleResultsAllowedElement);
                 if (Method != null) yield return new ElementValue("method", false, Method);
                 if (PreferredReportNameElement != null) yield return new ElementValue("preferredReportName", false, PreferredReportNameElement);
                 if (QuantitativeDetails != null) yield return new ElementValue("quantitativeDetails", false, QuantitativeDetails);
                 foreach (var elem in QualifiedInterval) { if (elem != null) yield return new ElementValue("qualifiedInterval", true, elem); }
-                if (ValidCodedValueSetElement != null) yield return new ElementValue("validCodedValueSet", false, ValidCodedValueSetElement);
-                if (NormalCodedValueSetElement != null) yield return new ElementValue("normalCodedValueSet", false, NormalCodedValueSetElement);
-                if (AbnormalCodedValueSetElement != null) yield return new ElementValue("abnormalCodedValueSet", false, AbnormalCodedValueSetElement);
-                if (CriticalCodedValueSetElement != null) yield return new ElementValue("criticalCodedValueSet", false, CriticalCodedValueSetElement);
+                if (ValidCodedValueSet != null) yield return new ElementValue("validCodedValueSet", false, ValidCodedValueSet);
+                if (NormalCodedValueSet != null) yield return new ElementValue("normalCodedValueSet", false, NormalCodedValueSet);
+                if (AbnormalCodedValueSet != null) yield return new ElementValue("abnormalCodedValueSet", false, AbnormalCodedValueSet);
+                if (CriticalCodedValueSet != null) yield return new ElementValue("criticalCodedValueSet", false, CriticalCodedValueSet);
             }
         }
 

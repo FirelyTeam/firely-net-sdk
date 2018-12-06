@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "FilterComponent"; } }
             
             /// <summary>
-            /// A property defined by the code system
+            /// A property/filter defined by the code system
             /// </summary>
             [FhirElement("property", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _PropertyElement;
             
             /// <summary>
-            /// A property defined by the code system
+            /// A property/filter defined by the code system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2135,15 +2135,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
         
 
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_11 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "status='active' or compose.exists() or expansion.empty()",
-            Key = "vsd-11",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Status must = 'active' if expansion is present and compose is absent",
-            Xpath = "f:status/@value='active' or exists(f:compose) or not(exists(f:expansion)"
-        };
-
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_0 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
@@ -2211,7 +2202,6 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(ValueSet_VSD_11);
             InvariantConstraints.Add(ValueSet_VSD_0);
             InvariantConstraints.Add(ValueSet_VSD_2);
             InvariantConstraints.Add(ValueSet_VSD_3);

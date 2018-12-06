@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -673,36 +673,18 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Interpretation;
         
         /// <summary>
-        /// Comments about the test result value
+        /// Comments about the observation
         /// </summary>
-        [FhirElement("comment", Order=240)]
+        [FhirElement("note", Order=240)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString CommentElement
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { return _CommentElement; }
-            set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _CommentElement;
-        
-        /// <summary>
-        /// Comments about the test result value
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Comment
-        {
-            get { return CommentElement != null ? CommentElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  CommentElement = null; 
-                else
-                  CommentElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Comment");
-            }
-        }
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
         /// Observed body part
@@ -779,7 +761,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("hasMember", InSummary=true, Order=300)]
         [CLSCompliant(false)]
-		[References("Observation","QuestionnaireResponse","Sequence")]
+		[References("Observation","QuestionnaireResponse","MolecularSequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> HasMember
@@ -795,7 +777,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("derivedFrom", InSummary=true, Order=310)]
         [CLSCompliant(false)]
-		[References("DocumentReference","ImagingStudy","Media","QuestionnaireResponse","Observation","Sequence")]
+		[References("DocumentReference","ImagingStudy","Media","QuestionnaireResponse","Observation","MolecularSequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
@@ -826,7 +808,7 @@ namespace Hl7.Fhir.Model
             Expression = "value.empty() or component.code.where( (coding.code = %resource.code.coding.code) and (coding.system = %resource.code.coding.system)).empty()",
             Key = "obs-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If Observation.code is the same as a Observation.component.code then the value element associated with the code SHALL NOT be present",
+            Human = "If Observation.code is the same as an Observation.component.code then the value element associated with the code SHALL NOT be present",
             Xpath = "not(f:*[starts-with(local-name(.), 'value')] and (for $coding in f:code/f:coding return f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value] [f:system/@value=$coding/f:system/@value]))"
         };
 
@@ -879,7 +861,7 @@ namespace Hl7.Fhir.Model
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
                 if(Interpretation != null) dest.Interpretation = new List<Hl7.Fhir.Model.CodeableConcept>(Interpretation.DeepCopy());
-                if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
@@ -920,7 +902,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Value, otherT.Value)) return false;
             if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
-            if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
@@ -954,7 +936,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
             if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.IsExactly(Interpretation, otherT.Interpretation)) return false;
-            if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
@@ -988,7 +970,7 @@ namespace Hl7.Fhir.Model
 				if (Value != null) yield return Value;
 				if (DataAbsentReason != null) yield return DataAbsentReason;
 				foreach (var elem in Interpretation) { if (elem != null) yield return elem; }
-				if (CommentElement != null) yield return CommentElement;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				if (BodySite != null) yield return BodySite;
 				if (Method != null) yield return Method;
 				if (Specimen != null) yield return Specimen;
@@ -1021,7 +1003,7 @@ namespace Hl7.Fhir.Model
                 if (Value != null) yield return new ElementValue("value", false, Value);
                 if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
                 foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", true, elem); }
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
                 if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
                 if (Method != null) yield return new ElementValue("method", false, Method);
                 if (Specimen != null) yield return new ElementValue("specimen", false, Specimen);

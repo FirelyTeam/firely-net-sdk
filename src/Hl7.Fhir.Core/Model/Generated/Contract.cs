@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("publisher", Order=60)]
             [CLSCompliant(false)]
-			[References("Person","Practitioner","Organization")]
+			[References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Publisher
             {
@@ -1307,7 +1307,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("reference", Order=40)]
             [CLSCompliant(false)]
-			[References("Patient","Person","RelatedPerson","Practitioner","Device","Group","Organization")]
+			[References("Patient","RelatedPerson","Practitioner","PractitionerRole","Device","Group","Organization")]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Reference
@@ -2302,7 +2302,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("responsible", Order=140)]
             [CLSCompliant(false)]
-			[References("Organization","Patient","Practitioner","RelatedPerson")]
+			[References("Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Responsible
             {
@@ -2317,7 +2317,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("recipient", Order=150)]
             [CLSCompliant(false)]
-			[References("Organization","Patient","Practitioner","RelatedPerson")]
+			[References("Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Recipient
             {
@@ -2720,7 +2720,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("requester", Order=130)]
             [CLSCompliant(false)]
-			[References("Patient","Person","RelatedPerson","Practitioner","Device","Group","Organization")]
+			[References("Patient","RelatedPerson","Practitioner","PractitionerRole","Device","Group","Organization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Requester
@@ -2796,7 +2796,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("performer", Order=170)]
             [CLSCompliant(false)]
-			[References("Person","RelatedPerson","Patient","Practitioner","PractitionerRole","CareTeam","Device","Substance","Organization","Location")]
+			[References("RelatedPerson","Patient","Practitioner","PractitionerRole","CareTeam","Device","Substance","Organization","Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Performer
             {
@@ -3160,7 +3160,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("reference", Order=40)]
             [CLSCompliant(false)]
-			[References("Patient","Person","RelatedPerson","Practitioner","Device","Group","Organization")]
+			[References("Patient","RelatedPerson","Practitioner","PractitionerRole","Device","Group","Organization")]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Reference
@@ -3281,7 +3281,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("party", Order=50)]
             [CLSCompliant(false)]
-			[References("Organization","Patient","Practitioner","RelatedPerson")]
+			[References("Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Party
@@ -4088,7 +4088,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", Order=280)]
         [CLSCompliant(false)]
-		[References("Person","Patient","Practitioner","Organization")]
+		[References("Patient","Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

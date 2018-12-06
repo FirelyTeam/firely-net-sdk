@@ -1,14 +1,13 @@
 ﻿
-
 //
-// Model Generated on Sun, 04 Nov 2018 17:05:10 GMT for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
-// Generated Shared Enumeration: Use
+// Generated Shared Enumeration: Use (http://hl7.org/fhir/ValueSet/claim-use)
 	// Used in model class (resource): Claim.use
 	// Used in model class (resource): ClaimResponse.use
 	// Used in model class (resource): ExplanationOfBenefit.use
 
-// Generated Shared Enumeration: ResourceType
+// Generated Shared Enumeration: ResourceType (http://hl7.org/fhir/ValueSet/resource-types)
 	// Used in model class (resource): CapabilityStatement.rest.resource.type
 	// Used in model class (resource): CompartmentDefinition.resource.code
 	// Used in model class (resource): ExampleScenario.instance.resourceType
@@ -21,23 +20,32 @@
 	// Used in model class (resource): SearchParameter.base
 	// Used in model class (resource): SearchParameter.target
 
-// Generated Shared Enumeration: OperationParameterUse
+// Generated Shared Enumeration: GroupMeasure (http://hl7.org/fhir/ValueSet/group-measure)
+	// Used in model class (resource): EvidenceVariable.characteristic.groupMeasure
+	// Used in model class (resource): ResearchElementDefinition.characteristic.studyEffectiveGroupMeasure
+	// Used in model class (resource): ResearchElementDefinition.characteristic.participantEffectiveGroupMeasure
+
+// Generated Shared Enumeration: OperationParameterUse (http://hl7.org/fhir/ValueSet/operation-parameter-use)
 	// Used in model class (resource): OperationDefinition.parameter.use
 	// Used in model class (type): ParameterDefinition.use
 
-// Generated Shared Enumeration: DeviceNameType
+// Generated Shared Enumeration: DeviceNameType (http://hl7.org/fhir/ValueSet/device-nametype)
 	// Used in model class (resource): Device.deviceName.type
 	// Used in model class (resource): DeviceDefinition.deviceName.type
 
-// Generated Shared Enumeration: FilterOperator
+// Generated Shared Enumeration: FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
 	// Used in model class (resource): CodeSystem.filter.operator
 	// Used in model class (resource): ValueSet.compose.include.filter.op
 
-// Generated Shared Enumeration: ActionSelectionBehavior
+// Generated Shared Enumeration: ActionSelectionBehavior (http://hl7.org/fhir/ValueSet/action-selection-behavior)
 	// Used in model class (resource): PlanDefinition.action.selectionBehavior
 	// Used in model class (resource): RequestGroup.action.selectionBehavior
 
-// Generated Shared Enumeration: RequestPriority
+// Generated Shared Enumeration: EvidenceVariableType (http://hl7.org/fhir/ValueSet/variable-type)
+	// Used in model class (resource): EvidenceVariable.type
+	// Used in model class (resource): ResearchElementDefinition.variableType
+
+// Generated Shared Enumeration: RequestPriority (http://hl7.org/fhir/ValueSet/request-priority)
 	// Used in model class (resource): ActivityDefinition.priority
 	// Used in model class (resource): Communication.priority
 	// Used in model class (resource): CommunicationRequest.priority
@@ -50,68 +58,64 @@
 	// Used in model class (resource): SupplyRequest.priority
 	// Used in model class (resource): Task.priority
 
-// Generated Shared Enumeration: RequestIntent
+// Generated Shared Enumeration: RequestIntent (http://hl7.org/fhir/ValueSet/request-intent)
 	// Used in model class (resource): ActivityDefinition.intent
 	// Used in model class (resource): DeviceRequest.intent
 	// Used in model class (resource): NutritionOrder.intent
 	// Used in model class (resource): RequestGroup.intent
 	// Used in model class (resource): ServiceRequest.intent
 
-// Generated Shared Enumeration: MeasureImprovementNotation
-	// Used in model class (resource): Measure.improvementNotation
-	// Used in model class (resource): MeasureReport.improvementNotation
-
-// Generated Shared Enumeration: AdministrativeGender
+// Generated Shared Enumeration: AdministrativeGender (http://hl7.org/fhir/ValueSet/administrative-gender)
+	// Used in model class (resource): ObservationDefinition.qualifiedInterval.gender
 	// Used in model class (resource): Patient.gender
 	// Used in model class (resource): Patient.contact.gender
 	// Used in model class (resource): Person.gender
 	// Used in model class (resource): Practitioner.gender
 	// Used in model class (resource): RelatedPerson.gender
 
-// Generated Shared Enumeration: EventStatus
+// Generated Shared Enumeration: EventStatus (http://hl7.org/fhir/ValueSet/event-status)
 	// Used in model class (resource): Communication.status
-	// Used in model class (resource): Consent.status
 	// Used in model class (resource): Media.status
 	// Used in model class (resource): Procedure.status
 
-// Generated Shared Enumeration: ActionGroupingBehavior
+// Generated Shared Enumeration: ActionGroupingBehavior (http://hl7.org/fhir/ValueSet/action-grouping-behavior)
 	// Used in model class (resource): PlanDefinition.action.groupingBehavior
 	// Used in model class (resource): RequestGroup.action.groupingBehavior
 
-// Generated Shared Enumeration: ObservationStatus
+// Generated Shared Enumeration: ObservationStatus (http://hl7.org/fhir/ValueSet/observation-status)
 	// Used in model class (resource): DetectedIssue.status
 	// Used in model class (resource): Observation.status
 	// Used in model class (resource): RiskAssessment.status
 
-// Generated Shared Enumeration: ActionPrecheckBehavior
+// Generated Shared Enumeration: ActionPrecheckBehavior (http://hl7.org/fhir/ValueSet/action-precheck-behavior)
 	// Used in model class (resource): PlanDefinition.action.precheckBehavior
 	// Used in model class (resource): RequestGroup.action.precheckBehavior
 
-// Generated Shared Enumeration: BindingStrength
+// Generated Shared Enumeration: BindingStrength (http://hl7.org/fhir/ValueSet/binding-strength)
 	// Used in model class (resource): OperationDefinition.parameter.binding.strength
 	// Used in model class (type): ElementDefinition.binding.strength
 
-// Generated Shared Enumeration: ParticipationStatus
+// Generated Shared Enumeration: ParticipationStatus (http://hl7.org/fhir/ValueSet/participationstatus)
 	// Used in model class (resource): Appointment.participant.status
 	// Used in model class (resource): AppointmentResponse.participantStatus
 
-// Generated Shared Enumeration: ClaimProcessingCodes
+// Generated Shared Enumeration: ClaimProcessingCodes (http://hl7.org/fhir/ValueSet/remittance-outcome)
 	// Used in model class (resource): ClaimResponse.outcome
 	// Used in model class (resource): CoverageEligibilityResponse.outcome
 	// Used in model class (resource): EnrollmentResponse.outcome
 	// Used in model class (resource): ExplanationOfBenefit.outcome
 	// Used in model class (resource): PaymentReconciliation.outcome
 
-// Generated Shared Enumeration: ListMode
+// Generated Shared Enumeration: ListMode (http://hl7.org/fhir/ValueSet/list-mode)
 	// Used in model class (resource): Composition.section.mode
 	// Used in model class (resource): List.mode
 
-// Generated Shared Enumeration: SearchParamType
+// Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
 	// Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type
 	// Used in model class (resource): OperationDefinition.parameter.searchType
 	// Used in model class (resource): SearchParameter.type
 
-// Generated Shared Enumeration: FinancialResourceStatusCodes
+// Generated Shared Enumeration: FinancialResourceStatusCodes (http://hl7.org/fhir/ValueSet/fm-status)
 	// Used in model class (resource): Claim.status
 	// Used in model class (resource): ClaimResponse.status
 	// Used in model class (resource): Coverage.status
@@ -121,49 +125,53 @@
 	// Used in model class (resource): EnrollmentResponse.status
 	// Used in model class (resource): PaymentNotice.status
 	// Used in model class (resource): PaymentReconciliation.status
-	// Used in model class (resource): ProcessRequest.status
-	// Used in model class (resource): ProcessResponse.status
 	// Used in model class (resource): VisionPrescription.status
 
-// Generated Shared Enumeration: ActionCardinalityBehavior
+// Generated Shared Enumeration: ActionCardinalityBehavior (http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
 	// Used in model class (resource): PlanDefinition.action.cardinalityBehavior
 	// Used in model class (resource): RequestGroup.action.cardinalityBehavior
 
-// Generated Shared Enumeration: CapabilityStatementKind
+// Generated Shared Enumeration: CapabilityStatementKind (http://hl7.org/fhir/ValueSet/capability-statement-kind)
 	// Used in model class (resource): CapabilityStatement.kind
 	// Used in model class (resource): TerminologyCapabilities.kind
 
-// Generated Shared Enumeration: ActionConditionKind
+// Generated Shared Enumeration: ActionConditionKind (http://hl7.org/fhir/ValueSet/action-condition-kind)
 	// Used in model class (resource): PlanDefinition.action.condition.kind
 	// Used in model class (resource): RequestGroup.action.condition.kind
 
-// Generated Shared Enumeration: CompartmentType
+// Generated Shared Enumeration: CompartmentType (http://hl7.org/fhir/ValueSet/compartment-type)
 	// Used in model class (resource): CompartmentDefinition.code
 	// Used in model class (resource): GraphDefinition.link.target.compartment.code
 
-// Generated Shared Enumeration: ActionParticipantType
+// Generated Shared Enumeration: ActionParticipantType (http://hl7.org/fhir/ValueSet/action-participant-type)
 	// Used in model class (resource): ActivityDefinition.participant.type
 	// Used in model class (resource): PlanDefinition.action.participant.type
 
-// Generated Shared Enumeration: InvoicePriceComponentType
+// Generated Shared Enumeration: InvoicePriceComponentType (http://hl7.org/fhir/ValueSet/invoice-priceComponentType)
 	// Used in model class (resource): ChargeItemDefinition.propertyGroup.priceComponent.type
 	// Used in model class (resource): Invoice.lineItem.priceComponent.type
 
-// Generated Shared Enumeration: DaysOfWeek
+// Generated Shared Enumeration: DaysOfWeek (http://hl7.org/fhir/ValueSet/days-of-week)
 	// Used in model class (resource): HealthcareService.availableTime.daysOfWeek
 	// Used in model class (resource): Location.hoursOfOperation.daysOfWeek
 	// Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
 	// Used in model class (type): Timing.repeat.dayOfWeek
 
-// Generated Shared Enumeration: ActionRelationshipType
+// Generated Shared Enumeration: FHIRVersion (http://hl7.org/fhir/ValueSet/FHIR-version)
+	// Used in model class (resource): CapabilityStatement.fhirVersion
+	// Used in model class (resource): ImplementationGuide.fhirVersion
+	// Used in model class (resource): ImplementationGuide.definition.resource.fhirVersion
+	// Used in model class (resource): StructureDefinition.fhirVersion
+
+// Generated Shared Enumeration: ActionRelationshipType (http://hl7.org/fhir/ValueSet/action-relationship-type)
 	// Used in model class (resource): PlanDefinition.action.relatedAction.relationship
 	// Used in model class (resource): RequestGroup.action.relatedAction.relationship
 
-// Generated Shared Enumeration: DocumentReferenceStatus
+// Generated Shared Enumeration: DocumentReferenceStatus (http://hl7.org/fhir/ValueSet/document-reference-status)
 	// Used in model class (resource): DocumentManifest.status
 	// Used in model class (resource): DocumentReference.status
 
-// Generated Shared Enumeration: RequestStatus
+// Generated Shared Enumeration: RequestStatus (http://hl7.org/fhir/ValueSet/request-status)
 	// Used in model class (resource): CarePlan.status
 	// Used in model class (resource): CommunicationRequest.status
 	// Used in model class (resource): DeviceRequest.status
@@ -171,38 +179,40 @@
 	// Used in model class (resource): RequestGroup.status
 	// Used in model class (resource): ServiceRequest.status
 
-// Generated Shared Enumeration: NoteType
+// Generated Shared Enumeration: NoteType (http://hl7.org/fhir/ValueSet/note-type)
 	// Used in model class (resource): ClaimResponse.processNote.type
 	// Used in model class (resource): ExplanationOfBenefit.processNote.type
 	// Used in model class (resource): PaymentReconciliation.processNote.type
-	// Used in model class (resource): ProcessResponse.processNote.type
 
-// Generated Shared Enumeration: CompositionStatus
+// Generated Shared Enumeration: CompositionStatus (http://hl7.org/fhir/ValueSet/composition-status)
 	// Used in model class (resource): Composition.status
 	// Used in model class (resource): DocumentReference.docStatus
 
-// Generated Shared Enumeration: ActionRequiredBehavior
+// Generated Shared Enumeration: ActionRequiredBehavior (http://hl7.org/fhir/ValueSet/action-required-behavior)
 	// Used in model class (resource): PlanDefinition.action.requiredBehavior
 	// Used in model class (resource): RequestGroup.action.requiredBehavior
 
-// Generated Shared Enumeration: DocumentRelationshipType
+// Generated Shared Enumeration: DocumentRelationshipType (http://hl7.org/fhir/ValueSet/document-relationship-type)
 	// Used in model class (resource): Composition.relatesTo.code
 	// Used in model class (resource): DocumentReference.relatesTo.code
 
-// Generated Shared Enumeration: FHIRAllTypes
+// Generated Shared Enumeration: FHIRAllTypes (http://hl7.org/fhir/ValueSet/all-types)
 	// Used in model class (resource): OperationDefinition.parameter.type
 	// Used in model class (type): DataRequirement.type
 	// Used in model class (type): ParameterDefinition.type
 
-// Generated Shared Enumeration: PublicationStatus
+// Generated Shared Enumeration: PublicationStatus (http://hl7.org/fhir/ValueSet/publication-status)
 	// Used in model class (resource): ActivityDefinition.status
 	// Used in model class (resource): CapabilityStatement.status
+	// Used in model class (resource): CatalogEntry.status
 	// Used in model class (resource): ChargeItemDefinition.status
 	// Used in model class (resource): CodeSystem.status
 	// Used in model class (resource): CompartmentDefinition.status
 	// Used in model class (resource): ConceptMap.status
-	// Used in model class (resource): EntryDefinition.status
+	// Used in model class (resource): EffectEvidenceSynthesis.status
 	// Used in model class (resource): EventDefinition.status
+	// Used in model class (resource): Evidence.status
+	// Used in model class (resource): EvidenceVariable.status
 	// Used in model class (resource): ExampleScenario.status
 	// Used in model class (resource): GraphDefinition.status
 	// Used in model class (resource): ImplementationGuide.status
@@ -214,6 +224,9 @@
 	// Used in model class (resource): OperationDefinition.status
 	// Used in model class (resource): PlanDefinition.status
 	// Used in model class (resource): Questionnaire.status
+	// Used in model class (resource): ResearchDefinition.status
+	// Used in model class (resource): ResearchElementDefinition.status
+	// Used in model class (resource): RiskEvidenceSynthesis.status
 	// Used in model class (resource): SearchParameter.status
 	// Used in model class (resource): StructureDefinition.status
 	// Used in model class (resource): StructureMap.status
@@ -227,7 +240,6 @@
 // Hl7.Fhir.Core\Model\Generated\UsageContext.cs
 // Hl7.Fhir.Core\Model\Generated\TriggerDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Timing.cs
-// Hl7.Fhir.Core\Model\Generated\SubstanceMoiety.cs
 // Hl7.Fhir.Core\Model\Generated\SubstanceAmount.cs
 // Hl7.Fhir.Core\Model\Generated\Signature.cs
 // Hl7.Fhir.Core\Model\Generated\SampledData.cs
@@ -238,6 +250,7 @@
 // Hl7.Fhir.Core\Model\Generated\Quantity.cs
 // Hl7.Fhir.Core\Model\Generated\ProductShelfLife.cs
 // Hl7.Fhir.Core\Model\Generated\ProdCharacteristic.cs
+// Hl7.Fhir.Core\Model\Generated\Population.cs
 // Hl7.Fhir.Core\Model\Generated\Period.cs
 // Hl7.Fhir.Core\Model\Generated\ParameterDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Money.cs
@@ -284,7 +297,6 @@
 // Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs
 // Hl7.Fhir.Core\Model\Generated\VerificationResult.cs
 // Hl7.Fhir.Core\Model\Generated\ValueSet.cs
-// Hl7.Fhir.Core\Model\Generated\UserSession.cs
 // Hl7.Fhir.Core\Model\Generated\TestScript.cs
 // Hl7.Fhir.Core\Model\Generated\TestReport.cs
 // Hl7.Fhir.Core\Model\Generated\TerminologyCapabilities.cs
@@ -292,8 +304,11 @@
 // Hl7.Fhir.Core\Model\Generated\SupplyRequest.cs
 // Hl7.Fhir.Core\Model\Generated\SupplyDelivery.cs
 // Hl7.Fhir.Core\Model\Generated\SubstanceSpecification.cs
+// Hl7.Fhir.Core\Model\Generated\SubstanceSourceMaterial.cs
 // Hl7.Fhir.Core\Model\Generated\SubstanceReferenceInformation.cs
+// Hl7.Fhir.Core\Model\Generated\SubstanceProtein.cs
 // Hl7.Fhir.Core\Model\Generated\SubstancePolymer.cs
+// Hl7.Fhir.Core\Model\Generated\SubstanceNucleicAcid.cs
 // Hl7.Fhir.Core\Model\Generated\Substance.cs
 // Hl7.Fhir.Core\Model\Generated\Subscription.cs
 // Hl7.Fhir.Core\Model\Generated\StructureMap.cs
@@ -302,19 +317,19 @@
 // Hl7.Fhir.Core\Model\Generated\Specimen.cs
 // Hl7.Fhir.Core\Model\Generated\Slot.cs
 // Hl7.Fhir.Core\Model\Generated\ServiceRequest.cs
-// Hl7.Fhir.Core\Model\Generated\Sequence.cs
 // Hl7.Fhir.Core\Model\Generated\SearchParameter.cs
 // Hl7.Fhir.Core\Model\Generated\Schedule.cs
+// Hl7.Fhir.Core\Model\Generated\RiskEvidenceSynthesis.cs
 // Hl7.Fhir.Core\Model\Generated\RiskAssessment.cs
 // Hl7.Fhir.Core\Model\Generated\ResearchSubject.cs
 // Hl7.Fhir.Core\Model\Generated\ResearchStudy.cs
+// Hl7.Fhir.Core\Model\Generated\ResearchElementDefinition.cs
+// Hl7.Fhir.Core\Model\Generated\ResearchDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\RequestGroup.cs
 // Hl7.Fhir.Core\Model\Generated\RelatedPerson.cs
 // Hl7.Fhir.Core\Model\Generated\QuestionnaireResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Questionnaire.cs
 // Hl7.Fhir.Core\Model\Generated\Provenance.cs
-// Hl7.Fhir.Core\Model\Generated\ProcessResponse.cs
-// Hl7.Fhir.Core\Model\Generated\ProcessRequest.cs
 // Hl7.Fhir.Core\Model\Generated\Procedure.cs
 // Hl7.Fhir.Core\Model\Generated\PractitionerRole.cs
 // Hl7.Fhir.Core\Model\Generated\Practitioner.cs
@@ -332,6 +347,7 @@
 // Hl7.Fhir.Core\Model\Generated\Observation.cs
 // Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs
 // Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
+// Hl7.Fhir.Core\Model\Generated\MolecularSequence.cs
 // Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
 // Hl7.Fhir.Core\Model\Generated\MessageDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\MedicinalProductUndesirableEffect.cs
@@ -341,9 +357,7 @@
 // Hl7.Fhir.Core\Model\Generated\MedicinalProductInteraction.cs
 // Hl7.Fhir.Core\Model\Generated\MedicinalProductIngredient.cs
 // Hl7.Fhir.Core\Model\Generated\MedicinalProductIndication.cs
-// Hl7.Fhir.Core\Model\Generated\MedicinalProductDeviceSpec.cs
 // Hl7.Fhir.Core\Model\Generated\MedicinalProductContraindication.cs
-// Hl7.Fhir.Core\Model\Generated\MedicinalProductClinicals.cs
 // Hl7.Fhir.Core\Model\Generated\MedicinalProductAuthorization.cs
 // Hl7.Fhir.Core\Model\Generated\MedicinalProduct.cs
 // Hl7.Fhir.Core\Model\Generated\MedicationStatement.cs
@@ -376,13 +390,15 @@
 // Hl7.Fhir.Core\Model\Generated\FamilyMemberHistory.cs
 // Hl7.Fhir.Core\Model\Generated\ExplanationOfBenefit.cs
 // Hl7.Fhir.Core\Model\Generated\ExampleScenario.cs
+// Hl7.Fhir.Core\Model\Generated\EvidenceVariable.cs
+// Hl7.Fhir.Core\Model\Generated\Evidence.cs
 // Hl7.Fhir.Core\Model\Generated\EventDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\EpisodeOfCare.cs
-// Hl7.Fhir.Core\Model\Generated\EntryDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\EnrollmentResponse.cs
 // Hl7.Fhir.Core\Model\Generated\EnrollmentRequest.cs
 // Hl7.Fhir.Core\Model\Generated\Endpoint.cs
 // Hl7.Fhir.Core\Model\Generated\Encounter.cs
+// Hl7.Fhir.Core\Model\Generated\EffectEvidenceSynthesis.cs
 // Hl7.Fhir.Core\Model\Generated\DomainResource.cs
 // Hl7.Fhir.Core\Model\Generated\DocumentReference.cs
 // Hl7.Fhir.Core\Model\Generated\DocumentManifest.cs
@@ -410,6 +426,7 @@
 // Hl7.Fhir.Core\Model\Generated\Claim.cs
 // Hl7.Fhir.Core\Model\Generated\ChargeItemDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\ChargeItem.cs
+// Hl7.Fhir.Core\Model\Generated\CatalogEntry.cs
 // Hl7.Fhir.Core\Model\Generated\CareTeam.cs
 // Hl7.Fhir.Core\Model\Generated\CarePlan.cs
 // Hl7.Fhir.Core\Model\Generated\CapabilityStatement.cs

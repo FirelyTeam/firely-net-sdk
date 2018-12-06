@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -654,16 +654,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Property value as a quantity
             /// </summary>
-            [FhirElement("valueQuanity", Order=50)]
+            [FhirElement("valueQuantity", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Quantity> ValueQuanity
+            public List<Quantity> ValueQuantity
             {
-                get { if(_ValueQuanity==null) _ValueQuanity = new List<Quantity>(); return _ValueQuanity; }
-                set { _ValueQuanity = value; OnPropertyChanged("ValueQuanity"); }
+                get { if(_ValueQuantity==null) _ValueQuantity = new List<Quantity>(); return _ValueQuantity; }
+                set { _ValueQuantity = value; OnPropertyChanged("ValueQuantity"); }
             }
             
-            private List<Quantity> _ValueQuanity;
+            private List<Quantity> _ValueQuantity;
             
             /// <summary>
             /// Property value as a code, e.g., NTP4 (synced to NTP)
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(ValueQuanity != null) dest.ValueQuanity = new List<Quantity>(ValueQuanity.DeepCopy());
+                    if(ValueQuantity != null) dest.ValueQuantity = new List<Quantity>(ValueQuantity.DeepCopy());
                     if(ValueCode != null) dest.ValueCode = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCode.DeepCopy());
                     return dest;
                 }
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(ValueQuanity, otherT.ValueQuanity)) return false;
+                if( !DeepComparable.Matches(ValueQuantity, otherT.ValueQuantity)) return false;
                 if( !DeepComparable.Matches(ValueCode, otherT.ValueCode)) return false;
                 
                 return true;
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(ValueQuanity, otherT.ValueQuanity)) return false;
+                if( !DeepComparable.IsExactly(ValueQuantity, otherT.ValueQuantity)) return false;
                 if( !DeepComparable.IsExactly(ValueCode, otherT.ValueCode)) return false;
                 
                 return true;
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
-                    foreach (var elem in ValueQuanity) { if (elem != null) yield return elem; }
+                    foreach (var elem in ValueQuantity) { if (elem != null) yield return elem; }
                     foreach (var elem in ValueCode) { if (elem != null) yield return elem; }
                 }
             }
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in ValueQuanity) { if (elem != null) yield return new ElementValue("valueQuanity", true, elem); }
+                    foreach (var elem in ValueQuantity) { if (elem != null) yield return new ElementValue("valueQuantity", true, elem); }
                     foreach (var elem in ValueCode) { if (elem != null) yield return new ElementValue("valueCode", true, elem); }
                 }
             }
@@ -1033,7 +1033,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DeviceDefinition.SpecializationComponent> _Specialization;
         
         /// <summary>
-        /// The actual design of the device or software version running on the device
+        /// Available versions
         /// </summary>
         [FhirElement("version", Order=160)]
         [Cardinality(Min=0,Max=-1)]
@@ -1047,7 +1047,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirString> _VersionElement;
         
         /// <summary>
-        /// The actual design of the device or software version running on the device
+        /// Available versions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

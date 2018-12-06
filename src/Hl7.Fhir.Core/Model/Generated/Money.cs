@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -380,6 +380,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)
             /// </summary>
+            [EnumLiteral("GGP", "urn:iso:std:iso:4217"), Description("Guernsey Pound")]
+            GGP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
             [EnumLiteral("GHS", "urn:iso:std:iso:4217"), Description("Ghanaian cedi")]
             GHS,
             /// <summary>
@@ -458,6 +464,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)
             /// </summary>
+            [EnumLiteral("IMP", "urn:iso:std:iso:4217"), Description("Isle of Man Pound")]
+            IMP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
             [EnumLiteral("INR", "urn:iso:std:iso:4217"), Description("Indian rupee")]
             INR,
             /// <summary>
@@ -478,6 +490,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("ISK", "urn:iso:std:iso:4217"), Description("Icelandic króna")]
             ISK,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
+            [EnumLiteral("JEP", "urn:iso:std:iso:4217"), Description("Jersey Pound")]
+            JEP,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)
@@ -922,6 +940,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("TTD", "urn:iso:std:iso:4217"), Description("Trinidad and Tobago dollar")]
             TTD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
+            [EnumLiteral("TVD", "urn:iso:std:iso:4217"), Description("Tuvalu Dollar")]
+            TVD,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)

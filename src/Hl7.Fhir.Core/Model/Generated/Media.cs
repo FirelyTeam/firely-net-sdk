@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -189,19 +189,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Encounter / Episode associated with media
+        /// Encounter associated with media
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=170)]
+        [FhirElement("encounter", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// When Media was collected
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
                 if(Modality != null) dest.Modality = (Hl7.Fhir.Model.CodeableConcept)Modality.DeepCopy();
                 if(View != null) dest.View = (Hl7.Fhir.Model.CodeableConcept)View.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Created != null) dest.Created = (Hl7.Fhir.Model.Element)Created.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
                 if(Operator != null) dest.Operator = (Hl7.Fhir.Model.ResourceReference)Operator.DeepCopy();
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Modality, otherT.Modality)) return false;
             if( !DeepComparable.Matches(View, otherT.View)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Created, otherT.Created)) return false;
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.Matches(Operator, otherT.Operator)) return false;
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Modality, otherT.Modality)) return false;
             if( !DeepComparable.IsExactly(View, otherT.View)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Created, otherT.Created)) return false;
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.IsExactly(Operator, otherT.Operator)) return false;
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
 				if (Modality != null) yield return Modality;
 				if (View != null) yield return View;
 				if (Subject != null) yield return Subject;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (Created != null) yield return Created;
 				if (IssuedElement != null) yield return IssuedElement;
 				if (Operator != null) yield return Operator;
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
                 if (Modality != null) yield return new ElementValue("modality", false, Modality);
                 if (View != null) yield return new ElementValue("view", false, View);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
                 if (Created != null) yield return new ElementValue("created", false, Created);
                 if (IssuedElement != null) yield return new ElementValue("issued", false, IssuedElement);
                 if (Operator != null) yield return new ElementValue("operator", false, Operator);

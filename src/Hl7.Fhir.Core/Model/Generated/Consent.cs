@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,51 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Consent"; } }
         
+        /// <summary>
+        /// Indicates the state of the consent.
+        /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
+        /// </summary>
+        [FhirEnumeration("ConsentState")]
+        public enum ConsentState
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-state-codes)
+            /// </summary>
+            [EnumLiteral("draft", "http://hl7.org/fhir/consent-state-codes"), Description("Pending")]
+            Draft,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-state-codes)
+            /// </summary>
+            [EnumLiteral("proposed", "http://hl7.org/fhir/consent-state-codes"), Description("Proposed")]
+            Proposed,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-state-codes)
+            /// </summary>
+            [EnumLiteral("active", "http://hl7.org/fhir/consent-state-codes"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-state-codes)
+            /// </summary>
+            [EnumLiteral("rejected", "http://hl7.org/fhir/consent-state-codes"), Description("Rejected")]
+            Rejected,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-state-codes)
+            /// </summary>
+            [EnumLiteral("inactive", "http://hl7.org/fhir/consent-state-codes"), Description("Inactive")]
+            Inactive,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-state-codes)
+            /// </summary>
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/consent-state-codes"), Description("Entered in Error")]
+            EnteredInError,
+        }
+
         /// <summary>
         /// How a rule statement is applied, such as adding additional consent or removing consent.
         /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
@@ -962,13 +1007,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.EventStatus> StatusElement
+        public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.EventStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.Consent.ConsentState> _StatusElement;
         
         /// <summary>
         /// draft | proposed | active | rejected | inactive | entered-in-error
@@ -976,7 +1021,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.EventStatus? Status
+        public Hl7.Fhir.Model.Consent.ConsentState? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -984,7 +1029,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.EventStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1101,7 +1146,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Source
         {
@@ -1230,7 +1275,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EventStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Consent.ConsentState>)StatusElement.DeepCopy();
                 if(Scope != null) dest.Scope = (Hl7.Fhir.Model.CodeableConcept)Scope.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1101,13 +1101,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("fhirVersion", InSummary=true, Order=250)]
         [DataMember]
-        public Hl7.Fhir.Model.Id FhirVersionElement
+        public Code<Hl7.Fhir.Model.FHIRVersion> FhirVersionElement
         {
             get { return _FhirVersionElement; }
             set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
         }
         
-        private Hl7.Fhir.Model.Id _FhirVersionElement;
+        private Code<Hl7.Fhir.Model.FHIRVersion> _FhirVersionElement;
         
         /// <summary>
         /// FHIR Version this StructureDefinition targets
@@ -1115,15 +1115,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string FhirVersion
+        public Hl7.Fhir.Model.FHIRVersion? FhirVersion
         {
             get { return FhirVersionElement != null ? FhirVersionElement.Value : null; }
             set
             {
-                if (value == null)
+                if (!value.HasValue)
                   FhirVersionElement = null; 
                 else
-                  FhirVersionElement = new Hl7.Fhir.Model.Id(value);
+                  FhirVersionElement = new Code<Hl7.Fhir.Model.FHIRVersion>(value);
                 OnPropertyChanged("FhirVersion");
             }
         }
@@ -1648,7 +1648,7 @@ namespace Hl7.Fhir.Model
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
                 if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.Coding>(Keyword.DeepCopy());
-                if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
+                if(FhirVersionElement != null) dest.FhirVersionElement = (Code<Hl7.Fhir.Model.FHIRVersion>)FhirVersionElement.DeepCopy();
                 if(Mapping != null) dest.Mapping = new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>(Mapping.DeepCopy());
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind>)KindElement.DeepCopy();
                 if(AbstractElement != null) dest.AbstractElement = (Hl7.Fhir.Model.FhirBoolean)AbstractElement.DeepCopy();

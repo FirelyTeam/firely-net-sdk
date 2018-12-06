@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ReferenceStrengthComponent"; } }
             
             /// <summary>
-            /// Relevent refrerence substance
+            /// Relevant reference substance
             /// </summary>
             [FhirElement("substance", InSummary=true, Order=40)]
             [DataMember]
@@ -449,9 +449,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Ratio _Strength;
             
             /// <summary>
+            /// Strength expressed in terms of a reference substance
+            /// </summary>
+            [FhirElement("strengthLowLimit", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Ratio StrengthLowLimit
+            {
+                get { return _StrengthLowLimit; }
+                set { _StrengthLowLimit = value; OnPropertyChanged("StrengthLowLimit"); }
+            }
+            
+            private Hl7.Fhir.Model.Ratio _StrengthLowLimit;
+            
+            /// <summary>
             /// For when strength is measured at a particular point or distance
             /// </summary>
-            [FhirElement("measurementPoint", InSummary=true, Order=60)]
+            [FhirElement("measurementPoint", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MeasurementPointElement
             {
@@ -483,7 +496,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The country or countries for which the strength range applies
             /// </summary>
-            [FhirElement("country", InSummary=true, Order=70)]
+            [FhirElement("country", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Country
@@ -503,6 +516,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Substance != null) dest.Substance = (Hl7.Fhir.Model.CodeableConcept)Substance.DeepCopy();
                     if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
+                    if(StrengthLowLimit != null) dest.StrengthLowLimit = (Hl7.Fhir.Model.Ratio)StrengthLowLimit.DeepCopy();
                     if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
                     if(Country != null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
                     return dest;
@@ -524,6 +538,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
                 if( !DeepComparable.Matches(Strength, otherT.Strength)) return false;
+                if( !DeepComparable.Matches(StrengthLowLimit, otherT.StrengthLowLimit)) return false;
                 if( !DeepComparable.Matches(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.Matches(Country, otherT.Country)) return false;
                 
@@ -538,6 +553,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
                 if( !DeepComparable.IsExactly(Strength, otherT.Strength)) return false;
+                if( !DeepComparable.IsExactly(StrengthLowLimit, otherT.StrengthLowLimit)) return false;
                 if( !DeepComparable.IsExactly(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.IsExactly(Country, otherT.Country)) return false;
                 
@@ -553,6 +569,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Substance != null) yield return Substance;
                     if (Strength != null) yield return Strength;
+                    if (StrengthLowLimit != null) yield return StrengthLowLimit;
                     if (MeasurementPointElement != null) yield return MeasurementPointElement;
                     foreach (var elem in Country) { if (elem != null) yield return elem; }
                 }
@@ -566,6 +583,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Substance != null) yield return new ElementValue("substance", false, Substance);
                     if (Strength != null) yield return new ElementValue("strength", false, Strength);
+                    if (StrengthLowLimit != null) yield return new ElementValue("strengthLowLimit", false, StrengthLowLimit);
                     if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", false, MeasurementPointElement);
                     foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", true, elem); }
                 }

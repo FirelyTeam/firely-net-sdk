@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -705,18 +705,18 @@ namespace Hl7.Fhir.Model
         private List<RelatedArtifact> _RelatedArtifact;
         
         /// <summary>
-        /// "when" the event occurs
+        /// "when" the event occurs (multiple = 'or')
         /// </summary>
         [FhirElement("trigger", InSummary=true, Order=360)]
-        [Cardinality(Min=1,Max=1)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public TriggerDefinition Trigger
+        public List<TriggerDefinition> Trigger
         {
-            get { return _Trigger; }
+            get { if(_Trigger==null) _Trigger = new List<TriggerDefinition>(); return _Trigger; }
             set { _Trigger = value; OnPropertyChanged("Trigger"); }
         }
         
-        private TriggerDefinition _Trigger;
+        private List<TriggerDefinition> _Trigger;
         
 
         public static ElementDefinition.ConstraintComponent EventDefinition_EVD_0 = new ElementDefinition.ConstraintComponent()
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
                 if(Reviewer != null) dest.Reviewer = new List<ContactDetail>(Reviewer.DeepCopy());
                 if(Endorser != null) dest.Endorser = new List<ContactDetail>(Endorser.DeepCopy());
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
-                if(Trigger != null) dest.Trigger = (TriggerDefinition)Trigger.DeepCopy();
+                if(Trigger != null) dest.Trigger = new List<TriggerDefinition>(Trigger.DeepCopy());
                 return dest;
             }
             else
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Reviewer) { if (elem != null) yield return elem; }
 				foreach (var elem in Endorser) { if (elem != null) yield return elem; }
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
-				if (Trigger != null) yield return Trigger;
+				foreach (var elem in Trigger) { if (elem != null) yield return elem; }
             }
         }
 
@@ -927,7 +927,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", true, elem); }
                 foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", true, elem); }
                 foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", true, elem); }
-                if (Trigger != null) yield return new ElementValue("trigger", false, Trigger);
+                foreach (var elem in Trigger) { if (elem != null) yield return new ElementValue("trigger", true, elem); }
             }
         }
 

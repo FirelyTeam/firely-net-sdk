@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Quantity),typeof(Hl7.Fhir.Model.Range))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("entity", Order=40)]
             [CLSCompliant(false)]
-			[References("Patient","Practitioner","PractitionerRole","Device","Medication","Substance")]
+			[References("Patient","Practitioner","PractitionerRole","Device","Medication","Substance","Group")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Entity
@@ -598,9 +598,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Entity that is the custodian of the Group's definition
+        /// </summary>
+        [FhirElement("managingEntity", InSummary=true, Order=160)]
+        [CLSCompliant(false)]
+		[References("Organization","RelatedPerson","Practitioner","PractitionerRole")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference ManagingEntity
+        {
+            get { return _ManagingEntity; }
+            set { _ManagingEntity = value; OnPropertyChanged("ManagingEntity"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _ManagingEntity;
+        
+        /// <summary>
         /// Include / Exclude group members by Trait
         /// </summary>
-        [FhirElement("characteristic", Order=160)]
+        [FhirElement("characteristic", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
@@ -614,7 +629,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who or what is in group
         /// </summary>
-        [FhirElement("member", Order=170)]
+        [FhirElement("member", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.MemberComponent> Member
@@ -656,6 +671,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
+                if(ManagingEntity != null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)ManagingEntity.DeepCopy();
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopy());
                 if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(Member.DeepCopy());
                 return dest;
@@ -682,6 +698,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(QuantityElement, otherT.QuantityElement)) return false;
+            if( !DeepComparable.Matches(ManagingEntity, otherT.ManagingEntity)) return false;
             if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
             if( !DeepComparable.Matches(Member, otherT.Member)) return false;
             
@@ -701,6 +718,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(QuantityElement, otherT.QuantityElement)) return false;
+            if( !DeepComparable.IsExactly(ManagingEntity, otherT.ManagingEntity)) return false;
             if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
             if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
             
@@ -720,6 +738,7 @@ namespace Hl7.Fhir.Model
 				if (Code != null) yield return Code;
 				if (NameElement != null) yield return NameElement;
 				if (QuantityElement != null) yield return QuantityElement;
+				if (ManagingEntity != null) yield return ManagingEntity;
 				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
 				foreach (var elem in Member) { if (elem != null) yield return elem; }
             }
@@ -738,6 +757,7 @@ namespace Hl7.Fhir.Model
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 if (NameElement != null) yield return new ElementValue("name", false, NameElement);
                 if (QuantityElement != null) yield return new ElementValue("quantity", false, QuantityElement);
+                if (ManagingEntity != null) yield return new ElementValue("managingEntity", false, ManagingEntity);
                 foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
                 foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", true, elem); }
             }

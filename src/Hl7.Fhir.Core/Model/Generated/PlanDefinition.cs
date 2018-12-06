@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -620,9 +620,24 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Type of individual the action is focused on
+            /// </summary>
+            [FhirElement("subject", Order=130, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Subject
+            {
+                get { return _Subject; }
+                set { _Subject = value; OnPropertyChanged("Subject"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Subject;
+            
+            /// <summary>
             /// When the action should be triggered
             /// </summary>
-            [FhirElement("trigger", Order=130)]
+            [FhirElement("trigger", Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<TriggerDefinition> Trigger
@@ -636,7 +651,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether or not the action is applicable
             /// </summary>
-            [FhirElement("condition", Order=140)]
+            [FhirElement("condition", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent> Condition
@@ -650,7 +665,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Input data requirements
             /// </summary>
-            [FhirElement("input", Order=150)]
+            [FhirElement("input", Order=160)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<DataRequirement> Input
@@ -664,7 +679,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Output data definition
             /// </summary>
-            [FhirElement("output", Order=160)]
+            [FhirElement("output", Order=170)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<DataRequirement> Output
@@ -678,7 +693,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship to another action
             /// </summary>
-            [FhirElement("relatedAction", Order=170)]
+            [FhirElement("relatedAction", Order=180)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent> RelatedAction
@@ -692,7 +707,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the action should take place
             /// </summary>
-            [FhirElement("timing", Order=180, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", Order=190, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -707,7 +722,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who should participate in the action
             /// </summary>
-            [FhirElement("participant", Order=190)]
+            [FhirElement("participant", Order=200)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent> Participant
@@ -721,7 +736,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// create | update | remove | fire-event
             /// </summary>
-            [FhirElement("type", Order=200)]
+            [FhirElement("type", Order=210)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -734,7 +749,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// visual-group | logical-group | sentence-group
             /// </summary>
-            [FhirElement("groupingBehavior", Order=210)]
+            [FhirElement("groupingBehavior", Order=220)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
             {
@@ -766,7 +781,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
             /// </summary>
-            [FhirElement("selectionBehavior", Order=220)]
+            [FhirElement("selectionBehavior", Order=230)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
             {
@@ -798,7 +813,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// must | could | must-unless-documented
             /// </summary>
-            [FhirElement("requiredBehavior", Order=230)]
+            [FhirElement("requiredBehavior", Order=240)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
             {
@@ -830,7 +845,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// yes | no
             /// </summary>
-            [FhirElement("precheckBehavior", Order=240)]
+            [FhirElement("precheckBehavior", Order=250)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
             {
@@ -862,7 +877,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// single | multiple
             /// </summary>
-            [FhirElement("cardinalityBehavior", Order=250)]
+            [FhirElement("cardinalityBehavior", Order=260)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
             {
@@ -894,39 +909,22 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of the activity to be performed
             /// </summary>
-            [FhirElement("definition", Order=260)]
+            [FhirElement("definition", Order=270, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
             [DataMember]
-            public Hl7.Fhir.Model.Canonical DefinitionElement
+            public Hl7.Fhir.Model.Element Definition
             {
-                get { return _DefinitionElement; }
-                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+                get { return _Definition; }
+                set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.Canonical _DefinitionElement;
-            
-            /// <summary>
-            /// Description of the activity to be performed
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Definition
-            {
-                get { return DefinitionElement != null ? DefinitionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        DefinitionElement = null; 
-                    else
-                        DefinitionElement = new Hl7.Fhir.Model.Canonical(value);
-                    OnPropertyChanged("Definition");
-                }
-            }
+            private Hl7.Fhir.Model.Element _Definition;
             
             /// <summary>
             /// Transform to apply the template
             /// </summary>
-            [FhirElement("transform", Order=270)]
+            [FhirElement("transform", Order=280)]
             [DataMember]
             public Hl7.Fhir.Model.Canonical TransformElement
             {
@@ -958,7 +956,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dynamic aspects of the definition
             /// </summary>
-            [FhirElement("dynamicValue", Order=280)]
+            [FhirElement("dynamicValue", Order=290)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent> DynamicValue
@@ -972,7 +970,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A sub-action
             /// </summary>
-            [FhirElement("action", Order=290)]
+            [FhirElement("action", Order=300)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
@@ -999,6 +997,7 @@ namespace Hl7.Fhir.Model
                     if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                     if(Documentation != null) dest.Documentation = new List<RelatedArtifact>(Documentation.DeepCopy());
                     if(GoalIdElement != null) dest.GoalIdElement = new List<Hl7.Fhir.Model.Id>(GoalIdElement.DeepCopy());
+                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
                     if(Trigger != null) dest.Trigger = new List<TriggerDefinition>(Trigger.DeepCopy());
                     if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent>(Condition.DeepCopy());
                     if(Input != null) dest.Input = new List<DataRequirement>(Input.DeepCopy());
@@ -1012,7 +1011,7 @@ namespace Hl7.Fhir.Model
                     if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
                     if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
                     if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
-                    if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.Canonical)DefinitionElement.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Element)Definition.DeepCopy();
                     if(TransformElement != null) dest.TransformElement = (Hl7.Fhir.Model.Canonical)TransformElement.DeepCopy();
                     if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
                     if(Action != null) dest.Action = new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>(Action.DeepCopy());
@@ -1042,6 +1041,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.Matches(GoalIdElement, otherT.GoalIdElement)) return false;
+                if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.Matches(Trigger, otherT.Trigger)) return false;
                 if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
                 if( !DeepComparable.Matches(Input, otherT.Input)) return false;
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(RequiredBehaviorElement, otherT.RequiredBehaviorElement)) return false;
                 if( !DeepComparable.Matches(PrecheckBehaviorElement, otherT.PrecheckBehaviorElement)) return false;
                 if( !DeepComparable.Matches(CardinalityBehaviorElement, otherT.CardinalityBehaviorElement)) return false;
-                if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.Matches(TransformElement, otherT.TransformElement)) return false;
                 if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
                 if( !DeepComparable.Matches(Action, otherT.Action)) return false;
@@ -1078,6 +1078,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.IsExactly(GoalIdElement, otherT.GoalIdElement)) return false;
+                if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.IsExactly(Trigger, otherT.Trigger)) return false;
                 if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
                 if( !DeepComparable.IsExactly(Input, otherT.Input)) return false;
@@ -1091,7 +1092,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(RequiredBehaviorElement, otherT.RequiredBehaviorElement)) return false;
                 if( !DeepComparable.IsExactly(PrecheckBehaviorElement, otherT.PrecheckBehaviorElement)) return false;
                 if( !DeepComparable.IsExactly(CardinalityBehaviorElement, otherT.CardinalityBehaviorElement)) return false;
-                if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.IsExactly(TransformElement, otherT.TransformElement)) return false;
                 if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
                 if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
@@ -1115,6 +1116,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Reason) { if (elem != null) yield return elem; }
                     foreach (var elem in Documentation) { if (elem != null) yield return elem; }
                     foreach (var elem in GoalIdElement) { if (elem != null) yield return elem; }
+                    if (Subject != null) yield return Subject;
                     foreach (var elem in Trigger) { if (elem != null) yield return elem; }
                     foreach (var elem in Condition) { if (elem != null) yield return elem; }
                     foreach (var elem in Input) { if (elem != null) yield return elem; }
@@ -1128,7 +1130,7 @@ namespace Hl7.Fhir.Model
                     if (RequiredBehaviorElement != null) yield return RequiredBehaviorElement;
                     if (PrecheckBehaviorElement != null) yield return PrecheckBehaviorElement;
                     if (CardinalityBehaviorElement != null) yield return CardinalityBehaviorElement;
-                    if (DefinitionElement != null) yield return DefinitionElement;
+                    if (Definition != null) yield return Definition;
                     if (TransformElement != null) yield return TransformElement;
                     foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }
                     foreach (var elem in Action) { if (elem != null) yield return elem; }
@@ -1150,6 +1152,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
                     foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", true, elem); }
                     foreach (var elem in GoalIdElement) { if (elem != null) yield return new ElementValue("goalId", true, elem); }
+                    if (Subject != null) yield return new ElementValue("subject", false, Subject);
                     foreach (var elem in Trigger) { if (elem != null) yield return new ElementValue("trigger", true, elem); }
                     foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
                     foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", true, elem); }
@@ -1163,7 +1166,7 @@ namespace Hl7.Fhir.Model
                     if (RequiredBehaviorElement != null) yield return new ElementValue("requiredBehavior", false, RequiredBehaviorElement);
                     if (PrecheckBehaviorElement != null) yield return new ElementValue("precheckBehavior", false, PrecheckBehaviorElement);
                     if (CardinalityBehaviorElement != null) yield return new ElementValue("cardinalityBehavior", false, CardinalityBehaviorElement);
-                    if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
+                    if (Definition != null) yield return new ElementValue("definition", false, Definition);
                     if (TransformElement != null) yield return new ElementValue("transform", false, TransformElement);
                     foreach (var elem in DynamicValue) { if (elem != null) yield return new ElementValue("dynamicValue", true, elem); }
                     foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }

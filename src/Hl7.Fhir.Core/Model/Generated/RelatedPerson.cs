@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,6 +54,130 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.RelatedPerson; } }
         [NotMapped]
         public override string TypeName { get { return "RelatedPerson"; } }
+        
+        [FhirType("CommunicationComponent")]
+        [DataContract]
+        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "CommunicationComponent"; } }
+            
+            /// <summary>
+            /// The language which can be used to communicate with the patient about his or her health
+            /// </summary>
+            [FhirElement("language", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Language
+            {
+                get { return _Language; }
+                set { _Language = value; OnPropertyChanged("Language"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Language;
+            
+            /// <summary>
+            /// Language preference indicator
+            /// </summary>
+            [FhirElement("preferred", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean PreferredElement
+            {
+                get { return _PreferredElement; }
+                set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
+            
+            /// <summary>
+            /// Language preference indicator
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Preferred
+            {
+                get { return PreferredElement != null ? PreferredElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        PreferredElement = null; 
+                    else
+                        PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Preferred");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as CommunicationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Language != null) dest.Language = (Hl7.Fhir.Model.CodeableConcept)Language.DeepCopy();
+                    if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new CommunicationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as CommunicationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Language, otherT.Language)) return false;
+                if( !DeepComparable.Matches(PreferredElement, otherT.PreferredElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as CommunicationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Language, otherT.Language)) return false;
+                if( !DeepComparable.IsExactly(PreferredElement, otherT.PreferredElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Language != null) yield return Language;
+                    if (PreferredElement != null) yield return PreferredElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Language != null) yield return new ElementValue("language", false, Language);
+                    if (PreferredElement != null) yield return new ElementValue("preferred", false, PreferredElement);
+                }
+            }
+
+            
+        }
+        
         
         /// <summary>
         /// A human identifier for this person
@@ -264,6 +388,20 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Period _Period;
         
+        /// <summary>
+        /// A language which may be used to communicate with about the patient's health
+        /// </summary>
+        [FhirElement("communication", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.RelatedPerson.CommunicationComponent> Communication
+        {
+            get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.RelatedPerson.CommunicationComponent>(); return _Communication; }
+            set { _Communication = value; OnPropertyChanged("Communication"); }
+        }
+        
+        private List<Hl7.Fhir.Model.RelatedPerson.CommunicationComponent> _Communication;
+        
 
         public override void AddDefaultConstraints()
         {
@@ -289,6 +427,7 @@ namespace Hl7.Fhir.Model
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.RelatedPerson.CommunicationComponent>(Communication.DeepCopy());
                 return dest;
             }
             else
@@ -317,6 +456,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
             
             return true;
         }
@@ -338,6 +478,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+            if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
             
             return true;
         }
@@ -359,6 +500,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Address) { if (elem != null) yield return elem; }
 				foreach (var elem in Photo) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
+				foreach (var elem in Communication) { if (elem != null) yield return elem; }
             }
         }
 
@@ -379,6 +521,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
                 foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, elem); }
                 if (Period != null) yield return new ElementValue("period", false, Period);
+                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", true, elem); }
             }
         }
 

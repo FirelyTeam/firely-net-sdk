@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,29 +56,29 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "MedicationKnowledge"; } }
         
         /// <summary>
-        /// A coded concept defining if the medication is in active use.
-        /// (url: http://hl7.org/fhir/ValueSet/medicationKnowledge-status)
+        /// MedicationKnowledge Status Codes
+        /// (url: http://hl7.org/fhir/ValueSet/medicationknowledge-status)
         /// </summary>
-        [FhirEnumeration("MedicationKnowledgeStatus")]
-        public enum MedicationKnowledgeStatus
+        [FhirEnumeration("MedicationKnowledgeStatusCodes")]
+        public enum MedicationKnowledgeStatusCodes
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medicationKnowledge-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medicationknowledge-status)
             /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/medicationKnowledge-status"), Description("Active")]
+            [EnumLiteral("active", "http://terminology.hl7.org/CodeSystem/medicationknowledge-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medicationKnowledge-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medicationknowledge-status)
             /// </summary>
-            [EnumLiteral("inactive", "http://hl7.org/fhir/medicationKnowledge-status"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://terminology.hl7.org/CodeSystem/medicationknowledge-status"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medicationKnowledge-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medicationknowledge-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medicationKnowledge-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/medicationknowledge-status"), Description("Entered in Error")]
             EnteredInError,
         }
 
@@ -1433,7 +1433,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent> _Schedule;
             
             /// <summary>
-            /// The maximum number of units of the medicaton that can be dispensed in a period
+            /// The maximum number of units of the medication that can be dispensed in a period
             /// </summary>
             [FhirElement("maxDispense", Order=70)]
             [DataMember]
@@ -1746,7 +1746,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "MaxDispenseComponent"; } }
             
             /// <summary>
-            /// The maximum number of units of the medicaton that can be dispensed
+            /// The maximum number of units of the medication that can be dispensed
             /// </summary>
             [FhirElement("quantity", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -1985,13 +1985,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus> StatusElement
+        public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> _StatusElement;
         
         /// <summary>
         /// active | inactive | entered-in-error
@@ -1999,7 +1999,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus? Status
+        public Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -2007,7 +2007,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -2233,7 +2233,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent> _MonitoringProgram;
         
         /// <summary>
-        /// Gudelines for administration of the medication
+        /// Guidelines for administration of the medication
         /// </summary>
         [FhirElement("administrationGuidelines", Order=240)]
         [Cardinality(Min=0,Max=-1)]
@@ -2346,7 +2346,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>)StatusElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(DoseForm != null) dest.DoseForm = (Hl7.Fhir.Model.CodeableConcept)DoseForm.DeepCopy();
                 if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1173,7 +1173,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Additional identifier for the code system
+        /// Additional identifier for the code system (business identifier)
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -1582,7 +1582,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Canonical URL for value set with entire code system
+        /// Canonical reference to the value set with entire code system
         /// </summary>
         [FhirElement("valueSet", InSummary=true, Order=250)]
         [DataMember]
@@ -1595,7 +1595,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Canonical _ValueSetElement;
         
         /// <summary>
-        /// Canonical URL for value set with entire code system
+        /// Canonical reference to the value set with entire code system
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1743,7 +1743,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Code System this adds designations and properties to
+        /// Canonical URL of Code System this adds designations and properties to
         /// </summary>
         [FhirElement("supplements", InSummary=true, Order=300)]
         [DataMember]
@@ -1756,7 +1756,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Canonical _SupplementsElement;
         
         /// <summary>
-        /// Code System this adds designations and properties to
+        /// Canonical URL of Code System this adds designations and properties to
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

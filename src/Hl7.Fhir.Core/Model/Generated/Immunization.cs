@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -405,6 +405,168 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("ReactionComponent")]
+        [DataContract]
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ReactionComponent"; } }
+            
+            /// <summary>
+            /// When reaction started
+            /// </summary>
+            [FhirElement("date", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDateTime DateElement
+            {
+                get { return _DateElement; }
+                set { _DateElement = value; OnPropertyChanged("DateElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDateTime _DateElement;
+            
+            /// <summary>
+            /// When reaction started
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Date
+            {
+                get { return DateElement != null ? DateElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DateElement = null; 
+                    else
+                        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("Date");
+                }
+            }
+            
+            /// <summary>
+            /// Additional information on reaction
+            /// </summary>
+            [FhirElement("detail", Order=50)]
+            [CLSCompliant(false)]
+			[References("Observation")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Detail
+            {
+                get { return _Detail; }
+                set { _Detail = value; OnPropertyChanged("Detail"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Detail;
+            
+            /// <summary>
+            /// Indicates self-reported reaction
+            /// </summary>
+            [FhirElement("reported", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean ReportedElement
+            {
+                get { return _ReportedElement; }
+                set { _ReportedElement = value; OnPropertyChanged("ReportedElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
+            
+            /// <summary>
+            /// Indicates self-reported reaction
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Reported
+            {
+                get { return ReportedElement != null ? ReportedElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        ReportedElement = null; 
+                    else
+                        ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Reported");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ReactionComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.ResourceReference)Detail.DeepCopy();
+                    if(ReportedElement != null) dest.ReportedElement = (Hl7.Fhir.Model.FhirBoolean)ReportedElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ReactionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ReactionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
+                if( !DeepComparable.Matches(ReportedElement, otherT.ReportedElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ReactionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+                if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
+                if( !DeepComparable.IsExactly(ReportedElement, otherT.ReportedElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (DateElement != null) yield return DateElement;
+                    if (Detail != null) yield return Detail;
+                    if (ReportedElement != null) yield return ReportedElement;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                    if (Detail != null) yield return new ElementValue("detail", false, Detail);
+                    if (ReportedElement != null) yield return new ElementValue("reported", false, ReportedElement);
+                }
+            }
+
+            
+        }
+        
+        
         [FhirType("ProtocolAppliedComponent")]
         [DataContract]
         public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -463,15 +625,15 @@ namespace Hl7.Fhir.Model
             /// Vaccine preventatable disease being targetted
             /// </summary>
             [FhirElement("targetDisease", Order=60)]
-            [Cardinality(Min=1,Max=1)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept TargetDisease
+            public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
             {
-                get { return _TargetDisease; }
+                get { if(_TargetDisease==null) _TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetDisease; }
                 set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _TargetDisease;
+            private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
             
             /// <summary>
             /// Dose number within series
@@ -489,6 +651,21 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Element _DoseNumber;
             
+            /// <summary>
+            /// Recommended number of doses for immunity
+            /// </summary>
+            [FhirElement("seriesDoses", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element SeriesDoses
+            {
+                get { return _SeriesDoses; }
+                set { _SeriesDoses = value; OnPropertyChanged("SeriesDoses"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _SeriesDoses;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProtocolAppliedComponent;
@@ -498,8 +675,9 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
                     if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
-                    if(TargetDisease != null) dest.TargetDisease = (Hl7.Fhir.Model.CodeableConcept)TargetDisease.DeepCopy();
+                    if(TargetDisease != null) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(TargetDisease.DeepCopy());
                     if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.Element)DoseNumber.DeepCopy();
+                    if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.Element)SeriesDoses.DeepCopy();
                     return dest;
                 }
                 else
@@ -521,6 +699,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
                 if( !DeepComparable.Matches(TargetDisease, otherT.TargetDisease)) return false;
                 if( !DeepComparable.Matches(DoseNumber, otherT.DoseNumber)) return false;
+                if( !DeepComparable.Matches(SeriesDoses, otherT.SeriesDoses)) return false;
                 
                 return true;
             }
@@ -535,6 +714,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
                 if( !DeepComparable.IsExactly(TargetDisease, otherT.TargetDisease)) return false;
                 if( !DeepComparable.IsExactly(DoseNumber, otherT.DoseNumber)) return false;
+                if( !DeepComparable.IsExactly(SeriesDoses, otherT.SeriesDoses)) return false;
                 
                 return true;
             }
@@ -548,8 +728,9 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (SeriesElement != null) yield return SeriesElement;
                     if (Authority != null) yield return Authority;
-                    if (TargetDisease != null) yield return TargetDisease;
+                    foreach (var elem in TargetDisease) { if (elem != null) yield return elem; }
                     if (DoseNumber != null) yield return DoseNumber;
+                    if (SeriesDoses != null) yield return SeriesDoses;
                 }
             }
 
@@ -561,8 +742,9 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
                     if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                    if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
+                    foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", true, elem); }
                     if (DoseNumber != null) yield return new ElementValue("doseNumber", false, DoseNumber);
+                    if (SeriesDoses != null) yield return new ElementValue("seriesDoses", false, SeriesDoses);
                 }
             }
 
@@ -1047,9 +1229,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _FundingSource;
         
         /// <summary>
+        /// Details of a reaction that follows immunization
+        /// </summary>
+        [FhirElement("reaction", Order=350)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
+        {
+            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(); return _Reaction; }
+            set { _Reaction = value; OnPropertyChanged("Reaction"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Immunization.ReactionComponent> _Reaction;
+        
+        /// <summary>
         /// Protocol followed by the provider
         /// </summary>
-        [FhirElement("protocolApplied", Order=350)]
+        [FhirElement("protocolApplied", Order=360)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent> ProtocolApplied
@@ -1110,6 +1306,7 @@ namespace Hl7.Fhir.Model
                 if(Education != null) dest.Education = new List<Hl7.Fhir.Model.Immunization.EducationComponent>(Education.DeepCopy());
                 if(ProgramEligibility != null) dest.ProgramEligibility = new List<Hl7.Fhir.Model.CodeableConcept>(ProgramEligibility.DeepCopy());
                 if(FundingSource != null) dest.FundingSource = (Hl7.Fhir.Model.CodeableConcept)FundingSource.DeepCopy();
+                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(Reaction.DeepCopy());
                 if(ProtocolApplied != null) dest.ProtocolApplied = new List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent>(ProtocolApplied.DeepCopy());
                 return dest;
             }
@@ -1154,6 +1351,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Education, otherT.Education)) return false;
             if( !DeepComparable.Matches(ProgramEligibility, otherT.ProgramEligibility)) return false;
             if( !DeepComparable.Matches(FundingSource, otherT.FundingSource)) return false;
+            if( !DeepComparable.Matches(Reaction, otherT.Reaction)) return false;
             if( !DeepComparable.Matches(ProtocolApplied, otherT.ProtocolApplied)) return false;
             
             return true;
@@ -1191,6 +1389,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Education, otherT.Education)) return false;
             if( !DeepComparable.IsExactly(ProgramEligibility, otherT.ProgramEligibility)) return false;
             if( !DeepComparable.IsExactly(FundingSource, otherT.FundingSource)) return false;
+            if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
             if( !DeepComparable.IsExactly(ProtocolApplied, otherT.ProtocolApplied)) return false;
             
             return true;
@@ -1228,6 +1427,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Education) { if (elem != null) yield return elem; }
 				foreach (var elem in ProgramEligibility) { if (elem != null) yield return elem; }
 				if (FundingSource != null) yield return FundingSource;
+				foreach (var elem in Reaction) { if (elem != null) yield return elem; }
 				foreach (var elem in ProtocolApplied) { if (elem != null) yield return elem; }
             }
         }
@@ -1264,6 +1464,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Education) { if (elem != null) yield return new ElementValue("education", true, elem); }
                 foreach (var elem in ProgramEligibility) { if (elem != null) yield return new ElementValue("programEligibility", true, elem); }
                 if (FundingSource != null) yield return new ElementValue("fundingSource", false, FundingSource);
+                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", true, elem); }
                 foreach (var elem in ProtocolApplied) { if (elem != null) yield return new ElementValue("protocolApplied", true, elem); }
             }
         }

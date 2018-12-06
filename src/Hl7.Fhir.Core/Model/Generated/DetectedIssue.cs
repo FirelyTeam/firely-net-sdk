@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -82,6 +82,114 @@ namespace Hl7.Fhir.Model
             Low,
         }
 
+        [FhirType("EvidenceComponent")]
+        [DataContract]
+        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "EvidenceComponent"; } }
+            
+            /// <summary>
+            /// Manifestation
+            /// </summary>
+            [FhirElement("code", Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Code
+            {
+                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Code;
+            
+            /// <summary>
+            /// Supporting information
+            /// </summary>
+            [FhirElement("detail", Order=50)]
+            [CLSCompliant(false)]
+			[References()]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Detail
+            {
+                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
+                set { _Detail = value; OnPropertyChanged("Detail"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Detail;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as EvidenceComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
+                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new EvidenceComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as EvidenceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as EvidenceComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    foreach (var elem in Code) { if (elem != null) yield return elem; }
+                    foreach (var elem in Detail) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
+                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", true, elem); }
+                }
+            }
+
+            
+        }
+        
+        
         [FhirType("MitigationComponent")]
         [DataContract]
         public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -140,7 +248,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("author", Order=60)]
             [CLSCompliant(false)]
-			[References("Practitioner")]
+			[References("Practitioner","PractitionerRole")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Author
             {
@@ -276,15 +384,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=110)]
+        [FhirElement("code", InSummary=true, Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
+        public Hl7.Fhir.Model.CodeableConcept Code
         {
-            get { return _Category; }
-            set { _Category = value; OnPropertyChanged("Category"); }
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Category;
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// high | moderate | low
@@ -336,41 +444,24 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When identified
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=140)]
+        [FhirElement("identified", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement
+        public Hl7.Fhir.Model.Element Identified
         {
-            get { return _DateElement; }
-            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+            get { return _Identified; }
+            set { _Identified = value; OnPropertyChanged("Identified"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _DateElement;
-        
-        /// <summary>
-        /// When identified
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Date
-        {
-            get { return DateElement != null ? DateElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DateElement = null; 
-                else
-                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Date");
-            }
-        }
+        private Hl7.Fhir.Model.Element _Identified;
         
         /// <summary>
         /// The provider or device that identified the issue
         /// </summary>
         [FhirElement("author", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Practitioner","Device")]
+		[References("Practitioner","PractitionerRole","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -397,9 +488,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Implicated;
         
         /// <summary>
+        /// Supporting evidence
+        /// </summary>
+        [FhirElement("evidence", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent> Evidence
+        {
+            get { if(_Evidence==null) _Evidence = new List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent>(); return _Evidence; }
+            set { _Evidence = value; OnPropertyChanged("Evidence"); }
+        }
+        
+        private List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent> _Evidence;
+        
+        /// <summary>
         /// Description and context
         /// </summary>
-        [FhirElement("detail", Order=170)]
+        [FhirElement("detail", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DetailElement
         {
@@ -431,7 +536,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Authority for issue
         /// </summary>
-        [FhirElement("reference", Order=180)]
+        [FhirElement("reference", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri ReferenceElement
         {
@@ -463,7 +568,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Step taken to address
         /// </summary>
-        [FhirElement("mitigation", Order=190)]
+        [FhirElement("mitigation", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation
@@ -490,12 +595,13 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>)StatusElement.DeepCopy();
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>)SeverityElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+                if(Identified != null) dest.Identified = (Hl7.Fhir.Model.Element)Identified.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.ResourceReference>(Implicated.DeepCopy());
+                if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent>(Evidence.DeepCopy());
                 if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
                 if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>(Mitigation.DeepCopy());
@@ -518,12 +624,13 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(Identified, otherT.Identified)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Implicated, otherT.Implicated)) return false;
+            if( !DeepComparable.Matches(Evidence, otherT.Evidence)) return false;
             if( !DeepComparable.Matches(DetailElement, otherT.DetailElement)) return false;
             if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
             if( !DeepComparable.Matches(Mitigation, otherT.Mitigation)) return false;
@@ -539,12 +646,13 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(Identified, otherT.Identified)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Implicated, otherT.Implicated)) return false;
+            if( !DeepComparable.IsExactly(Evidence, otherT.Evidence)) return false;
             if( !DeepComparable.IsExactly(DetailElement, otherT.DetailElement)) return false;
             if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
             if( !DeepComparable.IsExactly(Mitigation, otherT.Mitigation)) return false;
@@ -560,12 +668,13 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
-				if (Category != null) yield return Category;
+				if (Code != null) yield return Code;
 				if (SeverityElement != null) yield return SeverityElement;
 				if (Patient != null) yield return Patient;
-				if (DateElement != null) yield return DateElement;
+				if (Identified != null) yield return Identified;
 				if (Author != null) yield return Author;
 				foreach (var elem in Implicated) { if (elem != null) yield return elem; }
+				foreach (var elem in Evidence) { if (elem != null) yield return elem; }
 				if (DetailElement != null) yield return DetailElement;
 				if (ReferenceElement != null) yield return ReferenceElement;
 				foreach (var elem in Mitigation) { if (elem != null) yield return elem; }
@@ -580,12 +689,13 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
                 if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (Code != null) yield return new ElementValue("code", false, Code);
                 if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
                 if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Identified != null) yield return new ElementValue("identified", false, Identified);
                 if (Author != null) yield return new ElementValue("author", false, Author);
                 foreach (var elem in Implicated) { if (elem != null) yield return new ElementValue("implicated", true, elem); }
+                foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", true, elem); }
                 if (DetailElement != null) yield return new ElementValue("detail", false, DetailElement);
                 if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
                 foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", true, elem); }

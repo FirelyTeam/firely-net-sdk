@@ -37,7 +37,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "BackboneElement"; } }
         
         /// <summary>
-        /// Extensions that cannot be ignored if unrecognized
+        /// Extensions that cannot be ignored even if unrecognized
         /// </summary>
         [FhirElement("modifierExtension", InSummary=true, Order=30)]
         [Cardinality(Min=0,Max=-1)]

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> _AllowedResponse;
         
         /// <summary>
-        /// Canonical URL for a GraphDefinition
+        /// Canonical reference to a GraphDefinition
         /// </summary>
         [FhirElement("graph", Order=320)]
         [Cardinality(Min=0,Max=-1)]
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Canonical> _GraphElement;
         
         /// <summary>
-        /// Canonical URL for a GraphDefinition
+        /// Canonical reference to a GraphDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

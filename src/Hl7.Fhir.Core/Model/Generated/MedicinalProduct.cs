@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -670,9 +670,22 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
+            /// The type of special designation, e.g. orphan drug, minor use
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
             /// The intended use of the product, e.g. prevention, treatment
             /// </summary>
-            [FhirElement("intendedUse", InSummary=true, Order=50)]
+            [FhirElement("intendedUse", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept IntendedUse
             {
@@ -685,20 +698,22 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Condition for which the medicinal use applies
             /// </summary>
-            [FhirElement("indication", InSummary=true, Order=60)]
+            [FhirElement("indication", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Indication
+            public Hl7.Fhir.Model.Element Indication
             {
                 get { return _Indication; }
                 set { _Indication = value; OnPropertyChanged("Indication"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Indication;
+            private Hl7.Fhir.Model.Element _Indication;
             
             /// <summary>
             /// For example granted, pending, expired or withdrawn
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=70)]
+            [FhirElement("status", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Status
             {
@@ -711,7 +726,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date when the designation was granted
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=80)]
+            [FhirElement("date", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
@@ -743,7 +758,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Animal species for which this applies
             /// </summary>
-            [FhirElement("species", InSummary=true, Order=90)]
+            [FhirElement("species", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Species
             {
@@ -761,8 +776,9 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopy();
-                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.CodeableConcept)Indication.DeepCopy();
+                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Element)Indication.DeepCopy();
                     if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                     if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();
@@ -784,6 +800,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(IntendedUse, otherT.IntendedUse)) return false;
                 if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
                 if( !DeepComparable.Matches(Status, otherT.Status)) return false;
@@ -800,6 +817,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(IntendedUse, otherT.IntendedUse)) return false;
                 if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
                 if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
@@ -817,6 +835,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+                    if (Type != null) yield return Type;
                     if (IntendedUse != null) yield return IntendedUse;
                     if (Indication != null) yield return Indication;
                     if (Status != null) yield return Status;
@@ -832,6 +851,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", false, Type);
                     if (IntendedUse != null) yield return new ElementValue("intendedUse", false, IntendedUse);
                     if (Indication != null) yield return new ElementValue("indication", false, Indication);
                     if (Status != null) yield return new ElementValue("status", false, Status);
@@ -845,7 +865,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Business idenfifier for this product. Could be an MPID
+        /// Business identifier for this product. Could be an MPID
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -898,9 +918,22 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _CombinedPharmaceuticalDoseForm;
         
         /// <summary>
+        /// The legal status of supply of the medicinal product as classified by the regulator
+        /// </summary>
+        [FhirElement("legalStatusOfSupply", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept LegalStatusOfSupply
+        {
+            get { return _LegalStatusOfSupply; }
+            set { _LegalStatusOfSupply = value; OnPropertyChanged("LegalStatusOfSupply"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _LegalStatusOfSupply;
+        
+        /// <summary>
         /// Whether the Medicinal Product is subject to additional monitoring for regulatory reasons
         /// </summary>
-        [FhirElement("additionalMonitoringIndicator", InSummary=true, Order=130)]
+        [FhirElement("additionalMonitoringIndicator", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept AdditionalMonitoringIndicator
         {
@@ -913,7 +946,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether the Medicinal Product is subject to special measures for regulatory reasons
         /// </summary>
-        [FhirElement("specialMeasures", InSummary=true, Order=140)]
+        [FhirElement("specialMeasures", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> SpecialMeasuresElement
@@ -946,7 +979,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If authorised for use in children
         /// </summary>
-        [FhirElement("paediatricUseIndicator", InSummary=true, Order=150)]
+        [FhirElement("paediatricUseIndicator", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PaediatricUseIndicator
         {
@@ -959,7 +992,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Allows the product to be classified by various systems
         /// </summary>
-        [FhirElement("productClassification", InSummary=true, Order=160)]
+        [FhirElement("productClassification", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ProductClassification
@@ -973,7 +1006,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Marketing status of the medicinal product, in contrast to marketing authorizaton
         /// </summary>
-        [FhirElement("marketingStatus", InSummary=true, Order=170)]
+        [FhirElement("marketingStatus", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<MarketingStatus> MarketingStatus
@@ -985,40 +1018,9 @@ namespace Hl7.Fhir.Model
         private List<MarketingStatus> _MarketingStatus;
         
         /// <summary>
-        /// Product regulatory authorization
-        /// </summary>
-        [FhirElement("marketingAuthorization", InSummary=true, Order=180)]
-        [CLSCompliant(false)]
-		[References("MedicinalProductAuthorization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference MarketingAuthorization
-        {
-            get { return _MarketingAuthorization; }
-            set { _MarketingAuthorization = value; OnPropertyChanged("MarketingAuthorization"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _MarketingAuthorization;
-        
-        /// <summary>
-        /// Package representation for the product
-        /// </summary>
-        [FhirElement("packagedMedicinalProduct", InSummary=true, Order=190)]
-        [CLSCompliant(false)]
-		[References("MedicinalProductPackaged")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> PackagedMedicinalProduct
-        {
-            get { if(_PackagedMedicinalProduct==null) _PackagedMedicinalProduct = new List<Hl7.Fhir.Model.ResourceReference>(); return _PackagedMedicinalProduct; }
-            set { _PackagedMedicinalProduct = value; OnPropertyChanged("PackagedMedicinalProduct"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _PackagedMedicinalProduct;
-        
-        /// <summary>
         /// Pharmaceutical aspects of product
         /// </summary>
-        [FhirElement("pharmaceuticalProduct", InSummary=true, Order=200)]
+        [FhirElement("pharmaceuticalProduct", InSummary=true, Order=190)]
         [CLSCompliant(false)]
 		[References("MedicinalProductPharmaceutical")]
         [Cardinality(Min=0,Max=-1)]
@@ -1032,73 +1034,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _PharmaceuticalProduct;
         
         /// <summary>
-        /// Clinical contraindications, reasons for not giving this
+        /// Package representation for the product
         /// </summary>
-        [FhirElement("contraindication", InSummary=true, Order=210)]
+        [FhirElement("packagedMedicinalProduct", InSummary=true, Order=200)]
         [CLSCompliant(false)]
-		[References("MedicinalProductContraindication")]
+		[References("MedicinalProductPackaged")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Contraindication
+        public List<Hl7.Fhir.Model.ResourceReference> PackagedMedicinalProduct
         {
-            get { if(_Contraindication==null) _Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contraindication; }
-            set { _Contraindication = value; OnPropertyChanged("Contraindication"); }
+            get { if(_PackagedMedicinalProduct==null) _PackagedMedicinalProduct = new List<Hl7.Fhir.Model.ResourceReference>(); return _PackagedMedicinalProduct; }
+            set { _PackagedMedicinalProduct = value; OnPropertyChanged("PackagedMedicinalProduct"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Contraindication;
-        
-        /// <summary>
-        /// Clinical interactions with other medications or substances
-        /// </summary>
-        [FhirElement("interaction", InSummary=true, Order=220)]
-        [CLSCompliant(false)]
-		[References("MedicinalProductInteraction")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Interaction
-        {
-            get { if(_Interaction==null) _Interaction = new List<Hl7.Fhir.Model.ResourceReference>(); return _Interaction; }
-            set { _Interaction = value; OnPropertyChanged("Interaction"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Interaction;
-        
-        /// <summary>
-        /// Clinical reason for use
-        /// </summary>
-        [FhirElement("therapeuticIndication", InSummary=true, Order=230)]
-        [CLSCompliant(false)]
-		[References("MedicinalProductIndication")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> TherapeuticIndication
-        {
-            get { if(_TherapeuticIndication==null) _TherapeuticIndication = new List<Hl7.Fhir.Model.ResourceReference>(); return _TherapeuticIndication; }
-            set { _TherapeuticIndication = value; OnPropertyChanged("TherapeuticIndication"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _TherapeuticIndication;
-        
-        /// <summary>
-        /// Potential clinical unwanted effects of use
-        /// </summary>
-        [FhirElement("undesirableEffect", InSummary=true, Order=240)]
-        [CLSCompliant(false)]
-		[References("MedicinalProductUndesirableEffect")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> UndesirableEffect
-        {
-            get { if(_UndesirableEffect==null) _UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(); return _UndesirableEffect; }
-            set { _UndesirableEffect = value; OnPropertyChanged("UndesirableEffect"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _UndesirableEffect;
+        private List<Hl7.Fhir.Model.ResourceReference> _PackagedMedicinalProduct;
         
         /// <summary>
         /// Supporting documentation, typically for regulatory submission
         /// </summary>
-        [FhirElement("attachedDocument", InSummary=true, Order=250)]
+        [FhirElement("attachedDocument", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -1114,7 +1068,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A master file for to the medicinal product (e.g. Pharmacovigilance System Master File)
         /// </summary>
-        [FhirElement("masterFile", InSummary=true, Order=260)]
+        [FhirElement("masterFile", InSummary=true, Order=220)]
         [CLSCompliant(false)]
 		[References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -1130,7 +1084,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A product specific contact, person (in a role), or an organization
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=270)]
+        [FhirElement("contact", InSummary=true, Order=230)]
         [CLSCompliant(false)]
 		[References("Organization","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
@@ -1146,7 +1100,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical trials or studies that this product is involved in
         /// </summary>
-        [FhirElement("clinicalTrial", InSummary=true, Order=280)]
+        [FhirElement("clinicalTrial", InSummary=true, Order=240)]
         [CLSCompliant(false)]
 		[References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
@@ -1162,7 +1116,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The product's name, including full name and possibly coded parts
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=290)]
+        [FhirElement("name", InSummary=true, Order=250)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicinalProduct.NameComponent> Name
@@ -1176,7 +1130,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference to another product, e.g. for linking authorised to investigational product
         /// </summary>
-        [FhirElement("crossReference", InSummary=true, Order=300)]
+        [FhirElement("crossReference", InSummary=true, Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> CrossReference
@@ -1190,7 +1144,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An operation applied to the product, for manufacturing or adminsitrative purpose
         /// </summary>
-        [FhirElement("manufacturingBusinessOperation", InSummary=true, Order=310)]
+        [FhirElement("manufacturingBusinessOperation", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicinalProduct.ManufacturingBusinessOperationComponent> ManufacturingBusinessOperation
@@ -1204,7 +1158,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates if the medicinal product has an orphan designation for the treatment of a rare disease
         /// </summary>
-        [FhirElement("specialDesignation", InSummary=true, Order=320)]
+        [FhirElement("specialDesignation", InSummary=true, Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent> SpecialDesignation
@@ -1233,18 +1187,14 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Domain != null) dest.Domain = (Hl7.Fhir.Model.Coding)Domain.DeepCopy();
                 if(CombinedPharmaceuticalDoseForm != null) dest.CombinedPharmaceuticalDoseForm = (Hl7.Fhir.Model.CodeableConcept)CombinedPharmaceuticalDoseForm.DeepCopy();
+                if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)LegalStatusOfSupply.DeepCopy();
                 if(AdditionalMonitoringIndicator != null) dest.AdditionalMonitoringIndicator = (Hl7.Fhir.Model.CodeableConcept)AdditionalMonitoringIndicator.DeepCopy();
                 if(SpecialMeasuresElement != null) dest.SpecialMeasuresElement = new List<Hl7.Fhir.Model.FhirString>(SpecialMeasuresElement.DeepCopy());
                 if(PaediatricUseIndicator != null) dest.PaediatricUseIndicator = (Hl7.Fhir.Model.CodeableConcept)PaediatricUseIndicator.DeepCopy();
                 if(ProductClassification != null) dest.ProductClassification = new List<Hl7.Fhir.Model.CodeableConcept>(ProductClassification.DeepCopy());
                 if(MarketingStatus != null) dest.MarketingStatus = new List<MarketingStatus>(MarketingStatus.DeepCopy());
-                if(MarketingAuthorization != null) dest.MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference)MarketingAuthorization.DeepCopy();
-                if(PackagedMedicinalProduct != null) dest.PackagedMedicinalProduct = new List<Hl7.Fhir.Model.ResourceReference>(PackagedMedicinalProduct.DeepCopy());
                 if(PharmaceuticalProduct != null) dest.PharmaceuticalProduct = new List<Hl7.Fhir.Model.ResourceReference>(PharmaceuticalProduct.DeepCopy());
-                if(Contraindication != null) dest.Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(Contraindication.DeepCopy());
-                if(Interaction != null) dest.Interaction = new List<Hl7.Fhir.Model.ResourceReference>(Interaction.DeepCopy());
-                if(TherapeuticIndication != null) dest.TherapeuticIndication = new List<Hl7.Fhir.Model.ResourceReference>(TherapeuticIndication.DeepCopy());
-                if(UndesirableEffect != null) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(UndesirableEffect.DeepCopy());
+                if(PackagedMedicinalProduct != null) dest.PackagedMedicinalProduct = new List<Hl7.Fhir.Model.ResourceReference>(PackagedMedicinalProduct.DeepCopy());
                 if(AttachedDocument != null) dest.AttachedDocument = new List<Hl7.Fhir.Model.ResourceReference>(AttachedDocument.DeepCopy());
                 if(MasterFile != null) dest.MasterFile = new List<Hl7.Fhir.Model.ResourceReference>(MasterFile.DeepCopy());
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ResourceReference>(Contact.DeepCopy());
@@ -1274,18 +1224,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Domain, otherT.Domain)) return false;
             if( !DeepComparable.Matches(CombinedPharmaceuticalDoseForm, otherT.CombinedPharmaceuticalDoseForm)) return false;
+            if( !DeepComparable.Matches(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
             if( !DeepComparable.Matches(AdditionalMonitoringIndicator, otherT.AdditionalMonitoringIndicator)) return false;
             if( !DeepComparable.Matches(SpecialMeasuresElement, otherT.SpecialMeasuresElement)) return false;
             if( !DeepComparable.Matches(PaediatricUseIndicator, otherT.PaediatricUseIndicator)) return false;
             if( !DeepComparable.Matches(ProductClassification, otherT.ProductClassification)) return false;
             if( !DeepComparable.Matches(MarketingStatus, otherT.MarketingStatus)) return false;
-            if( !DeepComparable.Matches(MarketingAuthorization, otherT.MarketingAuthorization)) return false;
-            if( !DeepComparable.Matches(PackagedMedicinalProduct, otherT.PackagedMedicinalProduct)) return false;
             if( !DeepComparable.Matches(PharmaceuticalProduct, otherT.PharmaceuticalProduct)) return false;
-            if( !DeepComparable.Matches(Contraindication, otherT.Contraindication)) return false;
-            if( !DeepComparable.Matches(Interaction, otherT.Interaction)) return false;
-            if( !DeepComparable.Matches(TherapeuticIndication, otherT.TherapeuticIndication)) return false;
-            if( !DeepComparable.Matches(UndesirableEffect, otherT.UndesirableEffect)) return false;
+            if( !DeepComparable.Matches(PackagedMedicinalProduct, otherT.PackagedMedicinalProduct)) return false;
             if( !DeepComparable.Matches(AttachedDocument, otherT.AttachedDocument)) return false;
             if( !DeepComparable.Matches(MasterFile, otherT.MasterFile)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
@@ -1308,18 +1254,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Domain, otherT.Domain)) return false;
             if( !DeepComparable.IsExactly(CombinedPharmaceuticalDoseForm, otherT.CombinedPharmaceuticalDoseForm)) return false;
+            if( !DeepComparable.IsExactly(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
             if( !DeepComparable.IsExactly(AdditionalMonitoringIndicator, otherT.AdditionalMonitoringIndicator)) return false;
             if( !DeepComparable.IsExactly(SpecialMeasuresElement, otherT.SpecialMeasuresElement)) return false;
             if( !DeepComparable.IsExactly(PaediatricUseIndicator, otherT.PaediatricUseIndicator)) return false;
             if( !DeepComparable.IsExactly(ProductClassification, otherT.ProductClassification)) return false;
             if( !DeepComparable.IsExactly(MarketingStatus, otherT.MarketingStatus)) return false;
-            if( !DeepComparable.IsExactly(MarketingAuthorization, otherT.MarketingAuthorization)) return false;
-            if( !DeepComparable.IsExactly(PackagedMedicinalProduct, otherT.PackagedMedicinalProduct)) return false;
             if( !DeepComparable.IsExactly(PharmaceuticalProduct, otherT.PharmaceuticalProduct)) return false;
-            if( !DeepComparable.IsExactly(Contraindication, otherT.Contraindication)) return false;
-            if( !DeepComparable.IsExactly(Interaction, otherT.Interaction)) return false;
-            if( !DeepComparable.IsExactly(TherapeuticIndication, otherT.TherapeuticIndication)) return false;
-            if( !DeepComparable.IsExactly(UndesirableEffect, otherT.UndesirableEffect)) return false;
+            if( !DeepComparable.IsExactly(PackagedMedicinalProduct, otherT.PackagedMedicinalProduct)) return false;
             if( !DeepComparable.IsExactly(AttachedDocument, otherT.AttachedDocument)) return false;
             if( !DeepComparable.IsExactly(MasterFile, otherT.MasterFile)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
@@ -1342,18 +1284,14 @@ namespace Hl7.Fhir.Model
 				if (Type != null) yield return Type;
 				if (Domain != null) yield return Domain;
 				if (CombinedPharmaceuticalDoseForm != null) yield return CombinedPharmaceuticalDoseForm;
+				if (LegalStatusOfSupply != null) yield return LegalStatusOfSupply;
 				if (AdditionalMonitoringIndicator != null) yield return AdditionalMonitoringIndicator;
 				foreach (var elem in SpecialMeasuresElement) { if (elem != null) yield return elem; }
 				if (PaediatricUseIndicator != null) yield return PaediatricUseIndicator;
 				foreach (var elem in ProductClassification) { if (elem != null) yield return elem; }
 				foreach (var elem in MarketingStatus) { if (elem != null) yield return elem; }
-				if (MarketingAuthorization != null) yield return MarketingAuthorization;
-				foreach (var elem in PackagedMedicinalProduct) { if (elem != null) yield return elem; }
 				foreach (var elem in PharmaceuticalProduct) { if (elem != null) yield return elem; }
-				foreach (var elem in Contraindication) { if (elem != null) yield return elem; }
-				foreach (var elem in Interaction) { if (elem != null) yield return elem; }
-				foreach (var elem in TherapeuticIndication) { if (elem != null) yield return elem; }
-				foreach (var elem in UndesirableEffect) { if (elem != null) yield return elem; }
+				foreach (var elem in PackagedMedicinalProduct) { if (elem != null) yield return elem; }
 				foreach (var elem in AttachedDocument) { if (elem != null) yield return elem; }
 				foreach (var elem in MasterFile) { if (elem != null) yield return elem; }
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
@@ -1375,18 +1313,14 @@ namespace Hl7.Fhir.Model
                 if (Type != null) yield return new ElementValue("type", false, Type);
                 if (Domain != null) yield return new ElementValue("domain", false, Domain);
                 if (CombinedPharmaceuticalDoseForm != null) yield return new ElementValue("combinedPharmaceuticalDoseForm", false, CombinedPharmaceuticalDoseForm);
+                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", false, LegalStatusOfSupply);
                 if (AdditionalMonitoringIndicator != null) yield return new ElementValue("additionalMonitoringIndicator", false, AdditionalMonitoringIndicator);
                 foreach (var elem in SpecialMeasuresElement) { if (elem != null) yield return new ElementValue("specialMeasures", true, elem); }
                 if (PaediatricUseIndicator != null) yield return new ElementValue("paediatricUseIndicator", false, PaediatricUseIndicator);
                 foreach (var elem in ProductClassification) { if (elem != null) yield return new ElementValue("productClassification", true, elem); }
                 foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", true, elem); }
-                if (MarketingAuthorization != null) yield return new ElementValue("marketingAuthorization", false, MarketingAuthorization);
-                foreach (var elem in PackagedMedicinalProduct) { if (elem != null) yield return new ElementValue("packagedMedicinalProduct", true, elem); }
                 foreach (var elem in PharmaceuticalProduct) { if (elem != null) yield return new ElementValue("pharmaceuticalProduct", true, elem); }
-                foreach (var elem in Contraindication) { if (elem != null) yield return new ElementValue("contraindication", true, elem); }
-                foreach (var elem in Interaction) { if (elem != null) yield return new ElementValue("interaction", true, elem); }
-                foreach (var elem in TherapeuticIndication) { if (elem != null) yield return new ElementValue("therapeuticIndication", true, elem); }
-                foreach (var elem in UndesirableEffect) { if (elem != null) yield return new ElementValue("undesirableEffect", true, elem); }
+                foreach (var elem in PackagedMedicinalProduct) { if (elem != null) yield return new ElementValue("packagedMedicinalProduct", true, elem); }
                 foreach (var elem in AttachedDocument) { if (elem != null) yield return new ElementValue("attachedDocument", true, elem); }
                 foreach (var elem in MasterFile) { if (elem != null) yield return new ElementValue("masterFile", true, elem); }
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }

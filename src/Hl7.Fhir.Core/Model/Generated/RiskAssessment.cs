@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -395,17 +395,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where was assessment performed?
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=160)]
+        [FhirElement("encounter", InSummary=true, Order=160)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// When was assessment made?
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=190)]
         [CLSCompliant(false)]
-		[References("Practitioner","Device")]
+		[References("Practitioner","PractitionerRole","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
 				if (Method != null) yield return Method;
 				if (Code != null) yield return Code;
 				if (Subject != null) yield return Subject;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (Occurrence != null) yield return Occurrence;
 				if (Condition != null) yield return Condition;
 				if (Performer != null) yield return Performer;
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
                 if (Method != null) yield return new ElementValue("method", false, Method);
                 if (Code != null) yield return new ElementValue("code", false, Code);
                 if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
                 if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
                 if (Condition != null) yield return new ElementValue("condition", false, Condition);
                 if (Performer != null) yield return new ElementValue("performer", false, Performer);

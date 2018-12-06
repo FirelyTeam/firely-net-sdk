@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Enrol in coverage
+    /// Enroll in coverage
     /// </summary>
     [FhirType("EnrollmentRequest", IsResource=true)]
     [DataContract]

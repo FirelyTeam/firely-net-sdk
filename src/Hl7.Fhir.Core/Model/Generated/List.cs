@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Information summarized from a list of other resources
+    /// A list is a curated collection of resources
     /// </summary>
     [FhirType("List", IsResource=true)]
     [DataContract]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
             Expression = "mode = 'working' or entry.date.empty()",
             Key = "lst-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A date can only be used if the mode of the list is \"working\"",
+            Human = "An entry date can only be used if the mode of the list is \"working\"",
             Xpath = "(f:mode/@value = 'working') or not(exists(f:entry/f:date))"
         };
 
