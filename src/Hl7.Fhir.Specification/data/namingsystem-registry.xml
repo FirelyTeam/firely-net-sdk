@@ -2217,4 +2217,40 @@
       </NamingSystem>
     </resource>
   </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/dicom-uid" />
+    <resource>
+      <NamingSystem>
+        <id value="dicom-uid" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="DICOM Unique Id" />
+        <status value="active" />
+        <kind value="identifier" />
+        <!-- Removed date -->
+        <publisher value="DICOM" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="https://www.dicomstandard.org/" />
+          </telecom>
+        </contact>
+        <description value="Identifiers of DICOM Studies" />
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="001" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:dicom:uid" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
 </Bundle>
