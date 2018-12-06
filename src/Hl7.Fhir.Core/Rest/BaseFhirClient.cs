@@ -1048,10 +1048,10 @@ namespace Hl7.Fhir.Rest
                 // Mmmm...cannot even read the body. Probably not so good.
                 throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
             }
-
-            if (!conf.FhirVersion.StartsWith(ModelInfo.Version))
+            string actualServerVersion = ((ISystemAndCode)conf?.FhirVersionElement)?.Code;
+            if (String.IsNullOrEmpty(actualServerVersion) || !actualServerVersion.StartsWith(ModelInfo.Version))
             {
-                throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, conf.FhirVersion));
+                throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, actualServerVersion));
             }
         }
 
