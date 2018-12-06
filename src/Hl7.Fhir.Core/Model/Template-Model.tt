@@ -63,7 +63,7 @@
 			{
 				enums.Add(valuesetUrl, "Hl7.Fhir.Model." + enumName);
 				generatedSets.Add(enumName);
-				WriteLine("// Generated Shared Enumeration: " + enumName);
+				WriteLine("// Generated Shared Enumeration: "+enumName+" ("+valuesetUrl+")");
 				foreach (XmlElement node in nodePaths)
                 {
 					WriteLine("	// Used in model class (resource): " + node.SelectSingleNode("fhir:path/@value", nsR).Value);
@@ -90,6 +90,10 @@
 			string resourceDescription = "";
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR).Value;
+			if (!string.IsNullOrEmpty(resourceDescription))
+			{
+				resourceDescription = resourceDescription.Replace("\n", "\n	/// ");
+			}
 			if (resourceName == "Resource" 
 			//	|| resourceName == "DomainResource"
 				)
@@ -177,6 +181,8 @@ if(!abstractType) {
         public override string TypeName { get { return "<#= resourceName #>"; } }
         
 <#
+			System.Collections.Generic.List<string> generatedSetsLocal = new System.Collections.Generic.List<string>();
+
 			foreach (System.Xml.XmlNode eProp in 
 				(e as System.Xml.XmlElement).SelectNodes( //and fhir:min/@value = '1' and fhir:max/@value = '1' 
 				"fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes']]", nsR))
@@ -213,7 +219,9 @@ if(!abstractType) {
 
 					if (generatedSets.Contains(enumName))
 						continue;
-					generatedSets.Add(enumName);
+					if (generatedSetsLocal.Contains(enumName))
+						continue;
+					generatedSetsLocal.Add(enumName);
 					enums.Add(valuesetUrl, "Hl7.Fhir.Model." + resourceName + "." + enumName);
 					if (enumName == "ParameterTypesusedinOperationDefinitions")
                     {
@@ -1486,7 +1494,9 @@ if (!abstractType){
 
 					if (generatedSets.Contains(enumName))
 						continue;
-					generatedSets.Add(enumName);
+					if (enums.ContainsKey(valuesetUrl))
+						continue;
+					// generatedSets.Add(enumName);
 					enums.Add(valuesetUrl, "Hl7.Fhir.Model." + resourceName + "." + enumName);
 					if (enumName == "ParameterTypesusedinOperationDefinitions")
                     {
