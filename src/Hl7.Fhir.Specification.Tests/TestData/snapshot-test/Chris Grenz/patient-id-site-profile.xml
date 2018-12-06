@@ -15,8 +15,10 @@
   <kind value="primitive-type" />
   <type value="Extension" />
   <abstract value="false" />
-  <contextType value="resource" />
-  <context value="Patient.identifier" />
+  <context>
+    <type value="fhirpath" />
+    <expression value="Patient.identifier" />
+  </context>
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
   <derivation value="constraint" />
   <snapshot>
@@ -271,7 +273,7 @@
       </constraint>
       <binding>
         <strength value="required" />
-        <valueSetUri value="http://example.com/fhir/localsystems/patient-id-site" />
+        <valueSet value="http://example.com/fhir/localsystems/patient-id-site" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -374,7 +376,7 @@
       </constraint>
       <binding>
         <strength value="required" />
-        <valueSetUri value="http://example.com/fhir/localsystems/patient-id-site" />
+        <valueSet value="http://example.com/fhir/localsystems/patient-id-site" />
       </binding>
       <mapping>
         <identity value="rim" />
@@ -400,7 +402,7 @@
       <min value="1" />
       <binding>
         <strength value="required" />
-        <valueSetUri value="http://example.com/fhir/localsystems/patient-id-site" />
+        <valueSet value="http://example.com/fhir/localsystems/patient-id-site" />
       </binding>
     </element>
     <element>
