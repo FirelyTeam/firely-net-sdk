@@ -139,7 +139,16 @@ namespace HealthConnex.Fhir.Server.Tests
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
             var nav = new PocoNavigator(resource);
-            var results = nav.Select(index.Expression, new FhirEvaluationContext(nav));
+            IEnumerable<IElementNavigator> results;
+            try
+            {
+                results = nav.Select(index.Expression, new FhirEvaluationContext(nav));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"Failed processing search expression {index.Name}: {index.Expression}");
+                throw ex;
+            }
             if (results.Count() > 0)
             {
                 foreach (var t2 in results)
