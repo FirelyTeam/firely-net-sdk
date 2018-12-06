@@ -112,10 +112,13 @@ namespace Hl7.Fhir.Model
                 if (model.Predicate(expression, new EvaluationContext(model)))
                     return true;
 
+                OperationOutcome.IssueSeverity severity = OperationOutcome.IssueSeverity.Error;
+                if (invariantRule.Severity == ElementDefinition.ConstraintSeverity.Warning)
+                    severity = OperationOutcome.IssueSeverity.Warning;
                 result.Issue.Add(new OperationOutcome.IssueComponent()
                 {
                     Code = OperationOutcome.IssueType.Invariant,
-                    Severity = OperationOutcome.IssueSeverity.Error,
+                    Severity = severity,
                     Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
                     Diagnostics = expression
                 });
