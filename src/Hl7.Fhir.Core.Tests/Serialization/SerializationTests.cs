@@ -672,20 +672,24 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(xml);
         }
 
+        /// <summary>
+        /// This test verifies that the parser can handle a backbone element that has a property of resourceType
+        /// (only found in the ExampleScenario resource in R4 - used to be in Claim)
+        /// </summary>
         [TestMethod]
-        public void TestClaimJsonSerialization()
+        public void TestExampleScenarioJsonSerialization()
         {
-            var c = new Claim();
-            c.Payee = new Claim.PayeeComponent();
-            c.Payee.Type = new CodeableConcept(null, "test");
-            c.Payee.Resource = new Coding(null, "test2");
-            c.Payee.Party = new ResourceReference("Practitioner/example", "Example, Dr John");
+            var es = new ExampleScenario();
+            es.Instance.Add(new ExampleScenario.InstanceComponent()
+            {
+                ResourceType = ResourceType.ExampleScenario,
+                Name = "brian"
+            });
 
-            string json = FhirJsonSerializer.SerializeToString(c);
-            var c2 = new FhirJsonParser().Parse<Claim>(json);
-            Assert.AreEqual("test", c2.Payee.Type.Coding[0].Code);
-            Assert.AreEqual("test2", c2.Payee.Resource.Code);
-            Assert.AreEqual("Practitioner/example", c2.Payee.Party.Reference);
+            string json = FhirJsonSerializer.SerializeToString(es);
+            var c2 = new FhirJsonParser().Parse<ExampleScenario>(json);
+            Assert.AreEqual("brian", c2.Instance[0].Name);
+            Assert.AreEqual("ExampleScenario", c2.Instance[0].ResourceTypeElement.ObjectValue as string);
         }
 
         [FhirType("Bundle", IsResource = true)]
