@@ -151,17 +151,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 return true;
             if (file.Contains(".diff"))
                 return true;
-            if (file.EndsWith("package.json"))
-                return true;
-            if (file.Contains("plandefinition-example-cardiology-os"))
-                return true; // this example has some issues to say the least
             if (file.Contains("examplescenario-example"))
-                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
-            if (file.Contains("medicationadministration0306"))
-                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
-            if (file.Contains("medicationadministration0307"))
-                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
-            if (file.Contains("medicationadministration0309"))
                 return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
             if (file.Contains("backbone-elements"))
                 return true; // its not really a resource!
@@ -170,7 +160,9 @@ namespace Hl7.Fhir.Tests.Serialization
             if (file.Contains("observation-decimal"))
                 return true; // exponential number example is tooo big (and too small)
             if (file.Contains("package-min-ver"))
-                return true; // note a resource
+                return true; // not a resource
+            if (file.Contains("choice-elements"))
+                return true; // not a resource
             return false;
         }
 

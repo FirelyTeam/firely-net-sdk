@@ -16,14 +16,50 @@ using System.Diagnostics;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.FhirPath;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
     public class ValidateSearchExtractionAllExamplesTest
     {
+        [AssemblyInitialize]
+        public static void Initialize(TestContext context)
+        {
+            // Register a custom local resolver (that doesn't really resolve, 
+            // but creates a blank resource that could be what was referenced
+            // (and only works with the PocoNavigator that we are testing with)
+            Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.Add("resolve", (object f) =>
+            {
+                if (f is IEnumerable<IElementNavigator>)
+                {
+                    object[] bits = (f as IEnumerable<IElementNavigator>).Select(i =>
+                    {
+                        var resref = (i as PocoNavigator).FhirValue as ResourceReference;
+                        if (resref != null && ResourceIdentity.IsRestResourceIdentity(resref.Reference))
+                        {
+                            ResourceIdentity ri = new ResourceIdentity(resref.Reference);
+                            if (!string.IsNullOrEmpty(ri.ResourceType))
+                            {
+                                var fac = new Hl7.Fhir.Serialization.DefaultModelFactory();
+                                var type = ModelInfo.GetTypeForFhirType(ri.ResourceType);
+                                DomainResource res = fac.Create(type) as DomainResource;
+                                res.Id = ri.Id;
+                                return res.ToNavigator();
+                            }
+                        }
+                        return (IElementNavigator)null;
+                    }).ToArray();
+                    return FhirValueList.Create(bits.Where(b => b != null).ToArray());
+                }
+                return FhirValueList.Empty;
+            });
+        }
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
@@ -131,7 +167,16 @@ namespace Hl7.Fhir.Tests.Model
 
             try
             {
-                var results = resourceModel.Select(index.Expression, new EvaluationContext(navigator));
+                IEnumerable<IElementNavigator> results;
+                try
+                {
+                    results = resourceModel.Select(index.Expression, new EvaluationContext(navigator));
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Trace.WriteLine($"Failed processing search expression {index.Name}: {index.Expression}");
+                    throw ex;
+                }
                 if (results.Count() > 0)
                 {
                     foreach (var t2 in results)
@@ -169,6 +214,7 @@ namespace Hl7.Fhir.Tests.Model
             }
             catch (ArgumentException ex)
             {
+                System.Diagnostics.Trace.WriteLine($"Failed processing search expression {index.Name}: {index.Expression}");
                 Debug.WriteLine("FATAL: Error parsing expression in search index {0}.{1} {2}\r\n\t{3}", index.Resource, index.Name, index.Expression, ex.Message);
             }
         }
