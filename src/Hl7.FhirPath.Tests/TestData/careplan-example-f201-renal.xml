@@ -32,7 +32,7 @@
         <b>addresses</b>: <a>Roel&#39;s renal insufficiency</a>
       </p>
       <p>
-        <b>goal</b>: id: goal; status: achieved; Re-established renal function with at least healthy nutrients. <span>(Details )</span>
+        <b>goal</b>: id: goal; lifecycleStatus: completed; Achieved <span>(Details : {http://terminology.hl7.org/CodeSystem/goal-achievement code &#39;achieved&#39; = &#39;Achieved&#39;, given as &#39;Achieved&#39;})</span>; Re-established renal function with at least healthy nutrients. <span>(Details )</span>
       </p>
       <blockquote>
         <p>
@@ -150,7 +150,15 @@
   <contained>
     <Goal>
       <id value="goal"/>
-      <status value="achieved"/>
+      <lifecycleStatus value="completed"/>
+      <achievementStatus>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/goal-achievement"/>
+          <code value="achieved"/>
+          <display value="Achieved"/>
+        </coding>
+        <text value="Achieved"/>
+      </achievementStatus>
       <description>
         <text value="Re-established renal function with at least healthy nutrients."/>
       </description>

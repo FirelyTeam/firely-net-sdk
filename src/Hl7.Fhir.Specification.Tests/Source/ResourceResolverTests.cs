@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestCacheLoadingStrategy()
         {
-            const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
+            const string resourceUri = "http://terminology.hl7.org/ValueSet/v2-0292";
 
             // Create empty in-memory resolver
             var mem = new InMemoryProfileResolver();
@@ -312,8 +312,8 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestCanonicalUrlConflicts()
         {
             //const string srcFileName = "extension-definitions.xml";
-            const string dupFileName = "diagnosticorder-reason-duplicate";
-            const string url = "http://hl7.org/fhir/StructureDefinition/procedurerequest-reasonRejected";
+            const string dupFileName = "patient-birthtime";
+            const string url = "http://hl7.org/fhir/StructureDefinition/patient-birthTime";
 
             var za = ZipSource.CreateValidationSource();
 
