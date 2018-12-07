@@ -40,7 +40,9 @@ namespace Hl7.Fhir.Tests.Serialization
                     using (file)
                     {
                         // Verified examples that fail validations
-                        // (none in R4)
+                        if (entry.Name.Contains("v2-tables"))
+                            continue; // this file is known to have a single dud valueset - have reported on Zulip
+                                         // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
                         var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
                         var resource = parser.Parse<Resource>(reader);
@@ -169,7 +171,9 @@ namespace Hl7.Fhir.Tests.Serialization
                     using (file)
                     {
                         // Verified examples that fail validations
-                        // (none in R4)
+                        if (entry.Name.Contains("v2-tables"))
+                            continue; // this file is known to have a single dud valueset - have reported on Zulip
+                                      // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
                         var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
                         var resource = parser.Parse<Resource>(reader);
