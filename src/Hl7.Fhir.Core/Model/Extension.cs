@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated, but posts-processed by hand for FHIR v1.0.2
+// Generated, but posts-processed by hand for FHIR v3.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("value", InSummary = true, Order = 40, Choice = ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary), typeof(Hl7.Fhir.Model.FhirBoolean), typeof(Hl7.Fhir.Model.Code), typeof(Hl7.Fhir.Model.Date), typeof(Hl7.Fhir.Model.FhirDateTime), typeof(Hl7.Fhir.Model.FhirDecimal), typeof(Hl7.Fhir.Model.Id), typeof(Hl7.Fhir.Model.Instant), typeof(Hl7.Fhir.Model.Integer), typeof(Hl7.Fhir.Model.Markdown), typeof(Hl7.Fhir.Model.Oid), typeof(Hl7.Fhir.Model.PositiveInt), typeof(Hl7.Fhir.Model.FhirString), typeof(Hl7.Fhir.Model.Time), typeof(Hl7.Fhir.Model.UnsignedInt), typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.Address), typeof(Age), typeof(Hl7.Fhir.Model.Annotation), typeof(Hl7.Fhir.Model.Attachment), typeof(Hl7.Fhir.Model.CodeableConcept), typeof(Hl7.Fhir.Model.Coding), typeof(Hl7.Fhir.Model.ContactPoint), typeof(Count), typeof(Distance), typeof(Duration), typeof(Hl7.Fhir.Model.HumanName), typeof(Hl7.Fhir.Model.Identifier), typeof(Money), typeof(Hl7.Fhir.Model.Period), typeof(Quantity), typeof(Hl7.Fhir.Model.Range), typeof(Hl7.Fhir.Model.Ratio), typeof(Hl7.Fhir.Model.ResourceReference), typeof(Hl7.Fhir.Model.SampledData), typeof(Hl7.Fhir.Model.Signature), typeof(Hl7.Fhir.Model.Timing), typeof(Hl7.Fhir.Model.Meta))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary), typeof(Hl7.Fhir.Model.FhirBoolean), typeof(Hl7.Fhir.Model.Canonical), typeof(Hl7.Fhir.Model.Code), typeof(Hl7.Fhir.Model.Date), typeof(Hl7.Fhir.Model.FhirDateTime), typeof(Hl7.Fhir.Model.FhirDecimal), typeof(Hl7.Fhir.Model.Id), typeof(Hl7.Fhir.Model.Instant), typeof(Hl7.Fhir.Model.Integer), typeof(Hl7.Fhir.Model.Markdown), typeof(Hl7.Fhir.Model.Oid), typeof(Hl7.Fhir.Model.PositiveInt), typeof(Hl7.Fhir.Model.FhirString), typeof(Hl7.Fhir.Model.Time), typeof(Hl7.Fhir.Model.UnsignedInt), typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.FhirUrl), typeof(Hl7.Fhir.Model.Uuid), typeof(Hl7.Fhir.Model.Address), typeof(Age), typeof(Hl7.Fhir.Model.Annotation), typeof(Hl7.Fhir.Model.Attachment), typeof(Hl7.Fhir.Model.CodeableConcept), typeof(Hl7.Fhir.Model.Coding), typeof(Hl7.Fhir.Model.ContactPoint), typeof(Count), typeof(Distance), typeof(Duration), typeof(Hl7.Fhir.Model.HumanName), typeof(Hl7.Fhir.Model.Identifier), typeof(Money), typeof(Hl7.Fhir.Model.Period), typeof(Quantity), typeof(Hl7.Fhir.Model.Range), typeof(Hl7.Fhir.Model.Ratio), typeof(Hl7.Fhir.Model.ResourceReference), typeof(Hl7.Fhir.Model.SampledData), typeof(Hl7.Fhir.Model.Signature), typeof(Hl7.Fhir.Model.Timing), typeof(ContactDetail), typeof(Contributor), typeof(DataRequirement), typeof(Expression), typeof(ParameterDefinition), typeof(RelatedArtifact), typeof(TriggerDefinition), typeof(UsageContext), typeof(Dosage))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
         {
@@ -144,6 +144,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+                // Should URL be included in there too?
                 if (Value != null) yield return Value;
             }
         }

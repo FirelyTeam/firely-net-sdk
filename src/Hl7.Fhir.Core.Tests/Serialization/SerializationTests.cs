@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(SerializationUtil.ProbeIsXml("<?xml />"));
         }
 
-        [TestMethod, Ignore] // Old tests, I'm note sure we need them anymore
+        [TestMethod]
         public void TestSummary()
         {
             var p = new Patient

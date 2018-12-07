@@ -107,6 +107,7 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\valueset-v2-0717.json" "$server/
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples.zip" "$server/examples.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/examples-json.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
+PowerCurl "$srcdir\Hl7.Fhir.Serialization.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
 
 # Still need to add:
