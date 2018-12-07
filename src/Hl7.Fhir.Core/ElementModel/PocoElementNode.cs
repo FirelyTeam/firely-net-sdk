@@ -16,7 +16,7 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider
+    public class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider
     {
         public readonly object Current;
         public readonly PocoStructureDefinitionSummaryProvider Provider;
