@@ -138,11 +138,11 @@ namespace HealthConnex.Fhir.Server.Tests
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var nav = new PocoNavigator(resource);
-            IEnumerable<IElementNavigator> results;
+            var node = resource.ToTypedElement();
+            IEnumerable<ITypedElement> results;
             try
             {
-                results = nav.Select(index.Expression, new FhirEvaluationContext(nav));
+                results = node.Select(index.Expression, new FhirEvaluationContext(node));
             }
             catch (Exception ex)
             {
@@ -155,7 +155,8 @@ namespace HealthConnex.Fhir.Server.Tests
                 {
                     if (t2 != null)
                     {
-                        if (t2 is PocoNavigator && (t2 as PocoNavigator).FhirValue != null)
+                        var fhirValueProvider = t2.Annotation<IFhirValueProvider>();
+                        if (fhirValueProvider?.FhirValue != null)
                         {
                             // Validate the type of data returned against the type of search parameter
                             //     Debug.Write(index.Resource + "." + index.Name + ": ");
@@ -163,12 +164,12 @@ namespace HealthConnex.Fhir.Server.Tests
                             exampleSearchValues[key]++;
                             // System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}", xpath.Value, t2.AsStringRepresentation()));
                         }
-                        else if (t2.Value is Hl7.FhirPath.ConstantValue)
-                        {
-                            //     Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //     Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);
-                            exampleSearchValues[key]++;
-                        }
+                        //else if (t2.Value is Hl7.FhirPath.ConstantValue)
+                        //{
+                        //    //     Debug.Write(index.Resource + "." + index.Name + ": ");
+                        //    //     Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);
+                        //    exampleSearchValues[key]++;
+                        //}
                         else if (t2.Value is bool)
                         {
                             //     Debug.Write(index.Resource + "." + index.Name + ": ");

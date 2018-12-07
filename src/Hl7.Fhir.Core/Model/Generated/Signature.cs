@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -307,13 +309,13 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                if (WhenElement != null) yield return new ElementValue("when", false, WhenElement);
-                if (Who != null) yield return new ElementValue("who", false, Who);
-                if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
-                if (TargetFormatElement != null) yield return new ElementValue("targetFormat", false, TargetFormatElement);
-                if (SigFormatElement != null) yield return new ElementValue("sigFormat", false, SigFormatElement);
-                if (DataElement != null) yield return new ElementValue("data", false, DataElement);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                if (WhenElement != null) yield return new ElementValue("when", WhenElement);
+                if (Who != null) yield return new ElementValue("who", Who);
+                if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                if (TargetFormatElement != null) yield return new ElementValue("targetFormat", TargetFormatElement);
+                if (SigFormatElement != null) yield return new ElementValue("sigFormat", SigFormatElement);
+                if (DataElement != null) yield return new ElementValue("data", DataElement);
  
             } 
         } 

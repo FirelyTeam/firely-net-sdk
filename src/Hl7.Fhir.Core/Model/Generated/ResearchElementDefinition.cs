@@ -450,18 +450,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Definition != null) yield return new ElementValue("definition", false, Definition);
-                    foreach (var elem in UsageContext) { if (elem != null) yield return new ElementValue("usageContext", true, elem); }
-                    if (ExcludeElement != null) yield return new ElementValue("exclude", false, ExcludeElement);
-                    if (UnitOfMeasure != null) yield return new ElementValue("unitOfMeasure", false, UnitOfMeasure);
-                    if (StudyEffectiveDescriptionElement != null) yield return new ElementValue("studyEffectiveDescription", false, StudyEffectiveDescriptionElement);
-                    if (StudyEffective != null) yield return new ElementValue("studyEffective", false, StudyEffective);
-                    if (StudyEffectiveTimeFromStart != null) yield return new ElementValue("studyEffectiveTimeFromStart", false, StudyEffectiveTimeFromStart);
-                    if (StudyEffectiveGroupMeasureElement != null) yield return new ElementValue("studyEffectiveGroupMeasure", false, StudyEffectiveGroupMeasureElement);
-                    if (ParticipantEffectiveDescriptionElement != null) yield return new ElementValue("participantEffectiveDescription", false, ParticipantEffectiveDescriptionElement);
-                    if (ParticipantEffective != null) yield return new ElementValue("participantEffective", false, ParticipantEffective);
-                    if (ParticipantEffectiveTimeFromStart != null) yield return new ElementValue("participantEffectiveTimeFromStart", false, ParticipantEffectiveTimeFromStart);
-                    if (ParticipantEffectiveGroupMeasureElement != null) yield return new ElementValue("participantEffectiveGroupMeasure", false, ParticipantEffectiveGroupMeasureElement);
+                    if (Definition != null) yield return new ElementValue("definition", Definition);
+                    foreach (var elem in UsageContext) { if (elem != null) yield return new ElementValue("usageContext", elem); }
+                    if (ExcludeElement != null) yield return new ElementValue("exclude", ExcludeElement);
+                    if (UnitOfMeasure != null) yield return new ElementValue("unitOfMeasure", UnitOfMeasure);
+                    if (StudyEffectiveDescriptionElement != null) yield return new ElementValue("studyEffectiveDescription", StudyEffectiveDescriptionElement);
+                    if (StudyEffective != null) yield return new ElementValue("studyEffective", StudyEffective);
+                    if (StudyEffectiveTimeFromStart != null) yield return new ElementValue("studyEffectiveTimeFromStart", StudyEffectiveTimeFromStart);
+                    if (StudyEffectiveGroupMeasureElement != null) yield return new ElementValue("studyEffectiveGroupMeasure", StudyEffectiveGroupMeasureElement);
+                    if (ParticipantEffectiveDescriptionElement != null) yield return new ElementValue("participantEffectiveDescription", ParticipantEffectiveDescriptionElement);
+                    if (ParticipantEffective != null) yield return new ElementValue("participantEffective", ParticipantEffective);
+                    if (ParticipantEffectiveTimeFromStart != null) yield return new ElementValue("participantEffectiveTimeFromStart", ParticipantEffectiveTimeFromStart);
+                    if (ParticipantEffectiveGroupMeasureElement != null) yield return new ElementValue("participantEffectiveGroupMeasure", ParticipantEffectiveGroupMeasureElement);
                 }
             }
 
@@ -1497,39 +1497,39 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (ShortTitleElement != null) yield return new ElementValue("shortTitle", false, ShortTitleElement);
-                if (SubtitleElement != null) yield return new ElementValue("subtitle", false, SubtitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in CommentElement) { if (elem != null) yield return new ElementValue("comment", true, elem); }
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (PurposeElement != null) yield return new ElementValue("purpose", false, PurposeElement);
-                if (UsageElement != null) yield return new ElementValue("usage", false, UsageElement);
-                if (CopyrightElement != null) yield return new ElementValue("copyright", false, CopyrightElement);
-                if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", false, ApprovalDateElement);
-                if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", false, LastReviewDateElement);
-                if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", false, EffectivePeriod);
-                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
-                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
-                foreach (var elem in Editor) { if (elem != null) yield return new ElementValue("editor", true, elem); }
-                foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", true, elem); }
-                foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", true, elem); }
-                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", true, elem); }
-                foreach (var elem in LibraryElement) { if (elem != null) yield return new ElementValue("library", true, elem); }
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (VariableTypeElement != null) yield return new ElementValue("variableType", false, VariableTypeElement);
-                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (ShortTitleElement != null) yield return new ElementValue("shortTitle", ShortTitleElement);
+                if (SubtitleElement != null) yield return new ElementValue("subtitle", SubtitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in CommentElement) { if (elem != null) yield return new ElementValue("comment", elem); }
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
+                if (UsageElement != null) yield return new ElementValue("usage", UsageElement);
+                if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
+                if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", ApprovalDateElement);
+                if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", LastReviewDateElement);
+                if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", EffectivePeriod);
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
+                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
+                foreach (var elem in Editor) { if (elem != null) yield return new ElementValue("editor", elem); }
+                foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", elem); }
+                foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", elem); }
+                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
+                foreach (var elem in LibraryElement) { if (elem != null) yield return new ElementValue("library", elem); }
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (VariableTypeElement != null) yield return new ElementValue("variableType", VariableTypeElement);
+                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
             }
         }
 

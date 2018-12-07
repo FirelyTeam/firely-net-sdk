@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Validation
         private string Path { get; set; }
         public string Name { get; private set; }
         public Cardinality Cardinality { get; private set; }
-        public IList<ScopedNavigator> Members { get; private set; } = new List<ScopedNavigator>();
+        public IList<ITypedElement> Members { get; private set; } = new List<ITypedElement>();
 
-        public abstract bool Add(ScopedNavigator instance);
+        public abstract bool Add(ITypedElement instance);
   
-        public virtual OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
+        public virtual OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
         {
             var outcome = new OperationOutcome();
 

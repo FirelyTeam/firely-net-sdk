@@ -207,9 +207,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
                 }
             }
 
@@ -333,9 +333,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    foreach (var elem in Exception) { if (elem != null) yield return new ElementValue("exception", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    foreach (var elem in Exception) { if (elem != null) yield return new ElementValue("exception", elem); }
                 }
             }
 
@@ -439,8 +439,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -928,23 +928,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (PolicyHolder != null) yield return new ElementValue("policyHolder", false, PolicyHolder);
-                if (Subscriber != null) yield return new ElementValue("subscriber", false, Subscriber);
-                if (SubscriberIdElement != null) yield return new ElementValue("subscriberId", false, SubscriberIdElement);
-                if (Beneficiary != null) yield return new ElementValue("beneficiary", false, Beneficiary);
-                if (DependentElement != null) yield return new ElementValue("dependent", false, DependentElement);
-                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                foreach (var elem in Payor) { if (elem != null) yield return new ElementValue("payor", true, elem); }
-                foreach (var elem in Class) { if (elem != null) yield return new ElementValue("class", true, elem); }
-                if (OrderElement != null) yield return new ElementValue("order", false, OrderElement);
-                if (NetworkElement != null) yield return new ElementValue("network", false, NetworkElement);
-                foreach (var elem in CostToBeneficiary) { if (elem != null) yield return new ElementValue("costToBeneficiary", true, elem); }
-                if (SubrogationElement != null) yield return new ElementValue("subrogation", false, SubrogationElement);
-                foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (PolicyHolder != null) yield return new ElementValue("policyHolder", PolicyHolder);
+                if (Subscriber != null) yield return new ElementValue("subscriber", Subscriber);
+                if (SubscriberIdElement != null) yield return new ElementValue("subscriberId", SubscriberIdElement);
+                if (Beneficiary != null) yield return new ElementValue("beneficiary", Beneficiary);
+                if (DependentElement != null) yield return new ElementValue("dependent", DependentElement);
+                if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                if (Period != null) yield return new ElementValue("period", Period);
+                foreach (var elem in Payor) { if (elem != null) yield return new ElementValue("payor", elem); }
+                foreach (var elem in Class) { if (elem != null) yield return new ElementValue("class", elem); }
+                if (OrderElement != null) yield return new ElementValue("order", OrderElement);
+                if (NetworkElement != null) yield return new ElementValue("network", NetworkElement);
+                foreach (var elem in CostToBeneficiary) { if (elem != null) yield return new ElementValue("costToBeneficiary", elem); }
+                if (SubrogationElement != null) yield return new ElementValue("subrogation", SubrogationElement);
+                foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", elem); }
             }
         }
 

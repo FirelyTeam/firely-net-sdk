@@ -204,11 +204,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (SymptomConditionEffect != null) yield return new ElementValue("symptomConditionEffect", false, SymptomConditionEffect);
-                if (Classification != null) yield return new ElementValue("classification", false, Classification);
-                if (FrequencyOfOccurrence != null) yield return new ElementValue("frequencyOfOccurrence", false, FrequencyOfOccurrence);
-                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (SymptomConditionEffect != null) yield return new ElementValue("symptomConditionEffect", SymptomConditionEffect);
+                if (Classification != null) yield return new ElementValue("classification", Classification);
+                if (FrequencyOfOccurrence != null) yield return new ElementValue("frequencyOfOccurrence", FrequencyOfOccurrence);
+                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
             }
         }
 

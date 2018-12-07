@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -175,10 +177,10 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Age != null) yield return new ElementValue("age", false, Age);
-                if (Gender != null) yield return new ElementValue("gender", false, Gender);
-                if (Race != null) yield return new ElementValue("race", false, Race);
-                if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", false, PhysiologicalCondition);
+                if (Age != null) yield return new ElementValue("age", Age);
+                if (Gender != null) yield return new ElementValue("gender", Gender);
+                if (Race != null) yield return new ElementValue("race", Race);
+                if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", PhysiologicalCondition);
  
             } 
         } 

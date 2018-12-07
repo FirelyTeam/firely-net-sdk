@@ -405,14 +405,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Study != null) yield return new ElementValue("study", false, Study);
-                if (Individual != null) yield return new ElementValue("individual", false, Individual);
-                if (AssignedArmElement != null) yield return new ElementValue("assignedArm", false, AssignedArmElement);
-                if (ActualArmElement != null) yield return new ElementValue("actualArm", false, ActualArmElement);
-                if (Consent != null) yield return new ElementValue("consent", false, Consent);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Study != null) yield return new ElementValue("study", Study);
+                if (Individual != null) yield return new ElementValue("individual", Individual);
+                if (AssignedArmElement != null) yield return new ElementValue("assignedArm", AssignedArmElement);
+                if (ActualArmElement != null) yield return new ElementValue("actualArm", ActualArmElement);
+                if (Consent != null) yield return new ElementValue("consent", Consent);
             }
         }
 

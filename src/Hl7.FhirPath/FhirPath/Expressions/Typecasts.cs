@@ -70,8 +70,8 @@ namespace Hl7.FhirPath.Expressions
             if (from.CanBeTreatedAsType(to)) return id;
 
             //if (to == typeof(bool)) return any2bool;
-            if (to == typeof(IElementNavigator) && (!from.CanBeTreatedAsType(typeof(IEnumerable<IElementNavigator>)))) return any2ValueProvider;
-            if (to == typeof(IEnumerable<IElementNavigator>)) return any2List;
+            if (to == typeof(ITypedElement) && (!from.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))) return any2ValueProvider;
+            if (to == typeof(IEnumerable<ITypedElement>)) return any2List;
              
             if (from == typeof(long) && (to == typeof(decimal) || to == typeof(decimal?))) return makeNativeCast(typeof(decimal));
             if (from == typeof(long?) && to == typeof(decimal?)) return makeNativeCast(typeof(decimal?));
@@ -82,21 +82,21 @@ namespace Hl7.FhirPath.Expressions
         {
             if (instance == null) return null;
 
-            if (to.CanBeTreatedAsType(typeof(IEnumerable<IElementNavigator>))) return instance;
+            if (to.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>))) return instance;
 
-            if (instance is IEnumerable<IElementNavigator>)
+            if (instance is IEnumerable<ITypedElement>)
             {
-                var list = (IEnumerable<IElementNavigator>)instance;
+                var list = (IEnumerable<ITypedElement>)instance;
                 if (!list.Any()) return null;
                 if (list.Count() == 1)
                     instance = list.Single();
             }
 
-            if (to.CanBeTreatedAsType(typeof(IElementNavigator))) return instance;
+            if (to.CanBeTreatedAsType(typeof(ITypedElement))) return instance;
 
-            if (instance is IElementNavigator)
+            if (instance is ITypedElement)
             {
-                var element = (IElementNavigator)instance;
+                var element = (ITypedElement)instance;
 
                 if (element.Value != null)
                     instance = element.Value;
@@ -153,7 +153,7 @@ namespace Hl7.FhirPath.Expressions
             }
 
             //if source == null, or unboxed source == null....
-            if (to == typeof(IEnumerable<IElementNavigator>))
+            if (to == typeof(IEnumerable<ITypedElement>))
                 return FhirValueList.Empty;
             if (to.IsNullable())
                 return null;
@@ -170,9 +170,9 @@ namespace Hl7.FhirPath.Expressions
 
         public static string ReadableFhirPathName(Type t)
         {
-            if (t.CanBeTreatedAsType(typeof(IEnumerable<IElementNavigator>)))
+            if (t.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))
                 return "collection";
-            else if (t.CanBeTreatedAsType(typeof(IElementNavigator)))
+            else if (t.CanBeTreatedAsType(typeof(ITypedElement)))
                 return "any single value";
             else
                 return t.Name;

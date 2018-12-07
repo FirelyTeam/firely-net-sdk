@@ -477,21 +477,21 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (RequestIdentifier != null) yield return new ElementValue("requestIdentifier", false, RequestIdentifier);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Module != null) yield return new ElementValue("module", false, Module);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (OccurrenceDateTimeElement != null) yield return new ElementValue("occurrenceDateTime", false, OccurrenceDateTimeElement);
-                if (Performer != null) yield return new ElementValue("performer", false, Performer);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in EvaluationMessage) { if (elem != null) yield return new ElementValue("evaluationMessage", true, elem); }
-                if (OutputParameters != null) yield return new ElementValue("outputParameters", false, OutputParameters);
-                if (Result != null) yield return new ElementValue("result", false, Result);
-                foreach (var elem in DataRequirement) { if (elem != null) yield return new ElementValue("dataRequirement", true, elem); }
+                if (RequestIdentifier != null) yield return new ElementValue("requestIdentifier", RequestIdentifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Module != null) yield return new ElementValue("module", Module);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (OccurrenceDateTimeElement != null) yield return new ElementValue("occurrenceDateTime", OccurrenceDateTimeElement);
+                if (Performer != null) yield return new ElementValue("performer", Performer);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in EvaluationMessage) { if (elem != null) yield return new ElementValue("evaluationMessage", elem); }
+                if (OutputParameters != null) yield return new ElementValue("outputParameters", OutputParameters);
+                if (Result != null) yield return new ElementValue("result", Result);
+                foreach (var elem in DataRequirement) { if (elem != null) yield return new ElementValue("dataRequirement", elem); }
             }
         }
 

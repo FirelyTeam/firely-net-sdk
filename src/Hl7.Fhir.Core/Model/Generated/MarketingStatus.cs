@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -212,11 +214,11 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Country != null) yield return new ElementValue("country", false, Country);
-                if (Jurisdiction != null) yield return new ElementValue("jurisdiction", false, Jurisdiction);
-                if (Status != null) yield return new ElementValue("status", false, Status);
-                if (DateRange != null) yield return new ElementValue("dateRange", false, DateRange);
-                if (RestoreDateElement != null) yield return new ElementValue("restoreDate", false, RestoreDateElement);
+                if (Country != null) yield return new ElementValue("country", Country);
+                if (Jurisdiction != null) yield return new ElementValue("jurisdiction", Jurisdiction);
+                if (Status != null) yield return new ElementValue("status", Status);
+                if (DateRange != null) yield return new ElementValue("dateRange", DateRange);
+                if (RestoreDateElement != null) yield return new ElementValue("restoreDate", RestoreDateElement);
  
             } 
         } 

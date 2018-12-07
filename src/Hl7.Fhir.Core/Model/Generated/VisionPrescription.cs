@@ -602,20 +602,20 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Product != null) yield return new ElementValue("product", false, Product);
-                    if (EyeElement != null) yield return new ElementValue("eye", false, EyeElement);
-                    if (SphereElement != null) yield return new ElementValue("sphere", false, SphereElement);
-                    if (CylinderElement != null) yield return new ElementValue("cylinder", false, CylinderElement);
-                    if (AxisElement != null) yield return new ElementValue("axis", false, AxisElement);
-                    foreach (var elem in Prism) { if (elem != null) yield return new ElementValue("prism", true, elem); }
-                    if (AddElement != null) yield return new ElementValue("add", false, AddElement);
-                    if (PowerElement != null) yield return new ElementValue("power", false, PowerElement);
-                    if (BackCurveElement != null) yield return new ElementValue("backCurve", false, BackCurveElement);
-                    if (DiameterElement != null) yield return new ElementValue("diameter", false, DiameterElement);
-                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
-                    if (ColorElement != null) yield return new ElementValue("color", false, ColorElement);
-                    if (BrandElement != null) yield return new ElementValue("brand", false, BrandElement);
-                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                    if (Product != null) yield return new ElementValue("product", Product);
+                    if (EyeElement != null) yield return new ElementValue("eye", EyeElement);
+                    if (SphereElement != null) yield return new ElementValue("sphere", SphereElement);
+                    if (CylinderElement != null) yield return new ElementValue("cylinder", CylinderElement);
+                    if (AxisElement != null) yield return new ElementValue("axis", AxisElement);
+                    foreach (var elem in Prism) { if (elem != null) yield return new ElementValue("prism", elem); }
+                    if (AddElement != null) yield return new ElementValue("add", AddElement);
+                    if (PowerElement != null) yield return new ElementValue("power", PowerElement);
+                    if (BackCurveElement != null) yield return new ElementValue("backCurve", BackCurveElement);
+                    if (DiameterElement != null) yield return new ElementValue("diameter", DiameterElement);
+                    if (Duration != null) yield return new ElementValue("duration", Duration);
+                    if (ColorElement != null) yield return new ElementValue("color", ColorElement);
+                    if (BrandElement != null) yield return new ElementValue("brand", BrandElement);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 }
             }
 
@@ -758,8 +758,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (AmountElement != null) yield return new ElementValue("amount", false, AmountElement);
-                    if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
+                    if (AmountElement != null) yield return new ElementValue("amount", AmountElement);
+                    if (BaseElement != null) yield return new ElementValue("base", BaseElement);
                 }
             }
 
@@ -1033,14 +1033,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (DateWrittenElement != null) yield return new ElementValue("dateWritten", false, DateWrittenElement);
-                if (Prescriber != null) yield return new ElementValue("prescriber", false, Prescriber);
-                foreach (var elem in LensSpecification) { if (elem != null) yield return new ElementValue("lensSpecification", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (DateWrittenElement != null) yield return new ElementValue("dateWritten", DateWrittenElement);
+                if (Prescriber != null) yield return new ElementValue("prescriber", Prescriber);
+                foreach (var elem in LensSpecification) { if (elem != null) yield return new ElementValue("lensSpecification", elem); }
             }
         }
 

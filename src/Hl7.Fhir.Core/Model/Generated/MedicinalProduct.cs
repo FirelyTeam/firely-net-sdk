@@ -189,9 +189,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ProductNameElement != null) yield return new ElementValue("productName", false, ProductNameElement);
-                    foreach (var elem in NamePart) { if (elem != null) yield return new ElementValue("namePart", true, elem); }
-                    foreach (var elem in CountryLanguage) { if (elem != null) yield return new ElementValue("countryLanguage", true, elem); }
+                    if (ProductNameElement != null) yield return new ElementValue("productName", ProductNameElement);
+                    foreach (var elem in NamePart) { if (elem != null) yield return new ElementValue("namePart", elem); }
+                    foreach (var elem in CountryLanguage) { if (elem != null) yield return new ElementValue("countryLanguage", elem); }
                 }
             }
 
@@ -315,8 +315,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (PartElement != null) yield return new ElementValue("part", false, PartElement);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (PartElement != null) yield return new ElementValue("part", PartElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
                 }
             }
 
@@ -438,9 +438,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Country != null) yield return new ElementValue("country", false, Country);
-                    if (Jurisdiction != null) yield return new ElementValue("jurisdiction", false, Jurisdiction);
-                    if (Language != null) yield return new ElementValue("language", false, Language);
+                    if (Country != null) yield return new ElementValue("country", Country);
+                    if (Jurisdiction != null) yield return new ElementValue("jurisdiction", Jurisdiction);
+                    if (Language != null) yield return new ElementValue("language", Language);
                 }
             }
 
@@ -635,12 +635,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (OperationType != null) yield return new ElementValue("operationType", false, OperationType);
-                    if (AuthorisationReferenceNumber != null) yield return new ElementValue("authorisationReferenceNumber", false, AuthorisationReferenceNumber);
-                    if (EffectiveDateElement != null) yield return new ElementValue("effectiveDate", false, EffectiveDateElement);
-                    if (ConfidentialityIndicator != null) yield return new ElementValue("confidentialityIndicator", false, ConfidentialityIndicator);
-                    foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", true, elem); }
-                    if (Regulator != null) yield return new ElementValue("regulator", false, Regulator);
+                    if (OperationType != null) yield return new ElementValue("operationType", OperationType);
+                    if (AuthorisationReferenceNumber != null) yield return new ElementValue("authorisationReferenceNumber", AuthorisationReferenceNumber);
+                    if (EffectiveDateElement != null) yield return new ElementValue("effectiveDate", EffectiveDateElement);
+                    if (ConfidentialityIndicator != null) yield return new ElementValue("confidentialityIndicator", ConfidentialityIndicator);
+                    foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+                    if (Regulator != null) yield return new ElementValue("regulator", Regulator);
                 }
             }
 
@@ -850,13 +850,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (IntendedUse != null) yield return new ElementValue("intendedUse", false, IntendedUse);
-                    if (Indication != null) yield return new ElementValue("indication", false, Indication);
-                    if (Status != null) yield return new ElementValue("status", false, Status);
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (Species != null) yield return new ElementValue("species", false, Species);
+                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (IntendedUse != null) yield return new ElementValue("intendedUse", IntendedUse);
+                    if (Indication != null) yield return new ElementValue("indication", Indication);
+                    if (Status != null) yield return new ElementValue("status", Status);
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (Species != null) yield return new ElementValue("species", Species);
                 }
             }
 
@@ -1309,26 +1309,26 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Domain != null) yield return new ElementValue("domain", false, Domain);
-                if (CombinedPharmaceuticalDoseForm != null) yield return new ElementValue("combinedPharmaceuticalDoseForm", false, CombinedPharmaceuticalDoseForm);
-                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", false, LegalStatusOfSupply);
-                if (AdditionalMonitoringIndicator != null) yield return new ElementValue("additionalMonitoringIndicator", false, AdditionalMonitoringIndicator);
-                foreach (var elem in SpecialMeasuresElement) { if (elem != null) yield return new ElementValue("specialMeasures", true, elem); }
-                if (PaediatricUseIndicator != null) yield return new ElementValue("paediatricUseIndicator", false, PaediatricUseIndicator);
-                foreach (var elem in ProductClassification) { if (elem != null) yield return new ElementValue("productClassification", true, elem); }
-                foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", true, elem); }
-                foreach (var elem in PharmaceuticalProduct) { if (elem != null) yield return new ElementValue("pharmaceuticalProduct", true, elem); }
-                foreach (var elem in PackagedMedicinalProduct) { if (elem != null) yield return new ElementValue("packagedMedicinalProduct", true, elem); }
-                foreach (var elem in AttachedDocument) { if (elem != null) yield return new ElementValue("attachedDocument", true, elem); }
-                foreach (var elem in MasterFile) { if (elem != null) yield return new ElementValue("masterFile", true, elem); }
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                foreach (var elem in ClinicalTrial) { if (elem != null) yield return new ElementValue("clinicalTrial", true, elem); }
-                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
-                foreach (var elem in CrossReference) { if (elem != null) yield return new ElementValue("crossReference", true, elem); }
-                foreach (var elem in ManufacturingBusinessOperation) { if (elem != null) yield return new ElementValue("manufacturingBusinessOperation", true, elem); }
-                foreach (var elem in SpecialDesignation) { if (elem != null) yield return new ElementValue("specialDesignation", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Domain != null) yield return new ElementValue("domain", Domain);
+                if (CombinedPharmaceuticalDoseForm != null) yield return new ElementValue("combinedPharmaceuticalDoseForm", CombinedPharmaceuticalDoseForm);
+                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", LegalStatusOfSupply);
+                if (AdditionalMonitoringIndicator != null) yield return new ElementValue("additionalMonitoringIndicator", AdditionalMonitoringIndicator);
+                foreach (var elem in SpecialMeasuresElement) { if (elem != null) yield return new ElementValue("specialMeasures", elem); }
+                if (PaediatricUseIndicator != null) yield return new ElementValue("paediatricUseIndicator", PaediatricUseIndicator);
+                foreach (var elem in ProductClassification) { if (elem != null) yield return new ElementValue("productClassification", elem); }
+                foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", elem); }
+                foreach (var elem in PharmaceuticalProduct) { if (elem != null) yield return new ElementValue("pharmaceuticalProduct", elem); }
+                foreach (var elem in PackagedMedicinalProduct) { if (elem != null) yield return new ElementValue("packagedMedicinalProduct", elem); }
+                foreach (var elem in AttachedDocument) { if (elem != null) yield return new ElementValue("attachedDocument", elem); }
+                foreach (var elem in MasterFile) { if (elem != null) yield return new ElementValue("masterFile", elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                foreach (var elem in ClinicalTrial) { if (elem != null) yield return new ElementValue("clinicalTrial", elem); }
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", elem); }
+                foreach (var elem in CrossReference) { if (elem != null) yield return new ElementValue("crossReference", elem); }
+                foreach (var elem in ManufacturingBusinessOperation) { if (elem != null) yield return new ElementValue("manufacturingBusinessOperation", elem); }
+                foreach (var elem in SpecialDesignation) { if (elem != null) yield return new ElementValue("specialDesignation", elem); }
             }
         }
 

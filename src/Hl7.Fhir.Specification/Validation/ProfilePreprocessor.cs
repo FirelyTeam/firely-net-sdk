@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Validation
         private ProfileAssertion _profiles;
 
         public ProfilePreprocessor(Func<string, StructureDefinition> profileResolver, Func<StructureDefinition, OperationOutcome> snapshotGenerator,
-                IElementNavigator instance, string declaredTypeProfile,
+                ITypedElement instance, string declaredTypeProfile,
                 IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals)
         {
             _profileResolver = profileResolver;
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Validation
 
             _profiles = new ProfileAssertion(_path, _profileResolver);
 
-            if (instance.Type != null) _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.Type));
+            if (instance.InstanceType != null) _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.InstanceType));
             if (declaredTypeProfile != null) _profiles.SetDeclaredType(declaredTypeProfile);
 
             // This is only for resources, but I don't bother checking, since this will return empty anyway
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Validation
                         {
                             var snapshotOutcome = snapshotGenerator(sd);
 
-                            if (!snapshotOutcome.Success)
+                            if (snapshotOutcome != null && !snapshotOutcome.Success)
                             {
                                 outcome.AddIssue($"Snapshot generation failed for '{sd.Url}'. Details follow below.",
                                    Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);

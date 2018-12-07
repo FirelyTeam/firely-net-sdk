@@ -93,12 +93,12 @@ namespace Hl7.FhirPath.Functions
             return null;
         }
 
-        public static IEnumerable<IElementNavigator> IIf(this IEnumerable<IElementNavigator> focus, bool? condition, IEnumerable<IElementNavigator> result)
+        public static IEnumerable<ITypedElement> IIf(this IEnumerable<ITypedElement> focus, bool? condition, IEnumerable<ITypedElement> result)
         {
             return IIf(focus, condition, result, null);
         }
 
-        public static IEnumerable<IElementNavigator> IIf(this IEnumerable<IElementNavigator> focus, bool? condition, IEnumerable<IElementNavigator> result, IEnumerable<IElementNavigator> otherwise)
+        public static IEnumerable<ITypedElement> IIf(this IEnumerable<ITypedElement> focus, bool? condition, IEnumerable<ITypedElement> result, IEnumerable<ITypedElement> otherwise)
         {
             if (condition == true)
                 return result;

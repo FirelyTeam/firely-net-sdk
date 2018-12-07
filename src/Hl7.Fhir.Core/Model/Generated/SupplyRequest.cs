@@ -203,8 +203,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -605,21 +605,21 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
-                if (Item != null) yield return new ElementValue("item", false, Item);
-                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
-                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
-                if (Requester != null) yield return new ElementValue("requester", false, Requester);
-                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", true, elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                if (DeliverFrom != null) yield return new ElementValue("deliverFrom", false, DeliverFrom);
-                if (DeliverTo != null) yield return new ElementValue("deliverTo", false, DeliverTo);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+                if (Item != null) yield return new ElementValue("item", Item);
+                if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", elem); }
+                if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
+                if (Requester != null) yield return new ElementValue("requester", Requester);
+                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                if (DeliverFrom != null) yield return new ElementValue("deliverFrom", DeliverFrom);
+                if (DeliverTo != null) yield return new ElementValue("deliverTo", DeliverTo);
             }
         }
 

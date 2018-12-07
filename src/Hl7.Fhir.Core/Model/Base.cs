@@ -40,7 +40,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [InvokeIValidatableObject]
@@ -67,11 +67,11 @@ namespace Hl7.Fhir.Model
                     dest.annotations.AddRange(annotations);
                 }
 
-#pragma warning disable 618,620            
+#pragma warning disable 618, 620
                 if (UserData != null) dest.UserData = new Dictionary<string, object>(UserData);
 #pragma warning restore 618
 
-                if (FhirComments != null) dest.FhirComments = new List<string>(FhirComments);
+               // if (FhirComments != null) dest.FhirComments = new List<string>(FhirComments);
                 return dest;
             }
             else
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             return Enumerable.Empty<ValidationResult>();
         }
 
-        #region << Annotations and UserData >>
+#region << Annotations and UserData >>
         private Dictionary<string, object> _userData = new Dictionary<string, object>();
 
         [NotMapped]
@@ -114,43 +114,7 @@ namespace Hl7.Fhir.Model
             annotations.RemoveOfType(type);
         }
 
-        #endregion
-
-
-
-
-        /// <summary>
-        /// A Comment recorded against this element in the FHIR Resource
-        /// </summary>
-        [FhirElement("fhir_comments", InSummary = false, Order = 5)]
-        [Cardinality(Min = 0, Max = -1)]
-        public List<Hl7.Fhir.Model.FhirString> FhirCommentsElement
-        {
-            get { if (_FhirCommentsElement == null) _FhirCommentsElement = new List<Hl7.Fhir.Model.FhirString>(); return _FhirCommentsElement; }
-            set { _FhirCommentsElement = value; OnPropertyChanged("FhirCommentsElement"); }
-        }
-
-        private List<Hl7.Fhir.Model.FhirString> _FhirCommentsElement;
-
-        /// <summary>
-        /// A Comment recorded against this element in the FHIR Resource
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IEnumerable<string> FhirComments
-        {
-            get => FhirCommentsElement?.Select(elem => elem.Value);
-            set
-            {
-                if (value == null)
-                    FhirCommentsElement = null;
-                else
-                    FhirCommentsElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
-                OnPropertyChanged("FhirComments");
-            }
-        }
-
+#endregion
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(String property)
@@ -180,12 +144,6 @@ namespace Hl7.Fhir.Model
         /// Finally returns child nodes defined by the current class.
         /// </summary>
         [NotMapped]
-        internal virtual IEnumerable<ElementValue> NamedChildren
-        {
-            get
-            {
-                foreach (var elem in FhirComments) { if (elem != null) yield return new ElementValue("fhir_comments", true, elem); }
-            }
-        }
+        internal virtual IEnumerable<ElementValue> NamedChildren => Enumerable.Empty<ElementValue>();
     }
 }

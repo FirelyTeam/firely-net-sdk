@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
+                    if (Item != null) yield return new ElementValue("item", Item);
                 }
             }
 
@@ -346,13 +346,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Interactant) { if (elem != null) yield return new ElementValue("interactant", true, elem); }
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Effect != null) yield return new ElementValue("effect", false, Effect);
-                if (Incidence != null) yield return new ElementValue("incidence", false, Incidence);
-                if (Management != null) yield return new ElementValue("management", false, Management);
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Interactant) { if (elem != null) yield return new ElementValue("interactant", elem); }
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Effect != null) yield return new ElementValue("effect", Effect);
+                if (Incidence != null) yield return new ElementValue("incidence", Incidence);
+                if (Management != null) yield return new ElementValue("management", Management);
             }
         }
 

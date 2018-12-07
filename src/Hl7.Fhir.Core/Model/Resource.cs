@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 var bd = this.Annotation<ResourceBaseData>();
-                return bd != null ? bd.Base : null;
+                return bd?.Base;
             }
 
             set
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
         /// <param name="context">Describes the context in which a validation check is performed.</param>
         /// <returns></returns>
-        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, ITypedElement model, OperationOutcome result)
         {
             string expression = invariantRule.Expression;
             try
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new PocoNavigator(this);
+                var tree = this.ToTypedElement();
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(context,invariantRule, tree, result);
@@ -253,6 +253,14 @@ namespace Hl7.Fhir.Model
 
         [NotMapped]
         public bool HasVersionId => Meta?.VersionId != null;
+
+        #region Obsolete members
+        [Obsolete("Use ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, ITypedElement model, OperationOutcome result) instead. Obsolete since 2018-10-17")]
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
+        {
+            return ValidateInvariantRule(context, invariantRule, model.ToTypedElement(), result);
+        }
+        #endregion
     }
 }
 

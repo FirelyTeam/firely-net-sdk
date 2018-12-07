@@ -260,9 +260,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Collector != null) yield return new ElementValue("collector", false, Collector);
-                    if (Source != null) yield return new ElementValue("source", false, Source);
-                    if (Collected != null) yield return new ElementValue("collected", false, Collected);
+                    if (Collector != null) yield return new ElementValue("collector", Collector);
+                    if (Source != null) yield return new ElementValue("source", Source);
+                    if (Collected != null) yield return new ElementValue("collected", Collected);
                 }
             }
 
@@ -422,10 +422,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Procedure != null) yield return new ElementValue("procedure", false, Procedure);
-                    if (Additive != null) yield return new ElementValue("additive", false, Additive);
-                    if (Time != null) yield return new ElementValue("time", false, Time);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Procedure != null) yield return new ElementValue("procedure", Procedure);
+                    if (Additive != null) yield return new ElementValue("additive", Additive);
+                    if (Time != null) yield return new ElementValue("time", Time);
                 }
             }
 
@@ -549,8 +549,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Time != null) yield return new ElementValue("time", false, Time);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Time != null) yield return new ElementValue("time", Time);
                 }
             }
 
@@ -744,10 +744,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (TemperatureElement != null) yield return new ElementValue("temperature", false, TemperatureElement);
-                    if (ScaleElement != null) yield return new ElementValue("scale", false, ScaleElement);
-                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (TemperatureElement != null) yield return new ElementValue("temperature", TemperatureElement);
+                    if (ScaleElement != null) yield return new ElementValue("scale", ScaleElement);
+                    if (Duration != null) yield return new ElementValue("duration", Duration);
                 }
             }
 
@@ -1068,17 +1068,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ProductCategoryElement != null) yield return new ElementValue("productCategory", false, ProductCategoryElement);
-                if (ProductCode != null) yield return new ElementValue("productCode", false, ProductCode);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", true, elem); }
-                if (QuantityElement != null) yield return new ElementValue("quantity", false, QuantityElement);
-                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
-                if (Collection != null) yield return new ElementValue("collection", false, Collection);
-                foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", true, elem); }
-                if (Manipulation != null) yield return new ElementValue("manipulation", false, Manipulation);
-                foreach (var elem in Storage) { if (elem != null) yield return new ElementValue("storage", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ProductCategoryElement != null) yield return new ElementValue("productCategory", ProductCategoryElement);
+                if (ProductCode != null) yield return new ElementValue("productCode", ProductCode);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", elem); }
+                if (QuantityElement != null) yield return new ElementValue("quantity", QuantityElement);
+                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", elem); }
+                if (Collection != null) yield return new ElementValue("collection", Collection);
+                foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", elem); }
+                if (Manipulation != null) yield return new ElementValue("manipulation", Manipulation);
+                foreach (var elem in Storage) { if (elem != null) yield return new ElementValue("storage", elem); }
             }
         }
 

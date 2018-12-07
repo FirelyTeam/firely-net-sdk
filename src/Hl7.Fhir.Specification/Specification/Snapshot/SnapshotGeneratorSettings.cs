@@ -14,22 +14,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
     public sealed class SnapshotGeneratorSettings
-#if DOTNETFW
-        : ICloneable
-#endif
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-        [Obsolete("Use the CreateDefault() method")]
+        [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
-        {
-            GenerateSnapshotForExternalProfiles = true,
-            ForceRegenerateSnapshots = false,           // Only enable this when using a cached source...!
-            GenerateExtensionsOnConstraints = false,    // Enabled by Simplifier (not used...)
-            GenerateAnnotationsOnConstraints = false,   // For snapshot rendering
-            GenerateElementIds = true                   // for STU3
-            // MergeTypeProfiles = true
-        };
+        public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings();
 
         /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> instance with default property values.</summary>
         public static SnapshotGeneratorSettings CreateDefault() => new SnapshotGeneratorSettings();
@@ -45,7 +34,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
-        public object Clone() => new SnapshotGeneratorSettings(this);
+        public SnapshotGeneratorSettings Clone() => new SnapshotGeneratorSettings(this);
 
         /// <summary>Copy all configuration settings to another instance.</summary>
         public void CopyTo(SnapshotGeneratorSettings other)
@@ -64,7 +53,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// of any referenced external profiles on demand if necessary.
         /// If disabled, then skip the merging of any external type profiles without a snapshot component.
         /// </summary>
-        public bool GenerateSnapshotForExternalProfiles { get; set; } // ExpandExternalProfiles
+        public bool GenerateSnapshotForExternalProfiles { get; set; } = true; // ExpandExternalProfiles
 
         /// <summary>
         /// Force expansion of all external profiles, disregarding any existing snapshot components.
@@ -73,7 +62,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming the provided resource resolver uses caching).
         /// If disabled (default), then the snapshot generator relies on existing snapshot components, if they exist.
         /// </summary>
-        public bool ForceRegenerateSnapshots { get; set; } // ForceExpandAll
+        public bool ForceRegenerateSnapshots { get; set; } = false; // ForceExpandAll
 
         /// <summary>
         /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
@@ -83,14 +72,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
         /// The <seealso cref="SnapshotGeneratorExtensions"/> class provides utility methods to read and/or remove the generated extensions.
         /// </summary>
-        public bool GenerateExtensionsOnConstraints { get; set; } // MarkChanges
+        public bool GenerateExtensionsOnConstraints { get; set; } = false; // MarkChanges
 
         /// <summary>Enable this setting to annotate all elements and properties in the snapshot that are constrained by the differential.</summary>
         /// <remarks>The <seealso cref="SnapshotGeneratorAnnotations"/> class provides utility methods to read and/or remove the generated annotations.</remarks>
-        public bool GenerateAnnotationsOnConstraints { get; set; } // AnnotateDifferentialConstraints
+        public bool GenerateAnnotationsOnConstraints { get; set; } = false; // AnnotateDifferentialConstraints
 
         /// <summary>Enable this setting to automatically generate missing element id values.</summary>
-        public bool GenerateElementIds { get; set; }
+        public bool GenerateElementIds { get; set; } = true;
 
         // [WMR 20161004] Always try to merge element type profiles
 

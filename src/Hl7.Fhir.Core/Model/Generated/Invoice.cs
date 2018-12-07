@@ -192,8 +192,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Actor != null) yield return new ElementValue("actor", Actor);
                 }
             }
 
@@ -336,9 +336,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
-                    if (ChargeItem != null) yield return new ElementValue("chargeItem", false, ChargeItem);
-                    foreach (var elem in PriceComponent) { if (elem != null) yield return new ElementValue("priceComponent", true, elem); }
+                    if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
+                    if (ChargeItem != null) yield return new ElementValue("chargeItem", ChargeItem);
+                    foreach (var elem in PriceComponent) { if (elem != null) yield return new ElementValue("priceComponent", elem); }
                 }
             }
 
@@ -514,10 +514,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (FactorElement != null) yield return new ElementValue("factor", false, FactorElement);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (FactorElement != null) yield return new ElementValue("factor", FactorElement);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -947,22 +947,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (CancelledReasonElement != null) yield return new ElementValue("cancelledReason", false, CancelledReasonElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Recipient != null) yield return new ElementValue("recipient", false, Recipient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
-                if (Issuer != null) yield return new ElementValue("issuer", false, Issuer);
-                if (Account != null) yield return new ElementValue("account", false, Account);
-                foreach (var elem in LineItem) { if (elem != null) yield return new ElementValue("lineItem", true, elem); }
-                foreach (var elem in TotalPriceComponent) { if (elem != null) yield return new ElementValue("totalPriceComponent", true, elem); }
-                if (TotalNet != null) yield return new ElementValue("totalNet", false, TotalNet);
-                if (TotalGross != null) yield return new ElementValue("totalGross", false, TotalGross);
-                if (PaymentTermsElement != null) yield return new ElementValue("paymentTerms", false, PaymentTermsElement);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (CancelledReasonElement != null) yield return new ElementValue("cancelledReason", CancelledReasonElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Recipient != null) yield return new ElementValue("recipient", Recipient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
+                if (Issuer != null) yield return new ElementValue("issuer", Issuer);
+                if (Account != null) yield return new ElementValue("account", Account);
+                foreach (var elem in LineItem) { if (elem != null) yield return new ElementValue("lineItem", elem); }
+                foreach (var elem in TotalPriceComponent) { if (elem != null) yield return new ElementValue("totalPriceComponent", elem); }
+                if (TotalNet != null) yield return new ElementValue("totalNet", TotalNet);
+                if (TotalGross != null) yield return new ElementValue("totalGross", TotalGross);
+                if (PaymentTermsElement != null) yield return new ElementValue("paymentTerms", PaymentTermsElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

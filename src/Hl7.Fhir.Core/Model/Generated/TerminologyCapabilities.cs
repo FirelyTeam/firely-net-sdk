@@ -210,8 +210,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 }
             }
 
@@ -353,8 +353,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 }
             }
 
@@ -513,9 +513,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
-                    foreach (var elem in Version) { if (elem != null) yield return new ElementValue("version", true, elem); }
-                    if (SubsumptionElement != null) yield return new ElementValue("subsumption", false, SubsumptionElement);
+                    if (UriElement != null) yield return new ElementValue("uri", UriElement);
+                    foreach (var elem in Version) { if (elem != null) yield return new ElementValue("version", elem); }
+                    if (SubsumptionElement != null) yield return new ElementValue("subsumption", SubsumptionElement);
                 }
             }
 
@@ -784,12 +784,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (IsDefaultElement != null) yield return new ElementValue("isDefault", false, IsDefaultElement);
-                    if (CompositionalElement != null) yield return new ElementValue("compositional", false, CompositionalElement);
-                    foreach (var elem in LanguageElement) { if (elem != null) yield return new ElementValue("language", true, elem); }
-                    foreach (var elem in Filter) { if (elem != null) yield return new ElementValue("filter", true, elem); }
-                    foreach (var elem in PropertyElement) { if (elem != null) yield return new ElementValue("property", true, elem); }
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (IsDefaultElement != null) yield return new ElementValue("isDefault", IsDefaultElement);
+                    if (CompositionalElement != null) yield return new ElementValue("compositional", CompositionalElement);
+                    foreach (var elem in LanguageElement) { if (elem != null) yield return new ElementValue("language", elem); }
+                    foreach (var elem in Filter) { if (elem != null) yield return new ElementValue("filter", elem); }
+                    foreach (var elem in PropertyElement) { if (elem != null) yield return new ElementValue("property", elem); }
                 }
             }
 
@@ -932,8 +932,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    foreach (var elem in OpElement) { if (elem != null) yield return new ElementValue("op", true, elem); }
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    foreach (var elem in OpElement) { if (elem != null) yield return new ElementValue("op", elem); }
                 }
             }
 
@@ -1164,11 +1164,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (HierarchicalElement != null) yield return new ElementValue("hierarchical", false, HierarchicalElement);
-                    if (PagingElement != null) yield return new ElementValue("paging", false, PagingElement);
-                    if (IncompleteElement != null) yield return new ElementValue("incomplete", false, IncompleteElement);
-                    foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
-                    if (TextFilterElement != null) yield return new ElementValue("textFilter", false, TextFilterElement);
+                    if (HierarchicalElement != null) yield return new ElementValue("hierarchical", HierarchicalElement);
+                    if (PagingElement != null) yield return new ElementValue("paging", PagingElement);
+                    if (IncompleteElement != null) yield return new ElementValue("incomplete", IncompleteElement);
+                    foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", elem); }
+                    if (TextFilterElement != null) yield return new ElementValue("textFilter", TextFilterElement);
                 }
             }
 
@@ -1310,8 +1310,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
                 }
             }
 
@@ -1417,7 +1417,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TranslationsElement != null) yield return new ElementValue("translations", false, TranslationsElement);
+                    if (TranslationsElement != null) yield return new ElementValue("translations", TranslationsElement);
                 }
             }
 
@@ -1523,7 +1523,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NeedsMapElement != null) yield return new ElementValue("needsMap", false, NeedsMapElement);
+                    if (NeedsMapElement != null) yield return new ElementValue("needsMap", NeedsMapElement);
                 }
             }
 
@@ -1628,7 +1628,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TranslationElement != null) yield return new ElementValue("translation", false, TranslationElement);
+                    if (TranslationElement != null) yield return new ElementValue("translation", TranslationElement);
                 }
             }
 
@@ -2437,30 +2437,30 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (PurposeElement != null) yield return new ElementValue("purpose", false, PurposeElement);
-                if (CopyrightElement != null) yield return new ElementValue("copyright", false, CopyrightElement);
-                if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
-                if (Software != null) yield return new ElementValue("software", false, Software);
-                if (Implementation != null) yield return new ElementValue("implementation", false, Implementation);
-                if (LockedDateElement != null) yield return new ElementValue("lockedDate", false, LockedDateElement);
-                foreach (var elem in CodeSystem) { if (elem != null) yield return new ElementValue("codeSystem", true, elem); }
-                if (Expansion != null) yield return new ElementValue("expansion", false, Expansion);
-                if (CodeSearchElement != null) yield return new ElementValue("codeSearch", false, CodeSearchElement);
-                if (ValidateCode != null) yield return new ElementValue("validateCode", false, ValidateCode);
-                if (Translation != null) yield return new ElementValue("translation", false, Translation);
-                if (Closure != null) yield return new ElementValue("closure", false, Closure);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
+                if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
+                if (KindElement != null) yield return new ElementValue("kind", KindElement);
+                if (Software != null) yield return new ElementValue("software", Software);
+                if (Implementation != null) yield return new ElementValue("implementation", Implementation);
+                if (LockedDateElement != null) yield return new ElementValue("lockedDate", LockedDateElement);
+                foreach (var elem in CodeSystem) { if (elem != null) yield return new ElementValue("codeSystem", elem); }
+                if (Expansion != null) yield return new ElementValue("expansion", Expansion);
+                if (CodeSearchElement != null) yield return new ElementValue("codeSearch", CodeSearchElement);
+                if (ValidateCode != null) yield return new ElementValue("validateCode", ValidateCode);
+                if (Translation != null) yield return new ElementValue("translation", Translation);
+                if (Closure != null) yield return new ElementValue("closure", Closure);
             }
         }
 

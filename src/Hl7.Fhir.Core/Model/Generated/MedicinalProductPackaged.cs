@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (OuterPackaging != null) yield return new ElementValue("outerPackaging", false, OuterPackaging);
-                    if (ImmediatePackaging != null) yield return new ElementValue("immediatePackaging", false, ImmediatePackaging);
+                    if (OuterPackaging != null) yield return new ElementValue("outerPackaging", OuterPackaging);
+                    if (ImmediatePackaging != null) yield return new ElementValue("immediatePackaging", ImmediatePackaging);
                 }
             }
 
@@ -442,18 +442,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", true, elem); }
-                    foreach (var elem in AlternateMaterial) { if (elem != null) yield return new ElementValue("alternateMaterial", true, elem); }
-                    foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", true, elem); }
-                    foreach (var elem in ManufacturedItem) { if (elem != null) yield return new ElementValue("manufacturedItem", true, elem); }
-                    foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", true, elem); }
-                    if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", false, PhysicalCharacteristics);
-                    foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", true, elem); }
-                    foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", true, elem); }
-                    foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", true, elem); }
+                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", elem); }
+                    foreach (var elem in AlternateMaterial) { if (elem != null) yield return new ElementValue("alternateMaterial", elem); }
+                    foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", elem); }
+                    foreach (var elem in ManufacturedItem) { if (elem != null) yield return new ElementValue("manufacturedItem", elem); }
+                    foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
+                    if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", PhysicalCharacteristics);
+                    foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", elem); }
+                    foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", elem); }
+                    foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
                 }
             }
 
@@ -705,15 +705,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", false, LegalStatusOfSupply);
-                foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", true, elem); }
-                if (MarketingAuthorization != null) yield return new ElementValue("marketingAuthorization", false, MarketingAuthorization);
-                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", true, elem); }
-                foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", true, elem); }
-                foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", LegalStatusOfSupply);
+                foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", elem); }
+                if (MarketingAuthorization != null) yield return new ElementValue("marketingAuthorization", MarketingAuthorization);
+                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+                foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", elem); }
+                foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
             }
         }
 

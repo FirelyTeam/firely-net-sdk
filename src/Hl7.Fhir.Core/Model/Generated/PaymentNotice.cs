@@ -394,18 +394,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Request != null) yield return new ElementValue("request", false, Request);
-                if (Response != null) yield return new ElementValue("response", false, Response);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
-                if (Provider != null) yield return new ElementValue("provider", false, Provider);
-                if (Payment != null) yield return new ElementValue("payment", false, Payment);
-                if (PaymentDateElement != null) yield return new ElementValue("paymentDate", false, PaymentDateElement);
-                if (Payee != null) yield return new ElementValue("payee", false, Payee);
-                if (Recipient != null) yield return new ElementValue("recipient", false, Recipient);
-                if (Amount != null) yield return new ElementValue("amount", false, Amount);
-                if (PaymentStatus != null) yield return new ElementValue("paymentStatus", false, PaymentStatus);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Request != null) yield return new ElementValue("request", Request);
+                if (Response != null) yield return new ElementValue("response", Response);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Payment != null) yield return new ElementValue("payment", Payment);
+                if (PaymentDateElement != null) yield return new ElementValue("paymentDate", PaymentDateElement);
+                if (Payee != null) yield return new ElementValue("payee", Payee);
+                if (Recipient != null) yield return new ElementValue("recipient", Recipient);
+                if (Amount != null) yield return new ElementValue("amount", Amount);
+                if (PaymentStatus != null) yield return new ElementValue("paymentStatus", PaymentStatus);
             }
         }
 

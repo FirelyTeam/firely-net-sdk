@@ -333,14 +333,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IsDerivedElement != null) yield return new ElementValue("isDerived", false, IsDerivedElement);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (PreferenceElement != null) yield return new ElementValue("preference", false, PreferenceElement);
-                    if (Container != null) yield return new ElementValue("container", false, Container);
-                    if (RequirementElement != null) yield return new ElementValue("requirement", false, RequirementElement);
-                    if (RetentionTime != null) yield return new ElementValue("retentionTime", false, RetentionTime);
-                    foreach (var elem in RejectionCriterion) { if (elem != null) yield return new ElementValue("rejectionCriterion", true, elem); }
-                    foreach (var elem in Handling) { if (elem != null) yield return new ElementValue("handling", true, elem); }
+                    if (IsDerivedElement != null) yield return new ElementValue("isDerived", IsDerivedElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (PreferenceElement != null) yield return new ElementValue("preference", PreferenceElement);
+                    if (Container != null) yield return new ElementValue("container", Container);
+                    if (RequirementElement != null) yield return new ElementValue("requirement", RequirementElement);
+                    if (RetentionTime != null) yield return new ElementValue("retentionTime", RetentionTime);
+                    foreach (var elem in RejectionCriterion) { if (elem != null) yield return new ElementValue("rejectionCriterion", elem); }
+                    foreach (var elem in Handling) { if (elem != null) yield return new ElementValue("handling", elem); }
                 }
             }
 
@@ -586,14 +586,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Material != null) yield return new ElementValue("material", false, Material);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Cap != null) yield return new ElementValue("cap", false, Cap);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Capacity != null) yield return new ElementValue("capacity", false, Capacity);
-                    if (MinimumVolume != null) yield return new ElementValue("minimumVolume", false, MinimumVolume);
-                    foreach (var elem in Additive) { if (elem != null) yield return new ElementValue("additive", true, elem); }
-                    if (PreparationElement != null) yield return new ElementValue("preparation", false, PreparationElement);
+                    if (Material != null) yield return new ElementValue("material", Material);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Cap != null) yield return new ElementValue("cap", Cap);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Capacity != null) yield return new ElementValue("capacity", Capacity);
+                    if (MinimumVolume != null) yield return new ElementValue("minimumVolume", MinimumVolume);
+                    foreach (var elem in Additive) { if (elem != null) yield return new ElementValue("additive", elem); }
+                    if (PreparationElement != null) yield return new ElementValue("preparation", PreparationElement);
                 }
             }
 
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Additive != null) yield return new ElementValue("additive", false, Additive);
+                    if (Additive != null) yield return new ElementValue("additive", Additive);
                 }
             }
 
@@ -838,10 +838,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TemperatureQualifier != null) yield return new ElementValue("temperatureQualifier", false, TemperatureQualifier);
-                    if (TemperatureRange != null) yield return new ElementValue("temperatureRange", false, TemperatureRange);
-                    if (MaxDuration != null) yield return new ElementValue("maxDuration", false, MaxDuration);
-                    if (InstructionElement != null) yield return new ElementValue("instruction", false, InstructionElement);
+                    if (TemperatureQualifier != null) yield return new ElementValue("temperatureQualifier", TemperatureQualifier);
+                    if (TemperatureRange != null) yield return new ElementValue("temperatureRange", TemperatureRange);
+                    if (MaxDuration != null) yield return new ElementValue("maxDuration", MaxDuration);
+                    if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
                 }
             }
 
@@ -1033,12 +1033,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (TypeCollected != null) yield return new ElementValue("typeCollected", false, TypeCollected);
-                foreach (var elem in PatientPreparation) { if (elem != null) yield return new ElementValue("patientPreparation", true, elem); }
-                if (TimeAspectElement != null) yield return new ElementValue("timeAspect", false, TimeAspectElement);
-                foreach (var elem in Collection) { if (elem != null) yield return new ElementValue("collection", true, elem); }
-                foreach (var elem in TypeTested) { if (elem != null) yield return new ElementValue("typeTested", true, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (TypeCollected != null) yield return new ElementValue("typeCollected", TypeCollected);
+                foreach (var elem in PatientPreparation) { if (elem != null) yield return new ElementValue("patientPreparation", elem); }
+                if (TimeAspectElement != null) yield return new ElementValue("timeAspect", TimeAspectElement);
+                foreach (var elem in Collection) { if (elem != null) yield return new ElementValue("collection", elem); }
+                foreach (var elem in TypeTested) { if (elem != null) yield return new ElementValue("typeTested", elem); }
             }
         }
 

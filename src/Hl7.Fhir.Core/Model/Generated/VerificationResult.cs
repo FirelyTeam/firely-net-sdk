@@ -304,13 +304,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Who != null) yield return new ElementValue("who", false, Who);
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                    foreach (var elem in CommunicationMethod) { if (elem != null) yield return new ElementValue("communicationMethod", true, elem); }
-                    if (ValidationStatus != null) yield return new ElementValue("validationStatus", false, ValidationStatus);
-                    if (ValidationDateElement != null) yield return new ElementValue("validationDate", false, ValidationDateElement);
-                    if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", false, CanPushUpdates);
-                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", true, elem); }
+                    if (Who != null) yield return new ElementValue("who", Who);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    foreach (var elem in CommunicationMethod) { if (elem != null) yield return new ElementValue("communicationMethod", elem); }
+                    if (ValidationStatus != null) yield return new ElementValue("validationStatus", ValidationStatus);
+                    if (ValidationDateElement != null) yield return new ElementValue("validationDate", ValidationDateElement);
+                    if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", CanPushUpdates);
+                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", elem); }
                 }
             }
 
@@ -576,14 +576,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Who != null) yield return new ElementValue("who", false, Who);
-                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
-                    if (CommunicationMethod != null) yield return new ElementValue("communicationMethod", false, CommunicationMethod);
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", false, SourceIdentityCertificateElement);
-                    if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", false, ProxyIdentityCertificateElement);
-                    if (ProxySignature != null) yield return new ElementValue("proxySignature", false, ProxySignature);
-                    if (SourceSignature != null) yield return new ElementValue("sourceSignature", false, SourceSignature);
+                    if (Who != null) yield return new ElementValue("who", Who);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                    if (CommunicationMethod != null) yield return new ElementValue("communicationMethod", CommunicationMethod);
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", SourceIdentityCertificateElement);
+                    if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", ProxyIdentityCertificateElement);
+                    if (ProxySignature != null) yield return new ElementValue("proxySignature", ProxySignature);
+                    if (SourceSignature != null) yield return new ElementValue("sourceSignature", SourceSignature);
                 }
             }
 
@@ -725,9 +725,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", false, IdentityCertificateElement);
-                    if (AttestationSignature != null) yield return new ElementValue("attestationSignature", false, AttestationSignature);
+                    if (Organization != null) yield return new ElementValue("organization", Organization);
+                    if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", IdentityCertificateElement);
+                    if (AttestationSignature != null) yield return new ElementValue("attestationSignature", AttestationSignature);
                 }
             }
 
@@ -1136,20 +1136,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
-                foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", true, elem); }
-                if (Need != null) yield return new ElementValue("need", false, Need);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (StatusDateElement != null) yield return new ElementValue("statusDate", false, StatusDateElement);
-                if (ValidationType != null) yield return new ElementValue("validationType", false, ValidationType);
-                foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", true, elem); }
-                if (Frequency != null) yield return new ElementValue("frequency", false, Frequency);
-                if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", false, LastPerformedElement);
-                if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", false, NextScheduledElement);
-                if (FailureAction != null) yield return new ElementValue("failureAction", false, FailureAction);
-                foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", true, elem); }
-                if (Attestation != null) yield return new ElementValue("attestation", false, Attestation);
-                foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", true, elem); }
+                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
+                foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", elem); }
+                if (Need != null) yield return new ElementValue("need", Need);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
+                if (ValidationType != null) yield return new ElementValue("validationType", ValidationType);
+                foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", elem); }
+                if (Frequency != null) yield return new ElementValue("frequency", Frequency);
+                if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", LastPerformedElement);
+                if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", NextScheduledElement);
+                if (FailureAction != null) yield return new ElementValue("failureAction", FailureAction);
+                foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", elem); }
+                if (Attestation != null) yield return new ElementValue("attestation", Attestation);
+                foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", elem); }
             }
         }
 

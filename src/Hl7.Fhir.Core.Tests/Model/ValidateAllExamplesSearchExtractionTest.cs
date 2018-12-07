@@ -35,11 +35,11 @@ namespace Hl7.Fhir.Tests.Model
             // (and only works with the PocoNavigator that we are testing with)
             Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.Add("resolve", (object f) =>
             {
-                if (f is IEnumerable<IElementNavigator>)
+                if (f is IEnumerable<ITypedElement>)
                 {
-                    object[] bits = (f as IEnumerable<IElementNavigator>).Select(i =>
+                    object[] bits = (f as IEnumerable<ITypedElement>).Select(i =>
                     {
-                        var resref = (i as PocoNavigator).FhirValue as ResourceReference;
+                        var resref = (i as PocoElementNode).FhirValue as ResourceReference;
                         if (resref != null && ResourceIdentity.IsRestResourceIdentity(resref.Reference))
                         {
                             ResourceIdentity ri = new ResourceIdentity(resref.Reference);
@@ -49,10 +49,10 @@ namespace Hl7.Fhir.Tests.Model
                                 var type = ModelInfo.GetTypeForFhirType(ri.ResourceType);
                                 DomainResource res = fac.Create(type) as DomainResource;
                                 res.Id = ri.Id;
-                                return res.ToNavigator();
+                                return res.ToTypedElement();
                             }
                         }
-                        return (IElementNavigator)null;
+                        return (ITypedElement)null;
                     }).ToArray();
                     return FhirValueList.Create(bits.Where(b => b != null).ToArray());
                 }
@@ -162,15 +162,14 @@ namespace Hl7.Fhir.Tests.Model
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = new PocoNavigator(resource);
-            var navigator = new PocoNavigator(resource);
+            var resourceModel = resource.ToTypedElement();
 
             try
             {
-                IEnumerable<IElementNavigator> results;
+                IEnumerable<ITypedElement> results;
                 try
                 {
-                    results = resourceModel.Select(index.Expression, new EvaluationContext(navigator));
+                    results = resourceModel.Select(index.Expression, new EvaluationContext(resourceModel));
                 }
                 catch (Exception ex)
                 {
@@ -183,17 +182,17 @@ namespace Hl7.Fhir.Tests.Model
                     {
                         if (t2 != null)
                         {
-                            if (t2 is PocoNavigator && (t2 as PocoNavigator).FhirValue != null)
+                            if (t2 is PocoElementNode && (t2 as PocoElementNode).FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
-                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
+                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                                //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
                                 exampleSearchValues[key]++;
                             }
                             else if (t2.Value is Hl7.FhirPath.ConstantValue)
                             {
-                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
+                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                                //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
                                 exampleSearchValues[key]++;
                             }
                             else if (t2.Value is bool)

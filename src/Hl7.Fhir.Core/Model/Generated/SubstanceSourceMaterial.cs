@@ -169,8 +169,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (FractionElement != null) yield return new ElementValue("fraction", false, FractionElement);
-                    if (MaterialType != null) yield return new ElementValue("materialType", false, MaterialType);
+                    if (FractionElement != null) yield return new ElementValue("fraction", FractionElement);
+                    if (MaterialType != null) yield return new ElementValue("materialType", MaterialType);
                 }
             }
 
@@ -395,14 +395,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Family != null) yield return new ElementValue("family", false, Family);
-                    if (Genus != null) yield return new ElementValue("genus", false, Genus);
-                    if (Species != null) yield return new ElementValue("species", false, Species);
-                    if (IntraspecificType != null) yield return new ElementValue("intraspecificType", false, IntraspecificType);
-                    if (IntraspecificDescriptionElement != null) yield return new ElementValue("intraspecificDescription", false, IntraspecificDescriptionElement);
-                    foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
-                    if (Hybrid != null) yield return new ElementValue("hybrid", false, Hybrid);
-                    if (OrganismGeneral != null) yield return new ElementValue("organismGeneral", false, OrganismGeneral);
+                    if (Family != null) yield return new ElementValue("family", Family);
+                    if (Genus != null) yield return new ElementValue("genus", Genus);
+                    if (Species != null) yield return new ElementValue("species", Species);
+                    if (IntraspecificType != null) yield return new ElementValue("intraspecificType", IntraspecificType);
+                    if (IntraspecificDescriptionElement != null) yield return new ElementValue("intraspecificDescription", IntraspecificDescriptionElement);
+                    foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
+                    if (Hybrid != null) yield return new ElementValue("hybrid", Hybrid);
+                    if (OrganismGeneral != null) yield return new ElementValue("organismGeneral", OrganismGeneral);
                 }
             }
 
@@ -524,8 +524,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (AuthorType != null) yield return new ElementValue("authorType", false, AuthorType);
-                    if (AuthorDescriptionElement != null) yield return new ElementValue("authorDescription", false, AuthorDescriptionElement);
+                    if (AuthorType != null) yield return new ElementValue("authorType", AuthorType);
+                    if (AuthorDescriptionElement != null) yield return new ElementValue("authorDescription", AuthorDescriptionElement);
                 }
             }
 
@@ -755,11 +755,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MaternalOrganismIdElement != null) yield return new ElementValue("maternalOrganismId", false, MaternalOrganismIdElement);
-                    if (MaternalOrganismNameElement != null) yield return new ElementValue("maternalOrganismName", false, MaternalOrganismNameElement);
-                    if (PaternalOrganismIdElement != null) yield return new ElementValue("paternalOrganismId", false, PaternalOrganismIdElement);
-                    if (PaternalOrganismNameElement != null) yield return new ElementValue("paternalOrganismName", false, PaternalOrganismNameElement);
-                    if (HybridType != null) yield return new ElementValue("hybridType", false, HybridType);
+                    if (MaternalOrganismIdElement != null) yield return new ElementValue("maternalOrganismId", MaternalOrganismIdElement);
+                    if (MaternalOrganismNameElement != null) yield return new ElementValue("maternalOrganismName", MaternalOrganismNameElement);
+                    if (PaternalOrganismIdElement != null) yield return new ElementValue("paternalOrganismId", PaternalOrganismIdElement);
+                    if (PaternalOrganismNameElement != null) yield return new ElementValue("paternalOrganismName", PaternalOrganismNameElement);
+                    if (HybridType != null) yield return new ElementValue("hybridType", HybridType);
                 }
             }
 
@@ -896,10 +896,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Kingdom != null) yield return new ElementValue("kingdom", false, Kingdom);
-                    if (Phylum != null) yield return new ElementValue("phylum", false, Phylum);
-                    if (Class != null) yield return new ElementValue("class", false, Class);
-                    if (Order != null) yield return new ElementValue("order", false, Order);
+                    if (Kingdom != null) yield return new ElementValue("kingdom", Kingdom);
+                    if (Phylum != null) yield return new ElementValue("phylum", Phylum);
+                    if (Class != null) yield return new ElementValue("class", Class);
+                    if (Order != null) yield return new ElementValue("order", Order);
                 }
             }
 
@@ -1002,8 +1002,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Part != null) yield return new ElementValue("part", false, Part);
-                    if (PartLocation != null) yield return new ElementValue("partLocation", false, PartLocation);
+                    if (Part != null) yield return new ElementValue("part", Part);
+                    if (PartLocation != null) yield return new ElementValue("partLocation", PartLocation);
                 }
             }
 
@@ -1355,19 +1355,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (SourceMaterialClass != null) yield return new ElementValue("sourceMaterialClass", false, SourceMaterialClass);
-                if (SourceMaterialType != null) yield return new ElementValue("sourceMaterialType", false, SourceMaterialType);
-                if (SourceMaterialState != null) yield return new ElementValue("sourceMaterialState", false, SourceMaterialState);
-                if (OrganismId != null) yield return new ElementValue("organismId", false, OrganismId);
-                if (OrganismNameElement != null) yield return new ElementValue("organismName", false, OrganismNameElement);
-                foreach (var elem in ParentSubstanceId) { if (elem != null) yield return new ElementValue("parentSubstanceId", true, elem); }
-                foreach (var elem in ParentSubstanceNameElement) { if (elem != null) yield return new ElementValue("parentSubstanceName", true, elem); }
-                foreach (var elem in CountryOfOrigin) { if (elem != null) yield return new ElementValue("countryOfOrigin", true, elem); }
-                foreach (var elem in GeographicalLocationElement) { if (elem != null) yield return new ElementValue("geographicalLocation", true, elem); }
-                if (DevelopmentStage != null) yield return new ElementValue("developmentStage", false, DevelopmentStage);
-                foreach (var elem in FractionDescription) { if (elem != null) yield return new ElementValue("fractionDescription", true, elem); }
-                if (Organism != null) yield return new ElementValue("organism", false, Organism);
-                foreach (var elem in PartDescription) { if (elem != null) yield return new ElementValue("partDescription", true, elem); }
+                if (SourceMaterialClass != null) yield return new ElementValue("sourceMaterialClass", SourceMaterialClass);
+                if (SourceMaterialType != null) yield return new ElementValue("sourceMaterialType", SourceMaterialType);
+                if (SourceMaterialState != null) yield return new ElementValue("sourceMaterialState", SourceMaterialState);
+                if (OrganismId != null) yield return new ElementValue("organismId", OrganismId);
+                if (OrganismNameElement != null) yield return new ElementValue("organismName", OrganismNameElement);
+                foreach (var elem in ParentSubstanceId) { if (elem != null) yield return new ElementValue("parentSubstanceId", elem); }
+                foreach (var elem in ParentSubstanceNameElement) { if (elem != null) yield return new ElementValue("parentSubstanceName", elem); }
+                foreach (var elem in CountryOfOrigin) { if (elem != null) yield return new ElementValue("countryOfOrigin", elem); }
+                foreach (var elem in GeographicalLocationElement) { if (elem != null) yield return new ElementValue("geographicalLocation", elem); }
+                if (DevelopmentStage != null) yield return new ElementValue("developmentStage", DevelopmentStage);
+                foreach (var elem in FractionDescription) { if (elem != null) yield return new ElementValue("fractionDescription", elem); }
+                if (Organism != null) yield return new ElementValue("organism", Organism);
+                foreach (var elem in PartDescription) { if (elem != null) yield return new ElementValue("partDescription", elem); }
             }
         }
 

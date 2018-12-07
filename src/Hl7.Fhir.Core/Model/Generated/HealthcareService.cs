@@ -169,8 +169,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
                 }
             }
 
@@ -384,10 +384,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", true, elem); }
-                    if (AllDayElement != null) yield return new ElementValue("allDay", false, AllDayElement);
-                    if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", false, AvailableStartTimeElement);
-                    if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", false, AvailableEndTimeElement);
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", elem); }
+                    if (AllDayElement != null) yield return new ElementValue("allDay", AllDayElement);
+                    if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", AvailableStartTimeElement);
+                    if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", AvailableEndTimeElement);
                 }
             }
 
@@ -510,8 +510,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (During != null) yield return new ElementValue("during", false, During);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (During != null) yield return new ElementValue("during", During);
                 }
             }
 
@@ -1125,30 +1125,30 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (ProvidedBy != null) yield return new ElementValue("providedBy", false, ProvidedBy);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
-                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-                if (ExtraDetailsElement != null) yield return new ElementValue("extraDetails", false, ExtraDetailsElement);
-                if (Photo != null) yield return new ElementValue("photo", false, Photo);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                foreach (var elem in CoverageArea) { if (elem != null) yield return new ElementValue("coverageArea", true, elem); }
-                foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return new ElementValue("serviceProvisionCode", true, elem); }
-                foreach (var elem in Eligibility) { if (elem != null) yield return new ElementValue("eligibility", true, elem); }
-                foreach (var elem in Program) { if (elem != null) yield return new ElementValue("program", true, elem); }
-                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
-                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", true, elem); }
-                foreach (var elem in ReferralMethod) { if (elem != null) yield return new ElementValue("referralMethod", true, elem); }
-                if (AppointmentRequiredElement != null) yield return new ElementValue("appointmentRequired", false, AppointmentRequiredElement);
-                foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", true, elem); }
-                foreach (var elem in NotAvailable) { if (elem != null) yield return new ElementValue("notAvailable", true, elem); }
-                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", false, AvailabilityExceptionsElement);
-                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (ProvidedBy != null) yield return new ElementValue("providedBy", ProvidedBy);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
+                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                if (ExtraDetailsElement != null) yield return new ElementValue("extraDetails", ExtraDetailsElement);
+                if (Photo != null) yield return new ElementValue("photo", Photo);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                foreach (var elem in CoverageArea) { if (elem != null) yield return new ElementValue("coverageArea", elem); }
+                foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return new ElementValue("serviceProvisionCode", elem); }
+                foreach (var elem in Eligibility) { if (elem != null) yield return new ElementValue("eligibility", elem); }
+                foreach (var elem in Program) { if (elem != null) yield return new ElementValue("program", elem); }
+                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
+                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", elem); }
+                foreach (var elem in ReferralMethod) { if (elem != null) yield return new ElementValue("referralMethod", elem); }
+                if (AppointmentRequiredElement != null) yield return new ElementValue("appointmentRequired", AppointmentRequiredElement);
+                foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", elem); }
+                foreach (var elem in NotAvailable) { if (elem != null) yield return new ElementValue("notAvailable", elem); }
+                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", AvailabilityExceptionsElement);
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
             }
         }
 

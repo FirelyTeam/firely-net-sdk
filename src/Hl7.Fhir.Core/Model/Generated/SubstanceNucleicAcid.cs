@@ -311,14 +311,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SubunitElement != null) yield return new ElementValue("subunit", false, SubunitElement);
-                    if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
-                    if (LengthElement != null) yield return new ElementValue("length", false, LengthElement);
-                    if (SequenceAttachment != null) yield return new ElementValue("sequenceAttachment", false, SequenceAttachment);
-                    if (FivePrime != null) yield return new ElementValue("fivePrime", false, FivePrime);
-                    if (ThreePrime != null) yield return new ElementValue("threePrime", false, ThreePrime);
-                    foreach (var elem in Linkage) { if (elem != null) yield return new ElementValue("linkage", true, elem); }
-                    foreach (var elem in Sugar) { if (elem != null) yield return new ElementValue("sugar", true, elem); }
+                    if (SubunitElement != null) yield return new ElementValue("subunit", SubunitElement);
+                    if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
+                    if (LengthElement != null) yield return new ElementValue("length", LengthElement);
+                    if (SequenceAttachment != null) yield return new ElementValue("sequenceAttachment", SequenceAttachment);
+                    if (FivePrime != null) yield return new ElementValue("fivePrime", FivePrime);
+                    if (ThreePrime != null) yield return new ElementValue("threePrime", ThreePrime);
+                    foreach (var elem in Linkage) { if (elem != null) yield return new ElementValue("linkage", elem); }
+                    foreach (var elem in Sugar) { if (elem != null) yield return new ElementValue("sugar", elem); }
                 }
             }
 
@@ -512,10 +512,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ConnectivityElement != null) yield return new ElementValue("connectivity", false, ConnectivityElement);
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (ResidueSiteElement != null) yield return new ElementValue("residueSite", false, ResidueSiteElement);
+                    if (ConnectivityElement != null) yield return new ElementValue("connectivity", ConnectivityElement);
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (ResidueSiteElement != null) yield return new ElementValue("residueSite", ResidueSiteElement);
                 }
             }
 
@@ -673,9 +673,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (ResidueSiteElement != null) yield return new ElementValue("residueSite", false, ResidueSiteElement);
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (ResidueSiteElement != null) yield return new ElementValue("residueSite", ResidueSiteElement);
                 }
             }
 
@@ -867,11 +867,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (SequenceType != null) yield return new ElementValue("sequenceType", false, SequenceType);
-                if (NumberOfSubunitsElement != null) yield return new ElementValue("numberOfSubunits", false, NumberOfSubunitsElement);
-                if (AreaOfHybridisationElement != null) yield return new ElementValue("areaOfHybridisation", false, AreaOfHybridisationElement);
-                if (OligoNucleotideType != null) yield return new ElementValue("oligoNucleotideType", false, OligoNucleotideType);
-                foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", true, elem); }
+                if (SequenceType != null) yield return new ElementValue("sequenceType", SequenceType);
+                if (NumberOfSubunitsElement != null) yield return new ElementValue("numberOfSubunits", NumberOfSubunitsElement);
+                if (AreaOfHybridisationElement != null) yield return new ElementValue("areaOfHybridisation", AreaOfHybridisationElement);
+                if (OligoNucleotideType != null) yield return new ElementValue("oligoNucleotideType", OligoNucleotideType);
+                foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", elem); }
             }
         }
 

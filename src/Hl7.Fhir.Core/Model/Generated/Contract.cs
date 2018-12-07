@@ -477,12 +477,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (SubType != null) yield return new ElementValue("subType", false, SubType);
-                    if (Publisher != null) yield return new ElementValue("publisher", false, Publisher);
-                    if (PublicationDateElement != null) yield return new ElementValue("publicationDate", false, PublicationDateElement);
-                    if (PublicationStatusElement != null) yield return new ElementValue("publicationStatus", false, PublicationStatusElement);
-                    if (CopyrightElement != null) yield return new ElementValue("copyright", false, CopyrightElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (SubType != null) yield return new ElementValue("subType", SubType);
+                    if (Publisher != null) yield return new ElementValue("publisher", Publisher);
+                    if (PublicationDateElement != null) yield return new ElementValue("publicationDate", PublicationDateElement);
+                    if (PublicationStatusElement != null) yield return new ElementValue("publicationStatus", PublicationStatusElement);
+                    if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
                 }
             }
 
@@ -800,18 +800,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                    if (IssuedElement != null) yield return new ElementValue("issued", false, IssuedElement);
-                    if (Applies != null) yield return new ElementValue("applies", false, Applies);
-                    if (Topic != null) yield return new ElementValue("topic", false, Topic);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (SubType != null) yield return new ElementValue("subType", false, SubType);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", true, elem); }
-                    if (Offer != null) yield return new ElementValue("offer", false, Offer);
-                    foreach (var elem in Asset) { if (elem != null) yield return new ElementValue("asset", true, elem); }
-                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
-                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
+                    if (Applies != null) yield return new ElementValue("applies", Applies);
+                    if (Topic != null) yield return new ElementValue("topic", Topic);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (SubType != null) yield return new ElementValue("subType", SubType);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
+                    if (Offer != null) yield return new ElementValue("offer", Offer);
+                    foreach (var elem in Asset) { if (elem != null) yield return new ElementValue("asset", elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
                 }
             }
 
@@ -971,10 +971,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in NumberElement) { if (elem != null) yield return new ElementValue("number", true, elem); }
-                    if (Classification != null) yield return new ElementValue("classification", false, Classification);
-                    foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                    foreach (var elem in Control) { if (elem != null) yield return new ElementValue("control", true, elem); }
+                    foreach (var elem in NumberElement) { if (elem != null) yield return new ElementValue("number", elem); }
+                    if (Classification != null) yield return new ElementValue("classification", Classification);
+                    foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                    foreach (var elem in Control) { if (elem != null) yield return new ElementValue("control", elem); }
                 }
             }
 
@@ -1278,16 +1278,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                    foreach (var elem in Party) { if (elem != null) yield return new ElementValue("party", true, elem); }
-                    if (Topic != null) yield return new ElementValue("topic", false, Topic);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Decision != null) yield return new ElementValue("decision", false, Decision);
-                    foreach (var elem in DecisionMode) { if (elem != null) yield return new ElementValue("decisionMode", true, elem); }
-                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", true, elem); }
-                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", true, elem); }
+                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                    foreach (var elem in Party) { if (elem != null) yield return new ElementValue("party", elem); }
+                    if (Topic != null) yield return new ElementValue("topic", Topic);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Decision != null) yield return new ElementValue("decision", Decision);
+                    foreach (var elem in DecisionMode) { if (elem != null) yield return new ElementValue("decisionMode", elem); }
+                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", elem); }
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", elem); }
+                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", elem); }
                 }
             }
 
@@ -1394,8 +1394,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Reference) { if (elem != null) yield return new ElementValue("reference", true, elem); }
-                    if (Role != null) yield return new ElementValue("role", false, Role);
+                    foreach (var elem in Reference) { if (elem != null) yield return new ElementValue("reference", elem); }
+                    if (Role != null) yield return new ElementValue("role", Role);
                 }
             }
 
@@ -1484,7 +1484,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -1897,21 +1897,21 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Scope != null) yield return new ElementValue("scope", false, Scope);
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                    foreach (var elem in TypeReference) { if (elem != null) yield return new ElementValue("typeReference", true, elem); }
-                    foreach (var elem in Subtype) { if (elem != null) yield return new ElementValue("subtype", true, elem); }
-                    if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
-                    foreach (var elem in Context) { if (elem != null) yield return new ElementValue("context", true, elem); }
-                    if (ConditionElement != null) yield return new ElementValue("condition", false, ConditionElement);
-                    foreach (var elem in PeriodType) { if (elem != null) yield return new ElementValue("periodType", true, elem); }
-                    foreach (var elem in Period) { if (elem != null) yield return new ElementValue("period", true, elem); }
-                    foreach (var elem in UsePeriod) { if (elem != null) yield return new ElementValue("usePeriod", true, elem); }
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", true, elem); }
-                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
-                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", true, elem); }
-                    foreach (var elem in ValuedItem) { if (elem != null) yield return new ElementValue("valuedItem", true, elem); }
+                    if (Scope != null) yield return new ElementValue("scope", Scope);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    foreach (var elem in TypeReference) { if (elem != null) yield return new ElementValue("typeReference", elem); }
+                    foreach (var elem in Subtype) { if (elem != null) yield return new ElementValue("subtype", elem); }
+                    if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                    foreach (var elem in Context) { if (elem != null) yield return new ElementValue("context", elem); }
+                    if (ConditionElement != null) yield return new ElementValue("condition", ConditionElement);
+                    foreach (var elem in PeriodType) { if (elem != null) yield return new ElementValue("periodType", elem); }
+                    foreach (var elem in Period) { if (elem != null) yield return new ElementValue("period", elem); }
+                    foreach (var elem in UsePeriod) { if (elem != null) yield return new ElementValue("usePeriod", elem); }
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", elem); }
+                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", elem); }
+                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", elem); }
+                    foreach (var elem in ValuedItem) { if (elem != null) yield return new ElementValue("valuedItem", elem); }
                 }
             }
 
@@ -2053,9 +2053,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
                 }
             }
 
@@ -2503,20 +2503,20 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Entity != null) yield return new ElementValue("entity", false, Entity);
-                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                    if (EffectiveTimeElement != null) yield return new ElementValue("effectiveTime", false, EffectiveTimeElement);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (UnitPrice != null) yield return new ElementValue("unitPrice", false, UnitPrice);
-                    if (FactorElement != null) yield return new ElementValue("factor", false, FactorElement);
-                    if (PointsElement != null) yield return new ElementValue("points", false, PointsElement);
-                    if (Net != null) yield return new ElementValue("net", false, Net);
-                    if (PaymentElement != null) yield return new ElementValue("payment", false, PaymentElement);
-                    if (PaymentDateElement != null) yield return new ElementValue("paymentDate", false, PaymentDateElement);
-                    if (Responsible != null) yield return new ElementValue("responsible", false, Responsible);
-                    if (Recipient != null) yield return new ElementValue("recipient", false, Recipient);
-                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", true, elem); }
-                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", true, elem); }
+                    if (Entity != null) yield return new ElementValue("entity", Entity);
+                    if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                    if (EffectiveTimeElement != null) yield return new ElementValue("effectiveTime", EffectiveTimeElement);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (UnitPrice != null) yield return new ElementValue("unitPrice", UnitPrice);
+                    if (FactorElement != null) yield return new ElementValue("factor", FactorElement);
+                    if (PointsElement != null) yield return new ElementValue("points", PointsElement);
+                    if (Net != null) yield return new ElementValue("net", Net);
+                    if (PaymentElement != null) yield return new ElementValue("payment", PaymentElement);
+                    if (PaymentDateElement != null) yield return new ElementValue("paymentDate", PaymentDateElement);
+                    if (Responsible != null) yield return new ElementValue("responsible", Responsible);
+                    if (Recipient != null) yield return new ElementValue("recipient", Recipient);
+                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", elem); }
+                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", elem); }
                 }
             }
 
@@ -3120,27 +3120,27 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", false, DoNotPerformElement);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                    if (Intent != null) yield return new ElementValue("intent", false, Intent);
-                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", true, elem); }
-                    if (Status != null) yield return new ElementValue("status", false, Status);
-                    if (Context != null) yield return new ElementValue("context", false, Context);
-                    foreach (var elem in ContextLinkIdElement) { if (elem != null) yield return new ElementValue("contextLinkId", true, elem); }
-                    if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                    foreach (var elem in Requester) { if (elem != null) yield return new ElementValue("requester", true, elem); }
-                    foreach (var elem in RequesterLinkIdElement) { if (elem != null) yield return new ElementValue("requesterLinkId", true, elem); }
-                    foreach (var elem in PerformerType) { if (elem != null) yield return new ElementValue("performerType", true, elem); }
-                    if (PerformerRole != null) yield return new ElementValue("performerRole", false, PerformerRole);
-                    if (Performer != null) yield return new ElementValue("performer", false, Performer);
-                    foreach (var elem in PerformerLinkIdElement) { if (elem != null) yield return new ElementValue("performerLinkId", true, elem); }
-                    foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                    foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                    foreach (var elem in ReasonElement) { if (elem != null) yield return new ElementValue("reason", true, elem); }
-                    foreach (var elem in ReasonLinkIdElement) { if (elem != null) yield return new ElementValue("reasonLinkId", true, elem); }
-                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", true, elem); }
+                    if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", DoNotPerformElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                    if (Intent != null) yield return new ElementValue("intent", Intent);
+                    foreach (var elem in LinkIdElement) { if (elem != null) yield return new ElementValue("linkId", elem); }
+                    if (Status != null) yield return new ElementValue("status", Status);
+                    if (Context != null) yield return new ElementValue("context", Context);
+                    foreach (var elem in ContextLinkIdElement) { if (elem != null) yield return new ElementValue("contextLinkId", elem); }
+                    if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
+                    foreach (var elem in Requester) { if (elem != null) yield return new ElementValue("requester", elem); }
+                    foreach (var elem in RequesterLinkIdElement) { if (elem != null) yield return new ElementValue("requesterLinkId", elem); }
+                    foreach (var elem in PerformerType) { if (elem != null) yield return new ElementValue("performerType", elem); }
+                    if (PerformerRole != null) yield return new ElementValue("performerRole", PerformerRole);
+                    if (Performer != null) yield return new ElementValue("performer", Performer);
+                    foreach (var elem in PerformerLinkIdElement) { if (elem != null) yield return new ElementValue("performerLinkId", elem); }
+                    foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                    foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                    foreach (var elem in ReasonElement) { if (elem != null) yield return new ElementValue("reason", elem); }
+                    foreach (var elem in ReasonLinkIdElement) { if (elem != null) yield return new ElementValue("reasonLinkId", elem); }
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                    foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", elem); }
                 }
             }
 
@@ -3246,8 +3246,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Reference) { if (elem != null) yield return new ElementValue("reference", true, elem); }
-                    if (Role != null) yield return new ElementValue("role", false, Role);
+                    foreach (var elem in Reference) { if (elem != null) yield return new ElementValue("reference", elem); }
+                    if (Role != null) yield return new ElementValue("role", Role);
                 }
             }
 
@@ -3372,9 +3372,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Party != null) yield return new ElementValue("party", false, Party);
-                    foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Party != null) yield return new ElementValue("party", Party);
+                    foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", elem); }
                 }
             }
 
@@ -3463,7 +3463,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", false, Content);
+                    if (Content != null) yield return new ElementValue("content", Content);
                 }
             }
 
@@ -3552,7 +3552,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", false, Content);
+                    if (Content != null) yield return new ElementValue("content", Content);
                 }
             }
 
@@ -3641,7 +3641,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", false, Content);
+                    if (Content != null) yield return new ElementValue("content", Content);
                 }
             }
 
@@ -4475,39 +4475,39 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (LegalState != null) yield return new ElementValue("legalState", false, LegalState);
-                if (InstantiatesCanonical != null) yield return new ElementValue("instantiatesCanonical", false, InstantiatesCanonical);
-                if (InstantiatesUriElement != null) yield return new ElementValue("instantiatesUri", false, InstantiatesUriElement);
-                if (ContentDerivative != null) yield return new ElementValue("contentDerivative", false, ContentDerivative);
-                if (IssuedElement != null) yield return new ElementValue("issued", false, IssuedElement);
-                if (Applies != null) yield return new ElementValue("applies", false, Applies);
-                if (ExpirationType != null) yield return new ElementValue("expirationType", false, ExpirationType);
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                foreach (var elem in Authority) { if (elem != null) yield return new ElementValue("authority", true, elem); }
-                foreach (var elem in Domain) { if (elem != null) yield return new ElementValue("domain", true, elem); }
-                foreach (var elem in Site) { if (elem != null) yield return new ElementValue("site", true, elem); }
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (SubtitleElement != null) yield return new ElementValue("subtitle", false, SubtitleElement);
-                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (Scope != null) yield return new ElementValue("scope", false, Scope);
-                if (Topic != null) yield return new ElementValue("topic", false, Topic);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                foreach (var elem in SubType) { if (elem != null) yield return new ElementValue("subType", true, elem); }
-                if (ContentDefinition != null) yield return new ElementValue("contentDefinition", false, ContentDefinition);
-                foreach (var elem in Term) { if (elem != null) yield return new ElementValue("term", true, elem); }
-                foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", true, elem); }
-                foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", true, elem); }
-                foreach (var elem in Signer) { if (elem != null) yield return new ElementValue("signer", true, elem); }
-                foreach (var elem in Friendly) { if (elem != null) yield return new ElementValue("friendly", true, elem); }
-                foreach (var elem in Legal) { if (elem != null) yield return new ElementValue("legal", true, elem); }
-                foreach (var elem in Rule) { if (elem != null) yield return new ElementValue("rule", true, elem); }
-                if (LegallyBinding != null) yield return new ElementValue("legallyBinding", false, LegallyBinding);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (LegalState != null) yield return new ElementValue("legalState", LegalState);
+                if (InstantiatesCanonical != null) yield return new ElementValue("instantiatesCanonical", InstantiatesCanonical);
+                if (InstantiatesUriElement != null) yield return new ElementValue("instantiatesUri", InstantiatesUriElement);
+                if (ContentDerivative != null) yield return new ElementValue("contentDerivative", ContentDerivative);
+                if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
+                if (Applies != null) yield return new ElementValue("applies", Applies);
+                if (ExpirationType != null) yield return new ElementValue("expirationType", ExpirationType);
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                foreach (var elem in Authority) { if (elem != null) yield return new ElementValue("authority", elem); }
+                foreach (var elem in Domain) { if (elem != null) yield return new ElementValue("domain", elem); }
+                foreach (var elem in Site) { if (elem != null) yield return new ElementValue("site", elem); }
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (SubtitleElement != null) yield return new ElementValue("subtitle", SubtitleElement);
+                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", elem); }
+                if (Author != null) yield return new ElementValue("author", Author);
+                if (Scope != null) yield return new ElementValue("scope", Scope);
+                if (Topic != null) yield return new ElementValue("topic", Topic);
+                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in SubType) { if (elem != null) yield return new ElementValue("subType", elem); }
+                if (ContentDefinition != null) yield return new ElementValue("contentDefinition", ContentDefinition);
+                foreach (var elem in Term) { if (elem != null) yield return new ElementValue("term", elem); }
+                foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", elem); }
+                foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", elem); }
+                foreach (var elem in Signer) { if (elem != null) yield return new ElementValue("signer", elem); }
+                foreach (var elem in Friendly) { if (elem != null) yield return new ElementValue("friendly", elem); }
+                foreach (var elem in Legal) { if (elem != null) yield return new ElementValue("legal", elem); }
+                foreach (var elem in Rule) { if (elem != null) yield return new ElementValue("rule", elem); }
+                if (LegallyBinding != null) yield return new ElementValue("legallyBinding", LegallyBinding);
             }
         }
 

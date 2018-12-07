@@ -216,9 +216,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (IsActiveElement != null) yield return new ElementValue("isActive", false, IsActiveElement);
-                    if (Strength != null) yield return new ElementValue("strength", false, Strength);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (IsActiveElement != null) yield return new ElementValue("isActive", IsActiveElement);
+                    if (Strength != null) yield return new ElementValue("strength", Strength);
                 }
             }
 
@@ -359,8 +359,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
+                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
                 }
             }
 
@@ -587,14 +587,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
-                if (Form != null) yield return new ElementValue("form", false, Form);
-                if (Amount != null) yield return new ElementValue("amount", false, Amount);
-                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, elem); }
-                if (Batch != null) yield return new ElementValue("batch", false, Batch);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                if (Form != null) yield return new ElementValue("form", Form);
+                if (Amount != null) yield return new ElementValue("amount", Amount);
+                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                if (Batch != null) yield return new ElementValue("batch", Batch);
             }
         }
 

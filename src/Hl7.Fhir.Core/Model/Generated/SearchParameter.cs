@@ -373,8 +373,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
+                    if (DefinitionElement != null) yield return new ElementValue("definition", DefinitionElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
                 }
             }
 
@@ -1347,32 +1347,32 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (DerivedFromElement != null) yield return new ElementValue("derivedFrom", false, DerivedFromElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (PurposeElement != null) yield return new ElementValue("purpose", false, PurposeElement);
-                if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                foreach (var elem in BaseElement) { if (elem != null) yield return new ElementValue("base", true, elem); }
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
-                if (XpathElement != null) yield return new ElementValue("xpath", false, XpathElement);
-                if (XpathUsageElement != null) yield return new ElementValue("xpathUsage", false, XpathUsageElement);
-                foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", true, elem); }
-                if (MultipleOrElement != null) yield return new ElementValue("multipleOr", false, MultipleOrElement);
-                if (MultipleAndElement != null) yield return new ElementValue("multipleAnd", false, MultipleAndElement);
-                foreach (var elem in ComparatorElement) { if (elem != null) yield return new ElementValue("comparator", true, elem); }
-                foreach (var elem in ModifierElement) { if (elem != null) yield return new ElementValue("modifier", true, elem); }
-                foreach (var elem in ChainElement) { if (elem != null) yield return new ElementValue("chain", true, elem); }
-                foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (DerivedFromElement != null) yield return new ElementValue("derivedFrom", DerivedFromElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
+                if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                foreach (var elem in BaseElement) { if (elem != null) yield return new ElementValue("base", elem); }
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
+                if (XpathElement != null) yield return new ElementValue("xpath", XpathElement);
+                if (XpathUsageElement != null) yield return new ElementValue("xpathUsage", XpathUsageElement);
+                foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", elem); }
+                if (MultipleOrElement != null) yield return new ElementValue("multipleOr", MultipleOrElement);
+                if (MultipleAndElement != null) yield return new ElementValue("multipleAnd", MultipleAndElement);
+                foreach (var elem in ComparatorElement) { if (elem != null) yield return new ElementValue("comparator", elem); }
+                foreach (var elem in ModifierElement) { if (elem != null) yield return new ElementValue("modifier", elem); }
+                foreach (var elem in ChainElement) { if (elem != null) yield return new ElementValue("chain", elem); }
+                foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
             }
         }
 

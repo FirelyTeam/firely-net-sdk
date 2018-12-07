@@ -204,8 +204,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Function != null) yield return new ElementValue("function", false, Function);
-                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (Function != null) yield return new ElementValue("function", Function);
+                    if (Actor != null) yield return new ElementValue("actor", Actor);
                 }
             }
 
@@ -397,12 +397,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    if (Site != null) yield return new ElementValue("site", false, Site);
-                    if (Route != null) yield return new ElementValue("route", false, Route);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (Dose != null) yield return new ElementValue("dose", false, Dose);
-                    if (Rate != null) yield return new ElementValue("rate", false, Rate);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    if (Site != null) yield return new ElementValue("site", Site);
+                    if (Route != null) yield return new ElementValue("route", Route);
+                    if (Method != null) yield return new ElementValue("method", Method);
+                    if (Dose != null) yield return new ElementValue("dose", Dose);
+                    if (Rate != null) yield return new ElementValue("rate", Rate);
                 }
             }
 
@@ -876,25 +876,25 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", true, elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in StatusReason) { if (elem != null) yield return new ElementValue("statusReason", true, elem); }
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
-                if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                if (Request != null) yield return new ElementValue("request", false, Request);
-                foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                if (Dosage != null) yield return new ElementValue("dosage", false, Dosage);
-                foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in StatusReason) { if (elem != null) yield return new ElementValue("statusReason", elem); }
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Medication != null) yield return new ElementValue("medication", Medication);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
+                if (Effective != null) yield return new ElementValue("effective", Effective);
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                if (Request != null) yield return new ElementValue("request", Request);
+                foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                if (Dosage != null) yield return new ElementValue("dosage", Dosage);
+                foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
             }
         }
 

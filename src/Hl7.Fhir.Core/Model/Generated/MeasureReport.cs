@@ -246,10 +246,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
-                    if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
-                    foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
+                    if (MeasureScore != null) yield return new ElementValue("measureScore", MeasureScore);
+                    foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", elem); }
                 }
             }
 
@@ -390,9 +390,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CountElement != null) yield return new ElementValue("count", CountElement);
+                    if (SubjectResults != null) yield return new ElementValue("subjectResults", SubjectResults);
                 }
             }
 
@@ -497,8 +497,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                    foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", true, elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", elem); }
                 }
             }
 
@@ -637,10 +637,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", true, elem); }
-                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
-                    if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
+                    if (MeasureScore != null) yield return new ElementValue("measureScore", MeasureScore);
                 }
             }
 
@@ -745,8 +745,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -887,9 +887,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CountElement != null) yield return new ElementValue("count", CountElement);
+                    if (SubjectResults != null) yield return new ElementValue("subjectResults", SubjectResults);
                 }
             }
 
@@ -1253,17 +1253,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (MeasureElement != null) yield return new ElementValue("measure", false, MeasureElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Reporter != null) yield return new ElementValue("reporter", false, Reporter);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (ImprovementNotation != null) yield return new ElementValue("improvementNotation", false, ImprovementNotation);
-                foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
-                foreach (var elem in EvaluatedResource) { if (elem != null) yield return new ElementValue("evaluatedResource", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (MeasureElement != null) yield return new ElementValue("measure", MeasureElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Reporter != null) yield return new ElementValue("reporter", Reporter);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (ImprovementNotation != null) yield return new ElementValue("improvementNotation", ImprovementNotation);
+                foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
+                foreach (var elem in EvaluatedResource) { if (elem != null) yield return new ElementValue("evaluatedResource", elem); }
             }
         }
 

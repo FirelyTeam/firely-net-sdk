@@ -100,10 +100,10 @@ namespace Hl7.Fhir.Rest
             get => Requester.PreferredParameterHandling;
             set => Requester.PreferredParameterHandling = value;
         }
-#endregion
+        #endregion
 
 
-#if NET_COMPRESSION
+#if !NETSTANDARD1_1
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate

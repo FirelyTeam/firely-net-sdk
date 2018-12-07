@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Status != null) yield return new ElementValue("status", false, Status);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Status != null) yield return new ElementValue("status", Status);
                 }
             }
 
@@ -342,13 +342,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (FirstDose != null) yield return new ElementValue("firstDose", false, FirstDose);
-                    if (MaxSingleDose != null) yield return new ElementValue("maxSingleDose", false, MaxSingleDose);
-                    if (MaxDosePerDay != null) yield return new ElementValue("maxDosePerDay", false, MaxDosePerDay);
-                    if (MaxDosePerTreatmentPeriod != null) yield return new ElementValue("maxDosePerTreatmentPeriod", false, MaxDosePerTreatmentPeriod);
-                    if (MaxTreatmentPeriod != null) yield return new ElementValue("maxTreatmentPeriod", false, MaxTreatmentPeriod);
-                    foreach (var elem in TargetSpecies) { if (elem != null) yield return new ElementValue("targetSpecies", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (FirstDose != null) yield return new ElementValue("firstDose", FirstDose);
+                    if (MaxSingleDose != null) yield return new ElementValue("maxSingleDose", MaxSingleDose);
+                    if (MaxDosePerDay != null) yield return new ElementValue("maxDosePerDay", MaxDosePerDay);
+                    if (MaxDosePerTreatmentPeriod != null) yield return new ElementValue("maxDosePerTreatmentPeriod", MaxDosePerTreatmentPeriod);
+                    if (MaxTreatmentPeriod != null) yield return new ElementValue("maxTreatmentPeriod", MaxTreatmentPeriod);
+                    foreach (var elem in TargetSpecies) { if (elem != null) yield return new ElementValue("targetSpecies", elem); }
                 }
             }
 
@@ -453,8 +453,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    foreach (var elem in WithdrawalPeriod) { if (elem != null) yield return new ElementValue("withdrawalPeriod", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    foreach (var elem in WithdrawalPeriod) { if (elem != null) yield return new ElementValue("withdrawalPeriod", elem); }
                 }
             }
 
@@ -595,9 +595,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Tissue != null) yield return new ElementValue("tissue", false, Tissue);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    if (SupportingInformationElement != null) yield return new ElementValue("supportingInformation", false, SupportingInformationElement);
+                    if (Tissue != null) yield return new ElementValue("tissue", Tissue);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    if (SupportingInformationElement != null) yield return new ElementValue("supportingInformation", SupportingInformationElement);
                 }
             }
 
@@ -794,13 +794,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (AdministrableDoseForm != null) yield return new ElementValue("administrableDoseForm", false, AdministrableDoseForm);
-                if (UnitOfPresentation != null) yield return new ElementValue("unitOfPresentation", false, UnitOfPresentation);
-                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, elem); }
-                foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", true, elem); }
-                foreach (var elem in Characteristics) { if (elem != null) yield return new ElementValue("characteristics", true, elem); }
-                foreach (var elem in RouteOfAdministration) { if (elem != null) yield return new ElementValue("routeOfAdministration", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (AdministrableDoseForm != null) yield return new ElementValue("administrableDoseForm", AdministrableDoseForm);
+                if (UnitOfPresentation != null) yield return new ElementValue("unitOfPresentation", UnitOfPresentation);
+                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", elem); }
+                foreach (var elem in Characteristics) { if (elem != null) yield return new ElementValue("characteristics", elem); }
+                foreach (var elem in RouteOfAdministration) { if (elem != null) yield return new ElementValue("routeOfAdministration", elem); }
             }
         }
 

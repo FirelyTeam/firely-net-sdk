@@ -170,9 +170,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (GeneSequenceOrigin != null) yield return new ElementValue("geneSequenceOrigin", false, GeneSequenceOrigin);
-                    if (Gene != null) yield return new ElementValue("gene", false, Gene);
-                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", true, elem); }
+                    if (GeneSequenceOrigin != null) yield return new ElementValue("geneSequenceOrigin", GeneSequenceOrigin);
+                    if (Gene != null) yield return new ElementValue("gene", Gene);
+                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
                 }
             }
 
@@ -295,9 +295,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Element != null) yield return new ElementValue("element", false, Element);
-                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Element != null) yield return new ElementValue("element", Element);
+                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
                 }
             }
 
@@ -438,10 +438,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Domain != null) yield return new ElementValue("domain", false, Domain);
-                    if (Classification != null) yield return new ElementValue("classification", false, Classification);
-                    foreach (var elem in Subtype) { if (elem != null) yield return new ElementValue("subtype", true, elem); }
-                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", true, elem); }
+                    if (Domain != null) yield return new ElementValue("domain", Domain);
+                    if (Classification != null) yield return new ElementValue("classification", Classification);
+                    foreach (var elem in Subtype) { if (elem != null) yield return new ElementValue("subtype", elem); }
+                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
                 }
             }
 
@@ -651,14 +651,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Target != null) yield return new ElementValue("target", false, Target);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Interaction != null) yield return new ElementValue("interaction", false, Interaction);
-                    if (Organism != null) yield return new ElementValue("organism", false, Organism);
-                    if (OrganismType != null) yield return new ElementValue("organismType", false, OrganismType);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
-                    if (AmountType != null) yield return new ElementValue("amountType", false, AmountType);
-                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", true, elem); }
+                    if (Target != null) yield return new ElementValue("target", Target);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Interaction != null) yield return new ElementValue("interaction", Interaction);
+                    if (Organism != null) yield return new ElementValue("organism", Organism);
+                    if (OrganismType != null) yield return new ElementValue("organismType", OrganismType);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
+                    if (AmountType != null) yield return new ElementValue("amountType", AmountType);
+                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
                 }
             }
 
@@ -834,11 +834,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-                foreach (var elem in Gene) { if (elem != null) yield return new ElementValue("gene", true, elem); }
-                foreach (var elem in GeneElement) { if (elem != null) yield return new ElementValue("geneElement", true, elem); }
-                foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", true, elem); }
-                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
+                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                foreach (var elem in Gene) { if (elem != null) yield return new ElementValue("gene", elem); }
+                foreach (var elem in GeneElement) { if (elem != null) yield return new ElementValue("geneElement", elem); }
+                foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", elem); }
+                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
             }
         }
 

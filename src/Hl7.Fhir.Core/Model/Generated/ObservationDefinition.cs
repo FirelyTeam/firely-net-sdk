@@ -324,10 +324,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CustomaryUnit != null) yield return new ElementValue("customaryUnit", false, CustomaryUnit);
-                    if (Unit != null) yield return new ElementValue("unit", false, Unit);
-                    if (ConversionFactorElement != null) yield return new ElementValue("conversionFactor", false, ConversionFactorElement);
-                    if (DecimalPrecisionElement != null) yield return new ElementValue("decimalPrecision", false, DecimalPrecisionElement);
+                    if (CustomaryUnit != null) yield return new ElementValue("customaryUnit", CustomaryUnit);
+                    if (Unit != null) yield return new ElementValue("unit", Unit);
+                    if (ConversionFactorElement != null) yield return new ElementValue("conversionFactor", ConversionFactorElement);
+                    if (DecimalPrecisionElement != null) yield return new ElementValue("decimalPrecision", DecimalPrecisionElement);
                 }
             }
 
@@ -590,14 +590,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
-                    if (Range != null) yield return new ElementValue("range", false, Range);
-                    if (Context != null) yield return new ElementValue("context", false, Context);
-                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", true, elem); }
-                    if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
-                    if (Age != null) yield return new ElementValue("age", false, Age);
-                    if (GestationalAge != null) yield return new ElementValue("gestationalAge", false, GestationalAge);
-                    if (ConditionElement != null) yield return new ElementValue("condition", false, ConditionElement);
+                    if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
+                    if (Range != null) yield return new ElementValue("range", Range);
+                    if (Context != null) yield return new ElementValue("context", Context);
+                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", elem); }
+                    if (GenderElement != null) yield return new ElementValue("gender", GenderElement);
+                    if (Age != null) yield return new ElementValue("age", Age);
+                    if (GestationalAge != null) yield return new ElementValue("gestationalAge", GestationalAge);
+                    if (ConditionElement != null) yield return new ElementValue("condition", ConditionElement);
                 }
             }
 
@@ -956,19 +956,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in PermittedDataTypeElement) { if (elem != null) yield return new ElementValue("permittedDataType", true, elem); }
-                if (MultipleResultsAllowedElement != null) yield return new ElementValue("multipleResultsAllowed", false, MultipleResultsAllowedElement);
-                if (Method != null) yield return new ElementValue("method", false, Method);
-                if (PreferredReportNameElement != null) yield return new ElementValue("preferredReportName", false, PreferredReportNameElement);
-                if (QuantitativeDetails != null) yield return new ElementValue("quantitativeDetails", false, QuantitativeDetails);
-                foreach (var elem in QualifiedInterval) { if (elem != null) yield return new ElementValue("qualifiedInterval", true, elem); }
-                if (ValidCodedValueSet != null) yield return new ElementValue("validCodedValueSet", false, ValidCodedValueSet);
-                if (NormalCodedValueSet != null) yield return new ElementValue("normalCodedValueSet", false, NormalCodedValueSet);
-                if (AbnormalCodedValueSet != null) yield return new ElementValue("abnormalCodedValueSet", false, AbnormalCodedValueSet);
-                if (CriticalCodedValueSet != null) yield return new ElementValue("criticalCodedValueSet", false, CriticalCodedValueSet);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in PermittedDataTypeElement) { if (elem != null) yield return new ElementValue("permittedDataType", elem); }
+                if (MultipleResultsAllowedElement != null) yield return new ElementValue("multipleResultsAllowed", MultipleResultsAllowedElement);
+                if (Method != null) yield return new ElementValue("method", Method);
+                if (PreferredReportNameElement != null) yield return new ElementValue("preferredReportName", PreferredReportNameElement);
+                if (QuantitativeDetails != null) yield return new ElementValue("quantitativeDetails", QuantitativeDetails);
+                foreach (var elem in QualifiedInterval) { if (elem != null) yield return new ElementValue("qualifiedInterval", elem); }
+                if (ValidCodedValueSet != null) yield return new ElementValue("validCodedValueSet", ValidCodedValueSet);
+                if (NormalCodedValueSet != null) yield return new ElementValue("normalCodedValueSet", NormalCodedValueSet);
+                if (AbnormalCodedValueSet != null) yield return new ElementValue("abnormalCodedValueSet", AbnormalCodedValueSet);
+                if (CriticalCodedValueSet != null) yield return new ElementValue("criticalCodedValueSet", CriticalCodedValueSet);
             }
         }
 

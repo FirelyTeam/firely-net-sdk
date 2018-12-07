@@ -99,9 +99,9 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestFhirPathPolymporphism()
         {
-            var patient = new Hl7.Fhir.Model.Patient() { Active = false };
+            var patient = new Patient() { Active = false };
             patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
-            var nav = new PocoNavigator(patient);
+            var nav = patient.ToTypedElement();
 
             var result = nav.Select("Resource.meta.lastUpdated");
             Assert.IsNotNull(result.FirstOrDefault());
@@ -113,7 +113,7 @@ namespace Hl7.FhirPath.Tests
         {
             var patient = new Hl7.Fhir.Model.Patient() { Id = "pat45", Active = false };
             patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
-            var nav = new PocoNavigator(patient);
+            var nav = patient.ToTypedElement();
 
             EvaluationContext ctx = new EvaluationContext();
             var result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
@@ -121,11 +121,11 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IElementNavigator> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.AreEqual("log", name);
-                foreach (PocoNavigator item in results)
+                foreach (PocoElementNode item in results)
                 {
                     System.Diagnostics.Trace.WriteLine($"--({item.FhirValue.GetType().Name}): {item.Value} {item.FhirValue}");
                     Assert.AreEqual(patient.Meta, item.FhirValue);
@@ -138,11 +138,11 @@ namespace Hl7.FhirPath.Tests
             Assert.IsTrue(traced);
 
             traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IElementNavigator> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.IsTrue(name == "id" || name == "log");
-                foreach (PocoNavigator item in results)
+                foreach (PocoElementNode item in results)
                 {
                     System.Diagnostics.Trace.WriteLine($"--({item.FhirValue.GetType().Name}): {item.Value} {item.FhirValue}");
                     traced = true;
@@ -162,7 +162,7 @@ namespace Hl7.FhirPath.Tests
             {
                 Code = "5", Display = "Five"
             });
-            var nav = new PocoNavigator(cs);
+            var nav = cs.ToTypedElement();
 
             EvaluationContext ctx = new EvaluationContext();
             var result = nav.Predicate("concept.code.combine($this.descendants().concept.code).isDistinct()", ctx);

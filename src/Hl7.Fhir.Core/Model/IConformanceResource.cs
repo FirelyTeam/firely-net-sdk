@@ -135,6 +135,11 @@ namespace Hl7.Fhir.Model
     {
 
     }
+    public partial class TestScript : IVersionableConformanceResource
+    {
+
+    }
+
 
     //public partial class ExpansionProfile : IVersionableConformanceResource
     //{

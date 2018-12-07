@@ -11,10 +11,10 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class SearchAsyncTests
     {
-        private string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
 
         //private string _endpointSupportingSearchUsingPost = "http://localhost:49911/fhir";
-        private string _endpointSupportingSearchUsingPost = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
+        private readonly string _endpointSupportingSearchUsingPost = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
 
         [TestMethod]
         [TestCategory("IntegrationTest")]

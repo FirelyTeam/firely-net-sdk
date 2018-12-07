@@ -48,10 +48,13 @@ namespace Hl7.Fhir
                     return changedDate;
                 });
 
-            var v4 = new PocoNavigator(qr);
-            var v5 = v4.Select("item.where(linkId = 'Section-A').item.where(linkId = 'WorkerGivenNames').answer.value").FirstOrDefault() as PocoNavigator;
-            Assert.AreEqual("QuestionnaireResponse.item.where(linkId='Section-A').item.where(linkId='WorkerGivenNames').answer[0].value", v5.CommonPath);
-            Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value", v5.ShortPath);
+            var v4 = qr.ToTypedElement();
+            var v5 = v4.Select("item.where(linkId = 'Section-A').item.where(linkId = 'WorkerGivenNames').answer.value").FirstOrDefault();
+            //TODO: We need to add that CommonPath stuff back - but it is soo specific, this should be done
+            //by writing a custom ITypedNode implementation on top of this. Left as an exercise for Brian ;-)
+            //Assert.AreEqual("QuestionnaireResponse.item.where(linkId='Section-A').item.where(linkId='WorkerGivenNames').answer[0].value", v5.CommonPath);
+            var spGenerator = v5.Annotation<IShortPathGenerator>();
+            Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value", spGenerator.ShortPath);
             Assert.AreEqual("QuestionnaireResponse.item[0].item[5].answer[0].value[0]", v5.Location);
 
             // Now perform some FHIRpath operations on it

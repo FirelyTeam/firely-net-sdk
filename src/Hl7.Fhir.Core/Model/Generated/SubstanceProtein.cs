@@ -347,14 +347,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SubunitElement != null) yield return new ElementValue("subunit", false, SubunitElement);
-                    if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
-                    if (LengthElement != null) yield return new ElementValue("length", false, LengthElement);
-                    if (SequenceAttachment != null) yield return new ElementValue("sequenceAttachment", false, SequenceAttachment);
-                    if (NTerminalModificationId != null) yield return new ElementValue("nTerminalModificationId", false, NTerminalModificationId);
-                    if (NTerminalModificationElement != null) yield return new ElementValue("nTerminalModification", false, NTerminalModificationElement);
-                    if (CTerminalModificationId != null) yield return new ElementValue("cTerminalModificationId", false, CTerminalModificationId);
-                    if (CTerminalModificationElement != null) yield return new ElementValue("cTerminalModification", false, CTerminalModificationElement);
+                    if (SubunitElement != null) yield return new ElementValue("subunit", SubunitElement);
+                    if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
+                    if (LengthElement != null) yield return new ElementValue("length", LengthElement);
+                    if (SequenceAttachment != null) yield return new ElementValue("sequenceAttachment", SequenceAttachment);
+                    if (NTerminalModificationId != null) yield return new ElementValue("nTerminalModificationId", NTerminalModificationId);
+                    if (NTerminalModificationElement != null) yield return new ElementValue("nTerminalModification", NTerminalModificationElement);
+                    if (CTerminalModificationId != null) yield return new ElementValue("cTerminalModificationId", CTerminalModificationId);
+                    if (CTerminalModificationElement != null) yield return new ElementValue("cTerminalModification", CTerminalModificationElement);
                 }
             }
 
@@ -530,10 +530,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (SequenceType != null) yield return new ElementValue("sequenceType", false, SequenceType);
-                if (NumberOfSubunitsElement != null) yield return new ElementValue("numberOfSubunits", false, NumberOfSubunitsElement);
-                foreach (var elem in DisulfideLinkageElement) { if (elem != null) yield return new ElementValue("disulfideLinkage", true, elem); }
-                foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", true, elem); }
+                if (SequenceType != null) yield return new ElementValue("sequenceType", SequenceType);
+                if (NumberOfSubunitsElement != null) yield return new ElementValue("numberOfSubunits", NumberOfSubunitsElement);
+                foreach (var elem in DisulfideLinkageElement) { if (elem != null) yield return new ElementValue("disulfideLinkage", elem); }
+                foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", elem); }
             }
         }
 
