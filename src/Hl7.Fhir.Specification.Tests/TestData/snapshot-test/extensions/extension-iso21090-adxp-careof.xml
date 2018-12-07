@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The name of the party who will take receipt at the specified address, and will take on responsibility for ensuring delivery to the target recipient." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

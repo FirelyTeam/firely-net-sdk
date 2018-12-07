@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The position of the body when the observation was done, e.g. standing, sitting. To be used only when the body position in not precoordinated in the observation code." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

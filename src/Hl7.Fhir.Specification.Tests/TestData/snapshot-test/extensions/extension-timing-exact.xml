@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="If true, indicates that the specified times, frequencies, periods are expected to be adhered to as precisely as possible.  If false, indicates that a typical degree of variability based on institutional and/or patient convenience is acceptable." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

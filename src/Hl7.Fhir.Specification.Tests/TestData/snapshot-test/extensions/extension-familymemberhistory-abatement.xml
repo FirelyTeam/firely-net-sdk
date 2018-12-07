@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The approximate date, age, or flag indicating that the condition of the family member resolved. The abatement should only be specified if the condition is stated in the positive sense, i.e., the didNotHave flag is false." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Identifies whether the useContext is a true context or a classification." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="For attachment answers, indicates the maximum size an attachment can be." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

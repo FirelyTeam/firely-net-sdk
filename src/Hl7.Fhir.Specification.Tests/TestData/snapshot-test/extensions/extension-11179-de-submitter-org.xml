@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Organization responsible for submitting the data element to its registry." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="iso11179" />
     <uri value="http://metadata-standards.org/11179/" />

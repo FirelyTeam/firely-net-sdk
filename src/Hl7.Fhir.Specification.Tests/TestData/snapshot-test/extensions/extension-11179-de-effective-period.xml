@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Identifies the date on which the element became (or is expected to become) active and the date on which the element became (or is expected to become) retired." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

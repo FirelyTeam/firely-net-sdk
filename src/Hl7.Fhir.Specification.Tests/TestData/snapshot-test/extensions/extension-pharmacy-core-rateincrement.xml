@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Change in the dosing rate applied each rateIncrementInterval, e.g., 20 mL/hour. The rate increment is usually an increase for a patient who is initiating tube feeding. The increase is continued until the maxDeliveryRate or rateGoal is reached." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

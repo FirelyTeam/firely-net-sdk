@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Knowledge-based comments on the effect of the sequence on patient's condition/medication reaction." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

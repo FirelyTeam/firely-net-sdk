@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="An allele is one of a set of coexisting sequence variants of a gene ([SO:0001023](http://www.sequenceontology.org/browser/current_svn/term/SO:0001023)). This element is the common name for the allele. LONIC Code: ([48008-7](http://loinc.org/48008-7))." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

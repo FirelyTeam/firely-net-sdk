@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="If set to true, indicates that support for the specified behavior would make a system non=conformant with the specification." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

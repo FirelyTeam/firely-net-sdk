@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="A human readable name for the region of interest. Typically Exon #, Intron # or other. NOTE: This is not standardized and is mainly for convenience and display purposes.  LONIC Code: ([47999-8](http://loinc.org/47999-8))." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

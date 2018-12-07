@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="For questionnaires generated from FHIR profiles, indicates the FHIR data type or resource type that corresponds to this node." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The category under which the resource type is presented on the official resource list." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

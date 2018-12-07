@@ -9,7 +9,7 @@
   <date value="2017-02-28T07:41:33+00:00" />
   <publisher value="HL7" />
   <description value="Mother's maiden (unmarried) name, commonly collected to help verify patient identity." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

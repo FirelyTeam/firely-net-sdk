@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="For infused medications, the length of time the infusion process, as a duration.  Note the difference between infuseOver and duration of treatment (specified in administrationFrequency). An order may call for infusing a patient TID for an hour each time over a duration of 5 days." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

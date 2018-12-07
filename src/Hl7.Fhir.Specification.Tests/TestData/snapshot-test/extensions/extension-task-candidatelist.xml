@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Identifies the individuals who are candidates for being the owner of the task." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="workflow" />
     <uri value="http://hl7.org/fhir/workflow" />

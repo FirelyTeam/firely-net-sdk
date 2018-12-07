@@ -9,7 +9,7 @@
   <date value="2017-02-28T07:41:33+00:00" />
   <publisher value="HL7" />
   <description value="Other names that this location is known as. (for Example, &quot;Pembo HC&quot; and &quot;Pembo Health Clinic&quot;)." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

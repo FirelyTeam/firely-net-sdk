@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The qualitative change in the value relative to the previous measurement. Usually only recorded if the change is clinically significant." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

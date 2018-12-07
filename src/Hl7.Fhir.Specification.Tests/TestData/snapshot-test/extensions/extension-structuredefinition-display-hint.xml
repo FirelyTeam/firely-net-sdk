@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Hinting information for the narrative generator - a series of name: value; pairs." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

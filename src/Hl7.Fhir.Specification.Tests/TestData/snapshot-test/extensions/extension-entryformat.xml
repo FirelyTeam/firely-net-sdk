@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Additional instructions for the user to guide their input (i.e. a human readable version of a regular expression like &quot;nnn-nnn-nnn&quot;). In most UIs this is the placeholder (or 'ghost') text placed directly inside the edit controls and that disappear when the control gets the focus." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

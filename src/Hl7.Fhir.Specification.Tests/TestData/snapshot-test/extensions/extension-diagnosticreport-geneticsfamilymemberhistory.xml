@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Significant health events and conditions for a person related to the patient relevant in the context of care for the patient." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

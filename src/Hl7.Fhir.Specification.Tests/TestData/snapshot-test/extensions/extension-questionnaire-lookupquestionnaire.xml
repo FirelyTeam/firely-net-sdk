@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="For items of type reference, the reference can be populated either by picking an existing entity or by creating a new one.  In the later case, this Questionnaire allows specifying the Questionnaire to use in creating the target instance.  This can be direct (if the Reference is to a Questionnaire) or indirect via mapping if the Reference is to some other sort of resource." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

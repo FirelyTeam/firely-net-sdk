@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="A set of codes each of which specifies a certain subcategory of the name part in addition to the main name part type." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

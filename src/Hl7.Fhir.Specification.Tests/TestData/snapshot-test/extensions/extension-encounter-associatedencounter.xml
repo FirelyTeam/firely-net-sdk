@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="This encounter occurs within the scope of the referenced encounter." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

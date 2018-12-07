@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The primary measure of variance/uncertainty of the value (the square root of the sum of the squares of the differences between all data points and the mean)." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Allows capturing, on a specific question or group of questions, exactly who was responsible for providing the answer(s)." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

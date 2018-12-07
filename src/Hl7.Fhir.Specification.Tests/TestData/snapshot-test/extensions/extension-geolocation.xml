@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The absolute geographic location of the Location, expressed using the WGS84 datum (This is the same co-ordinate system used in KML)." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

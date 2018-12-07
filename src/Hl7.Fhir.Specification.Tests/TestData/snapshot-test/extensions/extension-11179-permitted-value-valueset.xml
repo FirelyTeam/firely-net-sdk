@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Allows expressing the value set that must be stored internally by the system (as distinct from the base value set which defines values for exchange)." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

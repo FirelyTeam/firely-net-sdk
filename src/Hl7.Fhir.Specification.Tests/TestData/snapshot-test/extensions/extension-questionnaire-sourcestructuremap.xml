@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="StructureMaps that have this Questionnaire as 'target' - i.e. that can be used to create QuestionnaireResponses that are valid against this Questionnaire." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

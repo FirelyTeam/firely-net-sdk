@@ -8,7 +8,7 @@
   <date value="2017-02-28T07:41:33+00:00" />
   <publisher value="HL7" />
   <description value="Allows a direct reference to the code system for FHIR query." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Reference to a specific Questionnaire Resource as an ordered item.  Allows for ordering a specific questionnaire to be completed." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Where the type for a question is &quot;Reference&quot;, indicates a type of resource that is permitted." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

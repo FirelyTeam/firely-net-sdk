@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Record of the date and/or time of the first exposure to the Substance for this Reaction Event." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

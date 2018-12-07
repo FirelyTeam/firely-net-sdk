@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Restricts this exception to only apply a specific location as defined." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

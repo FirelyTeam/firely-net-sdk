@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The portion of the family name that is derived from the person's own surname, as distinguished from any portion that is derived from the surname of the person's partner or spouse." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

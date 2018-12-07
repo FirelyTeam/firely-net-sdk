@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Status code taken from [HL7 template specification](http://wiki.hl7.org/images/7/7a/TemplatesDSTU-20140910b-96.pdf.zip) - allows for alignment with the template DSTU, and has more authoring status codes." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

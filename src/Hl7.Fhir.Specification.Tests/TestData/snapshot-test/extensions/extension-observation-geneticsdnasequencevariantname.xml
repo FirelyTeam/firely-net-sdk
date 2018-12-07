@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Human Genome Variation Society (HGVS) nomenclature for a single or set of DNA Sequence Variation(s) identified in testing.  The use of the nomenclature is also used to describe non-variations (aka. wild types). LONIC Code: ([48004-6](http://loinc.org/48004-6))." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

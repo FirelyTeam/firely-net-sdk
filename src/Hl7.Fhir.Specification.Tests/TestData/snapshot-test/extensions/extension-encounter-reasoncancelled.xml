@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="If the encountered was cancelled after it was planned, why? Applies only if the status is cancelled." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

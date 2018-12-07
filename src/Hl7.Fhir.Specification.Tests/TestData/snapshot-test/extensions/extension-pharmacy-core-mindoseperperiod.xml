@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The minimum total quantity of a therapeutic substance that may be administered to a subject over the period of time. E.g., 10 mg in 24 hours." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

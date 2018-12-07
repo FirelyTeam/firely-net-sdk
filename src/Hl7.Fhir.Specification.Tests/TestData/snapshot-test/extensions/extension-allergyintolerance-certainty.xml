@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Statement about the degree of clinical certainty that the specific substance was the cause of the manifestation in this reaction event." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

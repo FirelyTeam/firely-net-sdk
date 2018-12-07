@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The reason the goal was not accepted. Applies only if the status of the goal is rejected." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="qdm" />
     <uri value="http://www.healthit.gov/quality-data-model" />

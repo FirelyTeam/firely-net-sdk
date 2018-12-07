@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Number of refills allowed or remaining after a dispensing event." />
-  <fhirVersion value="1.9.0" />
+  <fhirVersion value="3.6.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />
