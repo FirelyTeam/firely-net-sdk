@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using System.Diagnostics;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
@@ -243,7 +244,7 @@ namespace Hl7.Fhir.Validation
             result.Name = name;
             result.Status = PublicationStatus.Draft;
             result.Description = description;
-            result.FhirVersion = (FHIRVersion)System.Enum.Parse(typeof(FHIRVersion), ModelInfo.Version);
+            result.FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version);
             result.Derivation = StructureDefinition.TypeDerivationRule.Constraint;
 
             if (ModelInfo.IsKnownResource(constrainedType))

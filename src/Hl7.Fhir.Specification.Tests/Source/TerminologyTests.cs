@@ -121,8 +121,8 @@ namespace Hl7.Fhir.Specification.Tests
                 display: "Not any Number");
             Assert.False(result.Success);
 
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
+            result = svc.ValidateCode("http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
+                system: "http://terminology.hl7.org/CodeSystem/v3-AcknowledgementDetailCode");
             Assert.True(result.Success);
 
             Assert.Throws<ValueSetUnknownException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));

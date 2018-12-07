@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Specification.Tests
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Add(new Coding("http://hl7.org/fhir/v3/MaritalStatus", "L"));
+            patient.MaritalStatus.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "L"));
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(1, report.Errors);
 
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Instead, clone the core def and modify the clone
             var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
 
-            var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
+            var instance1 = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "U");
 
             var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
             maritalStatusElement.Pattern = (CodeableConcept)instance1.DeepCopy();
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Specification.Tests
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Insert(0, new Coding("http://hl7.org/fhir/v3/MaritalStatus", "L"));
+            patient.MaritalStatus.Coding.Insert(0, new Coding("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "L"));
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
 
@@ -466,7 +466,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.NotNull(careplan);
             var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
-            //output.WriteLine(report.ToString());
+            if (!report.Success)
+            {
+                report.Issue.RemoveAll(i => i.Severity == OperationOutcome.IssueSeverity.Warning);
+                output.WriteLine(report.ToString());
+            }
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);            // 3x invariant
 
@@ -585,7 +589,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var p = new Patient
             {
-                MaritalStatus = new CodeableConcept("http://hl7.org/fhir/v3/MaritalStatus", "S")
+                MaritalStatus = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "S")
             };
 
             var report = _validator.Validate(p);
