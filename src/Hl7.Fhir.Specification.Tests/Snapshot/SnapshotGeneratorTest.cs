@@ -6711,7 +6711,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
             Assert.AreEqual(FHIRAllTypes.Reference.GetLiteral(), nav.Current.Type[0].Code);
-            Assert.AreEqual(ReferenceProfile.Url, nav.Current.Type[0].Profile);
+            Assert.AreEqual(ReferenceProfile.Url, nav.Current.Type[0].Profile.First());
             // By default, snapshot generator does not expand children of element DiagnosticReport.imagingStudy
             Assert.IsFalse(nav.HasChildren);
 
