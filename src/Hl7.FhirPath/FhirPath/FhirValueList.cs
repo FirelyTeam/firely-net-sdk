@@ -12,7 +12,7 @@ using Hl7.Fhir.ElementModel;
 
 namespace Hl7.FhirPath
 {
-    internal static class FhirValueList
+    public static class FhirValueList
     {
         //todo: object can now be ITypedElement? --mh
         public static IEnumerable<ITypedElement> Create(params object[] values)
