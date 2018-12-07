@@ -64,51 +64,51 @@ namespace Hl7.Fhir.Model
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("on-hold", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("cancelled", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("stopped", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("draft", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Draft")]
             Draft,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
             /// </summary>
-            [EnumLiteral("unknown", "http://hl7.org/fhir/ValueSet/medicationrequest-status"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/CodeSystem/medicationrequest-status"), Description("Unknown")]
             Unknown,
         }
 
@@ -121,51 +121,51 @@ namespace Hl7.Fhir.Model
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("proposal", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Proposal")]
+            [EnumLiteral("proposal", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Proposal")]
             Proposal,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("plan", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Plan")]
+            [EnumLiteral("plan", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Plan")]
             Plan,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("order", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Order")]
+            [EnumLiteral("order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Order")]
             Order,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("original-order", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Original Order")]
+            [EnumLiteral("original-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Original Order")]
             OriginalOrder,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("reflex-order", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Reflex Order")]
+            [EnumLiteral("reflex-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Reflex Order")]
             ReflexOrder,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("filler-order", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Filler Order")]
+            [EnumLiteral("filler-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Filler Order")]
             FillerOrder,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("instance-order", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Instance Order")]
+            [EnumLiteral("instance-order", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Instance Order")]
             InstanceOrder,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
             /// </summary>
-            [EnumLiteral("option", "http://hl7.org/fhir/ValueSet/medicationrequest-intent"), Description("Option")]
+            [EnumLiteral("option", "http://hl7.org/fhir/CodeSystem/medicationrequest-intent"), Description("Option")]
             Option,
         }
 

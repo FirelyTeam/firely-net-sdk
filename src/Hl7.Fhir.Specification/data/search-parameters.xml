@@ -34297,7 +34297,7 @@
         <code value="value" />
         <base value="Group" />
         <type value="token" />
-        <expression value="Group.characteristic.value as CodeableConcept | Group.characteristic.value as boolean" />
+        <expression value="(Group.characteristic.value as CodeableConcept) | (Group.characteristic.value as boolean)" />
         <xpath value="f:Group/f:characteristic/f:valueCodeableConcept | f:Group/f:characteristic/f:valueBoolean | f:Group/f:characteristic/f:valueQuantity | f:Group/f:characteristic/f:valueRange | f:Group/f:characteristic/f:valueReference" />
         <xpathUsage value="normal" />
         <multipleOr value="true" />
@@ -51050,7 +51050,7 @@
         <code value="combo-value-quantity" />
         <base value="Observation" />
         <type value="quantity" />
-        <expression value="Observation.value as Quantity | Observation.value as SampledData | Observation.component.value as Quantity | Observation.component.value as SampledData" />
+        <expression value="(Observation.value as Quantity) | (Observation.value as SampledData) | (Observation.component.value as Quantity) | (Observation.component.value as SampledData)" />
         <xpath value="f:Observation/f:valueQuantity | f:Observation/f:valueCodeableConcept | f:Observation/f:valueString | f:Observation/f:valueBoolean | f:Observation/f:valueInteger | f:Observation/f:valueRange | f:Observation/f:valueRatio | f:Observation/f:valueSampledData | f:Observation/f:valueTime | f:Observation/f:valueDateTime | f:Observation/f:valuePeriod" />
         <xpathUsage value="normal" />
         <multipleOr value="true" />
@@ -51239,7 +51239,7 @@
         <code value="component-value-quantity" />
         <base value="Observation" />
         <type value="quantity" />
-        <expression value="Observation.component.value as Quantity | Observation.component.value as SampledData" />
+        <expression value="(Observation.component.value as Quantity) | (Observation.component.value as SampledData)" />
         <xpath value="f:Observation/f:component/f:valueQuantity | f:Observation/f:component/f:valueCodeableConcept | f:Observation/f:component/f:valueString | f:Observation/f:component/f:valueBoolean | f:Observation/f:component/f:valueInteger | f:Observation/f:component/f:valueRange | f:Observation/f:component/f:valueRatio | f:Observation/f:component/f:valueSampledData | f:Observation/f:component/f:valueTime | f:Observation/f:component/f:valueDateTime | f:Observation/f:component/f:valuePeriod" />
         <xpathUsage value="normal" />
         <multipleOr value="true" />
@@ -52033,7 +52033,7 @@
         <code value="value-quantity" />
         <base value="Observation" />
         <type value="quantity" />
-        <expression value="Observation.value as Quantity | Observation.value as SampledData" />
+        <expression value="(Observation.value as Quantity) | (Observation.value as SampledData)" />
         <xpath value="f:Observation/f:valueQuantity | f:Observation/f:valueCodeableConcept | f:Observation/f:valueString | f:Observation/f:valueBoolean | f:Observation/f:valueInteger | f:Observation/f:valueRange | f:Observation/f:valueRatio | f:Observation/f:valueSampledData | f:Observation/f:valueTime | f:Observation/f:valueDateTime | f:Observation/f:valuePeriod" />
         <xpathUsage value="normal" />
         <multipleOr value="true" />
@@ -52081,7 +52081,7 @@
         <code value="value-string" />
         <base value="Observation" />
         <type value="string" />
-        <expression value="Observation.value as string | (Observation.value as CodeableConcept).text" />
+        <expression value="(Observation.value as string) | (Observation.value as CodeableConcept).text" />
         <xpath value="f:Observation/f:valueQuantity | f:Observation/f:valueCodeableConcept | f:Observation/f:valueString | f:Observation/f:valueBoolean | f:Observation/f:valueInteger | f:Observation/f:valueRange | f:Observation/f:valueRatio | f:Observation/f:valueSampledData | f:Observation/f:valueTime | f:Observation/f:valueDateTime | f:Observation/f:valuePeriod" />
         <xpathUsage value="normal" />
         <multipleOr value="true" />
