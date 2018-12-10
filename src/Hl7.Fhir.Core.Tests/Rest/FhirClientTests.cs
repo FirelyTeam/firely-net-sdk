@@ -2063,7 +2063,7 @@ namespace Hl7.Fhir.Tests.Rest
             // GET operation $everything with 1 complex parameter
             try
             {
-                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Annotation() { Text = "test" }), useGet: true);
+                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Annotation() { Text = new Markdown("test") }), useGet: true);
                 Assert.Fail("An InvalidOperationException was expected here");
             }
             catch (Exception ex)

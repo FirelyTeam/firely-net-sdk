@@ -579,32 +579,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("description", Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown DescriptionElement
+        public Hl7.Fhir.Model.Markdown Description
         {
-            get { return _DescriptionElement; }
-            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            get { return _Description; }
+            set { _Description = value; OnPropertyChanged("Description"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _DescriptionElement;
-        
-        /// <summary>
-        /// Natural language description of the naming system
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Description
-        {
-            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DescriptionElement = null; 
-                else
-                  DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("Description");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
         /// The context that the content is intended to support
@@ -732,7 +713,7 @@ namespace Hl7.Fhir.Model
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
                 if(ResponsibleElement != null) dest.ResponsibleElement = (Hl7.Fhir.Model.FhirString)ResponsibleElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
+                if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
@@ -762,7 +743,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(ResponsibleElement, otherT.ResponsibleElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.Matches(UsageElement, otherT.UsageElement)) return false;
@@ -785,7 +766,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(ResponsibleElement, otherT.ResponsibleElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
             if( !DeepComparable.IsExactly(UsageElement, otherT.UsageElement)) return false;
@@ -808,7 +789,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				if (ResponsibleElement != null) yield return ResponsibleElement;
 				if (Type != null) yield return Type;
-				if (DescriptionElement != null) yield return DescriptionElement;
+				if (Description != null) yield return Description;
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
 				if (UsageElement != null) yield return UsageElement;
@@ -830,7 +811,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
                 if (ResponsibleElement != null) yield return new ElementValue("responsible", ResponsibleElement);
                 if (Type != null) yield return new ElementValue("type", Type);
-                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (Description != null) yield return new ElementValue("description", Description);
                 foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
                 if (UsageElement != null) yield return new ElementValue("usage", UsageElement);

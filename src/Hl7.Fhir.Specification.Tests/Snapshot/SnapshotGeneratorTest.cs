@@ -1810,7 +1810,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsFalse(elem.ShortElement.IsConstrainedByDiff());
                 // Profile overrides the definition property of the extension definition root element 
                 Assert.AreNotEqual(baseElem.Definition, elem.Definition);
-                Assert.IsTrue(elem.DefinitionElement.IsConstrainedByDiff());
+                Assert.IsTrue(elem.Definition.IsConstrainedByDiff());
 
                 Assert.IsTrue(nav.MoveToFirstChild());
 
@@ -1832,7 +1832,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(baseElem.Short, elem.Short);    // Verify that short property is inherited
                 Assert.IsFalse(elem.ShortElement.IsConstrainedByDiff());
                 Assert.AreEqual(baseElem.Definition, elem.Definition);    // Verify that definition property is inherited
-                Assert.IsFalse(elem.DefinitionElement.IsConstrainedByDiff());
+                Assert.IsFalse(elem.Definition.IsConstrainedByDiff());
             }
             finally
             {
@@ -2079,11 +2079,11 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.Base)
                 || isChanged(elem.Binding)
                 || hasChanges(elem.Code)
-                || isChanged(elem.CommentElement)
+                || isChanged(elem.Comment)
                 || hasChanges(elem.ConditionElement)
                 || hasChanges(elem.Constraint)
                 || isChanged(elem.DefaultValue)
-                || isChanged(elem.DefinitionElement)
+                || isChanged(elem.Definition)
                 || hasChanges(elem.Example)
                 || hasChanges(elem.Extension)
              //   || hasChanges(elem.FhirCommentsElement)
@@ -2095,7 +2095,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.MaxElement)
                 || isChanged(elem.MaxLengthElement)
                 || isChanged(elem.MaxValue)
-                || isChanged(elem.MeaningWhenMissingElement)
+                || isChanged(elem.MeaningWhenMissing)
                 || isChanged(elem.MinElement)
                 || isChanged(elem.MinValue)
                 || isChanged(elem.MustSupportElement)
@@ -2104,7 +2104,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.PathElement)
                 || isChanged(elem.Pattern)
                 || hasChanges(elem.RepresentationElement)
-                || isChanged(elem.RequirementsElement)
+                || isChanged(elem.Requirements)
                 || isChanged(elem.ShortElement)
                 || isChanged(elem.Slicing)
                 || hasChanges(elem.Type);
@@ -2120,11 +2120,11 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.Base)) { return "Base"; }
             if (isChanged(element.Binding)) { return "Binding"; }
             if (hasChanges(element.Code)) { return "Code"; }
-            if (isChanged(element.CommentElement)) { return "Comment"; }
+            if (isChanged(element.Comment)) { return "Comment"; }
             if (hasChanges(element.ConditionElement)) { return "Condition"; }
             if (hasChanges(element.Constraint)) { return "Constraint"; }
             if (isChanged(element.DefaultValue)) { return "DefaultValue"; }
-            if (isChanged(element.DefinitionElement)) { return "Definition"; }
+            if (isChanged(element.Definition)) { return "Definition"; }
             if (hasChanges(element.Example)) { return "Example"; }
             if (hasChanges(element.Extension)) { return "Extension"; }
             //if (hasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
@@ -2136,7 +2136,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.MaxElement)) { return "Max"; }
             if (isChanged(element.MaxLengthElement)) { return "MaxLength"; }
             if (isChanged(element.MaxValue)) { return "MaxValue"; }
-            if (isChanged(element.MeaningWhenMissingElement)) { return "MeaningWhenMissing"; }
+            if (isChanged(element.MeaningWhenMissing)) { return "MeaningWhenMissing"; }
             if (isChanged(element.MinElement)) { return "Min"; }
             if (isChanged(element.MinValue)) { return "MinValue"; }
             if (isChanged(element.MustSupportElement)) { return "MustSupport"; }
@@ -2145,7 +2145,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.PathElement)) { return "Path"; }
             if (isChanged(element.Pattern)) { return "Pattern"; }
             if (hasChanges(element.RepresentationElement)) { return "Representation"; }
-            if (isChanged(element.RequirementsElement)) { return "Requirements"; }
+            if (isChanged(element.Requirements)) { return "Requirements"; }
             //if (IsChanged(element.ShortElement)) { return "Short"; }
             //if (IsChanged(element.Slicing)) { return "Slicing"; }
             //if (HasChanges(element.Type)) { return "Type"; }
@@ -3503,7 +3503,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new ElementDefinition("Patient.identifier")
                     {
-                        Comment = "NationalPatientProfile"
+                        Comment = new Markdown("NationalPatientProfile")
                     },
                     new ElementDefinition("Patient.identifier.system")
                     {
@@ -3538,7 +3538,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         Min = 1,
                         // Append to comment inherited from base
-                        Comment = "...SlicedNationalPatientProfile"
+                        Comment = new Markdown("...SlicedNationalPatientProfile")
                     }
                     // Slice: bsn
                     ,new ElementDefinition("Patient.identifier")
@@ -3729,7 +3729,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         Min = 1,
                         // Append to comment inherited from base
-                        Comment = "...SlicedNationalPatientProfile"
+                        Comment = new Markdown("...SlicedNationalPatientProfile")
                     }
                     // Slice: bsn
                     ,new ElementDefinition("Patient.identifier")
@@ -5086,7 +5086,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new ElementDefinition("Observation.method")
                     {
                         Short = "MoreDerivedMethodShort",
-                        Comment = "MoreDerivedMethodComment"
+                        Comment = new Markdown("MoreDerivedMethodComment")
                     },
                     // Include child constraint to force full expansion of .bodySite node
                     // BUG: if we include this element, then the generated base element for .bodySite is incorrect
@@ -6374,7 +6374,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition("Questionnaire.item.item.type")
                         {
-                            Comment = "level 2"
+                            Comment = new Markdown("level 2")
                         }
                     }
             }
@@ -6420,7 +6420,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Questionnaire.item.type")
                         {
-                            Comment = "level 1 *"
+                            Comment = new Markdown("level 1 *")
                         },
                         new ElementDefinition("Questionnaire.item.item.type")
                         {
@@ -6646,7 +6646,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Reference")
                         {
-                            Comment = "CustomReference"
+                            Comment = new Markdown("CustomReference")
                         },
                         new ElementDefinition("Reference.reference")
                         {

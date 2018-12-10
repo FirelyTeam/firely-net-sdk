@@ -95,9 +95,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //}
 
                 snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
-                snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);
-                snap.CommentElement = mergePrimitiveAttribute(snap.CommentElement, diff.CommentElement, allowAppend: true);
-                snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
+                snap.Definition = mergePrimitiveAttribute(snap.Definition, diff.Definition, allowAppend: true);
+                snap.Comment = mergePrimitiveAttribute(snap.Comment, diff.Comment, allowAppend: true);
+                snap.Requirements = mergePrimitiveAttribute(snap.Requirements, diff.Requirements, allowAppend: true);
                 snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
 
                 // Aliases are cumulative based on the string value
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 
                 // [WMR 20160909] merge defaultValue and meaningWhenMissing, to handle core definitions; validator can detect invalid constraints
                 snap.DefaultValue = mergeComplexAttribute(snap.DefaultValue, diff.DefaultValue);
-                snap.MeaningWhenMissingElement = mergePrimitiveAttribute(snap.MeaningWhenMissingElement, diff.MeaningWhenMissingElement);
+                snap.MeaningWhenMissing = mergePrimitiveAttribute(snap.MeaningWhenMissing, diff.MeaningWhenMissing);
                 snap.MaxLengthElement = mergePrimitiveAttribute(snap.MaxLengthElement, diff.MaxLengthElement);
 
                 // [EK 20170301] Added this new STU3 element

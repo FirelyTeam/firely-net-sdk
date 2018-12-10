@@ -80,32 +80,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("comment", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Markdown CommentElement
+            public Hl7.Fhir.Model.Markdown Comment
             {
-                get { return _CommentElement; }
-                set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+                get { return _Comment; }
+                set { _Comment = value; OnPropertyChanged("Comment"); }
             }
             
-            private Hl7.Fhir.Model.Markdown _CommentElement;
-            
-            /// <summary>
-            /// Describes the eligibility conditions for the service
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Comment
-            {
-                get { return CommentElement != null ? CommentElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        CommentElement = null; 
-                    else
-                        CommentElement = new Hl7.Fhir.Model.Markdown(value);
-                    OnPropertyChanged("Comment");
-                }
-            }
+            private Hl7.Fhir.Model.Markdown _Comment;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -115,7 +96,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
+                    if(Comment != null) dest.Comment = (Hl7.Fhir.Model.Markdown)Comment.DeepCopy();
                     return dest;
                 }
                 else
@@ -134,7 +115,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+                if( !DeepComparable.Matches(Comment, otherT.Comment)) return false;
                 
                 return true;
             }
@@ -146,7 +127,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+                if( !DeepComparable.IsExactly(Comment, otherT.Comment)) return false;
                 
                 return true;
             }
@@ -159,7 +140,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
-                    if (CommentElement != null) yield return CommentElement;
+                    if (Comment != null) yield return Comment;
                 }
             }
 
@@ -170,7 +151,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Code != null) yield return new ElementValue("code", Code);
-                    if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                    if (Comment != null) yield return new ElementValue("comment", Comment);
                 }
             }
 
@@ -707,32 +688,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("extraDetails", Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown ExtraDetailsElement
+        public Hl7.Fhir.Model.Markdown ExtraDetails
         {
-            get { return _ExtraDetailsElement; }
-            set { _ExtraDetailsElement = value; OnPropertyChanged("ExtraDetailsElement"); }
+            get { return _ExtraDetails; }
+            set { _ExtraDetails = value; OnPropertyChanged("ExtraDetails"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _ExtraDetailsElement;
-        
-        /// <summary>
-        /// Extra details about the service that can't be placed in the other fields
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string ExtraDetails
-        {
-            get { return ExtraDetailsElement != null ? ExtraDetailsElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  ExtraDetailsElement = null; 
-                else
-                  ExtraDetailsElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("ExtraDetails");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _ExtraDetails;
         
         /// <summary>
         /// Facilitates quick identification of the service
@@ -992,7 +954,7 @@ namespace Hl7.Fhir.Model
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.Markdown)ExtraDetailsElement.DeepCopy();
+                if(ExtraDetails != null) dest.ExtraDetails = (Hl7.Fhir.Model.Markdown)ExtraDetails.DeepCopy();
                 if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopy());
@@ -1033,7 +995,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.Matches(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
+            if( !DeepComparable.Matches(ExtraDetails, otherT.ExtraDetails)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(CoverageArea, otherT.CoverageArea)) return false;
@@ -1067,7 +1029,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.IsExactly(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
+            if( !DeepComparable.IsExactly(ExtraDetails, otherT.ExtraDetails)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(CoverageArea, otherT.CoverageArea)) return false;
@@ -1101,7 +1063,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Location) { if (elem != null) yield return elem; }
 				if (NameElement != null) yield return NameElement;
 				if (CommentElement != null) yield return CommentElement;
-				if (ExtraDetailsElement != null) yield return ExtraDetailsElement;
+				if (ExtraDetails != null) yield return ExtraDetails;
 				if (Photo != null) yield return Photo;
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
 				foreach (var elem in CoverageArea) { if (elem != null) yield return elem; }
@@ -1134,7 +1096,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
                 if (NameElement != null) yield return new ElementValue("name", NameElement);
                 if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-                if (ExtraDetailsElement != null) yield return new ElementValue("extraDetails", ExtraDetailsElement);
+                if (ExtraDetails != null) yield return new ElementValue("extraDetails", ExtraDetails);
                 if (Photo != null) yield return new ElementValue("photo", Photo);
                 foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
                 foreach (var elem in CoverageArea) { if (elem != null) yield return new ElementValue("coverageArea", elem); }

@@ -654,32 +654,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("description", Order=230)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown DescriptionElement
+        public Hl7.Fhir.Model.Markdown Description
         {
-            get { return _DescriptionElement; }
-            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            get { return _Description; }
+            set { _Description = value; OnPropertyChanged("Description"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _DescriptionElement;
-        
-        /// <summary>
-        /// What this is study doing
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Description
-        {
-            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DescriptionElement = null; 
-                else
-                  DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("Description");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
         /// Inclusion &amp; exclusion criteria
@@ -839,7 +820,7 @@ namespace Hl7.Fhir.Model
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.CodeableConcept>(Keyword.DeepCopy());
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.CodeableConcept>(Location.DeepCopy());
-                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
+                if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(Enrollment != null) dest.Enrollment = new List<Hl7.Fhir.Model.ResourceReference>(Enrollment.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Sponsor != null) dest.Sponsor = (Hl7.Fhir.Model.ResourceReference)Sponsor.DeepCopy();
@@ -880,7 +861,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.Matches(Keyword, otherT.Keyword)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(Enrollment, otherT.Enrollment)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Sponsor, otherT.Sponsor)) return false;
@@ -914,7 +895,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.IsExactly(Keyword, otherT.Keyword)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(Enrollment, otherT.Enrollment)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Sponsor, otherT.Sponsor)) return false;
@@ -948,7 +929,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
 				foreach (var elem in Keyword) { if (elem != null) yield return elem; }
 				foreach (var elem in Location) { if (elem != null) yield return elem; }
-				if (DescriptionElement != null) yield return DescriptionElement;
+				if (Description != null) yield return Description;
 				foreach (var elem in Enrollment) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
 				if (Sponsor != null) yield return Sponsor;
@@ -981,7 +962,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
                 foreach (var elem in Keyword) { if (elem != null) yield return new ElementValue("keyword", elem); }
                 foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (Description != null) yield return new ElementValue("description", Description);
                 foreach (var elem in Enrollment) { if (elem != null) yield return new ElementValue("enrollment", elem); }
                 if (Period != null) yield return new ElementValue("period", Period);
                 if (Sponsor != null) yield return new ElementValue("sponsor", Sponsor);

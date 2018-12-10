@@ -782,32 +782,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("paymentTerms", Order=230)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown PaymentTermsElement
+        public Hl7.Fhir.Model.Markdown PaymentTerms
         {
-            get { return _PaymentTermsElement; }
-            set { _PaymentTermsElement = value; OnPropertyChanged("PaymentTermsElement"); }
+            get { return _PaymentTerms; }
+            set { _PaymentTerms = value; OnPropertyChanged("PaymentTerms"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _PaymentTermsElement;
-        
-        /// <summary>
-        /// Payment details
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string PaymentTerms
-        {
-            get { return PaymentTermsElement != null ? PaymentTermsElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  PaymentTermsElement = null; 
-                else
-                  PaymentTermsElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("PaymentTerms");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _PaymentTerms;
         
         /// <summary>
         /// Comments made about the invoice
@@ -851,7 +832,7 @@ namespace Hl7.Fhir.Model
                 if(TotalPriceComponent != null) dest.TotalPriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(TotalPriceComponent.DeepCopy());
                 if(TotalNet != null) dest.TotalNet = (Money)TotalNet.DeepCopy();
                 if(TotalGross != null) dest.TotalGross = (Money)TotalGross.DeepCopy();
-                if(PaymentTermsElement != null) dest.PaymentTermsElement = (Hl7.Fhir.Model.Markdown)PaymentTermsElement.DeepCopy();
+                if(PaymentTerms != null) dest.PaymentTerms = (Hl7.Fhir.Model.Markdown)PaymentTerms.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
@@ -884,7 +865,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(TotalPriceComponent, otherT.TotalPriceComponent)) return false;
             if( !DeepComparable.Matches(TotalNet, otherT.TotalNet)) return false;
             if( !DeepComparable.Matches(TotalGross, otherT.TotalGross)) return false;
-            if( !DeepComparable.Matches(PaymentTermsElement, otherT.PaymentTermsElement)) return false;
+            if( !DeepComparable.Matches(PaymentTerms, otherT.PaymentTerms)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
@@ -910,7 +891,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(TotalPriceComponent, otherT.TotalPriceComponent)) return false;
             if( !DeepComparable.IsExactly(TotalNet, otherT.TotalNet)) return false;
             if( !DeepComparable.IsExactly(TotalGross, otherT.TotalGross)) return false;
-            if( !DeepComparable.IsExactly(PaymentTermsElement, otherT.PaymentTermsElement)) return false;
+            if( !DeepComparable.IsExactly(PaymentTerms, otherT.PaymentTerms)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
@@ -936,7 +917,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in TotalPriceComponent) { if (elem != null) yield return elem; }
 				if (TotalNet != null) yield return TotalNet;
 				if (TotalGross != null) yield return TotalGross;
-				if (PaymentTermsElement != null) yield return PaymentTermsElement;
+				if (PaymentTerms != null) yield return PaymentTerms;
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
@@ -961,7 +942,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in TotalPriceComponent) { if (elem != null) yield return new ElementValue("totalPriceComponent", elem); }
                 if (TotalNet != null) yield return new ElementValue("totalNet", TotalNet);
                 if (TotalGross != null) yield return new ElementValue("totalGross", TotalGross);
-                if (PaymentTermsElement != null) yield return new ElementValue("paymentTerms", PaymentTermsElement);
+                if (PaymentTerms != null) yield return new ElementValue("paymentTerms", PaymentTerms);
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }

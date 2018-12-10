@@ -1086,8 +1086,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (IsEqualPath(elem.Base?.Path, DomainResource_Extension_Path))
             {
                 elem.ShortElement?.RemoveConstrainedByDiffAnnotation();
-                elem.CommentElement?.RemoveConstrainedByDiffAnnotation();
-                elem.DefinitionElement?.RemoveConstrainedByDiffAnnotation();
+                elem.Comment?.RemoveConstrainedByDiffAnnotation();
+                elem.Definition?.RemoveConstrainedByDiffAnnotation();
             }
         }
 
