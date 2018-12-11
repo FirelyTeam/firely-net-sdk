@@ -676,9 +676,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMatcher_Patient_Animal_Slice()
+        public void TestElementMatcher_Patient_Identifier_Slice()
         {
-            // Slice Patient.animal (named)
+            // Slice Patient.identifier (named)
 
             var baseProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
             var userProfile = new StructureDefinition()
@@ -688,9 +688,9 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" }
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
                     }
                 }
             };
@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Slice: Patient.animal
+            // Slice: Patient.identifier
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -718,9 +718,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMatcher_Patient_Animal_Slice_Override()
+        public void TestElementMatcher_Patient_Identifier_Slice_Override()
         {
-            // Constrain existing slice on Patient.animal (named)
+            // Constrain existing slice on Patient.identifier (named)
 
             var baseProfile = new StructureDefinition()
             {
@@ -729,9 +729,9 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" }
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
                     }
                 }
             };
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Slice: Patient.animal
+            // Slice: Patient.identifier
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -761,9 +761,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMatcher_Patient_Animal_Slice_Override_NoEntry()
+        public void TestElementMatcher_Patient_Identifier_Slice_Override_NoEntry()
         {
-            // Constrain existing slice on Patient.animal (named)
+            // Constrain existing slice on Patient.identifier (named)
             // Similar to previous, but differential does NOT provide a slice entry
             // Not strictly necessary, as it is implied by the base
 
@@ -774,9 +774,9 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" }
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
                     }
                 }
             };
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Slice: Patient.animal
+            // Slice: Patient.identifier
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -807,9 +807,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMatcher_Patient_Animal_Slice_Add()
+        public void TestElementMatcher_Patient_Identifier_Slice_Add()
         {
-            // Add a new (named) slice to an existing slice on Patient.animal
+            // Add a new (named) slice to an existing slice on Patient.identifier
 
             var baseProfile = new StructureDefinition()
             {
@@ -818,14 +818,14 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" }
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
                     }
                 }
             };
             var userProfile = (StructureDefinition)baseProfile.DeepCopy();
-            userProfile.Differential.Element[2].SliceName = "cat";
+            userProfile.Differential.Element[2].SliceName = "his";
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Slice: Patient.animal
+            // Slice: Patient.identifier
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -850,9 +850,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMatcher_Patient_Animal_Slice_Insert()
+        public void TestElementMatcher_Patient_Identifier_Slice_Insert()
         {
-            // Insert a new (named) slice into an existing slice on Patient.animal
+            // Insert a new (named) slice into an existing slice on Patient.identifier
 
             var baseProfile = new StructureDefinition()
             {
@@ -861,15 +861,15 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" }
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
                     }
                 }
             };
             var userProfile = (StructureDefinition)baseProfile.DeepCopy();
             var slice = (ElementDefinition)userProfile.Differential.Element[2].DeepCopy();
-            slice.SliceName = "cat";
+            slice.SliceName = "his";
             userProfile.Differential.Element.Insert(2, slice);
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
@@ -881,7 +881,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Slice: Patient.animal
+            // Slice: Patient.identifier
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMatcher_Patient_Animal_Reslice()
+        public void TestElementMatcher_Patient_Identifier_Reslice()
         {
             // Reslice an existing (named) slice on Patient.animal
 
@@ -909,10 +909,10 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" },
-                        new ElementDefinition("Patient.animal") { SliceName = "cat" }
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "his" },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
                     }
                 }
             };
@@ -923,12 +923,12 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog", Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("breed").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog/schnautzer" },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog/dachshund" }
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "his", Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("use.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "his/acme" },
+                        new ElementDefinition("Patient.identifier") { SliceName = "his/firely" }
                     }
                 }
             };
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Reslice: Patient.animal
+            // Reslice: Patient.identifier
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -962,9 +962,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMatcher_Patient_Animal_Nested_Slice()
+        public void TestElementMatcher_Patient_Identifier_Nested_Slice()
         {
-            // Introduce a nested (named) slice within an existing (named) slice on Patient.animal
+            // Introduce a nested (named) slice within an existing (named) slice on Patient.identifier
 
             var baseProfile = new StructureDefinition()
             {
@@ -973,12 +973,12 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" },
-                        new ElementDefinition("Patient.animal.breed"),
-                        new ElementDefinition("Patient.animal") { SliceName = "cat" },
-                        new ElementDefinition("Patient.animal.breed")
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" },
+                        new ElementDefinition("Patient.identifier.use"),
+                        new ElementDefinition("Patient.identifier") { SliceName = "his" },
+                        new ElementDefinition("Patient.identifier.use")
                     }
                 }
             };
@@ -989,14 +989,14 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        // Is slice entry required? We're not reslicing animal...
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog" },
-                        new ElementDefinition("Patient.animal.breed") { Slicing = new ElementDefinition.SlicingComponent()
+                        // Is slice entry required? We're not reslicing identifier...
+                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
+                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" },
+                        new ElementDefinition("Patient.identifier.use") { Slicing = new ElementDefinition.SlicingComponent()
                         { Discriminator = ForValueSlice("coding.code").ToList() } },
-                        new ElementDefinition("Patient.animal.breed") { SliceName="schnautzer" },
-                        new ElementDefinition("Patient.animal.breed") { SliceName="dachshund" },
+                        new ElementDefinition("Patient.identifier.use") { SliceName="official" },
+                        new ElementDefinition("Patient.identifier.use") { SliceName="secondary" },
                     }
                 }
             };
@@ -1010,7 +1010,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Slice: Patient.animal
+            // Slice: Patient.identifier
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -1021,9 +1021,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(diffNav.MoveToNext());
             Assert.IsTrue(snapNav.MoveToNext());
             assertMatch(matches[1], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // First slice
-            Assert.AreEqual("dog", diffNav.Current.SliceName);
+            Assert.AreEqual("ssn", diffNav.Current.SliceName);
 
-            // Nested slice: Patient.animal.breed
+            // Nested slice: Patient.identifier.use
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
@@ -1035,11 +1035,11 @@ namespace Hl7.Fhir.Specification.Tests
             // Don't advance snapNav (not sliced)
             Assert.IsFalse(snapNav.MoveToNext());
             assertMatch(matches[1], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // First new nested slice
-            Assert.AreEqual("schnautzer", diffNav.Current.SliceName);
+            Assert.AreEqual("official", diffNav.Current.SliceName);
             Assert.IsTrue(diffNav.MoveToNext());
             // Don't advance snapNav (not sliced)
             assertMatch(matches[2], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Second new nested slice
-            Assert.AreEqual("dachshund", diffNav.Current.SliceName);
+            Assert.AreEqual("secondary", diffNav.Current.SliceName);
             Assert.IsFalse(diffNav.MoveToNext());
             // Don't advance snapNav (not sliced)
         }
