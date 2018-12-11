@@ -331,7 +331,11 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
-                        new ElementDefinition("Extension.extension") { SliceName = "name" },
+                        new ElementDefinition("Extension.extension") {
+                            SliceName = "name",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
@@ -340,7 +344,11 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         },
                         new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("name")  },
-                        new ElementDefinition("Extension.extension") { SliceName = "age" },
+                        new ElementDefinition("Extension.extension") {
+                            SliceName = "age",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
@@ -398,9 +406,17 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
-                        new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent()
-                            { Discriminator = ForValueSlice("url").ToList() } },
-                        new ElementDefinition("Extension.extension") { SliceName = "name" },
+                        new ElementDefinition("Extension.extension")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() {
+                                Discriminator = ForValueSlice("url").ToList()
+                            }
+                        },
+                        new ElementDefinition("Extension.extension") {
+                            SliceName = "name",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
@@ -409,7 +425,11 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         },
                         new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("name")  },
-                        new ElementDefinition("Extension.extension") { SliceName = "age" },
+                        new ElementDefinition("Extension.extension") {
+                            SliceName = "age",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
@@ -421,6 +441,7 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
+
             var userProfile = new StructureDefinition()
             {
                 Differential = new StructureDefinition.DifferentialComponent()
@@ -428,7 +449,12 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
-                        new ElementDefinition("Extension.extension") { SliceName = "size" },
+                        new ElementDefinition("Extension.extension")
+                        {
+                            SliceName = "size",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
@@ -489,8 +515,10 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Extension"),
                         new ElementDefinition("Extension.extension") {
-                            Slicing = new ElementDefinition.SlicingComponent()
-                            { Discriminator = ForValueSlice("url").ToList() } },
+                            Slicing = new ElementDefinition.SlicingComponent() {
+                                Discriminator = ForValueSlice("url").ToList() 
+                            } 
+                        },
                         new ElementDefinition("Extension.extension") { SliceName = "name" },
                         new ElementDefinition("Extension.extension.value[x]")
                         {
@@ -592,11 +620,27 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Extension"),
                         new ElementDefinition("Extension.extension")
-                        { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = ForValueSlice("url").ToList() } },
-                        new ElementDefinition("Extension.extension") { SliceName = "parent" },
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() {
+                                Discriminator = ForValueSlice("url").ToList()
+                            }
+                        },
+                        new ElementDefinition("Extension.extension") {
+                            SliceName = "parent",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Extension.extension.extension")
-                        { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = ForValueSlice("url").ToList() } },
-                        new ElementDefinition("Extension.extension.extension") { SliceName = "child" },
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() {
+                                Discriminator = ForValueSlice("url").ToList()
+                            }
+                        },
+                        new ElementDefinition("Extension.extension.extension") {
+                            SliceName = "child",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Extension.extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
@@ -624,8 +668,16 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
-                        new ElementDefinition("Extension.extension") { SliceName = "parent" },
-                        new ElementDefinition("Extension.extension.extension") { SliceName = "child" },
+                        new ElementDefinition("Extension.extension") {
+                            SliceName = "parent",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = true
+                        },
+                        new ElementDefinition("Extension.extension.extension") {
+                            SliceName = "child",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = true
+                        },
                         new ElementDefinition("Extension.extension.extension.valueCoding")
                         {
                             Min = 1,
@@ -688,9 +740,16 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
                     }
                 }
             };
@@ -729,14 +788,22 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
                     }
                 }
             };
             var userProfile = (StructureDefinition)baseProfile.DeepCopy();
             userProfile.Differential.Element[2].Min = 1;
+            // [WMR 20181211] R4: also specify SliceIsConstraining flag
+            //userProfile.Differential.Element[2].SliceIsConstraining = true;
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
@@ -774,9 +841,15 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
                     }
                 }
             };
@@ -784,6 +857,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Remove slice entry from diff
             userProfile.Differential.Element.RemoveAt(1);
             userProfile.Differential.Element[1].Min = 1;
+            // [WMR 20181211] R4: also specify SliceIsConstraining flag
+            //userProfile.Differential.Element[1].SliceIsConstraining = true;
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
@@ -818,14 +893,21 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
                     }
                 }
             };
             var userProfile = (StructureDefinition)baseProfile.DeepCopy();
             userProfile.Differential.Element[2].SliceName = "his";
+            // [WMR 20181211] R4: Cloned SliceIsConstraining flag value = false
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
@@ -861,16 +943,29 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
                     }
                 }
             };
+
             var userProfile = (StructureDefinition)baseProfile.DeepCopy();
-            var slice = (ElementDefinition)userProfile.Differential.Element[2].DeepCopy();
-            slice.SliceName = "his";
-            userProfile.Differential.Element.Insert(2, slice);
+            // [WMR 20181211] R4: update "ssn" slice in derived profile, flag as a constraining slice
+            var ssnSlice = userProfile.Differential.Element[2];
+            Assert.AreEqual("ssn", ssnSlice.SliceName);
+            //ssnSlice.SliceIsConstraining = true;
+            // [WMR 20181211] R4: add "his" slice to derived profile and flag as a new named slice
+            var newSlice = (ElementDefinition)ssnSlice.DeepCopy();
+            newSlice.SliceName = "his";
+            //newSlice.SliceIsConstraining = false;
+            userProfile.Differential.Element.Insert(2, newSlice);
 
             var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
@@ -909,10 +1004,20 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "his" },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" }
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "his",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
                     }
                 }
             };
@@ -923,12 +1028,26 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "his", Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("use.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "his/acme" },
-                        new ElementDefinition("Patient.identifier") { SliceName = "his/firely" }
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "his",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = true,
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "his/acme",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "his/firely",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
                     }
                 }
             };
@@ -973,11 +1092,21 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Patient.identifier.use"),
-                        new ElementDefinition("Patient.identifier") { SliceName = "his" },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "his",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                         new ElementDefinition("Patient.identifier.use")
                     }
                 }
@@ -990,13 +1119,29 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Patient"),
                         // Is slice entry required? We're not reslicing identifier...
-                        new ElementDefinition("Patient.identifier") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("type.coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier") { SliceName = "ssn" },
-                        new ElementDefinition("Patient.identifier.use") { Slicing = new ElementDefinition.SlicingComponent()
-                        { Discriminator = ForValueSlice("coding.code").ToList() } },
-                        new ElementDefinition("Patient.identifier.use") { SliceName="official" },
-                        new ElementDefinition("Patient.identifier.use") { SliceName="secondary" },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier") {
+                            SliceName = "ssn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = true
+                        },
+                        new ElementDefinition("Patient.identifier.use")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" }
+                        },
+                        new ElementDefinition("Patient.identifier.use") {
+                            SliceName ="official",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
+                        new ElementDefinition("Patient.identifier.use") {
+                            SliceName ="secondary",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        },
                     }
                 }
             };
@@ -1057,15 +1202,18 @@ namespace Hl7.Fhir.Specification.Tests
                         new ElementDefinition("Patient"),
                         new ElementDefinition("Patient.identifier")
                         {
-                            Slicing = new ElementDefinition.SlicingComponent() { Description = "TEST" },
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" },
                         },
                         new ElementDefinition("Patient.identifier")
                         {
-                            SliceName = "bsn"
+                            SliceName = "bsn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
                         }
                     }
                 }
             };
+
             var userProfile = new StructureDefinition()
             {
                 Differential = new StructureDefinition.DifferentialComponent()
@@ -1081,12 +1229,16 @@ namespace Hl7.Fhir.Specification.Tests
                         // Constraint on inherited slice
                         new ElementDefinition("Patient.identifier")
                         {
-                            SliceName = "bsn"
+                            SliceName = "bsn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = true,
                         },
                         // Introduce new slice
                         new ElementDefinition("Patient.identifier")
                         {
-                            SliceName = "ehrid"
+                            SliceName = "ehrid",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
                         }
                     }
                 }
@@ -1331,6 +1483,120 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.Print(match.Issue.Details?.Text);
             Assert.IsTrue(int.TryParse(match.Issue.Details?.Coding?[0]?.Code, out int code));
             Assert.AreEqual(SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICETYPE_NAME.Code, code);
+        }
+
+        // [WMR 20181211] R4: NEW
+        // Test handling of invalid ElementDefinition.SliceIsConstraining flag values
+        // If SliceIsConstraining flag is explicitly specified (not null),
+        // then verify slice name in derived profile against slice names in base profile
+        // Otherwise, if SliceIsConstraining flag is unspecified,
+        // then fall back to original (STU3) matching behavior:
+        // - found matching slice in base profile => implies derived profile constrains existing slice
+        // - no matching slice exists in base profile => implies derived profile introduces a new slice
+        [TestMethod]
+        public void TestElementMatcher_SliceIsConstraining()
+        {
+            var baseProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient"),
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "DUMMY" },
+                        },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            SliceName = "bsn",
+                            // [WMR 20181211] R4: NEW
+                            //SliceIsConstraining = false
+                        }
+                    }
+                }
+            };
+
+            var userProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient"),
+                        // Constraint on inherited slice entry
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Min = 1
+                        },
+                        // Constraint on inherited slice
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            SliceName = "bsn",
+                            // [WMR 20181211] R4: NEW
+                            // INVALID - conflicts with existing "bsn" slice in base profile
+                            SliceIsConstraining = false,
+                        },
+                        // Introduce new slice
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            SliceName = "his",
+                            // [WMR 20181211] R4: NEW
+                            // INVALID - no matching "his" slice in base profile
+                            SliceIsConstraining = true
+                        }
+                    }
+                }
+            };
+
+            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
+
+            // Merge: Observation root
+            var matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // Slice entry: Patient.identifier
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+            matches.DumpMatches(snapNav, diffNav);
+            Assert.AreEqual(3, matches.Count);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
+            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Constraint on slice entry
+            var snapSliceEntryBookmark = snapNav.Bookmark();
+
+            // New slice: Patient.identifier:ssn - INVALID (conflicting slice in base profile)
+            Assert.IsTrue(diffNav.MoveToNext());
+            Assert.IsTrue(snapNav.MoveToNext());
+            var match = matches[1];
+            assertMatch(match, ElementMatcher.MatchAction.Invalid, snapNav, diffNav);  
+            Assert.AreEqual("bsn", diffNav.Current.SliceName);
+            Assert.AreEqual("bsn", snapNav.Current.SliceName);
+            // Verify generated outcome issue
+            Assert.IsNotNull(match.Issue);
+            Debug.Print(match.Issue.Details?.Text);
+            Assert.IsTrue(int.TryParse(match.Issue.Details?.Coding?[0]?.Code, out int code));
+            Assert.AreEqual(SnapshotGenerator.PROFILE_ELEMENTDEF_SLICENAME_CONFLICT.Code, code);
+
+            // Slice constraint: Patient.identifier:his - INVALID (no matching slice in base profile)
+            Assert.IsTrue(diffNav.MoveToNext());
+            Assert.IsFalse(snapNav.MoveToNext());
+            Assert.IsTrue(snapNav.ReturnToBookmark(snapSliceEntryBookmark));
+            match = matches[2];
+            assertMatch(match, ElementMatcher.MatchAction.Invalid, snapNav, diffNav);
+            Assert.AreEqual("his", diffNav.Current.SliceName);
+            Assert.IsNull(snapNav.Current.SliceName);
+            // Verify generated outcome issue
+            Assert.IsNotNull(match.Issue);
+            Debug.Print(match.Issue.Details?.Text);
+            Assert.IsTrue(int.TryParse(match.Issue.Details?.Coding?[0]?.Code, out code));
+            Assert.AreEqual(SnapshotGenerator.PROFILE_ELEMENTDEF_SLICENAME_NOMATCH.Code, code);
+
+            // No more matches
+            Assert.IsFalse(diffNav.MoveToNext());
         }
 
         // ========== Helper functions ==========
