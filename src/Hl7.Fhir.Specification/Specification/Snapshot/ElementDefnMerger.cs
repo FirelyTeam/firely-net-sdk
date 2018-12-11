@@ -76,6 +76,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [EK 20170301] This used to be ambiguous, now (STU3) split in contentReference and sliceName
                 snap.SliceNameElement = mergePrimitiveAttribute(snap.SliceNameElement, diff.SliceNameElement);
 
+                // [WMR 20181211] R4: Also merge ElementDefinition.SliceIsConstraining
+                snap.SliceIsConstrainingElement = mergePrimitiveAttribute(snap.SliceIsConstrainingElement, diff.SliceIsConstrainingElement);
+
                 // Codes are cumulative based on the code value
                 // [WMR 20180611] WRONG! Invalid elementComparer
                 // snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
@@ -160,6 +163,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // if (isExtensionConstraint)
                 // {
                 snap.IsModifierElement = mergePrimitiveAttribute(snap.IsModifierElement, diff.IsModifierElement);
+                // [WMR 20181211] R4: Also merge ElementDefinition.IsModifierReason
+                snap.IsModifierReasonElement = mergePrimitiveAttribute(snap.IsModifierReasonElement, diff.IsModifierReasonElement);
                 // }
 
                 snap.IsSummaryElement = mergePrimitiveAttribute(snap.IsSummaryElement, diff.IsSummaryElement);
@@ -174,6 +179,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
                 // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot
                 snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
+
+                // [WMR 20181211] R4: Also merge ElementDefinition.ModifierExtension
+                // Q: What does this mean? How should consumers handle these?
+                snap.ModifierExtension = mergeCollection(snap.ModifierExtension, diff.ModifierExtension, (s, d) => s.Url == d.Url);
 
                 // [EK 20170301] Added this after comparison with Java generated snapshot
                 snap.RepresentationElement = mergeCollection(snap.RepresentationElement, diff.RepresentationElement, (s, d) => s.IsExactly(d));
