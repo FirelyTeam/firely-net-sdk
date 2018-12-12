@@ -9,6 +9,9 @@
 // Accept multiple renamed choice type elements (Chris Grenz)
 #define MULTIPLE_RENAMED_CHOICE_TYPES
 
+// [WMR 20181212] Match type slice on all specified profiles
+#define MULTIPLE_SLICE_PROFILES
+
 // [WMR 20161208] NEW
 // Ewout:
 // (1) Type slice: slicing constraints on choice type element "value[x]"
@@ -640,6 +643,39 @@ namespace Hl7.Fhir.Specification.Snapshot
             match.Action = MatchAction.Add;
         }
 
+        class SliceByTypeProfileEqualityComparer : IEqualityComparer<string>
+        {
+            readonly string _sliceName;
+
+            public SliceByTypeProfileEqualityComparer(string sliceName)
+            {
+                _sliceName = sliceName ?? throw new ArgumentNullException(nameof(sliceName));
+            }
+
+            public bool Equals(string snapProfile, string diffProfile)
+            {
+                var profileRef = ProfileReference.Parse(diffProfile);
+                if (profileRef.IsComplex)
+                {
+                    // Match on element name (for complex extension elements)
+                    return SnapshotGenerator.IsEqualName(_sliceName, profileRef.ElementName);
+                }
+                else
+                {
+                    // Match on type profile(s)
+                    return SnapshotGenerator.IsEqualUri(snapProfile, diffProfile);
+                }
+            }
+
+            public int GetHashCode(string obj)
+            {
+                //throw new NotImplementedException();
+
+                // Force the use of Equals
+                return 0; 
+            }
+        }
+
         // Match current snapshot and differential slice elements on @type|@profile = Element.Type.Code and Element.Type.Profile
         // Returns an initialized MatchInfo with action = Merge | Add
         static void matchSliceByTypeProfile(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, MatchInfo match)
@@ -648,10 +684,26 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (match.Action == MatchAction.Merge)
             {
                 // We have a match on type code(s); match type profiles
+#if MULTIPLE_SLICE_PROFILES
+                // [WMR 20181212] Match type slice on all specified profiles
+                var diffProfiles = diffNav.Current.PrimaryTypeProfiles();
+                var snapProfiles = snapNav.Current.PrimaryTypeProfiles();
+
+                // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
+                // [WMR 20181212] Not used anymore?
+                if (!diffProfiles.Any() && !snapProfiles.Any())
+                {
+                    return;
+                }
+
+                var comparer = new SliceByTypeProfileEqualityComparer(snapNav.Current.SliceName);
+                var result = snapProfiles.SequenceEqual(diffProfiles, comparer);
+#else
                 var diffProfile = diffNav.Current.PrimaryTypeProfile();
                 var snapProfile = snapNav.Current.PrimaryTypeProfile();
 
                 // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
+                // [WMR 20181212] Not used anymore?
                 if (string.IsNullOrEmpty(diffProfile) && string.IsNullOrEmpty(snapProfile))
                 {
                     return;
@@ -660,10 +712,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var profileRef = ProfileReference.Parse(diffProfile);
                 var result = profileRef.IsComplex
                     // Match on element name (for complex extension elements)
-                    ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.ElementName)
+                    ? SnapshotGenerator.IsEqualName(snapNav.Current.SliceName, profileRef.ElementName)
                     // Match on type profile(s)
-                    : snapProfile.SequenceEqual(diffProfile);
-
+                    : SnapshotGenerator.IsEqualUri(snapProfile, diffProfile);
+#endif
                 if (!result)
                 {
                     match.Action = MatchAction.Add;

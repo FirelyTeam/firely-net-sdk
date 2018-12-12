@@ -1909,5 +1909,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Determine if the specified element names are equal. Performs an ordinal comparison.</summary>
         internal static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
+
+        /// <summary>Determine if the specified uri strings are equal. Performs an ordinal comparison.</summary>
+        internal static bool IsEqualUri(string uri, string other) => StringComparer.Ordinal.Equals(uri, other);
     }
 }

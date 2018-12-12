@@ -121,6 +121,12 @@ namespace Hl7.Fhir.Specification.Navigation
             return null;
         }
 
+        /// <summary>Returns the type profile reference(s) of the primary element type code, if available.</summary>
+        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition elem)
+        {
+            return elem.Type.FirstOrDefault()?.Profile ?? Enumerable.Empty<string>();
+        }
+
         /// <summary>
         /// Returns the only element of a sequence,
         /// or the default value if the sequence is empty or contains multiple elements.
