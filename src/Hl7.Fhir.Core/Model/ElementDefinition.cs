@@ -65,18 +65,30 @@ namespace Hl7.Fhir.Model
         [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
         public partial class DiscriminatorComponent
         {
+            /// <summary>Fixed default discriminator path for slicing extension elements.</summary>
+            public static readonly string ExtensionDiscriminatorPath = "url";
+
+            /// <summary>Fixed default discriminator path for slicing extension elements.</summary>
+            public static readonly string TypeDiscriminatorPath = "$this";
+
+            /// <summary>Creates a new <see cref="DiscriminatorComponent"/> for slicing by type.</summary>
             public static DiscriminatorComponent ForTypeSlice()
             {
                 // [WMR 20170823] Also initialize Discriminator.Path = "$this", as defined here:
                 // https://www.hl7.org/fhir/profiling.html#discriminator
-                return new DiscriminatorComponent { Type = DiscriminatorType.Type, Path = "$this" };
+                return new DiscriminatorComponent { Type = DiscriminatorType.Type, Path = TypeDiscriminatorPath };
             }
 
+            /// <summary>Creates a new <see cref="DiscriminatorComponent"/> for slicing by value.</summary>
             public static DiscriminatorComponent ForValueSlice(string path)
             {
                 return new DiscriminatorComponent { Type = DiscriminatorType.Value, Path = path };
             }
 
+            /// <summary>Creates a new <see cref="DiscriminatorComponent"/> for slicing extensions (by url value).</summary>
+            public static DiscriminatorComponent ForExtensionSlice() => ForValueSlice(ExtensionDiscriminatorPath);
+
+            /// <summary>Converts a single <see cref="DiscriminatorComponent"/> to a list.</summary>
             public List<DiscriminatorComponent> ToList()
             {
                 return new List<DiscriminatorComponent> { this };

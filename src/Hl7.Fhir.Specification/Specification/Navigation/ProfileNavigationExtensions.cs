@@ -121,13 +121,52 @@ namespace Hl7.Fhir.Specification.Navigation
             return null;
         }
 
-        /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
+        /// <summary>
+        /// Returns the only element of a sequence,
+        /// or the default value if the sequence is empty or contains multiple elements.
+        /// <para>
+        /// If the specified sequence contains multiple elements, then this method returns the default value.
+        /// The standard LINQ method <see cref="Enumerable.SingleOrDefault{TSource}(IEnumerable{TSource})"/>
+        /// would throw an exception.
+        /// </para>
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of <paramref name="sequence"/></typeparam>
+        /// <param name="sequence">An <see cref="IEnumerable{T}"/> to return the single element of.</param>
+        /// <returns>A value of type <typeparamref name="T"/>.</returns>
+        internal static T SafeSingleOrDefault<T>(this IEnumerable<T> sequence)
+        {
+            using (var e = sequence.GetEnumerator())
+            {
+                if (e.MoveNext())
+                {
+                    var first = e.Current;
+                    if (!e.MoveNext())
+                    {
+                        // Return single element
+                        return first;
+                    }
+                }
+            }
+            // Zero or multiple elements
+            return default(T);
+        }
+
+        // <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
+
+        /// <summary>
+        /// If the specified type reference specifies a single profile url, then return it.
+        /// Otherwise return the core profile url for the specified type code.
+        /// </summary>
+        /// <param name="elemType">A <see cref="ElementDefinition.TypeRefComponent"/> instance.</param>
+        /// <returns>An profile uri string, or <c>null</c>.</returns>
         public static string GetTypeProfile(this ElementDefinition.TypeRefComponent elemType)
         {
             string profile = null;
             if (elemType != null)
             {
-                profile = elemType.Profile.FirstOrDefault();
+                // [WMR 20181212] R4 NEW
+                //profile = elemType.Profile.FirstOrDefault();
+                profile = elemType.Profile.SafeSingleOrDefault();
                 if (profile == null && elemType.Code != null)
                 {
                     profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code);

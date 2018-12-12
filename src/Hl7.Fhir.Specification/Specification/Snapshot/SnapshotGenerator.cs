@@ -322,6 +322,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Fatal error...
                         throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
                     }
+
+                    // [WMR 20181212] TODO: Handle logical models, where type is an uri => parse the last segment
+
                     snapshot.Rebase(rootPath);
 
 #if FIX_SLICENAMES_ON_SPECIALIZATIONS
@@ -492,6 +495,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Also verify that diff only specifies child constraints on common elements (.extension | .modifierExtension) ... ?
                 // Actually, we should determine the intersection of the specified type profiles... ouch
 
+                // [WMR 20181212] R4 NEW - eld-13: Types must be unique by code
+                // Gracefully handle non-distinct type codes; do not expand
+
                 var distinctTypeCode = defn.CommonTypeCode();
                 if (distinctTypeCode != null)
                 {
@@ -518,7 +524,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // [WMR 20160720] Handle custom type profiles (GForge #9791)
                 StructureDefinition typeStructure = getStructureForElementType(defn, true);
-
                 return expandElementType(nav, typeStructure);
             }
 
@@ -868,7 +873,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // [WMR 20171004] New
-            var distinctTypeProfiles = diffTypes.Where(t => t.Profile != null).Select(t => t.Profile).Distinct().ToList();
+            //var distinctTypeProfiles = diffTypes.Where(t => t.Profile != null).Select(t => t.Profile).Distinct().ToList();
+            // [WMR 20181212] R4 NEW
+            var distinctTypeProfiles = diffTypes.SelectMany(t => t.Profile).Distinct().ToList();
             if (distinctTypeProfiles.Count > 1)
             {
                 // Multiple type profiles, cannot expand children
@@ -886,7 +893,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var primarySnapType = snap.Current.PrimaryType();
                 // if (primarySnapType == null) { return true; }
 
-                var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
+                // [WMR 20181212] R4 NEW
+                //var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
+                var primaryDiffTypeProfile = distinctTypeProfiles.FirstOrDefault();
 
                 // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
                 // e.g. if the differential specifies explicit core type profile url
@@ -973,12 +982,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // [WMR 20170208] Update ElementDefinition.Base components
                                 // ensureBaseComponents(typeNav, snap, true);
 
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
                                 // [WMR 20170321] HACK: Never copy elements names from the root element (e.g. SimpleQuantity)
                                 if (typeNav.Current.SliceNameElement != null)
                                 {
                                     Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.SliceName}'");
                                     typeNav.Current.SliceName = null;
                                 }
+#endif
 
                             }
                             else
@@ -1569,14 +1580,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Initialize slicing component to sensible defaults
             elem.Slicing = new ElementDefinition.SlicingComponent()
             {
-                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
-                {
-                    new ElementDefinition.DiscriminatorComponent
-                    {
-                        Type = ElementDefinition.DiscriminatorType.Value,
-                        Path = "url"
-                    }
-                },
+                //Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                //{
+                //    new ElementDefinition.DiscriminatorComponent
+                //    {
+                //        Type = ElementDefinition.DiscriminatorType.Value,
+                //        Path = "url"
+                //    }
+                //},
+                Discriminator = ElementDefinition.DiscriminatorComponent.ForExtensionSlice().ToList(),
                 Ordered = false,
                 Rules = ElementDefinition.SlicingRules.Open
             };
@@ -1613,8 +1625,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20160720] Handle custom type profiles (GForge #9791)
             bool isValidProfile = false;
 
-            // First try to resolve the custom element type profile, if specified
-            var typeProfile = typeRef.Profile.FirstOrDefault();
+            // [WMR 20181212] R4 NEW
+            // Resolve target profile if the type specifies a _single_ profile.
+            // Return null if the type specifies zero or multiple profiles.
+            var typeProfile = typeRef.Profile.SafeSingleOrDefault();
 
             // [WMR 20161004] Remove configuration setting; always merge type profiles
             // [WMR 20180723] Also expand custom profile on Reference
@@ -1657,6 +1671,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var location = elementDef.Path;
 
             var contentReference = elementDef.ContentReference; // e.g. "#Questionnaire.item"
+
+            // [WMR 20181212] TODO: Handle logical models, where StructureDefinition.type returns an uri
 
             var coreType = nav.StructureDefinition?.Type
                 // Fall back to root element name...?
@@ -1889,9 +1905,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Determine if the specified element paths are equal. Performs an ordinal comparison.</summary>
-        static bool IsEqualPath(string path, string other) => StringComparer.Ordinal.Equals(path, other);
+        internal static bool IsEqualPath(string path, string other) => StringComparer.Ordinal.Equals(path, other);
 
         /// <summary>Determine if the specified element names are equal. Performs an ordinal comparison.</summary>
-        static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
+        internal static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
     }
 }

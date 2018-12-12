@@ -557,21 +557,24 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (diffNav.Current.IsExtension())
             {
-                // Discriminator = url => match on ElementDefinition.Type[0].Profile
+                // Extension discriminator (on .url value)
+                // => match on ElementDefinition.Type[0].Profile
                 matchExtensionSlice(snapNav, diffNav, discriminators, match);
                 return;
             }
 
-            else if (discriminators.Count == 1 && discriminators[0].Type == ElementDefinition.DiscriminatorType.Type)
+            else if (discriminators.Count == 1 && isTypeDiscriminator(discriminators[0]))
             {
-                // Discriminator = @type => match on ElementDefinition.Type[0].Code
+                // Type discriminator
+                // => match on ElementDefinition.Type[0].Code
                 matchSliceByTypeCode(snapNav, diffNav, match);
                 return;
             }
 
             if (isTypeProfileDiscriminator(discriminators))
             {
-                // Discriminator = type@profile, { @type, @profile }
+                // Type & Profile discriminator
+                // => match on ElementDefinition.Type[0].Code & .Profile
                 matchSliceByTypeProfile(snapNav, diffNav, match);
                 return;
             }
@@ -649,7 +652,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var snapProfile = snapNav.Current.PrimaryTypeProfile();
 
                 // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
-                if (String.IsNullOrEmpty(diffProfile) && string.IsNullOrEmpty(snapProfile))
+                if (string.IsNullOrEmpty(diffProfile) && string.IsNullOrEmpty(snapProfile))
                 {
                     return;
                 }
@@ -679,9 +682,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             return elemType.Profile.FirstOrDefault();
         }
 
-        /// <summary>Fixed default discriminator for slicing extension elements.</summary>
-        static readonly string UrlDiscriminator = "url";
-
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type profile.</summary>
         static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Profile;
 
@@ -694,7 +694,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         //static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
 
         /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
-        static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => StringComparer.Ordinal.Equals(discriminator?.Path, UrlDiscriminator);
+        static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator)
+            => discriminator != null
+               && discriminator.Type == ElementDefinition.DiscriminatorType.Value
+               && SnapshotGenerator.IsEqualPath(discriminator.Path, ElementDefinition.DiscriminatorComponent.ExtensionDiscriminatorPath);
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on (type and) profile
