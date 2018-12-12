@@ -19,9 +19,9 @@ namespace Hl7.Fhir.Support
     {
         public const string API_OPERATION_OUTCOME_SYSTEM = "http://hl7.org/fhir/dotnet-api-operation-outcome";
 
-        public int Code;
-        public OperationOutcome.IssueSeverity Severity;
-        public OperationOutcome.IssueType Type;
+        public readonly int Code;
+        public readonly OperationOutcome.IssueSeverity Severity;
+        public readonly OperationOutcome.IssueType Type;
 
         public CodeableConcept ToCodeableConcept(string text = null)
         {
@@ -59,12 +59,15 @@ namespace Hl7.Fhir.Support
             return ic;
         }
 
-
-        /// <summary>Factory method.</summary>
-        internal static Issue Create(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
+        public Issue(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
         {
-            return new Issue() { Code = code, Severity = severity, Type = type };
+            Code = code;
+            Severity = severity;
+            Type = type;
         }
+        /// <summary>Factory method.</summary>
+        internal static Issue Create(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type) =>
+            new Issue(code, severity, type);
 
         // Validation resouce instance errors
         public static readonly Issue CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN = Create(1000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -89,7 +92,6 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_MISMATCHING_PROFILES = Create(1022, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_REQUIRED_BINDING = Create(1023, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_NON_REQUIRED_BINDING = Create(1024, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_TYPE_NOT_BINDEABLE = Create(1025, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_FAILS_SLICING_RULE = Create(1026, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_SLICING_OUT_OF_ORDER = Create(1027, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INCORRECT_OCCURRENCE = Create(1028, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
