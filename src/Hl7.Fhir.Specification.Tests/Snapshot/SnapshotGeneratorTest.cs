@@ -312,13 +312,26 @@ namespace Hl7.Fhir.Specification.Tests
             var snapElems = snapshot.Snapshot.Element;
             Debug.WriteLine($"Default snapshot: {snapElems.Count} elements");
             dumpBaseElems(snapElems);
-            Assert.AreEqual(52, snapElems.Count);
+            // [WMR 20181212] R4 FIXED - Patient.animal has been removed, including children
+            // Total of 7 elements removed:
+            // -1 (animal)
+            // -3 inline children
+            // -3 inherited children (id, extension, modifierExtension)
+            //Assert.AreEqual(52, snapElems.Count);
+            Assert.AreEqual(45, snapElems.Count);
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
             var fullElems = fullyExpand(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
-            Assert.AreEqual(310, fullElems.Count);
+            //Assert.AreEqual(310, fullElems.Count);
+            // [WMR 20181212] R4 FIXED
+            // Total of 7 + 3 * 12 = 43 elements removed:
+            // -1 (animal)
+            // -3 inline children, of type CodeableConcept
+            // -3*12 full expansion of CodeableConcept
+            // -3 inherited children (id, extension, modifierExtension)
+            Assert.AreEqual(277, fullElems.Count);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -369,7 +382,16 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
                 dumpBaseElems(fullElems);
                 dumpIssues(issues);
-                Assert.AreEqual(347, fullElems.Count);
+                // [WMR 20181212] R4 FIXED
+                // * Added elements: Meta.source, Reference.type
+                // +1 Organization.meta.source
+                // +1 Organization.contained.meta.source
+                // +4 Organization.identifier.assigner.type (slice intro + 3 named slices)
+                // +1 Organization.partOf.type
+                // +1 Organization.endpoint.type
+                // +8 in total
+                //Assert.AreEqual(347, fullElems.Count);
+                Assert.AreEqual(355, fullElems.Count);
                 Assert.AreEqual(0, issues.Count);
 
                 // Verify
@@ -1132,11 +1154,12 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170711] Fix non-standard element id's in source (capitalization)
             // Standardized element ids are preferred, but not mandatory; so the profile is not invalid
             // Nonetheless fix this first, so we can call common assertion methods
-            var elem = sd.Snapshot.Element.FirstOrDefault(e => e.ElementId == "DiagnosticReport.result:cholesterol");
+            // [WMR 20181212] R4 - Update slice names
+            var elem = sd.Snapshot.Element.FirstOrDefault(e => e.ElementId == "DiagnosticReport.result:Cholesterol");
             Assert.IsNotNull(elem);
             elem.ElementId = elem.Path + ElementIdGenerator.ElementIdSliceNameDelimiter + elem.SliceName;
             Assert.AreEqual("DiagnosticReport.result:Cholesterol", elem.ElementId);
-            elem = sd.Snapshot.Element.FirstOrDefault(e => e.ElementId == "DiagnosticReport.result:triglyceride");
+            elem = sd.Snapshot.Element.FirstOrDefault(e => e.ElementId == "DiagnosticReport.result:Triglyceride");
             elem.ElementId = elem.Path + ElementIdGenerator.ElementIdSliceNameDelimiter + elem.SliceName;
             Assert.IsNotNull(elem);
             elem.ElementId = elem.Path + ElementIdGenerator.ElementIdSliceNameDelimiter + elem.SliceName;
@@ -1564,9 +1587,10 @@ namespace Hl7.Fhir.Specification.Tests
             // Patient.identifier should reference the default core Identifier type profile
             var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(elem);
-            var typeProfileUrl = elem.Type.FirstOrDefault().Profile;
+            // [WMR 20181212] R4 Fixed - inspect the first type profile, compare canonical
+            var typeProfileUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
             Assert.IsNotNull(typeProfileUrl);
-            Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
+            Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier).Value);
 
             var settings = new SnapshotGeneratorSettings(_settings);
             settings.GenerateAnnotationsOnConstraints = true;
@@ -2944,12 +2968,15 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
             Assert.IsNotNull(outcome);
-            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
-            //Assert.AreEqual(1, outcome.Issue.Count);
-            // assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
-            Assert.AreEqual(2, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
-            assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            //Assert.AreEqual(2, outcome.Issue.Count);
+            //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            //assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            // [WMR 20181212] R4 FIXED - SimpleQuantity core type definition has been fixed
+            Assert.AreEqual(1, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+
+            // [WMR 20181212] R4 TODO
+            Assert.Fail("TODO: Fix choice type constraints for R4");
         }
 
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
@@ -4202,17 +4229,20 @@ namespace Hl7.Fhir.Specification.Tests
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump();
             dumpOutcome(_generator.Outcome);
 
-            var issues = _generator.Outcome?.Issue;
-            Assert.AreEqual(1, issues.Count);
-            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            // [WMR 20181212] R4 FIXED - SimpleQuantity core type definition has been fixed
+            //var issues = _generator.Outcome?.Issue;
+            //Assert.AreEqual(1, issues.Count);
+            //assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            Assert.IsNull(_generator.Outcome);
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
-            issues = new List<OperationOutcome.IssueComponent>();
+            var issues = new List<OperationOutcome.IssueComponent>();
             var elems = expanded.Snapshot.Element;
             elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
             // Generator should report same issue as during regular snapshot expansion
-            Assert.AreEqual(1, issues.Count);
-            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            //Assert.AreEqual(1, issues.Count);
+            //assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            Assert.AreEqual(0, issues.Count);
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -5149,7 +5179,9 @@ namespace Hl7.Fhir.Specification.Tests
             var coreMethodElem = coreObs.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
             Assert.IsNotNull(coreMethodElem);
             Assert.IsNotNull(coreMethodElem.Comment);
-            Assert.AreEqual(coreMethodElem.Comment, baseElem.Comment);
+            // [WMR 20181212] R4 - Comment type changed from string to markdown
+            Assert.AreEqual(coreMethodElem.Comment?.Value, baseElem.Comment?.Value);
+            Assert.IsTrue(baseElem.Comment.IsExactly(coreMethodElem.Comment));
         }
 
         // [WMR 20170718] Test for slicing issue
@@ -6614,10 +6646,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
 
             // Expecting single issue about invalid slice name on SimpleQuantity root element
-            var outcome = generator.Outcome;
-            //Assert.IsNull(outcome);
-            Assert.AreEqual(1, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            //var outcome = generator.Outcome;
+            //Assert.AreEqual(1, outcome.Issue.Count);
+            //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            // [WMR 20181212] R4 FIXED - SimpleQuantity core type definition has been fixed
+            Assert.IsNull(generator.Outcome);
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsNotNull(nav);
@@ -6707,7 +6740,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst("DiagnosticReport.imagingStudy"));
             Assert.IsNotNull(nav.Current);
             // Verify that snapshot generator merges constraints from external ReferenceProfile
-            Assert.AreEqual("CustomReference", nav.Current.Comment);
+            // [WMR 20181212] R4 Fixed markdown
+            Assert.AreEqual("CustomReference", nav.Current.Comment?.Value);
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
             Assert.AreEqual(FHIRAllTypes.Reference.GetLiteral(), nav.Current.Type[0].Code);
