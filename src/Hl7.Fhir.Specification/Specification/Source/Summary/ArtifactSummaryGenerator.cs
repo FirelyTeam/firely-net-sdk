@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Summary
                 CodeSystemSummaryProperties.Harvest,
                 ConceptMapSummaryProperties.Harvest,
                 // Fall back for all other conformance resources
-                ConformanceSummaryProperties.Harvest
+                ConformanceSummaryProperties.Harvest,
             };
 
         /// <summary>Singleton. Returns a global default instance.</summary>
