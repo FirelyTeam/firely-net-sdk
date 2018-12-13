@@ -24,13 +24,13 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
     internal class DispatchingReader
     {
-        private readonly ISourceNode _current;
+        private readonly ITypedElement _current;
         private readonly ModelInspector _inspector;
         private readonly bool _arrayMode;
 
         public ParserSettings Settings { get; private set; }
 
-        internal DispatchingReader(ISourceNode data, ParserSettings settings, bool arrayMode)
+        internal DispatchingReader(ITypedElement data, ParserSettings settings, bool arrayMode)
         {
             _current = data;
             _inspector = BaseFhirParser.Inspector;
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
         }
 #pragma warning restore 612,618
 
-        public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
+        public object Deserialize(PropertyMapping prop, string memberName, string typeName, object existing=null)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
                 var reader = new RepeatingElementReader(_current, Settings);
-                return reader.Deserialize(prop, memberName, (IList)existing);
+                return reader.Deserialize(prop, memberName, typeName, (IList)existing);
             }
 
             // If this is a primitive type, no classmappings and reflection is involved,
@@ -79,7 +79,9 @@ namespace Hl7.Fhir.Serialization
                 // For Choice properties, determine the actual type of the element using
                 // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)
                 // This function implements type substitution.
-                mapping = determineElementPropertyType(prop, memberName);
+
+                var test = prop.GetChoiceSuffixFromName(memberName);
+                mapping = getMappingForType(prop, memberName, typeName);
             }   
             // Else use the actual return type of the property
             else
@@ -92,17 +94,9 @@ namespace Hl7.Fhir.Serialization
             return cplxReader.Deserialize(mapping, (Base)existing);
         }
 
-        private ClassMapping determineElementPropertyType(PropertyMapping mappedProperty, string memberName)
+        private ClassMapping getMappingForType(PropertyMapping mappedProperty, string memberName, string typeName)
         {
             ClassMapping result = null;
-
-            var typeName = mappedProperty.GetChoiceSuffixFromName(memberName);
-
-            if (String.IsNullOrEmpty(typeName))
-                throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used".FormatWith(memberName), _current.Location);
-
-            // Exception: valueResource actually means the element is of type ResourceReference
-            if (typeName == "Resource") typeName = "Reference";
 
             // NB: this will return the latest type registered for that name, so supports type mapping/overriding
             // Maybe we should Import the types present on the choice, to make sure they are available. For now

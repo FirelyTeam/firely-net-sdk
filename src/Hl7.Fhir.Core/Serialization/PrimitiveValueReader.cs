@@ -17,10 +17,10 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612, 618
     internal class PrimitiveValueReader
     {
-        private readonly ISourceNode _current;
+        private readonly ITypedElement _current;
         private readonly ModelInspector _inspector;
 
-        public PrimitiveValueReader(ISourceNode data)
+        public PrimitiveValueReader(ITypedElement data)
         {
             _current = data;
             _inspector = BaseFhirParser.Inspector;
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
 
-            object primitiveValue = _current.Text;
+            object primitiveValue = _current.Value;
 
             if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
             {

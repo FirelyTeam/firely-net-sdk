@@ -16,12 +16,12 @@ namespace Hl7.Fhir.Serialization
     internal class RepeatingElementReader
     {
 #pragma warning disable 612, 618
-        private readonly ISourceNode _current;
+        private readonly ITypedElement _current;
         private readonly ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        internal RepeatingElementReader(ISourceNode reader, ParserSettings settings)
+        internal RepeatingElementReader(ITypedElement reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
 
 #pragma warning restore 612, 618
 
-        public IList Deserialize(PropertyMapping prop, string memberName, IList existing = null)
+        public IList Deserialize(PropertyMapping prop, string memberName, string typeName, IList existing = null)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
             if (result == null) result = ReflectionHelper.CreateGenericList(prop.ImplementingType);
 
             var reader = new DispatchingReader(_current, Settings, arrayMode: true);
-            result.Add(reader.Deserialize(prop, memberName));
+            result.Add(reader.Deserialize(prop, memberName, typeName));
 
             return result;
         }

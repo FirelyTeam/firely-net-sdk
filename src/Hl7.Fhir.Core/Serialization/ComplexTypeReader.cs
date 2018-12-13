@@ -13,30 +13,31 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Serialization
 {
 #pragma warning disable 612,618
     internal class ComplexTypeReader
     {
-        private ISourceNode _current;
+        private ITypedElement _current;
         private ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        public ComplexTypeReader(ISourceNode reader, ParserSettings settings)
+        public ComplexTypeReader(ITypedElement reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
         }
 
-        internal Base Deserialize(Type elementType, Base existing = null)
+        internal Base Deserialize(Base existing = null)
         {
-            var mapping = _inspector.FindClassMappingByType(elementType);
+            var mapping = _inspector.FindClassMappingByType(_current.InstanceType);
 
             if (mapping == null)
-                throw Error.Format("Asked to deserialize unknown type '" + elementType.Name + "'", _current.Location);
+                throw Error.Format("Asked to deserialize unknown type '" + _current.InstanceType + "'", _current.Location);
 
             return Deserialize(mapping, existing);
         }
@@ -56,18 +57,26 @@ namespace Hl7.Fhir.Serialization
                     throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
             }
 
-            var members = _current.Text != null ?
-                new[] { SourceNode.Valued("value", _current.Text) }.Union(_current.Children()) :
+            var members = _current.Value != null ?
+                new[] { SourceNode.Valued("value", PrimitiveTypeConverter.ConvertTo<string>(_current.Value)).ToTypedElement() }.Union(_current.Children()) :
                 _current.Children();
 
-            read(mapping, members, existing);
+            try
+            {
+                read(mapping, members, existing);
+            }
+            catch (StructuralTypeException ste)
+            {
+                throw Error.Format(ste.Message);
+            }
 
             return existing;
 
         }
 
+        //this should be refactored into read(ITypedElement parent, Base existing)
 
-        private void read(ClassMapping mapping, IEnumerable<ISourceNode> members, Base existing)
+        private void read(ClassMapping mapping, IEnumerable<ITypedElement> members, Base existing)
         {
             foreach (var memberData in members)
             {
@@ -93,7 +102,7 @@ namespace Hl7.Fhir.Serialization
                     }
 
                     var reader = new DispatchingReader(memberData, Settings, arrayMode: false);
-                    value = reader.Deserialize(mappedProperty, memberName, value);
+                    value = reader.Deserialize(mappedProperty, memberName, memberData.InstanceType, value);
 
                     if (mappedProperty.RepresentsValueElement && mappedProperty.ImplementingType.IsEnum() && value is String)
                     {

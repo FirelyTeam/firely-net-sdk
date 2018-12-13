@@ -11,6 +11,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -24,53 +25,53 @@ namespace Hl7.Fhir.Serialization
         private readonly PocoBuilderSettings _settings;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
-
+        
+        //dataType can also be Resourse or DomainResourse
+        //the builder will figure the type by itself when it is the case
         public Base BuildFrom(ISourceNode source, Type dataType = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
-
+            string typeFound = null;
             if (dataType != null)
-                return buildInternal(source, dataType);
-            else
             {
-                var rti = source.GetResourceTypeIndicator();
-                if (rti == null)
+                typeFound = ModelInfo.GetFhirTypeNameForType(dataType);
+
+                if (typeFound == null)
                 {
-                    ExceptionHandler.NotifyOrThrow(this,
-                     ExceptionNotification.Error(new StructuralTypeException($"No type indication on source to build POCO's for.")));
+                    ExceptionNotification.Error(
+                        new StructuralTypeException($"The .NET type '{dataType.Name}' does not represent a FHIR type."));
+
                     return null;
                 }
-                else
-                    return BuildFrom(source, rti);
             }
+            return BuildFrom(source, typeFound);
         }
-
-        public Base BuildFrom(ISourceNode source, string dataType)
+        
+        //dataType can also be Resourse or DomainResourse
+        //the builder will figure the type by itself when it is the case
+        public Base BuildFrom(ISourceNode source, string dataType = null)
         {
-            if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
-
-            var typeFound = ModelInfo.GetTypeForFhirType(dataType);
-
-            if (typeFound == null)
+            if (source == null) throw Error.ArgumentNull(nameof(source));
+            TypedElementSettings typedSettings = new TypedElementSettings
             {
-                ExceptionNotification.Error(
-                    new StructuralTypeException($"There is no .NET type representing the FHIR type '{dataType}'."));
+                ErrorMode = _settings.IgnoreUnknownMembers ?
+                    TypedElementSettings.TypeErrorMode.Ignore
+                    : TypedElementSettings.TypeErrorMode.Report
+            };
 
-                return null;
-            }
-            else
-                return buildInternal(source, typeFound);
+            // If dataType is an abstract resource superclass -> ToTypedElement(with type=null) will figure it out;
+            if (dataType == FHIRDefinedType.Resource.GetLiteral() || dataType == FHIRDefinedType.DomainResource.GetLiteral())
+                dataType = null;
+
+            var typedSource = source.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), dataType, typedSettings);
+
+            return BuildFrom(typedSource);
         }
-
+        
         public Base BuildFrom(ITypedElement source)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
 
-            return BuildFrom(source.ToSourceNode(), source.InstanceType);
-        }
-
-        private Base buildInternal(ISourceNode source, Type typeToBuild)
-        {
             if (source is IExceptionSource)
             {
                 using (source.Catch((o, a) => ExceptionHandler.NotifyOrThrow(o, a)))
@@ -89,9 +90,19 @@ namespace Hl7.Fhir.Serialization
                     AllowUnrecognizedEnums = _settings.AllowUnrecognizedEnums
                 };
 
+                var typeToBuild = ModelInfo.GetTypeForFhirType(source.InstanceType);
+
+                if (typeToBuild == null)
+                {
+                    ExceptionNotification.Error(
+                        new StructuralTypeException($"There is no .NET type representing the FHIR type '{source.InstanceType}'."));
+
+                    return null;
+                }
+
                 return typeToBuild.CanBeTreatedAsType(typeof(Resource))
                     ? new ResourceReader(source, settings).Deserialize()
-                    : new ComplexTypeReader(source, settings).Deserialize(typeToBuild);
+                    : new ComplexTypeReader(source, settings).Deserialize();
             }
         }
     }
