@@ -50,11 +50,11 @@ namespace Hl7.Fhir.Specification.Schema
         public readonly IAssertion Source;
 
         public ICollection<ValidationDetail> Details;
-        public ICollection<ValidationOutcome> Nested;
+        //public ICollection<ValidationOutcome> Nested;
 
 
         public ValidationOutcome(IAssertion source, ValidationResult result, ITypedElement focus,
-            IEnumerable<ValidationDetail> details, IEnumerable<ValidationOutcome> nested = null) 
+            IEnumerable<ValidationDetail> details=null, IEnumerable<ValidationOutcome> nested = null) 
         {
             Source = source;
             Result = result;

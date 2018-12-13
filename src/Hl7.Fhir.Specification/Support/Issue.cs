@@ -23,26 +23,17 @@ namespace Hl7.Fhir.Support
         public readonly OperationOutcome.IssueSeverity Severity;
         public readonly OperationOutcome.IssueType Type;
 
-        public CodeableConcept ToCodeableConcept(string text = null)
-        {
-            return ToCodeableConcept(Code, text);
-        }
+        public CodeableConcept ToCodeableConcept(string text = null) => ToCodeableConcept(Code, text);
 
-        public static CodeableConcept ToCodeableConcept(int issueCode, string text = null)
-        {
-            return new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
-        }
+        public static CodeableConcept ToCodeableConcept(int issueCode, string text = null) => 
+            new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
 
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, ITypedElement location = null)
-        {
-            return ToIssueComponent(message, location?.Location);
-        }
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, ITypedElement location = null) => 
+            ToIssueComponent(message, location?.Location);
 
         [Obsolete("Use ToIssueComponent(string message, ITypedElement location = null) instead")]
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null)
-        {
-            return ToIssueComponent(message, location?.Location);
-        }
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null) =>
+            ToIssueComponent(message, location?.Location);
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, string path = null)
         {
@@ -51,10 +42,11 @@ namespace Hl7.Fhir.Support
 
             // var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type, Diagnostics = message };
             var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type };
+
+            // Put numeric code + readable message into a CodeableConcept
             ic.Details = ToCodeableConcept(message);
 
             if (path != null) ic.Location = new List<string> { path };
-            if (message != null) ic.Details = ToCodeableConcept(message);
 
             return ic;
         }

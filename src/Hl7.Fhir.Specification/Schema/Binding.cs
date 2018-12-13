@@ -1,6 +1,8 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 
@@ -77,7 +79,7 @@ namespace Hl7.Fhir.Specification.Schema
             if (vc?.TerminologyService == null) throw new InvalidValidationContextException($"ValidationContext should have its {nameof(ValidationContext.TerminologyService)} property set.");
             if (input.InstanceType == null) throw Error.Argument(nameof(input), "Binding validation requires input to have an instance type.");
 
-            if (!IsBindable(input.InstanceType))
+            if (!ModelInfo.IsBindable(input.InstanceType))
             {
                 // TODO: Find a way to conditionally evaluate this depending on tracing level
                 return new ValidationOutcome(this, ValidationResult.Valid, input,
@@ -102,50 +104,55 @@ namespace Hl7.Fhir.Specification.Schema
         internal ValidationOutcome ValidateCode(ITypedElement input, ValidationContext vc)
         {
             var bindable = parseBindable(input);
-
             ValidationOutcome outcome;
-            return outcome;
-            //switch (bindable)
-            //{
-            //    case Code co:
-            //        outcome = callService(uri, co?.Value, system: null, display: null, abstractAllowed: abstractAllowed);
-            //        break;
-            //    case Coding cd:
-            //        outcome = callService(uri, coding: cd, abstractAllowed: abstractAllowed);
-            //        break;
-            //    case CodeableConcept cc:
-            //        outcome = callService(uri, cc: cc, abstractAllowed: abstractAllowed);
-            //        break;
-            //    default:
-            //        throw Error.NotSupported($"Validating a binding against a '{bindable.TypeName}' is not supported in FHIR.");
-            //}
 
-            ////EK 20170605 - disabled inclusion of warnings/erros for all but required bindings since this will 
-            //// 1) create superfluous messages (both saying the code is not valid) coming from the validateResult + the outcome.AddIssue() 
-            //// 2) add the validateResult as warnings for preferred bindings, which are confusing in the case where the slicing entry is 
-            ////    validating the binding against the core and slices will refine it: if it does not generate warnings against the slice, 
-            ////    it should not generate warnings against the slicing entry.
-            //if (Strength == BindingStrength.Required)
-            //    return outcome;
-            //else
-            //    return new OperationOutcome();
-        }
-
-        public static bool IsBindable(string instanceType)
-        {
-            switch (instanceType)
+            switch (bindable)
             {
-                case "code":
-                case "Coding":
-                case "CodeableConcept":
-                case "Quantity":
-                case "string":
-                case "uri":
-                    return true;
+                case Code co:
+                    outcome = callService(vc.TerminologyService, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed);
+                    break;
+                case Coding cd:
+                    outcome = callService(vc.TerminologyService, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed);
+                    break;
+                case CodeableConcept cc:
+                    outcome = callService(vc.TerminologyService, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed);
+                    break;
                 default:
-                    return false;
+                    throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
             }
+
+            //EK 20170605 - disabled inclusion of warnings/erros for all but required bindings since this will 
+            // 1) create superfluous messages (both saying the code is not valid) coming from the validateResult + the outcome.AddIssue() 
+            // 2) add the validateResult as warnings for preferred bindings, which are confusing in the case where the slicing entry is 
+            //    validating the binding against the core and slices will refine it: if it does not generate warnings against the slice, 
+            //    it should not generate warnings against the slicing entry.
+            if (Strength == BindingStrength.Required)
+                return outcome;
+            else
+                return new ValidationOutcome(this, ValidationResult.Valid, input);
         }
+
+        private ValidationOutcome callService(ITerminologyService svc, string canonical, string code = null, string system = null, string display = null,
+                Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null)
+        {
+            var outcome = new OperationOutcome();
+
+            try
+            {
+                outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
+                                coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
+                foreach (var issue in outcome.Issue) issue.Location = new string[] { _path };
+            }
+            catch (TerminologyServiceException tse)
+            {
+                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, _path);
+            }
+
+            return outcome;
+        }
+
+
+
 
         /// <summary>
         /// Validates whether the instance has the minimum required coded content, depending on the binding.
@@ -156,12 +163,10 @@ namespace Hl7.Fhir.Specification.Schema
 
             switch (bindable)
             {
+                // Note: parseBindable with translate all bindable types to just code/Coding/CodeableConcept
                 case Code co when String.IsNullOrEmpty(co.Value) && Strength == BindingStrength.Required:
                 case Coding cd when String.IsNullOrEmpty(cd.Code) && Strength == BindingStrength.Required:
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && Strength == BindingStrength.Required:
-                case Quantity q when String.IsNullOrEmpty(q.Code) && Strength == BindingStrength.Required:
-                case FhirString fs when String.IsNullOrEmpty(fs.Value) && Strength == BindingStrength.Required:
-                case FhirUri fu when String.IsNullOrEmpty(fu.Value) && Strength == BindingStrength.Required:
                     return new ValidationOutcome(this, ValidationResult.Invalid, input,
                         ValidationDetail.Single(INSUFFICIENT_CODED_CONTENT, Weight.Error,
                         $"No code found in {input.InstanceType} with a required binding."));
@@ -170,33 +175,30 @@ namespace Hl7.Fhir.Specification.Schema
                         ValidationDetail.Single(INSUFFICIENT_CODED_CONTENT, Weight.Error,
                         $"Extensible binding requires code or text."));
                 default:
-                    return false;
-
-                // TODO: This list differs from STU to STU (i.e. canonical). Fix.
+                    throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
             }
         }
 
         private bool codeableConceptHasCode(CodeableConcept cc) =>
             cc.Coding.Any(cd => !String.IsNullOrEmpty(cd.Code));
 
-        //private OperationOutcome callService(string canonical, string code = null, string system = null, string display = null,
-        //                Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null)
-        //{
-        //    var outcome = new OperationOutcome();
 
-        //    try
-        //    {
-        //        outcome = _service.ValidateCode(canonical: canonical, code: code, system: system, display: display,
-        //                        coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
-        //        foreach (var issue in outcome.Issue) issue.Location = new string[] { _path };
-        //    }
-        //    catch (TerminologyServiceException tse)
-        //    {
-        //        outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, _path);
-        //    }
+        public JToken ToJson()
+        {
+            var props = new JObject(
+                    new JProperty("valueSet", ValueSetUri),
+                    new JProperty("strength", Strength.GetLiteral()),
+                    new JProperty("abstractAllowed", AbstractAllowed));
+            if (Description != null)
+                props.Add(new JProperty("description", Description));
 
-        //    return outcome;
-        //}
+            return new JProperty("binding", props);
+        }
+
+        //   public readonly string ValueSetUri;
+        //public readonly BindingStrength Strength;
+        //public readonly string Description;
+        //public readonly bool AbstractAllowed;
 
     }
 }
