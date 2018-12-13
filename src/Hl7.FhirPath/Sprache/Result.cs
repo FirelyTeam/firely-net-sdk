@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sprache
+namespace Hl7.FhirPath.Sprache
 {
     /// <summary>
     /// Contains helper functions to create <see cref="IResult&lt;T&gt;"/> instances.
