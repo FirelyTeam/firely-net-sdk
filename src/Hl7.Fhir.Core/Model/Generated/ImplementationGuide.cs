@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.6.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             /// (system: http://hl7.org/fhir/spdx-license)
             /// </summary>
             [EnumLiteral("0BSD", "http://hl7.org/fhir/spdx-license"), Description("BSD Zero Clause License")]
-            zeroBSD,
+            N0BSD,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/spdx-license)

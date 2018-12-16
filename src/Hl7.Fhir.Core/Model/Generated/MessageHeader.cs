@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.6.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("receiver", InSummary=true, Order=70)]
             [CLSCompliant(false)]
-			[References("Practitioner","Organization")]
+			[References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Receiver
             {
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("sender", InSummary=true, Order=110)]
         [CLSCompliant(false)]
-		[References("Practitioner","Organization")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
         {
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("enterer", InSummary=true, Order=120)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
         {
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -758,7 +758,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("responsible", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Practitioner","Organization")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Responsible
         {

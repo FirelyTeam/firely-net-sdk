@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.6.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,8 +59,8 @@ namespace Hl7.Fhir.Model
         /// MedicationAdministration Status Codes
         /// (url: http://hl7.org/fhir/ValueSet/medication-admin-status)
         /// </summary>
-        [FhirEnumeration("MedicationAdmninistrationStatusCodes")]
-        public enum MedicationAdmninistrationStatusCodes
+        [FhirEnumeration("MedicationAdministrationStatusCodes")]
+        public enum MedicationAdministrationStatusCodes
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -479,13 +479,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdmninistrationStatusCodes> StatusElement
+        public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdmninistrationStatusCodes> _StatusElement;
+        private Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes> _StatusElement;
         
         /// <summary>
         /// in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MedicationAdministration.MedicationAdmninistrationStatusCodes? Status
+        public Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdmninistrationStatusCodes>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(InstantiatesElement != null) dest.InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(InstantiatesElement.DeepCopy());
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdmninistrationStatusCodes>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>)StatusElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();

@@ -29,7 +29,7 @@
 */
 
 //
-// Generated for FHIR v3.6.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -268,133 +268,127 @@ namespace Hl7.Fhir.Model
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.01", "http://hl7.org/fhir/FHIR-version"), Description("0.01")]
-        zero_01,
+        N0_01,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.05", "http://hl7.org/fhir/FHIR-version"), Description("0.05")]
-        zero_05,
+        N0_05,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.06", "http://hl7.org/fhir/FHIR-version"), Description("0.06")]
-        zero_06,
+        N0_06,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.11", "http://hl7.org/fhir/FHIR-version"), Description("0.11")]
-        zero_11,
+        N0_11,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.0.80", "http://hl7.org/fhir/FHIR-version"), Description("0.0.80")]
-        zero_0_80,
+        N0_0_80,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.0.81", "http://hl7.org/fhir/FHIR-version"), Description("0.0.81")]
-        zero_0_81,
+        N0_0_81,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.0.82", "http://hl7.org/fhir/FHIR-version"), Description("0.0.82")]
-        zero_0_82,
+        N0_0_82,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.4.0", "http://hl7.org/fhir/FHIR-version"), Description("0.4.0")]
-        zero_4_0,
+        N0_4_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("0.5.0", "http://hl7.org/fhir/FHIR-version"), Description("0.5.0")]
-        zero_5_0,
+        N0_5_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("1.0.0", "http://hl7.org/fhir/FHIR-version"), Description("1.0.0")]
-        one_0_0,
+        N1_0_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("1.0.1", "http://hl7.org/fhir/FHIR-version"), Description("1.0.1")]
-        one_0_1,
+        N1_0_1,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("1.0.2", "http://hl7.org/fhir/FHIR-version"), Description("1.0.2")]
-        one_0_2,
+        N1_0_2,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("1.1.0", "http://hl7.org/fhir/FHIR-version"), Description("1.1.0")]
-        one_1_0,
+        N1_1_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("1.4.0", "http://hl7.org/fhir/FHIR-version"), Description("1.4.0")]
-        one_4_0,
+        N1_4_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("1.6.0", "http://hl7.org/fhir/FHIR-version"), Description("1.6.0")]
-        one_6_0,
+        N1_6_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("1.8.0", "http://hl7.org/fhir/FHIR-version"), Description("1.8.0")]
-        one_8_0,
+        N1_8_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("3.0.0", "http://hl7.org/fhir/FHIR-version"), Description("3.0.0")]
-        three_0_0,
+        N3_0_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("3.0.1", "http://hl7.org/fhir/FHIR-version"), Description("3.0.1")]
-        three_0_1,
+        N3_0_1,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("3.3.0", "http://hl7.org/fhir/FHIR-version"), Description("3.3.0")]
-        three_3_0,
+        N3_3_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("3.5.0", "http://hl7.org/fhir/FHIR-version"), Description("3.5.0")]
-        three_5_0,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/FHIR-version)
-        /// </summary>
-        [EnumLiteral("3.6.0", "http://hl7.org/fhir/FHIR-version"), Description("3.6.0")]
-        three_6_0,
+        N3_5_0,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/FHIR-version)
         /// </summary>
         [EnumLiteral("4.0.0", "http://hl7.org/fhir/FHIR-version"), Description("4.0.0")]
-        four_0_0,
+        N4_0_0,
     }
 
     /// <summary>
@@ -812,12 +806,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Invoice", "http://hl7.org/fhir/resource-types"), Description("Invoice")]
         Invoice,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("ItemInstance", "http://hl7.org/fhir/resource-types"), Description("ItemInstance")]
-        ItemInstance,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2930,12 +2918,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Invoice", "http://hl7.org/fhir/resource-types"), Description("Invoice")]
         Invoice,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("ItemInstance", "http://hl7.org/fhir/resource-types"), Description("ItemInstance")]
-        ItemInstance,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
