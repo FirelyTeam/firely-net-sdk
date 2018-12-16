@@ -584,6 +584,11 @@ namespace Hl7.Fhir.Specification.Tests
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
 
             report = _validator.Validate(cpDoc.CreateReader());
+            if (!report.Success)
+            {
+                report.Issue.RemoveAll(i => i.Severity == OperationOutcome.IssueSeverity.Warning);
+                output.WriteLine(report.ToString());
+            }
             Assert.False(report.Success);
             Assert.Contains(".NET Xsd validation", report.ToString());
         }
@@ -651,6 +656,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.NotNull(levin);
 
             var report = _validator.Validate(levin);
+            DebugDumpOutputXml(report);
 
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);
@@ -658,6 +664,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Now, rename the mandatory NCT sub-extension
             levin.Extension[1].Extension[0].Url = "NCTX";
             report = _validator.Validate(levin);
+            DebugDumpOutputXml(report);
             Assert.False(report.Success);
             Assert.Contains("Instance count for 'Extension.extension:NCT' is 0", report.ToString());
 
