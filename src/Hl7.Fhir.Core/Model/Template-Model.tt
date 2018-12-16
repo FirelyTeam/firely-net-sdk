@@ -28,7 +28,6 @@
     nsT.AddNamespace("fhir", "http://hl7.org/fhir");
 
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
-	// fhirVersion = "4.0.0";
 #>
 //
 // Generated for FHIR v<#= fhirVersion #>
@@ -44,6 +43,8 @@
 			string enumName = valueset.SelectSingleNode("fhir:name/@value", nsE).InnerText;
 			string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
 			string valuesetUrl = valueset.SelectSingleNode("fhir:url/@value", nsE).Value;
+			if (!String.IsNullOrEmpty(valuesetUrl) && valuesetUrl.EndsWith("|" + fhirVersion))
+				valuesetUrl = valuesetUrl.Replace("|" + fhirVersion, "");
 			// reformat the name so that it is a valid .NET enumeration name
 			enumName = enumName.Replace(" ", "").Replace("-", "_");
 
@@ -52,15 +53,17 @@
 
 			// Check to see if this is used in more than one resource
 			var nodes = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"' and (fhir:valueSet/@value = '"+valuesetUrl+"' or fhir:valueSet/@value = '"+valuesetUrl+"|"+fhirVersion+"')]]]", nsR);
 			var nodesTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"' and (fhir:valueSet/@value = '"+valuesetUrl+"' or fhir:valueSet/@value = '"+valuesetUrl+"|"+fhirVersion+"')]]]", nsT);
 			var nodePaths = docResources.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes' and fhir:valueSet/@value = '"+valuesetUrl+"']]", nsR);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"' and (fhir:valueSet/@value = '"+valuesetUrl+"' or fhir:valueSet/@value = '"+valuesetUrl+"|"+fhirVersion+"')]]", nsR);
 			var nodePathTypes = docTypes.DocumentElement.SelectNodes(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes' and fhir:valueSet/@value = '"+valuesetUrl+"']]", nsT);
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"' and (fhir:valueSet/@value = '"+valuesetUrl+"' or fhir:valueSet/@value = '"+valuesetUrl+"|"+fhirVersion+"')]]", nsT);
 			if (nodes.Count + nodesTypes.Count > 1)
 			{
+				if (generatedSets.Contains(enumName))
+					continue;
 				enums.Add(valuesetUrl, "Hl7.Fhir.Model." + enumName);
 				generatedSets.Add(enumName);
 				WriteLine("// Generated Shared Enumeration: "+enumName+" ("+valuesetUrl+")");
@@ -185,7 +188,7 @@ if(!abstractType) {
 
 			foreach (System.Xml.XmlNode eProp in 
 				(e as System.Xml.XmlElement).SelectNodes( //and fhir:min/@value = '1' and fhir:max/@value = '1' 
-				"fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes']]", nsR))
+				"fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']]", nsR))
 			{
 				if (eProp is System.Xml.XmlElement)
 				{
@@ -206,6 +209,10 @@ if(!abstractType) {
 						// WriteLine("//		VSR: " + n4.Value);
 						valuesetUrl = n4.Value;
                     }
+					if (valuesetUrl.EndsWith("|"+fhirVersion))
+                    {
+						valuesetUrl = valuesetUrl.Replace("|" + fhirVersion, "");
+                    }
 					System.Xml.XmlElement valueset = docExpansions.SelectSingleNode(
 						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet[fhir:url/@value = '"+valuesetUrl+"']", nsE)
 						 as System.Xml.XmlElement;
@@ -222,6 +229,8 @@ if(!abstractType) {
 					if (generatedSetsLocal.Contains(enumName))
 						continue;
 					generatedSetsLocal.Add(enumName);
+					if (enums.ContainsKey(valuesetUrl))
+						continue;
 					enums.Add(valuesetUrl, "Hl7.Fhir.Model." + resourceName + "." + enumName);
 					if (enumName == "ParameterTypesusedinOperationDefinitions")
                     {
@@ -275,7 +284,7 @@ if(!abstractType) {
 			List<PropertyDetails> props = new List<PropertyDetails>();
 			foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
             {
-				PropertyDetails pd = PropertyDetails.Parse(resourceName, resourceName, snapshotElement, nsR, enums);
+				PropertyDetails pd = PropertyDetails.Parse(resourceName, resourceName, snapshotElement, nsR, enums, fhirVersion);
 				if (pd != null)
 					props.Add(pd);
             }
@@ -300,7 +309,7 @@ if(!abstractType) {
 		List<PropertyDetails> component = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
         {
-			PropertyDetails pd = PropertyDetails.Parse(componentName, componentElement.Value, snapshotElement, nsR, enums);
+			PropertyDetails pd = PropertyDetails.Parse(componentName, componentElement.Value, snapshotElement, nsR, enums, fhirVersion);
 			if (pd != null)
 				component.Add(pd);
         }
@@ -568,7 +577,7 @@ if(!abstractType) {
                 string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
 #>        public static ElementDefinition.ConstraintComponent <#= resourceName + "_" + key.Replace("-", "_").ToUpper() #> = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "<#= expression.Replace("\"", "\\\"") #>",
+            Expression = "<#= expression.Replace(@"\", @"\\").Replace("\"", "\\\"") #>",
             Key = "<#= key #>",
             Severity = <#= severity == "Error" ? "ElementDefinition.ConstraintSeverity.Error" : "ElementDefinition.ConstraintSeverity.Warning" #>,
             Human = "<#= human.Replace("\"", "\\\"") #>",
@@ -674,7 +683,7 @@ if(!abstractType) {
             {
                 foreach (var item in base.Children) yield return item;
 <#
-				YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "				", withName:false);
+				YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "				", withName:false, fhirVersion:fhirVersion);
 #>
             }
         }
@@ -686,7 +695,7 @@ if(!abstractType) {
             {
                 foreach (var item in base.NamedChildren) yield return item;
 <#
-                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true);
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true, fhirVersion:fhirVersion);
 #>
             }
         }
@@ -1028,11 +1037,11 @@ namespace Hl7.Fhir.Model
 						// WriteLine("//		VSR: " + n4.Value);
 						valuesetUrl = n4.Value;
                     }
-
+					valuesetUrl = valuesetUrl.Replace("|" + fhirVersion,"");
 					var nodes = docResources.DocumentElement.SelectNodes(
-						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsR);
+						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and (fhir:valueSet/@value = '"+valuesetUrl+"' or fhir:valueSet/@value = '"+valuesetUrl+"|"+fhirVersion+"')]]]", nsR);
 					var nodesTypes = docTypes.DocumentElement.SelectNodes(
-						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value = '"+valuesetUrl+"']]]", nsT);
+						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and (fhir:valueSet/@value = '"+valuesetUrl+"' or fhir:valueSet/@value = '"+valuesetUrl+"|"+fhirVersion+"')]]]", nsT);
 					if (nodes.Count + nodesTypes.Count < 2)
 						continue;
 
@@ -1462,7 +1471,7 @@ if (!abstractType){
    }
 			foreach (System.Xml.XmlNode eProp in 
 				(e as System.Xml.XmlElement).SelectNodes( //and fhir:min/@value = '1' and fhir:max/@value = '1' 
-				"fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes']]", nsR))
+				"fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']]", nsR))
 			{
 				if (eProp is System.Xml.XmlElement)
 				{
@@ -1482,6 +1491,10 @@ if (!abstractType){
                     {
 						// WriteLine("//		VSR: " + n4.Value);
 						valuesetUrl = n4.Value;
+                    }
+					if (valuesetUrl.EndsWith("|"+fhirVersion))
+                    {
+						valuesetUrl = valuesetUrl.Replace("|" + fhirVersion, "");
                     }
 					System.Xml.XmlElement valueset = docExpansions.SelectSingleNode(
 						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet[fhir:url/@value = '"+valuesetUrl+"']", nsE)
@@ -1552,7 +1565,7 @@ if (!abstractType){
 			List<PropertyDetails> props = new List<PropertyDetails>();
 			foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
             {
-				PropertyDetails pd = PropertyDetails.Parse(resourceName, rawResourceName, snapshotElement, nsR, enums);
+				PropertyDetails pd = PropertyDetails.Parse(resourceName, rawResourceName, snapshotElement, nsR, enums, fhirVersion);
 				if (pd != null)
 					props.Add(pd);
             }
@@ -1581,7 +1594,7 @@ if (!abstractType){
 		List<PropertyDetails> component = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
         {
-			PropertyDetails pd = PropertyDetails.Parse(componentName, componentElement.Value, snapshotElement, nsR, enums);
+			PropertyDetails pd = PropertyDetails.Parse(componentName, componentElement.Value, snapshotElement, nsR, enums, fhirVersion);
 			if (pd != null)
 				component.Add(pd);
         }
@@ -1927,7 +1940,7 @@ if (!abstractType){
             {
                 foreach (var item in base.Children) yield return item;
 <#
-                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName: false);
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName: false, fhirVersion:fhirVersion);
 #>
             }
         }
@@ -1939,7 +1952,7 @@ if (!abstractType){
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
 <# 
-                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true); 
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true, fhirVersion:fhirVersion); 
 #> 
             } 
         } 
@@ -2061,12 +2074,9 @@ if (!abstractType){
         }
 		result = result.Replace(".", "_");
 		int IsIntegerValue;
-		if (int.TryParse(result, out IsIntegerValue))
-			result = "N" + result;
 		if (Char.IsDigit(result[0]))
         {
-			var numMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-			result = numMap[int.Parse(name.Substring(0,1))] + result.Substring(1);
+			result = "N" + result;
         }
 		return result;
 	}
@@ -2176,7 +2186,7 @@ if (!abstractType){
 			return propType;
         }
 
-		public static PropertyDetails Parse(string className, string resourceName, System.Xml.XmlElement element, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums)
+		public static PropertyDetails Parse(string className, string resourceName, System.Xml.XmlElement element, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums, string fhirVersion)
         {
 			PropertyDetails result = new PropertyDetails();
 			if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", nsR) != null)
@@ -2196,7 +2206,7 @@ if (!abstractType){
             {
 				string nameRef = attrNameRef.Value;
 				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[@id = '"+nameRef.Replace("#", "")+"']", nsR) as XmlElement;
-				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
+				PropertyDetails temp = ParseType(elemNameRef, nsR, enums, fhirVersion);
 				if (temp != null)
                 {
 					result.PropType = temp.PropType;
@@ -2415,8 +2425,10 @@ if (!abstractType){
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes']/fhir:valueSet/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes']/fhir:valueSet/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR).Value;
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.EndsWith("|" + fhirVersion))
+					result.CodeRequiredBinding = result.CodeRequiredBinding.Replace("|" + fhirVersion, "");
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -2458,7 +2470,7 @@ if (!abstractType){
 			return result;
         }
 
-		public static PropertyDetails ParseType(System.Xml.XmlElement element, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums)
+		public static PropertyDetails ParseType(System.Xml.XmlElement element, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums, string fhirVersion)
         {
 			PropertyDetails result = new PropertyDetails();
 			string ResourceBase = element.SelectSingleNode("fhir:path/@value", nsR).Value;
@@ -2495,7 +2507,7 @@ if (!abstractType){
             {
 				string nameRef = attrNameRef.Value;
 				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[@id = '"+nameRef.Replace("#", "")+"']", nsR) as XmlElement;
-				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
+				PropertyDetails temp = ParseType(elemNameRef, nsR, enums, fhirVersion);
 				if (temp != null)
                 {
 					result.PropType = temp.PropType;
@@ -2666,8 +2678,10 @@ if (!abstractType){
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
             {
 				// Grab the binding from the element
-				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes']/fhir:valueSet/@value", nsR) != null)
-					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes']/fhir:valueSet/@value", nsR).Value;
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR).Value;
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.EndsWith("|" + fhirVersion))
+					result.CodeRequiredBinding = result.CodeRequiredBinding.Replace("|" + fhirVersion, "");
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -2700,14 +2714,14 @@ if (!abstractType){
 	// [WMR 20160818] NEW - Recursively yield all child elements, including elements inherited from base resource(s)
 
 	public void YieldChildren(System.Xml.XmlDocument docBaseTypes, System.Xml.XmlElement structDefElem, System.Xml.XmlNamespaceManager nsR, 
-		Dictionary<string, string> enums, string indent, bool withName)
+		Dictionary<string, string> enums, string indent, bool withName, string fhirVersion)
 	{
 		// only emit local properties, the base class will be called to enumerate their children first
 		var resourceName = structDefElem.SelectSingleNode("fhir:name/@value", nsR).Value;
 		List<PropertyDetails> props = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement element in structDefElem.SelectNodes("fhir:differential/fhir:element", nsR))
 		{
-			PropertyDetails pd = PropertyDetails.Parse(resourceName, resourceName, element, nsR, enums);
+			PropertyDetails pd = PropertyDetails.Parse(resourceName, resourceName, element, nsR, enums, fhirVersion);
 			YieldChild(pd, indent, withName);
 		}
 	}
