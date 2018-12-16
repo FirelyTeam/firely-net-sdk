@@ -3,6 +3,43 @@
   <id value="registry" />
   <type value="collection" />
   <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/dicom-uid" />
+    <resource>
+      <NamingSystem>
+        <id value="dicom-uid" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="DICOM Unique Id" />
+        <status value="active" />
+        <kind value="identifier" />
+        <!-- Removed date -->
+        <publisher value="NEMA" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="https://www.dicomstandard.org/" />
+          </telecom>
+        </contact>
+        <description value="An OID issued under DICOM OID rules. DICOM OIDs are represented as plain OIDs, with a prefix of &quot;urn:oid:&quot;" />
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="001" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:dicom:uid" />
+          <preferred value="true" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/NamingSystem/us-ssn" />
     <resource>
       <NamingSystem>
@@ -211,6 +248,7 @@
             <value value="http://www.gs1.org/" />
           </telecom>
         </contact>
+        <description value="Note: GTINs may be used in both [Codes](datatypes.html#Coding) and [Identifiers](datatypes.html#Identifier)" />
         <jurisdiction>
           <coding>
             <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
@@ -2213,42 +2251,6 @@
         <uniqueId>
           <type value="uri" />
           <value value="urn:oid:2.16.840.1.113883.4.3.56" />
-        </uniqueId>
-      </NamingSystem>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/NamingSystem/dicom-uid" />
-    <resource>
-      <NamingSystem>
-        <id value="dicom-uid" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <name value="DICOM Unique Id" />
-        <status value="active" />
-        <kind value="identifier" />
-        <!-- Removed date -->
-        <publisher value="DICOM" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="https://www.dicomstandard.org/" />
-          </telecom>
-        </contact>
-        <description value="Identifiers of DICOM Studies" />
-        <jurisdiction>
-          <coding>
-            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
-            <code value="001" />
-          </coding>
-        </jurisdiction>
-        <uniqueId>
-          <type value="uri" />
-          <value value="urn:dicom:uid" />
         </uniqueId>
       </NamingSystem>
     </resource>
