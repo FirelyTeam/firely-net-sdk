@@ -217,9 +217,32 @@ namespace Hl7.Fhir.Model
             {
 				string name = sp.SelectSingleNode("fhir:name/@value", nsS).Value;
 				string url = sp.SelectSingleNode("fhir:url/@value", nsS).Value;
-				string description = sp.SelectSingleNode("fhir:description/@value", nsS).Value;
-				if (description.StartsWith("Multiple"))
-					description = "";
+
+				var appliesToMultipleResources = sp.SelectNodes("fhir:base", nsS).Count > 1;
+				var description = sp.SelectSingleNode("fhir:description/@value", nsS)?.Value ?? String.Empty;
+				if (appliesToMultipleResources)
+				{
+					// For multi-resources search parameters the description is something like 
+					// 'Multiple Resources: &#xD;&#xA;&#xD;&#xA;* [ReferralRequest](referralrequest.html): Who the referral is about&#xD;&#xA;*....'
+					var resourceDescription = description
+												.Split( new[] { "\r\n" }, StringSplitOptions.None )
+												.FirstOrDefault( d => d.Contains( $"[{resourceName}]" ) );
+					if (resourceDescription == null)
+					{
+						resourceDescription = string.Empty;
+					}
+					else
+					{
+						var index = resourceDescription.IndexOf("):");
+						if (index > 0)
+						{
+							resourceDescription = resourceDescription.Substring(index + 2);
+						}
+						resourceDescription = resourceDescription.Trim(new[] { ' ', '\r', '\n'});
+					}
+					description = resourceDescription;
+				}
+
 				string searchType = sp.SelectSingleNode("fhir:type/@value", nsS).Value;
 				string outputType = "";
 				switch (searchType)
@@ -243,16 +266,17 @@ namespace Hl7.Fhir.Model
 					path += "\"" + string.Join("\", \"", split) + "\", ";
 				}
 				string target = ""; // "ResourceType.Patient, ";
-				string expression = "";
+				
 				var sc = new System.Collections.Generic.SortedSet<String>();
 				foreach(XmlAttribute et in sp.SelectNodes("fhir:target/@value", nsS))
                 {
 					sc.Add("ResourceType." + et.Value);
 					target += "ResourceType." + et.Value + ", ";
 				}
-				var exprNode = sp.SelectSingleNode("fhir:expression/@value", nsR);
-				if (exprNode != null)
-					expression = exprNode.Value;
+				
+				string expression = sp.SelectSingleNode("fhir:expression/@value", nsR)?.Value ?? String.Empty;
+
+
 				if (!string.IsNullOrEmpty(target))
                 {
 					// target = ", Target = new ResourceType[] { " + target + "}";

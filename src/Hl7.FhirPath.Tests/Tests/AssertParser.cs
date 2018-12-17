@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.FhirPath;
-using Sprache;
+using Hl7.FhirPath.Sprache;
 using Xunit;
 
 namespace Hl7.FhirPath.Tests

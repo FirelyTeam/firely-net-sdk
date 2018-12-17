@@ -115,9 +115,10 @@ namespace Hl7.Fhir.Specification.Tests
                 display: "Not a Number");
             Assert.True(result.Success);
 
-            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-                display: "Not any Number");
-            Assert.False(result.Success);
+            // The spec is not clear on the behaviour of incorrect displays - so don't test it here
+            //result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+            //    display: "Not any Number");
+            //Assert.True(result.Success);
 
             result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
                 system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
@@ -157,6 +158,23 @@ namespace Hl7.Fhir.Specification.Tests
             var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));
             output.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
 #endif
+        }
+
+        [Fact]
+        public void LocalTSDisplayIncorrectAsWarning()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
+            var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+                display: "Not a Number");
+            Assert.True(result.Success);
+            Assert.Equal(0, result.Warnings);
+
+            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+                        display: "Certainly Not a Number");
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);
         }
 
         [Fact]

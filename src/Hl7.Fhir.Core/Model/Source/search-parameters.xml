@@ -2495,7 +2495,6 @@
         <xpath value="f:ReferralRequest/f:subject | f:DocumentManifest/f:subject | f:Goal/f:subject | f:Consent/f:patient | f:DocumentReference/f:subject | f:ImagingManifest/f:patient | f:RiskAssessment/f:subject | f:CareTeam/f:subject | f:ImagingStudy/f:patient | f:FamilyMemberHistory/f:patient | f:Encounter/f:subject | f:DeviceUseStatement/f:subject | f:DeviceRequest/f:subject | f:AllergyIntolerance/f:patient | f:CarePlan/f:subject | f:EpisodeOfCare/f:patient | f:Procedure/f:subject | f:List/f:subject | f:Immunization/f:patient | f:VisionPrescription/f:patient | f:ProcedureRequest/f:subject | f:Flag/f:subject | f:Observation/f:subject | f:DiagnosticReport/f:subject | f:NutritionOrder/f:patient | f:Condition/f:subject | f:Composition/f:subject | f:DetectedIssue/f:patient | f:SupplyDelivery/f:patient | f:ClinicalImpression/f:subject" />
         <xpathUsage value="normal" />
         <target value="Patient" />
-        <target value="Group" />
       </SearchParameter>
     </resource>
   </entry>
@@ -30748,7 +30747,7 @@
           <definition>
             <reference value="http://hl7.org/fhir/SearchParameter/Observation-value-date" />
           </definition>
-          <expression value="value.as(DateTime) | value.as(Period)" />
+          <expression value="value.as(dateTime) | value.as(Period)" />
         </component>
       </SearchParameter>
     </resource>
