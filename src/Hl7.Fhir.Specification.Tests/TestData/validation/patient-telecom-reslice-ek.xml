@@ -1,5 +1,6 @@
 <StructureDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://hl7.org/fhir">
 	<url value="http://example.com/StructureDefinition/patient-telecom-reslice-ek" />
+  <version value="1.0" />
 	<name value="patient-telecom-slice" />
 	<status value="draft" />
 	<description value="Slice Patient.telecom by multiple discriminators - based on an example by Chris Grenz." />

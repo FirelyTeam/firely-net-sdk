@@ -173,6 +173,7 @@ namespace Hl7.Fhir.Specification.Source
     {
         public static readonly string CanonicalUrlKey = "Conformance.url";
         public static readonly string NameKey = "Conformance.name";
+        public static readonly string VersionKey = "Conformance.version";
         public static readonly string StatusKey = "Conformance.status";
 
         /// <summary>Determines if the specified instance represents summary information about a conformance resource.</summary>
@@ -195,6 +196,7 @@ namespace Hl7.Fhir.Specification.Source
             if (IsConformanceSummary(properties))
             {
                 nav.HarvestValue(properties, CanonicalUrlKey, "url");
+                nav.HarvestValue(properties, VersionKey, "version");
                 nav.HarvestValue(properties, NameKey, "name");
                 nav.HarvestValue(properties, StatusKey, "status");
                 return true;
@@ -206,6 +208,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
         public static string GetConformanceCanonicalUrl(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(CanonicalUrlKey);
+
+        /// <summary>Get the <c>version</c> property value from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>Only applies to summaries of conformance resources.</remarks>
+        public static string GetConformanceVersion(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(VersionKey);
 
         /// <summary>Get the <c>name</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
