@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var matches = ElementMatcher.Match(snap, diff);
 
 #if DUMPMATCHES
-                Debug.WriteLine($"Matches for children of '{snap.StructureDefinition?.Name}' : {(snap.AtRoot ? "(root)" : snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
+                Debug.WriteLine($"Matches for children of '{snap.StructureDefinition?.Name}' : {(snap.AtRoot ? "(root)" : snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile?.FirstOrDefault() ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
                 matches.DumpMatches(snap, diff);
 #endif
 
