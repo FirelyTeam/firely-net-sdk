@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
@@ -19,7 +20,7 @@ namespace Hl7.Fhir.Specification.Schema
         /// Bindable element does not have enough coded content (codes, text).
         /// </summary>
         /// <remarks>Depends on binding strength.</remarks>
-        public const int INSUFFICIENT_CODED_CONTENT = 6100;
+        public const int INSUFFICIENT_CODED_CONTENT = 6005;
 
 
         public enum BindingStrength
@@ -73,7 +74,7 @@ namespace Hl7.Fhir.Specification.Schema
         /// <param name="vc"></param>
         /// <returns></returns>
         /// <remarks>ValidationContext must have TerminologyService set.</remarks>
-        public ValidationOutcome Validate(ITypedElement input, ValidationContext vc)
+        public OperationOutcome Validate(ITypedElement input, ValidationContext vc)
         {
             if (input == null) throw Error.ArgumentNull(nameof(input));
             if (vc?.TerminologyService == null) throw new InvalidValidationContextException($"ValidationContext should have its {nameof(ValidationContext.TerminologyService)} property set.");
@@ -81,13 +82,12 @@ namespace Hl7.Fhir.Specification.Schema
 
             if (!ModelInfo.IsBindable(input.InstanceType))
             {
-                // TODO: Find a way to conditionally evaluate this depending on tracing level
-                return new ValidationOutcome(this, ValidationResult.Valid, input,
-                    ValidationDetail.Single(TYPE_NOT_BINDEABLE, Weight.Note, $"Non-bindable instance type '{input.InstanceType}'"));
+                return Issue.CONTENT_ELEMENT_NOT_BINDABLE
+                    .NewOutcomeWithIssue("Validation of binding wih non-bindable instance type '{input.InstanceType}' always succeeds.", input);
             }
 
             var outcome = VerifyContentRequirements(input);
-            if (outcome.Result != ValidationResult.Valid) return outcome;
+            if (!outcome.Success) return outcome;
 
             return ValidateCode(input, vc);
         }
@@ -101,21 +101,21 @@ namespace Hl7.Fhir.Specification.Schema
             return bindable;
         }
 
-        internal ValidationOutcome ValidateCode(ITypedElement input, ValidationContext vc)
+        internal OperationOutcome ValidateCode(ITypedElement input, ValidationContext vc)
         {
             var bindable = parseBindable(input);
-            ValidationOutcome outcome;
+            OperationOutcome outcome;
 
             switch (bindable)
             {
                 case Code co:
-                    outcome = callService(vc.TerminologyService, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed);
+                    outcome = callService(vc.TerminologyService, input.Location, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed);
                     break;
                 case Coding cd:
-                    outcome = callService(vc.TerminologyService, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed);
+                    outcome = callService(vc.TerminologyService, input.Location, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed);
                     break;
                 case CodeableConcept cc:
-                    outcome = callService(vc.TerminologyService, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed);
+                    outcome = callService(vc.TerminologyService, input.Location, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed);
                     break;
                 default:
                     throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
@@ -126,13 +126,10 @@ namespace Hl7.Fhir.Specification.Schema
             // 2) add the validateResult as warnings for preferred bindings, which are confusing in the case where the slicing entry is 
             //    validating the binding against the core and slices will refine it: if it does not generate warnings against the slice, 
             //    it should not generate warnings against the slicing entry.
-            if (Strength == BindingStrength.Required)
-                return outcome;
-            else
-                return new ValidationOutcome(this, ValidationResult.Valid, input);
+            return Strength == BindingStrength.Required ? outcome : new OperationOutcome();
         }
 
-        private ValidationOutcome callService(ITerminologyService svc, string canonical, string code = null, string system = null, string display = null,
+        private OperationOutcome callService(ITerminologyService svc, string location, string canonical, string code = null, string system = null, string display = null,
                 Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null)
         {
             var outcome = new OperationOutcome();
@@ -141,11 +138,11 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
                                 coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
-                foreach (var issue in outcome.Issue) issue.Location = new string[] { _path };
+                foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
             }
             catch (TerminologyServiceException tse)
             {
-                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, _path);
+                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, location);
             }
 
             return outcome;
@@ -157,7 +154,7 @@ namespace Hl7.Fhir.Specification.Schema
         /// <summary>
         /// Validates whether the instance has the minimum required coded content, depending on the binding.
         /// </summary>
-        internal ValidationOutcome VerifyContentRequirements(ITypedElement input)
+        internal OperationOutcome VerifyContentRequirements(ITypedElement input)
         {
             var bindable = parseBindable(input);
 

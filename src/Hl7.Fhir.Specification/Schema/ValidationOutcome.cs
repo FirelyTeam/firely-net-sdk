@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace Hl7.Fhir.Specification.Schema
         Information,
         Note,
         Warning,
-        Error
+        Error,
+        Fatal
     }
 
     /// <summary>
@@ -50,7 +52,7 @@ namespace Hl7.Fhir.Specification.Schema
         public readonly IAssertion Source;
 
         public ICollection<ValidationDetail> Details;
-        //public ICollection<ValidationOutcome> Nested;
+        public ICollection<ValidationOutcome> Nested;
 
 
         public ValidationOutcome(IAssertion source, ValidationResult result, ITypedElement focus,

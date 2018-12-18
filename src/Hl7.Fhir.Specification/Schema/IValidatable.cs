@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace Hl7.Fhir.Specification.Schema
     /// </summary>
     interface IValidatable
     {
-        ValidationOutcome Validate(ITypedElement input, ValidationContext vc);
+        OperationOutcome Validate(ITypedElement input, ValidationContext vc);
     }
 }

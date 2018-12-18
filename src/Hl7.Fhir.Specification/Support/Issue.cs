@@ -84,6 +84,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_MISMATCHING_PROFILES = Create(1022, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_REQUIRED_BINDING = Create(1023, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_NON_REQUIRED_BINDING = Create(1024, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_NOT_BINDABLE = Create(1025, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_FAILS_SLICING_RULE = Create(1026, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_SLICING_OUT_OF_ORDER = Create(1027, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INCORRECT_OCCURRENCE = Create(1028, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
