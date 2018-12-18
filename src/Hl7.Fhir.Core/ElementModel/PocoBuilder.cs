@@ -105,8 +105,9 @@ namespace Hl7.Fhir.Serialization
 
                 if (typeToBuild == null)
                 {
-                    ExceptionNotification.Error(
-                        new StructuralTypeException($"There is no .NET type representing the FHIR type '{source.InstanceType}'."));
+                    ExceptionHandler.NotifyOrThrow(this,
+                        ExceptionNotification.Error(
+                            new StructuralTypeException($"There is no .NET type representing the FHIR type '{source.InstanceType}'.")));
 
                     return null;
                 }
