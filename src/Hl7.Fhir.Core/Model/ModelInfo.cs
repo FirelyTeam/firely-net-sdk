@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
             public string Resource { get; set; }
             public string Name { get; set; }
             public string Url { get; set; }
-            public string Description { get; set; }
+            public Markdown Description { get; set; }
             public SearchParamType Type { get; set; }
 
             /// <summary>

@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class ReadAsyncTests
     {
-        private string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+        private string _endpoint = "http://sqlonfhir-r4.azurewebsites.net/fhir"; // https://api.hspconsortium.org/rpineda/open";
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
             
-            Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
+            Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/example"));
             Assert.IsNotNull(p);
             Assert.IsNotNull(p.Name[0].Given);
             Assert.IsNotNull(p.Name[0].Family);
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             })
             {
-                Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
+                Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/example"));
                 Assert.IsNotNull(p);
                 Assert.IsNotNull(p.Name[0].Given);
                 Assert.IsNotNull(p.Name[0].Family);
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
-            Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
+            Patient p = await client.ReadAsync<Patient>("/Patient/example");
             Assert.IsNotNull(p);
             Assert.IsNotNull(p.Name[0].Given);
             Assert.IsNotNull(p.Name[0].Family);
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             })
             {
-                Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
+                Patient p = await client.ReadAsync<Patient>("/Patient/example");
                 Assert.IsNotNull(p);
                 Assert.IsNotNull(p.Name[0].Given);
                 Assert.IsNotNull(p.Name[0].Family);

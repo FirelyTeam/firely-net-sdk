@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v3.6.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
