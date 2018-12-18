@@ -29,7 +29,6 @@
       <sliceName value="extension" />
       <max value="1" />
       <!-- Override the extension definition root element property -->
-      <definition value="Custom patient profile extension element" />
       <type>
         <code value="Extension" />
         <profile value="http://example.org/fhir/StructureDefinition/PatientExtension" />

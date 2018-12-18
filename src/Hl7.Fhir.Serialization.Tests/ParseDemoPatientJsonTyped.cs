@@ -123,36 +123,36 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CatchesIncorrectNarrativeXhtml()
         {
-            // Total crap - passes unless we activate xhtml validation
-            var nav = getJsonNode("{ 'resourceType': 'Patient', 'text': {" +
-             "'status': 'generated', " +
-             "'div': 'crap' } }");
-            var errors = nav.VisitAndCatch();
-            Assert.AreEqual(0,errors.Count);
+                // Total crap - passes unless we activate xhtml validation
+                var nav = getJsonNode("{ 'resourceType': 'Patient', 'text': {" +
+                 "'status': 'generated', " +
+                 "'div': 'crap' } }", new FhirJsonParsingSettings { PermissiveParsing = true });
+                var errors = nav.VisitAndCatch();
+                Assert.AreEqual(0,errors.Count);
 
-            // Total crap - now with validation
-            nav = getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
-             "'status': 'generated', " +
-             "'div': 'crap' } }");
-            errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));
+                // Total crap - now with validation
+                nav = getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
+                 "'status': 'generated', " +
+                 "'div': 'crap' } }");
+                errors = nav.VisitAndCatch();
+                Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));
 
-            // No xhtml namespace
-            nav = getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
-             "'status': 'generated', " +
-             "'div': '<div><p>Donald</p></div>' } }");
-            errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("is not a <div> from the XHTML namespace"));
+                // No xhtml namespace
+                nav = getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
+                 "'status': 'generated', " +
+                 "'div': '<div><p>Donald</p></div>' } }");
+                errors = nav.VisitAndCatch();
+                Assert.IsTrue(errors.Single().Message.Contains("is not a <div> from the XHTML namespace"));
 
-            // Active content
-            nav = getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
-             "'status': 'generated', " +
-             "'div': '<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div>' } }");
-            errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
+                // Active content
+                nav = getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
+                 "'status': 'generated', " +
+                 "'div': '<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div>' } }");
+                errors = nav.VisitAndCatch();
+                Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
-            ITypedElement getValidatingJsonNav(string jsonText) =>
-                getJsonNode(jsonText, new FhirJsonParsingSettings { ValidateFhirXhtml = true });
+                ITypedElement getValidatingJsonNav(string jsonText) =>
+                    getJsonNode(jsonText, new FhirJsonParsingSettings { ValidateFhirXhtml = true });
         }
 
         [TestMethod]

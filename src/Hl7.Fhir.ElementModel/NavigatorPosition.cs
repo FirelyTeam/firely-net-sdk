@@ -30,6 +30,9 @@ namespace Hl7.Fhir.ElementModel
         {
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
 
+            if (elementType != null && elementType.IsAbstract)
+                throw Error.Argument(nameof(elementType), $"The given type must be a concrete type, '{elementType.TypeName}' is abstract.");
+
             var rootElement = elementType != null ? ElementDefinitionSummary.ForRoot(elementName, elementType) : null;
             return new NavigatorPosition(element, rootElement, elementName, elementType?.TypeName);
         }

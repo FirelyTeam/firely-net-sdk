@@ -19,8 +19,8 @@
     <element>
       <path value="Extension" />
       <!-- Inherited by referencing profile extension element -->
+      <comments value="ObservationLabelExtension" />
       <max value="1" />
-      <comment value="ObservationLabelExtension" />
     </element>
     <element>
       <path value="Extension.url" />

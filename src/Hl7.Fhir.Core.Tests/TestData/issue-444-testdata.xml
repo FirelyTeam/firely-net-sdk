@@ -2,7 +2,6 @@
   <id value="ImoFhirTerminologyServer" />
   <name value="IMO FHIR Terminology Server" />
   <status value="draft" />
-  <date value="2017-10-17" />
   <publisher value="Intelligent Medical Objects" />
   <contact>
     <name value="Intelligent Medical Objects" />
@@ -11,6 +10,7 @@
       <value value="http://www.e-imo.com" />
     </telecom>
   </contact>
+  <date value="2017-10-17" />
   <description value="Conformance statement for the IMO FHIR Terminology Server" />
   <kind value="capability" />
   <fhirVersion value="3.0.1" />
