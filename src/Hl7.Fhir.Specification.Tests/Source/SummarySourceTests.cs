@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Specification.Tests
             var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
             var vs = source.ListSummaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
+            // [WMR 20181218] R4 OBSOLETE - ExpansionProfile resource no longer exists
             // var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
             var ns = source.ListSummaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
 

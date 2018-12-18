@@ -6,6 +6,7 @@ using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -16,6 +17,8 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSummaryTests
     {
+        // [WMR 20181213] ModelInfo.Version returns 3.6 ...?
+        static readonly string ApiFhirVersion = "4.0.0"; // ModelInfo.Version;
 
         [TestMethod]
         public void TestPatientXmlSummary() => TestPatientSummary(@"TestData\TestPatient.xml");
@@ -46,9 +49,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             var summary = assertSummary(path, harvesters);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
-            var familyNames = summary.GetValueOrDefault<string[]>(PatientFamilyNameKey);
+            var familyNames = summary.GetValueOrDefault<IReadOnlyList<string>>(PatientFamilyNameKey);
             Assert.IsNotNull(familyNames);
-            Assert.AreEqual(1, familyNames.Length);
+            Assert.AreEqual(1, familyNames.Count);
             Assert.IsTrue(expectedNames.SequenceEqual(familyNames));
         }
 
@@ -79,7 +82,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("MainBundle Section title codes", summary.GetConformanceName());
-            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetPublicationStatus());
         }
 
 
@@ -96,12 +99,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("religion", summary.GetConformanceName());
-            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetPublicationStatus());
             // StructureDefinition properties
-            var context = summary.GetStructureDefinitionContext();
-            Assert.IsNotNull(context);
-            Assert.AreEqual(1, context.Length);
-            Assert.AreEqual("Patient", context[0]);
+
+            //[WMR 20181218] STU3 OBSOLETE
+            //var context = summary.GetStructureDefinitionContext();
+            //Assert.IsNotNull(context);
+            //Assert.AreEqual(1, context.Length);
+            //Assert.AreEqual("Patient", context[0]);
+
+            //[WMR 20181218] R4 NEW
+            var contexts = summary.GetStructureDefinitionContext();
+            Assert.IsNotNull(contexts);
+            var context = contexts.FirstOrDefault();
+            Assert.AreEqual(StructureDefinition.ExtensionContextType.Fhirpath.GetLiteral(), context.Type); // "fhirpath"
+            Assert.AreEqual(ModelInfo.ResourceTypeToFhirTypeName(ResourceType.Patient), context.Expression); // "Patient"
         }
 
 
@@ -158,9 +170,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
 
-                // [WMR 20181213] ModelInfo.Version returns 3.6 ...?
-                var fhirVersion = "4.0.0"; // ModelInfo.Version;
-                Assert.AreEqual(fhirVersion, summary.GetStructureDefinitionFhirVersion());
+                Assert.AreEqual(ApiFhirVersion, summary.GetStructureDefinitionFhirVersion());
 
                 // For profiles-types, we expect Kind = ComplexType | PrimitiveType
                 Assert.IsNotNull(summary.GetStructureDefinitionKind());
@@ -210,16 +220,27 @@ namespace Hl7.Fhir.Specification.Tests
                     // Conformance resource properties
                     Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
                     Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
-                    Assert.IsNotNull(summary.GetConformanceName());
-                    Assert.IsNotNull(summary.GetConformanceStatus());
-                    Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+                    var name = summary.GetConformanceName();
+                    Assert.IsNotNull(name);
+                    Assert.IsNotNull(summary.GetPublicationStatus());
 
+                    // [WMR 20181213] R4 NEW - Also harvest core extensions:
+                    var standardsStatus = summary.GetStructureDefinitionStandardsStatus();
+                    Assert.IsNotNull(standardsStatus);
+                    var isNormative = standardsStatus == "normative";
+                    var normativeVersion = summary.GetStructureDefinitionNormativeVersion();
+                    if (isNormative)
+                    {
+                        Assert.IsNotNull(normativeVersion);
+                    }
+                    var expectedStatus = isNormative ? PublicationStatus.Active : PublicationStatus.Draft;
+                    Assert.AreEqual(expectedStatus.GetLiteral(), summary.GetPublicationStatus());
 
                     //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
                     // StructureDefinition properties
                     Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
-                    Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
+                    Assert.AreEqual(ApiFhirVersion, summary.GetStructureDefinitionFhirVersion());
 
                     // For profiles-resources, we expect Kind = Resource | Logical
                     var kind = summary.GetStructureDefinitionKind();
@@ -246,9 +267,6 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
                         Assert.IsNotNull(summary.GetStructureDefinitionWorkingGroup());
-                        // [WMR 20181213] R4 - NEW
-                        Assert.IsNotNull(summary.GetStructureDefinitionStandardsStatus());
-                        Assert.IsNotNull(summary.GetStructureDefinitionNormativeVersion());
                     }
 
                     // [WMR 20180725] Also harvest root element definition text

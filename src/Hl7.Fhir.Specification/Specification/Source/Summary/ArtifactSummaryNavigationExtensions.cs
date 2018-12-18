@@ -98,7 +98,9 @@ namespace Hl7.Fhir.Specification.Summary
             }
             if (values.Count > 0)
             {
-                properties[key] = values.ToArray();
+                // [WMR 20181218] Ensure summary is immutable
+                //properties[key] = values.ToArray();
+                properties[key] = values.AsReadOnly();
                 return true;
             }
             return false;
@@ -122,7 +124,9 @@ namespace Hl7.Fhir.Specification.Summary
             }
             if (values.Count > 0)
             {
-                properties[key] = values.ToArray();
+                // [WMR 20181218] Ensure summary is immutable
+                //properties[key] = values.ToArray();
+                properties[key] = values.AsReadOnly();
                 return true;
             }
             return false;
@@ -136,7 +140,7 @@ namespace Hl7.Fhir.Specification.Summary
         {
             const string extension = "extension";
 
-            foreach(var child in nav.Children(extension))
+            foreach (var child in nav.Children(extension))
             {
                 var url = child.Children("url").FirstOrDefault();
                 if(url != null)
@@ -145,7 +149,6 @@ namespace Hl7.Fhir.Specification.Summary
                 }
             }
         }
-
     }
 
 }
