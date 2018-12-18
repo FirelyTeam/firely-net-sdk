@@ -161,6 +161,7 @@ src/Hl7.Fhir.Model/EwoutFhirNetApi.snk
 *.snk
 sonar-project.properties
 src/.vs/
+.vs/
 build/runbuild.txt
 
 specification.zip
