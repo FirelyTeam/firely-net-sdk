@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
 
 #pragma warning restore 612, 618
 
-        public IList Deserialize(PropertyMapping prop, string memberName, string typeName, IList existing = null)
+        public IList Deserialize(PropertyMapping prop, string memberName, IList existing = null)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
             if (result == null) result = ReflectionHelper.CreateGenericList(prop.ImplementingType);
 
             var reader = new DispatchingReader(_current, Settings, arrayMode: true);
-            result.Add(reader.Deserialize(prop, memberName, typeName));
+            result.Add(reader.Deserialize(prop, memberName));
 
             return result;
         }

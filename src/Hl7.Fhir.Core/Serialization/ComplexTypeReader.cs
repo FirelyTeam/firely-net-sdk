@@ -9,14 +9,36 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Serialization
 {
+    internal class ValuePropertyTypedElement : ITypedElement
+    {
+        private ITypedElement _wrapped;
+
+        public ValuePropertyTypedElement(ITypedElement primitiveElement)
+        {
+            _wrapped = primitiveElement;
+        }
+
+        public string Name => "value";
+
+        public string InstanceType => _wrapped.InstanceType;
+
+        public object Value => _wrapped.Value;
+
+        public string Location => _wrapped.Location;
+
+        public IElementDefinitionSummary Definition => _wrapped.Definition;
+
+        public IEnumerable<ITypedElement> Children(string name = null) => _wrapped.Children(name);
+    }
+
 #pragma warning disable 612,618
     internal class ComplexTypeReader
     {
@@ -34,6 +56,9 @@ namespace Hl7.Fhir.Serialization
 
         internal Base Deserialize(Base existing = null)
         {
+            if (_current.InstanceType is null)
+                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
+
             var mapping = _inspector.FindClassMappingByType(_current.InstanceType);
 
             if (mapping == null)
@@ -41,8 +66,8 @@ namespace Hl7.Fhir.Serialization
 
             return Deserialize(mapping, existing);
         }
-        
-        internal Base Deserialize(ClassMapping mapping, Base existing=null)
+
+        internal Base Deserialize(ClassMapping mapping, Base existing = null)
         {
             if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
 
@@ -57,9 +82,11 @@ namespace Hl7.Fhir.Serialization
                     throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
             }
 
+            // The older code for read() assumes the primitive value member is represented as a separate child element named "value", 
+            // while the newer ITypedElement represents this as a special Value property. We simulate the old behaviour here, by
+            // explicitly adding the value property as a child and making it act like a typed node.
             var members = _current.Value != null ?
-                new[] { SourceNode.Valued("value", PrimitiveTypeConverter.ConvertTo<string>(_current.Value)).ToTypedElement() }.Union(_current.Children()) :
-                _current.Children();
+                new[] { new ValuePropertyTypedElement(_current) }.Union(_current.Children()) : _current.Children();
 
             try
             {
@@ -81,7 +108,7 @@ namespace Hl7.Fhir.Serialization
             foreach (var memberData in members)
             {
                 var memberName = memberData.Name;  // tuple: first is name of member
-             
+
                 // Find a property on the instance that matches the element found in the data
                 // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
                 var mappedProperty = mapping.FindMappedElementByName(memberName);
@@ -102,7 +129,12 @@ namespace Hl7.Fhir.Serialization
                     }
 
                     var reader = new DispatchingReader(memberData, Settings, arrayMode: false);
-                    value = reader.Deserialize(mappedProperty, memberName, memberData.InstanceType, value);
+
+                    // Since we're still using both ClassMappings and the newer IElementDefinitionSummary provider at the same time, 
+                    // the member might be known in the one (POCO), but unknown in the provider. This is only in theory, since the
+                    // provider should provide exactly the same information as the mappings. But better to get a clear exception
+                    // when this happens.
+                    value = reader.Deserialize(mappedProperty, memberName, value);
 
                     if (mappedProperty.RepresentsValueElement && mappedProperty.ImplementingType.IsEnum() && value is String)
                     {

@@ -26,8 +26,14 @@ namespace Hl7.Fhir.Serialization
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
         
-        //dataType can also be Resourse or DomainResourse
-        //the builder will figure the type by itself when it is the case
+        /// <summary>
+        /// Build a POCO from an ISourceNode.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="dataType">Optional. Type of POCO to build. Should be one of the generated POCO classes.</param>
+        /// <returns></returns>
+        /// <remarks>If <paramref name="dataType"/> is not supplied, or is <code>Resource</code> or <code>DomainResource</code>, 
+        /// the builder will try to determine the actual type to create from the <paramref name="source"/>. </remarks>
         public Base BuildFrom(ISourceNode source, Type dataType = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
@@ -46,9 +52,15 @@ namespace Hl7.Fhir.Serialization
             }
             return BuildFrom(source, typeFound);
         }
-        
-        //dataType can also be Resourse or DomainResourse
-        //the builder will figure the type by itself when it is the case
+
+        /// <summary>
+        /// Build a POCO from an ISourceNode.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="dataType">Optional. Type of POCO to build. Should be the name of one of the generated POCO classes.</param>
+        /// <returns></returns>
+        /// <remarks>If <paramref name="dataType"/> is not supplied, or is <code>Resource</code> or <code>DomainResource</code>, 
+        /// the builder will try to determine the actual type to create from the <paramref name="source"/>. </remarks>
         public Base BuildFrom(ISourceNode source, string dataType = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
@@ -67,7 +79,12 @@ namespace Hl7.Fhir.Serialization
 
             return BuildFrom(typedSource);
         }
-        
+
+        /// <summary>
+        /// Build a POCO from an IElementNode.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public Base BuildFrom(ITypedElement source)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
@@ -84,12 +101,6 @@ namespace Hl7.Fhir.Serialization
 
             Base build()
             {
-                var settings = new ParserSettings
-                {
-                    AcceptUnknownMembers = _settings.IgnoreUnknownMembers,
-                    AllowUnrecognizedEnums = _settings.AllowUnrecognizedEnums
-                };
-
                 var typeToBuild = ModelInfo.GetTypeForFhirType(source.InstanceType);
 
                 if (typeToBuild == null)
@@ -99,6 +110,12 @@ namespace Hl7.Fhir.Serialization
 
                     return null;
                 }
+
+                var settings = new ParserSettings
+                {
+                    AcceptUnknownMembers = _settings.IgnoreUnknownMembers,
+                    AllowUnrecognizedEnums = _settings.AllowUnrecognizedEnums
+                };
 
                 return typeToBuild.CanBeTreatedAsType(typeof(Resource))
                     ? new ResourceReader(source, settings).Deserialize()

@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
         }
 #pragma warning restore 612,618
 
-        public object Deserialize(PropertyMapping prop, string memberName, string typeName, object existing=null)
+        public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
                 var reader = new RepeatingElementReader(_current, Settings);
-                return reader.Deserialize(prop, memberName, typeName, (IList)existing);
+                return reader.Deserialize(prop, memberName, (IList)existing);
             }
 
             // If this is a primitive type, no classmappings and reflection is involved,
@@ -71,23 +71,14 @@ namespace Hl7.Fhir.Serialization
                 return reader.Deserialize(null);
             }
 
-            ClassMapping mapping;
+            if (_current.InstanceType is null)
+                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
+
+            ClassMapping mapping = prop.Choice == ChoiceType.DatatypeChoice
+                ? getMappingForType(prop, memberName, _current.InstanceType)
+                : _inspector.ImportType(prop.ImplementingType);
 
             // Handle other Choices having any datatype or a list of datatypes
-            if(prop.Choice == ChoiceType.DatatypeChoice)
-            {
-                // For Choice properties, determine the actual type of the element using
-                // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)
-                // This function implements type substitution.
-
-                var test = prop.GetChoiceSuffixFromName(memberName);
-                mapping = getMappingForType(prop, memberName, typeName);
-            }   
-            // Else use the actual return type of the property
-            else
-            {
-                mapping = _inspector.ImportType(prop.ImplementingType);
-            }
 
             if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument(nameof(existing), "Can only read complex elements into types that are Element or Resource");
             var cplxReader = new ComplexTypeReader(_current, Settings);

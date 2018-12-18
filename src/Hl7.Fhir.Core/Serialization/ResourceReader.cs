@@ -39,8 +39,8 @@ namespace Hl7.Fhir.Serialization
 
         public Resource Deserialize(Resource existing=null)
         {
-            // If there's no a priori knowledge of the type of Resource we will encounter,
-            // we'll have to determine from the data itself. 
+            if(_reader.InstanceType is null)
+                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
 
             var mapping = _inspector.FindClassMappingForResource(_reader.InstanceType);
 
