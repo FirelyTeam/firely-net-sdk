@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Div = "A great blues player" },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { VersionId = "eric-clapton" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 Id = "patient-two",
                 Active = true,
-                Text = new Narrative { Div = "<div>Another great blues player</div>" },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>" },
                 Meta = new Meta { VersionId = "bb-king" },
                 Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
             };
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var patientOne = new Patient
             {
                 Id = "patient-one",
-                Text = new Narrative { Div = "<div>A great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
                 Meta = new Meta { VersionId = "eric-clapton" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 Id = "patient-two",
                 Active = true,
-                Text = new Narrative { Div = "<div>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
                 Meta = new Meta { VersionId = "bb-king" },
                 Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
             };
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Div = "A great blues player" },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { VersionId = "1234" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -434,12 +434,12 @@ namespace Hl7.Fhir.Tests.Serialization
                 "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
             var shouldBePatientOneText =
-                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"text\":{\"div\":\"A great blues player\"}}";
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"text\":{\"div\":\"<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>\"}}";
 
             var shouldBePationeOneData =
                 "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
-            var shouldBePatientOneFalse = "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"A great blues player\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
+            var shouldBePatientOneFalse = "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
             Assert.AreEqual(summaryTrue, shouldBePatientOneTrue);
             Assert.AreEqual(summaryText, shouldBePatientOneText);
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 Id = "patient-one",
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
-                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Active = true,
                 Name = new List<HumanName> { new HumanName { Use = HumanName.NameUse.Official, Family = "Clapton" } },
                 Gender = AdministrativeGender.Male,
