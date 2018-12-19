@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="nl-core-address" />
   <meta>
@@ -24,8 +25,8 @@
     <comment value="Voorheen GBA - Gemeentelijke basisregistratie" />
   </mapping>
   <kind value="primitive-type" />
-  <type value="Address" />
   <abstract value="false" />
+  <type value="Address" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Address" />
   <derivation value="constraint" />
   <differential>
@@ -37,29 +38,31 @@
       <type>
         <code value="Address" />
       </type>
-      <example><valueAddress>
-        <extension url="http://fhir.nl/fhir/StructureDefinition/nl-address-official">
-          <valueBoolean value="false" />
-        </extension>
-        <line value="Binnenkant 12A Hoog">
-          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
-            <valueString value="Binnenkant" />
+      <example>
+        <valueAddress>
+          <extension url="http://fhir.nl/fhir/StructureDefinition/nl-address-official">
+            <valueBoolean value="false" />
           </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
-            <valueString value="12" />
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix">
-            <valueString value="A" />
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID">
-            <valueString value="Hoog" />
-          </extension>
-        </line>
-        <city value="Amsterdam" />
-        <state value="NH" />
-        <postalCode value="1000AA" />
-        <country value="NLD" />
-      </valueAddress></example>
+          <line value="Binnenkant 12A Hoog">
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+              <valueString value="Binnenkant" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+              <valueString value="12" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix">
+              <valueString value="A" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID">
+              <valueString value="Hoog" />
+            </extension>
+          </line>
+          <city value="Amsterdam" />
+          <state value="NH" />
+          <postalCode value="1000AA" />
+          <country value="NLD" />
+        </valueAddress>
+      </example>
       <condition value="nl-streetname-if-official-and-other-line-parts" />
       <constraint>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -79,7 +82,10 @@
     <element id="Address.extension">
       <path value="Address.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="url" /></discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
     </element>
@@ -102,7 +108,10 @@
     <element id="Address.line.extension">
       <path value="Address.line.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="url" /></discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
     </element>
@@ -214,7 +223,9 @@
       <requirements value="Basisregistratie Persoonsgegevens 11.70 Woonplaatsnaam" />
       <alias value="Municipality" />
       <alias value="woonplaats" />
-      <example><valueString value="Den Haag" /></example>
+      <example>
+        <valueString value="Den Haag" />
+      </example>
       <mapping>
         <identity value="zib-address" />
         <map value="NL-CM:0.1.14" />
@@ -232,7 +243,9 @@
       <requirements value="Basisregistratie Persoonsgegevens 09.10 Gemeente van inschrijving" />
       <alias value="County" />
       <alias value="gemeente" />
-      <example><valueString value="Wateringen" /></example>
+      <example>
+        <valueString value="Wateringen" />
+      </example>
       <mapping>
         <identity value="zib-address" />
         <map value="NL-CM:0.1.16" />
@@ -250,7 +263,9 @@
       <alias value="Province" />
       <alias value="Territory" />
       <alias value="provincie" />
-      <example><valueString value="ZH" /></example>
+      <example>
+        <valueString value="ZH" />
+      </example>
     </element>
     <element id="Address.postalCode">
       <path value="Address.postalCode" />
@@ -259,7 +274,9 @@
       <comment value="Dutch postal codes have pattern '\d{4}[A-Z]{2}' so they do not have spaces. Systems can easily render postal codes with a space if necessary." />
       <alias value="Zip" />
       <alias value="postcode" />
-      <example><valueString value="9132AG" /></example>
+      <example>
+        <valueString value="9132AG" />
+      </example>
       <condition value="nl-postal-code-pattern" />
       <constraint>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -284,7 +301,9 @@
       <short value="Country (can be ISO 3166 3 letter code)" />
       <definition value="A country (code) for the address." />
       <alias value="land" />
-      <example><valueString value="NLD" /></example>
+      <example>
+        <valueString value="NLD" />
+      </example>
       <mapping>
         <identity value="zib-address" />
         <map value="NL-CM:0.1.17" />

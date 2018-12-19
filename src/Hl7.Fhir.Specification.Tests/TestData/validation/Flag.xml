@@ -14,6 +14,7 @@
           <lastUpdated value="2011-04-01T13:05:21+02:00" />
           <profile value="http://helse-nord.no/FHIR/profiles/Workflow.CriticalInformation/Flag" />
         </meta>
+        <status value="active" />
         <category>
           <coding>
             <system value="http://helse-nord.no/fhir/ValueSet/epj-internal-flag-categories-for-critical-information" />
@@ -21,18 +22,6 @@
             <display value="Åpen innleggelse" />
           </coding>
         </category>
-        <status value="active" />
-        <period>
-          <start value="2011-04-01T00:00:00+02:00" />
-        </period>
-        <subject>
-          <reference value="Patient/11463505251" />
-          <display value="11463505251" />
-        </subject>
-        <author>
-          <reference value="Practitioner/4700052" />
-          <display value="NSS" />
-        </author>
         <code>
           <coding>
             <system value="http://helse-nord.no/fhir/ValueSet/epj-internal-severity-for-critical-information" />
@@ -44,6 +33,17 @@
             <code value="False" />
           </coding>
         </code>
+        <subject>
+          <reference value="Patient/11463505251" />
+          <display value="11463505251" />
+        </subject>
+        <period>
+          <start value="2011-04-01T00:00:00+02:00" />
+        </period>
+        <author>
+          <reference value="Practitioner/4700052" />
+          <display value="NSS" />
+        </author>
       </Flag>
     </resource>
   </entry>
@@ -56,6 +56,7 @@
           <lastUpdated value="2011-09-13T13:39:30+02:00" />
           <profile value="http://helse-nord.no/FHIR/profiles/Workflow.CriticalInformation/Flag" />
         </meta>
+        <status value="active" />
         <category>
           <coding>
             <system value="http://helse-nord.no/fhir/ValueSet/epj-internal-flag-categories-for-critical-information" />
@@ -63,18 +64,6 @@
             <display value="Allergi" />
           </coding>
         </category>
-        <status value="active" />
-        <period>
-          <start value="2011-09-13T00:00:00+02:00" />
-        </period>
-        <subject>
-          <reference value="Patient/11463505251" />
-          <display value="11463505251" />
-        </subject>
-        <author>
-          <reference value="Practitioner/10305215" />
-          <display value="MWA003" />
-        </author>
         <code>
           <coding>
             <system value="http://helse-nord.no/fhir/ValueSet/epj-internal-severity-for-critical-information" />
@@ -86,6 +75,17 @@
             <code value="True" />
           </coding>
         </code>
+        <subject>
+          <reference value="Patient/11463505251" />
+          <display value="11463505251" />
+        </subject>
+        <period>
+          <start value="2011-09-13T00:00:00+02:00" />
+        </period>
+        <author>
+          <reference value="Practitioner/10305215" />
+          <display value="MWA003" />
+        </author>
       </Flag>
     </resource>
   </entry>
