@@ -125,10 +125,11 @@ namespace Hl7.FhirPath.Tests
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.AreEqual("log", name);
-                foreach (PocoElementNode item in results)
+                foreach (var item in results)
                 {
-                    System.Diagnostics.Trace.WriteLine($"--({item.FhirValue.GetType().Name}): {item.Value} {item.FhirValue}");
-                    Assert.AreEqual(patient.Meta, item.FhirValue);
+                    var value = item.Annotation<IFhirValueProvider>();
+                    System.Diagnostics.Trace.WriteLine($"--({value.FhirValue.GetType().Name}): {item.Value} {value.FhirValue}");
+                    Assert.AreEqual(patient.Meta, value);
                     traced = true;
                 }
             };
@@ -142,9 +143,10 @@ namespace Hl7.FhirPath.Tests
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.IsTrue(name == "id" || name == "log");
-                foreach (PocoElementNode item in results)
+                foreach (var item in results)
                 {
-                    System.Diagnostics.Trace.WriteLine($"--({item.FhirValue.GetType().Name}): {item.Value} {item.FhirValue}");
+                    var value = item.Annotation<IFhirValueProvider>();
+                    System.Diagnostics.Trace.WriteLine($"--({value.FhirValue.GetType().Name}): {item.Value} {value.FhirValue}");
                     traced = true;
                 }
             };

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Rest.Http
             Client.Timeout = new TimeSpan(0, 0, 100);       // Default timeout is 100 seconds            
             PreferredReturn = Rest.Prefer.ReturnRepresentation;
             PreferredParameterHandling = null;
-            ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
+            ParserSettings = Hl7.Fhir.Serialization.ParserSettings.CreateDefault();
         }
 
 

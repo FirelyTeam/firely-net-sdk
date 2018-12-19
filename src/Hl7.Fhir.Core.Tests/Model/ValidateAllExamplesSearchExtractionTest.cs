@@ -39,7 +39,8 @@ namespace Hl7.Fhir.Tests.Model
                 {
                     object[] bits = (f as IEnumerable<ITypedElement>).Select(i =>
                     {
-                        var resref = (i as PocoElementNode).FhirValue as ResourceReference;
+                        var fhirval = i.Annotation<IFhirValueProvider>();
+                        var resref = fhirval.FhirValue as ResourceReference;
                         if (resref != null && ResourceIdentity.IsRestResourceIdentity(resref.Reference))
                         {
                             ResourceIdentity ri = new ResourceIdentity(resref.Reference);
@@ -182,7 +183,8 @@ namespace Hl7.Fhir.Tests.Model
                     {
                         if (t2 != null)
                         {
-                            if (t2 is PocoElementNode && (t2 as PocoElementNode).FhirValue != null)
+                            var fhirval = t2.Annotation<IFhirValueProvider>();
+                            if (fhirval?.FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
                                 //    Debug.Write(index.Resource + "." + index.Name + ": ");
