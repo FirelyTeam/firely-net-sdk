@@ -11,18 +11,6 @@ namespace Hl7.Fhir.Specification.Schema
 {
     internal class Binding : IValidatable, IAssertion
     {
-        /// <summary>
-        /// Instance type is not one of the bindable types
-        /// </summary>
-        public const int TYPE_NOT_BINDEABLE = 1025;
-
-        /// <summary>
-        /// Bindable element does not have enough coded content (codes, text).
-        /// </summary>
-        /// <remarks>Depends on binding strength.</remarks>
-        public const int INSUFFICIENT_CODED_CONTENT = 6005;
-
-
         public enum BindingStrength
         {
             /// <summary>
@@ -121,7 +109,7 @@ namespace Hl7.Fhir.Specification.Schema
                     throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
             }
 
-            //EK 20170605 - disabled inclusion of warnings/erros for all but required bindings since this will 
+            //EK 20170605 - disabled inclusion of warnings/errors for all but required bindings since this will 
             // 1) create superfluous messages (both saying the code is not valid) coming from the validateResult + the outcome.AddIssue() 
             // 2) add the validateResult as warnings for preferred bindings, which are confusing in the case where the slicing entry is 
             //    validating the binding against the core and slices will refine it: if it does not generate warnings against the slice, 
@@ -132,20 +120,18 @@ namespace Hl7.Fhir.Specification.Schema
         private OperationOutcome callService(ITerminologyService svc, string location, string canonical, string code = null, string system = null, string display = null,
                 Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null)
         {
-            var outcome = new OperationOutcome();
-
             try
             {
-                outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
+                var outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
                                 coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
                 foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
+                return outcome;
             }
             catch (TerminologyServiceException tse)
             {
-                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, location);
+                return Issue.TERMINOLOGY_SERVICE_FAILED
+                    .NewOutcomeWithIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", location);
             }
-
-            return outcome;
         }
 
 
@@ -154,6 +140,7 @@ namespace Hl7.Fhir.Specification.Schema
         /// <summary>
         /// Validates whether the instance has the minimum required coded content, depending on the binding.
         /// </summary>
+        /// <remarks>Will throw an <c>InvalidOperationException</c> when the input is not of a bindeable type.</remarks>
         internal OperationOutcome VerifyContentRequirements(ITypedElement input)
         {
             var bindable = parseBindable(input);
@@ -164,13 +151,11 @@ namespace Hl7.Fhir.Specification.Schema
                 case Code co when String.IsNullOrEmpty(co.Value) && Strength == BindingStrength.Required:
                 case Coding cd when String.IsNullOrEmpty(cd.Code) && Strength == BindingStrength.Required:
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && Strength == BindingStrength.Required:
-                    return new ValidationOutcome(this, ValidationResult.Invalid, input,
-                        ValidationDetail.Single(INSUFFICIENT_CODED_CONTENT, Weight.Error,
-                        $"No code found in {input.InstanceType} with a required binding."));
+                    return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
+                        .NewOutcomeWithIssue($"No code found in {input.InstanceType} with a required binding.", input);
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) && Strength == BindingStrength.Extensible:
-                    return new ValidationOutcome(this, ValidationResult.Invalid, input,
-                        ValidationDetail.Single(INSUFFICIENT_CODED_CONTENT, Weight.Error,
-                        $"Extensible binding requires code or text."));
+                    return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
+                        .NewOutcomeWithIssue($"Extensible binding requires code or text.", input);
                 default:
                     throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
             }
@@ -191,11 +176,5 @@ namespace Hl7.Fhir.Specification.Schema
 
             return new JProperty("binding", props);
         }
-
-        //   public readonly string ValueSetUri;
-        //public readonly BindingStrength Strength;
-        //public readonly string Description;
-        //public readonly bool AbstractAllowed;
-
     }
 }
