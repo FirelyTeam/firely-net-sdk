@@ -480,6 +480,7 @@ namespace Hl7.Fhir.Model
                 case "Quantity":
                 case "string":
                 case "uri":
+                case "Extension":       // for backwards compat with DSTU2
                     return true;
                 default:
                     return false;

@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Specification.Tests
             var binding = new ElementDefinition.BindingComponent
             {
                 ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
-                Strength = BindingStrength.Required
+                Strength = BindingStrength.Preferred
             };
 
             var val = binding.ToValidatable();
@@ -131,10 +131,18 @@ namespace Hl7.Fhir.Specification.Tests
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding(null, null, "Just some display text"));
 
-            // First, with no code at all in a CC
+            // First, no code at all should be ok with a preferred binding
             var result = val.Validate(cc.ToTypedElement(), vc);
+            Assert.True(result.Success);
+
+            // Now, switch to a required binding
+            binding.Strength = BindingStrength.Required;
+            val = binding.ToValidatable();
+           
+            // Then, with no code at all in a CC with a required binding
+            result = val.Validate(cc.ToTypedElement(), vc);
             Assert.False(result.Success);
-            Assert.Contains("No code found in instance", result.ToString());
+            Assert.Contains("No code found in", result.ToString());
 
             // Now with no code + illegal code
             cc.Coding.Add(new Coding("urn:oid:1.2.3.4.5", "16", "Here's a code"));
@@ -156,7 +164,6 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason"),
                 Strength = BindingStrength.Required
-
             };
 
             var val = binding.ToValidatable();
@@ -179,7 +186,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             //EK 2017-07-6 No longer reports warnings when failing a preferred binding
             binding.Strength = BindingStrength.Preferred;
-            result = val.Validate(cc.ToTypedElement(), vc);
+            var val2 = binding.ToValidatable();
+            result = val2.Validate(cc.ToTypedElement(), vc);
             Assert.True(result.Success);
             Assert.Equal(0, result.Warnings);
         }

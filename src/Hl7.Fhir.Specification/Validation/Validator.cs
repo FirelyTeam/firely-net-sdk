@@ -17,6 +17,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
@@ -279,7 +280,20 @@ namespace Hl7.Fhir.Validation
 
             // new style validator - has a configure and then execute step.
             // will be separated when all logic has been converted.
-            ValidationContext vc = new ValidationContext() { TerminologyService = Settings.TerminologyService };
+            var ts = Settings.TerminologyService;
+            if (ts == null)
+            {
+                if (Settings.ResourceResolver == null)
+                {
+                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
+                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
+                    return outcome;
+                }
+
+                ts = new LocalTerminologyService(Settings.ResourceResolver);
+            }
+
+            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
@@ -291,7 +305,7 @@ namespace Hl7.Fhir.Validation
             }
             catch(IncorrectElementDefinitionException iede)
             {
-                outcome.AddIssue(iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, elementConstraints.Path);
+                Trace(outcome, "Incorrect ElementDefinition: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, elementConstraints.Path);
             }
             
             // If the report only has partial information, no use to show the hierarchy, so flatten it.

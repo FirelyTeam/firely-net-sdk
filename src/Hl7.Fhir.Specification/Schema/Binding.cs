@@ -74,10 +74,13 @@ namespace Hl7.Fhir.Specification.Schema
                     .NewOutcomeWithIssue("Validation of binding wih non-bindable instance type '{input.InstanceType}' always succeeds.", input);
             }
 
-            var outcome = VerifyContentRequirements(input);
+            var bindable = parseBindable(input);
+            if (bindable == null) return new OperationOutcome();   // not bindable -> implies success
+
+            var outcome = VerifyContentRequirements(input, bindable);
             if (!outcome.Success) return outcome;
 
-            return ValidateCode(input, vc);
+            return ValidateCode(input, bindable, vc);
         }
 
         private static Element parseBindable(ITypedElement input)
@@ -89,21 +92,20 @@ namespace Hl7.Fhir.Specification.Schema
             return bindable;
         }
 
-        internal OperationOutcome ValidateCode(ITypedElement input, ValidationContext vc)
+        internal OperationOutcome ValidateCode(ITypedElement source, Element bindable, ValidationContext vc)
         {
-            var bindable = parseBindable(input);
             OperationOutcome outcome;
 
             switch (bindable)
             {
                 case Code co:
-                    outcome = callService(vc.TerminologyService, input.Location, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed);
+                    outcome = callService(vc.TerminologyService, source.Location, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed);
                     break;
                 case Coding cd:
-                    outcome = callService(vc.TerminologyService, input.Location, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed);
+                    outcome = callService(vc.TerminologyService, source.Location, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed);
                     break;
                 case CodeableConcept cc:
-                    outcome = callService(vc.TerminologyService, input.Location, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed);
+                    outcome = callService(vc.TerminologyService, source.Location, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed);
                     break;
                 default:
                     throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
@@ -135,29 +137,27 @@ namespace Hl7.Fhir.Specification.Schema
         }
 
 
-
-
         /// <summary>
         /// Validates whether the instance has the minimum required coded content, depending on the binding.
         /// </summary>
         /// <remarks>Will throw an <c>InvalidOperationException</c> when the input is not of a bindeable type.</remarks>
-        internal OperationOutcome VerifyContentRequirements(ITypedElement input)
+        internal OperationOutcome VerifyContentRequirements(ITypedElement source, Element bindable)
         {
-            var bindable = parseBindable(input);
-
             switch (bindable)
             {
-                // Note: parseBindable with translate all bindable types to just code/Coding/CodeableConcept
+                // Note: parseBindable with translate all bindable types to just code/Coding/CodeableConcept,
+                // so that's all we need to expect here.
                 case Code co when String.IsNullOrEmpty(co.Value) && Strength == BindingStrength.Required:
                 case Coding cd when String.IsNullOrEmpty(cd.Code) && Strength == BindingStrength.Required:
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && Strength == BindingStrength.Required:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
-                        .NewOutcomeWithIssue($"No code found in {input.InstanceType} with a required binding.", input);
-                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) && Strength == BindingStrength.Extensible:
+                        .NewOutcomeWithIssue($"No code found in {source.InstanceType} with a required binding.", source);
+                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) && 
+                                Strength == BindingStrength.Extensible:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
-                        .NewOutcomeWithIssue($"Extensible binding requires code or text.", input);
+                        .NewOutcomeWithIssue($"Extensible binding requires code or text.", source);
                 default:
-                    throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
+                    return new OperationOutcome();      // nothing wrong then
             }
         }
 

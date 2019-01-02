@@ -75,7 +75,6 @@ namespace Hl7.Fhir.ElementModel
         public static Element ParseBindable(this ITypedElement instance)
         {
             var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
-            if (instanceType is null) throw Error.NotSupported($"Encountered type '{instance.InstanceType}', which has no POCO representation.");
 
             switch (instanceType)
             {
@@ -94,7 +93,7 @@ namespace Hl7.Fhir.ElementModel
                 case FHIRDefinedType.Extension:
                     return parseExtension(instance);
                 default:
-                    throw Error.NotSupported($"Encountered type '{instance.InstanceType}' which is not parseable to a bindable POCO.");
+                    return null;
             }
 
             Coding parseQuantity(ITypedElement nav)
