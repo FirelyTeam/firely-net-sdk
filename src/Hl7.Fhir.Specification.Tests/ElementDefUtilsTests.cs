@@ -136,6 +136,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Specimen), tr.TargetCanonical());
         }
 
+
+        [TestMethod]
+        public void TestBaseType()
+        {
+            var defs = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation);
+            Assert.AreEqual(FHIRDefinedType.Observation, defs.BaseType());
+
+            defs = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Money);
+            Assert.AreEqual(FHIRDefinedType.Quantity, defs.BaseType());
+
+            defs = _source.FindStructureDefinition("http://example.org/StructureDefinition/WeightHeightObservation");
+            Assert.AreEqual(FHIRDefinedType.Observation, defs.BaseType());        
+        }
+
+
         [TestMethod]
         public void TestIsReference()
         {
