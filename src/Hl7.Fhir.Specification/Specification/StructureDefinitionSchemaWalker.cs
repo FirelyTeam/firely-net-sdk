@@ -22,6 +22,12 @@ namespace Hl7.Fhir.Specification
 
         public readonly ElementDefinitionNavigator Current;
 
+        public StructureDefinitionSchemaWalker(StructureDefinition sd, IResourceResolver resolver) 
+            : this(ElementDefinitionNavigator.ForSnapshot(sd), resolver)
+        {
+            // nothing more
+        }
+
         public StructureDefinitionSchemaWalker(ElementDefinitionNavigator element, IResourceResolver resolver)
         {
             Current = element.ShallowCopy();

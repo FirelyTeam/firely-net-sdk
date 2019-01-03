@@ -146,6 +146,9 @@ namespace Hl7.Fhir.Specification.Tests
             defs = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Money);
             Assert.AreEqual(FHIRDefinedType.Quantity, defs.BaseType());
 
+            defs = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Code);
+            Assert.AreEqual(FHIRDefinedType.Code, defs.BaseType());
+
             defs = _source.FindStructureDefinition("http://example.org/StructureDefinition/WeightHeightObservation");
             Assert.AreEqual(FHIRDefinedType.Observation, defs.BaseType());        
         }

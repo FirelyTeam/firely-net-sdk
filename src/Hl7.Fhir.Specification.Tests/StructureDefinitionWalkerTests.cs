@@ -38,22 +38,25 @@ namespace Hl7.Fhir.Specification.Tests
             var nav = ElementDefinitionNavigator.ForSnapshot(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation));
             var walker = new StructureDefinitionSchemaWalker(nav, _source);
 
+            // A primivite type
+            var elem = walker.Child("status");
+            Assert.AreEqual("Observation.status", elem.Current.Path);
+
             // A member that is of a complex type.
-            var elem = walker.Child("method");
+            elem = walker.Child("method");
             Assert.AreEqual("Observation.method", elem.Current.Path);
 
             // Move into the complex type
             elem = elem.Child("coding");
             Assert.AreEqual("CodeableConcept.coding", elem.Current.Path);
 
-            // A primivite type
-            elem = walker.Child("status");
-            Assert.AreEqual("Observation.status", elem.Current.Path);
+            // now move deeper, across type boundary
+            elem = elem.Child("system");
+            Assert.AreEqual("Coding.system", elem.Current.Path);
+            Assert.AreEqual("uri.extension", elem.Child("extension").Current.Path);
 
             // Try move to the special value member
             Assert.ThrowsException<StructureDefinitionSchemaWalkerException>(() => elem.Child("value"), "Primitives should not have a 'value' member");
-            // STU3: Assert.AreEqual("code.extension", elem.Child("extension").Current.Path);
-            Assert.AreEqual("string.extension", elem.Child("extension").Current.Path);
 
             // Move into a component
             elem = walker.Child("component");
@@ -95,6 +98,10 @@ namespace Hl7.Fhir.Specification.Tests
             // Now, walk across a choice type, disambiguating the choice.
             elem = walker.Child("value").OfType("Quantity").Child("system").Single();
             Assert.AreEqual("Quantity.system", elem.Current.Path);
+
+            // Try walking into an 'any' choice
+            elem = walker.Child("method").Child("extension").Child("value").OfType("HumanName").Child("family").Single();
+            Assert.AreEqual("HumanName.family", elem.Current.Path);
         }
 
         [TestMethod]

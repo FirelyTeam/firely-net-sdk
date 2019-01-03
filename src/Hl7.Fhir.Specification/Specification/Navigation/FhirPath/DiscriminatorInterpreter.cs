@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
                     var type = getSingleStringParameter(call);
                     if(!ModelInfo.IsCoreModelType(type))
                         throw new DiscriminatorFormatException($"Type '{type}' passed to ofType() is not a known FHIR type.");
-                    return parentSet.OfType(ModelInfo.CanonicalUriForFhirCoreType(type));
+                    return parentSet.OfType(type);
                 default:
                     throw new DiscriminatorFormatException($"Invocation of function '{call.FunctionName}' is not supported in discriminators.");
             }

@@ -23,11 +23,18 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
             return expr.Accept(interpeter);
         }
 
+        /// <summary>
+        /// Walk the definition given a discriminator path.
+        /// </summary>
+        /// <param name="me"></param>
+        /// <param name="discriminatorExpression"></param>
+        /// <returns></returns>
+        /// <remarks>Discriminator paths are subsets of FhirPath as described here: http://www.hl7.org/implement/standards/fhir/profiling.html#discriminator</remarks>
         public static IEnumerable<StructureDefinitionSchemaWalker> Walk(this StructureDefinitionSchemaWalker me, string discriminatorExpression)
         {
             if (discriminatorExpression == null) throw Error.ArgumentNull(nameof(discriminatorExpression));
 
-            var compiler = new FhirPathCompiler(new SymbolTable());
+            var compiler = new FhirPathCompiler(new SymbolTable());  // Basic symbol table is enough to have ofType() and resolve()
             var tree = compiler.Parse(discriminatorExpression);
 
             return me.EvaluateDiscriminator(tree);

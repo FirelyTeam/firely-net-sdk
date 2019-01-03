@@ -203,8 +203,21 @@ namespace Hl7.Fhir.Model
         /// <remarks>In DSTU2, this is Name, later it became SliceName</remarks>
         public static string SliceName(this ElementDefinition def) => def.Name;
 
-        public static FHIRDefinedType? BaseType(this StructureDefinition sd) =>
-            sd.ConstrainedType ?? (sd.Name != null ? ModelInfo.FhirTypeNameToFhirType(sd.Name) : null);
+        public static FHIRDefinedType? BaseType(this StructureDefinition sd)
+        {
+            // this is MUCH easier in STU3+
+            var candidate = sd.Name;
+
+            if (ModelInfo.IsCoreModelType(candidate))
+            {
+                return ModelInfo.IsProfiledQuantity(candidate) ? 
+                    (FHIRDefinedType?)FHIRDefinedType.Quantity 
+                    : ModelInfo.FhirTypeNameToFhirType(candidate);
+            }
+            else
+                return sd.ConstrainedType;
+        }
+
 
         /// <summary>
         /// Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.
