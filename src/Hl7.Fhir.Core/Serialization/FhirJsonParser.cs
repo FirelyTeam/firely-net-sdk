@@ -27,17 +27,17 @@ namespace Hl7.Fhir.Serialization
         // TODO: True for DSTU2, should be false in STU3
         private readonly FhirJsonParsingSettings jsonNodeSettings = new FhirJsonParsingSettings { AllowJsonComments = true };
 
-        public Base Parse(string json, Type dataType)
+        public Base Parse(string json, Type dataType = null)
         {
             var jsonReader =
-                FhirJsonNode.Parse(json, ModelInfo.GetFhirTypeNameForType(dataType), jsonNodeSettings);
+                FhirJsonNode.Parse(json, dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null, jsonNodeSettings);
             return Parse(jsonReader, dataType);
         }
 
-        public Base Parse(JsonReader reader, Type dataType)
+        public Base Parse(JsonReader reader, Type dataType = null)
         {
             var jsonReader =
-                FhirJsonNode.Read(reader, ModelInfo.GetFhirTypeNameForType(dataType), jsonNodeSettings);
+                FhirJsonNode.Read(reader, dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null, jsonNodeSettings);
             return Parse(jsonReader, dataType);
         }
     }

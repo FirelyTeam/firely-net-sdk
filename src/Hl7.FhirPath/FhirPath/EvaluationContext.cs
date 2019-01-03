@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.FhirPath
 {
@@ -18,6 +19,8 @@ namespace Hl7.FhirPath
         }
 
         public ITypedElement Container { get; set; }
+
+        public Action<string, IEnumerable<ITypedElement>> Tracer { get; set; }
 
         #region Obsolete members
         [Obsolete("Please use CreateDefault() instead of this member, which may cause raise conditions.")]

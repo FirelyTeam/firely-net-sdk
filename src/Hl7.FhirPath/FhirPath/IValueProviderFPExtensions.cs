@@ -10,44 +10,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
-using Sprache;
+using Hl7.FhirPath.Sprache;
 
 namespace Hl7.FhirPath
 {
     public static class IValueProviderFPExtensions
     {
-        private static Dictionary<string, CompiledExpression> _cache = new Dictionary<string, CompiledExpression>();
-        private static List<string> _mruList = new List<string>();      // sigh, no sortedlist in NETSTANDARD 1.0
-        private static readonly Object _cacheLock = new Object();
         public static int MAX_FP_EXPRESSION_CACHE_SIZE = 500;
+        private static readonly Cache<string, CompiledExpression> _cache = new Cache<string, CompiledExpression>(expr => Compile(expr), new CacheSettings() { MaxCacheSize = MAX_FP_EXPRESSION_CACHE_SIZE });
+
+        private static CompiledExpression Compile(string expression)
+        {
+            var compiler = new FhirPathCompiler();
+            return compiler.Compile(expression);
+        }
 
         private static CompiledExpression getCompiledExpression(string expression)
         {
-            lock (_cacheLock)
-            {
-                bool success = _cache.TryGetValue(expression, out CompiledExpression ce);
-
-                if (!success)
-                {
-                    var compiler = new FhirPathCompiler();
-                    ce = compiler.Compile(expression);
-
-                    if (_cache.Count >= MAX_FP_EXPRESSION_CACHE_SIZE)
-                    {
-                        var lruExpression = _mruList.First();
-                        _cache.Remove(lruExpression);
-                        _mruList.Remove(lruExpression);
-                    }
-
-                    _cache.Add(expression, ce);
-                }
-
-                _mruList.Remove(expression);
-                _mruList.Add(expression);
-
-                return ce;
-            }
+            return _cache.GetValue(expression);
         }
 
         public static IEnumerable<ITypedElement> Select(this ITypedElement input, string expression, EvaluationContext ctx = null)
@@ -55,19 +37,19 @@ namespace Hl7.FhirPath
             var evaluator = getCompiledExpression(expression);
             return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
         }
-        
+
         public static object Scalar(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.Scalar(input, ctx ?? EvaluationContext.CreateDefault());
         }
-        
+
         public static bool Predicate(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.Predicate(input, ctx ?? EvaluationContext.CreateDefault());
         }
-        
+
         public static bool IsBoolean(this ITypedElement input, string expression, bool value, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);

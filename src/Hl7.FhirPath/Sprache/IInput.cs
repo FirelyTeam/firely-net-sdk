@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sprache
+namespace Hl7.FhirPath.Sprache
 {
     /// <summary>
     /// Represents an input for parsing.

@@ -80,8 +80,8 @@ namespace Hl7.Fhir.Tests.Model
 
             Assert.IsTrue(new Instant(dtNow) != new Instant(dtNow.AddDays(1)));
 
-            Assert.IsTrue(new Instant(new FhirDateTime("2016-01-01T10:00:00+10:00").ToDateTimeOffset()) 
-                != new Instant(new FhirDateTime("2016-01-01T10:00:00+06:00").ToDateTimeOffset()));
+            Assert.IsTrue(new Instant(new FhirDateTime("2016-01-01T10:00:00+10:00").ToDateTimeOffset(TimeSpan.Zero)) 
+                != new Instant(new FhirDateTime("2016-01-01T10:00:00+06:00").ToDateTimeOffset(TimeSpan.Zero)));
 
             // regular checks
             Assert.IsTrue(new Instant(dtNow) != null);

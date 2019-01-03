@@ -410,6 +410,9 @@ namespace Hl7.Fhir.Model
         public static bool IsCoreModelTypeUri(Uri uri)
         {
             return uri != null
+                // [WMR 20181025] Issue #746
+                // Note: FhirCoreProfileBaseUri.IsBaseOf(new Uri("Dummy", UriKind.RelativeOrAbsolute)) = true...?!
+                && uri.IsAbsoluteUri 
                 && FhirCoreProfileBaseUri.IsBaseOf(uri)
                 && IsCoreModelType(FhirCoreProfileBaseUri.MakeRelativeUri(uri).ToString());
         }

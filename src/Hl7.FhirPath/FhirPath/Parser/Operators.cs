@@ -6,7 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Sprache;
+using Hl7.FhirPath.Sprache;
 using System.Linq;
 using System.Collections.Generic;
 
