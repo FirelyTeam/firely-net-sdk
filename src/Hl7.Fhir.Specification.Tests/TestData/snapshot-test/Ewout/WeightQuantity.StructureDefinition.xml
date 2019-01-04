@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://validationtest.org/fhir/StructureDefinition/WeightQuantity" />
   <name value="Weight Quantity" />
@@ -5,8 +6,8 @@
   <description value="Quantity which allows just kilograms" />
   <fhirVersion value="1.0.2" />
   <kind value="primitive-type" />
-  <type value="Quantity" />
   <abstract value="false" />
+  <type value="Quantity" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Quantity" />
   <derivation value="constraint" />
   <differential>

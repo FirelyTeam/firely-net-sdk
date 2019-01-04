@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://example.com/fhir/SD/patient-mrn-id" />
   <name value="patient-mrn-id" />
   <status value="draft" />
   <description value="An example type profile constraining the Identifier type. For use in slicing by profile examples." />
-  <!-- [WMR 20170412 Fixed -->
   <fhirVersion value="3.0.0" />
   <mapping>
     <identity value="v2" />
@@ -22,8 +21,8 @@
     <name value="ServD" />
   </mapping>
   <kind value="primitive-type" />
-  <type value="Identifier" />
   <abstract value="false" />
+  <type value="Identifier" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Identifier" />
   <derivation value="constraint" />
   <snapshot>
