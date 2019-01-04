@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
 {
     public static class DiscriminatorInterpeterExtensions
     {
-        internal static IEnumerable<StructureDefinitionSchemaWalker> EvaluateDiscriminator(this StructureDefinitionSchemaWalker walker, Expression expr)
+        internal static IEnumerable<StructureDefinitionWalker> EvaluateDiscriminator(this StructureDefinitionWalker walker, Expression expr)
         {
             var interpeter = new DiscriminatorInterpreter(walker);
             interpeter.AssertSupportedRootExpression(expr);
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
         /// <param name="discriminatorExpression"></param>
         /// <returns></returns>
         /// <remarks>Discriminator paths are subsets of FhirPath as described here: http://www.hl7.org/implement/standards/fhir/profiling.html#discriminator</remarks>
-        public static IEnumerable<StructureDefinitionSchemaWalker> Walk(this StructureDefinitionSchemaWalker me, string discriminatorExpression)
+        public static IEnumerable<StructureDefinitionWalker> Walk(this StructureDefinitionWalker me, string discriminatorExpression)
         {
             if (discriminatorExpression == null) throw Error.ArgumentNull(nameof(discriminatorExpression));
 

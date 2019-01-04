@@ -18,23 +18,23 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
     /// <summary>
     /// This visitor interprets a parsed FhirPath AST as a discriminator expression
     /// </summary>
-    /// <remarks>Given a <see cref="StructureDefinitionSchemaWalker"/>, this interpreter will
+    /// <remarks>Given a <see cref="StructureDefinitionWalker"/>, this interpreter will
     /// walk the definition tree based on the discriminator tree visited.</remarks>
-    internal class DiscriminatorInterpreter : ExpressionVisitor<IEnumerable<StructureDefinitionSchemaWalker>>
+    internal class DiscriminatorInterpreter : ExpressionVisitor<IEnumerable<StructureDefinitionWalker>>
     {
-        public DiscriminatorInterpreter(in StructureDefinitionSchemaWalker root)
+        public DiscriminatorInterpreter(in StructureDefinitionWalker root)
         {
             Root = root;
         }
 
-        public override IEnumerable<StructureDefinitionSchemaWalker> VisitConstant(ConstantExpression expression) =>
+        public override IEnumerable<StructureDefinitionWalker> VisitConstant(ConstantExpression expression) =>
             throw Error.InvalidOperation("Internal error: VisitConstant() should never be invoked while walking the AST for a discriminator expression.");
 
         /// <summary>
         /// Visit a function call appearing in a discriminator expression
         /// </summary>
         /// <remarks>May only be 'builtin.children', 'resolve' and 'extension'</remarks>
-        public override IEnumerable<StructureDefinitionSchemaWalker> VisitFunctionCall(FunctionCallExpression call)
+        public override IEnumerable<StructureDefinitionWalker> VisitFunctionCall(FunctionCallExpression call)
         {
             var parentSet = call.Focus.Accept(this);
 
@@ -81,13 +81,13 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
             throw new DiscriminatorFormatException($"Function '{call.FunctionName}' should be invoked with a single parameter or type string");
         }
 
-        public override IEnumerable<StructureDefinitionSchemaWalker> VisitNewNodeListInit(NewNodeListInitExpression expression) =>
+        public override IEnumerable<StructureDefinitionWalker> VisitNewNodeListInit(NewNodeListInitExpression expression) =>
             throw new DiscriminatorFormatException("The empty set constructor '{}', is not supported in discriminators.");
 
-        public StructureDefinitionSchemaWalker Root { get; private set; }
+        public StructureDefinitionWalker Root { get; private set; }
 
 
-        public override IEnumerable<StructureDefinitionSchemaWalker> VisitVariableRef(VariableRefExpression expression)
+        public override IEnumerable<StructureDefinitionWalker> VisitVariableRef(VariableRefExpression expression)
         {
             if (expression.Name == "builtin.this")
                 return new[] { Root };

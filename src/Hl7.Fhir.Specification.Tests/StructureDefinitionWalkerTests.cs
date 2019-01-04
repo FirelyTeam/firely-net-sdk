@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void WalkIntoTypeMembers()
         {
             var nav = ElementDefinitionNavigator.ForSnapshot(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation));
-            var walker = new StructureDefinitionSchemaWalker(nav, _source);
+            var walker = new StructureDefinitionWalker(nav, _source);
 
             // A primivite type
             var elem = walker.Child("status");
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("uri.extension", elem.Child("extension").Current.Path);
 
             // Try move to the special value member
-            Assert.ThrowsException<StructureDefinitionSchemaWalkerException>(() => elem.Child("value"), "Primitives should not have a 'value' member");
+            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Child("value"), "Primitives should not have a 'value' member");
 
             // Move into a component
             elem = walker.Child("component");
@@ -77,17 +77,17 @@ namespace Hl7.Fhir.Specification.Tests
 
             // should not walk into value[x] when unconstrained to a single type
             elem = walker.Child("value");
-            Assert.ThrowsException<StructureDefinitionSchemaWalkerException>(() => elem.Child("system"));  // i.e. a Quantity
+            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Child("system"));  // i.e. a Quantity
 
             // can't walk into an unknown child
-            Assert.ThrowsException<StructureDefinitionSchemaWalkerException>(() => walker.Child("ewout"));
+            Assert.ThrowsException<StructureDefinitionWalkerException>(() => walker.Child("ewout"));
         }
 
         [TestMethod]
         public void WalkIntoChoice()            
         {
             var nav = ElementDefinitionNavigator.ForSnapshot(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation));
-            var walker = new StructureDefinitionSchemaWalker(nav, _source);
+            var walker = new StructureDefinitionWalker(nav, _source);
 
             // If you filter on the type of a non-choice member, you'll arrive at that type.
             var elem = walker.Child("method");
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void WalkAcrossReference()
         {
             var nav = ElementDefinitionNavigator.ForSnapshot(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation));
-            var walker = new StructureDefinitionSchemaWalker(nav, _source);
+            var walker = new StructureDefinitionWalker(nav, _source);
 
             var elem = walker.Child("performer").Resolve().OfType("Practitioner").Child("name").Single();
             Assert.AreEqual("Practitioner.name", elem.Current.Path);

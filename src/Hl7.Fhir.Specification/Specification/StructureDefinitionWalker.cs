@@ -16,19 +16,19 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification
 {
-    public class StructureDefinitionSchemaWalker
+    public class StructureDefinitionWalker
     {
         public readonly IResourceResolver Resolver;
 
         public readonly ElementDefinitionNavigator Current;
 
-        public StructureDefinitionSchemaWalker(StructureDefinition sd, IResourceResolver resolver) 
+        public StructureDefinitionWalker(StructureDefinition sd, IResourceResolver resolver) 
             : this(ElementDefinitionNavigator.ForSnapshot(sd), resolver)
         {
             // nothing more
         }
 
-        public StructureDefinitionSchemaWalker(ElementDefinitionNavigator element, IResourceResolver resolver)
+        public StructureDefinitionWalker(ElementDefinitionNavigator element, IResourceResolver resolver)
         {
             Current = element.ShallowCopy();
             Resolver = resolver;
@@ -37,22 +37,22 @@ namespace Hl7.Fhir.Specification
             if (Current.AtRoot) Current.MoveToFirstChild();
         }
 
-        public StructureDefinitionSchemaWalker(StructureDefinitionSchemaWalker other)
+        public StructureDefinitionWalker(StructureDefinitionWalker other)
         {
             Current = other.Current.ShallowCopy();
             Resolver = other.Resolver;
         }
 
-        public StructureDefinitionSchemaWalker FromCanonical(string canonical)
+        public StructureDefinitionWalker FromCanonical(string canonical)
         {
             try
             {
                 var sd = Resolver.FindStructureDefinition(canonical, requireSnapshot: true);
-                return new StructureDefinitionSchemaWalker(ElementDefinitionNavigator.ForSnapshot(sd), Resolver);
+                return new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), Resolver);
             }
             catch (Exception e)
             {
-                throw new StructureDefinitionSchemaWalkerException($"Cannot create a walker for StructureDefinition with canonical '{canonical}' at '{Current.UrlAndPath()}'", e);
+                throw new StructureDefinitionWalkerException($"Cannot create a walker for StructureDefinition with canonical '{canonical}' at '{Current.UrlAndPath()}'", e);
             }
         }
 
@@ -63,27 +63,27 @@ namespace Hl7.Fhir.Specification
         /// <param name="childName"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown when there is no childName given.</exception>
-        public StructureDefinitionSchemaWalker Child(string childName)
+        public StructureDefinitionWalker Child(string childName)
         {
             if (childName == null) throw Error.ArgumentNull(nameof(childName));
 
             var canonicals = Current.Current.Type.Select(t => t.Canonical()).Distinct().ToArray();
             if (canonicals.Length > 1)
-                throw new StructureDefinitionSchemaWalkerException($"Cannot determine which child to select, since there are multiple paths leading from here ('{Current.UrlAndPath()}'), use 'ofType()' to disambiguate");
+                throw new StructureDefinitionWalkerException($"Cannot determine which child to select, since there are multiple paths leading from here ('{Current.UrlAndPath()}'), use 'ofType()' to disambiguate");
 
             var expanded = Expand();
             // Take First(), since all canonicals are the same anyway.
             var definitions = childDefinitions(expanded.First(), childName).Take(2).ToList();
 
             if (definitions.Count == 1)
-                return new StructureDefinitionSchemaWalker(definitions.Single(), Resolver);
+                return new StructureDefinitionWalker(definitions.Single(), Resolver);
             else if (definitions.Count > 1)
                 throw new InvalidOperationException($"Internal error: childDefinitions() produced more than one child with name '{childName} at '{Current.UrlAndPath()}' ");
             else
-                throw new StructureDefinitionSchemaWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.UrlAndPath()}'.");
+                throw new StructureDefinitionWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.UrlAndPath()}'.");
         }
 
-        private static IEnumerable<ElementDefinitionNavigator> childDefinitions(StructureDefinitionSchemaWalker walker, string childName = null)
+        private static IEnumerable<ElementDefinitionNavigator> childDefinitions(StructureDefinitionWalker walker, string childName = null)
         {
             var nav = walker.Current.ShallowCopy();
             var lastName = "";
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Specification
         /// 1. If the walker contains an ElementDefinition with children, it returns itself. 
         /// 2. If the ElementDefinition has a NameReference, it returns the node referred to by the namereference.
         /// 3. If not 1 or 2, it returns a set of walkers representing the types the ElementDefinition refers to.</remarks>
-        public IEnumerable<StructureDefinitionSchemaWalker> Expand()
+        public IEnumerable<StructureDefinitionWalker> Expand()
         {
             if (Current.HasChildren)
                 return new[] { this };
@@ -120,8 +120,8 @@ namespace Hl7.Fhir.Specification
                 var reference = Current.ShallowCopy();
 
                 if (!reference.JumpToNameReference(name))
-                    new StructureDefinitionSchemaWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.UrlAndPath()}'.");
-                return new[] { new StructureDefinitionSchemaWalker(reference, Resolver) };
+                    new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.UrlAndPath()}'.");
+                return new[] { new StructureDefinitionWalker(reference, Resolver) };
             }
             else if(Current.Current.Type.Count >= 1)
             {
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Specification
                     .Select(c => FromCanonical(c));
             }
 
-            throw new StructureDefinitionSchemaWalkerException($"Invalid StructureDefinition: element misses either a type reference or nameReference at '{Current.UrlAndPath()}'");
+            throw new StructureDefinitionWalkerException($"Invalid StructureDefinition: element misses either a type reference or nameReference at '{Current.UrlAndPath()}'");
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Specification
         /// <remarks>This is basically an Expand(), filtering by the given type. Note that this function might return
         /// multiple walkers if there are multiple different constraints for the same type (typerefs with the same
         /// type code, but multiple different profiles.</remarks>
-        public IEnumerable<StructureDefinitionSchemaWalker> OfType(string type)
+        public IEnumerable<StructureDefinitionWalker> OfType(string type)
         {
             var expanded = Expand();
 
@@ -164,11 +164,11 @@ namespace Hl7.Fhir.Specification
         /// </summary>
         /// <returns></returns>
         /// <remarks>May return multiple walkers, one for each of the references encountered.</remarks>
-        /// <exception cref="StructureDefinitionSchemaWalkerException">Thrown when the ElementDefinition's type is not a Reference.</exception>
-        public IEnumerable<StructureDefinitionSchemaWalker> Resolve()
+        /// <exception cref="StructureDefinitionWalkerException">Thrown when the ElementDefinition's type is not a Reference.</exception>
+        public IEnumerable<StructureDefinitionWalker> Resolve()
         {
             if (!Current.Current.Type.Any(t => t.IsReference()))
-                throw new StructureDefinitionSchemaWalkerException("resolve() should only be called on elements of type Reference at '{Current.UrlAndPath()}'.");
+                throw new StructureDefinitionWalkerException("resolve() should only be called on elements of type Reference at '{Current.UrlAndPath()}'.");
 
             return Current.Current.Type
                     .Where(t => t.IsReference())
@@ -176,24 +176,24 @@ namespace Hl7.Fhir.Specification
                     .Select(c => FromCanonical(c));
         }
 
-        public StructureDefinitionSchemaWalker Extension(string url) => FromCanonical(url);
+        public StructureDefinitionWalker Extension(string url) => FromCanonical(url);
     };
 
 
     public static class StructureDefinitionSchemaWalkerEnumerables
     {
-        public static IEnumerable<StructureDefinitionSchemaWalker> Child(this IEnumerable<StructureDefinitionSchemaWalker> me, string childName) =>
+        public static IEnumerable<StructureDefinitionWalker> Child(this IEnumerable<StructureDefinitionWalker> me, string childName) =>
             me.Select(w => w.Child(childName));
 
-        public static IEnumerable<StructureDefinitionSchemaWalker> Expand(this IEnumerable<StructureDefinitionSchemaWalker> me) =>
+        public static IEnumerable<StructureDefinitionWalker> Expand(this IEnumerable<StructureDefinitionWalker> me) =>
             me.SelectMany(w => w.Expand());
 
-        public static IEnumerable<StructureDefinitionSchemaWalker> OfType(this IEnumerable<StructureDefinitionSchemaWalker> me, string canonical) =>
+        public static IEnumerable<StructureDefinitionWalker> OfType(this IEnumerable<StructureDefinitionWalker> me, string canonical) =>
             me.SelectMany(w => w.OfType(canonical));
 
-        public static IEnumerable<StructureDefinitionSchemaWalker> Resolve(this IEnumerable<StructureDefinitionSchemaWalker> me) =>
+        public static IEnumerable<StructureDefinitionWalker> Resolve(this IEnumerable<StructureDefinitionWalker> me) =>
             me.SelectMany(w => w.Resolve());
-        public static IEnumerable<StructureDefinitionSchemaWalker> Extension(this IEnumerable<StructureDefinitionSchemaWalker> me, string canonical) =>
+        public static IEnumerable<StructureDefinitionWalker> Extension(this IEnumerable<StructureDefinitionWalker> me, string canonical) =>
             me.Select(w => w.Extension(canonical));
     }
 }

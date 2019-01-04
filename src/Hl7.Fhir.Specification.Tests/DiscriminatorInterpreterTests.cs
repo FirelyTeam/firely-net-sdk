@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void WalkIntoTypeMembers()
         {
-            var walker = new StructureDefinitionSchemaWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
+            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
 
             // Walk to a primivite type
             var elem = walker.Walk("status").Single();
@@ -51,16 +51,16 @@ namespace Hl7.Fhir.Specification.Tests
             
             // should not walk into value[x] when unconstrained to a single type
             elem = walker.Child("value");
-            Assert.ThrowsException<StructureDefinitionSchemaWalkerException>(() => elem.Walk("system").First());  // i.e. a Quantity
+            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Walk("system").First());  // i.e. a Quantity
 
             // can't walk into an unknown child
-            Assert.ThrowsException<StructureDefinitionSchemaWalkerException>(() => walker.Walk("ewout").First());
+            Assert.ThrowsException<StructureDefinitionWalkerException>(() => walker.Walk("ewout").First());
         }
 
         [TestMethod]
         public void WalkIntoChoice()            
         {
-            var walker = new StructureDefinitionSchemaWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
+            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
 
             // If you filter on the type of a non-choice member, you'll arrive at that type.
             var elem = walker.Walk("value.ofType('Quantity').system").Single();
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void WalkAcrossReference()
         {
-            var walker = new StructureDefinitionSchemaWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
+            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
 
             var elem = walker.Walk("performer.resolve().ofType('Practitioner').name").Single();
             Assert.AreEqual("Practitioner.name", elem.Current.Path);
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void WalkToExtension()
         {
-            var walker = new StructureDefinitionSchemaWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
+            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation), _source);
 
             var elem = walker.Walk("status.extension('http://hl7.org/fhir/StructureDefinition/data-absent-reason').value.ofType('code')").Single();
             Assert.AreEqual("string", elem.Current.Path);   // 'code' in STU3+
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ParseInvalidDiscriminatorExpressions()
         {
             var patientDef = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
-            var schemas = new StructureDefinitionSchemaWalker(new ElementDefinitionNavigator(patientDef), _source);
+            var schemas = new StructureDefinitionWalker(new ElementDefinitionNavigator(patientDef), _source);
 
             eval("45");
             eval("active.resolve('bla')");
