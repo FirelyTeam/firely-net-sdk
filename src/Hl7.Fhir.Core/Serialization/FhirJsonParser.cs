@@ -9,6 +9,8 @@
 using Hl7.Fhir.Model;
 using Newtonsoft.Json;
 using System;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 
 
 namespace Hl7.Fhir.Serialization
@@ -23,21 +25,26 @@ namespace Hl7.Fhir.Serialization
         public T Parse<T>(string json) where T : Base => (T)Parse(json, typeof(T));
 
         public T Parse<T>(JsonReader reader) where T : Base => (T)Parse(reader, typeof(T));
-
-        // TODO: True for DSTU2, should be false in STU3
-        private readonly FhirJsonParsingSettings jsonNodeSettings = new FhirJsonParsingSettings { AllowJsonComments = true };
+        
+        private FhirJsonParsingSettings buildNodeSettings(ParserSettings settings) =>
+                new FhirJsonParsingSettings
+                {
+                    // TODO: True for DSTU2, should be false in STU3
+                    AllowJsonComments = true,
+                    PermissiveParsing = Settings.PermissiveParsing
+                };
 
         public Base Parse(string json, Type dataType = null)
         {
-            var jsonReader =
-                FhirJsonNode.Parse(json, dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null, jsonNodeSettings);
+            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var jsonReader = FhirJsonNode.Parse(json, rootName, buildNodeSettings(Settings));
             return Parse(jsonReader, dataType);
         }
 
         public Base Parse(JsonReader reader, Type dataType = null)
         {
-            var jsonReader =
-                FhirJsonNode.Read(reader, dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null, jsonNodeSettings);
+            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var jsonReader = FhirJsonNode.Read(reader, rootName, buildNodeSettings(Settings));
             return Parse(jsonReader, dataType);
         }
     }

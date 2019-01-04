@@ -8,19 +8,20 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Utility;
 using System;
-
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Serialization
 {
 #pragma warning disable 612, 618
     internal class PrimitiveValueReader
     {
-        private readonly ISourceNode _current;
+        private readonly ITypedElement _current;
         private readonly ModelInspector _inspector;
 
-        public PrimitiveValueReader(ISourceNode data)
+        public PrimitiveValueReader(ITypedElement data)
         {
             _current = data;
             _inspector = BaseFhirParser.Inspector;
@@ -31,17 +32,16 @@ namespace Hl7.Fhir.Serialization
         {
             if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
 
-            object primitiveValue = _current.Text;
+            object primitiveValue = _current.Value;
 
-            if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
-            {
-                // Don't try to parse enums in the parser -> it's been moved to the Code<T> type
-                return primitiveValue;
-            }
+            if (nativeType.IsEnum()) return primitiveValue;
 
             try
             {
-                return PrimitiveTypeConverter.ConvertTo(primitiveValue, nativeType);
+                if (primitiveValue is PartialDateTime || primitiveValue is PartialTime)
+                    return PrimitiveTypeConverter.ConvertTo(primitiveValue.ToString(), nativeType);                    
+                else
+                    return PrimitiveTypeConverter.ConvertTo(primitiveValue, nativeType);
             }
             catch (NotSupportedException exc)
             {

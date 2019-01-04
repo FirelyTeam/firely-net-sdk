@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -24,13 +24,13 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
     internal class DispatchingReader
     {
-        private readonly ISourceNode _current;
+        private readonly ITypedElement _current;
         private readonly ModelInspector _inspector;
         private readonly bool _arrayMode;
 
         public ParserSettings Settings { get; private set; }
 
-        internal DispatchingReader(ISourceNode data, ParserSettings settings, bool arrayMode)
+        internal DispatchingReader(ITypedElement data, ParserSettings settings, bool arrayMode)
         {
             _current = data;
             _inspector = BaseFhirParser.Inspector;
@@ -71,38 +71,23 @@ namespace Hl7.Fhir.Serialization
                 return reader.Deserialize(null);
             }
 
-            ClassMapping mapping;
+            if (_current.InstanceType is null)
+                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
+
+            ClassMapping mapping = prop.Choice == ChoiceType.DatatypeChoice
+                ? getMappingForType(prop, memberName, _current.InstanceType)
+                : _inspector.ImportType(prop.ImplementingType);
 
             // Handle other Choices having any datatype or a list of datatypes
-            if(prop.Choice == ChoiceType.DatatypeChoice)
-            {
-                // For Choice properties, determine the actual type of the element using
-                // the suffix of the membername (i.e. deceasedBoolean, deceasedDate)
-                // This function implements type substitution.
-                mapping = determineElementPropertyType(prop, memberName);
-            }   
-            // Else use the actual return type of the property
-            else
-            {
-                mapping = _inspector.ImportType(prop.ImplementingType);
-            }
 
             if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument(nameof(existing), "Can only read complex elements into types that are Element or Resource");
             var cplxReader = new ComplexTypeReader(_current, Settings);
             return cplxReader.Deserialize(mapping, (Base)existing);
         }
 
-        private ClassMapping determineElementPropertyType(PropertyMapping mappedProperty, string memberName)
+        private ClassMapping getMappingForType(PropertyMapping mappedProperty, string memberName, string typeName)
         {
             ClassMapping result = null;
-
-            var typeName = mappedProperty.GetChoiceSuffixFromName(memberName);
-
-            if (String.IsNullOrEmpty(typeName))
-                throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used".FormatWith(memberName), _current.Location);
-
-            // Exception: valueResource actually means the element is of type ResourceReference
-            if (typeName == "Resource") typeName = "Reference";
 
             // NB: this will return the latest type registered for that name, so supports type mapping/overriding
             // Maybe we should Import the types present on the choice, to make sure they are available. For now
