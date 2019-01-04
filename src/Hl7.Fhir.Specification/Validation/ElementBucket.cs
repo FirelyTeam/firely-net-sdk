@@ -27,11 +27,6 @@ namespace Hl7.Fhir.Validation
 
         public override bool Add(ITypedElement instance)
         {
-            // Membership of an "element bucket" should be determined by element name
-            //var matches = ChildNameMatcher.NameMatches(Root.PathName, candidate);
-            //if (!matches)
-            //    Validator.Trace(outcome, $"Element name {candidate.Name} does match definition {Root.Path}", Issue.CONTENT_ELEMENT_NAME_DOESNT_MATCH_DEFINITION, candidate);
-
             Members.Add(instance);
             return true;
         }

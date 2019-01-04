@@ -38,17 +38,26 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav)
-        {
-            string path = "";
+        /// <summary>
+        /// Builds a fully qualified path for the ElementDefinition.
+        /// </summary>
+        /// <param name="def"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        /// <remarks>A fully qualified path is the path of the ElementDefinition, prefixed by the canonical of 
+        /// the StructureDefinition the ElementDefinition is part of.</remarks>
+        public static string QualifiedDefinitionPath(this ElementDefinition def, StructureDefinition parent = null) =>
+            parent?.Url != null ?
+                $"{{{parent?.Url}}}{def.Path}"
+                : $"{def.Path}";
 
-            if (nav.StructureDefinition != null && nav.StructureDefinition.Url != null)
-                path = "{" + nav.StructureDefinition.Url + "}";
-
-            path += nav.Path;
-
-            return path;
-        }
+        /// <summary>
+        /// Builds a fully qualified path for the ElementDefinition.
+        /// </summary>
+        /// <remarks>A fully qualified path is the path of the ElementDefinition, prefixed by the canonical of 
+        /// the StructureDefinition the ElementDefinition is part of.</remarks>
+        public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav) =>
+            QualifiedDefinitionPath(nav.Current, nav.StructureDefinition);
     }
 
 }

@@ -11,6 +11,7 @@ using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Navigation.FhirPath
 {
@@ -30,14 +31,14 @@ namespace Hl7.Fhir.Specification.Navigation.FhirPath
         /// <param name="discriminatorExpression"></param>
         /// <returns></returns>
         /// <remarks>Discriminator paths are subsets of FhirPath as described here: http://www.hl7.org/implement/standards/fhir/profiling.html#discriminator</remarks>
-        public static IEnumerable<StructureDefinitionWalker> Walk(this StructureDefinitionWalker me, string discriminatorExpression)
+        public static IList<StructureDefinitionWalker> Walk(this StructureDefinitionWalker me, string discriminatorExpression)
         {
             if (discriminatorExpression == null) throw Error.ArgumentNull(nameof(discriminatorExpression));
 
             var compiler = new FhirPathCompiler(new SymbolTable());  // Basic symbol table is enough to have ofType() and resolve()
             var tree = compiler.Parse(discriminatorExpression);
 
-            return me.EvaluateDiscriminator(tree);
+            return me.EvaluateDiscriminator(tree).ToList();
         }
 
     }

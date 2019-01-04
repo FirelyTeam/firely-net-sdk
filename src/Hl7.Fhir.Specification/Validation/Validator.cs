@@ -173,13 +173,13 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                List<ElementDefinitionNavigator> allDefinitions = new List<ElementDefinitionNavigator>(definitions);
+                var allDefinitions = definitions.ToList();
 
                 if (allDefinitions.Count() == 1)
                     outcome.Add(validateElement(allDefinitions.Single(), instance));
                 else
                 {
-                    var validators = allDefinitions.Select(nav => createValidator(nav, instance));
+                    var validators = allDefinitions.Select(nav => createValidator(nav));
                     outcome.Add(this.Combine(BatchValidationMode.All, instance, validators));
                 }
             }
@@ -189,22 +189,15 @@ namespace Hl7.Fhir.Validation
             }
 
             return outcome;
+
+            Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav) =>
+                () => validateElement(nav, instance);
         }
-
-
-        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, ScopedNode instance)
-        {
-            return () => validateElement(nav, instance);
-        }
-
-
-        //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
+     
 
         private OperationOutcome validateElement(ElementDefinitionNavigator definition, ScopedNode instance)
         {
             var outcome = new OperationOutcome();
-
-            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
             // If navigator cannot be moved to content, there's really nothing to validate against.
             if (definition.AtRoot && !definition.MoveToFirstChild())
@@ -212,6 +205,8 @@ namespace Hl7.Fhir.Validation
                 outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                 return outcome;
             }
+
+            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
             // This does not work, since the children might still be empty, we need something better
             //// Any node must either have a value, or children, or both (e.g. extensions on primitives)
