@@ -105,6 +105,7 @@ namespace Hl7.Fhir.Validation
             other.SkipConstraintValidation = SkipConstraintValidation;
             other.TerminologyService = TerminologyService;
             other.Trace = Trace;
+            other.FhirPathCompiler = FhirPathCompiler;
         }
 
         /// <summary>Creates a new <see cref="ValidationSettings"/> object that is a copy of the current instance.</summary>

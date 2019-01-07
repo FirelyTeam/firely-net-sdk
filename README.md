@@ -1,6 +1,6 @@
-|DSTU2|STU3|
-|---|---|
-|[![DSTU2](https://ci.appveyor.com/api/projects/status/tt94it79sgl172up/branch/develop?svg=true)](https://ci.appveyor.com/project/ewoutkramer/fhir-net-api-7cq0g/branch/develop)|[![STU3](https://ci.appveyor.com/api/projects/status/tt94it79sgl172up/branch/develop-stu3?svg=true)](https://ci.appveyor.com/project/ewoutkramer/fhir-net-api-7cq0g/branch/develop-stu3)|
+|DSTU2|STU3|Released|
+|---|---|---|
+|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop-stu3)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Release status](https://vsrm.dev.azure.com/firely/_apis/public/Release/badge/d27985be-1c61-41fd-82e7-23e7a2f06dc3/1/2)](https://dev.azure.com/firely/fhir-net-api/_releaseDefinition?definitionId=1&_a=definition-pipeline)|
 
 ## Introduction ##
 This is the official support API for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.

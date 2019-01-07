@@ -9,7 +9,7 @@
 using Hl7.FhirPath.Parser;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
-using Sprache;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
 using System.Linq;

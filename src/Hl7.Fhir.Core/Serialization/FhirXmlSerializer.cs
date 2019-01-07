@@ -24,23 +24,23 @@ namespace Hl7.Fhir.Serialization
         private FhirXmlSerializationSettings buildFhirXmlWriterSettings() =>
             new FhirXmlSerializationSettings { Pretty = Settings.Pretty };
 
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null) => 
-            MakeElementStack(instance, summary)
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) => 
+            MakeElementStack(instance, summary, elements)
             .Rename(root)
             .ToXml(settings: buildFhirXmlWriterSettings());
 
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => 
-            MakeElementStack(instance, summary)
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) => 
+            MakeElementStack(instance, summary, elements)
             .Rename(root)
             .ToXmlBytes(settings: buildFhirXmlWriterSettings());
 
-        public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null) =>
-           MakeElementStack(instance, summary)
+        public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
+           MakeElementStack(instance, summary, elements)
             .Rename(root)
             .ToXDocument(buildFhirXmlWriterSettings()).Rename(root);
 
-        public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null) =>
-            MakeElementStack(instance, summary)
+        public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
+            MakeElementStack(instance, summary, elements)
             .Rename(root)
             .WriteTo(writer, settings: buildFhirXmlWriterSettings());
     }

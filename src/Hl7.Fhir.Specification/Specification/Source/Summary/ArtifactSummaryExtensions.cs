@@ -50,7 +50,16 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find <see cref="ArtifactSummary"/> instances for conformance resources with the specified canonical url.</summary>
         public static IEnumerable<ArtifactSummary> FindConformanceResources(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
-            => summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == canonicalUrl);
+        {
+            var values = canonicalUrl.Split('|');
+            if (values.Length > 2)
+                throw Error.Argument("Url is not valid. The pipe occures more than once.");
+
+            var version = values.Length == 2 ? values[1] : string.Empty;
+
+            return summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == values[0] && 
+                                                               (string.IsNullOrEmpty(version) || r.GetConformanceVersion() == version));
+        }
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for <see cref="CodeSystem"/> resources with the specified valueSet uri.</summary>
         public static IEnumerable<ArtifactSummary> FindCodeSystems(this IEnumerable<ArtifactSummary> summaries, string valueSetUri)

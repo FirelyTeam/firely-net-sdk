@@ -1,5 +1,5 @@
 ﻿
-namespace Sprache
+namespace Hl7.FhirPath.Sprache
 {
     /// <summary>
     /// An interface for objects that have a source <see cref="Position"/>.

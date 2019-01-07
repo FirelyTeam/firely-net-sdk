@@ -16,12 +16,21 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.FhirPath;
+using System.Diagnostics;
+using System.Threading.Tasks.Dataflow;
 
 namespace Hl7.FhirPath.Tests
 {
     [TestClass]
     public class FhirPathTest
     {
+        /// <summary>
+        ///  Gets or sets the test context which provides
+        ///  information about and functionality for the current test run.
+        ///</summary>
+        public TestContext TestContext { get; set; }
+
         [TestMethod]
         public void ConvertToInteger()
         {
@@ -157,7 +166,7 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
-        public void TestFhirPathCombine()
+        public void TestFhirPathCombine2()
         {
             var cs = new Hl7.Fhir.Model.CodeSystem() { Id = "pat45" };
             cs.Concept.Add(new CodeSystem.ConceptDefinitionComponent()
@@ -177,6 +186,57 @@ namespace Hl7.FhirPath.Tests
             });
             result = nav.Predicate("concept.code.combine($this.descendants().concept.code).isDistinct()", ctx);
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TestFhirPathCombine()
+        {
+            var patient = new Patient();
+
+            patient.Identifier.Add(new Identifier("http://nu.nl", "id1"));
+            patient.Identifier.Add(new Identifier("http://nu.nl", "id2"));
+
+            var result = patient.Predicate("identifier[0].value.combine($this.identifier[1].value).isDistinct()");
+            Assert.IsTrue(result);
+
+            result = patient.Predicate("identifier[0].value.combine($this.identifier[0].value).isDistinct()");
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void TestFhirPathScalarInParallel()
+        {
+            var patient = new Patient();
+
+            patient.Identifier.Add(new Identifier("http://nu.nl", "id1"));
+
+            var element = patient.ToTypedElement();
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var actionBlock = new ActionBlock<string>(
+                 (input =>
+                 {
+                     element.Select(input);
+                 }),
+                 new ExecutionDataflowBlockOptions()
+                 {
+                     MaxDegreeOfParallelism = 20
+                 });
+
+
+            for (int i = 0; i < 20_000; i++)
+            {
+                actionBlock.Post($"identifier[{i}]");
+            }
+            actionBlock.Complete();
+            actionBlock.Completion.Wait();
+
+            stopwatch.Stop();
+
+            TestContext.WriteLine($"Select in 20.000 : {stopwatch.ElapsedMilliseconds}ms");
         }
 
         //[TestMethod]

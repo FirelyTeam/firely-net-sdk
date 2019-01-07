@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Rest
 
                 var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", response.Request.Method,
                     response.Request.Url, typeof(TResource).Name, result.GetType().Name);
-                throw new FhirOperationException(message, Requester.LastStatusCode);
+                throw new FhirOperationException(message, Requester.LastStatusCode.Value);
             }
             else
                 return result as TResource;
