@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             Descending,
         }
 
-        [FhirType("CodeFilterComponent")]
+        [FhirType("CodeFilterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("DateFilterComponent")]
+        [FhirType("DateFilterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DateFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("SortComponent")]
+        [FhirType("SortComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SortComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {

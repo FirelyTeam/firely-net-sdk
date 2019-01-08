@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             Low,
         }
 
-        [FhirType("EvidenceComponent")]
+        [FhirType("EvidenceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MitigationComponent")]
+        [FhirType("MitigationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

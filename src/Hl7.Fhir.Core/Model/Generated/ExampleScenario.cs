@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             Entity,
         }
 
-        [FhirType("ActorComponent")]
+        [FhirType("ActorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InstanceComponent")]
+        [FhirType("InstanceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VersionComponent")]
+        [FhirType("VersionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainedInstanceComponent")]
+        [FhirType("ContainedInstanceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcessComponent")]
+        [FhirType("ProcessComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StepComponent")]
+        [FhirType("StepComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StepComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationComponent")]
+        [FhirType("OperationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1502,7 +1502,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AlternativeComponent")]
+        [FhirType("AlternativeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

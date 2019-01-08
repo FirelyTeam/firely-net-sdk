@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             IsReplacedBy,
         }
 
-        [FhirType("RelatedEntryComponent")]
+        [FhirType("RelatedEntryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

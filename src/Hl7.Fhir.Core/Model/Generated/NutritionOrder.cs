@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "NutritionOrder"; } }
         
-        [FhirType("OralDietComponent")]
+        [FhirType("OralDietComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutrientComponent")]
+        [FhirType("NutrientComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TextureComponent")]
+        [FhirType("TextureComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplementComponent")]
+        [FhirType("SupplementComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EnteralFormulaComponent")]
+        [FhirType("EnteralFormulaComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -948,7 +948,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationComponent")]
+        [FhirType("AdministrationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

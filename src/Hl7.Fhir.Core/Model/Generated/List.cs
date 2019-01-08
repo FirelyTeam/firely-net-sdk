@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("EntryComponent")]
+        [FhirType("EntryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

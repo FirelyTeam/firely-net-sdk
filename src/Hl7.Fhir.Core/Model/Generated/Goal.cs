@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
             Rejected,
         }
 
-        [FhirType("TargetComponent")]
+        [FhirType("TargetComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

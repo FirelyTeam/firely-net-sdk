@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("UdiCarrierComponent")]
+        [FhirType("UdiCarrierComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DeviceNameComponent")]
+        [FhirType("DeviceNameComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecializationComponent")]
+        [FhirType("SpecializationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VersionComponent")]
+        [FhirType("VersionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyComponent")]
+        [FhirType("PropertyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

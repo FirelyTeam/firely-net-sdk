@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "SubstanceSourceMaterial"; } }
         
-        [FhirType("FractionDescriptionComponent")]
+        [FhirType("FractionDescriptionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FractionDescriptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OrganismComponent")]
+        [FhirType("OrganismComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OrganismComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AuthorComponent")]
+        [FhirType("AuthorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AuthorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HybridComponent")]
+        [FhirType("HybridComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class HybridComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OrganismGeneralComponent")]
+        [FhirType("OrganismGeneralComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OrganismGeneralComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PartDescriptionComponent")]
+        [FhirType("PartDescriptionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PartDescriptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

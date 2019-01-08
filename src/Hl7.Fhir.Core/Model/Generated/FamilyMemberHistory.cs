@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             HealthUnknown,
         }
 
-        [FhirType("ConditionComponent")]
+        [FhirType("ConditionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

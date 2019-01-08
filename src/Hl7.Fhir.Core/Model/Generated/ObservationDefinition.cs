@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
             Absolute,
         }
 
-        [FhirType("QuantitativeDetailsComponent")]
+        [FhirType("QuantitativeDetailsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("QualifiedIntervalComponent")]
+        [FhirType("QualifiedIntervalComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ValueSet"; } }
         
-        [FhirType("ComposeComponent")]
+        [FhirType("ComposeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptSetComponent")]
+        [FhirType("ConceptSetComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptReferenceComponent")]
+        [FhirType("ConceptReferenceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DesignationComponent")]
+        [FhirType("DesignationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FilterComponent")]
+        [FhirType("FilterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -958,7 +958,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionComponent")]
+        [FhirType("ExpansionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1213,7 +1213,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1339,7 +1339,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainsComponent")]
+        [FhirType("ContainsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

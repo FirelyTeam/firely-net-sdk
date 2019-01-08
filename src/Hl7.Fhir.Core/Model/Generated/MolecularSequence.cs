@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("ReferenceSeqComponent")]
+        [FhirType("ReferenceSeqComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VariantComponent")]
+        [FhirType("VariantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -809,7 +809,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("QualityComponent")]
+        [FhirType("QualityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RocComponent")]
+        [FhirType("RocComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RocComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1691,7 +1691,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RepositoryComponent")]
+        [FhirType("RepositoryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1982,7 +1982,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureVariantComponent")]
+        [FhirType("StructureVariantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2178,7 +2178,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OuterComponent")]
+        [FhirType("OuterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2320,7 +2320,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InnerComponent")]
+        [FhirType("InnerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             Alternate,
         }
 
-        [FhirType("TypeTestedComponent")]
+        [FhirType("TypeTestedComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainerComponent")]
+        [FhirType("ContainerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdditiveComponent")]
+        [FhirType("AdditiveComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HandlingComponent")]
+        [FhirType("HandlingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

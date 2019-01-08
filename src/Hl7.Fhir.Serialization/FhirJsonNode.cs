@@ -236,7 +236,9 @@ namespace Hl7.Fhir.Serialization
 
         private bool isResourceTypeIndicator(IGrouping<string, JProperty> child) => 
             child.Key != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME ?
-                false : child.First().Value.Type == JTokenType.String;
+                false :
+                child.First().Value.Type == JTokenType.String 
+                    && (Name != "instance");        // Hack to support R4 ExampleScenario.instance.resourceType element
 
         private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string, JProperty> child)
         {

@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
             Option,
         }
 
-        [FhirType("DispenseRequestComponent")]
+        [FhirType("DispenseRequestComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InitialFillComponent")]
+        [FhirType("InitialFillComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent")]
+        [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

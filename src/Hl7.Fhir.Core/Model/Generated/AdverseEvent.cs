@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             Potential,
         }
 
-        [FhirType("SuspectEntityComponent")]
+        [FhirType("SuspectEntityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CausalityComponent")]
+        [FhirType("CausalityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

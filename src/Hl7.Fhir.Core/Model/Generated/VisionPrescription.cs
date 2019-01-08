@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
             Out,
         }
 
-        [FhirType("LensSpecificationComponent")]
+        [FhirType("LensSpecificationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PrismComponent")]
+        [FhirType("PrismComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

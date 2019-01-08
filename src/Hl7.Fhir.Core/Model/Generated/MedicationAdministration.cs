@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("PerformerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DosageComponent")]
+        [FhirType("DosageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

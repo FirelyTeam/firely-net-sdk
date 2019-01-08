@@ -314,7 +314,7 @@ if(!abstractType) {
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= componentName #>")]
+        [FhirType("<#= componentName #>", NamedBackboneElement=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1599,7 +1599,7 @@ if (!abstractType){
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= componentName #>")]
+        [FhirType("<#= componentName #>", NamedBackboneElement=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {

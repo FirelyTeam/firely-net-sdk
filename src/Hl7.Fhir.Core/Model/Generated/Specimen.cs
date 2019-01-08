@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("CollectionComponent")]
+        [FhirType("CollectionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcessingComponent")]
+        [FhirType("ProcessingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainerComponent")]
+        [FhirType("ContainerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

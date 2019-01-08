@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             Informational,
         }
 
-        [FhirType("IssueComponent")]
+        [FhirType("IssueComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

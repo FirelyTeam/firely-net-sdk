@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             RevalFail,
         }
 
-        [FhirType("PrimarySourceComponent")]
+        [FhirType("PrimarySourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AttestationComponent")]
+        [FhirType("AttestationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValidatorComponent")]
+        [FhirType("ValidatorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

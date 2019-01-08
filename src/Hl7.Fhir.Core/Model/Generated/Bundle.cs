@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
             PATCH,
         }
 
-        [FhirType("LinkComponent")]
+        [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntryComponent")]
+        [FhirType("EntryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SearchComponent")]
+        [FhirType("SearchComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequestComponent")]
+        [FhirType("RequestComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResponseComponent")]
+        [FhirType("ResponseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

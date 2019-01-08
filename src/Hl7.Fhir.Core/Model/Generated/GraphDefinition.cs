@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
             Custom,
         }
 
-        [FhirType("LinkComponent")]
+        [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetComponent")]
+        [FhirType("TargetComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CompartmentComponent")]
+        [FhirType("CompartmentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
