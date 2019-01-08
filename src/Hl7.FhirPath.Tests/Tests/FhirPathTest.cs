@@ -124,7 +124,7 @@ namespace Hl7.FhirPath.Tests
             patient.Meta = new Meta() { LastUpdated = new DateTimeOffset(2018, 5, 24, 14, 48, 0, TimeSpan.Zero) };
             var nav = patient.ToTypedElement();
 
-            EvaluationContext ctx = new EvaluationContext();
+            EvaluationContext ctx = new FhirEvaluationContext();
             var result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
@@ -134,11 +134,11 @@ namespace Hl7.FhirPath.Tests
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.AreEqual("log", name);
-                foreach (var item in results)
+                foreach (ITypedElement item in results)
                 {
-                    var value = item.Annotation<IFhirValueProvider>();
-                    System.Diagnostics.Trace.WriteLine($"--({value.FhirValue.GetType().Name}): {item.Value} {value.FhirValue}");
-                    Assert.AreEqual(patient.Meta, value);
+                    var fhirValue = item.Annotation<IFhirValueProvider>();
+                    System.Diagnostics.Trace.WriteLine($"--({fhirValue.FhirValue.GetType().Name}): {item.Value} {fhirValue.FhirValue}");
+                    Assert.AreEqual(patient.Meta, fhirValue.FhirValue);
                     traced = true;
                 }
             };
@@ -152,10 +152,10 @@ namespace Hl7.FhirPath.Tests
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.IsTrue(name == "id" || name == "log");
-                foreach (var item in results)
+                foreach (ITypedElement item in results)
                 {
-                    var value = item.Annotation<IFhirValueProvider>();
-                    System.Diagnostics.Trace.WriteLine($"--({value.FhirValue.GetType().Name}): {item.Value} {value.FhirValue}");
+                    var fhirValue = item.Annotation<IFhirValueProvider>();
+                    System.Diagnostics.Trace.WriteLine($"--({fhirValue.FhirValue.GetType().Name}): {item.Value} {fhirValue.FhirValue}");
                     traced = true;
                 }
             };
