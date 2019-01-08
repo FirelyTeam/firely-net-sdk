@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             Outcome,
         }
 
-        [FhirType("CharacteristicComponent")]
+        [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

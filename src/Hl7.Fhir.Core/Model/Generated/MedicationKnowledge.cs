@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("RelatedMedicationKnowledgeComponent")]
+        [FhirType("RelatedMedicationKnowledgeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MonographComponent")]
+        [FhirType("MonographComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("IngredientComponent")]
+        [FhirType("IngredientComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CostComponent")]
+        [FhirType("CostComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MonitoringProgramComponent")]
+        [FhirType("MonitoringProgramComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationGuidelinesComponent")]
+        [FhirType("AdministrationGuidelinesComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DosageComponent")]
+        [FhirType("DosageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PatientCharacteristicsComponent")]
+        [FhirType("PatientCharacteristicsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1065,7 +1065,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicineClassificationComponent")]
+        [FhirType("MedicineClassificationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1171,7 +1171,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackagingComponent")]
+        [FhirType("PackagingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DrugCharacteristicComponent")]
+        [FhirType("DrugCharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1381,7 +1381,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RegulatoryComponent")]
+        [FhirType("RegulatoryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1526,7 +1526,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent")]
+        [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1651,7 +1651,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ScheduleComponent")]
+        [FhirType("ScheduleComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1738,7 +1738,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MaxDispenseComponent")]
+        [FhirType("MaxDispenseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1843,7 +1843,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("KineticsComponent")]
+        [FhirType("KineticsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

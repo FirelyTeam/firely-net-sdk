@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductIndication"; } }
         
-        [FhirType("OtherTherapyComponent")]
+        [FhirType("OtherTherapyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

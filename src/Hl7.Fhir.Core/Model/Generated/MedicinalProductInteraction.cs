@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductInteraction"; } }
         
-        [FhirType("InteractantComponent")]
+        [FhirType("InteractantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

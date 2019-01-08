@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             All,
         }
 
-        [FhirType("SoftwareComponent")]
+        [FhirType("SoftwareComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationComponent")]
+        [FhirType("ImplementationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CodeSystemComponent")]
+        [FhirType("CodeSystemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CodeSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VersionComponent")]
+        [FhirType("VersionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FilterComponent")]
+        [FhirType("FilterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionComponent")]
+        [FhirType("ExpansionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1157,7 +1157,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1300,7 +1300,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValidateCodeComponent")]
+        [FhirType("ValidateCodeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ValidateCodeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1406,7 +1406,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TranslationComponent")]
+        [FhirType("TranslationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TranslationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1512,7 +1512,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClosureComponent")]
+        [FhirType("ClosureComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ClosureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

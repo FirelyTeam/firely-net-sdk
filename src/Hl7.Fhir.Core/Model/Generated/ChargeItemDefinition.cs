@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ChargeItemDefinition"; } }
         
-        [FhirType("ApplicabilityComponent")]
+        [FhirType("ApplicabilityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyGroupComponent")]
+        [FhirType("PropertyGroupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PriceComponentComponent")]
+        [FhirType("PriceComponentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

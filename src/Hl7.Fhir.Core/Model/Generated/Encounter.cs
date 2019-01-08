@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             Completed,
         }
 
-        [FhirType("StatusHistoryComponent")]
+        [FhirType("StatusHistoryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClassHistoryComponent")]
+        [FhirType("ClassHistoryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParticipantComponent")]
+        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosisComponent")]
+        [FhirType("DiagnosisComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HospitalizationComponent")]
+        [FhirType("HospitalizationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LocationComponent")]
+        [FhirType("LocationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

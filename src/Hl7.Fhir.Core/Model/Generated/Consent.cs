@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             Authoredby,
         }
 
-        [FhirType("PolicyComponent")]
+        [FhirType("PolicyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VerificationComponent")]
+        [FhirType("VerificationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("provisionComponent")]
+        [FhirType("provisionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("provisionActorComponent")]
+        [FhirType("provisionActorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("provisionDataComponent")]
+        [FhirType("provisionDataComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

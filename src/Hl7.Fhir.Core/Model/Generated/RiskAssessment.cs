@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "RiskAssessment"; } }
         
-        [FhirType("PredictionComponent")]
+        [FhirType("PredictionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             Stopped,
         }
 
-        [FhirType("ItemComponent")]
+        [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnswerComponent")]
+        [FhirType("AnswerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

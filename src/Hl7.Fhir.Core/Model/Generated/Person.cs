@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             Level4,
         }
 
-        [FhirType("LinkComponent")]
+        [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

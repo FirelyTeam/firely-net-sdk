@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             Validation,
         }
 
-        [FhirType("InsuranceComponent")]
+        [FhirType("InsuranceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ItemsComponent")]
+        [FhirType("ItemsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BenefitComponent")]
+        [FhirType("BenefitComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ErrorsComponent")]
+        [FhirType("ErrorsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

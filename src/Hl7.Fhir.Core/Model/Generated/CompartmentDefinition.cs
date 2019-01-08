@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "CompartmentDefinition"; } }
         
-        [FhirType("ResourceComponent")]
+        [FhirType("ResourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

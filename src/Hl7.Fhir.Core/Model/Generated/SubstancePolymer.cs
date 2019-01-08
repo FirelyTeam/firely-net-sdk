@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "SubstancePolymer"; } }
         
-        [FhirType("MonomerSetComponent")]
+        [FhirType("MonomerSetComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StartingMaterialComponent")]
+        [FhirType("StartingMaterialComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RepeatComponent")]
+        [FhirType("RepeatComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RepeatUnitComponent")]
+        [FhirType("RepeatUnitComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DegreeOfPolymerisationComponent")]
+        [FhirType("DegreeOfPolymerisationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructuralRepresentationComponent")]
+        [FhirType("StructuralRepresentationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

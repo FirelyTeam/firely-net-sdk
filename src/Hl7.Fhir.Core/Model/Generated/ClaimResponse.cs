@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ClaimResponse"; } }
         
-        [FhirType("ItemComponent")]
+        [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdjudicationComponent")]
+        [FhirType("AdjudicationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ItemDetailComponent")]
+        [FhirType("ItemDetailComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ItemDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubDetailComponent")]
+        [FhirType("SubDetailComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemComponent")]
+        [FhirType("AddedItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1246,7 +1246,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemDetailComponent")]
+        [FhirType("AddedItemDetailComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AddedItemDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1519,7 +1519,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemSubDetailComponent")]
+        [FhirType("AddedItemSubDetailComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AddedItemSubDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1773,7 +1773,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TotalComponent")]
+        [FhirType("TotalComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TotalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1879,7 +1879,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PaymentComponent")]
+        [FhirType("PaymentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2076,7 +2076,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NoteComponent")]
+        [FhirType("NoteComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2274,7 +2274,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InsuranceComponent")]
+        [FhirType("InsuranceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2496,7 +2496,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ErrorComponent")]
+        [FhirType("ErrorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ErrorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

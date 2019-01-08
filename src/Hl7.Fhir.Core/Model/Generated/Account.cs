@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("CoverageComponent")]
+        [FhirType("CoverageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GuarantorComponent")]
+        [FhirType("GuarantorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

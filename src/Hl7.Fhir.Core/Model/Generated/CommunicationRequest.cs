@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "CommunicationRequest"; } }
         
-        [FhirType("PayloadComponent")]
+        [FhirType("PayloadComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

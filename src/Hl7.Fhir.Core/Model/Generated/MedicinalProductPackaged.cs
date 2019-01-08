@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductPackaged"; } }
         
-        [FhirType("BatchIdentifierComponent")]
+        [FhirType("BatchIdentifierComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackageItemComponent")]
+        [FhirType("PackageItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

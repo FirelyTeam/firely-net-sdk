@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Measure"; } }
         
-        [FhirType("GroupComponent")]
+        [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PopulationComponent")]
+        [FhirType("PopulationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierComponent")]
+        [FhirType("StratifierComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComponentComponent")]
+        [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplementalDataComponent")]
+        [FhirType("SupplementalDataComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

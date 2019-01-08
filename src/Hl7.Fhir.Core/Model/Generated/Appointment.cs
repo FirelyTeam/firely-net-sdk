@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             InformationOnly,
         }
 
-        [FhirType("ParticipantComponent")]
+        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

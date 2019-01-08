@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("PerformerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent")]
+        [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -47,6 +47,8 @@ namespace Hl7.Fhir.Introspection
         public bool IsBackbone { get; private set; }
 
         public bool IsAbstract { get; private set; }
+
+        public bool IsNamedBackboneElement { get; private set; }
 
         /// <summary>
         /// PropertyMappings indexed by uppercase name for access speed
@@ -115,6 +117,7 @@ namespace Hl7.Fhir.Introspection
                 result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
                 result.IsAbstract = type.GetTypeInfo().IsAbstract;
+                result.IsNamedBackboneElement = isNamedBackbone(type);
                 result.IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                     ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
 
@@ -158,6 +161,9 @@ namespace Hl7.Fhir.Introspection
 
             me._orderedMappings = me._propMappings.Values.OrderBy(prop => prop.Order).ToList();
         }
+
+        private static bool isNamedBackbone(Type type) => 
+            type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>()?.NamedBackboneElement == true;
 
 
         private static string getProfile(Type type) => 

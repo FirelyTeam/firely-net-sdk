@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             VisionPrescription,
         }
 
-        [FhirType("ParticipantComponent")]
+        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DynamicValueComponent")]
+        [FhirType("DynamicValueComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("SeriesComponent")]
+        [FhirType("SeriesComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PerformerComponent")]
+        [FhirType("PerformerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InstanceComponent")]
+        [FhirType("InstanceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

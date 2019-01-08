@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             DataCollection,
         }
 
-        [FhirType("GroupComponent")]
+        [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PopulationComponent")]
+        [FhirType("PopulationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierComponent")]
+        [FhirType("StratifierComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupComponent")]
+        [FhirType("StratifierGroupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComponentComponent")]
+        [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupPopulationComponent")]
+        [FhirType("StratifierGroupPopulationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

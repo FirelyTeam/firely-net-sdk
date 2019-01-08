@@ -2242,7 +2242,7 @@ namespace Hl7.Fhir.Model
             HtmlTemplate,
         }
 
-        [FhirType("DependsOnComponent")]
+        [FhirType("DependsOnComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2422,7 +2422,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GlobalComponent")]
+        [FhirType("GlobalComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2566,7 +2566,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DefinitionComponent")]
+        [FhirType("DefinitionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2728,7 +2728,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GroupingComponent")]
+        [FhirType("GroupingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2871,7 +2871,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResourceComponent")]
+        [FhirType("ResourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3129,7 +3129,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PageComponent")]
+        [FhirType("PageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3313,7 +3313,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3457,7 +3457,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TemplateComponent")]
+        [FhirType("TemplateComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3638,7 +3638,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestComponent")]
+        [FhirType("ManifestComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3857,7 +3857,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestResourceComponent")]
+        [FhirType("ManifestResourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -4003,7 +4003,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestPageComponent")]
+        [FhirType("ManifestPageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             OtherMap,
         }
 
-        [FhirType("GroupComponent")]
+        [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SourceElementComponent")]
+        [FhirType("SourceElementComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetElementComponent")]
+        [FhirType("TargetElementComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OtherElementComponent")]
+        [FhirType("OtherElementComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1038,7 +1038,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("UnmappedComponent")]
+        [FhirType("UnmappedComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

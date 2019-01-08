@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "SubstanceAmount"; } }
         
-        [FhirType("ReferenceRangeComponent")]
+        [FhirType("ReferenceRangeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {

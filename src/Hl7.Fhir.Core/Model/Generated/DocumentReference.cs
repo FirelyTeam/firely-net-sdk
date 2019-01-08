@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "DocumentReference"; } }
         
-        [FhirType("RelatesToComponent")]
+        [FhirType("RelatesToComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContentComponent")]
+        [FhirType("ContentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContextComponent")]
+        [FhirType("ContextComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

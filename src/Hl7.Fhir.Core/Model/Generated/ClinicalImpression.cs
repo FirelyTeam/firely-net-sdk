@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("InvestigationComponent")]
+        [FhirType("InvestigationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FindingComponent")]
+        [FhirType("FindingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
