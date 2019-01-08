@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,9 +49,9 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Unique identifier for this supply request.</xs:documentation>
+              <xs:documentation xml:lang="en">Business identifiers assigned to this SupplyRequest by the author and/or other systems. These identifiers remain constant as the resource is updated and propagates from server to server.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="0" maxOccurs="1" type="SupplyRequestStatus">
@@ -69,9 +69,21 @@
               <xs:documentation xml:lang="en">Indicates how quickly this SupplyRequest should be addressed with respect to other requests.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="orderedItem" type="SupplyRequest.OrderedItem" minOccurs="0" maxOccurs="1">
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">The item being requested.</xs:documentation>
+              <xs:documentation xml:lang="en">The item that is requested to be supplied. This is either a link to a resource representing the details of the item or a code that identifies the item from a known list.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="itemCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="itemReference" type="Reference"/>
+          </xs:choice>
+          <xs:element name="quantity" minOccurs="1" maxOccurs="1" type="Quantity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The amount that is being ordered of the indicated item.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="parameter" type="SupplyRequest.Parameter" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specific parameters for the ordered item.  For example, the size of the indicated item.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
@@ -87,9 +99,9 @@
               <xs:documentation xml:lang="en">When the request was made.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="requester" type="SupplyRequest.Requester" minOccurs="0" maxOccurs="1">
+          <xs:element name="requester" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The individual who initiated the request and has responsibility for its activation.</xs:documentation>
+              <xs:documentation xml:lang="en">The device, practitioner, etc. who initiated the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="supplier" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -97,13 +109,16 @@
               <xs:documentation xml:lang="en">Who is intended to fulfill the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Why the supply item was requested.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="reasonCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="reasonReference" type="Reference"/>
-          </xs:choice>
+              <xs:documentation xml:lang="en">The reason why the supply item was requested.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The reason why the supply item was requested.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="deliverFrom" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Where the supply is expected to come from.</xs:documentation>
@@ -118,46 +133,27 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="SupplyRequest.OrderedItem">
+  <xs:complexType name="SupplyRequest.Parameter">
     <xs:annotation>
       <xs:documentation xml:lang="en">A record of a request for a medication, substance or device used in the healthcare setting.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="quantity" minOccurs="1" maxOccurs="1" type="Quantity">
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The amount that is being ordered of the indicated item.</xs:documentation>
+              <xs:documentation xml:lang="en">A code or string that identifies the device detail being asserted.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">The item that is requested to be supplied. This is either a link to a resource representing the details of the item or a code that identifies the item from a known list.</xs:documentation>
+              <xs:documentation xml:lang="en">The value of the device detail.</xs:documentation>
             </xs:annotation>
-            <xs:element name="itemCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="itemReference" type="Reference"/>
+            <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueQuantity" type="Quantity"/>
+            <xs:element name="valueRange" type="Range"/>
+            <xs:element name="valueBoolean" type="boolean"/>
           </xs:choice>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="SupplyRequest.Requester">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a request for a medication, substance or device used in the healthcare setting.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="agent" minOccurs="1" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The device, practitioner, etc. who initiated the request.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="onBehalfOf" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The organization the device or practitioner was acting on behalf of.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -203,7 +199,7 @@
   </xs:simpleType>
   <xs:complexType name="SupplyRequestStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Status of the supply request</xs:documentation>
+      <xs:documentation xml:lang="en">Status of the supply request.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

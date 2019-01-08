@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Identifies the kind(s) of attachmemt allowed to be sent for an element." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

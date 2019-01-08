@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Indicates that the style extensions ([style](extension-rendering-style.html), [markdown](extension-rendering-markdown.html)) and [xhtml](extension-rendering-xhtml.html)) in this resource are essential to the interpretation of the styled text and that it cannot be rendered without the style without losing essential information." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

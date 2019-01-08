@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="A name to use for the type, in implementations. This is a suggestion; it's not a normative part of the FHIR specification, but it does appear in the UML diagrams, and is used in generated code, schemas, etc.to identify the type." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Human Genome Variation Society (HGVS) nomenclature for an amino acid change. Reference sequence ID used for HGVS naming must be anotated. An amino acid is a sequence feature that corresponds to a single amino acid residue in a polypeptide ([SO:0001237](http://www.sequenceontology.org/browser/current_svn/term/SO:0001237)). LONIC Code: ([48005-3](http://loinc.org/48005-3))." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

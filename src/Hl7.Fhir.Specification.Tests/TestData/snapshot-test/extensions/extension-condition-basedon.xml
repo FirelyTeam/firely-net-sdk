@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The order, plan or recommendation being satisfied in whole or in part by this condition record." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

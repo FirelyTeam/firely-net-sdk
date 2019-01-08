@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Indicates the type of service offered, method of delivery. For example: post office box, rural route, general delivery, etc." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

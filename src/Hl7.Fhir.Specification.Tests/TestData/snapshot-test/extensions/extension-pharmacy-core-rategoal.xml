@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The target rate to reach for this infusion.  Note that deliveryRateGoal is typically less than the maximum delivery rate which is the rate not to exceed. For enteral feeding orders, a target tube feeding rate of 75ml/hour may be specified." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

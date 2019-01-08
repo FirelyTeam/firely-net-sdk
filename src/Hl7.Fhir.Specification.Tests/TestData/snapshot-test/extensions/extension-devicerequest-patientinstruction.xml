@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Simple concise instructions to be read by the patient.  For example  “twice a day” rather than “BID.”." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

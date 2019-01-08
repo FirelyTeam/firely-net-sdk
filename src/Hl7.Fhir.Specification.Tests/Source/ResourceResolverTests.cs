@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestCacheLoadingStrategy()
         {
-            const string resourceUri = "http://terminology.hl7.org/ValueSet/v2-0292";
+            const string resourceUri = "http://hl7.org/fhir/ValueSet/currencies";
 
             // Create empty in-memory resolver
             var mem = new InMemoryProfileResolver();

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Codified type for associated DNA sequence variant. DNA sequence variants use the HGVS notation, which implies the DNA sequence variant type. LONIC Code: ([48019-4](http://loinc.org/48019-4))." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -56,7 +56,7 @@
           </xs:element>
           <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this healthcareservice record is in active use.</xs:documentation>
+              <xs:documentation xml:lang="en">This flag is used to mark the record to not be used. This is not used when a center is closed for maintenance, or for holidays, the notAvailable period is to be used for this.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="providedBy" minOccurs="0" maxOccurs="1" type="Reference">
@@ -64,7 +64,7 @@
               <xs:documentation xml:lang="en">The organization that provides this healthcare service.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the broad category of service being performed or delivered.</xs:documentation>
            </xs:annotation>
@@ -94,7 +94,7 @@
               <xs:documentation xml:lang="en">Any additional description of the service and/or any specific issues not covered by the other attributes, which can be displayed as further detail under the serviceName.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="extraDetails" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="extraDetails" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">Extra details about the service that can't be placed in the other fields.</xs:documentation>
            </xs:annotation>
@@ -119,24 +119,24 @@
               <xs:documentation xml:lang="en">The code(s) that detail the conditions under which the healthcare service is available/offered.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="eligibility" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="eligibility" type="HealthcareService.Eligibility" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Does this service have specific eligibility requirements that need to be met in order to use the service?</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="eligibilityNote" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="program" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Describes the eligibility conditions for the service.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="programName" minOccurs="0" maxOccurs="unbounded" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Program Names that can be used to categorize the service.</xs:documentation>
+              <xs:documentation xml:lang="en">Programs that this service is applicable to.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="characteristic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Collection of characteristics (attributes).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="communication" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Some services are specifically made available in multiple languages, this property permits a directory to declare the languages this is offered in. Typically this is only provided where a service operates in communities with mixed languages used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="referralMethod" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -167,6 +167,27 @@
           <xs:element name="endpoint" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Technical endpoints providing access to services operated for the specific healthcare services defined at this resource.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="HealthcareService.Eligibility">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The details of a healthcare service available at a location.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Coded value for the eligibility.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="comment" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the eligibility conditions for the service.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

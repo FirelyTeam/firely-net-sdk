@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.True(issueTypeVs.CodeInExpansion("security", "http://hl7.org/fhir/issue-type"));
             Assert.True(issueTypeVs.CodeInExpansion("expired", "http://hl7.org/fhir/issue-type"));
-            Assert.Equal(29, issueTypeVs.Expansion.Contains.CountConcepts());
+            Assert.Equal(31, issueTypeVs.Expansion.Contains.CountConcepts());
             Assert.Equal(issueTypeVs.Expansion.Contains.CountConcepts(), issueTypeVs.Expansion.Total);
 
             var trans = issueTypeVs.FindInExpansion("transient", "http://hl7.org/fhir/issue-type");
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Tests
             issueTypeVs.Version = "3.14";
             expander.Expand(issueTypeVs);
             Assert.NotEqual(id, issueTypeVs.Expansion.Identifier);
-            Assert.Equal(29, issueTypeVs.Expansion.Total);
+            Assert.Equal(31, issueTypeVs.Expansion.Total);
 
             //var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
             //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
@@ -78,17 +78,17 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ExpansionOfComposeImport()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v3-ObservationMethod").DeepCopy() as ValueSet;
+            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/FHIR-version").DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
-            expander.Settings.MaxExpansionSize = 50;
+            expander.Settings.MaxExpansionSize = 2;
 
             Assert.Throws<ValueSetExpansionTooBigException>(() => expander.Expand(testVs));
 
-            expander.Settings.MaxExpansionSize = 500;
+            expander.Settings.MaxExpansionSize = 50;
             expander.Expand(testVs);
-            Assert.Equal(304, testVs.Expansion.Total);
+            Assert.Equal(21, testVs.Expansion.Total);
         }
 
         [Fact]
@@ -107,14 +107,14 @@ namespace Hl7.Fhir.Specification.Tests
         private void testService(ITerminologyService svc)
         {
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-            var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason");
+            var result = svc.ValidateCode(vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason");
             Assert.True(result.Success);
 
-            result = svc.ValidateCode(vsUrl, code: "NaNX", system: "http://hl7.org/fhir/data-absent-reason");
+            result = svc.ValidateCode(vsUrl, code: "NaNX", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason");
             Assert.False(result.Success);
 
-            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-                display: "Not a Number");
+            result = svc.ValidateCode(vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
+                display: "Not a Number (NaN)");
             Assert.True(result.Success);
 
             // The spec is not clear on the behaviour of incorrect displays - so don't test it here
@@ -128,11 +128,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.Throws<ValueSetUnknownException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
 
-            var coding = new Coding("http://hl7.org/fhir/data-absent-reason", "NaN");
+            var coding = new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number");
             result = svc.ValidateCode(vsUrl, coding: coding);
             Assert.True(result.Success);
 
-            coding.Display = "Not a Number";
+            coding.Display = "Not a Number (NaN)";
             result = svc.ValidateCode(vsUrl, coding: coding);
             Assert.True(result.Success);
 
@@ -141,11 +141,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(result.Success);
             coding.Code = "NaN";
 
-            var cc = new CodeableConcept("http://hl7.org/fhir/data-absent-reason", "NaNX", "Not a Number");
+            var cc = new CodeableConcept("http://terminology.hl7.org/CodeSystem/data-absent-reason", "NaNX", "Not a Number");
             result = svc.ValidateCode(vsUrl, codeableConcept: cc);
             Assert.False(result.Success);
 
-            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
+            cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "asked-unknown"));
             result = svc.ValidateCode(vsUrl, codeableConcept: cc);
             DebugDumpOutputXml(result);
 
@@ -168,12 +168,12 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_resolver);
 
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-            var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-                display: "Not a Number");
+            var result = svc.ValidateCode(vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
+                display: "Not a Number (NaN)");
             Assert.True(result.Success);
             Assert.Equal(0, result.Warnings);
 
-            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+            result = svc.ValidateCode(vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
                         display: "Certainly Not a Number");
             Assert.True(result.Success);
             Assert.Equal(1, result.Warnings);
@@ -185,16 +185,11 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_resolver);
 
             // Do common tests for service
-            testService(svc);
+            testService(svc); 
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
-            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://hl7.org/fhir/v2/0136");
+            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://terminology.hl7.org/CodeSystem/v2-0136");
             Assert.True(result.Success);
-
-            // This test is not always correctly done by the external services, so copied here instead
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                    system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode", @abstract: false);
-            Assert.False(result.Success);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             Assert.Throws<ValueSetExpansionTooComplexException>(

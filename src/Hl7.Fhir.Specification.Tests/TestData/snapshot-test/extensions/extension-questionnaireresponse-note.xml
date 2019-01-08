@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Comments captured about the completion of the form in general or about specific groups or questions within it." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

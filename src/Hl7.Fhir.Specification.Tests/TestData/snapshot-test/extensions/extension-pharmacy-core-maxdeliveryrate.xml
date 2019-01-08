@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="The maximum rate of substance administration. For volume medications, the maximum rate is to be expressed as a volume per time period. This value may be used as a stopping condition when a deliveryRateIncrement is specified without a count." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

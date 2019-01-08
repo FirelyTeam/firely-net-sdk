@@ -177,14 +177,15 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void ValidateResourceWithIncorrectChildElement()
         {
-            // First create an incomplete encounter (class not supplied)
+            // First create an incomplete encounter (status and class not supplied)
             var enc = new Encounter();
             validateErrorOrFail(enc, membername: "StatusElement");
             validateErrorOrFail(enc,true);  // recursive checking shouldn't matter
 
             enc.Status = Encounter.EncounterStatus.Planned;
+            enc.Class = new Coding("http://terminology.hl7.org/CodeSystem/v3-ActCode", "IMP", "inpatient encounter");
 
-            // Now, it should work
+                // Now, it should work
             DotNetAttributeValidation.Validate(enc);
             DotNetAttributeValidation.Validate(enc, true);  // recursive checking shouldnt matter
 

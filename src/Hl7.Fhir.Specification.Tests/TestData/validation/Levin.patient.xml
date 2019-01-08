@@ -11,7 +11,7 @@
             <p>MRN: 123456. Male, 24-Sept 1932</p>
         </div>
     </text>
-    <extension url="http://hl7.org/fhir/StructureDefinition/birthPlace">
+    <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
         <valueAddress>
             <text value="1 Back Lane&#13;&#10;Holmfirth&#13;&#10;HUDDERSFIELD&#13;&#10;HD7 1HQ"/>
             <line value="1 Back Lane"/>
@@ -20,25 +20,22 @@
             <postalCode value="HD7 1HQ"/>
         </valueAddress>
     </extension>
-    <extension url="http://hl7.org/fhir/StructureDefinition/patient-clinicalTrial" >
-        <extension url="NCT" >
-            <valueString value="123456789" />
-        </extension>
-        <extension url="period" >	  
-            <valuePeriod>
-                <start value="2009-03-14" />	  
-            </valuePeriod>
-        </extension>
-        <extension url="reason" >	  
-            <valueCodeableConcept>	  
-                <coding>	  	    
-                    <system value="http://acme.org/codes/general" />	  
-                    <code value="tt14j" />	  
-                </coding>	  	    
-            </valueCodeableConcept>	  
-        </extension>
+    <extension url="http://hl7.org/fhir/StructureDefinition/patient-nationality">
+      <extension url="code" >
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://acme.org/codes/general" />
+            <code value="tt14j" />
+          </coding>
+        </valueCodeableConcept>
+      </extension>
+      <extension url="period" >
+        <valuePeriod>
+          <start value="2009-03-14" />
+        </valuePeriod>
+      </extension>      
     </extension>
-    <identifier>
+  <identifier>
         <use value="usual"/>
         <type>
             <coding>

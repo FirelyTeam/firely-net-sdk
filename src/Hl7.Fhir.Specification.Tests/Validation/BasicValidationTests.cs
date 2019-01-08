@@ -618,12 +618,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var profile = "http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams";
             var cc = new CodeableConcept();
-            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "NaN"));
-            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "not-asked"));
+            cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number"));
+            cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-asked"));
 
             var p = new Parameters();
             p.Add("cc", cc);
-            p.Add("c", new Coding("http://hl7.org/fhir/data-absent-reason", "NaN"));
+            p.Add("c", new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number"));
             p.Add("s", new FhirString("not-asked"));
 
             var report = _validator.Validate(p, profile);
@@ -661,14 +661,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);
 
-            // Now, rename the mandatory NCT sub-extension
-            levin.Extension[1].Extension[0].Url = "NCTX";
-            report = _validator.Validate(levin);
-            DebugDumpOutputXml(report);
-            Assert.False(report.Success);
-            Assert.Contains("Instance count for 'Extension.extension:NCT' is 0", report.ToString());
-
-            levin.Extension[1].Extension[0].Url = "NCT";
             levin.Extension[1].Extension[1].Value = new FhirString("wrong!");
             report = _validator.Validate(levin);
             DebugDumpOutputXml(report);

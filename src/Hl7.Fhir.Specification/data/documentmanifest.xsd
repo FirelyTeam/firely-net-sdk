@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -66,7 +66,7 @@
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Specifies the kind of this set of documents (e.g. Patient Summary, Discharge Summary, Prescription, etc.). The type of a set of documents may be the same as one of the documents in it - especially if there is only one - but it may be wider.</xs:documentation>
+              <xs:documentation xml:lang="en">The code specifying the type of clinical activity that resulted in placing the associated content into the DocumentManifest.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
@@ -81,7 +81,7 @@
           </xs:element>
           <xs:element name="author" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies who is responsible for creating the manifest, and adding  documents to it.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies who is the author of the manifest. Manifest author is not necessarly the author of the references included.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="recipient" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -99,9 +99,9 @@
               <xs:documentation xml:lang="en">Human-readable description of the source document. This is sometimes known as the &quot;title&quot;.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="content" type="DocumentManifest.Content" minOccurs="1" maxOccurs="unbounded">
+          <xs:element name="content" minOccurs="1" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The list of Documents included in the manifest.</xs:documentation>
+              <xs:documentation xml:lang="en">The list of Resources that consist of the parts of this manifest.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="related" type="DocumentManifest.Related" minOccurs="0" maxOccurs="unbounded">
@@ -109,24 +109,6 @@
               <xs:documentation xml:lang="en">Related identifiers or resources associated with the DocumentManifest.</xs:documentation>
            </xs:annotation>
           </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="DocumentManifest.Content">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:choice minOccurs="1" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The list of references to document content, or Attachment that consist of the parts of this document manifest. Usually, these would be document references, but direct references to Media or Attachments are also allowed.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="pAttachment" type="Attachment"/>
-            <xs:element name="pReference" type="Reference"/>
-          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -145,7 +127,7 @@
           </xs:element>
           <xs:element name="ref" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Related Resource to this DocumentManifest. For example, Order, ProcedureRequest,  Procedure, EligibilityRequest, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">Related Resource to this DocumentManifest. For example, Order, ServiceRequest,  Procedure, EligibilityRequest, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

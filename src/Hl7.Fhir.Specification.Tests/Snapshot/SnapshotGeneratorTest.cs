@@ -2632,6 +2632,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void FindComplexTestExtensions()
         {
+            //Assert.Fail("CHANGE all files in TestData/snapshot-test/extensions. The FhirVersion should be 4.0.0");
             Debug.WriteLine("Complex extension in TestData folder:");
             var dirSource = new DirectorySource("TestData/snapshot-test/extensions");
             var uris = dirSource.ListResourceUris(ResourceType.StructureDefinition);

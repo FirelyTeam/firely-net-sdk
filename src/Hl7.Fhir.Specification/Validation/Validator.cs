@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Validation
             Trace(outcome, "Verifying content of the leaf primitive value attribute", Issue.PROCESSING_PROGRESS, instance);
 
             // Go look for the primitive type extensions
-            //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
+            //  <extension url="http://hl7.org/fhir/StructureDefinition/regex">
             //        <valueString value="-?([0]|([1-9][0-9]*))"/>
             //      </extension>
             //      <code>
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Validation
 
             // The spec has no regexes for the primitives mentioned below, so don't check them
             return definition.Type.Count() == 1
-                ? ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
+                ? ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/regex")
                 : outcome;
         }
 

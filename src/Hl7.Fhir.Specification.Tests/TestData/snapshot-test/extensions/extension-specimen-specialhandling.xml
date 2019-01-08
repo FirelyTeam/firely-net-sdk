@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Special handling during the collection, transport, or storage of the specimen." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

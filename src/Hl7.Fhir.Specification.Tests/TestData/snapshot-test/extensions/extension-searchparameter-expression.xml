@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The searh path as specified using FHIRPath language." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

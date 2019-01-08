@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Points to the Observation, AllergyIntolerance or other record that provides additional supporting information about this particular flag." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />
