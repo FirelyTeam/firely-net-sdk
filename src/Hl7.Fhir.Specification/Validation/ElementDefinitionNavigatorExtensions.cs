@@ -24,14 +24,12 @@ namespace Hl7.Fhir.Validation
             return cc.Expression;
         }
 
+        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed) =>
+                   ed.Path.EndsWith(".value") && IsPrimitiveConstraint(ed);
 
-        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
-        {
-            //TODO: There is something smarter for this in STU3
-            var path = ed.Path;
-
-            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
-        }
+        public static bool IsPrimitiveConstraint(this ElementDefinition ed) =>
+            ed.Type.Any() && ed.Type.First().CodeElement != null 
+            && ed.Type.First().CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type") != null;
 
         internal static bool IsResourcePlaceholder(this ElementDefinition ed)
         {

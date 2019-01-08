@@ -35,11 +35,13 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
     [InvokeIValidatableObject]
+    [FhirType("DomainResource", IsResource = true)]
     public abstract partial class DomainResource : IModifierExtendable
     {
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

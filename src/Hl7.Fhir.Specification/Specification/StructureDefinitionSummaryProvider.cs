@@ -6,10 +6,8 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
@@ -177,6 +175,10 @@ namespace Hl7.Fhir.Specification
                         $"has a namereference '{name}' on element '{nav.Current.Path}' that cannot be resolved.");
 
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
+            }
+            else if(nav.Current.Path == "Extension.url")        // Compiler magic since R4
+            {
+                return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("uri") };
             }
             else
                 return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code)).Distinct().ToArray();
