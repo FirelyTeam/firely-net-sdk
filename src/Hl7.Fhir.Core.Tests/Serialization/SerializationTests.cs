@@ -706,6 +706,60 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("ExampleScenario", c2.Instance[0].ResourceTypeElement.ObjectValue as string);
         }
 
+        /// <summary>
+        /// This test verifies that the parser can handle a backbone element that has a property of resourceType
+        /// (only found in the ExampleScenario resource in R4 - used to be in Claim)
+        /// </summary>
+        [TestMethod]
+        public void TestVerificationResultSerialization()
+        {
+            var vr = new VerificationResult();
+            vr.Id = "test-vr";
+            vr.Target.Add(new ResourceReference("Practitioner/example"));
+            vr.TargetLocation = new[] { "Practitioner.address[0]" };
+            vr.Need = new CodeableConcept("http://terminology.hl7.org/CodeSystem/need", "none", "None");
+            vr.Status = VerificationResult.status.Attested;
+            vr.StatusDateElement = FhirDateTime.Now();
+            vr.ValidationType = new CodeableConcept("http://terminology.hl7.org/CodeSystem/validation-type", "primary", "Primary Source");
+            vr.ValidationProcess.Add(new CodeableConcept("http://terminology.hl7.org/CodeSystem/validation-process", "edit-check", "edit check"));
+            vr.Frequency = new Timing();
+            vr.Frequency.Repeat = new Timing.RepeatComponent() { Frequency = 1, Period = 6, PeriodUnit = Timing.UnitsOfTime.Mo };
+            vr.LastPerformedElement = FhirDateTime.Now();
+            vr.NextScheduled = "2018-12-13";
+            vr.FailureAction = new CodeableConcept("http://terminology.hl7.org/CodeSystem/failure-action", "none", "None");
+
+            vr.PrimarySource.Add(new VerificationResult.PrimarySourceComponent()
+            {
+                Who = new ResourceReference(null, "US Postal Service"),
+                Type = new List<CodeableConcept>() { new CodeableConcept("http://terminology.hl7.org/CodeSystem/primary-source-type", "post-serv", "Postal Service") },
+                CommunicationMethod = new List<CodeableConcept>() { new CodeableConcept("http://terminology.hl7.org/CodeSystem/verificationresult-communication-method", "pull", "Pull") },
+                ValidationStatus = new CodeableConcept("http://terminology.hl7.org/CodeSystem/validation-status", "successful", "Successful"),
+                ValidationDateElement = FhirDateTime.Now()
+            });
+
+            vr.Attestation = new VerificationResult.AttestationComponent()
+            {
+                Who = new ResourceReference(null, "Eric the Attester"),
+                OnBehalfOf = new ResourceReference("Practitioner/example"),
+                CommunicationMethod = new CodeableConcept("http://terminology.hl7.org/CodeSystem/verificationresult-communication-method", "push", "Push"),
+                DateElement = Date.Today()
+            };
+
+            vr.Validator.Add(new VerificationResult.ValidatorComponent()
+            {
+                Organization = new ResourceReference(null, "Brian's Verification Organization")
+            });
+
+            string json = FhirJsonSerializer.SerializeToString(vr);
+            var vr2 = new FhirJsonParser().Parse<VerificationResult>(json);
+            Assert.IsTrue(vr2.IsExactly(vr), "JSON resources should be the same");
+
+            string xml = FhirXmlSerializer.SerializeToString(vr);
+            var vr3 = new FhirXmlParser().Parse<VerificationResult>(xml);
+            Assert.IsTrue(vr3.IsExactly(vr), "XML resources should be the same");
+            Assert.IsTrue(vr3.IsExactly(vr2), "resources should be the same");
+        }
+
         [FhirType("Bundle", IsResource = true)]
         //[DataContract]
         public class CustomBundle : Bundle
