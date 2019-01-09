@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("UniqueIdComponent")]
+        [FhirType("UniqueIdComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

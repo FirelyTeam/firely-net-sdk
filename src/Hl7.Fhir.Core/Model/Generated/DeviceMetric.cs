@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
             Unspecified,
         }
 
-        [FhirType("CalibrationComponent")]
+        [FhirType("CalibrationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

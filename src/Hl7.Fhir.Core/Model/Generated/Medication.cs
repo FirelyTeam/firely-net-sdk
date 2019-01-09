@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("IngredientComponent")]
+        [FhirType("IngredientComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BatchComponent")]
+        [FhirType("BatchComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

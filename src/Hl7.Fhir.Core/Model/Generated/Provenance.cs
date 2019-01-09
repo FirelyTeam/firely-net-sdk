@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             Removal,
         }
 
-        [FhirType("AgentComponent")]
+        [FhirType("AgentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntityComponent")]
+        [FhirType("EntityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The number of a building, house or lot alongside the street. Also known as &quot;primary street number&quot;. This does not number the street but rather the building." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

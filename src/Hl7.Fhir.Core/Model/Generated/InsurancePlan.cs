@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "InsurancePlan"; } }
         
-        [FhirType("ContactComponent")]
+        [FhirType("ContactComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CoverageComponent")]
+        [FhirType("CoverageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CoverageBenefitComponent")]
+        [FhirType("CoverageBenefitComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LimitComponent")]
+        [FhirType("LimitComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PlanComponent")]
+        [FhirType("PlanComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GeneralCostComponent")]
+        [FhirType("GeneralCostComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GeneralCostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecificCostComponent")]
+        [FhirType("SpecificCostComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SpecificCostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1039,7 +1039,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PlanBenefitComponent")]
+        [FhirType("PlanBenefitComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CostComponent")]
+        [FhirType("CostComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -45,7 +45,10 @@ namespace Hl7.Fhir.FhirPath
         {
             t.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (ITypedElement f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
-            t.Add("htmlchecks", (ITypedElement f) => f.HtmlChecks(), doNullProp: false); // this is the old name that WAS in here (do we want to keep this one?)
+
+            // Pre-normative this function was called htmlchecks, normative is htmlChecks
+            // lets keep both to keep everyone happy.
+            t.Add("htmlchecks", (ITypedElement f) => f.HtmlChecks(), doNullProp: false);
             t.Add("htmlChecks", (ITypedElement f) => f.HtmlChecks(), doNullProp: false);
 
             return t;

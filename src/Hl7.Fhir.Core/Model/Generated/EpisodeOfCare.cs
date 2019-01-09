@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("StatusHistoryComponent")]
+        [FhirType("StatusHistoryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosisComponent")]
+        [FhirType("DiagnosisComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

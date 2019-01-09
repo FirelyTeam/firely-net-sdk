@@ -8,7 +8,7 @@
   <date value="2017-02-28T07:41:33+00:00" />
   <publisher value="HL7" />
   <description value="A reference to a concept map that is relevant for the interpretation of this value set." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

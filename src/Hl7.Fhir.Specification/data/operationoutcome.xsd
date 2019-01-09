@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="OperationOutcome" type="OperationOutcome">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A collection of error, warning or information messages that result from a system action.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of error, warning, or information messages that result from a system action.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="OperationOutcome">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A collection of error, warning or information messages that result from a system action.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of error, warning, or information messages that result from a system action.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -51,7 +51,7 @@
         <xs:sequence>
           <xs:element name="issue" type="OperationOutcome.Issue" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An error, warning or information message that results from a system action.</xs:documentation>
+              <xs:documentation xml:lang="en">An error, warning, or information message that results from a system action.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -60,7 +60,7 @@
   </xs:complexType>
   <xs:complexType name="OperationOutcome.Issue">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A collection of error, warning or information messages that result from a system action.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of error, warning, or information messages that result from a system action.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -77,22 +77,24 @@
           </xs:element>
           <xs:element name="details" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Additional details about the error. This may be a text description of the error, or a system code that identifies the error.</xs:documentation>
+              <xs:documentation xml:lang="en">Additional details about the error. This may be a text description of the error or a system code that identifies the error.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="diagnostics" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Additional diagnostic information about the issue.  Typically, this may be a description of how a value is erroneous, or a stack dump to help trace the issue.</xs:documentation>
+              <xs:documentation xml:lang="en">Additional diagnostic information about the issue.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="location" minOccurs="0" maxOccurs="unbounded" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">For resource issues, this will be a simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.  For HTTP errors, will be &quot;http.&quot; + the parameter name.</xs:documentation>
+              <xs:documentation xml:lang="en">This element is deprecated because it is XML specific. It is replaced by issue.expression, which is format independent, and simpler to parse. 
+
+For resource issues, this will be a simple XPath limited to element names, repetition indicators and the default child accessor that identifies one of the elements in the resource that caused this issue to be raised.  For HTTP errors, will be &quot;http.&quot; + the parameter name.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="expression" minOccurs="0" maxOccurs="unbounded" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A simple FHIRPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.</xs:documentation>
+              <xs:documentation xml:lang="en">A [simple subset of FHIRPath](fhirpath.html#simple) limited to element names, repetition indicators and the default child accessor that identifies one of the elements in the resource that caused this issue to be raised.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -171,9 +173,19 @@
           <xs:documentation xml:lang="en">Duplicate</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="multiple-matches">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Multiple Matches</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="not-found">
         <xs:annotation>
           <xs:documentation xml:lang="en">Not Found</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="deleted">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Deleted</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="too-long">
@@ -206,11 +218,6 @@
           <xs:documentation xml:lang="en">Edit Version Conflict</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="incomplete">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Incomplete Results</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="transient">
         <xs:annotation>
           <xs:documentation xml:lang="en">Transient Issue</xs:documentation>
@@ -234,6 +241,11 @@
       <xs:enumeration value="timeout">
         <xs:annotation>
           <xs:documentation xml:lang="en">Timeout</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="incomplete">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Incomplete Results</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="throttled">

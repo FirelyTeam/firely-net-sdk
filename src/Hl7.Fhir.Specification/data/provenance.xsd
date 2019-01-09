@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,11 +54,13 @@
               <xs:documentation xml:lang="en">The Reference(s) that were generated or updated by  the activity described in this resource. A provenance can point to more than one target if multiple resources were created/updated by the same activity.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The period during which the activity occurred.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+            </xs:annotation>
+            <xs:element name="occurredPeriod" type="Period"/>
+            <xs:element name="occurredDateTime" type="dateTime"/>
+          </xs:choice>
           <xs:element name="recorded" minOccurs="1" maxOccurs="1" type="instant">
             <xs:annotation>
               <xs:documentation xml:lang="en">The instant of time at which the activity was recorded.</xs:documentation>
@@ -74,12 +76,12 @@
               <xs:documentation xml:lang="en">Where the activity occurred, if relevant.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="Coding">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reason that the activity was taking place.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="activity" minOccurs="0" maxOccurs="1" type="Coding">
+          <xs:element name="activity" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">An activity is something that occurs over a period of time and acts upon or with entities; it may include consuming, processing, transforming, modifying, relocating, using, or generating entities.</xs:documentation>
            </xs:annotation>
@@ -110,28 +112,24 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The participation the agent had with respect to the activity.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="role" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The function of the agent with respect to the activity. The security role enabling the agent with respect to the activity.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
+          <xs:element name="who" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The individual, device or organization that participated in the event.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="whoUri" type="uri"/>
-            <xs:element name="whoReference" type="Reference"/>
-          </xs:choice>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="onBehalfOf" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The individual, device, or organization for whom the change was made.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="onBehalfOfUri" type="uri"/>
-            <xs:element name="onBehalfOfReference" type="Reference"/>
-          </xs:choice>
-          <xs:element name="relatedAgentType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The type of relationship between agents.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -150,14 +148,11 @@
               <xs:documentation xml:lang="en">How the entity was used during the activity.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
+          <xs:element name="what" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identity of the  Entity used. May be a logical or physical uri and maybe absolute or relative.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="whatUri" type="uri"/>
-            <xs:element name="whatReference" type="Reference"/>
-            <xs:element name="whatIdentifier" type="Identifier"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="agent" type="Provenance.Agent" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The entity is attributed to an agent to express the agent's responsibility for that entity, possibly along with other agents. This description can be understood as shorthand for saying that the agent was responsible for the activity which generated the entity.</xs:documentation>

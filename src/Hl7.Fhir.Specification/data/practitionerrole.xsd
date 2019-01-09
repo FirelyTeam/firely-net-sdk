@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -56,7 +56,7 @@
           </xs:element>
           <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this practitioner's record is in active use.</xs:documentation>
+              <xs:documentation xml:lang="en">Whether this practitioner role record is in active use.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
@@ -66,7 +66,7 @@
           </xs:element>
           <xs:element name="practitioner" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Practitioner that is able to provide the defined services for the organation.</xs:documentation>
+              <xs:documentation xml:lang="en">Practitioner that is able to provide the defined services for the organization.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="organization" minOccurs="0" maxOccurs="1" type="Reference">
@@ -101,12 +101,12 @@
           </xs:element>
           <xs:element name="availableTime" type="PractitionerRole.AvailableTime" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A collection of times that the Service Site is available.</xs:documentation>
+              <xs:documentation xml:lang="en">A collection of times the practitioner is available or performing this role at the location and/or healthcareservice.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="notAvailable" type="PractitionerRole.NotAvailable" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The HealthcareService is not available during this period of time due to the provided reason.</xs:documentation>
+              <xs:documentation xml:lang="en">The practitioner is not available or performing this role during this period of time due to the provided reason.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="availabilityExceptions" minOccurs="0" maxOccurs="1" type="string">

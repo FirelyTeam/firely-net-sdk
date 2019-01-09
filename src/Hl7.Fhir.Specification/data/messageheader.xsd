@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,29 +49,21 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="event" minOccurs="1" maxOccurs="1" type="Coding">
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Code that identifies the event this message represents and connects it with its definition. Events defined as part of the FHIR specification have the system value &quot;http://hl7.org/fhir/message-events&quot;.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+              <xs:documentation xml:lang="en">Code that identifies the event this message represents and connects it with its definition. Events defined as part of the FHIR specification have the system value &quot;http://terminology.hl7.org/CodeSystem/message-events&quot;.  Alternatively uri to the EventDefinition.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="eventCoding" type="Coding"/>
+            <xs:element name="eventUri" type="uri"/>
+          </xs:choice>
           <xs:element name="destination" type="MessageHeader.Destination" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The destination application which the message is intended for.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="receiver" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Allows data conveyed by a message to be addressed to a particular person or department when routing to a specific application isn't sufficient.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="sender" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the sending system to allow the use of a trust relationship.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="timestamp" minOccurs="1" maxOccurs="1" type="instant">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The time that the message was sent.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="enterer" minOccurs="0" maxOccurs="1" type="Reference">
@@ -109,6 +101,11 @@
               <xs:documentation xml:lang="en">The actual data of the message - a reference to the root/focus class of the event.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="definition" minOccurs="0" maxOccurs="1" type="canonical">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Permanent link to the MessageDefinition for this message.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -130,9 +127,14 @@
               <xs:documentation xml:lang="en">Identifies the target end system in situations where the initial message transmission is to an intermediary system.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="endpoint" minOccurs="1" maxOccurs="1" type="uri">
+          <xs:element name="endpoint" minOccurs="1" maxOccurs="1" type="url">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates where the message should be routed to.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="receiver" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Allows data conveyed by a message to be addressed to a particular person or department when routing to a specific application isn't sufficient.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -166,7 +168,7 @@
               <xs:documentation xml:lang="en">An e-mail, phone, website or other contact point to use to resolve issues with message communications.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="endpoint" minOccurs="1" maxOccurs="1" type="uri">
+          <xs:element name="endpoint" minOccurs="1" maxOccurs="1" type="url">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the routing target to send acknowledgements to.</xs:documentation>
            </xs:annotation>
@@ -222,7 +224,7 @@
   </xs:simpleType>
   <xs:complexType name="ResponseType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The kind of response to a message</xs:documentation>
+      <xs:documentation xml:lang="en">The kind of response to a message.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,7 +49,7 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">Business identifier assigned to the risk assessment.</xs:documentation>
            </xs:annotation>
@@ -79,12 +79,12 @@
               <xs:documentation xml:lang="en">The type of the risk assessment performed.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The patient or group the risk assessment applies to.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The encounter where the assessment was performed.</xs:documentation>
            </xs:annotation>
@@ -106,16 +106,19 @@
               <xs:documentation xml:lang="en">The provider or software application that performed the assessment.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reason the risk assessment was performed.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="reasonCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="reasonReference" type="Reference"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Resources supporting the reason the risk assessment was performed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="basis" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the source data considered as part of the assessment (FamilyHistory, Observations, Procedures, Conditions, etc.).</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the source data considered as part of the assessment (for example, FamilyHistory, Observations, Procedures, Conditions, etc.).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="prediction" type="RiskAssessment.Prediction" minOccurs="0" maxOccurs="unbounded">
@@ -128,7 +131,7 @@
               <xs:documentation xml:lang="en">A description of the steps that might be taken to reduce the identified risk(s).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
               <xs:documentation xml:lang="en">Additional comments about the risk assessment.</xs:documentation>
            </xs:annotation>
@@ -144,21 +147,21 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="outcome" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="outcome" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">One of the potential outcomes for the patient (e.g. remission, death,  a particular condition).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">How likely is the outcome (in the specified timeframe).</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates how likely the outcome is (in the specified timeframe).</xs:documentation>
             </xs:annotation>
             <xs:element name="probabilityDecimal" type="decimal"/>
             <xs:element name="probabilityRange" type="Range"/>
           </xs:choice>
           <xs:element name="qualitativeRisk" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">How likely is the outcome (in the specified timeframe), expressed as a qualitative value (e.g. low, medium, high).</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates how likely the outcome is (in the specified timeframe), expressed as a qualitative value (e.g. low, medium, or high).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="relativeRisk" minOccurs="0" maxOccurs="1" type="decimal">

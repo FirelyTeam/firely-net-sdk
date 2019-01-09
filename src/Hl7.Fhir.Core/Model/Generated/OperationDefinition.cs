@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             Query,
         }
 
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BindingComponent")]
+        [FhirType("BindingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ReferencedFromComponent")]
+        [FhirType("ReferencedFromComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReferencedFromComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OverloadComponent")]
+        [FhirType("OverloadComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

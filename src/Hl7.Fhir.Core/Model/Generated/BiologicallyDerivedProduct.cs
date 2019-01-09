@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
             Kelvin,
         }
 
-        [FhirType("CollectionComponent")]
+        [FhirType("CollectionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcessingComponent")]
+        [FhirType("ProcessingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManipulationComponent")]
+        [FhirType("ManipulationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManipulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StorageComponent")]
+        [FhirType("StorageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StorageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Characterizes potential impact of the condition on life, durable physiological function, or quality of life. May include concepts such as self-resolving, life-threatening, requires hospitalization, or potential loss of function or capacity.  Different from severity in that a moderate subarachnoid hemorrhage is likely to be highly critical, whereas a moderate headache is not as important." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The prefix portion (e.g. voorvoegsel) of the family name that is derived from the person's partner's surname, as distinguished from any portion that is derived from the surname of the person's own." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
             Kind,
         }
 
-        [FhirType("PositionComponent")]
+        [FhirType("PositionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HoursOfOperationComponent")]
+        [FhirType("HoursOfOperationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductIngredient"; } }
         
-        [FhirType("SpecifiedSubstanceComponent")]
+        [FhirType("SpecifiedSubstanceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StrengthComponent")]
+        [FhirType("StrengthComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ReferenceStrengthComponent")]
+        [FhirType("ReferenceStrengthComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceComponent")]
+        [FhirType("SubstanceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

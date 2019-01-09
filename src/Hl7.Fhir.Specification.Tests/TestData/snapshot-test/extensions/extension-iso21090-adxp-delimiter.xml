@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Delimiters are printed without framing white space. If no value component is provided, the delimiter appears as a line break." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

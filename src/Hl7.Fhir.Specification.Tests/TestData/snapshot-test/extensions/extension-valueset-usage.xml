@@ -8,7 +8,7 @@
   <date value="2017-02-28T07:41:33+00:00" />
   <publisher value="HL7" />
   <description value="Consumers of the value set and the implementations, projects or standards that the author has utilized the value set in." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

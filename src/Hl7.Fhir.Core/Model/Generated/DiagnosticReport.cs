@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("MediaComponent")]
+        [FhirType("MediaComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

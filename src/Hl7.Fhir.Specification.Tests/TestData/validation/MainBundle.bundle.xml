@@ -3,6 +3,7 @@
   <id value="MainBundle"/>
   <meta>
     <profile value="http://example.org/StructureDefinition/DocumentBundle"/>
+    <lastUpdated value="2012-05-29T23:45:32Z"/>
   </meta>
   <identifier>
     <system value="urn:ietf:rfc:3986" />

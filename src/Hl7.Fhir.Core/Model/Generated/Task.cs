@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
             Option,
         }
 
-        [FhirType("RestrictionComponent")]
+        [FhirType("RestrictionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OutputComponent")]
+        [FhirType("OutputComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

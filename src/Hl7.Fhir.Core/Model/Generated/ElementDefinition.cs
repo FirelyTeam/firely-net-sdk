@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
             Warning,
         }
 
-        [FhirType("SlicingComponent")]
+        [FhirType("SlicingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SlicingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("DiscriminatorComponent")]
+        [FhirType("DiscriminatorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("BaseComponent")]
+        [FhirType("BaseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class BaseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("TypeRefComponent")]
+        [FhirType("TypeRefComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ExampleComponent")]
+        [FhirType("ExampleComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ExampleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ConstraintComponent")]
+        [FhirType("ConstraintComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -1454,7 +1454,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinitionBindingComponent")]
+        [FhirType("ElementDefinitionBindingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -1631,7 +1631,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("MappingComponent")]
+        [FhirType("MappingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {

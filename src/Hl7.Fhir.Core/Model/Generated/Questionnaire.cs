@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
             Any,
         }
 
-        [FhirType("ItemComponent")]
+        [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EnableWhenComponent")]
+        [FhirType("EnableWhenComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnswerOptionComponent")]
+        [FhirType("AnswerOptionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InitialComponent")]
+        [FhirType("InitialComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

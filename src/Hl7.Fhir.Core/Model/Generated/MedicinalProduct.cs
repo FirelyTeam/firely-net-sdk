@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProduct"; } }
         
-        [FhirType("NameComponent")]
+        [FhirType("NameComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class NameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NamePartComponent")]
+        [FhirType("NamePartComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CountryLanguageComponent")]
+        [FhirType("CountryLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManufacturingBusinessOperationComponent")]
+        [FhirType("ManufacturingBusinessOperationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecialDesignationComponent")]
+        [FhirType("SpecialDesignationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

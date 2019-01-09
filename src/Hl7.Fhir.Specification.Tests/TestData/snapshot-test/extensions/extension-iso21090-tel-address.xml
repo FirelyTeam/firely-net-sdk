@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="A V3 compliant, RFC 3966 conformant URI version of the telephone or fax number." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

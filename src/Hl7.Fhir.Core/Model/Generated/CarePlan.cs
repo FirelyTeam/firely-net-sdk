@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ActivityComponent")]
+        [FhirType("ActivityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent")]
+        [FhirType("DetailComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

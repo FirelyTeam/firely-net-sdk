@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             OnSuccess,
         }
 
-        [FhirType("FocusComponent")]
+        [FhirType("FocusComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AllowedResponseComponent")]
+        [FhirType("AllowedResponseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

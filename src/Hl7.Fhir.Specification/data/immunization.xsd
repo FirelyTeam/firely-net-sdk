@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="Immunization" type="Immunization">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccination or a record of a vaccination as reported by a patient, a clinician or another party and may include vaccine reaction information and what vaccination protocol was followed.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="Immunization">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccination or a record of a vaccination as reported by a patient, a clinician or another party and may include vaccine reaction information and what vaccination protocol was followed.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -56,12 +56,12 @@
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ImmunizationStatusCodes">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the current status of the vaccination event.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the current status of the immunization event.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="notGiven" minOccurs="1" maxOccurs="1" type="boolean">
+          <xs:element name="statusReason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates if the vaccination was or was not given.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the reason the immunization event was not performed.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="vaccineCode" minOccurs="1" maxOccurs="1" type="CodeableConcept">
@@ -79,12 +79,19 @@
               <xs:documentation xml:lang="en">The visit or admission or other contact between patient and health care provider the immunization was performed as part of.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">Date vaccine administered or was to be administered.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="occurrenceDateTime" type="dateTime"/>
+            <xs:element name="occurrenceString" type="string"/>
+          </xs:choice>
+          <xs:element name="recorded" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date the occurrence of the immunization was first captured in the record - potentially significantly after the occurrence of the event.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="primarySource" minOccurs="1" maxOccurs="1" type="boolean">
+          <xs:element name="primarySource" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
               <xs:documentation xml:lang="en">An indication that the content of the record is based on information from the person who administered the vaccine. This reflects the context under which the data was originally recorded.</xs:documentation>
            </xs:annotation>
@@ -129,9 +136,9 @@
               <xs:documentation xml:lang="en">The quantity of vaccine product that was administered.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="practitioner" type="Immunization.Practitioner" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="performer" type="Immunization.Performer" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates who or what performed the event.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates who performed the immunization event.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
@@ -139,9 +146,39 @@
               <xs:documentation xml:lang="en">Extra information about the immunization that is not conveyed by the other attributes.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="explanation" type="Immunization.Explanation" minOccurs="0" maxOccurs="1">
+          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Reasons why a vaccine was or was not administered.</xs:documentation>
+              <xs:documentation xml:lang="en">Reasons why the vaccine was administered.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Condition, Observation or DiagnosticReport that supports why the immunization was administered.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="isSubpotent" minOccurs="0" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indication if a dose is considered to be subpotent. By default, a dose should be considered to be potent.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subpotentReason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Reason why a dose is considered to be subpotent.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="education" type="Immunization.Education" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Educational material presented to the patient (or guardian) at the time of vaccine administration.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="programEligibility" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates a patient's eligibility for a funding program.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="fundingSource" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the source of the vaccine actually administered. This may be different than the patient eligibility (e.g. the patient may be eligible for a publically purchased vaccine but due to inventory issues, vaccine purchased with private funds was actually administered).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reaction" type="Immunization.Reaction" minOccurs="0" maxOccurs="unbounded">
@@ -149,51 +186,61 @@
               <xs:documentation xml:lang="en">Categorical data indicating that an adverse event is associated in time to an immunization.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="vaccinationProtocol" type="Immunization.VaccinationProtocol" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="protocolApplied" type="Immunization.ProtocolApplied" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Contains information about the protocol(s) under which the vaccine was administered.</xs:documentation>
+              <xs:documentation xml:lang="en">The protocol (set of recommendations) being followed by the provider who administered the dose.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Immunization.Practitioner">
+  <xs:complexType name="Immunization.Performer">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccination or a record of a vaccination as reported by a patient, a clinician or another party and may include vaccine reaction information and what vaccination protocol was followed.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="function" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Describes the type of performance (e.g. ordering provider, administering provider, etc.).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="actor" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The device, practitioner, etc. who performed the action.</xs:documentation>
+              <xs:documentation xml:lang="en">The practitioner or organization who performed the action.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Immunization.Explanation">
+  <xs:complexType name="Immunization.Education">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccination or a record of a vaccination as reported by a patient, a clinician or another party and may include vaccine reaction information and what vaccination protocol was followed.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="documentType" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Reasons why a vaccine was administered.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifier of the material presented to the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonNotGiven" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reference" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Reason why a vaccine was not administered.</xs:documentation>
+              <xs:documentation xml:lang="en">Reference pointer to the educational material given to the patient if the information was on line.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="publicationDate" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Date the educational material was published.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="presentationDate" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Date the educational material was given to the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -202,7 +249,7 @@
   </xs:complexType>
   <xs:complexType name="Immunization.Reaction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccination or a record of a vaccination as reported by a patient, a clinician or another party and may include vaccine reaction information and what vaccination protocol was followed.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -226,53 +273,42 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Immunization.VaccinationProtocol">
+  <xs:complexType name="Immunization.ProtocolApplied">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccination or a record of a vaccination as reported by a patient, a clinician or another party and may include vaccine reaction information and what vaccination protocol was followed.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="doseSequence" minOccurs="0" maxOccurs="1" type="positiveInt">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Nominal position in a series.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Contains the description about the protocol under which the vaccine was administered.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="authority" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the authority who published the protocol.  E.g. ACIP.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="series" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">One possible path to achieve presumed immunity against a disease - within the context of an authority.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="seriesDoses" minOccurs="0" maxOccurs="1" type="positiveInt">
+          <xs:element name="authority" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the authority who published the protocol (e.g. ACIP) that is being followed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="targetDisease" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The vaccine preventable disease the dose is being administered against.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="1" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Nominal position in a series.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="doseNumberPositiveInt" type="positiveInt"/>
+            <xs:element name="doseNumberString" type="string"/>
+          </xs:choice>
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The recommended number of doses to achieve immunity.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="targetDisease" minOccurs="1" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The targeted disease.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="doseStatus" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates if the immunization event should &quot;count&quot; against  the protocol.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="doseStatusReason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Provides an explanation as to why an immunization event should or should not count against the protocol.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+            </xs:annotation>
+            <xs:element name="seriesDosesPositiveInt" type="positiveInt"/>
+            <xs:element name="seriesDosesString" type="string"/>
+          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -289,11 +325,16 @@
           <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="not-done">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Not Done</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="ImmunizationStatusCodes">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of codes indicating the current status of an Immunization</xs:documentation>
+      <xs:documentation xml:lang="en">A set of codes indicating the current status of an Immunization.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

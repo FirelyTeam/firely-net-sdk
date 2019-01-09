@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Required if ParticipantObjectIDTypeCode is (110180, DCM, &quot;Study Instance UID&quot;) and any of the optional fields (AccessionNumber, ContainsMPPS, NumberOfInstances, ContainsSOPInstances,Encrypted,Anonymized) are present in this Participant Object. May be present if ParticipantObjectIDTypeCode is (110180, DCM, &quot;Study Instance UID&quot;) even though none of the optional fields are present." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="dicom" />
     <uri value="http://nema.org/dicom" />

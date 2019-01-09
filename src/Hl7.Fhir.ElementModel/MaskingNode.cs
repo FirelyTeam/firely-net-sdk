@@ -31,6 +31,13 @@ namespace Hl7.Fhir.ElementModel
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 
+        public static MaskingNode ForElements(ITypedElement node, string[] _elements) =>
+            new MaskingNode(node, new MaskingNodeSettings
+            {
+                IncludeElements = _elements ?? new string[] { },
+                PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
+            });
+
         public static MaskingNode ForData(ITypedElement node) =>
             new MaskingNode(node, new MaskingNodeSettings
             {

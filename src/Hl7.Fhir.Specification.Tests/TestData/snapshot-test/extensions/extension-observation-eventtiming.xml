@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Regular life events the observation is tied to. This is useful for recording imprecise or &quot;fuzzy&quot; times when the observation occurred.  For example, a blood glucose measurement &quot;after breakfast&quot;.  It is interpreted as relative to the `effectiveTime` element or the `issued` element if `effectiveTime` is absent.  For example the blood glucose measurement could be reported that same day (&quot;today after breakfast&quot; ) or some other day (&quot;yesterday after breakfast&quot;)." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductPharmaceutical"; } }
         
-        [FhirType("CharacteristicsComponent")]
+        [FhirType("CharacteristicsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RouteOfAdministrationComponent")]
+        [FhirType("RouteOfAdministrationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetSpeciesComponent")]
+        [FhirType("TargetSpeciesComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("WithdrawalPeriodComponent")]
+        [FhirType("WithdrawalPeriodComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

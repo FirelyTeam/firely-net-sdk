@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="List" type="List">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of information summarized from a list of other resources.</xs:documentation>
+      <xs:documentation xml:lang="en">A list is a curated collection of resources.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="List">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of information summarized from a list of other resources.</xs:documentation>
+      <xs:documentation xml:lang="en">A list is a curated collection of resources.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -76,7 +76,7 @@
           </xs:element>
           <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The common subject (or patient) of the resources that are in the list, if there is one.</xs:documentation>
+              <xs:documentation xml:lang="en">The common subject (or patient) of the resources that are in the list if there is one.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
@@ -120,7 +120,7 @@
   </xs:complexType>
   <xs:complexType name="List.Entry">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of information summarized from a list of other resources.</xs:documentation>
+      <xs:documentation xml:lang="en">A list is a curated collection of resources.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -170,7 +170,7 @@
   </xs:simpleType>
   <xs:complexType name="ListStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The current state of the list</xs:documentation>
+      <xs:documentation xml:lang="en">The current state of the list.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

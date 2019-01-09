@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The maximum allowable value set, for use when the binding strength is 'extensible'. This value set is the value set from which extensions can be taken from." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

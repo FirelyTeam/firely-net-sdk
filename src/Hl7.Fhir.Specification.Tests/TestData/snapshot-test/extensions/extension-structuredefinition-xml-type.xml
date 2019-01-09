@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="The XML (schema) type of a property - used for the value attribute of a primitive type (for which there is no type in the FHIR typing system)." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

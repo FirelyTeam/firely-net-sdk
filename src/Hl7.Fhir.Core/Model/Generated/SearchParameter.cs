@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
             OfType,
         }
 
-        [FhirType("ComponentComponent")]
+        [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

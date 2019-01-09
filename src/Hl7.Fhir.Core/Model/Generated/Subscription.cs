@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             Message,
         }
 
-        [FhirType("ChannelComponent")]
+        [FhirType("ChannelComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

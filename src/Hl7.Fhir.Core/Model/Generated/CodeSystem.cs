@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
             Decimal,
         }
 
-        [FhirType("FilterComponent")]
+        [FhirType("FilterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyComponent")]
+        [FhirType("PropertyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptDefinitionComponent")]
+        [FhirType("ConceptDefinitionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -852,7 +852,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DesignationComponent")]
+        [FhirType("DesignationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1013,7 +1013,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptPropertyComponent")]
+        [FhirType("ConceptPropertyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

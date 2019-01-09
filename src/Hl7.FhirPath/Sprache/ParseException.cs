@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sprache
+namespace Hl7.FhirPath.Sprache
 {
     /// <summary>
     /// Represents an error that occurs during parsing.

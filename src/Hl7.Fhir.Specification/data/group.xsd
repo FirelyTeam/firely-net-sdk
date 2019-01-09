@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="Group" type="Group">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
+      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="Group">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
+      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -84,9 +84,14 @@
               <xs:documentation xml:lang="en">A count of the number of resource instances that are part of the group.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="managingEntity" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Entity responsible for defining and maintaining Group characteristics and/or registered members.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="characteristic" type="Group.Characteristic" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the traits shared by members of the group.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies traits whose presence r absence is shared by members of the group.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="member" type="Group.Member" minOccurs="0" maxOccurs="unbounded">
@@ -100,7 +105,7 @@
   </xs:complexType>
   <xs:complexType name="Group.Characteristic">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
+      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -118,6 +123,7 @@
             <xs:element name="valueBoolean" type="boolean"/>
             <xs:element name="valueQuantity" type="Quantity"/>
             <xs:element name="valueRange" type="Range"/>
+            <xs:element name="valueReference" type="Reference"/>
           </xs:choice>
           <xs:element name="exclude" minOccurs="1" maxOccurs="1" type="boolean">
             <xs:annotation>
@@ -135,14 +141,14 @@
   </xs:complexType>
   <xs:complexType name="Group.Member">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
+      <xs:documentation xml:lang="en">Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="entity" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to the entity that is a member of the group. Must be consistent with Group.type.</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to the entity that is a member of the group. Must be consistent with Group.type. If the entity is another group, then the type must be the same.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
@@ -195,7 +201,7 @@
   </xs:simpleType>
   <xs:complexType name="GroupType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Types of resources that are part of group</xs:documentation>
+      <xs:documentation xml:lang="en">Types of resources that are part of group.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

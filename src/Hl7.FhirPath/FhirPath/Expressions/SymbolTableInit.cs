@@ -126,8 +126,11 @@ namespace Hl7.FhirPath.Expressions
             t.Add("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst), doNullProp: true);
             t.Add("length", (string f) => f.Length, doNullProp: true);
 
+            // The next two functions existed pre-normative, so we have kept them.
             t.Add("is", (ITypedElement f, string name) => f.Is(name), doNullProp: true);
             t.Add("as", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
+
+            t.Add("ofType", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
             t.Add("binary.is", (object f, ITypedElement left, string name) => left.Is(name), doNullProp: true);
             t.Add("binary.as", (object f, ITypedElement left, string name) => left.CastAs(name), doNullProp: true);
             t.Add("binary.as", (object f, IEnumerable<ITypedElement> left, string name) => left.FilterType(name), doNullProp: true);
@@ -146,8 +149,8 @@ namespace Hl7.FhirPath.Expressions
             t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
             t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
             t.Add(new CallSignature("repeat", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runRepeat);
-
             t.Add(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
+
 
             t.AddVar("sct", "http://snomed.info/sct");
             t.AddVar("loinc", "http://loinc.org");
@@ -179,9 +182,7 @@ namespace Hl7.FhirPath.Expressions
             selectArgs.Add(arguments.First());
             selectArgs.AddRange(arguments.Skip(2));
             var selectResults = runSelect(ctx, selectArgs);
-            var tracer = ctx?.EvaluationContext?.Tracer;
-            if (tracer != null)
-                tracer(name, selectResults);
+            ctx?.EvaluationContext?.Tracer?.Invoke(name, selectResults);
 
             return focus;
         }

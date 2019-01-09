@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductAuthorization"; } }
         
-        [FhirType("JurisdictionalAuthorizationComponent")]
+        [FhirType("JurisdictionalAuthorizationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcedureComponent")]
+        [FhirType("ProcedureComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

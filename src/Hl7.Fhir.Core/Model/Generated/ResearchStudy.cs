@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             Withdrawn,
         }
 
-        [FhirType("ArmComponent")]
+        [FhirType("ArmComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ObjectiveComponent")]
+        [FhirType("ObjectiveComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

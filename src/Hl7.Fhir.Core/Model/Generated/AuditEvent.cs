@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
             N5,
         }
 
-        [FhirType("AgentComponent")]
+        [FhirType("AgentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NetworkComponent")]
+        [FhirType("NetworkComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SourceComponent")]
+        [FhirType("SourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntityComponent")]
+        [FhirType("EntityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent")]
+        [FhirType("DetailComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

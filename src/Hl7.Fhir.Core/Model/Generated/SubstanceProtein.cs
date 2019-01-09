@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "SubstanceProtein"; } }
         
-        [FhirType("SubunitComponent")]
+        [FhirType("SubunitComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Expresses the linkage between the internal codes used for storage and the codes used for exchange." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

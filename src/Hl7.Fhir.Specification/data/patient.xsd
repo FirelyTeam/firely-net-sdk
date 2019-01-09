@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -56,7 +56,12 @@
           </xs:element>
           <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this patient record is in active use.</xs:documentation>
+              <xs:documentation xml:lang="en">Whether this patient record is in active use. 
+Many systems use this property to mark as non-current patients, such as those that have not been seen for a period of time based on an organization's business rules.
+
+It is often used to filter patient lists to exclude inactive patients
+
+Deceased patients may also be marked as inactive for the same reasons, but may be active for some time after death.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="unbounded" type="HumanName">
@@ -88,7 +93,7 @@
           </xs:choice>
           <xs:element name="address" minOccurs="0" maxOccurs="unbounded" type="Address">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Addresses for the individual.</xs:documentation>
+              <xs:documentation xml:lang="en">An address for the individual.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="maritalStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -98,7 +103,7 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates whether the patient is part of a multiple (boolean) or indicates the actual birth order (integer).</xs:documentation>
             </xs:annotation>
             <xs:element name="multipleBirthBoolean" type="boolean"/>
             <xs:element name="multipleBirthInteger" type="integer"/>
@@ -113,14 +118,9 @@
               <xs:documentation xml:lang="en">A contact party (e.g. guardian, partner, friend) for the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="animal" type="Patient.Animal" minOccurs="0" maxOccurs="1">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">This patient is known to be an animal.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="communication" type="Patient.Communication" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Languages which may be used to communicate with the patient about his or her health.</xs:documentation>
+              <xs:documentation xml:lang="en">A language which may be used to communicate with the patient about his or her health.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="generalPractitioner" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -188,32 +188,6 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Patient.Animal">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Demographics and other administrative information about an individual or animal receiving care or other health-related services.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="species" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the high level taxonomic categorization of the kind of animal.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="breed" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the detailed categorization of the kind of animal.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="genderStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the current state of the animal's reproductive organs.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:complexType name="Patient.Communication">
     <xs:annotation>
       <xs:documentation xml:lang="en">Demographics and other administrative information about an individual or animal receiving care or other health-related services.</xs:documentation>
@@ -261,24 +235,25 @@
       <xs:enumeration value="replaced-by">
         <xs:annotation>
           <xs:documentation xml:lang="en">Replaced-by</xs:documentation>
-          <xs:documentation xml:lang="nl">vervangen</xs:documentation>
+          <xs:documentation xml:lang="nl">Vervangen door</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="replaces">
         <xs:annotation>
           <xs:documentation xml:lang="en">Replaces</xs:documentation>
+          <xs:documentation xml:lang="nl">Vervangt</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="refer">
         <xs:annotation>
           <xs:documentation xml:lang="en">Refer</xs:documentation>
-          <xs:documentation xml:lang="nl">verwijzing</xs:documentation>
+          <xs:documentation xml:lang="nl">Verwijzing</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="seealso">
         <xs:annotation>
           <xs:documentation xml:lang="en">See also</xs:documentation>
-          <xs:documentation xml:lang="nl">zie ook</xs:documentation>
+          <xs:documentation xml:lang="nl">Zie ook</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

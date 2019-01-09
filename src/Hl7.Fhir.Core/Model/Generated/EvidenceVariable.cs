@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "EvidenceVariable"; } }
         
-        [FhirType("CharacteristicComponent")]
+        [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

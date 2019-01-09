@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,12 +51,17 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">This records identifiers associated with this care plan that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).</xs:documentation>
+              <xs:documentation xml:lang="en">Business identifiers assigned to this goal by the performer or other systems which remain constant as the resource is updated and propagates from server to server.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="GoalStatus">
+          <xs:element name="lifecycleStatus" minOccurs="1" maxOccurs="1" type="GoalLifecycleStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates whether the goal has been reached and is still considered relevant.</xs:documentation>
+              <xs:documentation xml:lang="en">The state of the goal throughout its lifecycle.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="achievementStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the progression, or lack thereof, towards the goal against the target.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -74,7 +79,7 @@
               <xs:documentation xml:lang="en">Human-readable and/or coded description of a specific desired objective of care, such as &quot;control blood pressure&quot; or &quot;negotiate an obstacle course&quot; or &quot;dance with child at wedding&quot;.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the patient, group or organization for whom the goal is being established.</xs:documentation>
            </xs:annotation>
@@ -86,7 +91,7 @@
             <xs:element name="startDate" type="date"/>
             <xs:element name="startCodeableConcept" type="CodeableConcept"/>
           </xs:choice>
-          <xs:element name="target" type="Goal.Target" minOccurs="0" maxOccurs="1">
+          <xs:element name="target" type="Goal.Target" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates what should be done by when.</xs:documentation>
            </xs:annotation>
@@ -149,6 +154,10 @@
             <xs:element name="detailQuantity" type="Quantity"/>
             <xs:element name="detailRange" type="Range"/>
             <xs:element name="detailCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="detailString" type="string"/>
+            <xs:element name="detailBoolean" type="boolean"/>
+            <xs:element name="detailInteger" type="integer"/>
+            <xs:element name="detailRatio" type="Ratio"/>
           </xs:choice>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
@@ -161,16 +170,11 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="GoalStatus-list">
+  <xs:simpleType name="GoalLifecycleStatus-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="proposed">
         <xs:annotation>
           <xs:documentation xml:lang="en">Proposed</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="accepted">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Accepted</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="planned">
@@ -178,39 +182,24 @@
           <xs:documentation xml:lang="en">Planned</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="in-progress">
+      <xs:enumeration value="accepted">
         <xs:annotation>
-          <xs:documentation xml:lang="en">In Progress</xs:documentation>
+          <xs:documentation xml:lang="en">Accepted</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="on-target">
+      <xs:enumeration value="active">
         <xs:annotation>
-          <xs:documentation xml:lang="en">On Target</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ahead-of-target">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Ahead of Target</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="behind-target">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Behind Target</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="sustaining">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Sustaining</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="achieved">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Achieved</xs:documentation>
+          <xs:documentation xml:lang="en">Active</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="on-hold">
         <xs:annotation>
           <xs:documentation xml:lang="en">On Hold</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="completed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Completed</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="cancelled">
@@ -220,7 +209,7 @@
       </xs:enumeration>
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Entered In Error</xs:documentation>
+          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="rejected">
@@ -230,14 +219,14 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="GoalStatus">
+  <xs:complexType name="GoalLifecycleStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates whether the goal has been met and is still being targeted</xs:documentation>
+      <xs:documentation xml:lang="en">Codes that reflect the current state of a goal and whether the goal is still being targeted.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="GoalStatus-list" use="optional"/>
+        <xs:attribute name="value" type="GoalLifecycleStatus-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -48,6 +48,11 @@ namespace Hl7.Fhir.Specification.Tests
             extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
+
+            var dirSource = new DirectorySource(@"TestData\validation");
+            extDefn = dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0");
+
+            Assert.ThrowsException<ArgumentException>(() => dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|"));
         }
 
         [TestMethod]
@@ -222,7 +227,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestCacheLoadingStrategy()
         {
-            const string resourceUri = "http://terminology.hl7.org/ValueSet/v2-0292";
+            const string resourceUri = "http://hl7.org/fhir/ValueSet/currencies";
 
             // Create empty in-memory resolver
             var mem = new InMemoryProfileResolver();

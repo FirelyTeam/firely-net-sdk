@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("SuppliedItemComponent")]
+        [FhirType("SuppliedItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

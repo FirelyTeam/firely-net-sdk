@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="A result of the condition. The &quot;Cause of death&quot; for a patient is typically captured as an Observation.  The &quot;outcome&quot; doesn't imply causality.  Some outcomes may not be assessable until the condition.clinicalStatus is no longer active." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

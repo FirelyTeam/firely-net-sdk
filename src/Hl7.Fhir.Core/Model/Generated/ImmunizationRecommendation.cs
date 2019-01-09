@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
-        [FhirType("RecommendationComponent")]
+        [FhirType("RecommendationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DateCriterionComponent")]
+        [FhirType("DateCriterionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

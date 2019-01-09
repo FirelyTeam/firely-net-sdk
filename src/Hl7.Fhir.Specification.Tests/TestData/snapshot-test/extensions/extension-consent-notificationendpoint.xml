@@ -15,7 +15,7 @@
     </telecom>
   </contact>
   <description value="Endpoint for sending Disclosure notifications in the form of FHIR AuditEvent records." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="rim" />
     <uri value="http://hl7.org/v3" />

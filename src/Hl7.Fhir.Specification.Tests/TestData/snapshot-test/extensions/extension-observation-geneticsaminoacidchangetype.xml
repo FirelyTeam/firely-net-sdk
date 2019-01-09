@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Codified type for associated Amino Acid Change.  LONIC Code: ([48006-1](http://loinc.org/48006-1))." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="v2" />
     <uri value="http://hl7.org/v2" />

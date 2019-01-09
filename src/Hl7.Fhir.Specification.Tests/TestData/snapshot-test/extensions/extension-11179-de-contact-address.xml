@@ -14,7 +14,7 @@
     </telecom>
   </contact>
   <description value="Postal address for a contact for the data element." />
-  <fhirVersion value="3.6.0" />
+  <fhirVersion value="4.0.0" />
   <mapping>
     <identity value="iso11179" />
     <uri value="http://metadata-standards.org/11179/" />

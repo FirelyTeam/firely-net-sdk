@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             Seealso,
         }
 
-        [FhirType("ContactComponent")]
+        [FhirType("ContactComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CommunicationComponent")]
+        [FhirType("CommunicationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LinkComponent")]
+        [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

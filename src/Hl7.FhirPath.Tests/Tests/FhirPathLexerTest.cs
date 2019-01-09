@@ -8,7 +8,7 @@
 
 using System;
 using Hl7.FhirPath;
-using Sprache;
+using Hl7.FhirPath.Sprache;
 using Hl7.FhirPath.Parser;
 using Xunit;
 using Hl7.Fhir.Model.Primitives;

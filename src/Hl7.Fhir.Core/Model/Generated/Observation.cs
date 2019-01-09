@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Observation"; } }
         
-        [FhirType("ReferenceRangeComponent")]
+        [FhirType("ReferenceRangeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComponentComponent")]
+        [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

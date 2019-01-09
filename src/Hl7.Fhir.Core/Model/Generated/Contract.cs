@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
             Terminated,
         }
 
-        [FhirType("ContentDefinitionComponent")]
+        [FhirType("ContentDefinitionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContentDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TermComponent")]
+        [FhirType("TermComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TermComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SecurityLabelComponent")]
+        [FhirType("SecurityLabelComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SecurityLabelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContractOfferComponent")]
+        [FhirType("ContractOfferComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContractOfferComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1276,7 +1276,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContractPartyComponent")]
+        [FhirType("ContractPartyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContractPartyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1384,7 +1384,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnswerComponent")]
+        [FhirType("AnswerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1473,7 +1473,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContractAssetComponent")]
+        [FhirType("ContractAssetComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1900,7 +1900,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AssetContextComponent")]
+        [FhirType("AssetContextComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2044,7 +2044,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValuedItemComponent")]
+        [FhirType("ValuedItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2505,7 +2505,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionComponent")]
+        [FhirType("ActionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3129,7 +3129,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionSubjectComponent")]
+        [FhirType("ActionSubjectComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3236,7 +3236,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SignatoryComponent")]
+        [FhirType("SignatoryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3363,7 +3363,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FriendlyLanguageComponent")]
+        [FhirType("FriendlyLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3452,7 +3452,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LegalLanguageComponent")]
+        [FhirType("LegalLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3541,7 +3541,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComputableLanguageComponent")]
+        [FhirType("ComputableLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

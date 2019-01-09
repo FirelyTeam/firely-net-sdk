@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ParticipantComponent")]
+        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LineItemComponent")]
+        [FhirType("LineItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PriceComponentComponent")]
+        [FhirType("PriceComponentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {

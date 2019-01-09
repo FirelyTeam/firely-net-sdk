@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             NotDone,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("PerformerComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EducationComponent")]
+        [FhirType("EducationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ReactionComponent")]
+        [FhirType("ReactionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProtocolAppliedComponent")]
+        [FhirType("ProtocolAppliedComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
