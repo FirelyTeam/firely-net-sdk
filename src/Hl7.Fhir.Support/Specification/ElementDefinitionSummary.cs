@@ -15,9 +15,10 @@ namespace Hl7.Fhir.Specification
     {
         private ElementDefinitionSummary() { }
 
-        public ElementDefinitionSummary(string elementName, bool isCollection, bool isChoice, 
-            bool isResource, XmlRepresentation representation, ITypeSerializationInfo[] type, 
-            int order, string nonDefaultNS, bool inSummary, bool isRequired)
+        public ElementDefinitionSummary(string elementName, bool isCollection, bool isChoice,
+            bool isResource, XmlRepresentation representation, ITypeSerializationInfo[] type,
+            int order, string nonDefaultNS, bool inSummary, bool isRequired, bool isPrimitive,
+            bool representsValueElement, Type implementingType, Type implementingValueType)
         {
             ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
             IsCollection = isCollection;
@@ -29,6 +30,10 @@ namespace Hl7.Fhir.Specification
             NonDefaultNamespace = nonDefaultNS;
             InSummary = inSummary;
             IsRequired = isRequired;
+            IsPrimitive = isPrimitive;
+            RepresentsValueElement = representsValueElement;
+            ImplementingType = implementingType;
+            ImplementingValueType = implementingValueType;
         }
 
         public ElementDefinitionSummary(IElementDefinitionSummary source)
@@ -43,13 +48,28 @@ namespace Hl7.Fhir.Specification
             NonDefaultNamespace = source.NonDefaultNamespace;
             InSummary = source.InSummary;
             IsRequired = source.IsRequired;
+            IsPrimitive = source.IsPrimitive;
+            RepresentsValueElement = source.RepresentsValueElement;
+            ImplementingType = source.ImplementingType;
+            ImplementingValueType = source.ImplementingValueType;
         }
 
         public static ElementDefinitionSummary ForRoot(string rootName, IStructureDefinitionSummary rootType) =>
-            new ElementDefinitionSummary(rootName, isCollection: false, isChoice: false, 
-                isResource: rootType.IsResource, 
-                representation: XmlRepresentation.XmlElement, 
-                type: new[] { rootType }, order: 0, nonDefaultNS: null, inSummary: true, isRequired: false);
+            new ElementDefinitionSummary(rootName, isCollection: false, isChoice: false,
+                isResource: rootType.IsResource,
+                representation: XmlRepresentation.XmlElement,
+                type: new[] { rootType }, order: 0, nonDefaultNS: null, inSummary: true, isRequired: false,
+                isPrimitive: false, representsValueElement: false, implementingType: null, implementingValueType: null);
+
+        public object GetValue(object instance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetValue(object instance, object value)
+        {
+            throw new NotImplementedException();
+        }
 
         public string ElementName { get; private set; }
 
@@ -68,6 +88,13 @@ namespace Hl7.Fhir.Specification
 
         public string NonDefaultNamespace { get; }
 
+        public bool IsPrimitive { get; }
+
+        public bool RepresentsValueElement { get; private set; }
+
+        public Type ImplementingType { get; private set; }
+
+        public Type ImplementingValueType { get; private set; }
     }
 
 

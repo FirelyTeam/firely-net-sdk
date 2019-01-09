@@ -129,6 +129,16 @@ namespace Hl7.Fhir.Specification
             }
         }
 
+        public object GetValue(object instance)
+        {
+            return _pm.GetValue(instance);
+        }
+
+        public void SetValue(object instance, object value)
+        {
+            _pm.SetValue(instance, value);
+        }
+
         public string ElementName => _pm.Name;
 
         public bool IsCollection => _pm.IsCollection;
@@ -143,7 +153,7 @@ namespace Hl7.Fhir.Specification
         public bool IsResource => _pm.Choice == ChoiceType.ResourceChoice;
 
         public bool IsRequired => _pm.IsMandatoryElement;
-
+        
         public int Order => _pm.Order;
 
         // [WMR 20180822] OPTIMIZE
@@ -160,5 +170,12 @@ namespace Hl7.Fhir.Specification
         }
 
         public string NonDefaultNamespace => null;
+
+        public bool IsPrimitive => _pm.NestedValueElement.IsPrimitive;
+
+        public bool RepresentsValueElement => _pm.NestedValueElement.RepresentsValueElement;
+
+        public Type ImplementingType => _pm.ImplementingType;
+        public Type ImplementingValueType => _pm.NestedValueElement.ImplementingType;
     }
 }

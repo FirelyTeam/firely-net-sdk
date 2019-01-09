@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 
@@ -39,9 +40,10 @@ namespace Hl7.Fhir.Introspection
         public ChoiceType Choice { get; private set; }
         public Type[] FhirType { get; private set; }        // may be multiple if this is a choice
 
+        internal PropertyMapping NestedValueElement { get; private set; }
         public static PropertyMapping Create(PropertyInfo prop) => Create(prop, out IEnumerable<Type> dummy);
-        
-        internal static PropertyMapping Create(PropertyInfo prop, out IEnumerable<Type> referredTypes)        
+
+        internal static PropertyMapping Create(PropertyInfo prop, out IEnumerable<Type> referredTypes)
         {
             if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
@@ -65,7 +67,7 @@ namespace Hl7.Fhir.Introspection
                 result.SerializationHint = elementAttr.XmlSerialization;
                 result.Order = elementAttr.Order;
             }
-          
+
             result.IsCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
 
             // Get to the actual (native) type representing this element
@@ -75,7 +77,13 @@ namespace Hl7.Fhir.Introspection
 
             result.IsBackboneElement = result.ImplementingType.CanBeTreatedAsType(typeof(IBackboneElement));
             foundTypes.Add(result.ImplementingType);
-
+            
+            var childProperties = ReflectionHelper.FindPublicProperties(result.ImplementingType);
+            if (childProperties.Any())
+            {
+                var valuePropertyInfo = childProperties.SingleOrDefault(p=>p.Name.ToLower() == "value");
+                result.NestedValueElement = valuePropertyInfo != null ? Create(valuePropertyInfo) : null;
+            }
             // Derive the C# type that represents which types are allowed for this element.
             // This may differ from the ImplementingType in several ways:
             // * for a choice, ImplementingType = Any, but FhirType[] contains the possible choices
@@ -111,7 +119,7 @@ namespace Hl7.Fhir.Introspection
             if(elementAttr != null && elementAttr.Name != null)
                 return elementAttr.Name;
             else
-                return lowerCamel(prop.Name);            
+                return lowerCamel(prop.Name);
         }
 
         private static string lowerCamel(string p)
@@ -142,19 +150,19 @@ namespace Hl7.Fhir.Introspection
         }
 
 
-         //// Special case: this is a member that uses the closed generic Code<T> type - 
-         //       // do mapping for its open, defining type instead
-         //       if (elementType.IsGenericType)
-         //       {
-         //           if (ReflectionHelper.IsClosedGenericType(elementType) &&  
-         //               ReflectionHelper.IsConstructedFromGenericTypeDefinition(elementType, typeof(Code<>)) )
-         //           {
-         //               result.CodeOfTEnumType = elementType.GetGenericArguments()[0];
-         //               elementType = elementType.GetGenericTypeDefinition();
-         //           }
-         //           else
-         //               throw Error.NotSupported("Property {0} on type {1} uses an open generic type, which is not yet supported", prop.Name, prop.DeclaringType.Name);
-         //       }
+        //// Special case: this is a member that uses the closed generic Code<T> type - 
+        //       // do mapping for its open, defining type instead
+        //       if (elementType.IsGenericType)
+        //       {
+        //           if (ReflectionHelper.IsClosedGenericType(elementType) &&  
+        //               ReflectionHelper.IsConstructedFromGenericTypeDefinition(elementType, typeof(Code<>)) )
+        //           {
+        //               result.CodeOfTEnumType = elementType.GetGenericArguments()[0];
+        //               elementType = elementType.GetGenericTypeDefinition();
+        //           }
+        //           else
+        //               throw Error.NotSupported("Property {0} on type {1} uses an open generic type, which is not yet supported", prop.Name, prop.DeclaringType.Name);
+        //       }
 
         public bool MatchesSuffixedName(string suffixedName)
         {
@@ -172,7 +180,7 @@ namespace Hl7.Fhir.Introspection
             else
                 throw Error.Argument(nameof(suffixedName), "The given suffixed name {0} does not match this property's name {1}".FormatWith(suffixedName, Name));
         }
-     
+
         //public Type GetChoiceType(string choiceSuffix)
         //{
         //    string suffix = choiceSuffix.ToUpperInvariant();
@@ -184,7 +192,7 @@ namespace Hl7.Fhir.Introspection
         //                .Select(cattr => cattr.Type)
         //                .FirstOrDefault(); 
         //}
-   
+
 
         private static bool isAllowedNativeTypeForDataTypeValue(Type type)
         {

@@ -81,16 +81,10 @@ namespace Hl7.Fhir.Serialization
                 if (mapping.NativeType != existing.GetType())
                     throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
             }
-
-            // The older code for read() assumes the primitive value member is represented as a separate child element named "value", 
-            // while the newer ITypedElement represents this as a special Value property. We simulate the old behaviour here, by
-            // explicitly adding the value property as a child and making it act like a typed node.
-            var members = _current.Value != null ?
-                new[] { new ValuePropertyTypedElement(_current) }.Union(_current.Children()) : _current.Children();
-
+            
             try
             {
-                read(mapping, members, existing);
+                read(_current, existing);
             }
             catch (StructuralTypeException ste)
             {
@@ -102,16 +96,17 @@ namespace Hl7.Fhir.Serialization
         }
 
         //this should be refactored into read(ITypedElement parent, Base existing)
-
-        private void read(ClassMapping mapping, IEnumerable<ITypedElement> members, Base existing)
+        private void read(ITypedElement parent, Base existing)
+        //private void read(ClassMapping mapping, IEnumerable<ITypedElement> members, Base existing)
         {
-            foreach (var memberData in members)
+            foreach (var memberData in parent.Children())
             {
-                var memberName = memberData.Name;  // tuple: first is name of member
-
+                //    var memberName = memberData.Name;  // tuple: first is name of member
+                //var isPrimitive = memberData.Value != null ? true : false;
                 // Find a property on the instance that matches the element found in the data
                 // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
-                var mappedProperty = mapping.FindMappedElementByName(memberName);
+                var memberName = memberData.Name;
+                var mappedProperty = memberData.Definition;
 
                 if (mappedProperty != null)
                 {
@@ -125,16 +120,11 @@ namespace Hl7.Fhir.Serialization
                         value = mappedProperty.GetValue(existing);
 
                         if (value != null && !mappedProperty.IsCollection)
-                            throw Error.Format($"Element '{mappedProperty.Name}' must not repeat", memberData.Location);
+                            throw Error.Format($"Element '{memberData.Name}' must not repeat", memberData.Location);
                     }
 
-                    var reader = new DispatchingReader(memberData, Settings, arrayMode: false);
-
-                    // Since we're still using both ClassMappings and the newer IElementDefinitionSummary provider at the same time, 
-                    // the member might be known in the one (POCO), but unknown in the provider. This is only in theory, since the
-                    // provider should provide exactly the same information as the mappings. But better to get a clear exception
-                    // when this happens.
-                    value = reader.Deserialize(mappedProperty, memberName, value);
+                    var reader = new DispatchingReader(memberData, Settings, arrayMode: false, isPrimitive: false);
+                    value = reader.Deserialize(memberData, value);
 
                     if (mappedProperty.RepresentsValueElement && mappedProperty.ImplementingType.IsEnum() && value is String)
                     {

@@ -216,10 +216,27 @@ namespace Hl7.Fhir.Specification
         private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 && 
             (defn.Type[0].Code == FHIRDefinedType.Resource || defn.Type[0].Code == FHIRDefinedType.DomainResource);
 
+        public object GetValue(object instance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetValue(object instance, object value)
+        {
+            throw new NotImplementedException();
+        }
+
         public ITypeSerializationInfo[] Type => _types.Value;
 
         public string NonDefaultNamespace =>
             _definition.GetExtensionValue<FhirUri>("http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace")?.Value;
 
+        public bool IsPrimitive => throw new NotImplementedException();
+
+        public bool RepresentsValueElement => throw new NotImplementedException();
+
+        public Type ImplementingType => throw new NotImplementedException();
+
+        public Type ImplementingValueType => throw new NotImplementedException();
     }
 }

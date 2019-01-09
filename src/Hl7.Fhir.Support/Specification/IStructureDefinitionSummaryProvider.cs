@@ -8,6 +8,7 @@
 
 
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,12 @@ namespace Hl7.Fhir.Specification
 
         bool IsChoiceElement { get; }
         bool IsResource { get; }
+        bool IsPrimitive { get; }
+        bool RepresentsValueElement { get; }
+        //bool IsEnum { get; }
 
+        Type ImplementingType { get; }
+        Type ImplementingValueType { get; }
         ITypeSerializationInfo[] Type { get; }
 
         // Attributes for XML support
@@ -31,6 +37,9 @@ namespace Hl7.Fhir.Specification
         XmlRepresentation Representation { get; }
 
         int Order { get; }
+
+        object GetValue(object instance);
+        void SetValue(object instance, object value);
     }
 
     public interface ITypeSerializationInfo
