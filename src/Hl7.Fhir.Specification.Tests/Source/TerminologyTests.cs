@@ -7,8 +7,6 @@ using System;
 using System.Linq;
 using Xunit;
 
-using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
-
 namespace Hl7.Fhir.Specification.Tests
 {
     public class TerminologyTests : IClassFixture<ValidationFixture>
@@ -211,22 +209,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact, Trait("TestCategory", "IntegrationTest")]
-        public void ExternalServiceValidateCodeTestHttpClient()
-        {
-            using (var client = new TestClient("http://ontoserver.csiro.au/stu3-latest"))
-            {
-                var svc = new ExternalTerminologyService(client);
-
-                // Do common tests for service
-                testService(svc);
-
-                // Any good external service should be able to handle this one
-                var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
-                Assert.True(result.Success);
-            }
-        }
-
-        [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTestWebClient()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/stu3-latest");
@@ -239,23 +221,6 @@ namespace Hl7.Fhir.Specification.Tests
             // Now, this should fall back
             var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
             Assert.True(result.Success);
-        }
-
-        [Fact, Trait("TestCategory", "IntegrationTest")]
-        public void FallbackServiceValidateCodeTestHttpClient()
-        {
-            using (var client = new TestClient("http://ontoserver.csiro.au/stu3-latest"))
-            {
-                var external = new ExternalTerminologyService(client);
-                var local = new LocalTerminologyService(_resolver);
-                var svc = new FallbackTerminologyService(local, external);
-
-                testService(svc);
-
-                // Now, this should fall back
-                var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
-                Assert.True(result.Success);
-            }
         }
 
         [Fact, Trait("TestCategory", "IntegrationTest")]
@@ -274,26 +239,6 @@ namespace Hl7.Fhir.Specification.Tests
             // Now, this should fall back to external + send our vs (that the server cannot know about)
             var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
             Assert.True(result.Success);
-        }
-
-        [Fact, Trait("TestCategory", "IntegrationTest")]
-        public void FallbackServiceValidateCodeTestWithVSHttpClient()
-        {
-            using (var client = new TestClient("http://ontoserver.csiro.au/stu3-latest"))
-            {
-                var service = new ExternalTerminologyService(client);
-                var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/substance-code");
-                Assert.NotNull(vs);
-
-                // Override the canonical with something the remote server cannot know
-                vs.Url = "http://furore.com/fhir/ValueSet/testVS";
-                var local = new LocalTerminologyService(new IKnowOnlyMyTestVSResolver(vs));
-                var fallback = new FallbackTerminologyService(local, service);
-
-                // Now, this should fall back to external + send our vs (that the server cannot know about)
-                var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
-                Assert.True(result.Success);
-            }
         }
 
         private class IKnowOnlyMyTestVSResolver : IResourceResolver

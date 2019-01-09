@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Validation
 
             var nameDef = new ElementDefinition("Organization.name.value").OfType(FHIRAllTypes.String);
             nameDef.Type.Single().SetStringExtension("http://hl7.org/fhir/StructureDefinition/regex", "[A-Z].*");
-            nameDef.Type.Single().Code = null;
+            //nameDef.Type.Single().Code = null;
             cons.Add(nameDef);
 
             return result;
