@@ -6,7 +6,7 @@
   <parameter>
     <name value="order"/>
     <resource>
-      <Order>
+      <ServiceRequest>
         <id value="example-gao-order"/>
         <meta>
           <profile value="http://hl7.org/fhir/StructureDefinition/gao-order"/>
@@ -67,24 +67,24 @@
           <system value="http://example.com/OrderIdentifier"/>
           <value value="123"/>
         </identifier>
-        <date value="2015-11-20"/>
         <subject>
           <reference value="#patient"/>
         </subject>  
-        <source>
+        <occuurenceDate value="2015-11-20"/>
+        <requester>
           <reference value="#practitioner"/>
-        </source>   
-        <reasonCodeableConcept>
+        </requester>   
+        <reasonCode>
           <coding>
             <system value="http://example.com"/>
             <code value="x"/>
           </coding>
           <text value="Headache"/>
-        </reasonCodeableConcept>        
+        </reasonCode>        
         <detail>
           <reference value="#diagnosticorder"/>
         </detail>
-      </Order>
+      </ServiceRequest>
     </resource>
   </parameter>
 </Parameters>
