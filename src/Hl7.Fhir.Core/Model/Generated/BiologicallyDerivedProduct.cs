@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
             Kelvin,
         }
 
-        [FhirType("CollectionComponent")]
+        [FhirType("CollectionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -150,11 +150,11 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CollectionComponent"; } }
             
             /// <summary>
-            /// HealthCare Professional performing collection
+            /// Individual performing collection
             /// </summary>
             [FhirElement("collector", Order=40)]
             [CLSCompliant(false)]
-			[References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
+			[References("Practitioner","PractitionerRole")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Collector
             {
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Collector;
             
             /// <summary>
-            /// Person or entity providing product
+            /// Who is product from
             /// </summary>
             [FhirElement("source", Order=50)]
             [CLSCompliant(false)]
@@ -260,9 +260,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Collector != null) yield return new ElementValue("collector", false, Collector);
-                    if (Source != null) yield return new ElementValue("source", false, Source);
-                    if (Collected != null) yield return new ElementValue("collected", false, Collected);
+                    if (Collector != null) yield return new ElementValue("collector", Collector);
+                    if (Source != null) yield return new ElementValue("source", Source);
+                    if (Collected != null) yield return new ElementValue("collected", Collected);
                 }
             }
 
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcessingComponent")]
+        [FhirType("ProcessingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -422,10 +422,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Procedure != null) yield return new ElementValue("procedure", false, Procedure);
-                    if (Additive != null) yield return new ElementValue("additive", false, Additive);
-                    if (Time != null) yield return new ElementValue("time", false, Time);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Procedure != null) yield return new ElementValue("procedure", Procedure);
+                    if (Additive != null) yield return new ElementValue("additive", Additive);
+                    if (Time != null) yield return new ElementValue("time", Time);
                 }
             }
 
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManipulationComponent")]
+        [FhirType("ManipulationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManipulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -549,8 +549,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Time != null) yield return new ElementValue("time", false, Time);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Time != null) yield return new ElementValue("time", Time);
                 }
             }
 
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StorageComponent")]
+        [FhirType("StorageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StorageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -744,10 +744,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (TemperatureElement != null) yield return new ElementValue("temperature", false, TemperatureElement);
-                    if (ScaleElement != null) yield return new ElementValue("scale", false, ScaleElement);
-                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (TemperatureElement != null) yield return new ElementValue("temperature", TemperatureElement);
+                    if (ScaleElement != null) yield return new ElementValue("scale", ScaleElement);
+                    if (Duration != null) yield return new ElementValue("duration", Duration);
                 }
             }
 
@@ -899,15 +899,16 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("parent", Order=150)]
         [CLSCompliant(false)]
-		[References()]
+		[References("BiologicallyDerivedProduct")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Parent
+        public List<Hl7.Fhir.Model.ResourceReference> Parent
         {
-            get { return _Parent; }
+            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Parent;
+        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
         /// How this product was collected
@@ -983,7 +984,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>)StatusElement.DeepCopy();
                 if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.Integer)QuantityElement.DeepCopy();
-                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
+                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
                 if(Collection != null) dest.Collection = (Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent)Collection.DeepCopy();
                 if(Processing != null) dest.Processing = new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent>(Processing.DeepCopy());
                 if(Manipulation != null) dest.Manipulation = (Hl7.Fhir.Model.BiologicallyDerivedProduct.ManipulationComponent)Manipulation.DeepCopy();
@@ -1053,7 +1054,7 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in Request) { if (elem != null) yield return elem; }
 				if (QuantityElement != null) yield return QuantityElement;
-				if (Parent != null) yield return Parent;
+				foreach (var elem in Parent) { if (elem != null) yield return elem; }
 				if (Collection != null) yield return Collection;
 				foreach (var elem in Processing) { if (elem != null) yield return elem; }
 				if (Manipulation != null) yield return Manipulation;
@@ -1067,17 +1068,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ProductCategoryElement != null) yield return new ElementValue("productCategory", false, ProductCategoryElement);
-                if (ProductCode != null) yield return new ElementValue("productCode", false, ProductCode);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", true, elem); }
-                if (QuantityElement != null) yield return new ElementValue("quantity", false, QuantityElement);
-                if (Parent != null) yield return new ElementValue("parent", false, Parent);
-                if (Collection != null) yield return new ElementValue("collection", false, Collection);
-                foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", true, elem); }
-                if (Manipulation != null) yield return new ElementValue("manipulation", false, Manipulation);
-                foreach (var elem in Storage) { if (elem != null) yield return new ElementValue("storage", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ProductCategoryElement != null) yield return new ElementValue("productCategory", ProductCategoryElement);
+                if (ProductCode != null) yield return new ElementValue("productCode", ProductCode);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Request) { if (elem != null) yield return new ElementValue("request", elem); }
+                if (QuantityElement != null) yield return new ElementValue("quantity", QuantityElement);
+                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", elem); }
+                if (Collection != null) yield return new ElementValue("collection", Collection);
+                foreach (var elem in Processing) { if (elem != null) yield return new ElementValue("processing", elem); }
+                if (Manipulation != null) yield return new ElementValue("manipulation", Manipulation);
+                foreach (var elem in Storage) { if (elem != null) yield return new ElementValue("storage", elem); }
             }
         }
 

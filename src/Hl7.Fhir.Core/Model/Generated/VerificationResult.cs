@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             RevalFail,
         }
 
-        [FhirType("PrimarySourceComponent")]
+        [FhirType("PrimarySourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -110,17 +110,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reference to the primary source
             /// </summary>
-            [FhirElement("organization", Order=40)]
+            [FhirElement("who", Order=40)]
             [CLSCompliant(false)]
-			[References("Organization")]
+			[References("Organization","Practitioner","PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Organization
+            public Hl7.Fhir.Model.ResourceReference Who
             {
-                get { return _Organization; }
-                set { _Organization = value; OnPropertyChanged("Organization"); }
+                get { return _Who; }
+                set { _Who = value; OnPropertyChanged("Who"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Organization;
+            private Hl7.Fhir.Model.ResourceReference _Who;
             
             /// <summary>
             /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
@@ -137,18 +137,18 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Type;
             
             /// <summary>
-            /// The process(es) by which the target is validated
+            /// Method for exchanging information with the primary source
             /// </summary>
-            [FhirElement("validationProcess", InSummary=true, Order=60)]
+            [FhirElement("communicationMethod", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> ValidationProcess
+            public List<Hl7.Fhir.Model.CodeableConcept> CommunicationMethod
             {
-                get { if(_ValidationProcess==null) _ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ValidationProcess; }
-                set { _ValidationProcess = value; OnPropertyChanged("ValidationProcess"); }
+                get { if(_CommunicationMethod==null) _CommunicationMethod = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CommunicationMethod; }
+                set { _CommunicationMethod = value; OnPropertyChanged("CommunicationMethod"); }
             }
             
-            private List<Hl7.Fhir.Model.CodeableConcept> _ValidationProcess;
+            private List<Hl7.Fhir.Model.CodeableConcept> _CommunicationMethod;
             
             /// <summary>
             /// successful | failed | unknown
@@ -229,9 +229,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                    if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());
+                    if(CommunicationMethod != null) dest.CommunicationMethod = new List<Hl7.Fhir.Model.CodeableConcept>(CommunicationMethod.DeepCopy());
                     if(ValidationStatus != null) dest.ValidationStatus = (Hl7.Fhir.Model.CodeableConcept)ValidationStatus.DeepCopy();
                     if(ValidationDateElement != null) dest.ValidationDateElement = (Hl7.Fhir.Model.FhirDateTime)ValidationDateElement.DeepCopy();
                     if(CanPushUpdates != null) dest.CanPushUpdates = (Hl7.Fhir.Model.CodeableConcept)CanPushUpdates.DeepCopy();
@@ -253,9 +253,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
+                if( !DeepComparable.Matches(Who, otherT.Who)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(ValidationProcess, otherT.ValidationProcess)) return false;
+                if( !DeepComparable.Matches(CommunicationMethod, otherT.CommunicationMethod)) return false;
                 if( !DeepComparable.Matches(ValidationStatus, otherT.ValidationStatus)) return false;
                 if( !DeepComparable.Matches(ValidationDateElement, otherT.ValidationDateElement)) return false;
                 if( !DeepComparable.Matches(CanPushUpdates, otherT.CanPushUpdates)) return false;
@@ -270,9 +270,9 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
+                if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(ValidationProcess, otherT.ValidationProcess)) return false;
+                if( !DeepComparable.IsExactly(CommunicationMethod, otherT.CommunicationMethod)) return false;
                 if( !DeepComparable.IsExactly(ValidationStatus, otherT.ValidationStatus)) return false;
                 if( !DeepComparable.IsExactly(ValidationDateElement, otherT.ValidationDateElement)) return false;
                 if( !DeepComparable.IsExactly(CanPushUpdates, otherT.CanPushUpdates)) return false;
@@ -288,9 +288,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Organization != null) yield return Organization;
+                    if (Who != null) yield return Who;
                     foreach (var elem in Type) { if (elem != null) yield return elem; }
-                    foreach (var elem in ValidationProcess) { if (elem != null) yield return elem; }
+                    foreach (var elem in CommunicationMethod) { if (elem != null) yield return elem; }
                     if (ValidationStatus != null) yield return ValidationStatus;
                     if (ValidationDateElement != null) yield return ValidationDateElement;
                     if (CanPushUpdates != null) yield return CanPushUpdates;
@@ -304,13 +304,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                    foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", true, elem); }
-                    if (ValidationStatus != null) yield return new ElementValue("validationStatus", false, ValidationStatus);
-                    if (ValidationDateElement != null) yield return new ElementValue("validationDate", false, ValidationDateElement);
-                    if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", false, CanPushUpdates);
-                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", true, elem); }
+                    if (Who != null) yield return new ElementValue("who", Who);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    foreach (var elem in CommunicationMethod) { if (elem != null) yield return new ElementValue("communicationMethod", elem); }
+                    if (ValidationStatus != null) yield return new ElementValue("validationStatus", ValidationStatus);
+                    if (ValidationDateElement != null) yield return new ElementValue("validationDate", ValidationDateElement);
+                    if (CanPushUpdates != null) yield return new ElementValue("canPushUpdates", CanPushUpdates);
+                    foreach (var elem in PushTypeAvailable) { if (elem != null) yield return new ElementValue("pushTypeAvailable", elem); }
                 }
             }
 
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AttestationComponent")]
+        [FhirType("AttestationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -326,47 +326,47 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "AttestationComponent"; } }
             
             /// <summary>
-            /// The individual attesting to information
+            /// The individual or organization attesting to information
             /// </summary>
-            [FhirElement("source", InSummary=true, Order=40)]
+            [FhirElement("who", InSummary=true, Order=40)]
             [CLSCompliant(false)]
-			[References("Practitioner")]
+			[References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Source
+            public Hl7.Fhir.Model.ResourceReference Who
             {
-                get { return _Source; }
-                set { _Source = value; OnPropertyChanged("Source"); }
+                get { return _Who; }
+                set { _Who = value; OnPropertyChanged("Who"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Source;
+            private Hl7.Fhir.Model.ResourceReference _Who;
             
             /// <summary>
-            /// The organization attesting to information
+            /// When the who is asserting on behalf of another (organization or individual)
             /// </summary>
-            [FhirElement("organization", InSummary=true, Order=50)]
+            [FhirElement("onBehalfOf", InSummary=true, Order=50)]
             [CLSCompliant(false)]
-			[References("Organization")]
+			[References("Organization","Practitioner","PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Organization
+            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
             {
-                get { return _Organization; }
-                set { _Organization = value; OnPropertyChanged("Organization"); }
+                get { return _OnBehalfOf; }
+                set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Organization;
+            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
             
             /// <summary>
-            /// Who is providing the attested information (owner; authorized representative; authorized intermediary; non-authorized source)
+            /// The method by which attested information was submitted/retrieved
             /// </summary>
-            [FhirElement("method", InSummary=true, Order=60)]
+            [FhirElement("communicationMethod", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Method
+            public Hl7.Fhir.Model.CodeableConcept CommunicationMethod
             {
-                get { return _Method; }
-                set { _Method = value; OnPropertyChanged("Method"); }
+                get { return _CommunicationMethod; }
+                set { _CommunicationMethod = value; OnPropertyChanged("CommunicationMethod"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Method;
+            private Hl7.Fhir.Model.CodeableConcept _CommunicationMethod;
             
             /// <summary>
             /// The date the information was attested to
@@ -467,32 +467,28 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Proxy signature
             /// </summary>
-            [FhirElement("signedProxyRight", Order=100, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
+            [FhirElement("proxySignature", Order=100)]
             [DataMember]
-            public Hl7.Fhir.Model.Element SignedProxyRight
+            public Hl7.Fhir.Model.Signature ProxySignature
             {
-                get { return _SignedProxyRight; }
-                set { _SignedProxyRight = value; OnPropertyChanged("SignedProxyRight"); }
+                get { return _ProxySignature; }
+                set { _ProxySignature = value; OnPropertyChanged("ProxySignature"); }
             }
             
-            private Hl7.Fhir.Model.Element _SignedProxyRight;
+            private Hl7.Fhir.Model.Signature _ProxySignature;
             
             /// <summary>
             /// Attester signature
             /// </summary>
-            [FhirElement("signedSourceAttestation", Order=110, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
+            [FhirElement("sourceSignature", Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.Element SignedSourceAttestation
+            public Hl7.Fhir.Model.Signature SourceSignature
             {
-                get { return _SignedSourceAttestation; }
-                set { _SignedSourceAttestation = value; OnPropertyChanged("SignedSourceAttestation"); }
+                get { return _SourceSignature; }
+                set { _SourceSignature = value; OnPropertyChanged("SourceSignature"); }
             }
             
-            private Hl7.Fhir.Model.Element _SignedSourceAttestation;
+            private Hl7.Fhir.Model.Signature _SourceSignature;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -501,14 +497,14 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
-                    if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
+                    if(CommunicationMethod != null) dest.CommunicationMethod = (Hl7.Fhir.Model.CodeableConcept)CommunicationMethod.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
                     if(SourceIdentityCertificateElement != null) dest.SourceIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)SourceIdentityCertificateElement.DeepCopy();
                     if(ProxyIdentityCertificateElement != null) dest.ProxyIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)ProxyIdentityCertificateElement.DeepCopy();
-                    if(SignedProxyRight != null) dest.SignedProxyRight = (Hl7.Fhir.Model.Element)SignedProxyRight.DeepCopy();
-                    if(SignedSourceAttestation != null) dest.SignedSourceAttestation = (Hl7.Fhir.Model.Element)SignedSourceAttestation.DeepCopy();
+                    if(ProxySignature != null) dest.ProxySignature = (Hl7.Fhir.Model.Signature)ProxySignature.DeepCopy();
+                    if(SourceSignature != null) dest.SourceSignature = (Hl7.Fhir.Model.Signature)SourceSignature.DeepCopy();
                     return dest;
                 }
                 else
@@ -526,14 +522,14 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-                if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                if( !DeepComparable.Matches(Who, otherT.Who)) return false;
+                if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                if( !DeepComparable.Matches(CommunicationMethod, otherT.CommunicationMethod)) return false;
                 if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
                 if( !DeepComparable.Matches(SourceIdentityCertificateElement, otherT.SourceIdentityCertificateElement)) return false;
                 if( !DeepComparable.Matches(ProxyIdentityCertificateElement, otherT.ProxyIdentityCertificateElement)) return false;
-                if( !DeepComparable.Matches(SignedProxyRight, otherT.SignedProxyRight)) return false;
-                if( !DeepComparable.Matches(SignedSourceAttestation, otherT.SignedSourceAttestation)) return false;
+                if( !DeepComparable.Matches(ProxySignature, otherT.ProxySignature)) return false;
+                if( !DeepComparable.Matches(SourceSignature, otherT.SourceSignature)) return false;
                 
                 return true;
             }
@@ -544,14 +540,14 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-                if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-                if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
+                if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
+                if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
+                if( !DeepComparable.IsExactly(CommunicationMethod, otherT.CommunicationMethod)) return false;
                 if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
                 if( !DeepComparable.IsExactly(SourceIdentityCertificateElement, otherT.SourceIdentityCertificateElement)) return false;
                 if( !DeepComparable.IsExactly(ProxyIdentityCertificateElement, otherT.ProxyIdentityCertificateElement)) return false;
-                if( !DeepComparable.IsExactly(SignedProxyRight, otherT.SignedProxyRight)) return false;
-                if( !DeepComparable.IsExactly(SignedSourceAttestation, otherT.SignedSourceAttestation)) return false;
+                if( !DeepComparable.IsExactly(ProxySignature, otherT.ProxySignature)) return false;
+                if( !DeepComparable.IsExactly(SourceSignature, otherT.SourceSignature)) return false;
                 
                 return true;
             }
@@ -563,14 +559,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Source != null) yield return Source;
-                    if (Organization != null) yield return Organization;
-                    if (Method != null) yield return Method;
+                    if (Who != null) yield return Who;
+                    if (OnBehalfOf != null) yield return OnBehalfOf;
+                    if (CommunicationMethod != null) yield return CommunicationMethod;
                     if (DateElement != null) yield return DateElement;
                     if (SourceIdentityCertificateElement != null) yield return SourceIdentityCertificateElement;
                     if (ProxyIdentityCertificateElement != null) yield return ProxyIdentityCertificateElement;
-                    if (SignedProxyRight != null) yield return SignedProxyRight;
-                    if (SignedSourceAttestation != null) yield return SignedSourceAttestation;
+                    if (ProxySignature != null) yield return ProxySignature;
+                    if (SourceSignature != null) yield return SourceSignature;
                 }
             }
 
@@ -580,14 +576,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Source != null) yield return new ElementValue("source", false, Source);
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", false, SourceIdentityCertificateElement);
-                    if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", false, ProxyIdentityCertificateElement);
-                    if (SignedProxyRight != null) yield return new ElementValue("signedProxyRight", false, SignedProxyRight);
-                    if (SignedSourceAttestation != null) yield return new ElementValue("signedSourceAttestation", false, SignedSourceAttestation);
+                    if (Who != null) yield return new ElementValue("who", Who);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
+                    if (CommunicationMethod != null) yield return new ElementValue("communicationMethod", CommunicationMethod);
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (SourceIdentityCertificateElement != null) yield return new ElementValue("sourceIdentityCertificate", SourceIdentityCertificateElement);
+                    if (ProxyIdentityCertificateElement != null) yield return new ElementValue("proxyIdentityCertificate", ProxyIdentityCertificateElement);
+                    if (ProxySignature != null) yield return new ElementValue("proxySignature", ProxySignature);
+                    if (SourceSignature != null) yield return new ElementValue("sourceSignature", SourceSignature);
                 }
             }
 
@@ -595,7 +591,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValidatorComponent")]
+        [FhirType("ValidatorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -653,17 +649,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Validator signature
             /// </summary>
-            [FhirElement("signedValidatorAttestation", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
+            [FhirElement("attestationSignature", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Element SignedValidatorAttestation
+            public Hl7.Fhir.Model.Signature AttestationSignature
             {
-                get { return _SignedValidatorAttestation; }
-                set { _SignedValidatorAttestation = value; OnPropertyChanged("SignedValidatorAttestation"); }
+                get { return _AttestationSignature; }
+                set { _AttestationSignature = value; OnPropertyChanged("AttestationSignature"); }
             }
             
-            private Hl7.Fhir.Model.Element _SignedValidatorAttestation;
+            private Hl7.Fhir.Model.Signature _AttestationSignature;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -674,7 +668,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(IdentityCertificateElement != null) dest.IdentityCertificateElement = (Hl7.Fhir.Model.FhirString)IdentityCertificateElement.DeepCopy();
-                    if(SignedValidatorAttestation != null) dest.SignedValidatorAttestation = (Hl7.Fhir.Model.Element)SignedValidatorAttestation.DeepCopy();
+                    if(AttestationSignature != null) dest.AttestationSignature = (Hl7.Fhir.Model.Signature)AttestationSignature.DeepCopy();
                     return dest;
                 }
                 else
@@ -694,7 +688,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.Matches(IdentityCertificateElement, otherT.IdentityCertificateElement)) return false;
-                if( !DeepComparable.Matches(SignedValidatorAttestation, otherT.SignedValidatorAttestation)) return false;
+                if( !DeepComparable.Matches(AttestationSignature, otherT.AttestationSignature)) return false;
                 
                 return true;
             }
@@ -707,7 +701,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.IsExactly(IdentityCertificateElement, otherT.IdentityCertificateElement)) return false;
-                if( !DeepComparable.IsExactly(SignedValidatorAttestation, otherT.SignedValidatorAttestation)) return false;
+                if( !DeepComparable.IsExactly(AttestationSignature, otherT.AttestationSignature)) return false;
                 
                 return true;
             }
@@ -721,7 +715,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Organization != null) yield return Organization;
                     if (IdentityCertificateElement != null) yield return IdentityCertificateElement;
-                    if (SignedValidatorAttestation != null) yield return SignedValidatorAttestation;
+                    if (AttestationSignature != null) yield return AttestationSignature;
                 }
             }
 
@@ -731,9 +725,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                    if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", false, IdentityCertificateElement);
-                    if (SignedValidatorAttestation != null) yield return new ElementValue("signedValidatorAttestation", false, SignedValidatorAttestation);
+                    if (Organization != null) yield return new ElementValue("organization", Organization);
+                    if (IdentityCertificateElement != null) yield return new ElementValue("identityCertificate", IdentityCertificateElement);
+                    if (AttestationSignature != null) yield return new ElementValue("attestationSignature", AttestationSignature);
                 }
             }
 
@@ -909,7 +903,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Timing _Frequency;
         
         /// <summary>
-        /// The date/time validation was last completed (incl. failed validations)
+        /// The date/time validation was last completed (including failed validations)
         /// </summary>
         [FhirElement("lastPerformed", Order=170)]
         [DataMember]
@@ -922,7 +916,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _LastPerformedElement;
         
         /// <summary>
-        /// The date/time validation was last completed (incl. failed validations)
+        /// The date/time validation was last completed (including failed validations)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1142,20 +1136,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
-                foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", true, elem); }
-                if (Need != null) yield return new ElementValue("need", false, Need);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (StatusDateElement != null) yield return new ElementValue("statusDate", false, StatusDateElement);
-                if (ValidationType != null) yield return new ElementValue("validationType", false, ValidationType);
-                foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", true, elem); }
-                if (Frequency != null) yield return new ElementValue("frequency", false, Frequency);
-                if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", false, LastPerformedElement);
-                if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", false, NextScheduledElement);
-                if (FailureAction != null) yield return new ElementValue("failureAction", false, FailureAction);
-                foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", true, elem); }
-                if (Attestation != null) yield return new ElementValue("attestation", false, Attestation);
-                foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", true, elem); }
+                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
+                foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", elem); }
+                if (Need != null) yield return new ElementValue("need", Need);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
+                if (ValidationType != null) yield return new ElementValue("validationType", ValidationType);
+                foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", elem); }
+                if (Frequency != null) yield return new ElementValue("frequency", Frequency);
+                if (LastPerformedElement != null) yield return new ElementValue("lastPerformed", LastPerformedElement);
+                if (NextScheduledElement != null) yield return new ElementValue("nextScheduled", NextScheduledElement);
+                if (FailureAction != null) yield return new ElementValue("failureAction", FailureAction);
+                foreach (var elem in PrimarySource) { if (elem != null) yield return new ElementValue("primarySource", elem); }
+                if (Attestation != null) yield return new ElementValue("attestation", Attestation);
+                foreach (var elem in Validator) { if (elem != null) yield return new ElementValue("validator", elem); }
             }
         }
 

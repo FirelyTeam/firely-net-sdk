@@ -23,8 +23,10 @@
   <kind value="primitive-type" />
   <type value="Extension" />
   <abstract value="false" />
-  <contextType value="resource" />
-  <context value="Organization" />
+  <context>
+    <type value="fhirpath" />
+    <expression value="Organization" />
+  </context>
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
   <derivation value="constraint" />
   <snapshot>

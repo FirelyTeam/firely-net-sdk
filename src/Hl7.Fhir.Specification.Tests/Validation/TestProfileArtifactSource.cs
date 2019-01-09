@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using System.Diagnostics;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
@@ -58,8 +59,8 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Organization").OfType(FHIRAllTypes.Organization));
 
             var nameDef = new ElementDefinition("Organization.name.value").OfType(FHIRAllTypes.String);
-            nameDef.Type.Single().SetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-regex", "[A-Z].*");
-            nameDef.Type.Single().Code = null;
+            nameDef.Type.Single().SetStringExtension("http://hl7.org/fhir/StructureDefinition/regex", "[A-Z].*");
+            //nameDef.Type.Single().Code = null;
             cons.Add(nameDef);
 
             return result;
@@ -243,7 +244,7 @@ namespace Hl7.Fhir.Validation
             result.Name = name;
             result.Status = PublicationStatus.Draft;
             result.Description = new Markdown(description);
-            result.FhirVersion = ModelInfo.Version;
+            result.FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version);
             result.Derivation = StructureDefinition.TypeDerivationRule.Constraint;
 
             if (ModelInfo.IsKnownResource(constrainedType))

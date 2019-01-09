@@ -16,9 +16,9 @@
 			<display value="General Discussion" />
 		</coding>
 	</serviceType>
-	<reason>
+	<reasonCode>
 		<text value="Clinical Review" />
-	</reason>
+	</reasonCode>
 	<priority value="5" />
 	<description value="Discussion on the results of your recent MRI" />
 	<minutesDuration value="15" />

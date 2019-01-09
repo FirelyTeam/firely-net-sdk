@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             /// (system: http://hl7.org/fhir/spdx-license)
             /// </summary>
             [EnumLiteral("0BSD", "http://hl7.org/fhir/spdx-license"), Description("BSD Zero Clause License")]
-            zeroBSD,
+            N0BSD,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/spdx-license)
@@ -2184,14 +2184,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-parameter-code)
             /// </summary>
-            [EnumLiteral("apply-business-version", "http://hl7.org/fhir/guide-parameter-code"), Description("Apply Business Version")]
-            ApplyBusinessVersion,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/guide-parameter-code)
-            /// </summary>
-            [EnumLiteral("apply-jurisdiction", "http://hl7.org/fhir/guide-parameter-code"), Description("Apply Jurisdiction")]
-            ApplyJurisdiction,
+            [EnumLiteral("apply", "http://hl7.org/fhir/guide-parameter-code"), Description("Apply Metadata Value")]
+            Apply,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-parameter-code)
@@ -2248,7 +2242,7 @@ namespace Hl7.Fhir.Model
             HtmlTemplate,
         }
 
-        [FhirType("DependsOnComponent")]
+        [FhirType("DependsOnComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2418,9 +2412,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
-                    if (PackageIdElement != null) yield return new ElementValue("packageId", false, PackageIdElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (UriElement != null) yield return new ElementValue("uri", UriElement);
+                    if (PackageIdElement != null) yield return new ElementValue("packageId", PackageIdElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 }
             }
 
@@ -2428,7 +2422,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GlobalComponent")]
+        [FhirType("GlobalComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2563,8 +2557,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (ProfileElement != null) yield return new ElementValue("profile", ProfileElement);
                 }
             }
 
@@ -2572,7 +2566,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DefinitionComponent")]
+        [FhirType("DefinitionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2582,16 +2576,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Grouping used to present related resources in the IG
             /// </summary>
-            [FhirElement("package", Order=40)]
+            [FhirElement("grouping", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> Package
+            public List<Hl7.Fhir.Model.ImplementationGuide.GroupingComponent> Grouping
             {
-                get { if(_Package==null) _Package = new List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent>(); return _Package; }
-                set { _Package = value; OnPropertyChanged("Package"); }
+                get { if(_Grouping==null) _Grouping = new List<Hl7.Fhir.Model.ImplementationGuide.GroupingComponent>(); return _Grouping; }
+                set { _Grouping = value; OnPropertyChanged("Grouping"); }
             }
             
-            private List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> _Package;
+            private List<Hl7.Fhir.Model.ImplementationGuide.GroupingComponent> _Grouping;
             
             /// <summary>
             /// Resource in the implementation guide
@@ -2655,7 +2649,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Package != null) dest.Package = new List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent>(Package.DeepCopy());
+                    if(Grouping != null) dest.Grouping = new List<Hl7.Fhir.Model.ImplementationGuide.GroupingComponent>(Grouping.DeepCopy());
                     if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>(Resource.DeepCopy());
                     if(Page != null) dest.Page = (Hl7.Fhir.Model.ImplementationGuide.PageComponent)Page.DeepCopy();
                     if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.ImplementationGuide.ParameterComponent>(Parameter.DeepCopy());
@@ -2677,7 +2671,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Package, otherT.Package)) return false;
+                if( !DeepComparable.Matches(Grouping, otherT.Grouping)) return false;
                 if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.Matches(Page, otherT.Page)) return false;
                 if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
@@ -2692,7 +2686,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Package, otherT.Package)) return false;
+                if( !DeepComparable.IsExactly(Grouping, otherT.Grouping)) return false;
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.IsExactly(Page, otherT.Page)) return false;
                 if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
@@ -2708,7 +2702,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    foreach (var elem in Package) { if (elem != null) yield return elem; }
+                    foreach (var elem in Grouping) { if (elem != null) yield return elem; }
                     foreach (var elem in Resource) { if (elem != null) yield return elem; }
                     if (Page != null) yield return Page;
                     foreach (var elem in Parameter) { if (elem != null) yield return elem; }
@@ -2722,11 +2716,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Package) { if (elem != null) yield return new ElementValue("package", true, elem); }
-                    foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", true, elem); }
-                    if (Page != null) yield return new ElementValue("page", false, Page);
-                    foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
-                    foreach (var elem in Template) { if (elem != null) yield return new ElementValue("template", true, elem); }
+                    foreach (var elem in Grouping) { if (elem != null) yield return new ElementValue("grouping", elem); }
+                    foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", elem); }
+                    if (Page != null) yield return new ElementValue("page", Page);
+                    foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", elem); }
+                    foreach (var elem in Template) { if (elem != null) yield return new ElementValue("template", elem); }
                 }
             }
 
@@ -2734,12 +2728,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackageComponent")]
+        [FhirType("GroupingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PackageComponent"; } }
+            public override string TypeName { get { return "GroupingComponent"; } }
             
             /// <summary>
             /// Descriptive name for the package
@@ -2808,7 +2802,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PackageComponent;
+                var dest = other as GroupingComponent;
                 
                 if (dest != null)
                 {
@@ -2823,12 +2817,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PackageComponent());
+                return CopyTo(new GroupingComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PackageComponent;
+                var otherT = other as GroupingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2840,7 +2834,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PackageComponent;
+                var otherT = other as GroupingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2868,8 +2862,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                 }
             }
 
@@ -2877,7 +2871,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResourceComponent")]
+        [FhirType("ResourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2901,9 +2895,42 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
+            /// Versions this applies to (if different to IG)
+            /// </summary>
+            [FhirElement("fhirVersion", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement
+            {
+                get { if(_FhirVersionElement==null) _FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(); return _FhirVersionElement; }
+                set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
+            }
+            
+            private List<Code<Hl7.Fhir.Model.FHIRVersion>> _FhirVersionElement;
+            
+            /// <summary>
+            /// Versions this applies to (if different to IG)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<Hl7.Fhir.Model.FHIRVersion?> FhirVersion
+            {
+                get { return FhirVersionElement != null ? FhirVersionElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        FhirVersionElement = null; 
+                    else
+                        FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>(elem)));
+                    OnPropertyChanged("FhirVersion");
+                }
+            }
+            
+            /// <summary>
             /// Human Name for the resource
             /// </summary>
-            [FhirElement("name", Order=50)]
+            [FhirElement("name", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -2935,7 +2962,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reason why included in guide
             /// </summary>
-            [FhirElement("description", Order=60)]
+            [FhirElement("description", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -2967,7 +2994,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is an example/What is this an example of?
             /// </summary>
-            [FhirElement("example", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("example", Order=80, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
             [DataMember]
@@ -2980,34 +3007,34 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Example;
             
             /// <summary>
-            /// Pack this is part of
+            /// Grouping this is part of
             /// </summary>
-            [FhirElement("package", Order=80)]
+            [FhirElement("groupingId", Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.Id PackageElement
+            public Hl7.Fhir.Model.Id GroupingIdElement
             {
-                get { return _PackageElement; }
-                set { _PackageElement = value; OnPropertyChanged("PackageElement"); }
+                get { return _GroupingIdElement; }
+                set { _GroupingIdElement = value; OnPropertyChanged("GroupingIdElement"); }
             }
             
-            private Hl7.Fhir.Model.Id _PackageElement;
+            private Hl7.Fhir.Model.Id _GroupingIdElement;
             
             /// <summary>
-            /// Pack this is part of
+            /// Grouping this is part of
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Package
+            public string GroupingId
             {
-                get { return PackageElement != null ? PackageElement.Value : null; }
+                get { return GroupingIdElement != null ? GroupingIdElement.Value : null; }
                 set
                 {
                     if (value == null)
-                        PackageElement = null; 
+                        GroupingIdElement = null; 
                     else
-                        PackageElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("Package");
+                        GroupingIdElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("GroupingId");
                 }
             }
             
@@ -3019,10 +3046,11 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+                    if(FhirVersionElement != null) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(FhirVersionElement.DeepCopy());
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Example != null) dest.Example = (Hl7.Fhir.Model.Element)Example.DeepCopy();
-                    if(PackageElement != null) dest.PackageElement = (Hl7.Fhir.Model.Id)PackageElement.DeepCopy();
+                    if(GroupingIdElement != null) dest.GroupingIdElement = (Hl7.Fhir.Model.Id)GroupingIdElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -3041,10 +3069,11 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(FhirVersionElement, otherT.FhirVersionElement)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(Example, otherT.Example)) return false;
-                if( !DeepComparable.Matches(PackageElement, otherT.PackageElement)) return false;
+                if( !DeepComparable.Matches(GroupingIdElement, otherT.GroupingIdElement)) return false;
                 
                 return true;
             }
@@ -3056,10 +3085,11 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.IsExactly(FhirVersionElement, otherT.FhirVersionElement)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(Example, otherT.Example)) return false;
-                if( !DeepComparable.IsExactly(PackageElement, otherT.PackageElement)) return false;
+                if( !DeepComparable.IsExactly(GroupingIdElement, otherT.GroupingIdElement)) return false;
                 
                 return true;
             }
@@ -3072,10 +3102,11 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Reference != null) yield return Reference;
+                    foreach (var elem in FhirVersionElement) { if (elem != null) yield return elem; }
                     if (NameElement != null) yield return NameElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Example != null) yield return Example;
-                    if (PackageElement != null) yield return PackageElement;
+                    if (GroupingIdElement != null) yield return GroupingIdElement;
                 }
             }
 
@@ -3085,11 +3116,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Example != null) yield return new ElementValue("example", false, Example);
-                    if (PackageElement != null) yield return new ElementValue("package", false, PackageElement);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
+                    foreach (var elem in FhirVersionElement) { if (elem != null) yield return new ElementValue("fhirVersion", elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Example != null) yield return new ElementValue("example", Example);
+                    if (GroupingIdElement != null) yield return new ElementValue("groupingId", GroupingIdElement);
                 }
             }
 
@@ -3097,7 +3129,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PageComponent")]
+        [FhirType("PageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3270,10 +3302,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Name != null) yield return new ElementValue("name", false, Name);
-                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                    if (GenerationElement != null) yield return new ElementValue("generation", false, GenerationElement);
-                    foreach (var elem in Page) { if (elem != null) yield return new ElementValue("page", true, elem); }
+                    if (Name != null) yield return new ElementValue("name", Name);
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                    if (GenerationElement != null) yield return new ElementValue("generation", GenerationElement);
+                    foreach (var elem in Page) { if (elem != null) yield return new ElementValue("page", elem); }
                 }
             }
 
@@ -3281,7 +3313,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3289,7 +3321,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
-            /// apply-business-version | apply-jurisdiction | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
+            /// apply | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
             /// </summary>
             [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -3303,7 +3335,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.ImplementationGuide.GuideParameterCode> _CodeElement;
             
             /// <summary>
-            /// apply-business-version | apply-jurisdiction | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
+            /// apply | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -3416,8 +3448,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
 
@@ -3425,7 +3457,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TemplateComponent")]
+        [FhirType("TemplateComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3596,9 +3628,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
-                    if (ScopeElement != null) yield return new ElementValue("scope", false, ScopeElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (SourceElement != null) yield return new ElementValue("source", SourceElement);
+                    if (ScopeElement != null) yield return new ElementValue("scope", ScopeElement);
                 }
             }
 
@@ -3606,7 +3638,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestComponent")]
+        [FhirType("ManifestComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3813,11 +3845,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RenderingElement != null) yield return new ElementValue("rendering", false, RenderingElement);
-                    foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", true, elem); }
-                    foreach (var elem in Page) { if (elem != null) yield return new ElementValue("page", true, elem); }
-                    foreach (var elem in ImageElement) { if (elem != null) yield return new ElementValue("image", true, elem); }
-                    foreach (var elem in OtherElement) { if (elem != null) yield return new ElementValue("other", true, elem); }
+                    if (RenderingElement != null) yield return new ElementValue("rendering", RenderingElement);
+                    foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", elem); }
+                    foreach (var elem in Page) { if (elem != null) yield return new ElementValue("page", elem); }
+                    foreach (var elem in ImageElement) { if (elem != null) yield return new ElementValue("image", elem); }
+                    foreach (var elem in OtherElement) { if (elem != null) yield return new ElementValue("other", elem); }
                 }
             }
 
@@ -3825,7 +3857,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestResourceComponent")]
+        [FhirType("ManifestResourceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3961,9 +3993,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
-                    if (Example != null) yield return new ElementValue("example", false, Example);
-                    if (RelativePathElement != null) yield return new ElementValue("relativePath", false, RelativePathElement);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
+                    if (Example != null) yield return new ElementValue("example", Example);
+                    if (RelativePathElement != null) yield return new ElementValue("relativePath", RelativePathElement);
                 }
             }
 
@@ -3971,7 +4003,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestPageComponent")]
+        [FhirType("ManifestPageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -4142,9 +4174,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                    foreach (var elem in AnchorElement) { if (elem != null) yield return new ElementValue("anchor", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                    foreach (var elem in AnchorElement) { if (elem != null) yield return new ElementValue("anchor", elem); }
                 }
             }
 
@@ -4483,6 +4515,7 @@ namespace Hl7.Fhir.Model
         /// NPM Package name for IG
         /// </summary>
         [FhirElement("packageId", InSummary=true, Order=220)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Id PackageIdElement
         {
@@ -4544,33 +4577,34 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// FHIR Version this Implementation Guide targets
+        /// FHIR Version(s) this Implementation Guide targets
         /// </summary>
         [FhirElement("fhirVersion", InSummary=true, Order=240)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Id FhirVersionElement
+        public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement
         {
-            get { return _FhirVersionElement; }
+            get { if(_FhirVersionElement==null) _FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(); return _FhirVersionElement; }
             set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
         }
         
-        private Hl7.Fhir.Model.Id _FhirVersionElement;
+        private List<Code<Hl7.Fhir.Model.FHIRVersion>> _FhirVersionElement;
         
         /// <summary>
-        /// FHIR Version this Implementation Guide targets
+        /// FHIR Version(s) this Implementation Guide targets
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string FhirVersion
+        public IEnumerable<Hl7.Fhir.Model.FHIRVersion?> FhirVersion
         {
-            get { return FhirVersionElement != null ? FhirVersionElement.Value : null; }
+            get { return FhirVersionElement != null ? FhirVersionElement.Select(elem => elem.Value) : null; }
             set
             {
                 if (value == null)
                   FhirVersionElement = null; 
                 else
-                  FhirVersionElement = new Hl7.Fhir.Model.Id(value);
+                  FhirVersionElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FHIRVersion>(elem)));
                 OnPropertyChanged("FhirVersion");
             }
         }
@@ -4639,11 +4673,31 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
+        public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "definition.resource.fhirVersion.all(%context.fhirVersion contains $this)",
+            Key = "ig-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource has a fhirVersion, it must be oe of the versions defined for the Implementation Guide",
+            Xpath = "count(for $id in (f:resource/f:fhirVersion) return $id[not(ancestor::f:fhirVersion/@value=$id/@value)])=0"
+        };
+
+        public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "definition.all(resource.groupingId.all(%context.grouping.id contains $this))",
+            Key = "ig-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource has a groupingId, it must refer to a grouping defined in the Implementation Guide",
+            Xpath = "count(for $id in (f:resource/f:groupingId) return $id[not(ancestor::f:grouping/@id=$id/@value)])=0"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(ImplementationGuide_IG_0);
+            InvariantConstraints.Add(ImplementationGuide_IG_2);
+            InvariantConstraints.Add(ImplementationGuide_IG_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -4668,7 +4722,7 @@ namespace Hl7.Fhir.Model
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(PackageIdElement != null) dest.PackageIdElement = (Hl7.Fhir.Model.Id)PackageIdElement.DeepCopy();
                 if(LicenseElement != null) dest.LicenseElement = (Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense>)LicenseElement.DeepCopy();
-                if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
+                if(FhirVersionElement != null) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(FhirVersionElement.DeepCopy());
                 if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ImplementationGuide.DependsOnComponent>(DependsOn.DeepCopy());
                 if(Global != null) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(Global.DeepCopy());
                 if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ImplementationGuide.DefinitionComponent)Definition.DeepCopy();
@@ -4765,7 +4819,7 @@ namespace Hl7.Fhir.Model
 				if (Copyright != null) yield return Copyright;
 				if (PackageIdElement != null) yield return PackageIdElement;
 				if (LicenseElement != null) yield return LicenseElement;
-				if (FhirVersionElement != null) yield return FhirVersionElement;
+				foreach (var elem in FhirVersionElement) { if (elem != null) yield return elem; }
 				foreach (var elem in DependsOn) { if (elem != null) yield return elem; }
 				foreach (var elem in Global) { if (elem != null) yield return elem; }
 				if (Definition != null) yield return Definition;
@@ -4779,26 +4833,26 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (PackageIdElement != null) yield return new ElementValue("packageId", false, PackageIdElement);
-                if (LicenseElement != null) yield return new ElementValue("license", false, LicenseElement);
-                if (FhirVersionElement != null) yield return new ElementValue("fhirVersion", false, FhirVersionElement);
-                foreach (var elem in DependsOn) { if (elem != null) yield return new ElementValue("dependsOn", true, elem); }
-                foreach (var elem in Global) { if (elem != null) yield return new ElementValue("global", true, elem); }
-                if (Definition != null) yield return new ElementValue("definition", false, Definition);
-                if (Manifest != null) yield return new ElementValue("manifest", false, Manifest);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+                if (PackageIdElement != null) yield return new ElementValue("packageId", PackageIdElement);
+                if (LicenseElement != null) yield return new ElementValue("license", LicenseElement);
+                foreach (var elem in FhirVersionElement) { if (elem != null) yield return new ElementValue("fhirVersion", elem); }
+                foreach (var elem in DependsOn) { if (elem != null) yield return new ElementValue("dependsOn", elem); }
+                foreach (var elem in Global) { if (elem != null) yield return new ElementValue("global", elem); }
+                if (Definition != null) yield return new ElementValue("definition", Definition);
+                if (Manifest != null) yield return new ElementValue("manifest", Manifest);
             }
         }
 

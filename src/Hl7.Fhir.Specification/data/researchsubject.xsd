@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,20 +38,20 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="ResearchSubject" type="ResearchSubject">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A process where a researcher or organization plans and then executes a series of steps intended to increase the field of healthcare-related knowledge.  This includes studies of safety, efficacy, comparative effectiveness and other information about medications, devices, therapies and other interventional and investigative techniques.  A ResearchStudy involves the gathering of information about human or animal subjects.</xs:documentation>
+      <xs:documentation xml:lang="en">A physical entity which is the primary unit of operational and/or administrative interest in a study.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="ResearchSubject">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A process where a researcher or organization plans and then executes a series of steps intended to increase the field of healthcare-related knowledge.  This includes studies of safety, efficacy, comparative effectiveness and other information about medications, devices, therapies and other interventional and investigative techniques.  A ResearchStudy involves the gathering of information about human or animal subjects.</xs:documentation>
+      <xs:documentation xml:lang="en">A physical entity which is the primary unit of operational and/or administrative interest in a study.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifiers assigned to this research study by the sponsor or other systems.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifiers assigned to this research subject for a study.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ResearchSubjectStatus">
@@ -100,19 +100,59 @@
           <xs:documentation xml:lang="en">Candidate</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="enrolled">
+      <xs:enumeration value="eligible">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Enrolled</xs:documentation>
+          <xs:documentation xml:lang="en">Eligible</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="active">
+      <xs:enumeration value="follow-up">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Active</xs:documentation>
+          <xs:documentation xml:lang="en">Follow-up</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="suspended">
+      <xs:enumeration value="ineligible">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Suspended</xs:documentation>
+          <xs:documentation xml:lang="en">Ineligible</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="not-registered">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Not Registered</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="off-study">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Off-study</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="on-study">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">On-study</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="on-study-intervention">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">On-study-intervention</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="on-study-observation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">On-study-observation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pending-on-study">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Pending on-study</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="potential-candidate">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Potential Candidate</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="screening">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Screening</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="withdrawn">
@@ -120,16 +160,11 @@
           <xs:documentation xml:lang="en">Withdrawn</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="completed">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Completed</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="ResearchSubjectStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates the progression of a study subject through a study</xs:documentation>
+      <xs:documentation xml:lang="en">Indicates the progression of a study subject through a study.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

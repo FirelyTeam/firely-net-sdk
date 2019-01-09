@@ -362,7 +362,7 @@
     <element>
       <path value="Group.name.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /></discriminator>
         <ordered value="false" />
         <rules value="open" />
       </slicing>
@@ -434,7 +434,7 @@
     <element>
       <path value="Group.characteristic" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="Trait of group members" />
@@ -976,7 +976,7 @@
     <element>
       <path value="Group.characteristic" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="Trait of group members" />

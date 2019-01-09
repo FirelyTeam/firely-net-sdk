@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestClient = Hl7.Fhir.Rest.Http.FhirClient;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
     [TestClass]
     public class ReadAsyncTests
     {
-        private string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+        private string _endpoint = "http://sqlonfhir-r4.azurewebsites.net/fhir"; // https://api.hspconsortium.org/rpineda/open";
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
@@ -23,31 +21,12 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
             
-            Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
+            Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/example"));
             Assert.IsNotNull(p);
             Assert.IsNotNull(p.Name[0].Given);
             Assert.IsNotNull(p.Name[0].Family);
             Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
             Console.WriteLine("Test Completed");
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturnedHttpClient()
-        {
-            using (var client = new TestClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            })
-            {
-                Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
-                Assert.IsNotNull(p);
-                Assert.IsNotNull(p.Name[0].Given);
-                Assert.IsNotNull(p.Name[0].Family);
-                Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                Console.WriteLine("Test Completed");
-            }
         }
 
         [TestMethod]
@@ -60,31 +39,12 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
-            Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
+            Patient p = await client.ReadAsync<Patient>("/Patient/example");
             Assert.IsNotNull(p);
             Assert.IsNotNull(p.Name[0].Given);
             Assert.IsNotNull(p.Name[0].Family);
             Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
             Console.WriteLine("Test Completed");
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturnedHttpClient()
-        {
-            using (var client = new TestClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            })
-            {
-                Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
-                Assert.IsNotNull(p);
-                Assert.IsNotNull(p.Name[0].Given);
-                Assert.IsNotNull(p.Name[0].Family);
-                Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                Console.WriteLine("Test Completed");
-            }
         }
     }
 }

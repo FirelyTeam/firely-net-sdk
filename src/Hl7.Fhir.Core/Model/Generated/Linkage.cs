@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -66,23 +66,23 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("source", "http://hl7.org/fhir/linkage-type"), Description("Source of truth")]
+            [EnumLiteral("source", "http://hl7.org/fhir/linkage-type"), Description("Source of Truth")]
             Source,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("alternate", "http://hl7.org/fhir/linkage-type"), Description("Alternate record")]
+            [EnumLiteral("alternate", "http://hl7.org/fhir/linkage-type"), Description("Alternate Record")]
             Alternate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("historical", "http://hl7.org/fhir/linkage-type"), Description("Historical/obsolete record")]
+            [EnumLiteral("historical", "http://hl7.org/fhir/linkage-type"), Description("Historical/Obsolete Record")]
             Historical,
         }
 
-        [FhirType("ItemComponent")]
+        [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -200,8 +200,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Resource != null) yield return new ElementValue("resource", Resource);
                 }
             }
 
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", InSummary=true, Order=100)]
         [CLSCompliant(false)]
-		[References("Practitioner","Organization")]
+		[References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -352,9 +352,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Author != null) yield return new ElementValue("author", Author);
+                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
             }
         }
 

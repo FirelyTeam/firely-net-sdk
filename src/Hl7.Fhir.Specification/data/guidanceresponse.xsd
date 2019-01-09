@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,21 +49,24 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="requestId" minOccurs="0" maxOccurs="1" type="id">
+          <xs:element name="requestIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The id of the request associated with this response. If an id was given as part of the request, it will be reproduced here to enable the requester to more easily identify the response in a multi-request scenario.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier of the request associated with this response. If an identifier was given as part of the request, it will be reproduced here to enable the requester to more easily identify the response in a multi-request scenario.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Allows a service to provide a unique, business identifier for the response.</xs:documentation>
+              <xs:documentation xml:lang="en">Allows a service to provide  unique, business identifiers for the response.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="module" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to the knowledge module that was invoked.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+              <xs:documentation xml:lang="en">An identifier, CodeableConcept or canonical reference to the guidance that was requested.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="moduleUri" type="uri"/>
+            <xs:element name="moduleCanonical" type="canonical"/>
+            <xs:element name="moduleCodeableConcept" type="CodeableConcept"/>
+          </xs:choice>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="GuidanceResponseStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">The status of the response. If the evaluation is completed successfully, the status will indicate success. However, in order to complete the evaluation, the engine may require more information. In this case, the status will be data-required, and the response will contain a description of the additional required information. If the evaluation completed successfully, but the engine determines that a potentially more accurate response could be provided if more data was available, the status will be data-requested, and the response will contain a description of the additional requested information.</xs:documentation>
@@ -74,9 +77,9 @@
               <xs:documentation xml:lang="en">The patient for which the request was processed.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Allows the context of the guidance response to be provided if available. In a service context, this would likely be unavailable.</xs:documentation>
+              <xs:documentation xml:lang="en">The encounter during which this response was created or to which the creation of this record is tightly associated.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="occurrenceDateTime" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -89,13 +92,16 @@
               <xs:documentation xml:lang="en">Provides a reference to the device that performed the guidance.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the reason for the guidance response in coded or textual form.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates the reason the request was initiated. This is typically provided as a parameter to the evaluation and echoed by the service, although for some use cases, such as subscription- or event-based scenarios, it may provide an indication of the cause for the response.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="reasonCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="reasonReference" type="Reference"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
               <xs:documentation xml:lang="en">Provides a mechanism to communicate additional information about the response.</xs:documentation>
@@ -161,7 +167,7 @@
   </xs:simpleType>
   <xs:complexType name="GuidanceResponseStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The status of a guidance response</xs:documentation>
+      <xs:documentation xml:lang="en">The status of a guidance response.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

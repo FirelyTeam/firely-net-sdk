@@ -1,5 +1,5 @@
 ﻿
-namespace Sprache
+namespace Hl7.FhirPath.Sprache
 {
     partial class Parse
     {

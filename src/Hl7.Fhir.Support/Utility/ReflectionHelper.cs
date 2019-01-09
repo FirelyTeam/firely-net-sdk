@@ -15,175 +15,6 @@ using System.Text;
 
 namespace Hl7.Fhir.Utility
 {
-#if NET40
-    public class TypeInfoPolyfill
-    {
-        public Type Type;
-
-        public TypeInfoPolyfill(Type type)
-        {
-            Type = type;
-        }
-
-        public bool IsValueType
-        {
-            get
-            {
-                return Type.IsValueType;
-            }
-        }
-
-        public bool IsGenericType
-        {
-            get
-            {
-                return Type.IsGenericType;
-            }
-        }
-
-        public bool IsGenericTypeDefinition
-        {
-            get
-            {
-                return Type.IsGenericTypeDefinition;
-            }
-        }
-
-        public bool ContainsGenericParameters
-        {
-            get
-            {
-                return Type.ContainsGenericParameters;
-            }
-        }
-
-        public bool IsInterface
-        {
-            get
-            {
-                return Type.IsInterface;
-            }
-        }
-
-        public Type[] ImplementedInterfaces
-        {
-            get
-            {
-                return Type.GetInterfaces();
-            }
-        }
-
-        public FieldInfo[] DeclaredFields
-        {
-            get
-            {
-                return Type.GetFields(BindingFlags.Public | BindingFlags.Static);
-            }
-        }
-
-        public Type[] GenericTypeParameters
-        {
-            get
-            {
-                return Type.GetGenericArguments();
-            }
-        }
-
-        public Type[] GenericTypeArguments
-        {
-            get
-            {
-                return Type.GetGenericArguments();
-            }
-        }
-
-        public FieldInfo GetDeclaredField(string fieldName)
-        {
-            return DeclaredFields.SingleOrDefault(f => f.Name == fieldName);
-        }
-
-        public bool IsEnum
-        {
-            get
-            {
-                return Type.IsEnum;
-            }
-        }
-
-        public bool IsAbstract
-        {
-            get
-            {
-                return Type.IsAbstract;
-            }
-        }
-
-        public Type BaseType
-        {
-            get
-            {
-                return Type.BaseType;
-            }
-        }
-
-        public Assembly Assembly
-        {
-            get
-            {
-                return Type.Assembly;
-            }
-        }
-
-        public bool IsAssignableFrom(TypeInfoPolyfill otherType)
-        {
-            return Type.IsAssignableFrom(otherType.Type);
-        }
-
-        public T GetCustomAttribute<T>() where T : Attribute
-        {
-            return (T) Type.GetCustomAttributes(typeof(T), true).FirstOrDefault();
-        }
-
-        public bool IsDefined(Type type, bool inherit)
-        {
-            return Type.IsDefined(type, inherit);
-        }
-    }
-
-    public static class Net40TypeExtensions
-    {
-        public static TypeInfoPolyfill GetTypeInfo(this Type type)
-        {
-            return new TypeInfoPolyfill(type);
-        }
-
-        public static PropertyInfo GetRuntimeProperty(this Type type, string propertyName)
-        {
-            return type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public);
-        }
-
-        public static T GetCustomAttribute<T>(this MemberInfo memberInfo) where T: Attribute
-        {
-            return (T) memberInfo.GetCustomAttributes(typeof(T), true).FirstOrDefault();
-        }
-
-        public static T GetCustomAttribute<T>(this Assembly assembly) where T : Attribute
-        {
-            return (T) assembly.GetCustomAttributes(typeof(T), true).FirstOrDefault();
-        }
-
-        public static Type[] GetExportedTypes(this Assembly assembly)
-        {
-            return assembly.GetTypes().Where(t => t.IsVisible).ToArray();
-        }
-
-        public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo memberInfo) where T: Attribute
-        {
-            return memberInfo.GetCustomAttributes(typeof(T), true).Cast<T>();
-        }
-    }
-#endif
-
     public static class ReflectionHelper
     {
         public static bool IsAValueType(this Type t)
@@ -221,7 +52,7 @@ namespace Hl7.Fhir.Utility
         {
             if (t == null) throw Error.ArgumentNull("t");
 
-#if !DOTNETFW
+#if NETSTANDARD1_1
             // Unfortunately, netstandard1.0 has no method to filter on bindingflags :-(
             // Have to do it ourselves
             return t.GetRuntimeProperties().Where(p => hasPublicInstanceReadAccessor(p));
@@ -267,7 +98,7 @@ namespace Hl7.Fhir.Utility
 
         internal static ConstructorInfo GetDefaultPublicConstructor(Type t)
         {
-#if !DOTNETFW
+#if NETSTANDARD1_1
             return t.GetTypeInfo().DeclaredConstructors.FirstOrDefault(s => s.GetParameters().Length == 0 && s.IsPublic && !s.IsStatic);
 #else
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
@@ -332,13 +163,11 @@ namespace Hl7.Fhir.Utility
         {
             if (type == null) throw Error.ArgumentNull("type");
 
-            Type genericListType;
-
             if (type.IsArray)
             {
                 return type.GetElementType();
             }
-            else if (ImplementsGenericDefinition(type, typeof(ICollection<>), out genericListType))
+            else if (ImplementsGenericDefinition(type, typeof(ICollection<>), out Type genericListType))
             {
                 //EK: If I look at ImplementsGenericDefinition, I don't think this can actually occur.
                 //if (genericListType.IsGenericTypeDefinition)
@@ -355,11 +184,8 @@ namespace Hl7.Fhir.Utility
                 throw Error.Argument("type", "Type {0} is not a collection.".FormatWith(type.Name));
             }
         }
-        public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition)
-        {
-            Type implementingType;
-            return ImplementsGenericDefinition(type, genericInterfaceDefinition, out implementingType);
-        }
+        public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition) =>
+            ImplementsGenericDefinition(type, genericInterfaceDefinition, out Type implementingType);
 
         public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, out Type implementingType)
         {
@@ -403,40 +229,11 @@ namespace Hl7.Fhir.Utility
 
         #region << Extension methods to make the handling of PCL easier >>
 
-//#if !DOTNETFW
-//		internal static bool IsDefined(this Type t, Type attributeType, bool inherit)
-//		{
-//			return t.GetTypeInfo().IsDefined(attributeType, inherit);
-//		}
-//#endif
-
-//#if !DOTNETFW
-//        internal static bool IsAssignableFrom(this Type t, Type otherType)
-//		{
-//			return t.GetTypeInfo().IsAssignableFrom(otherType.GetTypeInfo());
-//		}
-//#endif
-
-        public static bool IsEnum(this Type t)
+       public static bool IsEnum(this Type t)
         {
 			return t.GetTypeInfo().IsEnum;
         }
         #endregion
-
-//#if !DOTNETFW
-//        internal static T GetAttribute<T>(Type type) where T : Attribute
-//		{
-//			var attr = type.GetTypeInfo().GetCustomAttribute<T>();
-//			return (T)attr;
-//		}
-//#endif
-
-#if NET40
-        public static T GetAttribute<T>(TypeInfoPolyfill typeInfo) where T : Attribute
-        {
-            return typeInfo.GetCustomAttribute<T>();
-        }
-#endif
 
         public static T GetAttribute<T>(MemberInfo member) where T : Attribute
         {

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductPackaged"; } }
         
-        [FhirType("BatchIdentifierComponent")]
+        [FhirType("BatchIdentifierComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (OuterPackaging != null) yield return new ElementValue("outerPackaging", false, OuterPackaging);
-                    if (ImmediatePackaging != null) yield return new ElementValue("immediatePackaging", false, ImmediatePackaging);
+                    if (OuterPackaging != null) yield return new ElementValue("outerPackaging", OuterPackaging);
+                    if (ImmediatePackaging != null) yield return new ElementValue("immediatePackaging", ImmediatePackaging);
                 }
             }
 
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackageItemComponent")]
+        [FhirType("PackageItemComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("device", InSummary=true, Order=90)]
             [CLSCompliant(false)]
-			[References("MedicinalProductDeviceSpec","DeviceDefinition")]
+			[References("DeviceDefinition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Device
@@ -442,18 +442,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", true, elem); }
-                    foreach (var elem in AlternateMaterial) { if (elem != null) yield return new ElementValue("alternateMaterial", true, elem); }
-                    foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", true, elem); }
-                    foreach (var elem in ManufacturedItem) { if (elem != null) yield return new ElementValue("manufacturedItem", true, elem); }
-                    foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", true, elem); }
-                    if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", false, PhysicalCharacteristics);
-                    foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", true, elem); }
-                    foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", true, elem); }
-                    foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", true, elem); }
+                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    foreach (var elem in Material) { if (elem != null) yield return new ElementValue("material", elem); }
+                    foreach (var elem in AlternateMaterial) { if (elem != null) yield return new ElementValue("alternateMaterial", elem); }
+                    foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", elem); }
+                    foreach (var elem in ManufacturedItem) { if (elem != null) yield return new ElementValue("manufacturedItem", elem); }
+                    foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
+                    if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", PhysicalCharacteristics);
+                    foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", elem); }
+                    foreach (var elem in ShelfLifeStorage) { if (elem != null) yield return new ElementValue("shelfLifeStorage", elem); }
+                    foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
                 }
             }
 
@@ -465,20 +465,36 @@ namespace Hl7.Fhir.Model
         /// Unique identifier
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
+        /// The product with this is a pack for
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=100)]
+        [CLSCompliant(false)]
+		[References("MedicinalProduct")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Subject
+        {
+            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
         /// Textual description
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=100)]
+        [FhirElement("description", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -508,9 +524,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// The legal status of supply of the medicinal product as classified by the regulator
+        /// </summary>
+        [FhirElement("legalStatusOfSupply", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept LegalStatusOfSupply
+        {
+            get { return _LegalStatusOfSupply; }
+            set { _LegalStatusOfSupply = value; OnPropertyChanged("LegalStatusOfSupply"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _LegalStatusOfSupply;
+        
+        /// <summary>
         /// Marketing information
         /// </summary>
-        [FhirElement("marketingStatus", InSummary=true, Order=110)]
+        [FhirElement("marketingStatus", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<MarketingStatus> MarketingStatus
@@ -524,7 +553,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of this Package Item
         /// </summary>
-        [FhirElement("marketingAuthorization", InSummary=true, Order=120)]
+        [FhirElement("marketingAuthorization", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("MedicinalProductAuthorization")]
         [DataMember]
@@ -539,7 +568,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of this Package Item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=130)]
+        [FhirElement("manufacturer", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -555,7 +584,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Batch numbering
         /// </summary>
-        [FhirElement("batchIdentifier", InSummary=true, Order=140)]
+        [FhirElement("batchIdentifier", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent> BatchIdentifier
@@ -569,7 +598,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A packaging item, as a contained for medicine, possibly with other packaging items within
         /// </summary>
-        [FhirElement("packageItem", InSummary=true, Order=150)]
+        [FhirElement("packageItem", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> PackageItem
@@ -594,8 +623,10 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)LegalStatusOfSupply.DeepCopy();
                 if(MarketingStatus != null) dest.MarketingStatus = new List<MarketingStatus>(MarketingStatus.DeepCopy());
                 if(MarketingAuthorization != null) dest.MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference)MarketingAuthorization.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
@@ -619,7 +650,9 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
             if( !DeepComparable.Matches(MarketingStatus, otherT.MarketingStatus)) return false;
             if( !DeepComparable.Matches(MarketingAuthorization, otherT.MarketingAuthorization)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
@@ -636,7 +669,9 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
             if( !DeepComparable.IsExactly(MarketingStatus, otherT.MarketingStatus)) return false;
             if( !DeepComparable.IsExactly(MarketingAuthorization, otherT.MarketingAuthorization)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
@@ -652,8 +687,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Identifier != null) yield return Identifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Subject) { if (elem != null) yield return elem; }
 				if (DescriptionElement != null) yield return DescriptionElement;
+				if (LegalStatusOfSupply != null) yield return LegalStatusOfSupply;
 				foreach (var elem in MarketingStatus) { if (elem != null) yield return elem; }
 				if (MarketingAuthorization != null) yield return MarketingAuthorization;
 				foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
@@ -668,13 +705,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", true, elem); }
-                if (MarketingAuthorization != null) yield return new ElementValue("marketingAuthorization", false, MarketingAuthorization);
-                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", true, elem); }
-                foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", true, elem); }
-                foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", LegalStatusOfSupply);
+                foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", elem); }
+                if (MarketingAuthorization != null) yield return new ElementValue("marketingAuthorization", MarketingAuthorization);
+                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+                foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", elem); }
+                foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
             }
         }
 

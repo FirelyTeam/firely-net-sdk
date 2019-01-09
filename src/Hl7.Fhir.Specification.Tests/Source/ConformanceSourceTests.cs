@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(humanName);
         }
 
-        [TestMethod, Ignore]
+#if false
         public void TestSourceSpeedTest()
         {
             var jsonSource = new DirectorySource(
@@ -394,11 +394,11 @@ namespace Hl7.Fhir.Specification.Tests
                 }
 
                 sw.Stop();
-                Debug.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
+                Console.WriteLine($"{title} : {(multiThreaded ? "multi" : "single")} threaded, {cnt} resources, duration {sw.ElapsedMilliseconds} ms");
                 Assert.IsTrue(sw.ElapsedMilliseconds < maxDuration);
             }
         }
-
+#endif
         [TestMethod]
         public async Tasks.Task TestThreadSafety()
         {
@@ -422,11 +422,7 @@ namespace Hl7.Fhir.Specification.Tests
                 tasks[i] = Tasks.Task.Run(
                     () =>
                     {
-#if DOTNETFW
                         var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-#else
-                        const int threadId = 0;
-#endif
                         var start = sw.Elapsed;
                         var resource = source.ResolveByCanonicalUri(uri);
                         var summary = source.ListSummaries().ResolveByUri(uri);
@@ -453,7 +449,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestRefresh()
+        public void TestRefreshAll() => TestRefresh(true);
+
+        [TestMethod]
+        public void TestRefreshFile() => TestRefresh(false);
+
+        void TestRefresh(bool refreshAll)
         {
             // Create a temporary folder with a single artifact file
             const string srcFileName = "TestPatient.xml";
@@ -471,24 +472,34 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(1, fileNames.Count);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
+                void Refresh(params string[] files)
+                {
+                    if (refreshAll)
+                    {
+                        source.Refresh();
+                    }
+                    else
+                        source.Refresh(files);
+                }
+
                 // Rename file and refresh source
                 const string newFileName = "New" + srcFileName;
                 var newFilePath = Path.Combine(tmpFolderPath, newFileName);
                 File.Move(tmpFilePath, newFilePath);
-                source.Refresh(tmpFilePath, newFilePath);
+                Refresh(tmpFilePath, newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
                 Assert.AreEqual(1, fileNames.Count);
                 Assert.AreEqual(newFileName, fileNames[0]);
 
                 // Delete file and refresh source
                 File.Delete(newFilePath);
-                source.Refresh(newFilePath);
+                Refresh(newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
                 Assert.AreEqual(0, fileNames.Count);
 
                 // Recreate file and refresh source
                 File.Copy(srcFilePath, tmpFilePath);
-                source.Refresh(tmpFilePath);
+                Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
                 Assert.AreEqual(1, fileNames.Count);
                 Assert.AreEqual(srcFileName, fileNames[0]);

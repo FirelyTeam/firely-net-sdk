@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "NutritionOrder"; } }
         
-        [FhirType("OralDietComponent")]
+        [FhirType("OralDietComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -242,12 +242,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", true, elem); }
-                    foreach (var elem in Nutrient) { if (elem != null) yield return new ElementValue("nutrient", true, elem); }
-                    foreach (var elem in Texture) { if (elem != null) yield return new ElementValue("texture", true, elem); }
-                    foreach (var elem in FluidConsistencyType) { if (elem != null) yield return new ElementValue("fluidConsistencyType", true, elem); }
-                    if (InstructionElement != null) yield return new ElementValue("instruction", false, InstructionElement);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", elem); }
+                    foreach (var elem in Nutrient) { if (elem != null) yield return new ElementValue("nutrient", elem); }
+                    foreach (var elem in Texture) { if (elem != null) yield return new ElementValue("texture", elem); }
+                    foreach (var elem in FluidConsistencyType) { if (elem != null) yield return new ElementValue("fluidConsistencyType", elem); }
+                    if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
                 }
             }
 
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutrientComponent")]
+        [FhirType("NutrientComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -350,8 +350,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Modifier != null) yield return new ElementValue("modifier", false, Modifier);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (Modifier != null) yield return new ElementValue("modifier", Modifier);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
 
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TextureComponent")]
+        [FhirType("TextureComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -454,8 +454,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Modifier != null) yield return new ElementValue("modifier", false, Modifier);
-                    if (FoodType != null) yield return new ElementValue("foodType", false, FoodType);
+                    if (Modifier != null) yield return new ElementValue("modifier", Modifier);
+                    if (FoodType != null) yield return new ElementValue("foodType", FoodType);
                 }
             }
 
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplementComponent")]
+        [FhirType("SupplementComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -648,11 +648,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (ProductNameElement != null) yield return new ElementValue("productName", false, ProductNameElement);
-                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", true, elem); }
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (InstructionElement != null) yield return new ElementValue("instruction", false, InstructionElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (ProductNameElement != null) yield return new ElementValue("productName", ProductNameElement);
+                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", elem); }
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
                 }
             }
 
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EnteralFormulaComponent")]
+        [FhirType("EnteralFormulaComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -932,15 +932,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (BaseFormulaType != null) yield return new ElementValue("baseFormulaType", false, BaseFormulaType);
-                    if (BaseFormulaProductNameElement != null) yield return new ElementValue("baseFormulaProductName", false, BaseFormulaProductNameElement);
-                    if (AdditiveType != null) yield return new ElementValue("additiveType", false, AdditiveType);
-                    if (AdditiveProductNameElement != null) yield return new ElementValue("additiveProductName", false, AdditiveProductNameElement);
-                    if (CaloricDensity != null) yield return new ElementValue("caloricDensity", false, CaloricDensity);
-                    if (RouteofAdministration != null) yield return new ElementValue("routeofAdministration", false, RouteofAdministration);
-                    foreach (var elem in Administration) { if (elem != null) yield return new ElementValue("administration", true, elem); }
-                    if (MaxVolumeToDeliver != null) yield return new ElementValue("maxVolumeToDeliver", false, MaxVolumeToDeliver);
-                    if (AdministrationInstructionElement != null) yield return new ElementValue("administrationInstruction", false, AdministrationInstructionElement);
+                    if (BaseFormulaType != null) yield return new ElementValue("baseFormulaType", BaseFormulaType);
+                    if (BaseFormulaProductNameElement != null) yield return new ElementValue("baseFormulaProductName", BaseFormulaProductNameElement);
+                    if (AdditiveType != null) yield return new ElementValue("additiveType", AdditiveType);
+                    if (AdditiveProductNameElement != null) yield return new ElementValue("additiveProductName", AdditiveProductNameElement);
+                    if (CaloricDensity != null) yield return new ElementValue("caloricDensity", CaloricDensity);
+                    if (RouteofAdministration != null) yield return new ElementValue("routeofAdministration", RouteofAdministration);
+                    foreach (var elem in Administration) { if (elem != null) yield return new ElementValue("administration", elem); }
+                    if (MaxVolumeToDeliver != null) yield return new ElementValue("maxVolumeToDeliver", MaxVolumeToDeliver);
+                    if (AdministrationInstructionElement != null) yield return new ElementValue("administrationInstruction", AdministrationInstructionElement);
                 }
             }
 
@@ -948,7 +948,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationComponent")]
+        [FhirType("AdministrationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1062,9 +1062,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Schedule != null) yield return new ElementValue("schedule", false, Schedule);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (Rate != null) yield return new ElementValue("rate", false, Rate);
+                    if (Schedule != null) yield return new ElementValue("schedule", Schedule);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Rate != null) yield return new ElementValue("rate", Rate);
                 }
             }
 
@@ -1270,17 +1270,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter associated with this nutrition order
         /// </summary>
-        [FhirElement("context", Order=160)]
+        [FhirElement("encounter", Order=160)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Date and time the nutrition order was requested
@@ -1459,7 +1459,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopy();
                 if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>)IntentElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                 if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
                 if(AllergyIntolerance != null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopy());
@@ -1493,7 +1493,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(IntentElement, otherT.IntentElement)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.Matches(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
@@ -1520,7 +1520,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(IntentElement, otherT.IntentElement)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.IsExactly(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
@@ -1547,7 +1547,7 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (IntentElement != null) yield return IntentElement;
 				if (Patient != null) yield return Patient;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (DateTimeElement != null) yield return DateTimeElement;
 				if (Orderer != null) yield return Orderer;
 				foreach (var elem in AllergyIntolerance) { if (elem != null) yield return elem; }
@@ -1566,23 +1566,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", true, elem); }
-                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", true, elem); }
-                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (IntentElement != null) yield return new ElementValue("intent", false, IntentElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (DateTimeElement != null) yield return new ElementValue("dateTime", false, DateTimeElement);
-                if (Orderer != null) yield return new ElementValue("orderer", false, Orderer);
-                foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", true, elem); }
-                foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return new ElementValue("foodPreferenceModifier", true, elem); }
-                foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return new ElementValue("excludeFoodModifier", true, elem); }
-                if (OralDiet != null) yield return new ElementValue("oralDiet", false, OralDiet);
-                foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", true, elem); }
-                if (EnteralFormula != null) yield return new ElementValue("enteralFormula", false, EnteralFormula);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", elem); }
+                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", elem); }
+                foreach (var elem in InstantiatesElement) { if (elem != null) yield return new ElementValue("instantiates", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
+                if (Orderer != null) yield return new ElementValue("orderer", Orderer);
+                foreach (var elem in AllergyIntolerance) { if (elem != null) yield return new ElementValue("allergyIntolerance", elem); }
+                foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return new ElementValue("foodPreferenceModifier", elem); }
+                foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return new ElementValue("excludeFoodModifier", elem); }
+                if (OralDiet != null) yield return new ElementValue("oralDiet", OralDiet);
+                foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", elem); }
+                if (EnteralFormula != null) yield return new ElementValue("enteralFormula", EnteralFormula);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

@@ -75,9 +75,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [EK 20170301] This used to be ambiguous, now (STU3) split in contentReference and sliceName
                 snap.SliceNameElement = mergePrimitiveAttribute(snap.SliceNameElement, diff.SliceNameElement);
-            
+
+                // [WMR 20181211] R4: Also merge ElementDefinition.SliceIsConstraining
+                snap.SliceIsConstrainingElement = mergePrimitiveAttribute(snap.SliceIsConstrainingElement, diff.SliceIsConstrainingElement);
+
                 // Codes are cumulative based on the code value
-                snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
+                // [WMR 20180611] WRONG! Invalid elementComparer
+                // snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
+                snap.Code = mergeCollection(snap.Code, diff.Code, isEqualCoding);
 
                 // For extensions, the base definition is irrelevant since they describe infrastructure, and the diff should contain the real meaning for the elements
                 // In case the diff doesn't have these, give some generic defaults.
@@ -93,9 +98,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //}
 
                 snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
-                snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);
-                snap.CommentElement = mergePrimitiveAttribute(snap.CommentElement, diff.CommentElement, allowAppend: true);
-                snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
+                snap.Definition = mergePrimitiveAttribute(snap.Definition, diff.Definition, allowAppend: true);
+                snap.Comment = mergePrimitiveAttribute(snap.Comment, diff.Comment, allowAppend: true);
+                snap.Requirements = mergePrimitiveAttribute(snap.Requirements, diff.Requirements, allowAppend: true);
                 snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
 
                 // Aliases are cumulative based on the string value
@@ -133,7 +138,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 
                 // [WMR 20160909] merge defaultValue and meaningWhenMissing, to handle core definitions; validator can detect invalid constraints
                 snap.DefaultValue = mergeComplexAttribute(snap.DefaultValue, diff.DefaultValue);
-                snap.MeaningWhenMissingElement = mergePrimitiveAttribute(snap.MeaningWhenMissingElement, diff.MeaningWhenMissingElement);
+                snap.MeaningWhenMissing = mergePrimitiveAttribute(snap.MeaningWhenMissing, diff.MeaningWhenMissing);
                 snap.MaxLengthElement = mergePrimitiveAttribute(snap.MaxLengthElement, diff.MaxLengthElement);
 
                 // [EK 20170301] Added this new STU3 element
@@ -158,6 +163,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // if (isExtensionConstraint)
                 // {
                 snap.IsModifierElement = mergePrimitiveAttribute(snap.IsModifierElement, diff.IsModifierElement);
+                // [WMR 20181211] R4: Also merge ElementDefinition.IsModifierReason
+                snap.IsModifierReasonElement = mergePrimitiveAttribute(snap.IsModifierReasonElement, diff.IsModifierReasonElement);
                 // }
 
                 snap.IsSummaryElement = mergePrimitiveAttribute(snap.IsSummaryElement, diff.IsSummaryElement);
@@ -172,6 +179,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
                 // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot
                 snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
+
+                // [WMR 20181211] R4: Also merge ElementDefinition.ModifierExtension
+                // Q: What does this mean? How should consumers handle these?
+                snap.ModifierExtension = mergeCollection(snap.ModifierExtension, diff.ModifierExtension, (s, d) => s.Url == d.Url);
 
                 // [EK 20170301] Added this after comparison with Java generated snapshot
                 snap.RepresentationElement = mergeCollection(snap.RepresentationElement, diff.RepresentationElement, (s, d) => s.IsExactly(d));
@@ -312,6 +323,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Don't merge elementId, e.g. for type profiles
                     return null;
                 }
+            }
+
+            // [WMR 20180611] NEW
+            static bool isEqualCoding(Coding c, Coding d)
+            {
+                // Compare codes, if specified
+                if (c.CodeElement != null || d.CodeElement != null)
+                {
+                    return c.System == d.System
+                        && c.Version == d.Version
+                        && c.Code == d.Code;
+                }
+                // Codes are empty or missing; compare display values instead
+                return c.Display == d.Display;
             }
 
         }

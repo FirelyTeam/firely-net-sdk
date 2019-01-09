@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -37,7 +39,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -104,32 +106,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("text", InSummary=true, Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown TextElement
+        public Hl7.Fhir.Model.Markdown Text
         {
-            get { return _TextElement; }
-            set { _TextElement = value; OnPropertyChanged("TextElement"); }
+            get { return _Text; }
+            set { _Text = value; OnPropertyChanged("Text"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _TextElement;
-        
-        /// <summary>
-        /// The annotation  - text content (as markdown)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Text
-        {
-            get { return TextElement != null ? TextElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  TextElement = null; 
-                else
-                  TextElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("Text");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Text;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -141,7 +124,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.Element)Author.DeepCopy();
                 if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
-                if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.Markdown)TextElement.DeepCopy();
+                if(Text != null) dest.Text = (Hl7.Fhir.Model.Markdown)Text.DeepCopy();
                 return dest;
             }
             else
@@ -161,7 +144,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(TimeElement, otherT.TimeElement)) return false;
-            if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+            if( !DeepComparable.Matches(Text, otherT.Text)) return false;
             
             return true;
         }
@@ -174,7 +157,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
-            if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+            if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
             
             return true;
         }
@@ -187,7 +170,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
                 if (Author != null) yield return Author;
                 if (TimeElement != null) yield return TimeElement;
-                if (TextElement != null) yield return TextElement;
+                if (Text != null) yield return Text;
             }
         }
 
@@ -197,9 +180,9 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
-                if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                if (Author != null) yield return new ElementValue("author", Author);
+                if (TimeElement != null) yield return new ElementValue("time", TimeElement);
+                if (Text != null) yield return new ElementValue("text", Text);
  
             } 
         } 

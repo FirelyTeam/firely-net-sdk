@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             Substance,
         }
 
-        [FhirType("CharacteristicComponent")]
+        [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Quantity),typeof(Hl7.Fhir.Model.Range))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -253,10 +253,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    if (ExcludeElement != null) yield return new ElementValue("exclude", false, ExcludeElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    if (ExcludeElement != null) yield return new ElementValue("exclude", ExcludeElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MemberComponent")]
+        [FhirType("MemberComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("entity", Order=40)]
             [CLSCompliant(false)]
-			[References("Patient","Practitioner","PractitionerRole","Device","Medication","Substance")]
+			[References("Patient","Practitioner","PractitionerRole","Device","Medication","Substance","Group")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Entity
@@ -398,9 +398,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Entity != null) yield return new ElementValue("entity", false, Entity);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    if (InactiveElement != null) yield return new ElementValue("inactive", false, InactiveElement);
+                    if (Entity != null) yield return new ElementValue("entity", Entity);
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    if (InactiveElement != null) yield return new ElementValue("inactive", InactiveElement);
                 }
             }
 
@@ -598,9 +598,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Entity that is the custodian of the Group's definition
+        /// </summary>
+        [FhirElement("managingEntity", InSummary=true, Order=160)]
+        [CLSCompliant(false)]
+		[References("Organization","RelatedPerson","Practitioner","PractitionerRole")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference ManagingEntity
+        {
+            get { return _ManagingEntity; }
+            set { _ManagingEntity = value; OnPropertyChanged("ManagingEntity"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _ManagingEntity;
+        
+        /// <summary>
         /// Include / Exclude group members by Trait
         /// </summary>
-        [FhirElement("characteristic", Order=160)]
+        [FhirElement("characteristic", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
@@ -614,7 +629,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who or what is in group
         /// </summary>
-        [FhirElement("member", Order=170)]
+        [FhirElement("member", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Group.MemberComponent> Member
@@ -656,6 +671,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
+                if(ManagingEntity != null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)ManagingEntity.DeepCopy();
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopy());
                 if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(Member.DeepCopy());
                 return dest;
@@ -682,6 +698,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(QuantityElement, otherT.QuantityElement)) return false;
+            if( !DeepComparable.Matches(ManagingEntity, otherT.ManagingEntity)) return false;
             if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
             if( !DeepComparable.Matches(Member, otherT.Member)) return false;
             
@@ -701,6 +718,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(QuantityElement, otherT.QuantityElement)) return false;
+            if( !DeepComparable.IsExactly(ManagingEntity, otherT.ManagingEntity)) return false;
             if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
             if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
             
@@ -720,6 +738,7 @@ namespace Hl7.Fhir.Model
 				if (Code != null) yield return Code;
 				if (NameElement != null) yield return NameElement;
 				if (QuantityElement != null) yield return QuantityElement;
+				if (ManagingEntity != null) yield return ManagingEntity;
 				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
 				foreach (var elem in Member) { if (elem != null) yield return elem; }
             }
@@ -731,15 +750,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (ActualElement != null) yield return new ElementValue("actual", false, ActualElement);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (QuantityElement != null) yield return new ElementValue("quantity", false, QuantityElement);
-                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
-                foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (ActualElement != null) yield return new ElementValue("actual", ActualElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (QuantityElement != null) yield return new ElementValue("quantity", QuantityElement);
+                if (ManagingEntity != null) yield return new ElementValue("managingEntity", ManagingEntity);
+                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
+                foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", elem); }
             }
         }
 

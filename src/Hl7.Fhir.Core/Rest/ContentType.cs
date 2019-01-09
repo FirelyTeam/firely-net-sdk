@@ -152,28 +152,38 @@ namespace Hl7.Fhir.Rest
 
         public static string GetMediaTypeFromHeaderValue(string mediaHeaderValue)
         {
-#if DOTNETFW
-            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
-            return ct.MediaType.ToLowerInvariant();
+#if NETSTANDARD1_1
+                System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
+                if (headerValue != null)
+                {
+                    return headerValue.MediaType.ToLowerInvariant();
+                }
+                else
+                {
+                    return mediaHeaderValue;
+                }
 #else
-            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
-            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out headerValue);
-            return headerValue.MediaType.ToLowerInvariant();
-#endif
+            try
+            {
+                var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
+                return ct.MediaType.ToLowerInvariant();
+            }
+            catch (System.FormatException)
+            {
+                return mediaHeaderValue;
+            }
+        #endif
         }
 
         public static string GetCharSetFromHeaderValue(string mediaHeaderValue)
-        {
-#if DOTNETFW
-            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
-            return ct.CharSet;
-#else
-            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
-            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out headerValue);
-            return headerValue.CharSet;
-#endif
-        }
-    }
-
-
+                {
+        #if NETSTANDARD1_1
+                    System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
+                    return headerValue.CharSet;
+        #else
+                    var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
+                    return ct.CharSet;
+        #endif
+                }
+         }
 }

@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNavigator instance)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance)
         {
             var outcome = new OperationOutcome();
 
@@ -35,11 +35,11 @@ namespace Hl7.Fhir.Validation
 
             if (choices.Count() > 1)
             {
-                if (instance.Type != null)
+                if (instance.InstanceType != null)
                 {
                     // This is a choice type, find out what type is present in the instance data
                     // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.Type);
+                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
                     if (instanceType != null)
                     {
                         // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
@@ -57,12 +57,12 @@ namespace Hl7.Fhir.Validation
                         else
                         {
                             var choiceList = String.Join(",", choices.Select(t => "'" + t + "'"));
-                            validator.Trace(outcome, $"Type specified in the instance ('{instance.Type}') is not one of the allowed choices ({choiceList})",
+                            validator.Trace(outcome, $"Type specified in the instance ('{instance.InstanceType}') is not one of the allowed choices ({choiceList})",
                                      Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
                         }
                     }
                     else
-                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.Type}', which is not a known FHIR core type.",
+                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.InstanceType}', which is not a known FHIR core type.",
                                 Issue.CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE, instance);
                 }
                 else
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Validation
 
      
         internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
-            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNavigator instance)
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Validation
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent tr)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr)
         {
             return validate;
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent typeRef)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef)
         {
             var outcome = new OperationOutcome();
 
@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Validation
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
 
+            
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             var referencedResource = validator.resolveReference(instance, reference,
                 out ElementDefinition.AggregationMode? encounteredKind, outcome);
@@ -182,13 +183,13 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static IElementNavigator resolveReference(this Validator validator, ScopedNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        private static ITypedElement resolveReference(this Validator validator, ScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
         {
             var identity = new ResourceIdentity(reference);
 
             if (identity.Form == ResourceIdentityForm.Undetermined)
             {
-                if (!Uri.IsWellFormedUriString(reference, UriKind.RelativeOrAbsolute))
+                if (!Uri.IsWellFormedUriString(Uri.EscapeDataString(reference), UriKind.RelativeOrAbsolute))
                 {
                     validator.Trace(outcome, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
                     referenceKind = null;

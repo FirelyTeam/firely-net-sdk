@@ -65,7 +65,14 @@ namespace Hl7.Fhir.Specification.Tests
             // is correctly propagated to snapshot child elements [1] and [2]
             foreach (var elem in elems)
             {
-                assert_ele1(elem);
+                // [WMR 20181218] R4 Changed
+                // STU3: Element.id has type code "string"
+                // R4: Element.id has no type code, only special "compiler magic" extensions
+                // => Element.id no longer inherits constraints from "Element", e.g. "ele-1"
+                if (elem.Type?.FirstOrDefault()?.Code != null)
+                {
+                    assert_ele1(elem);
+                }
             }
         }
 

@@ -1,186 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <id value="questionnaire-choiceOrientation"/>
-  <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation"/>
-  <name value="choiceOrientation"/>
-  <status value="draft"/>
-  <date value="2013-07-04"/>
-  <publisher value="HL7"/>
+  <id value="questionnaire-choiceOrientation" />
+  <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation" />
+  <name value="choiceOrientation" />
+  <status value="draft" />
+  <date value="2013-07-04" />
+  <publisher value="HL7" />
   <contact>
     <telecom>
-      <system value="url"/>
-      <value value="http://www.hl7.org"/>
+      <system value="url" />
+      <value value="http://www.hl7.org" />
     </telecom>
   </contact>
-  <description value="Identifies the desired orientation when rendering a list of choices (typically radio-box or check-box lists)."/>
-  <fhirVersion value="1.9.0"/>
+  <description value="Identifies the desired orientation when rendering a list of choices (typically radio-box or check-box lists)." />
+  <fhirVersion value="4.0.0" />
   <mapping>
-    <identity value="rim"/>
-    <uri value="http://hl7.org/v3"/>
-    <name value="RIM Mapping"/>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
   </mapping>
-  <kind value="complex-type"/>
-  <abstract value="false"/>
-  <contextType value="resource"/>
-  <context value="Questionnaire.item"/>
-  <context value="Questionnaire.item.item"/>
-  <contextInvariant value="type=&#39;choice&#39; or type=&#39;open-choice&#39;"/>
-  <type value="Extension"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-  <derivation value="constraint"/>
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <context>
+    <type value="fhirpath" />
+    <expression value="Questionnaire.item" />
+  </context>
+  <context>
+    <type value="fhirpath" />
+    <expression value="Questionnaire.item.item" />
+  </context>
+  <contextInvariant value="type='choice' or type='open-choice'" />
+  <type value="Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
   <snapshot>
     <element id="Extension:choiceorientation">
-      <path value="Extension"/>
-      <short value="horizontal | vertical"/>
-      <definition value="Identifies the desired orientation when rendering a list of choices (typically radio-box or check-box lists)."/>
-      <comment value="Systems may choose to wrap answers rather than attempting to display them all in one row or column.  Language conventions may determine the order in which the choices are listed (left-to-right or right-to-left, etc.)."/>
-      <min value="0"/>
-      <max value="1"/>
+      <path value="Extension" />
+      <short value="horizontal | vertical" />
+      <definition value="Identifies the desired orientation when rendering a list of choices (typically radio-box or check-box lists)." />
+      <comment value="Systems may choose to wrap answers rather than attempting to display them all in one row or column.  Language conventions may determine the order in which the choices are listed (left-to-right or right-to-left, etc.)." />
+      <min value="0" />
+      <max value="1" />
       <base>
-        <path value="Extension"/>
-        <min value="0"/>
-        <max value="*"/>
+        <path value="Extension" />
+        <min value="0" />
+        <max value="*" />
       </base>
-      <condition value="ele-1"/>
+      <condition value="ele-1" />
       <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+        <source value="Element" />
       </constraint>
       <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
-        <source value="Extension"/>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <source value="Extension" />
       </constraint>
     </element>
     <element id="Extension:choiceorientation.id">
-      <path value="Extension.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
+      <path value="Extension.id" />
+      <representation value="xmlAttr" />
+      <short value="xml:id (or equivalent in JSON)" />
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+      <min value="0" />
+      <max value="1" />
       <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
+        <path value="Element.id" />
+        <min value="0" />
+        <max value="1" />
       </base>
       <type>
-        <code value="string"/>
+        <code value="string" />
       </type>
       <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
+        <identity value="rim" />
+        <map value="n/a" />
       </mapping>
     </element>
     <element id="Extension:choiceorientation.extension">
-      <path value="Extension.extension"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="0"/>
+      <path value="Extension.extension" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="0" />
       <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
       </base>
       <type>
-        <code value="Extension"/>
+        <code value="Extension" />
       </type>
     </element>
     <element id="Extension:choiceorientation.url">
-      <path value="Extension.url"/>
-      <representation value="xmlAttr"/>
-      <short value="identifies the meaning of the extension"/>
-      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
-      <min value="1"/>
-      <max value="1"/>
+      <path value="Extension.url" />
+      <representation value="xmlAttr" />
+      <short value="identifies the meaning of the extension" />
+      <definition value="Source of the definition for the extension code - a logical name or a URL." />
+      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension." />
+      <min value="1" />
+      <max value="1" />
       <base>
-        <path value="Extension.url"/>
-        <min value="1"/>
-        <max value="1"/>
+        <path value="Extension.url" />
+        <min value="1" />
+        <max value="1" />
       </base>
       <type>
-        <code value="uri"/>
+        <code value="uri" />
       </type>
-      <fixedUri value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation"/>
+      <fixedUri value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation" />
       <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
+        <identity value="rim" />
+        <map value="N/A" />
       </mapping>
     </element>
     <element id="Extension:choiceorientation.valueCode">
-      <path value="Extension.valueCode"/>
-      <short value="Value of extension"/>
-      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-      <min value="0"/>
-      <max value="1"/>
+      <path value="Extension.valueCode" />
+      <short value="Value of extension" />
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)." />
+      <min value="0" />
+      <max value="1" />
       <base>
-        <path value="Extension.value[x]"/>
-        <min value="0"/>
-        <max value="1"/>
+        <path value="Extension.value[x]" />
+        <min value="0" />
+        <max value="1" />
       </base>
       <type>
-        <code value="code"/>
+        <code value="code" />
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ChoiceListOrientation"/>
+          <valueString value="ChoiceListOrientation" />
         </extension>
-        <strength value="required"/>
-        <description value="Direction in which lists of question options should be displayed"/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/choice-list-orientation"/>
-        </valueSetReference>
+        <strength value="required" />
+        <description value="Direction in which lists of question options should be displayed" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/choice-list-orientation" />
       </binding>
       <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
+        <identity value="rim" />
+        <map value="N/A" />
       </mapping>
     </element>
   </snapshot>
   <differential>
     <element id="Extension:choiceorientation">
-      <path value="Extension"/>
-      <short value="horizontal | vertical"/>
-      <definition value="Identifies the desired orientation when rendering a list of choices (typically radio-box or check-box lists)."/>
-      <comment value="Systems may choose to wrap answers rather than attempting to display them all in one row or column.  Language conventions may determine the order in which the choices are listed (left-to-right or right-to-left, etc.)."/>
-      <min value="0"/>
-      <max value="1"/>
+      <path value="Extension" />
+      <short value="horizontal | vertical" />
+      <definition value="Identifies the desired orientation when rendering a list of choices (typically radio-box or check-box lists)." />
+      <comment value="Systems may choose to wrap answers rather than attempting to display them all in one row or column.  Language conventions may determine the order in which the choices are listed (left-to-right or right-to-left, etc.)." />
+      <min value="0" />
+      <max value="1" />
     </element>
     <element id="Extension:choiceorientation.extension">
-      <path value="Extension.extension"/>
-      <max value="0"/>
+      <path value="Extension.extension" />
+      <max value="0" />
     </element>
     <element id="Extension:choiceorientation.url">
-      <path value="Extension.url"/>
+      <path value="Extension.url" />
       <type>
-        <code value="uri"/>
+        <code value="uri" />
       </type>
-      <fixedUri value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation"/>
+      <fixedUri value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation" />
     </element>
     <element id="Extension:choiceorientation.valueCode">
-      <path value="Extension.valueCode"/>
+      <path value="Extension.valueCode" />
       <type>
-        <code value="code"/>
+        <code value="code" />
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ChoiceListOrientation"/>
+          <valueString value="ChoiceListOrientation" />
         </extension>
-        <strength value="required"/>
-        <description value="Direction in which lists of question options should be displayed"/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/choice-list-orientation"/>
-        </valueSetReference>
+        <strength value="required" />
+        <description value="Direction in which lists of question options should be displayed" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/choice-list-orientation" />
       </binding>
     </element>
   </differential>

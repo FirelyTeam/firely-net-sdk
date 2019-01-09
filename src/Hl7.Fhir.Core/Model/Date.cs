@@ -52,17 +52,39 @@ namespace Hl7.Fhir.Model
         {
         }
 
+        /// <summary>
+        /// Gets the current date in the local timezone
+        /// </summary>
+        /// <returns>Gets the current date in the local timezone</returns>
         public static Date Today()
         {
-            return new Date(DateTime.Now.ToString("yyyy-MM-dd"));
+            return new Date(DateTimeOffset.Now.ToString("yyyy-MM-dd"));
         }
 
+        /// <summary>
+        /// Gets the current date in the timezone UTC
+        /// </summary>
+        /// <returns>Gets the current date in the timezone UTC</returns>
+        public static Date UtcToday()
+        {
+            return new Date(DateTimeOffset.UtcNow.ToString("yyyy-MM-dd"));
+        }
+
+        [Obsolete("Use ToDateTimeOffset instead")]
         public DateTime? ToDateTime()
         {
             if (this.Value == null) return null;
 
-            return PrimitiveTypeConverter.ConvertTo<DateTime>(this.Value);
+            return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(this.Value).DateTime;
         }
+
+        public DateTimeOffset? ToDateTimeOffset()
+        {
+            if (this.Value == null) return null;
+
+            return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(this.Value);
+        }
+
 
         public Primitives.PartialDateTime? ToPartialDateTime()
         {

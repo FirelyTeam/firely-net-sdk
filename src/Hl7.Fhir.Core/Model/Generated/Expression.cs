@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -37,7 +39,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -286,11 +288,11 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
-                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
+                if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
  
             } 
         } 

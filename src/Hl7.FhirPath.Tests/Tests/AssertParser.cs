@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.FhirPath;
-using Sprache;
+using Hl7.FhirPath.Sprache;
 using Xunit;
 
 namespace Hl7.FhirPath.Tests
@@ -14,7 +14,7 @@ namespace Hl7.FhirPath.Tests
         {
             SucceedsWith(parser, input, t =>
             {
-                Assert.Equal(1, t.Count());
+                Assert.Single(t);
                 Assert.Equal(expectedResult, t.Single());
             });
         }

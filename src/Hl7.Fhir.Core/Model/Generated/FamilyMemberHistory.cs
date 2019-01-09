@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,17 +78,17 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health unknown")]
+            [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health Unknown")]
             HealthUnknown,
         }
 
-        [FhirType("ConditionComponent")]
+        [FhirType("ConditionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -123,9 +123,41 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Outcome;
             
             /// <summary>
+            /// Whether the condition contributed to the cause of death
+            /// </summary>
+            [FhirElement("contributedToDeath", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean ContributedToDeathElement
+            {
+                get { return _ContributedToDeathElement; }
+                set { _ContributedToDeathElement = value; OnPropertyChanged("ContributedToDeathElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _ContributedToDeathElement;
+            
+            /// <summary>
+            /// Whether the condition contributed to the cause of death
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? ContributedToDeath
+            {
+                get { return ContributedToDeathElement != null ? ContributedToDeathElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        ContributedToDeathElement = null; 
+                    else
+                        ContributedToDeathElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("ContributedToDeath");
+                }
+            }
+            
+            /// <summary>
             /// When condition first manifested
             /// </summary>
-            [FhirElement("onset", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("onset", Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -140,7 +172,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Extra information about condition
             /// </summary>
-            [FhirElement("note", Order=70)]
+            [FhirElement("note", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Annotation> Note
@@ -160,6 +192,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
+                    if(ContributedToDeathElement != null) dest.ContributedToDeathElement = (Hl7.Fhir.Model.FhirBoolean)ContributedToDeathElement.DeepCopy();
                     if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
                     if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     return dest;
@@ -181,6 +214,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+                if( !DeepComparable.Matches(ContributedToDeathElement, otherT.ContributedToDeathElement)) return false;
                 if( !DeepComparable.Matches(Onset, otherT.Onset)) return false;
                 if( !DeepComparable.Matches(Note, otherT.Note)) return false;
                 
@@ -195,6 +229,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+                if( !DeepComparable.IsExactly(ContributedToDeathElement, otherT.ContributedToDeathElement)) return false;
                 if( !DeepComparable.IsExactly(Onset, otherT.Onset)) return false;
                 if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
                 
@@ -210,6 +245,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (Outcome != null) yield return Outcome;
+                    if (ContributedToDeathElement != null) yield return ContributedToDeathElement;
                     if (Onset != null) yield return Onset;
                     foreach (var elem in Note) { if (elem != null) yield return elem; }
                 }
@@ -221,10 +257,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
-                    if (Onset != null) yield return new ElementValue("onset", false, Onset);
-                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                    if (ContributedToDeathElement != null) yield return new ElementValue("contributedToDeath", ContributedToDeathElement);
+                    if (Onset != null) yield return new ElementValue("onset", Onset);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 }
             }
 
@@ -453,17 +490,17 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Relationship;
         
         /// <summary>
-        /// male | female | unknown
+        /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=180)]
+        [FhirElement("sex", InSummary=true, Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Gender
+        public Hl7.Fhir.Model.CodeableConcept Sex
         {
-            get { return _Gender; }
-            set { _Gender = value; OnPropertyChanged("Gender"); }
+            get { return _Sex; }
+            set { _Sex = value; OnPropertyChanged("Sex"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Gender;
+        private Hl7.Fhir.Model.CodeableConcept _Sex;
         
         /// <summary>
         /// (approximate) date of birth
@@ -643,7 +680,7 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
-                if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopy();
+                if(Sex != null) dest.Sex = (Hl7.Fhir.Model.CodeableConcept)Sex.DeepCopy();
                 if(Born != null) dest.Born = (Hl7.Fhir.Model.Element)Born.DeepCopy();
                 if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
                 if(EstimatedAgeElement != null) dest.EstimatedAgeElement = (Hl7.Fhir.Model.FhirBoolean)EstimatedAgeElement.DeepCopy();
@@ -678,7 +715,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
-            if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+            if( !DeepComparable.Matches(Sex, otherT.Sex)) return false;
             if( !DeepComparable.Matches(Born, otherT.Born)) return false;
             if( !DeepComparable.Matches(Age, otherT.Age)) return false;
             if( !DeepComparable.Matches(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
@@ -706,7 +743,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
-            if( !DeepComparable.IsExactly(Gender, otherT.Gender)) return false;
+            if( !DeepComparable.IsExactly(Sex, otherT.Sex)) return false;
             if( !DeepComparable.IsExactly(Born, otherT.Born)) return false;
             if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
             if( !DeepComparable.IsExactly(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
@@ -734,7 +771,7 @@ namespace Hl7.Fhir.Model
 				if (DateElement != null) yield return DateElement;
 				if (NameElement != null) yield return NameElement;
 				if (Relationship != null) yield return Relationship;
-				if (Gender != null) yield return Gender;
+				if (Sex != null) yield return Sex;
 				if (Born != null) yield return Born;
 				if (Age != null) yield return Age;
 				if (EstimatedAgeElement != null) yield return EstimatedAgeElement;
@@ -752,24 +789,24 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", true, elem); }
-                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
-                if (Gender != null) yield return new ElementValue("gender", false, Gender);
-                if (Born != null) yield return new ElementValue("born", false, Born);
-                if (Age != null) yield return new ElementValue("age", false, Age);
-                if (EstimatedAgeElement != null) yield return new ElementValue("estimatedAge", false, EstimatedAgeElement);
-                if (Deceased != null) yield return new ElementValue("deceased", false, Deceased);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in InstantiatesCanonicalElement) { if (elem != null) yield return new ElementValue("instantiatesCanonical", elem); }
+                foreach (var elem in InstantiatesUriElement) { if (elem != null) yield return new ElementValue("instantiatesUri", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", DataAbsentReason);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                if (Sex != null) yield return new ElementValue("sex", Sex);
+                if (Born != null) yield return new ElementValue("born", Born);
+                if (Age != null) yield return new ElementValue("age", Age);
+                if (EstimatedAgeElement != null) yield return new ElementValue("estimatedAge", EstimatedAgeElement);
+                if (Deceased != null) yield return new ElementValue("deceased", Deceased);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
             }
         }
 

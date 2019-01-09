@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Specification.Tests
             var fourthRun = sw.ElapsedMilliseconds;
             Assert.IsTrue(fourthRun > secondRun);
 
-            File.SetLastWriteTime(zipFile, DateTime.Now);
+            File.SetLastWriteTimeUtc(zipFile, DateTimeOffset.UtcNow.DateTime);
             Assert.IsFalse(fa.IsActual());
         }
 

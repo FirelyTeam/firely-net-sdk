@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.1;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard1.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
-  
-  <Import Project="..\platforms.props" />
+
   <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
 
@@ -18,11 +17,11 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
-   <ItemGroup>
-     <Compile Remove="Rest\Search\**" />
-     <EmbeddedResource Remove="Rest\Search\**" />
-     <None Remove="Rest\Search\**" />
-   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Rest\Search\**" />
+    <EmbeddedResource Remove="Rest\Search\**" />
+    <None Remove="Rest\Search\**" />
+  </ItemGroup>
 
    <ItemGroup>
      <Compile Remove="Serialization\JsonNavFhirReader.cs" />
@@ -30,100 +29,49 @@
    </ItemGroup>
  
   <ItemGroup>    
-    <PackageReference Include="System.Net.Http" Version="4.3.1" />
-    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' and '$(TargetFramework)' != 'net40' ">
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net40' ">
-    <Reference Include="System" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="Validation\xhtml\fhir-xhtml.xsd" />
-    <None Include="Validation\xhtml\xml.xsd" />
     <None Include="Model\Source\expansions.xml" />
     <None Include="Model\Source\profiles-resources.xml" />
     <None Include="Model\Source\profiles-types.xml" />
     <None Include="Model\Source\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
     <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <Compile Remove="Properties\Resources.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <Compile Remove="Properties\Resources.Designer.cs" />
-  </ItemGroup>
   <ItemGroup>
-    <Compile Update="Model\Generated\Template-Bindings.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-Bindings.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-DataTypeModel.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-Model.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
+    <Compile Update="Model\Template-Model.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ModelInfo.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ProfiledDataTypes.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Model\Generated\Template-Bindings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Bindings.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Children.ttinclude">
-      <Generator>
-      </Generator>
-    </None>
-    <None Update="Model\Generated\Template-DataTypeModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
+    <None Update="Model\Template-Model.tt">
       <LastGenOutput>Template-Model.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ModelInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ProfiledDataTypes.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
     </None>
   </ItemGroup>
 </Project>

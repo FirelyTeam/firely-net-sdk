@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -37,7 +39,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -380,6 +382,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)
             /// </summary>
+            [EnumLiteral("GGP", "urn:iso:std:iso:4217"), Description("Guernsey Pound")]
+            GGP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
             [EnumLiteral("GHS", "urn:iso:std:iso:4217"), Description("Ghanaian cedi")]
             GHS,
             /// <summary>
@@ -458,6 +466,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)
             /// </summary>
+            [EnumLiteral("IMP", "urn:iso:std:iso:4217"), Description("Isle of Man Pound")]
+            IMP,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
             [EnumLiteral("INR", "urn:iso:std:iso:4217"), Description("Indian rupee")]
             INR,
             /// <summary>
@@ -478,6 +492,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("ISK", "urn:iso:std:iso:4217"), Description("Icelandic króna")]
             ISK,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
+            [EnumLiteral("JEP", "urn:iso:std:iso:4217"), Description("Jersey Pound")]
+            JEP,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)
@@ -926,6 +946,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: urn:iso:std:iso:4217)
             /// </summary>
+            [EnumLiteral("TVD", "urn:iso:std:iso:4217"), Description("Tuvalu Dollar")]
+            TVD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: urn:iso:std:iso:4217)
+            /// </summary>
             [EnumLiteral("TWD", "urn:iso:std:iso:4217"), Description("New Taiwan dollar")]
             TWD,
             /// <summary>
@@ -1254,8 +1280,8 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                if (CurrencyElement != null) yield return new ElementValue("currency", false, CurrencyElement);
+                if (ValueElement != null) yield return new ElementValue("value", ValueElement);
+                if (CurrencyElement != null) yield return new ElementValue("currency", CurrencyElement);
  
             } 
         } 

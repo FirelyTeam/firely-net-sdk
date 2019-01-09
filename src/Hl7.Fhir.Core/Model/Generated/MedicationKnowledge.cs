@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,33 +56,33 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "MedicationKnowledge"; } }
         
         /// <summary>
-        /// A coded concept defining if the medication is in active use.
-        /// (url: http://hl7.org/fhir/ValueSet/medicationKnowledge-status)
+        /// MedicationKnowledge Status Codes
+        /// (url: http://hl7.org/fhir/ValueSet/medicationknowledge-status)
         /// </summary>
-        [FhirEnumeration("MedicationKnowledgeStatus")]
-        public enum MedicationKnowledgeStatus
+        [FhirEnumeration("MedicationKnowledgeStatusCodes")]
+        public enum MedicationKnowledgeStatusCodes
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medicationKnowledge-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medicationknowledge-status)
             /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/medicationKnowledge-status"), Description("Active")]
+            [EnumLiteral("active", "http://terminology.hl7.org/CodeSystem/medicationknowledge-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medicationKnowledge-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medicationknowledge-status)
             /// </summary>
-            [EnumLiteral("inactive", "http://hl7.org/fhir/medicationKnowledge-status"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://terminology.hl7.org/CodeSystem/medicationknowledge-status"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medicationKnowledge-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medicationknowledge-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medicationKnowledge-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/medicationknowledge-status"), Description("Entered in Error")]
             EnteredInError,
         }
 
-        [FhirType("RelatedMedicationKnowledgeComponent")]
+        [FhirType("RelatedMedicationKnowledgeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -181,8 +181,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in Reference) { if (elem != null) yield return new ElementValue("reference", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in Reference) { if (elem != null) yield return new ElementValue("reference", elem); }
                 }
             }
 
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MonographComponent")]
+        [FhirType("MonographComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -287,8 +287,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Source != null) yield return new ElementValue("source", false, Source);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Source != null) yield return new ElementValue("source", Source);
                 }
             }
 
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("IngredientComponent")]
+        [FhirType("IngredientComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -430,9 +430,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (IsActiveElement != null) yield return new ElementValue("isActive", false, IsActiveElement);
-                    if (Strength != null) yield return new ElementValue("strength", false, Strength);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (IsActiveElement != null) yield return new ElementValue("isActive", IsActiveElement);
+                    if (Strength != null) yield return new ElementValue("strength", Strength);
                 }
             }
 
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CostComponent")]
+        [FhirType("CostComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -573,9 +573,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
-                    if (Cost != null) yield return new ElementValue("cost", false, Cost);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (SourceElement != null) yield return new ElementValue("source", SourceElement);
+                    if (Cost != null) yield return new ElementValue("cost", Cost);
                 }
             }
 
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MonitoringProgramComponent")]
+        [FhirType("MonitoringProgramComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -697,8 +697,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
                 }
             }
 
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationGuidelinesComponent")]
+        [FhirType("AdministrationGuidelinesComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -822,9 +822,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", true, elem); }
-                    if (Indication != null) yield return new ElementValue("indication", false, Indication);
-                    foreach (var elem in PatientCharacteristics) { if (elem != null) yield return new ElementValue("patientCharacteristics", true, elem); }
+                    foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", elem); }
+                    if (Indication != null) yield return new ElementValue("indication", Indication);
+                    foreach (var elem in PatientCharacteristics) { if (elem != null) yield return new ElementValue("patientCharacteristics", elem); }
                 }
             }
 
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DosageComponent")]
+        [FhirType("DosageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -929,8 +929,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", elem); }
                 }
             }
 
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PatientCharacteristicsComponent")]
+        [FhirType("PatientCharacteristicsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1056,8 +1056,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Characteristic != null) yield return new ElementValue("characteristic", false, Characteristic);
-                    foreach (var elem in ValueElement) { if (elem != null) yield return new ElementValue("value", true, elem); }
+                    if (Characteristic != null) yield return new ElementValue("characteristic", Characteristic);
+                    foreach (var elem in ValueElement) { if (elem != null) yield return new ElementValue("value", elem); }
                 }
             }
 
@@ -1065,7 +1065,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicineClassificationComponent")]
+        [FhirType("MedicineClassificationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1162,8 +1162,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", elem); }
                 }
             }
 
@@ -1171,7 +1171,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackagingComponent")]
+        [FhirType("PackagingComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1266,8 +1266,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
                 }
             }
 
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DrugCharacteristicComponent")]
+        [FhirType("DrugCharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1372,8 +1372,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -1381,7 +1381,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RegulatoryComponent")]
+        [FhirType("RegulatoryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1433,7 +1433,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent> _Schedule;
             
             /// <summary>
-            /// The maximum number of units of the medicaton that can be dispensed in a period
+            /// The maximum number of units of the medication that can be dispensed in a period
             /// </summary>
             [FhirElement("maxDispense", Order=70)]
             [DataMember]
@@ -1515,10 +1515,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RegulatoryAuthority != null) yield return new ElementValue("regulatoryAuthority", false, RegulatoryAuthority);
-                    foreach (var elem in Substitution) { if (elem != null) yield return new ElementValue("substitution", true, elem); }
-                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", true, elem); }
-                    if (MaxDispense != null) yield return new ElementValue("maxDispense", false, MaxDispense);
+                    if (RegulatoryAuthority != null) yield return new ElementValue("regulatoryAuthority", RegulatoryAuthority);
+                    foreach (var elem in Substitution) { if (elem != null) yield return new ElementValue("substitution", elem); }
+                    foreach (var elem in Schedule) { if (elem != null) yield return new ElementValue("schedule", elem); }
+                    if (MaxDispense != null) yield return new ElementValue("maxDispense", MaxDispense);
                 }
             }
 
@@ -1526,7 +1526,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent")]
+        [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1642,8 +1642,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (AllowedElement != null) yield return new ElementValue("allowed", false, AllowedElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (AllowedElement != null) yield return new ElementValue("allowed", AllowedElement);
                 }
             }
 
@@ -1651,7 +1651,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ScheduleComponent")]
+        [FhirType("ScheduleComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1730,7 +1730,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Schedule != null) yield return new ElementValue("schedule", false, Schedule);
+                    if (Schedule != null) yield return new ElementValue("schedule", Schedule);
                 }
             }
 
@@ -1738,7 +1738,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MaxDispenseComponent")]
+        [FhirType("MaxDispenseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1746,7 +1746,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "MaxDispenseComponent"; } }
             
             /// <summary>
-            /// The maximum number of units of the medicaton that can be dispensed
+            /// The maximum number of units of the medication that can be dispensed
             /// </summary>
             [FhirElement("quantity", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -1834,8 +1834,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -1843,7 +1843,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("KineticsComponent")]
+        [FhirType("KineticsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1957,9 +1957,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in AreaUnderCurve) { if (elem != null) yield return new ElementValue("areaUnderCurve", true, elem); }
-                    foreach (var elem in LethalDose50) { if (elem != null) yield return new ElementValue("lethalDose50", true, elem); }
-                    if (HalfLifePeriod != null) yield return new ElementValue("halfLifePeriod", false, HalfLifePeriod);
+                    foreach (var elem in AreaUnderCurve) { if (elem != null) yield return new ElementValue("areaUnderCurve", elem); }
+                    foreach (var elem in LethalDose50) { if (elem != null) yield return new ElementValue("lethalDose50", elem); }
+                    if (HalfLifePeriod != null) yield return new ElementValue("halfLifePeriod", HalfLifePeriod);
                 }
             }
 
@@ -1985,13 +1985,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus> StatusElement
+        public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> _StatusElement;
         
         /// <summary>
         /// active | inactive | entered-in-error
@@ -1999,7 +1999,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus? Status
+        public Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -2007,7 +2007,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -2214,7 +2214,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent> _MonitoringProgram;
         
         /// <summary>
-        /// Gudelines for administration of the medication
+        /// Guidelines for administration of the medication
         /// </summary>
         [FhirElement("administrationGuidelines", Order=240)]
         [Cardinality(Min=0,Max=-1)]
@@ -2327,7 +2327,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>)StatusElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(DoseForm != null) dest.DoseForm = (Hl7.Fhir.Model.CodeableConcept)DoseForm.DeepCopy();
                 if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
@@ -2460,28 +2460,28 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
-                if (DoseForm != null) yield return new ElementValue("doseForm", false, DoseForm);
-                if (Amount != null) yield return new ElementValue("amount", false, Amount);
-                foreach (var elem in SynonymElement) { if (elem != null) yield return new ElementValue("synonym", true, elem); }
-                foreach (var elem in RelatedMedicationKnowledge) { if (elem != null) yield return new ElementValue("relatedMedicationKnowledge", true, elem); }
-                foreach (var elem in AssociatedMedication) { if (elem != null) yield return new ElementValue("associatedMedication", true, elem); }
-                foreach (var elem in ProductType) { if (elem != null) yield return new ElementValue("productType", true, elem); }
-                foreach (var elem in Monograph) { if (elem != null) yield return new ElementValue("monograph", true, elem); }
-                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, elem); }
-                if (PreparationInstruction != null) yield return new ElementValue("preparationInstruction", false, PreparationInstruction);
-                foreach (var elem in IntendedRoute) { if (elem != null) yield return new ElementValue("intendedRoute", true, elem); }
-                foreach (var elem in Cost) { if (elem != null) yield return new ElementValue("cost", true, elem); }
-                foreach (var elem in MonitoringProgram) { if (elem != null) yield return new ElementValue("monitoringProgram", true, elem); }
-                foreach (var elem in AdministrationGuidelines) { if (elem != null) yield return new ElementValue("administrationGuidelines", true, elem); }
-                foreach (var elem in MedicineClassification) { if (elem != null) yield return new ElementValue("medicineClassification", true, elem); }
-                if (Packaging != null) yield return new ElementValue("packaging", false, Packaging);
-                foreach (var elem in DrugCharacteristic) { if (elem != null) yield return new ElementValue("drugCharacteristic", true, elem); }
-                foreach (var elem in Contraindication) { if (elem != null) yield return new ElementValue("contraindication", true, elem); }
-                foreach (var elem in Regulatory) { if (elem != null) yield return new ElementValue("regulatory", true, elem); }
-                foreach (var elem in Kinetics) { if (elem != null) yield return new ElementValue("kinetics", true, elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                if (DoseForm != null) yield return new ElementValue("doseForm", DoseForm);
+                if (Amount != null) yield return new ElementValue("amount", Amount);
+                foreach (var elem in SynonymElement) { if (elem != null) yield return new ElementValue("synonym", elem); }
+                foreach (var elem in RelatedMedicationKnowledge) { if (elem != null) yield return new ElementValue("relatedMedicationKnowledge", elem); }
+                foreach (var elem in AssociatedMedication) { if (elem != null) yield return new ElementValue("associatedMedication", elem); }
+                foreach (var elem in ProductType) { if (elem != null) yield return new ElementValue("productType", elem); }
+                foreach (var elem in Monograph) { if (elem != null) yield return new ElementValue("monograph", elem); }
+                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                if (PreparationInstruction != null) yield return new ElementValue("preparationInstruction", PreparationInstruction);
+                foreach (var elem in IntendedRoute) { if (elem != null) yield return new ElementValue("intendedRoute", elem); }
+                foreach (var elem in Cost) { if (elem != null) yield return new ElementValue("cost", elem); }
+                foreach (var elem in MonitoringProgram) { if (elem != null) yield return new ElementValue("monitoringProgram", elem); }
+                foreach (var elem in AdministrationGuidelines) { if (elem != null) yield return new ElementValue("administrationGuidelines", elem); }
+                foreach (var elem in MedicineClassification) { if (elem != null) yield return new ElementValue("medicineClassification", elem); }
+                if (Packaging != null) yield return new ElementValue("packaging", Packaging);
+                foreach (var elem in DrugCharacteristic) { if (elem != null) yield return new ElementValue("drugCharacteristic", elem); }
+                foreach (var elem in Contraindication) { if (elem != null) yield return new ElementValue("contraindication", elem); }
+                foreach (var elem in Regulatory) { if (elem != null) yield return new ElementValue("regulatory", elem); }
+                foreach (var elem in Kinetics) { if (elem != null) yield return new ElementValue("kinetics", elem); }
             }
         }
 

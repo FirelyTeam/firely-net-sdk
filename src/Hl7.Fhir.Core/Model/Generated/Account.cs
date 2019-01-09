@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("CoverageComponent")]
+        [FhirType("CoverageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -211,8 +211,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
-                    if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                    if (Coverage != null) yield return new ElementValue("coverage", Coverage);
+                    if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
                 }
             }
 
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GuarantorComponent")]
+        [FhirType("GuarantorComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -354,9 +354,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Party != null) yield return new ElementValue("party", false, Party);
-                    if (OnHoldElement != null) yield return new ElementValue("onHold", false, OnHoldElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Party != null) yield return new ElementValue("party", Party);
+                    if (OnHoldElement != null) yield return new ElementValue("onHold", OnHoldElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
 
@@ -457,11 +457,11 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// What is account tied to?
+        /// The entity that caused the expenses
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
+		[References("Patient","Device","Practitioner","PractitionerRole","Location","HealthcareService","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Subject
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Account.CoverageComponent> _Coverage;
         
         /// <summary>
-        /// Who is responsible?
+        /// Entity managing the Account
         /// </summary>
         [FhirElement("owner", InSummary=true, Order=160)]
         [CLSCompliant(false)]
@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Responsible for the account
+        /// The parties ultimately responsible for balancing the Account
         /// </summary>
         [FhirElement("guarantor", Order=180)]
         [Cardinality(Min=0,Max=-1)]
@@ -679,17 +679,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (ServicePeriod != null) yield return new ElementValue("servicePeriod", false, ServicePeriod);
-                foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", true, elem); }
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Guarantor) { if (elem != null) yield return new ElementValue("guarantor", true, elem); }
-                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (ServicePeriod != null) yield return new ElementValue("servicePeriod", ServicePeriod);
+                foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", elem); }
+                if (Owner != null) yield return new ElementValue("owner", Owner);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Guarantor) { if (elem != null) yield return new ElementValue("guarantor", elem); }
+                if (PartOf != null) yield return new ElementValue("partOf", PartOf);
             }
         }
 

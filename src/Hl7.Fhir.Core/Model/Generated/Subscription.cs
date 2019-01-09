@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             Message,
         }
 
-        [FhirType("ChannelComponent")]
+        [FhirType("ChannelComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -204,13 +204,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("payload", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString PayloadElement
+            public Hl7.Fhir.Model.Code PayloadElement
             {
                 get { return _PayloadElement; }
                 set { _PayloadElement = value; OnPropertyChanged("PayloadElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _PayloadElement;
+            private Hl7.Fhir.Model.Code _PayloadElement;
             
             /// <summary>
             /// MIME type to send, or omit for no payload
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         PayloadElement = null; 
                     else
-                        PayloadElement = new Hl7.Fhir.Model.FhirString(value);
+                        PayloadElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Payload");
                 }
             }
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>)TypeElement.DeepCopy();
                     if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)EndpointElement.DeepCopy();
-                    if(PayloadElement != null) dest.PayloadElement = (Hl7.Fhir.Model.FhirString)PayloadElement.DeepCopy();
+                    if(PayloadElement != null) dest.PayloadElement = (Hl7.Fhir.Model.Code)PayloadElement.DeepCopy();
                     if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
                     return dest;
                 }
@@ -334,10 +334,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (EndpointElement != null) yield return new ElementValue("endpoint", false, EndpointElement);
-                    if (PayloadElement != null) yield return new ElementValue("payload", false, PayloadElement);
-                    foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", true, elem); }
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
+                    if (PayloadElement != null) yield return new ElementValue("payload", PayloadElement);
+                    foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", elem); }
                 }
             }
 
@@ -536,20 +536,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Subscription.ChannelComponent _Channel;
         
-        /// <summary>
-        /// A tag to add to matching resources
-        /// </summary>
-        [FhirElement("tag", InSummary=true, Order=160)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Coding> Tag
-        {
-            get { if(_Tag==null) _Tag = new List<Hl7.Fhir.Model.Coding>(); return _Tag; }
-            set { _Tag = value; OnPropertyChanged("Tag"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Coding> _Tag;
-        
 
         public override void AddDefaultConstraints()
         {
@@ -571,7 +557,6 @@ namespace Hl7.Fhir.Model
                 if(CriteriaElement != null) dest.CriteriaElement = (Hl7.Fhir.Model.FhirString)CriteriaElement.DeepCopy();
                 if(ErrorElement != null) dest.ErrorElement = (Hl7.Fhir.Model.FhirString)ErrorElement.DeepCopy();
                 if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.ChannelComponent)Channel.DeepCopy();
-                if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
                 return dest;
             }
             else
@@ -596,7 +581,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CriteriaElement, otherT.CriteriaElement)) return false;
             if( !DeepComparable.Matches(ErrorElement, otherT.ErrorElement)) return false;
             if( !DeepComparable.Matches(Channel, otherT.Channel)) return false;
-            if( !DeepComparable.Matches(Tag, otherT.Tag)) return false;
             
             return true;
         }
@@ -614,7 +598,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CriteriaElement, otherT.CriteriaElement)) return false;
             if( !DeepComparable.IsExactly(ErrorElement, otherT.ErrorElement)) return false;
             if( !DeepComparable.IsExactly(Channel, otherT.Channel)) return false;
-            if( !DeepComparable.IsExactly(Tag, otherT.Tag)) return false;
             
             return true;
         }
@@ -632,7 +615,6 @@ namespace Hl7.Fhir.Model
 				if (CriteriaElement != null) yield return CriteriaElement;
 				if (ErrorElement != null) yield return ErrorElement;
 				if (Channel != null) yield return Channel;
-				foreach (var elem in Tag) { if (elem != null) yield return elem; }
             }
         }
 
@@ -642,14 +624,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
-                if (ReasonElement != null) yield return new ElementValue("reason", false, ReasonElement);
-                if (CriteriaElement != null) yield return new ElementValue("criteria", false, CriteriaElement);
-                if (ErrorElement != null) yield return new ElementValue("error", false, ErrorElement);
-                if (Channel != null) yield return new ElementValue("channel", false, Channel);
-                foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (EndElement != null) yield return new ElementValue("end", EndElement);
+                if (ReasonElement != null) yield return new ElementValue("reason", ReasonElement);
+                if (CriteriaElement != null) yield return new ElementValue("criteria", CriteriaElement);
+                if (ErrorElement != null) yield return new ElementValue("error", ErrorElement);
+                if (Channel != null) yield return new ElementValue("channel", Channel);
             }
         }
 

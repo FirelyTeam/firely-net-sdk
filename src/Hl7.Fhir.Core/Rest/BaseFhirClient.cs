@@ -100,10 +100,10 @@ namespace Hl7.Fhir.Rest
             get => Requester.PreferredParameterHandling;
             set => Requester.PreferredParameterHandling = value;
         }
-#endregion
+        #endregion
 
 
-#if NET_COMPRESSION
+#if !NETSTANDARD1_1
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Rest
 
                 var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", response.Request.Method,
                     response.Request.Url, typeof(TResource).Name, result.GetType().Name);
-                throw new FhirOperationException(message, Requester.LastStatusCode);
+                throw new FhirOperationException(message, Requester.LastStatusCode.Value);
             }
             else
                 return result as TResource;
@@ -1048,10 +1048,10 @@ namespace Hl7.Fhir.Rest
                 // Mmmm...cannot even read the body. Probably not so good.
                 throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
             }
-
-            if (!conf.FhirVersion.StartsWith(ModelInfo.Version))
+            string actualServerVersion = ((ISystemAndCode)conf?.FhirVersionElement)?.Code;
+            if (String.IsNullOrEmpty(actualServerVersion) || !actualServerVersion.StartsWith(ModelInfo.Version))
             {
-                throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, conf.FhirVersion));
+                throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, actualServerVersion));
             }
         }
 

@@ -40,27 +40,9 @@ namespace Hl7.Fhir.Tests.Serialization
                     using (file)
                     {
                         // Verified examples that fail validations
-                        // dom-3
-                        if (entry.Name.EndsWith("list-example-familyhistory-genetics-profile-annie(prognosis).xml"))
-                            continue;
-                        if (entry.Name.EndsWith("questionnaire-sdc-profile-example-loinc(questionnaire-sdc-profile-example-loinc).xml"))
-                            continue;
-                        if (entry.Name.EndsWith("questionnaireresponse-example(3141).xml"))
-                            continue;
-
-                        // vsd-3, vsd-8
-                        //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                        //    continue;
-
-                        // sdf-12 (new issue to R4 - May 2018)
-                        if (entry.Name.EndsWith("resource.profile.xml"))
-                            continue;
-                        if (entry.Name.EndsWith("element.profile.xml"))
-                            continue;
-
-                        // opd-2 (new issue to R4 - May 2018)
-                        if (entry.Name.EndsWith("operation-structuredefinition-snapshot.xml"))
-                            continue;
+                        if (entry.Name.Contains("v2-tables"))
+                            continue; // this file is known to have a single dud valueset - have reported on Zulip
+                                         // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
                         var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
                         var resource = parser.Parse<Resource>(reader);
@@ -76,12 +58,15 @@ namespace Hl7.Fhir.Tests.Serialization
                             Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
                             foreach (var item in outcome.Issue)
                             {
-                                if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
-                                    failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
-                                else
-                                    failedInvariantCodes[item.Details.Coding[0].Code]++;
-
-                                Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
+                                if (item.Severity != OperationOutcome.IssueSeverity.Warning)
+                                {
+                                    if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
+                                        failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
+                                    else
+                                        failedInvariantCodes[item.Details.Coding[0].Code]++;
+                                }
+                                Trace.WriteLine($"\t{item.Details.Coding[0].Code} ({item.Severity.GetLiteral()}): {item.Details.Text}");
+                                Trace.WriteLine("\t" + item.Diagnostics);
                             }
 
                             Trace.WriteLine("-------------------------");
@@ -90,7 +75,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             DebugDumpOutputXml(outcome);
                             Trace.WriteLine("-------------------------");
                         }
-                        if (outcome.Issue.Count != 0)
+                        if (outcome.Errors + outcome.Fatals != 0)
                         {
                             errorCount++;
                         }
@@ -186,30 +171,9 @@ namespace Hl7.Fhir.Tests.Serialization
                     using (file)
                     {
                         // Verified examples that fail validations
-                        // dom-3
-                        //if (entry.Name.EndsWith("list-example-familyhistory-genetics-profile-annie(prognosis).xml"))
-                        //    continue;
-                        //if (entry.Name.EndsWith("questionnaire-sdc-profile-example-loinc(questionnaire-sdc-profile-example-loinc).xml"))
-                        //    continue;
-                        //if (entry.Name.EndsWith("questionnaireresponse-example(3141).xml"))
-                        //    continue;
-                        //if (entry.Name.EndsWith("dataelement-example(gender).xml"))
-                        //    continue;
-
-
-                        // vsd-3, vsd-8
-                        //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                        //    continue;
-
-                        // sdf-12 (new issue to R4 - May 2018)
-                        if (entry.Name.EndsWith("resource.profile.xml"))
-                            continue;
-                        if (entry.Name.EndsWith("element.profile.xml"))
-                            continue;
-
-                        // opd-2 (new issue to R4 - May 2018)
-                        if (entry.Name.EndsWith("operation-structuredefinition-snapshot.xml"))
-                            continue;
+                        if (entry.Name.Contains("v2-tables"))
+                            continue; // this file is known to have a single dud valueset - have reported on Zulip
+                                      // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
                         var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
                         var resource = parser.Parse<Resource>(reader);
@@ -254,12 +218,15 @@ namespace Hl7.Fhir.Tests.Serialization
                                 Debug.WriteLine(String.Format("Reported Profiles: {0}", String.Join(",", resource.Meta.Profile)));
                             foreach (var item in outcome.Issue)
                             {
-                                if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
-                                    failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
-                                else
-                                    failedInvariantCodes[item.Details.Coding[0].Code]++;
+                                if (item.Severity != OperationOutcome.IssueSeverity.Warning)
+                                {
+                                    if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
+                                        failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
+                                    else
+                                        failedInvariantCodes[item.Details.Coding[0].Code]++;
+                                }
 
-                                Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
+                                Trace.WriteLine($"\t{item.Details.Coding[0].Code} ({item.Severity.GetLiteral()}): {item.Details.Text}");
                                 Trace.WriteLine("\t" + item.Diagnostics);
                             }
                             //  Trace.WriteLine("-------------------------");
@@ -270,7 +237,10 @@ namespace Hl7.Fhir.Tests.Serialization
                             Trace.WriteLine("-------------------------");
 
                             // count the issue
-                            errorCount++;
+                            if (outcome.Errors + outcome.Fatals != 0)
+                            {
+                                errorCount++;
+                            }
                         }
                     }
                 }

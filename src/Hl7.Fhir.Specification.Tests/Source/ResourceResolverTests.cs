@@ -24,6 +24,8 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ResolverTests
     {
+        const int DefaultTimeOut = 15 * 1000; // 15 seconds
+
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
@@ -46,6 +48,11 @@ namespace Hl7.Fhir.Specification.Tests
             extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
+
+            var dirSource = new DirectorySource(@"TestData\validation");
+            extDefn = dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0");
+
+            Assert.ThrowsException<ArgumentException>(() => dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|"));
         }
 
         [TestMethod]
@@ -69,7 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()
         {
-            var wa = new WebResolver();
+            var wa = new WebResolver() { TimeOut = DefaultTimeOut };
 
             var artifact = wa.ResolveByUri("http://test.fhir.org/r4/StructureDefinition/Observation");
 
@@ -112,7 +119,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             TestFhirClient client = null;
 
-            var wa = new WebResolver(id => client = new TestFhirClient(id));
+            var wa = new WebResolver(id => client = new TestFhirClient(id)) { TimeOut = DefaultTimeOut };
 
             Assert.IsNull(client);
 
@@ -129,7 +136,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod,TestCategory("IntegrationTest")]
         public void RetrieveArtifactMulti()
         {
-            var resolver = new MultiResolver(source, new WebResolver());
+            var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
 
             var vs = resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
@@ -146,7 +153,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void TestSourceCaching()
         {
-            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new WebResolver()));
+            var src = new CachedResolver(
+                new MultiResolver(
+                    ZipSource.CreateValidationSource(),
+                    new WebResolver() { TimeOut = DefaultTimeOut }));
 
             Stopwatch sw1 = new Stopwatch();
 
@@ -181,8 +191,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
             CachedResolver.LoadResourceEventArgs eventArgs = null;
-            CachedResolver.LoadResourceEventHandler handler = (sender, args) => { eventArgs = args; };
-            src.Load += handler;
+            src.Load += (sender, args) => { eventArgs = args; };
 
             // Verify that the Load event is fired on the initial load
             const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
@@ -218,7 +227,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestCacheLoadingStrategy()
         {
-            const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
+            const string resourceUri = "http://hl7.org/fhir/ValueSet/currencies";
 
             // Create empty in-memory resolver
             var mem = new InMemoryProfileResolver();
@@ -303,13 +312,13 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & CanonicalUrlConflictException
+        // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & ResolvingConflictException
         [TestMethod]
         public void TestCanonicalUrlConflicts()
         {
             //const string srcFileName = "extension-definitions.xml";
-            const string dupFileName = "diagnosticorder-reason-duplicate";
-            const string url = "http://hl7.org/fhir/StructureDefinition/procedurerequest-reasonRejected";
+            const string dupFileName = "patient-birthtime";
+            const string url = "http://hl7.org/fhir/StructureDefinition/patient-birthTime";
 
             var za = ZipSource.CreateValidationSource();
 
@@ -333,15 +342,15 @@ namespace Hl7.Fhir.Specification.Tests
                 var fa = new DirectorySource();
                 var res = fa.ResolveByCanonicalUri(url);
             }
-            catch (CanonicalUrlConflictException ex)
+            catch (ResolvingConflictException ex)
             {
                 Debug.WriteLine("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
                 Assert.IsNotNull(ex.Conflicts);
                 Assert.AreEqual(1, ex.Conflicts.Length);
                 var conflict = ex.Conflicts[0];
-                Assert.AreEqual(url, conflict.Url);
-                Assert.IsTrue(conflict.FilePaths.Contains(filePath));
-                Assert.IsTrue(conflict.FilePaths.Contains(filePath2));
+                Assert.AreEqual(url, conflict.Identifier);
+                Assert.IsTrue(conflict.Origins.Contains(filePath));
+                Assert.IsTrue(conflict.Origins.Contains(filePath2));
                 conflictException = true;
             }
             finally

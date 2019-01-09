@@ -52,10 +52,12 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public ElementDefinitionNavigator ShallowCopy()
         {
-            var result = new ElementDefinitionNavigator();
-            result.Elements = this.Elements;
-            result.OrdinalPosition = this.OrdinalPosition;
-            result.StructureDefinition = this.StructureDefinition;
+            var result = new ElementDefinitionNavigator
+            {
+                Elements = this.Elements,
+                OrdinalPosition = this.OrdinalPosition,
+                StructureDefinition = this.StructureDefinition
+            };
 
             return result;
         }

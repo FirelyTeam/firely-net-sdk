@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,17 +51,22 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A persistent identifier for the batch that won't change as a batch is copied from server to server.</xs:documentation>
+              <xs:documentation xml:lang="en">A persistent identifier for the bundle that won't change as a bundle is copied from server to server.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="BundleType">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the purpose of this bundle - how it was intended to be used.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the purpose of this bundle - how it is intended to be used.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="timestamp" minOccurs="0" maxOccurs="1" type="instant">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date/time that the bundle was assembled - i.e. when the resources were placed in the bundle.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="total" minOccurs="0" maxOccurs="1" type="unsignedInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">If a set of search matches, this is the total number of matches for the search (as opposed to the number of results in this bundle).</xs:documentation>
+              <xs:documentation xml:lang="en">If a set of search matches, this is the total number of entries of type 'match' across all pages in the search.  It does not include search.mode = 'include' or 'outcome' entries and it does not provide a count of the number of entries in the Bundle.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="link" type="Bundle.Link" minOccurs="0" maxOccurs="unbounded">
@@ -71,12 +76,12 @@
           </xs:element>
           <xs:element name="entry" type="Bundle.Entry" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An entry in a bundle resource - will either contain a resource, or information about a resource (transactions and history only).</xs:documentation>
+              <xs:documentation xml:lang="en">An entry in a bundle resource - will either contain a resource or information about a resource (transactions and history only).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="signature" minOccurs="0" maxOccurs="1" type="Signature">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Digital Signature - base64 encoded. XML-DSIg or a JWT.</xs:documentation>
+              <xs:documentation xml:lang="en">Digital Signature - base64 encoded. XML-DSig or a JWT.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -118,14 +123,14 @@
           </xs:element>
           <xs:element name="fullUrl" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The Absolute URL for the resource.  The fullUrl SHALL not disagree with the id in the resource. The fullUrl is a version independent reference to the resource. The fullUrl element SHALL have a value except that: 
+              <xs:documentation xml:lang="en">The Absolute URL for the resource.  The fullUrl SHALL NOT disagree with the id in the resource - i.e. if the fullUrl is not a urn:uuid, the URL shall be version-independent URL consistent with the Resource.id. The fullUrl is a version independent reference to the resource. The fullUrl element SHALL have a value except that: 
 * fullUrl can be empty on a POST (although it does not need to when specifying a temporary id for reference in the bundle)
 * Results from operations might involve resources that are not identified.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="resource" minOccurs="0" maxOccurs="1" type="ResourceContainer">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The Resources for the entry.</xs:documentation>
+              <xs:documentation xml:lang="en">The Resource for the entry. The purpose/meaning of the resource is determined by the Bundle.type.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="search" type="Bundle.Search" minOccurs="0" maxOccurs="1">
@@ -135,12 +140,12 @@
           </xs:element>
           <xs:element name="request" type="Bundle.Request" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Additional information about how this entry should be processed as part of a transaction.</xs:documentation>
+              <xs:documentation xml:lang="en">Additional information about how this entry should be processed as part of a transaction or batch.  For history, it shows how the entry was processed to create the version contained in the entry.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="response" type="Bundle.Response" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Additional information about how this entry should be processed as part of a transaction.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the results of processing the corresponding 'request' entry in the batch or transaction being responded to or what the results of an operation where when returning history.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -156,7 +161,7 @@
         <xs:sequence>
           <xs:element name="mode" minOccurs="0" maxOccurs="1" type="SearchEntryMode">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Why this entry is in the result set - whether it's included as a match or because of an _include requirement.</xs:documentation>
+              <xs:documentation xml:lang="en">Why this entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="score" minOccurs="0" maxOccurs="1" type="decimal">
@@ -177,7 +182,7 @@
         <xs:sequence>
           <xs:element name="method" minOccurs="1" maxOccurs="1" type="HTTPVerb">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The HTTP verb for this entry in either a change history, or a transaction/ transaction response.</xs:documentation>
+              <xs:documentation xml:lang="en">In a transaction or batch, this is the HTTP action to be executed for this entry. In a history bundle, this indicates the HTTP action that occurred.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
@@ -223,12 +228,12 @@
           </xs:element>
           <xs:element name="location" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The location header created by processing this operation.</xs:documentation>
+              <xs:documentation xml:lang="en">The location header created by processing this operation, populated if the operation returns a location.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="etag" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The etag for the resource, it the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http.html#versioning) and [Managing Resource Contention](http.html#concurrency)).</xs:documentation>
+              <xs:documentation xml:lang="en">The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http.html#versioning) and [Managing Resource Contention](http.html#concurrency)).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="lastModified" minOccurs="0" maxOccurs="1" type="instant">
@@ -252,6 +257,11 @@
           <xs:documentation xml:lang="en">GET</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="HEAD">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">HEAD</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="POST">
         <xs:annotation>
           <xs:documentation xml:lang="en">POST</xs:documentation>
@@ -267,11 +277,16 @@
           <xs:documentation xml:lang="en">DELETE</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="PATCH">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PATCH</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="HTTPVerb">
     <xs:annotation>
-      <xs:documentation xml:lang="en">HTTP verbs (in the HTTP command line).</xs:documentation>
+      <xs:documentation xml:lang="en">HTTP verbs (in the HTTP command line). See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -331,7 +346,7 @@
   </xs:simpleType>
   <xs:complexType name="BundleType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates the purpose of a bundle - how it was intended to be used.</xs:documentation>
+      <xs:documentation xml:lang="en">Indicates the purpose of a bundle - how it is intended to be used.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -361,7 +376,7 @@
   </xs:simpleType>
   <xs:complexType name="SearchEntryMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Why an entry is in the result set - whether it's included as a match or because of an _include requirement.</xs:documentation>
+      <xs:documentation xml:lang="en">Why an entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

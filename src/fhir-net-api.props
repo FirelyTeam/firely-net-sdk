@@ -2,23 +2,31 @@
   
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
-
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (http://fire.ly)</Company>
     <Copyright>Copyright 2017 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ewoutkramer/fhir-net-api</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
     <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/develop/LICENSE</PackageLicenseUrl>
+    <RunFhirPathTests>true</RunFhirPathTests>   <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
 
-  <PropertyGroup>
-    <FhirApiVersion>0.96.1</FhirApiVersion>
-    <SupportApiVersion>0.96.1</SupportApiVersion>
+  <!-- Although netstandard1.1 support codegen using the Expression class, we need at least
+  one version of our library that does not require it, since iOS does not have support for it.
+  Considering netstd1.1 is our lowest common denominator, I've chosen that version to not use
+  codegen -->
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'netstandard1.1' ">
+    <DefineConstants>$(DefineConstants);USE_CODE_GEN</DefineConstants>
   </PropertyGroup>
 
   <!-- Compiler settings -->
   <PropertyGroup>
-    <LangVersion>7</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
