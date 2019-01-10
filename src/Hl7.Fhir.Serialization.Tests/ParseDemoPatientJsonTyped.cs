@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var nav = getJsonNode(tp);
             ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
         }
-
+        
         [TestMethod]
         public void ElementNavPerformanceTypedJson()
         {
@@ -86,6 +86,18 @@ namespace Hl7.Fhir.Serialization.Tests
             var json = navXml.ToJson();
 
             JsonAssert.AreSame(tp, json);
+        }
+
+        [TestMethod]
+        public void IgnoreElements()
+        {
+            var patient = SourceNode.Resource("Patient", "Patient", SourceNode.Valued("id", "pat1"));
+            var jsonBare = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJson(new FhirJsonSerializationSettings { IgnoreUnknownElements = false });
+            Assert.IsTrue(jsonBare.Contains("pat1"));
+
+            patient.Add(SourceNode.Valued("unknownElement", "someValue"));
+            var jsonUnknown = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJson(new FhirJsonSerializationSettings { IgnoreUnknownElements = true });
+            Assert.IsFalse(jsonUnknown.Contains("unknownElement"));
         }
 
         [TestMethod]
