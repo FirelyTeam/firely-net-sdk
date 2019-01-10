@@ -162,7 +162,19 @@ namespace Hl7.Fhir.Validation
                 //              we be permitting more than one target profile here.
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile.FirstOrDefault(), statedProfiles: null, statedCanonicals: null);
+                    // This is the contained or bundled case
+                    if (typeRef.TargetProfile.ToList().Contains(ModelInfo.CanonicalUriForFhirCoreType(referencedResource.InstanceType)))
+                    {
+                        childResult = validator.Validate(referencedResource, ModelInfo.CanonicalUriForFhirCoreType(referencedResource.InstanceType), statedProfiles: null, statedCanonicals: null);
+                    }
+                    else if (typeRef.TargetProfile.ToList().Contains(referencedResource.InstanceType))
+                    {
+                        childResult = validator.Validate(referencedResource, referencedResource.InstanceType, statedProfiles: null, statedCanonicals: null);
+                    }
+                    else
+                    {
+                        childResult = validator.Validate(referencedResource, typeRef.TargetProfile.FirstOrDefault(), statedProfiles: null, statedCanonicals: null);
+                    }
                 }
                 else
                 {
