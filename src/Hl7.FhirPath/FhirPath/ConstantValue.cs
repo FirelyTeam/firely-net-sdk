@@ -19,6 +19,9 @@ namespace Hl7.FhirPath
 {
     internal class ConstantValue : ITypedElement
     {
+        public static ITypedElement[] Create(params object[] values) =>
+            values.Select(v => new ConstantValue(v)).ToArray();
+
         public static object ToFhirPathValue(object value)
         {
             object Value;
@@ -124,24 +127,6 @@ namespace Hl7.FhirPath
                 return 0;
         }
 
-        public bool MoveToNext(string nameFilter = null)
-        {
-            return false;
-        }
-
-        public bool MoveToFirstChild(string nameFilter = null)
-        {
-            return false;
-        }
-
-        public ITypedElement Clone()
-        {
-            return new ConstantValue(Value);
-        }
-
-        public IEnumerable<ITypedElement> Children(string name = null)
-        {
-            return Enumerable.Empty<ITypedElement>();
-        }
+        public IEnumerable<ITypedElement> Children(string name = null) => Enumerable.Empty<ITypedElement>();
     }
 }

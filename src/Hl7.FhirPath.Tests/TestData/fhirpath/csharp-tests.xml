@@ -467,7 +467,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0123" inputfile="fp-test-patient.xml">
-    <expression>Patient.birthDate.extension(%"ext-patient-birthTime").exists()</expression>
+    <expression>Patient.birthDate.extension(%`ext-patient-birthTime`).exists()</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0124" inputfile="fp-test-patient.xml">

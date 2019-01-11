@@ -33,6 +33,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Remove="TestData\fhirpath\extension-definitions.xml" />
+    <Content Remove="TestData\fhirpath\tests-fhir-r2.xml" />
+    <None Remove="TestData\fhirpath\tests-fhir-r2.xml" />
     <Content Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

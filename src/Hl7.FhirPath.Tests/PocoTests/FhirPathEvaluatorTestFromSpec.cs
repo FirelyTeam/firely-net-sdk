@@ -96,13 +96,18 @@ namespace Hl7.FhirPath.Tests
             this.output = output;
         }
 
-        private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected)
+        private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected, bool asPredicate)
         {
             var tpXml = new FhirXmlSerializer().SerializeToString(resource);
             var npoco = resource.ToTypedElement();
             //       FhirPathEvaluatorTest.Render(npoco);
+            IEnumerable<ITypedElement> actual;
 
-            IEnumerable<ITypedElement> actual = npoco.Select(expression);
+            if (!asPredicate)
+                actual = npoco.Select(expression);
+            else
+                actual = FhirValueList.Create(npoco.Predicate(expression));
+
             Assert.Equal(expected.Count(), actual.Count());
 
             expected.Zip(actual, compare).Count();
@@ -142,19 +147,19 @@ namespace Hl7.FhirPath.Tests
             {
                 var resourceNav = resource.ToTypedElement();
                 resourceNav.Select(expression);
-                throw new Exception();
+                Assert.True(false, "Should have been invalid");
             }
             catch (FormatException)
             {
-                if (type != ErrorType.Syntax) throw new Exception();
+                if (type != ErrorType.Syntax) Assert.True(false, "Invalid should have been of type syntax");
             }
             catch (InvalidCastException)
             {
-                if (type != ErrorType.Semantics) throw new Exception();
+                if (type != ErrorType.Semantics) Assert.True(false, "Invalid should have been of type semantics");
             }
             catch (InvalidOperationException)
             {
-                if (type != ErrorType.Semantics) throw new Exception();
+                if (type != ErrorType.Semantics) Assert.True(false, "Invalid should have been of type semantics2");
             }
         }
 
@@ -163,7 +168,7 @@ namespace Hl7.FhirPath.Tests
         int numFailed = 0;
         int totalTests = 0;
 
-        [Fact(Skip = "Some extra functions still have to be implemented yet.MV 20190109"), Trait("Area", "FhirPathFromSpec")]
+        [Fact,Trait("Area", "FhirPathFromSpec")]
         public void TestPublishedTests()
         {
             var path = Path.Combine(TestData.GetTestDataBasePath(), "fhirpath");
@@ -180,9 +185,7 @@ namespace Hl7.FhirPath.Tests
 
             if (numFailed > 0)
             {
-                // todo: mh
-                // Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
-                throw new Exception($"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+                Assert.True(false, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
             }
         }
 
@@ -217,30 +220,14 @@ namespace Hl7.FhirPath.Tests
                     totalTests += 1;
                     runTestItem(item, resource);
                 }
-
-
-                catch (XunitException afe) // (AssertFailedException afe)
-                {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    output.WriteLine("   " + afe.Message);
-                    numFailed += 1;
-                }
-                catch (InvalidOperationException ioe)
-                {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    output.WriteLine("   " + ioe.Message);
-                    numFailed += 1;
-                }
-                catch (FormatException fe)
-                {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    output.WriteLine("   " + fe.Message);
-                    numFailed += 1;
-                }
                 catch (Exception e)
                 {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    throw e;
+                    output.WriteLine($"FAIL: {groupName} - {name}: {expression}");
+                    if (!(e is XunitException))
+                        output.WriteLine($"   ({e.GetType().Name}) {e.Message}");
+                    else
+                        output.WriteLine($"   {e.Message}");
+                    numFailed += 1;
                 }
             }
         }
@@ -249,6 +236,7 @@ namespace Hl7.FhirPath.Tests
         {
             var expression = testLine.Element("expression");
             var output = testLine.Elements("output");
+            var isPredicate = testLine.Attribute("predicate")?.Value == "true";
 
             string invalid = expression.TryGetAttribute("invalid", out bool hasInvalid);
 
@@ -268,7 +256,7 @@ namespace Hl7.FhirPath.Tests
             else
             {
                 // Still need to check the types (and values)
-                test(resource, expression.Value, output);
+                test(resource, expression.Value, output, isPredicate);
             }
         }
 

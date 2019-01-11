@@ -24,15 +24,20 @@ namespace Hl7.FhirPath.Parser
         //   : ([A-Za-z] | '_')([A-Za-z0-9] | '_')*            // Added _ to support CQL (FHIR could constrain it out)
         //   ;
         public static readonly Parser<string> Id =
-            Parse.Identifier(Parse.Letter.XOr(Parse.Char('_')), Parse.LetterOrDigit.XOr(Parse.Char('_'))).Named("Identifier");
+            Parse.Identifier(
+                Parse.Letter
+                    .XOr(Parse.Char('_')), 
+                Parse.LetterOrDigit
+                    .XOr(Parse.Char('_')))
+            .Named("Identifier");
 
         //  QUOTEDIDENTIFIER
-        //      : '"' (ESC | ~[\\"])* '"'
+        //      : '`' (ESC | ~[\\"])* '`'
         //      ;
         public static readonly Parser<string> QuotedIdentifier =
-            from openQ in Parse.Char('\"')
-            from id in Parse.CharExcept(@"""\").Many().Text().Or(Escape).Many()
-            from closeQ in Parse.Char('\"')
+            from openQ in Parse.Char('`')
+            from id in Parse.CharExcept(@"`\").Many().Text().Or(Escape).Many()
+            from closeQ in Parse.Char('`')
             select string.Concat(id);
 
         // identifier
@@ -95,8 +100,8 @@ namespace Hl7.FhirPath.Parser
                    select XmlConvert.ToDecimal(num + dot + fraction);
 
 
-        // STRING:  '\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
-        // fragment ESC: '\\' (["'\\/fnrt] | UNICODE);    // allow \", \', \\, \/, \b, etc. and \uXXX
+        // STRING:  '\'' (ESC | ~[\`\\])* '\'';         // ' delineated string
+        // fragment ESC: '\\' ([`'\\/fnrt] | UNICODE);    // allow \`, \', \\, \/, \b, etc. and \uXXX
         // fragment UNICODE: 'u' HEX HEX HEX HEX;
         // fragment HEX: [0-9a-fA-F];
         public static readonly Parser<string> Unicode =
@@ -107,7 +112,7 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<string> Escape =
             from backslash in Parse.Char('\\')
             from escUnicode in
-                Parse.Chars("\"'\\/fnrt").Once().Unescape().Or(Unicode.Unescape())
+                Parse.Chars("`'\\/fnrt").Once().Unescape().Or(Unicode.Unescape())
             select escUnicode;
 
         public static readonly Parser<string> String =

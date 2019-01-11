@@ -25,8 +25,8 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "name");
             AssertParser.SucceedsMatch(parser, "name.name2");
             AssertParser.SucceedsMatch(parser, "name.name2.name3");
-            AssertParser.SucceedsMatch(parser, "name.\"name2\"", "name.name2");
-            AssertParser.SucceedsMatch(parser, "\"name\".\"name2\"", "name.name2");
+            AssertParser.SucceedsMatch(parser, "name.`name2`", "name.name2");
+            AssertParser.SucceedsMatch(parser, "`name`.`name2`", "name.name2");
         }
 
         private void SucceedsPrefixString(Parser<string> parser, string expr)
@@ -44,7 +44,7 @@ namespace Hl7.FhirPath.Tests
             SucceedsPrefixString(parser, "%const");
             SucceedsPrefixString(parser, "%a1");
             SucceedsPrefixString(parser, "%a__1");
-            AssertParser.SucceedsMatch(parser, "%\"forbidden-characters-1234\"", "forbidden-characters-1234");
+            AssertParser.SucceedsMatch(parser, "%`forbidden-characters-1234`", "forbidden-characters-1234");
 
             AssertParser.FailsMatch(parser, "%0");
             AssertParser.FailsMatch(parser, "%0123");
@@ -61,7 +61,7 @@ namespace Hl7.FhirPath.Tests
             var parser = Lexer.Identifier.End();
 
             AssertParser.SucceedsMatch(parser, "A34", "A34");
-            AssertParser.SucceedsMatch(parser, "\"A\uface%$#34\"", "A\uface%$#34");
+            AssertParser.SucceedsMatch(parser, "`A\uface%$#34`", "A\uface%$#34");
             AssertParser.FailsMatch(parser, "34");
             AssertParser.FailsMatch(parser, "'Hello'");
             AssertParser.FailsMatch(parser, "@2013");
@@ -153,12 +153,12 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Lexer.QuotedIdentifier.End();
 
-            SucceedsDelimitedString(parser, "\"2a\"");
-            SucceedsDelimitedString(parser, "\"_\"");
-            SucceedsDelimitedString(parser, "\"_Abcdef_ghijklmnopqrstuvwxyz_\"");
-            SucceedsDelimitedString(parser, "\"Hi \uface\"");
-            SucceedsDelimitedString(parser, "\"@#$%^&*().'\"");
-            SucceedsDelimitedString(parser, "\"3.1415\"");
+            SucceedsDelimitedString(parser, "`2a`");
+            SucceedsDelimitedString(parser, "`_`");
+            SucceedsDelimitedString(parser, "`_Abcdef_ghijklmnopqrstuvwxyz_`");
+            SucceedsDelimitedString(parser, "`Hi \uface`");
+            SucceedsDelimitedString(parser, "`@#$%^&*().'`");
+            SucceedsDelimitedString(parser, "`3.1415`");
 
             AssertParser.FailsMatch(parser, "NoQuotes");
             AssertParser.FailsMatch(parser, @"'wrong es\qape'");
@@ -190,7 +190,7 @@ namespace Hl7.FhirPath.Tests
 
             AssertParser.SucceedsMatch(parser, @"\uface", "龜");
             AssertParser.SucceedsMatch(parser, @"\'", @"'");
-            AssertParser.SucceedsMatch(parser, @"\""", "\"");
+            AssertParser.SucceedsMatch(parser, @"\`", "`");
             AssertParser.SucceedsMatch(parser, @"\\", @"\");
             AssertParser.SucceedsMatch(parser, @"\/", "/");
             //AssertParser.SucceedsMatch(parser, @"\b"); - removed in STU3
