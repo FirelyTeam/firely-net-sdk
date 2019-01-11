@@ -90,11 +90,11 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Term.End();
 
-            AssertParser.SucceedsMatch(parser, "%\"ext-11179-de-is-data-element-concept\"",
+            AssertParser.SucceedsMatch(parser, "%`ext-11179-de-is-data-element-concept`",
                 new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", TypeInfo.String,
                             new ConstantExpression("11179-de-is-data-element-concept")));
 
-            AssertParser.SucceedsMatch(parser, "%\"vs-administrative-gender\"",
+            AssertParser.SucceedsMatch(parser, "%`vs-administrative-gender`",
                 new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeInfo.String, 
                     new ConstantExpression("administrative-gender")));
         }
@@ -147,6 +147,12 @@ namespace Hl7.FhirPath.Tests
 
             AssertParser.SucceedsMatch(parser, "-Patient.name", new UnaryExpression('-', patientName));
             AssertParser.SucceedsMatch(parser, "+Patient.name", new UnaryExpression('+', patientName));
+
+            AssertParser.SucceedsMatch(parser, "-1.doSomething()",
+                new UnaryExpression("-",
+                    new FunctionCallExpression(
+                    new ConstantExpression("1"), "doSomething", TypeInfo.Any)));
+
         }
 
 
@@ -170,6 +176,10 @@ namespace Hl7.FhirPath.Tests
 
             AssertParser.SucceedsMatch(parser, "-4", new UnaryExpression('-', new ConstantExpression(4)));
             AssertParser.SucceedsMatch(parser, "4 + 6", constOp("+", 4, 6));
+            AssertParser.SucceedsMatch(parser, "-4 + 6",
+                new BinaryExpression("+",
+                    new UnaryExpression('-', new ConstantExpression(4)),
+                    new ConstantExpression(6)));              
 
             AssertParser.FailsMatch(parser, "4+");
             // AssertParser.FailsMatch(parser, "5div6");    oops

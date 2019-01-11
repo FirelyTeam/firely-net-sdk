@@ -143,7 +143,6 @@ namespace Hl7.FhirPath.Expressions
 
                     if (cast == null)
                     {
-                        //TODO: Spell out why a little bit more explicit than...
                         throw new InvalidCastException("Cannot cast from '{0}' to '{1}'".FormatWith(Typecasts.ReadableFhirPathName(source.GetType()),
                             Typecasts.ReadableFhirPathName(to)));
                     }
@@ -168,14 +167,24 @@ namespace Hl7.FhirPath.Expressions
            return false; // value-type
         }
 
-        public static string ReadableFhirPathName(Type t)
+        public static string ReadableFhirPathName(object value)
         {
-            if (t.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))
-                return "collection";
-            else if (t.CanBeTreatedAsType(typeof(ITypedElement)))
-                return "any single value";
+            Type t = value.GetType();
+
+            if (value is IEnumerable<ITypedElement> ete)
+            {
+                var values = ete.ToList();
+                var types = ete.Select(te => ReadableFhirPathName(te)).Distinct();
+
+                if (values.Count > 1)
+                    return "collection of " + String.Join("/", types);
+                else
+                    return types.Single();
+            }
+            else if (value is ITypedElement te)
+                return te.InstanceType;
             else
-                return t.Name;
+                return t.GetType().Name;
         }
 
     }

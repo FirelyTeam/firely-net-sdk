@@ -187,9 +187,21 @@ namespace Hl7.FhirPath.Expressions
                 }
                 catch (Exception e)
                 {
-                    throw new InvalidOperationException("Invocation of '{0}' failed: {1}".FormatWith(functionName, e.Message));
+                    throw new InvalidOperationException(
+                        $"Invocation of {formatFunctionName(functionName)} failed: {e.Message}");
                 }
             };
+
+            string formatFunctionName(string name)
+            {
+                if (name.StartsWith(BinaryExpression.BIN_PREFIX))
+                    return $"operator '{name.Substring(BinaryExpression.BIN_PREFIX_LEN)}'";
+                else if (name.StartsWith(UnaryExpression.URY_PREFIX))
+                    return $"operator '{name.Substring(UnaryExpression.URY_PREFIX_LEN)}'";
+                else
+                    return $"function '{name}'";
+
+        }
         }
 
     }

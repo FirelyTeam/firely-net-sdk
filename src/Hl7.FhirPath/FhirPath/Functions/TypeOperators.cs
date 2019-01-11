@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
@@ -19,23 +20,32 @@ namespace Hl7.FhirPath.Functions
         {
             if (focus.InstanceType != null)
             {
-                return focus.InstanceType == type;     // I have no information about classes/subclasses
+                return compareTypeNames(focus.InstanceType,type);     // I have no information about classes/subclasses
             }
             else
                 throw Error.InvalidOperation("Is operator is called on untyped data");
-        }
 
-        public static bool Is(this IEnumerable<ITypedElement> f, string type)
-        {
-            var focus = f.First();
-
-            if (focus.InstanceType == null)
+            bool compareTypeNames(string instance, string declared)
             {
-                return focus.InstanceType == type;     // I have no information about classes/subclasses
+                // Bit of a hack. I have no idea how to deal with all those
+                // System. and FHIR. prefixed names for now. Also, Fhir uses
+                // lower-cased primitives, and FhirPath upper-cased, so just
+                // ignore the differences for now.
+                return declared.Split('.').Last().ToLower() == instance.ToLower();
             }
-            else
-                throw Error.InvalidOperation("Is operator is called on untyped data");
         }
+
+        //public static bool Is(this IEnumerable<ITypedElement> f, string type)
+        //{
+        //    var focus = f.First();
+
+        //    if (focus.InstanceType == null)
+        //    {
+        //        return focus.InstanceType == type;     // I have no information about classes/subclasses
+        //    }
+        //    else
+        //        throw Error.InvalidOperation("Is operator is called on untyped data");
+        //}
 
 
         public static IEnumerable<ITypedElement> FilterType(this IEnumerable<ITypedElement> focus, string typeName)
@@ -44,11 +54,6 @@ namespace Hl7.FhirPath.Functions
         }
 
         public static ITypedElement CastAs(this ITypedElement focus, string typeName)
-        {
-            if (focus.Is(typeName))
-                return focus;
-            else
-                return null;
-        }
+            => focus.Is(typeName) ? focus : null;
     }
 }
